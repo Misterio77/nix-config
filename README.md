@@ -46,7 +46,7 @@ Time to mount (my ESP is at `/dev/nvme0n1p1`, and i'm assuming you find 2gb of t
 ```
 mount -t tmpfs -o size=2G,mode=755 none /mnt
 
-mkdir -p /mnt/{boot,nix,etc/nixos,data,dotfiles}
+mkdir /mnt/{boot,nix,nixos,data,dotfiles}
 
 mount /dev/nvme0n1p1 /mnt/boot
 
@@ -63,14 +63,24 @@ cd /mnt/dotfiles
 git clone git@github.com:Misterio77/nix-config.git
 ```
 
-Bind the dotfiles config to our new system `/etc/nixos`:
-```
-mount -o bind /mnt/dotfiles/nixos /mnt/etc/nixos
-```
-
 Create your (hashed) password:
 ```
 mkpasswd -m sha-512 > nixos/password.nix
 ```
 
+Bind the dotfiles config to our new system `/etc/nixos`:
+```
+mkdir -p /mnt/etc/nixos
+mount -o bind /mnt/dotfiles/nixos /mnt/etc/nixos
+```
+
 Finally, generate your hardware config: `nixos-generate-config --root /mnt`
+
+### Install
+
+You're ready to go! Just install it:
+```
+nixos-install --no-root-passwd
+```
+
+And reboot!
