@@ -272,7 +272,7 @@ in {
       "neofetch/config.conf".source = "/dotfiles/configs/neofetch.conf";
     };
     xdg.dataFile = {
-      "flavours/base16".source = "/dotfiles/configs/flavours_data";
+      "flavours/base16".source = "/dotfiles/configs/flavours";
     };
     home.file = {
       "bin".source = "/dotfiles/scripts";
