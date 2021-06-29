@@ -21,6 +21,12 @@ rewrite = true
 [[item]]
 file = "~/.config/nvim/colors/base16.vim"
 template = "vim"
+hook = "~/bin/reloadnvim"
+rewrite = true
+
+[[item]]
+file = "~/.config/zathura/colors"
+template = "zathura"
 rewrite = true
 
 [[item]]

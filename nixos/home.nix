@@ -26,7 +26,7 @@ in {
       pkgs.steam
       pkgs.qutebrowser
       #pkgs.flavours
-      pkgs.ncspot
+      pkgs.dragon-drop
       pkgs.bottom
       pkgs.jq
       pkgs.pulseaudio
@@ -37,9 +37,10 @@ in {
       pkgs.slurp
       pkgs.grim
       pkgs.glxinfo
-      pkgs.zathura
       pkgs.neofetch
+      pkgs.neovim-remote
       pkgs.wl-clipboard
+      pkgs.spotify
     ];
 
     # Sway
@@ -74,11 +75,11 @@ in {
       config = {
         startup = [
           { command = "swaylock.sh --image $(cat ~/.bg)"; }
+          { command = "swayfader.sh"; always = true; }
           { command = "swaybg.sh"; }
           { command = "seticons $(darkmode query)"; always = true; }
           { command = "swaymsg focus output HDMI-A-1"; }
-          { command = "pkill --full swayfader; swayfader"; always = true; }
-          { command = " swayidle -w \\
+          { command = "swayidle -w \\
           timeout 600 'swaylock.sh --screenshots --daemonize' \\
           timeout 20  'pgrep -x swaylock && swaymsg \"output * dpms off\"' \\
               resume  'pgrep -x swaylock && swaymsg \"output * dpms on\"' \\
@@ -115,6 +116,7 @@ in {
         };
       };
     };
+
     # Programs
     programs.alacritty = {
       enable = true;
@@ -130,6 +132,20 @@ in {
         signByDefault = true;
         key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
       };
+      lfs = {
+        enable = true;
+      };
+    };
+    programs.zathura = {
+      enable = true;
+      options = {
+        selection-clipboard = "clipboard";
+        font = "Fira Sans 12";
+        recolor = true;
+      };
+      extraConfig = ''
+        include colors
+      '';
     };
     programs.zsh = {
       enable = true;
@@ -144,12 +160,18 @@ in {
         fi
       '';
       shellAliases = {
+        jqless = "jq -C | less -r";
         nrs = "sudo nixos-rebuild switch";
-        ns = "nix-shell --command zsh -p";
+        ns = "nix-shell";
         v = "nvim";
-        mutt = "neomutt";
+        vi = "nvim";
+        vim = "nvim";
         m = "m";
+        mutt = "neomutt";
       };
+      envExtra = ''
+        GLOBALIAS_FILTER_VALUES=(ls)
+      '';
       history = {
         size = 1000;
       };
@@ -160,6 +182,9 @@ in {
 
         bindkey "''${terminfo[kcuu1]}" history-substring-search-up
         bindkey "''${terminfo[kcud1]}" history-substring-search-down
+
+        zstyle ":completion:*" completer _complete
+        zstyle ":completion:*" matcher-list "" "m:{[:lower:][:upper:]}={[:upper:][:lower:]}" "+l:|=* r:|=*"
         export PATH="$PATH":$HOME/bin
       '';
       zplug = {
@@ -169,7 +194,8 @@ in {
           { name = "zsh-users/zsh-completions"; }
           { name = "zsh-users/zsh-history-substring-search"; }
           { name = "softmoth/zsh-vim-mode"; }
-          #{ name = "plugins/globalias"; tags = [ from:oh-my-zsh ]; }
+          { name = "chisui/zsh-nix-shell"; }
+          { name = "plugins/globalias"; tags = [ from:oh-my-zsh ]; }
         ];
       };
     };
@@ -202,30 +228,46 @@ in {
           vicmd_symbol = "[<<-](bold yellow)";
         };
         aws = {
-          format = "on [$symbol$profile(($region))]($style) ";
+          format = "on [$symbol$profile(\($region\))]($style) ";
         };
         gcloud = {
-          format = "on [($symbol$active(/$project)(($region)))]($style) ";
+          format = "on [$symbol$active($project)(\($region\))]($style) ";
+        };
+        nix_shell = {
+          impure_msg = "";
+          pure_msg = "λ";
+          symbol= "❄️";
+          format = "via [$symbol( $state)( $name)]($style)";
         };
       };
     };
     programs.neovim = {
       enable = true;
       plugins = with pkgs.vimPlugins; [
-        ale
+        {
+          plugin = ale;
+          config = ''
+            let g:ale_completions_enabled = 1
+            let g:ale_linters = {"c": ["clang"], "rust": ["analyzer", "cargo"]}
+            let g:ale_fixers = {"rust": ["rustfmt"]}
+            let ale_rust_analyzer_config = {"checkOnSave": {"command": "clippy","enable": v:true}}
+          '';
+        }
         vim-gitgutter
         auto-pairs
         vim-surround
         vim-markdown
-        { plugin = vimtex;
-          config = "let g:vimtex_view_method = 'zathura'";
+        {
+          plugin = vimtex;
+          config = ''
+            let g:vimtex_view_method = "zathura"
+            let g:vimtex_view_automatic = 0
+          '';
         }
         vim-toml
         vim-nix
         rust-vim
       ];
-      viAlias = true;
-      vimAlias = true;
       extraConfig = ''
         "Tabs
         set tabstop=4 "How many spaces equals a tab
