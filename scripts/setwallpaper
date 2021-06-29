@@ -34,6 +34,6 @@ wallpaper=~/Pictures/Wallpapers/"${wallpaper}"
 echo "${wallpaper}" > ~/.bg
 pgrep -x sway && set_wallpaper & \
 
-if [[ $(flavours current) == "generated" ]]; then
+if [[ $(flavours current 2>/dev/null) == "generated" ]]; then
     flavours generate $(darkmode query) "${wallpaper}" --stdout | flavours apply --stdin
 fi

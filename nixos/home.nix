@@ -26,6 +26,7 @@ in {
       pkgs.steam
       pkgs.qutebrowser
       #pkgs.flavours
+      pkgs.ncspot
       pkgs.bottom
       pkgs.jq
       pkgs.pulseaudio
@@ -137,9 +138,8 @@ in {
       loginExtra = ''
         if [[ "$(tty)" == /dev/tty1 ]]; then
           setwallpaper -R
-          flavours generate dark $(cat $HOME/.bg)
-          mkdir -p ~/.config/nvim/colors
-          flavours apply generated
+          mkdir -p $HOME/.config/nvim/colors
+          flavours generate dark $(cat $HOME/.bg) --stdout | flavours apply --stdin
           exec sway
         fi
       '';
@@ -169,7 +169,7 @@ in {
           { name = "zsh-users/zsh-completions"; }
           { name = "zsh-users/zsh-history-substring-search"; }
           { name = "softmoth/zsh-vim-mode"; }
-          { name = "plugins/globalias"; tags = [ from:oh-my-zsh ]; }
+          #{ name = "plugins/globalias"; tags = [ from:oh-my-zsh ]; }
         ];
       };
     };
