@@ -27,11 +27,11 @@ We'll create a few subvolumes:
 - `data` For persistent data, will be mounted writable. I suggest setting up snpashots.
 
 First mount your btrfs. Assuming you opened the encrypted btrfs partition at `nixenc`:
-```
+```bash
 mount -t btrfs /dev/mapper/nixenv /mnt
 ```
 Then, create subvolumes, and umount the partition when done:
-```
+```bash
 btrfs subvolume create /mnt/nix
 btrfs subvolume create /mnt/dotfiles
 btrfs subvolume create /mnt/data
@@ -43,7 +43,7 @@ Of course, you can set this up in any other way you prefer, just remember to ada
 ### Mountpoints
 
 Time to mount (my ESP is at `/dev/nvme0n1p1`, and i'm assuming you find 2gb of tmpfs storage accetable):
-```
+```bash
 mount -t tmpfs -o size=2G,mode=755 none /mnt
 
 mkdir /mnt/{boot,nix,nixos,data,dotfiles}
@@ -58,18 +58,18 @@ mount -o subvol=data,compress=zstd,noatime /dev/mapper/nixenc /mnt/data
 ### Base config
 
 Clone the repo:
-```
+```bash
 cd /mnt/dotfiles
 git clone git@github.com:Misterio77/nix-config.git
 ```
 
 Create your (hashed) password:
-```
+```bash
 mkpasswd -m sha-512 > nixos/password.nix
 ```
 
 Bind the dotfiles config to our new system `/etc/nixos`:
-```
+```bash
 mkdir -p /mnt/etc/nixos
 mount -o bind /mnt/dotfiles/nixos /mnt/etc/nixos
 ```
@@ -79,7 +79,7 @@ Finally, generate your hardware config: `nixos-generate-config --root /mnt`
 ### Install
 
 You're ready to go! Just install it:
-```
+```bash
 nixos-install --no-root-passwd
 ```
 
