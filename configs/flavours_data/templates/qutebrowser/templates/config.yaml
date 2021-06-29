@@ -1,0 +1,11 @@
+default:
+    extension: .config.py
+    output: themes/default
+
+minimal:
+    extension: .config.py
+    output: themes/minimal
+
+colors:
+    extension: .colors.py
+    output: themes/colors

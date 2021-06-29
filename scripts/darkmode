@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+function try_scheme() {
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        return 1
+    fi
+	newscheme=$1
+	currentscheme=$2
+
+    # Try to find a scheme with that name, that both exists in flavours list and is different from the currentscheme
+    if (flavours list -l | grep -xq "$newscheme") && [ "$newscheme" != "$currentscheme" ]; then
+        # If it exists, echo and return ok
+        echo $newscheme
+		return 0
+	else
+		return 1
+	fi
+}
+
+function which_scheme() {
+    scheme=$1
+    # If contains light in name
+    if [[ $scheme =~ "light" ]]; then
+        # Try to replace light with dark
+        (try_scheme "${scheme/light/dark}" $scheme || \
+        # Try to remove light from start and end
+        try_scheme "${scheme#"light"}" $scheme || \
+        try_scheme "${scheme#"light-"}" $scheme || \
+        try_scheme "${scheme%"light"}" $scheme || \
+        try_scheme "${scheme%"-light"}" $scheme) && return 0
+    # If contains dark in name
+    elif [[ $scheme =~ "dark" ]]; then
+        # Try to replace dark with light
+        (try_scheme "${scheme/dark/light}" $scheme || \
+        # Try to remove dark from start and end
+        try_scheme "${scheme#"dark"}" $scheme || \
+        try_scheme "${scheme#"dark-"}" $scheme || \
+        try_scheme "${scheme%"dark"}" $scheme || \
+        try_scheme "${scheme%"-dark"}" $scheme) && return 0
+    # If contains moon in name (rose-pine-moon)
+    elif [[ $scheme =~ "moon" ]]; then
+        # Replace with dawn
+        try_scheme "${scheme/moon/dawn}" $scheme && return 0
+    # If contains dawn in name (rose-pine-dawn)
+    elif [[ $scheme =~ "dawn" ]]; then
+        # Replace with moon
+        try_scheme "${scheme/dawn/moon}" $scheme && return 0
+    elif [[ $scheme = "lime" ]]; then
+        try_scheme "${scheme/lime/emil}" $scheme && return 0
+    elif [[ $scheme = "emil" ]]; then
+        try_scheme "${scheme/emil/lime}" $scheme && return 0
+
+    else
+        # try adding dark to start and end
+        (try_scheme "${scheme}-dark" $scheme || try_scheme "dark-${scheme}"  $scheme)  && return 0
+        # try adding light to start and end
+        (try_scheme "${scheme}-light" $scheme|| try_scheme "light-${scheme}" $scheme)  && return 0
+        # try adding dawn to end (rose-pine)
+        try_scheme "${scheme}-dawn" $scheme  && return 0
+    fi
+    # If no change worked
+    return 1
+}
+
+function current() {
+    # Get current scheme background color
+    bgcolor=$(flavours info -r $(flavours current) | sed -n '3 p')
+    # Get first character
+    character=${bgcolor:1:1}
+    # If its less than 5, normally is a dark scheme
+    if [[ $character < 5 ]]; then
+        echo "dark"
+    else
+        echo "light"
+    fi
+}
+
+# Show current scheme type
+if [[ $* =~ "q" ]]; then
+    current
+    exit 0
+fi
+
+# Switch scheme type
+if [ "$(current)" = "dark" ]; then
+    newmode="light"
+else
+    newmode="dark"
+fi
+
+# If the current scheme is a generated one
+if [[ $(flavours current) =~ "generated" ]]; then
+    # Generate in the opposite mode
+    flavours generate $newmode $(cat ~/.bg) && flavours apply generated
+else
+    # If not, search for a scheme with the opposite type
+    newscheme=$(which_scheme $(flavours current)) && flavours apply $newscheme || \
+        { >&2 echo "Your current scheme doesn't have a $newmode variant"; exit 1; }
+fi

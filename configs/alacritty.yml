@@ -1,0 +1,11 @@
+import:
+    - /home/misterio/.config/alacritty/colors.yml
+font:
+    size: 12.0
+    normal:
+        family: Fira Code
+window:
+    padding:
+        x: 20
+        y: 20
+    dynamic_title: true

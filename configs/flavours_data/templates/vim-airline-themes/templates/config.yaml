@@ -1,0 +1,3 @@
+default:
+    extension: .vim
+    output: autoload/airline/themes

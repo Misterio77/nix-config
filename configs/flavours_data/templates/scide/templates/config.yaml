@@ -1,0 +1,3 @@
+default:
+  extension: .yaml
+  output: themes

@@ -1,0 +1,22 @@
+(progn
+  ;; Base16 {{scheme-name}}
+  ;; Author: {{scheme-author}}
+
+  (stumpwm:set-fg-color "#{{base04-hex}}")
+  (stumpwm:set-bg-color "#{{base00-hex}}")
+  (stumpwm:set-border-color "#{{base03-hex}}")
+  (stumpwm:set-focus-color "#{{base04-hex}}")
+  (stumpwm:set-unfocus-color "#{{base00-hex}}")
+
+  (setf stumpwm:*mode-line-foreground-color* "#{{base0E-hex}}"
+	stumpwm:*mode-line-background-color* "#{{base01-hex}}"
+	stumpwm:*mode-line-border-color* "#{{base03-hex}}")
+
+  ;; Set *colors*
+  ;; Currently only the black and white colors are changed
+  (setf (car stumpwm:*colors*) "#{{base00-hex}}"
+	(car (last stumpwm:*colors*)) "#{{base03-hex}}")
+  ;; Toggle the mode line so that changes are applied
+  (stumpwm:toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head))
+  (stumpwm:toggle-mode-line (stumpwm:current-screen) (stumpwm:current-head)))
+       

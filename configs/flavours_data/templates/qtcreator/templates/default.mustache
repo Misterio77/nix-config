@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme version="1.0" name="Base16 {{scheme-name}}">
+  <!--
+  base16-qtcreator (https://github.com/ilpianista/base16-qtcreator)
+  by Chris Kempson (http://chriskempson.com)
+  {{scheme-name}} scheme by {{scheme-author}}
+  -->
+
+  <!-- main colors, skipping one of attributes (backgroud/foreground) will use color from here -->
+  <style name="Text" foreground="#{{base05-hex}}" background="#{{base00-hex}}"/>
+
+  <!-- it will be underlined by default -->
+  <style name="Link"/>
+
+  <!-- selection, current line, search, matching brackets -->
+  <style name="Selection" background="#{{base02-hex}}"/>
+  <style name="CurrentLine" background="#{{base03-hex}}"/>
+  <style name="LineNumber" foreground="#{{base03-hex}}"/>
+  <style name="CurrentLineNumber" foreground="#{{base04-hex}}" bold="true"/>
+  <style name="SearchResult" background="#{{base01-hex}}"/>
+  <style name="Parentheses" background="#{{base02-hex}}" />
+  <style name="ParenthesesMismatch" background="#{{base0E-hex}}" />
+
+  <!-- Selection whilst searching in it -->
+  <style name="SearchScope" foreground="#{{base07-hex}}" background="#{{base03-hex}}"/>
+
+  <!-- word (symbol) under cursor: background - color of marking frame, foreground - ignored -->
+  <style name="Occurrences" background="#{{base03-hex}}"/>
+  <style name="Occurrences.Rename" background="#{{base04-hex}}"/>
+  <!-- unused variable: foreground - color of underlining -->
+  <style name="Occurrences.Unused" foreground="#{{base09-hex}}"/>
+
+  <!-- language primitives -->
+  <style name="Number" foreground="#{{base09-hex}}"/>
+  <style name="String" foreground="#{{base0B-hex}}"/>
+  <style name="Keyword" foreground="#{{base0E-hex}}"/>
+  <style name="Operator" foreground="#{{base05-hex}}"/>
+  <style name="Preprocessor" foreground="#{{base0D-hex}}"/>
+  <style name="Label" foreground="#{{base08-hex}}"/>
+
+  <!-- types, classes -->
+  <style name="Type" foreground="#{{base0A-hex}}"/>
+  <style name="PrimitiveType" foreground="#{{base0E-hex}}"/>
+
+  <!-- functions, methods -->
+  <style name="Function" foreground="#{{base0D-hex}}"/>
+  <style name="VirtualMethod" foreground="#{{base0D-hex}}" italic="true"/>
+
+  <!-- variables -->
+  <style name="Field" foreground="#{{base06-hex}}"/>
+  <style name="Local" foreground="#{{base05-hex}}"/>
+  <style name="Global" foreground="#{{base05-hex}}"/>
+  <style name="Static" foreground="#{{base05-hex}}"/>
+  <style name="JsScopeVar" foreground="#{{base05-hex}}" italic="true"/>
+  <style name="JsImportVar" foreground="#{{base05-hex}}" italic="true"/>
+  <style name="JsGlobalVar" foreground="#{{base05-hex}}" italic="true"/>
+
+  <!-- whitespace -->
+  <style name="VisualWhitespace" foreground="#{{base02-hex}}"/>
+
+  <!-- comments -->
+  <style name="Comment" foreground="#{{base03-hex}}"/>
+  <style name="DisabledCode" foreground="#{{base03-hex}}"/>
+  <style name="Doxygen.Comment" foreground="#{{base03-hex}}"/>
+  <style name="Doxygen.Tag" foreground="#{{base03-hex}}"/>
+
+  <!-- QML -->
+  <style name="QmlTypeId" foreground="#{{base0E-hex}}"/>
+  <style name="Binding" foreground="#{{base08-hex}}"/>
+  <style name="QmlExternalId" foreground="#{{base0D-hex}}" italic="true"/>
+  <style name="QmlExternalObjectProperty" foreground="#{{base0D-hex}}" italic="true"/>
+  <style name="QmlLocalId" italic="true"/>
+  <style name="QmlRootObjectProperty" italic="true"/>
+  <style name="QmlScopeObjectProperty" italic="true"/>
+  <style name="QmlStateName" italic="true"/>
+
+  <!-- inline diff -->
+  <style name="DiffFile" foreground="#{{base0E-hex}}"/>
+  <style name="DiffLocation" foreground="#{{base0D-hex}}"/>
+  <style name="AddedLine" foreground="#{{base0B-hex}}"/>
+  <style name="RemovedLine" foreground="#{{base0A-hex}}"/>
+  <style name="LogChangeLine" foreground="#{{base08-hex}}"/>
+
+  <!-- side-by-side diff -->
+  <style name="DiffFileLine" foreground="#{{base0E-hex}}"/>
+  <style name="DiffContextLine" foreground="#{{base0D-hex}}"/>
+  <style name="DiffSourceLine" foreground="#{{base0B-hex}}"/>
+  <style name="DiffSourceChar" foreground="#{{base0A-hex}}" background="#{{base01-hex}}"/>
+  <style name="DiffDestLine" foreground="#{{base0B-hex}}"/>
+  <style name="DiffDestChar" foreground="#{{base0A-hex}}" background="#{{base01-hex}}"/>
+
+  <!-- errors, warnings -->
+  <style name="Error" underlineColor="#{{base08-hex}}" underlineStyle="SingleUnderline"/>
+  <style name="ErrorContext" underlineColor="#{{base08-hex}}" underlineStyle="DotLine"/>
+  <style name="Warning" underlineColor="#{{base0A-hex}}" underlineStyle="SingleUnderline"/>
+  <style name="WarningContext" underlineColor="#{{base0A-hex}}" underlineStyle="DotLine"/>
+</style-scheme>

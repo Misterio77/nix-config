@@ -1,0 +1,3 @@
+default:
+    extension: .json
+    output: presets

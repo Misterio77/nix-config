@@ -1,0 +1,43 @@
+diff --git a/config.def.h b/config.def.h
+index 1c0b587..efdbcc4 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -7,15 +7,21 @@ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
+ static const char *fonts[]          = { "monospace:size=10" };
+ static const char dmenufont[]       = "monospace:size=10";
+-static const char col_gray1[]       = "#222222";
+-static const char col_gray2[]       = "#444444";
+-static const char col_gray3[]       = "#bbbbbb";
+-static const char col_gray4[]       = "#eeeeee";
+-static const char col_cyan[]        = "#005577";
++
++/*
++ * Base16 dwm template by Daniel Mulford
++ * {{scheme-name}} scheme by {{scheme-author}}
++ */
++static const char col_base00[]      = "#{{base00-hex}}";
++static const char col_base01[]      = "#{{base01-hex}}";
++static const char col_base02[]      = "#{{base02-hex}}";
++static const char col_base04[]      = "#{{base04-hex}}";
++static const char col_base0C[]      = "#{{base0C-hex}}";
++static const char col_base0D[]      = "#{{base0D-hex}}";
+ static const char *colors[][3]      = {
+-	/*               fg         bg         border   */
+-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
++	/*               fg          bg          border   */
++	[SchemeNorm] = { col_base04, col_base01, col_base02 },
++	[SchemeSel]  = { col_base00, col_base0D, col_base0C },
+ };
+ 
+ /* tagging */
+@@ -56,7 +62,7 @@ static const Layout layouts[] = {
+ 
+ /* commands */
+ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
++static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_base01, "-nf", col_base04, "-sb", col_base0D, "-sf", col_base00, NULL };
+ static const char *termcmd[]  = { "st", NULL };
+ 
+ static Key keys[] = {

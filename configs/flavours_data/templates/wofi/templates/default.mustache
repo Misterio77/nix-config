@@ -1,0 +1,30 @@
+/* base16-wofi (https://sr.ht/~knezi/base16-wofi)
+ * Base16 wofi template by knezi
+ * {{scheme-name}} scheme by {{scheme-author}} */
+
+window {
+	background-color: #{{base00-hex}};
+	color: #{{base05-hex}};
+}
+
+#entry:nth-child(odd) {
+	background-color: #{{base00-hex}};
+}
+
+#entry:nth-child(even) {
+	background-color: #{{base01-hex}};
+}
+
+#entry:selected {
+	background-color: #{{base02-hex}};
+}
+
+#input {
+	background-color: #{{base01-hex}};
+	color: #{{base04-hex}};
+	border-color: #{{base02-hex}}; 
+}
+
+#input:focus {
+	border-color: #{{base0A-hex}}; 
+}

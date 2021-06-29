@@ -1,0 +1,3 @@
+default:
+    extension: .toml
+    output: colors

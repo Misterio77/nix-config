@@ -1,0 +1,24 @@
+[[item]]
+file = "~/.config/alacritty/colors.yml"
+template = "alacritty"
+subtemplate = "default-256"
+rewrite = true
+
+[[item]]
+file = "~/.config/qutebrowser/colors.py"
+template = "qutebrowser"
+subtemplate = "colors"
+hook = "~/bin/reloadqb"
+rewrite = true
+
+[[item]]
+file = "~/.config/sway/colors"
+template = "sway"
+subtemplate = "colors"
+hook = "swaymsg reload"
+rewrite = true
+
+[[item]]
+file = "~/.config/nvim/colors/base16.vim"
+template = "vim"
+rewrite = true

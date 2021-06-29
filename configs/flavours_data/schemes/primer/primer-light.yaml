@@ -1,0 +1,18 @@
+scheme: "Primer Light"
+author: "Jimmy Lin"
+base00: "fafbfc" # gray-0
+base01: "e1e4e8" # gray-2
+base02: "d1d5da" # gray-3
+base03: "959da5" # gray-4
+base04: "444d56" # gray-7
+base05: "2f363d" # gray-8
+base06: "24292e" # gray-9
+base07: "1b1f23" # black
+base08: "d73a49" # red-5
+base09: "f66a0a" # orange-5
+base0A: "ffd33d" # yellow-5
+base0B: "28a745" # green-5
+base0C: "79b8ff" # blue-3
+base0D: "0366d6" # blue-5
+base0E: "ea4aaa" # pink-5
+base0F: "a04100" # orange-9

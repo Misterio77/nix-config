@@ -1,0 +1,18 @@
+scheme: "pinky"
+author: "Benjamin (https://github.com/b3nj5m1n)"
+base00: "171517" # default background
+base01: "1b181b" # lighter background (status bar)
+base02: "1d1b1d" # selection background
+base03: "383338" # comments, line highlighting
+base04: "e7dbdb" # dark foreground
+base05: "f5f5f5" # default foreground, caret, delimiters, operators
+base06: "ffffff" # light foreground
+base07: "f7f3f7" # light background
+base08: "ffa600" # variables
+base09: "00ff66" # ints, bools, constants
+base0A: "20df6c" # classes, search text background
+base0B: "ff0066" # strings
+base0C: "6600ff" # regex, escape chars
+base0D: "00ffff" # functions, methods, headings
+base0E: "007fff" # keywords, storage, selector
+base0F: "df206c" # Opening/Closing embedded language tags

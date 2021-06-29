@@ -1,0 +1,6 @@
+default:
+    extension: .lua
+    output: themes
+colors:
+    extension: .lua
+    output: colors

@@ -1,0 +1,47 @@
+// Base16 {{scheme-name}}
+// Scheme: {{scheme-author}}
+
+base00 = '#{{base00-hex}}';
+base01 = '#{{base01-hex}}';
+base02 = '#{{base02-hex}}';
+base03 = '#{{base03-hex}}';
+base04 = '#{{base04-hex}}';
+base05 = '#{{base05-hex}}';
+base06 = '#{{base06-hex}}';
+base07 = '#{{base07-hex}}';
+base08 = '#{{base08-hex}}';
+base09 = '#{{base09-hex}}';
+base0A = '#{{base0A-hex}}';
+base0B = '#{{base0B-hex}}';
+base0C = '#{{base0C-hex}}';
+base0D = '#{{base0D-hex}}';
+base0E = '#{{base0E-hex}}';
+base0F = '#{{base0F-hex}}';
+
+t.prefs_.set('color-palette-overrides', 
+                        [base00,
+                        base08,
+                        base0B,
+                        base0A,
+                        base0D,
+                        base0E,
+                        base0C,
+                        base05,
+                        base03,
+                        base08,
+                        base0B,
+                        base0A,
+                        base0D,
+                        base0E,
+                        base0C,
+                        base07,
+                        base09,
+                        base0F,
+                        base01,
+                        base02,
+                        base04,
+                        base06]);
+
+t.prefs_.set('cursor-color', "rgba({{base05-rgb-r}}, {{base05-rgb-g}}, {{base05-rgb-b}}, 0.5)");
+t.prefs_.set('foreground-color', base05);
+t.prefs_.set('background-color', base00);

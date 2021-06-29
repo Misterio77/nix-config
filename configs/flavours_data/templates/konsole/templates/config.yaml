@@ -1,0 +1,6 @@
+default:
+    extension: .colorscheme
+    output: colorscheme
+vim:
+    extension: .colorscheme
+    output: colorscheme-vim

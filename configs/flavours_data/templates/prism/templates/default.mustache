@@ -1,0 +1,165 @@
+/* base16-prism (https://github.com/atelierbram/base16-prism)
+ * by Bram de Haan (http://atelierbramdehaan.nl)
+ * {{scheme-name}} scheme by {{scheme-author}}
+*/
+
+code[class*="language-"],
+pre[class*="language-"] {
+  font-family: Consolas, Menlo, Monaco, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", "Courier New", Courier, monospace;
+  font-size: 14px;
+  line-height: 1.375;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  background: #{{base00-hex}};
+  color: #{{base05-hex}};
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+  text-shadow: none;
+  background: #{{base04-hex}};
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+  text-shadow: none;
+  background: #{{base04-hex}};
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #{{base03-hex}};
+}
+
+.token.punctuation {
+  color: #{{base05-hex}};
+}
+
+.token.namespace {
+  opacity: .7;
+}
+
+.token.operator,
+.token.boolean,
+.token.number {
+  color: #{{base09-hex}};
+}
+.token.property {
+  color: #{{base0A-hex}};
+}
+.token.tag {
+  color: #{{base0D-hex}};
+}
+.token.string {
+  color: #{{base0C-hex}};
+}
+.token.selector {
+  color: #{{base0E-hex}};
+}
+.token.attr-name {
+  color: #{{base09-hex}};
+}
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #{{base0C-hex}};
+}
+
+.token.attr-value,
+.token.keyword,
+.token.control,
+.token.directive,
+.token.unit {
+  color: #{{base0B-hex}};
+}
+
+.token.statement,
+.token.regex,
+.token.atrule {
+  color: #{{base0C-hex}};
+}
+
+.token.placeholder,
+.token.variable {
+  color: #{{base0D-hex}};
+}
+
+.token.deleted {
+  text-decoration: line-through;
+}
+
+.token.inserted {
+  border-bottom: 1px dotted #{{base07-hex}};
+  text-decoration: none;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.important {
+  color: #{{base08-hex}};
+}
+
+.token.entity {
+  cursor: help;
+}
+
+pre > code.highlight {
+  outline: .4em solid #{{base08-hex}};
+  outline-offset: .4em;
+}
+
+/* overrides color-values for the Line Numbers plugin
+ * http://prismjs.com/plugins/line-numbers/
+ */
+.line-numbers .line-numbers-rows {
+  border-right-color: #{{base01-hex}};
+}
+
+.line-numbers-rows > span:before {
+  color: #{{base02-hex}};
+}
+
+/* overrides color-values for the Line Highlight plugin
+ * http://prismjs.com/plugins/line-highlight/
+ * alpha transparency in 8 digits hex notation coming to a browser near you soon:
+ * https://drafts.csswg.org/css-color/#hex-notation
+ */
+.line-highlight {
+  background: #{{base05-hex}}33;
+  background: linear-gradient(to right, #{{base05-hex}}33 70%, #{{base05-hex}}00);
+}

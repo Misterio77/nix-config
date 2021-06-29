@@ -1,0 +1,26 @@
+-- Name: Base16 {{scheme-name}}
+-- Author: {{scheme-author}}
+-- Template by Bez Hermoso <bezalelhermoso@gmail.com>
+
+Description = "Base16 {{scheme}}"
+
+Default = { Colour = "#{{base05-hex}}" }
+Canvas = { Colour="#{{base00-hex}}" }
+Number = { Colour="#{{base09-hex}}" }
+Escape = { Colour="#{{base06-hex}}" , Italic=true}
+String = { Colour="#{{base0B-hex}}" }
+BlockComment = { Colour="#{{base03-hex}}" }
+StringPreProc = String
+LineComment   = BlockComment
+Operator      = { Colour="#{{base05-hex}}" }
+LineNum      = { Color="#{{base03-hex}}" }
+PreProcessor      = { Colour="#{{base0F-hex}}" }
+Interpolation  = Escape
+
+Keywords = {
+  { Colour="#{{base08-hex}}", Bold=true},
+  { Colour="#{{base0A-hex}}"},
+  { Colour="#{{base0D-hex}}"},
+  { Colour="#{{base0A-hex}}"},
+  { Colour="#{{base0A-hex}}" }
+}

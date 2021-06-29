@@ -1,0 +1,7 @@
+gtk-2:
+    extension: -gtkrc
+    output: gtk-2
+
+gtk-3:
+    extension: -gtk.css
+    output: gtk-3

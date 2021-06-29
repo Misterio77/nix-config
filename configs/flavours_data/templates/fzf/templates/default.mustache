@@ -1,0 +1,30 @@
+# Base16 {{scheme-name}}
+# Author: {{scheme-author}}
+
+_gen_fzf_default_opts() {
+
+local color00='#{{base00-hex}}'
+local color01='#{{base01-hex}}'
+local color02='#{{base02-hex}}'
+local color03='#{{base03-hex}}'
+local color04='#{{base04-hex}}'
+local color05='#{{base05-hex}}'
+local color06='#{{base06-hex}}'
+local color07='#{{base07-hex}}'
+local color08='#{{base08-hex}}'
+local color09='#{{base09-hex}}'
+local color0A='#{{base0A-hex}}'
+local color0B='#{{base0B-hex}}'
+local color0C='#{{base0C-hex}}'
+local color0D='#{{base0D-hex}}'
+local color0E='#{{base0E-hex}}'
+local color0F='#{{base0F-hex}}'
+
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
+" --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\
+" --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C"\
+" --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"
+
+}
+
+_gen_fzf_default_opts

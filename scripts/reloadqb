@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [[ "$(~/bin/darkmode query)" == "dark" ]]; then
+    echo 'scheme = "dark"' > ~/.config/qutebrowser/scheme.py
+else
+    echo 'scheme = "light"' > ~/.config/qutebrowser/scheme.py
+fi
+pgrep qutebrowser && qutebrowser :config-source

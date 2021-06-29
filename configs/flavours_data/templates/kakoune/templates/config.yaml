@@ -1,0 +1,3 @@
+default: 
+    extension: .kak
+    output: colors

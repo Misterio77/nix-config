@@ -1,0 +1,71 @@
+diff --git a/config.def.h b/config.def.h
+index 0e01717..c288227 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -82,33 +82,35 @@ char *termname = "st-256color";
+  */
+ unsigned int tabspaces = 8;
+ 
+-/* Terminal colors (16 first used in escape sequence) */
++/*
++ * Terminal colors (16 first used in escape sequence)
++ * Base16 st template by Daniel Mulford
++ * {{scheme-name}} scheme by {{scheme-author}}
++ */
+ static const char *colorname[] = {
+-	/* 8 normal colors */
+-	"black",
+-	"red3",
+-	"green3",
+-	"yellow3",
+-	"blue2",
+-	"magenta3",
+-	"cyan3",
+-	"gray90",
++    /* 8 normal colors */
++	[0] = "#{{base00-hex}}", /* black   */
++	[1] = "#{{base08-hex}}", /* red     */
++	[2] = "#{{base0B-hex}}", /* green   */
++	[3] = "#{{base0A-hex}}", /* yellow  */
++	[4] = "#{{base0D-hex}}", /* blue    */
++	[5] = "#{{base0E-hex}}", /* magenta */
++	[6] = "#{{base0C-hex}}", /* cyan    */
++	[7] = "#{{base05-hex}}", /* white   */
+ 
+ 	/* 8 bright colors */
+-	"gray50",
+-	"red",
+-	"green",
+-	"yellow",
+-	"#5c5cff",
+-	"magenta",
+-	"cyan",
+-	"white",
++	[8]  = "#{{base03-hex}}", /* black   */
++	[9]  = "#{{base08-hex}}", /* red     */
++	[10] = "#{{base0B-hex}}", /* green   */
++	[11] = "#{{base0A-hex}}", /* yellow  */
++	[12] = "#{{base0D-hex}}", /* blue    */
++	[13] = "#{{base0E-hex}}", /* magenta */
++	[14] = "#{{base0C-hex}}", /* cyan    */
++	[15] = "#{{base07-hex}}", /* white   */
+ 
+ 	[255] = 0,
+ 
+ 	/* more colors can be added after 255 to use with DefaultXX */
+-	"#cccccc",
+-	"#555555",
+ };
+ 
+ 
+@@ -118,8 +120,8 @@ static const char *colorname[] = {
+  */
+ unsigned int defaultfg = 7;
+ unsigned int defaultbg = 0;
+-static unsigned int defaultcs = 256;
+-static unsigned int defaultrcs = 257;
++static unsigned int defaultcs = 7;
++static unsigned int defaultrcs = 0;
+ 
+ /*
+  * Default shape of cursor

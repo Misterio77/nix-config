@@ -1,0 +1,32 @@
+# Base16 {{scheme-name}}
+# Author: {{scheme-author}}
+
+set -l color00 '#{{base00-hex}}'
+set -l color01 '#{{base01-hex}}'
+set -l color02 '#{{base02-hex}}'
+set -l color03 '#{{base03-hex}}'
+set -l color04 '#{{base04-hex}}'
+set -l color05 '#{{base05-hex}}'
+set -l color06 '#{{base06-hex}}'
+set -l color07 '#{{base07-hex}}'
+set -l color08 '#{{base08-hex}}'
+set -l color09 '#{{base09-hex}}'
+set -l color0A '#{{base0A-hex}}'
+set -l color0B '#{{base0B-hex}}'
+set -l color0C '#{{base0C-hex}}'
+set -l color0D '#{{base0D-hex}}'
+set -l color0E '#{{base0E-hex}}'
+set -l color0F '#{{base0F-hex}}'
+
+set -l FZF_NON_COLOR_OPTS
+
+for arg in (echo $FZF_DEFAULT_OPTS | tr " " "\n")
+    if not string match -q -- "--color*" $arg
+        set -a FZF_NON_COLOR_OPTS $arg
+    end
+end
+
+set -U FZF_DEFAULT_OPTS "$FZF_NON_COLOR_OPTS"\
+" --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D"\
+" --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C"\
+" --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D"

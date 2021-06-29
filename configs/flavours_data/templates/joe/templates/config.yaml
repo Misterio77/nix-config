@@ -1,0 +1,3 @@
+default:
+  extension: .jcf
+  output: colors

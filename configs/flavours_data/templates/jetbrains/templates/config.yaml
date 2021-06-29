@@ -1,0 +1,15 @@
+default:
+    extension: .icls
+    output: colors
+
+theme:
+    extension: .theme.xml
+    output: options
+
+accent:
+    extension: .accent.xml
+    output: options
+
+scheme:
+    extension: .scheme.xml
+    output: options

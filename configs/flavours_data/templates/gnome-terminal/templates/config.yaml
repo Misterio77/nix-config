@@ -1,0 +1,6 @@
+default:
+  extension: .sh
+  output: color-scripts
+default-256:
+  extension: -256.sh
+  output: color-scripts

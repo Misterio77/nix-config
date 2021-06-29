@@ -1,0 +1,3 @@
+default: 
+    extension: .tmTheme
+    output: Themes

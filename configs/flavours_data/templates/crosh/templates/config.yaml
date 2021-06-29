@@ -1,0 +1,7 @@
+default:
+        extension: .js
+        output: colors
+
+default-16:
+        extension: .16.js
+        output: colors

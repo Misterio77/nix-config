@@ -1,0 +1,18 @@
+scheme: "tender"
+author: "Jacobo Tabernero (https://github/com/jacoborus/tender.vim)"
+base00: "282828"  # color00 background
+base01: "383838"  # color18
+base02: "484848"  # color19
+base03: "1d1d1d"  # color08
+base04: "b8b8b8"  # color20
+base05: "eeeeee"  # color07 foreground
+base06: "e8e8e8"  # color21
+base07: "ffffff"  # color15 Bright_White
+base08: "f43753"  # color01 Red
+base09: "dc9656"  # color16
+base0A: "ffc24b"  # color03 Yellow
+base0B: "c9d05c"  # color02 Green
+base0C: "73cef4"  # color06 Cyan
+base0D: "b3deef"  # color04 Blue
+base0E: "d3b987"  # color05 Magenta
+base0F: "a16946"  # color17

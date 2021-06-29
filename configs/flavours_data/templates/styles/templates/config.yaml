@@ -1,0 +1,18 @@
+css: 
+  extension: .css
+  output: css
+css-variables: 
+  extension: .css
+  output: css-variables
+less:
+  extension: .less
+  output: less
+sass: 
+  extension: .sass
+  output: sass
+scss: 
+  extension: .scss
+  output: scss
+stylus: 
+  extension: .styl
+  output: stylus

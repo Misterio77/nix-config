@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+function set_wallpaper() {
+    old=$(pgrep -f "swaybg -i")
+    swaybg -i $(cat ~/.bg) -m fill & \
+    sleep 0.4
+    if ! [ -z "$old" ]; then
+        kill $old > /dev/null
+    fi
+}
+
+# Query
+if [[ $* == *-Q* ]]; then
+    basename $(cat ~/.bg)
+    exit
+fi
+
+# List
+if [[ $* == *-L* ]]; then
+    ls -1R ~/Pictures/Wallpapers/ | grep -E ".png|.jpg|.jpeg"
+    exit
+fi
+
+# Random
+if [[ $* == *-R* ]]; then
+    wallpaper=$(~/bin/setwallpaper -L | shuf -n 1)
+# Specified
+else
+    wallpaper=$1
+fi
+
+wallpaper=~/Pictures/Wallpapers/"${wallpaper}"
+
+echo "${wallpaper}" > ~/.bg
+pgrep -x sway && set_wallpaper & \
+
+if [[ $(flavours current) == "generated" ]]; then
+    flavours generate $(darkmode query) "${wallpaper}" --stdout | flavours apply --stdin
+fi
