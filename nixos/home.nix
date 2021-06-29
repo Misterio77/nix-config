@@ -23,24 +23,22 @@ in {
       (pkgs.pass.withExtensions (ext: with ext; [pass-otp]))
       pkgs.fira
       pkgs.fira-code
-      pkgs.neofetch
+      pkgs.steam
       pkgs.qutebrowser
-      pkgs.flavours
+      #pkgs.flavours
       pkgs.bottom
       pkgs.jq
       pkgs.pulseaudio
       pkgs.playerctl
-      pkgs.steam
       pkgs.swaylock
       pkgs.swayidle
       pkgs.swaybg
-      pkgs.wl-clipboard
+      pkgs.slurp
+      pkgs.grim
       pkgs.glxinfo
       pkgs.zathura
-      pkgs.cargo
-      pkgs.rustc
-      pkgs.clang
-      pkgs.binutils
+      pkgs.neofetch
+      pkgs.wl-clipboard
     ];
 
     # Sway

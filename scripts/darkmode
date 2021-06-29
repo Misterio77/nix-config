@@ -63,9 +63,9 @@ function which_scheme() {
 
 function current() {
     # Get current scheme background color
-    bgcolor=$(flavours info -r $(flavours current) | sed -n '3 p')
+    source ~/.colors
     # Get first character
-    character=${bgcolor:1:1}
+    character=${base00:0:1}
     # If its less than 5, normally is a dark scheme
     if [[ $character < 5 ]]; then
         echo "dark"
@@ -90,7 +90,7 @@ fi
 # If the current scheme is a generated one
 if [[ $(flavours current) =~ "generated" ]]; then
     # Generate in the opposite mode
-    flavours generate $newmode $(cat ~/.bg) && flavours apply generated
+    flavours generate $newmode $(cat ~/.bg) --stdout | flavours apply --stdin
 else
     # If not, search for a scheme with the opposite type
     newscheme=$(which_scheme $(flavours current)) && flavours apply $newscheme || \

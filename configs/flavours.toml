@@ -22,3 +22,8 @@ rewrite = true
 file = "~/.config/nvim/colors/base16.vim"
 template = "vim"
 rewrite = true
+
+[[item]]
+file = "~/.colors"
+template = "bash"
+rewrite = true
