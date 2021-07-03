@@ -3,7 +3,7 @@ import:
 font:
     size: 12.0
     normal:
-        family: Fira Code
+        family: FiraCode Nerd Font
 window:
     padding:
         x: 20

@@ -33,3 +33,9 @@ rewrite = true
 file = "~/.colors"
 template = "bash"
 rewrite = true
+
+[[item]]
+file = "~/.nix-wallpaper.svg"
+template = "svg-nix-wallpaper"
+rewrite = true
+#hook = "~/bin/renderwallpaper.sh"

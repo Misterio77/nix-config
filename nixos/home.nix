@@ -14,6 +14,7 @@ in {
     [
       "${home-manager}/nixos"
     ];
+  home-manager.useUserPackages = true;
   home-manager.users.misterio = {
     imports = [ "${impermanence}/home-manager.nix" ];
     programs.home-manager.enable = true;
@@ -25,7 +26,7 @@ in {
       pkgs.fira-code
       pkgs.steam
       pkgs.qutebrowser
-      #pkgs.flavours
+      pkgs.flavours
       pkgs.dragon-drop
       pkgs.bottom
       pkgs.jq
@@ -34,14 +35,20 @@ in {
       pkgs.swaylock
       pkgs.swayidle
       pkgs.swaybg
+      pkgs.sway-contrib.grimshot
       pkgs.slurp
       pkgs.grim
       pkgs.glxinfo
       pkgs.neofetch
       pkgs.neovim-remote
       pkgs.wl-clipboard
+      pkgs.inkscape
       pkgs.spotify
+      pkgs.xorg.xrandr
     ];
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
 
     # Sway
     wayland.windowManager.sway = {
@@ -66,19 +73,22 @@ in {
 
         # Colors
         include ~/.config/sway/colors
-        client.focused $base00 $base02 $base00 $base04 $base05
-        client.focused_inactive $base00 $base02 $base00 $base00 $base04
-        client.unfocused $base00 $base02 $base00 $base00 $base04
-        client.urgent $base00 $base02 $base00 $base00 $base04
+        client.focused $base00 $base02 $base00 $base03 $base05
+        client.focused_inactive $base00 $base02 $base00 $base04 $base04
+        client.unfocused $base00 $base02 $base00 $base04 $base04
+        client.urgent $base00 $base02 $base00 $base09 $base09
         client.background $base00
       '';
       config = {
+        bars = [];
         startup = [
+          # Lock on start
           { command = "swaylock.sh --image $(cat ~/.bg)"; }
-          { command = "swayfader.sh"; always = true; }
+          # Set initial background
           { command = "swaybg.sh"; }
-          { command = "seticons $(darkmode query)"; always = true; }
+          # Focus main output
           { command = "swaymsg focus output HDMI-A-1"; }
+          # Swayidle
           { command = "swayidle -w \\
           timeout 600 'swaylock.sh --screenshots --daemonize' \\
           timeout 20  'pgrep -x swaylock && swaymsg \"output * dpms off\"' \\
@@ -87,6 +97,11 @@ in {
               resume  'swaymsg \"output * dpms on\"' \\
           timeout 20  'pgrep -x swaylock && gpg-connect-agent reloadagent /bye' \\
           timeout 620 'gpg-connect-agent reloadagent /bye'"; }
+          # Add transparency
+          { command = "swayfader.sh"; always = true; }
+          # Set icon theme based on scheme
+          { command = "seticons $(darkmode query)"; always = true; }
+          { command = "exec_always \"xrandr --output $(xrandr | grep \"XWAYLAND.*2560x1080\" | awk '{printf $1}') --primary\"" ; always = true; }
         ];
         window = {
           border = 2;
@@ -101,6 +116,11 @@ in {
           "Mod4+w" = "exec makoctl dismiss";
           "Mod4+shift+w" = "exec makoctl dismiss -a";
           "Mod4+control+w" = "exec makoctl invoke";
+          "Shift+Print" = "exec grimshot --notify copy active";
+          "Control+Print" = "exec grimshot --notify copy screen";
+          "Print" = "exec grimshot --notify copy output";
+          "Mod1+Print" = "exec grimshot --notify copy area";
+          "Mod4+Print" = "exec grimshot --notify copy window";
         };
         workspaceAutoBackAndForth = true;
         terminal = "alacritty";
@@ -121,9 +141,9 @@ in {
     programs.alacritty = {
       enable = true;
     };
-    #programs.mako = {
-      #enable = true;
-    #};
+    programs.mako = {
+      enable = true;
+    };
     programs.git = {
       enable = true;
       userName = "Gabriel Fontes";
@@ -147,21 +167,32 @@ in {
         include colors
       '';
     };
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv = {
+        enable = true;
+      };
+    };
     programs.zsh = {
       enable = true;
       enableCompletion = false;
       enableSyntaxHighlighting = true;
+          #setwallpaper -R
+          #flavours generate dark $(cat $HOME/.bg) --stdout | flavours apply --stdin
       loginExtra = ''
         if [[ "$(tty)" == /dev/tty1 ]]; then
-          setwallpaper -R
+          flavours apply
+          renderwallpaper.sh
           mkdir -p $HOME/.config/nvim/colors
-          flavours generate dark $(cat $HOME/.bg) --stdout | flavours apply --stdin
           exec sway
         fi
       '';
       shellAliases = {
         jqless = "jq -C | less -r";
+        nr = "nixos-rebuild";
         nrs = "sudo nixos-rebuild switch";
+        nre = "nixos-rebuild edit";
         ns = "nix-shell";
         v = "nvim";
         vi = "nvim";
@@ -228,16 +259,87 @@ in {
           vicmd_symbol = "[<<-](bold yellow)";
         };
         aws = {
-          format = "on [$symbol$profile(\($region\))]($style) ";
+          symbol = "  ";
+          format = "on [$symbol$profile(\\($region\\))]($style) ";
         };
         gcloud = {
-          format = "on [$symbol$active($project)(\($region\))]($style) ";
+          symbol = " ";
+          format = "on [$symbol$active(/$project)(\\($region\\))]($style) ";
         };
         nix_shell = {
           impure_msg = "";
-          pure_msg = "λ";
-          symbol= "❄️";
-          format = "via [$symbol( $state)( $name)]($style)";
+          pure_msg = "λ ";
+          symbol= " ";
+          format = "via [$symbol$state( $name)]($style) ";
+        };
+        conda = {
+          symbol = " ";
+        };
+        dart = {
+          symbol = " ";
+        };
+        directory = {
+          read_only = " ";
+        };
+        docker_context = {
+          symbol = " ";
+        };
+        elixir = {
+          symbol = " ";
+        };
+        elm = {
+          symbol = " ";
+        };
+        git_branch = {
+          symbol = " ";
+        };
+        golang = {
+          symbol = " ";
+        };
+        hg_branch = {
+          symbol = " ";
+        };
+        java = {
+          symbol = " ";
+        };
+        julia = {
+          symbol = " ";
+        };
+        memory_usage = {
+          symbol = " ";
+        };
+        nim = {
+          symbol = " ";
+        };
+        nodejs = {
+          symbol = " ";
+        };
+        package = {
+          symbol = " ";
+        };
+        perl = {
+          symbol = " ";
+        };
+        php = {
+          symbol = " ";
+        };
+        python = {
+          symbol = " ";
+        };
+        ruby = {
+          symbol = " ";
+        };
+        rust = {
+          symbol = " ";
+        };
+        scala = {
+          symbol = " ";
+        };
+        shlvl = {
+          symbol = " ";
+        };
+        swift = {
+          symbol = "ﯣ ";
         };
       };
     };
@@ -247,10 +349,10 @@ in {
         {
           plugin = ale;
           config = ''
-            let g:ale_completions_enabled = 1
+            let g:ale_completion_enabled = 1
             let g:ale_linters = {"c": ["clang"], "rust": ["analyzer", "cargo"]}
-            let g:ale_fixers = {"rust": ["rustfmt"]}
-            let ale_rust_analyzer_config = {"checkOnSave": {"command": "clippy","enable": v:true}}
+            let g:ale_fixers = {"rust": ["rustfmt"], "sql": ["pgformatter"]}
+            let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
           '';
         }
         vim-gitgutter
@@ -258,17 +360,30 @@ in {
         vim-surround
         vim-markdown
         {
+          plugin = rust-vim;
+          config = "let g:rust_fold = 1";
+        }
+        {
           plugin = vimtex;
           config = ''
             let g:vimtex_view_method = "zathura"
             let g:vimtex_view_automatic = 0
           '';
+            #let g:vimtex_compiler_latexmk = {'options': ['-pdf','-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode',]}
         }
         vim-toml
         vim-nix
         rust-vim
       ];
       extraConfig = ''
+        "Reload automatically
+        set autoread
+        au CursorHold,CursorHoldI * checktime
+        "Folding
+        set foldmethod=syntax
+        "Set fold level to highest in file
+        "so everything starts out unfolded at just the right level
+        autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
         "Tabs
         set tabstop=4 "How many spaces equals a tab
         set softtabstop=4 "How many columns when you hit tab

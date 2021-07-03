@@ -25,6 +25,11 @@ let hashed_password = import ./password.nix; in
     };
   };
 
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
+
   nixpkgs.config.allowUnfree = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -94,10 +99,14 @@ let hashed_password = import ./password.nix; in
     mutableUsers = false;
     users.misterio = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "docker" ];
       shell = pkgs.zsh;
       initialHashedPassword = "${hashed_password}";
     };
+  };
+
+  virtualisation.docker = {
+    enable = true;
   };
 
   /*
@@ -110,6 +119,6 @@ let hashed_password = import ./password.nix; in
     registerMail = "eu%40misterio.me";
   };
   */
-  system.stateVersion = "21.05";
+  system.stateVersion = "21.11";
   
 }
