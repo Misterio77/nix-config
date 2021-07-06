@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, fetchFromGithub, ... }:
 
 let
   home-manager = builtins.fetchTarball {
@@ -10,10 +10,12 @@ let
       "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   };
 in {
-  imports =
-    [
+  imports = [
       "${home-manager}/nixos"
-    ];
+  ];
+  nixpkgs.overlays = [
+    (import ./overlays/flavours.nix)
+  ];
   home-manager.useUserPackages = true;
   home-manager.users.misterio = {
     imports = [ "${impermanence}/home-manager.nix" ];
@@ -22,11 +24,11 @@ in {
     home.packages = [
       (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
       (pkgs.pass.withExtensions (ext: with ext; [pass-otp]))
+      pkgs.flavours
       pkgs.fira
       pkgs.fira-code
       pkgs.steam
       pkgs.qutebrowser
-      pkgs.flavours
       pkgs.dragon-drop
       pkgs.bottom
       pkgs.jq
@@ -82,10 +84,8 @@ in {
       config = {
         bars = [];
         startup = [
-          # Lock on start
-          { command = "swaylock.sh --image $(cat ~/.bg)"; }
-          # Set initial background
-          { command = "swaybg.sh"; }
+          # Set initial theme, wallpaper, and lock screen
+          { command = "initial_theming.sh"; }
           # Focus main output
           { command = "swaymsg focus output HDMI-A-1"; }
           # Swayidle
@@ -101,6 +101,7 @@ in {
           { command = "swayfader.sh"; always = true; }
           # Set icon theme based on scheme
           { command = "seticons $(darkmode query)"; always = true; }
+          # Set xwayland main monitor
           { command = "exec_always \"xrandr --output $(xrandr | grep \"XWAYLAND.*2560x1080\" | awk '{printf $1}') --primary\"" ; always = true; }
         ];
         window = {
@@ -141,9 +142,9 @@ in {
     programs.alacritty = {
       enable = true;
     };
-    programs.mako = {
-      enable = true;
-    };
+    #programs.mako = {
+      #enable = true;
+    #};
     programs.git = {
       enable = true;
       userName = "Gabriel Fontes";
@@ -178,15 +179,8 @@ in {
       enable = true;
       enableCompletion = false;
       enableSyntaxHighlighting = true;
-          #setwallpaper -R
-          #flavours generate dark $(cat $HOME/.bg) --stdout | flavours apply --stdin
       loginExtra = ''
-        if [[ "$(tty)" == /dev/tty1 ]]; then
-          flavours apply
-          renderwallpaper.sh
-          mkdir -p $HOME/.config/nvim/colors
-          exec sway
-        fi
+        [[ "$(tty)" == /dev/tty1 ]] && exec sway
       '';
       shellAliases = {
         jqless = "jq -C | less -r";
@@ -374,6 +368,7 @@ in {
         vim-toml
         vim-nix
         rust-vim
+        dart-vim-plugin
       ];
       extraConfig = ''
         "Reload automatically
@@ -414,7 +409,7 @@ in {
 
     # Writable (persistent) data
     home.persistence."/data" = {
-      directories = [ "Documents" "Downloads" "Games" "Pictures" ".local/share/Steam" ".password-store" ".gnupg" ];
+      directories = [ "Documents" "Downloads" "Games" "Pictures" ".local/share/Steam" ".password-store" ".gnupg" ".local/share/Tabletop Simulator" ];
       allowOther = false;
     };
 

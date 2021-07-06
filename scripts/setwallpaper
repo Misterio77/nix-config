@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-function set_wallpaper() {
-    old=$(pgrep -f "swaybg -i")
-    swaybg -i $(cat ~/.bg) -m fill & \
-    sleep 0.4
-    if ! [ -z "$old" ]; then
-        kill $old > /dev/null
-    fi
-}
-
 # Query
 if [[ $* == *-Q* ]]; then
     basename $(cat ~/.bg)
@@ -29,10 +20,18 @@ else
     wallpaper=$1
 fi
 
+# From scheme
+if [[ $* == *-S* ]]; then
+    inkscape --export-type="png" \
+    ~/.nix-wallpaper.svg -w 2560 -h 1080 -o \
+    $HOME/Pictures/Wallpapers/nix-wallpaper.png
+    wallpaper="nix-wallpaper.png"
+fi
+
 wallpaper=~/Pictures/Wallpapers/"${wallpaper}"
 
 echo "${wallpaper}" > ~/.bg
-pgrep -x sway &>/dev/null && set_wallpaper &>/dev/null & \
+pgrep -x sway &>/dev/null && swaybg.sh &>/dev/null & \
 
 if [[ $(flavours current 2>/dev/null) == "generated" ]]; then
     flavours generate $(darkmode query) "${wallpaper}" --stdout | flavours apply --stdin

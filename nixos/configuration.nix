@@ -1,6 +1,6 @@
 { fetchFromGithub, config, pkgs, ... }:
 
-let hashed_password = import ./password.nix; in
+let hashed_passwords = import ./passwords.nix; in
 {
   imports = [
     ./hardware-configuration.nix
@@ -101,7 +101,7 @@ let hashed_password = import ./password.nix; in
       isNormalUser = true;
       extraGroups = [ "wheel" "docker" ];
       shell = pkgs.zsh;
-      initialHashedPassword = "${hashed_password}";
+      initialHashedPassword = "${hashed_passwords.misterio}";
     };
   };
 

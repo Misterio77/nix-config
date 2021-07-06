@@ -38,4 +38,3 @@ rewrite = true
 file = "~/.nix-wallpaper.svg"
 template = "svg-nix-wallpaper"
 rewrite = true
-#hook = "~/bin/renderwallpaper.sh"
