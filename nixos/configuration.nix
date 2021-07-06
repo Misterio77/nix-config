@@ -25,12 +25,12 @@ let hashed_passwords = import ./passwords.nix; in
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
   '';
-
-  nixpkgs.config.allowUnfree = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
 
