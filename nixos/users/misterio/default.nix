@@ -21,6 +21,9 @@
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
 
+  # Scripts
+  home.file = { "bin".source = "/dotfiles/scripts"; };
+
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
@@ -49,11 +52,6 @@
       ".local/share/Tabletop Simulator"
       ".local/share/password-store"
     ];
+    allowOther = false;
   };
-
-  # Read-only data
-  # Data files
-  xdg.dataFile = { "flavours/base16".source = "/dotfiles/configs/flavours"; };
-  # Scripts
-  home.file = { "bin".source = "/dotfiles/scripts"; };
 }
