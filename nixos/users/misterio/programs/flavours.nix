@@ -1,6 +1,6 @@
 {
   # Data files
-  xdg.dataFile = { "flavours/base16".source = "/dotfiles/flavours"; };
+  xdg.dataFile = { "flavours/base16".source = "/dotfiles/flavours/base16"; };
 
   programs.flavours = {
     enable = true;
