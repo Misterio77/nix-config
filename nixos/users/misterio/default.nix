@@ -5,9 +5,13 @@
     ../../imports/impermanence/home-manager.nix
     ./programs/alacritty.nix
     ./programs/direnv.nix
+    ./programs/flavours.nix
     ./programs/git.nix
     ./programs/gpg-agent.nix
+    ./programs/neofetch.nix
     ./programs/nvim.nix
+    ./programs/pass.nix
+    ./programs/qutebrowser.nix
     ./programs/starship.nix
     ./programs/sway.nix
     ./programs/zathura.nix
@@ -18,22 +22,19 @@
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    bottom
+    discord
     fira
     fira-code
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    (pass.withExtensions (ext: with ext; [ pass-otp ]))
-    flavours
-    steam
-    qutebrowser
-    bottom
-    jq
-    pulseaudio
-    playerctl
-    glxinfo
-    neofetch
     inkscape
+    nixfmt
+    playerctl
+    pulseaudio
     spotify
-    ];
+    steam
+    xdg-utils
+  ];
 
   # Writable (persistent) data
   home.persistence."/data" = {
@@ -42,23 +43,15 @@
       "Downloads"
       "Games"
       "Pictures"
-      ".local/share/Steam"
-      ".password-store"
       ".gnupg"
-      ".local/share/Tabletop Simulator"
       ".config/Hero_Siege"
+      ".local/share/Steam"
+      ".local/share/Tabletop Simulator"
+      ".local/share/password-store"
     ];
-    allowOther = false;
   };
 
   # Read-only data
-  # Configuration files
-  xdg.configFile = {
-    "flavours/config.toml".source = "/dotfiles/configs/flavours.toml";
-    "qutebrowser/config.py".source = "/dotfiles/configs/qutebrowser.py";
-    "alacritty/alacritty.yml".source = "/dotfiles/configs/alacritty.yml";
-    "neofetch/config.conf".source = "/dotfiles/configs/neofetch.conf";
-  };
   # Data files
   xdg.dataFile = { "flavours/base16".source = "/dotfiles/configs/flavours"; };
   # Scripts

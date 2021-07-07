@@ -9,7 +9,7 @@
     shellAliases = {
       jqless = "jq -C | less -r";
       nr = "nixos-rebuild";
-      nrs = "sudo nixos-rebuild switch";
+      nrs = "sudo nixos-rebuild switch --fast";
       nre = "nixos-rebuild edit";
       ns = "nix-shell";
       v = "nvim";

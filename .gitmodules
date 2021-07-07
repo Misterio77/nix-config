@@ -1,12 +1,6 @@
-[submodule "nixos/home/home-manager"]
-	path = nixos/home/home-manager
-	url = https://github.com/nix-community/home-manager/
-[submodule "nixos/home/impermanence"]
-	path = nixos/home/impermanence
-	url = https://github.com/nix-community/impermanence.git
-[submodule "nixos/imports/home-manager"]
-	path = nixos/imports/home-manager
-	url = git@github.com:nix-community/home-manager.git
 [submodule "nixos/imports/impermanence"]
 	path = nixos/imports/impermanence
 	url = git@github.com:nix-community/impermanence.git
+[submodule "nixos/imports/home-manager"]
+	path = nixos/imports/home-manager
+	url = git@github.com:Misterio77/home-manager.git
