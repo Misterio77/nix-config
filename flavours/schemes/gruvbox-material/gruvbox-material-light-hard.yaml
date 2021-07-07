@@ -1,0 +1,18 @@
+scheme: "Gruvbox Material Light, Hard"
+author: "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)"
+base00: "f9f5d7" # bg
+base01: "fbf1c7" # bg2
+base02: "e0cfa9" # bg6
+base03: "a89984" # bg8
+base04: "c9b99a" # p-fg3
+base05: "654735" # fg
+base06: "3c3836" # p-fg1
+base07: "282828" # p-fg0
+base08: "c14a4a" # red
+base09: "c35e0a" # orange
+base0A: "b47109" # yellow
+base0B: "6c782e" # green
+base0C: "4c7a5d" # aqua/cyan
+base0D: "45707a" # blue
+base0E: "945e80" # purple
+base0F: "e78a4e" # dim-orange
