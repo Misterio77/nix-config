@@ -22,22 +22,43 @@
   nixpkgs.config.allowUnfree = true;
 
   # Scripts
-  home.file = { "bin".source = "/dotfiles/scripts"; };
+  home.file = { "bin".source = "/dotfiles/nixos/users/misterio/scripts"; };
+
+  fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    glib
     bottom
     discord
     fira
     fira-code
     inkscape
-    nixfmt
     playerctl
     pulseaudio
     spotify
     steam
     xdg-utils
   ];
+
+  gtk = {
+    enable = true;
+    font = {
+      name = "Fira Sans";
+      size = 12;
+    };
+    iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus";
+    };
+    theme = {
+      name = "FlatColor";
+    };
+  };
+
+  home.file.".themes/FlatColor" = {
+    source = "/dotfiles/nixos/users/misterio/themes/FlatColor";
+  };
 
   # Writable (persistent) data
   home.persistence."/data" = {

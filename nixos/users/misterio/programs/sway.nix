@@ -82,10 +82,10 @@
           always = true;
         }
         # Set icon theme based on scheme
-        {
-          command = "seticons $(darkmode query)";
-          always = true;
-        }
+        #{
+        #  command = "seticons $(darkmode query)";
+        #  always = true;
+        #}
         # Set xwayland main monitor
         {
           command = ''

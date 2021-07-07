@@ -93,6 +93,7 @@ let hashed_passwords = import ./passwords.nix; in
   };
 
   programs.steam.enable = true;
+  programs.dconf.enable = true;
 
   services.getty.autologinUser = "misterio";
   users = {

@@ -4,3 +4,6 @@
 [submodule "nixos/imports/home-manager"]
 	path = nixos/imports/home-manager
 	url = git@github.com:Misterio77/home-manager.git
+[submodule "nixos/users/misterio/themes/FlatColor"]
+	path = nixos/users/misterio/themes/FlatColor
+	url = git@github.com:Misterio77/FlatColor.git

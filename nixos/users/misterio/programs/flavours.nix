@@ -1,6 +1,6 @@
 {
   # Data files
-  xdg.dataFile = { "flavours/base16".source = "/dotfiles/flavours/base16"; };
+  xdg.dataFile = { "flavours/base16".source = "/dotfiles/nixos/users/misterio/flavours/base16"; };
 
   programs.flavours = {
     enable = true;
@@ -47,6 +47,19 @@
         {
           file = "~/.nix-wallpaper.svg";
           template = "svg-nix-wallpaper";
+          rewrite = true;
+        }
+        {
+          file = "~/.themes/colors3";
+          template = "gtk-flatcolor";
+          subtemplate = "gtk-3";
+          rewrite = true;
+          hook = "gsettings set org.gnome.desktop.interface gtk-theme dummy && gsettings set org.gnome.desktop.interface gtk-theme FlatColor";
+        }
+        {
+          file = "~/.themes/colors2";
+          template = "gtk-flatcolor";
+          subtemplate = "gtk-2";
           rewrite = true;
         }
       ];

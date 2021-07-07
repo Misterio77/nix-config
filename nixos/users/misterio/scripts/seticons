@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ "$1" == "dark" ]]; then
+    echo "[Settings]\ngtk-icon-theme-name=Papirus-Dark" > "~/.config/gtk-3.0/settings-mine.ini"
+    echo "gtk-icon-theme-name=Papirus-Dark" > "~/.gtkrc-2.0-mine"
+else
+    echo "[Settings]\ngtk-icon-theme-name=Papirus-Light" > "~/.config/gtk-3.0/settings-mine.ini"
+    echo "gtk-icon-theme-name=Papirus-Light" > "~/.gtkrc-2.0-mine"
+fi

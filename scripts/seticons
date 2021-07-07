@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$1" == "dark" ]]; then
-    sed -i "s/Papirus-Light/Papirus-Dark/" ~/.gtkrc-2.0 ~/.config/{gtk-3.0/settings.ini,rofi/config.rasi,mako/config}
-else
-    sed -i "s/Papirus-Dark/Papirus-Light/" ~/.gtkrc-2.0 ~/.config/{gtk-3.0/settings.ini,rofi/config.rasi,mako/config}
-fi
