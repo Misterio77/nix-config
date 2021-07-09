@@ -6,9 +6,11 @@ let hashed_passwords = import ./passwords.nix; in
     ./hardware-configuration.nix
     ./home.nix
   ];
+
   fonts.fonts = with pkgs; [
     fira
   ];
+
   boot = {
     plymouth = {
       enable = true;
@@ -27,40 +29,13 @@ let hashed_passwords = import ./passwords.nix; in
 
   nixpkgs.config.allowUnfree = true;
 
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-  '';
-
   i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "America/Sao_Paulo";
 
   networking = {
     hostName = "thanatos";
     networkmanager.enable = true;
   };
-
-  time.timeZone = "America/Sao_Paulo";
-
-  nixpkgs.overlays = [
-    (self: super:
-    {
-      swaylock = super.swaylock.overrideAttrs (oldAttrs: rec {
-        src = super.fetchFromGitHub {
-          owner = "mortie";
-          repo = "swaylock-effects";
-          rev = "705166727786725f6c8503f794f401536946a407";
-          sha256 = "162aic40dfvlrz40zbzmhcmggihcdymxrfljxb7j7i5qy38iflpg";
-        };
-      });
-    })
-    (self: super:
-    {
-      ethminer = super.ethminer.overrideAttrs (oldAttrs: rec {
-        cudaSupport = false;
-      });
-    }
-    )
-  ];
 
   security.pam.services.swaylock = {};
 
@@ -92,8 +67,8 @@ let hashed_passwords = import ./passwords.nix; in
     enableSSHSupport = true;
   };
 
-  programs.steam.enable = true;
   programs.dconf.enable = true;
+  services.dbus.packages = [ pkgs.gcr ];
 
   services.getty.autologinUser = "misterio";
   users = {
@@ -110,16 +85,13 @@ let hashed_passwords = import ./passwords.nix; in
     enable = true;
   };
 
-  /*
-  services.ethminer = {
+  hardware.ckb-next = {
     enable = true;
-    pool = "eth-br.flexpool.io";
-    rig = "misterio";
-    toolkit = "opencl";
-    wallet = "0x16EeE21f85c06D3B983533b32Eef82d963d24f9a";
-    registerMail = "eu%40misterio.me";
   };
-  */
+  hardware.opengl = {
+    enable = true;
+  };
+
   system.stateVersion = "21.11";
   
 }

@@ -81,11 +81,6 @@
           command = "swayfader.sh";
           always = true;
         }
-        # Set icon theme based on scheme
-        #{
-        #  command = "seticons $(darkmode query)";
-        #  always = true;
-        #}
         # Set xwayland main monitor
         {
           command = ''
@@ -116,6 +111,12 @@
       input = {
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
           xkb_layout = "br";
+        };
+        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
+          xkb_layout = "br";
+        };
+        "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
+          pointer_accel = "1";
         };
       };
       gaps = {

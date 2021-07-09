@@ -8,6 +8,7 @@
     ./programs/flavours.nix
     ./programs/git.nix
     ./programs/gpg-agent.nix
+    ./programs/rgbdaemon.nix
     ./programs/neofetch.nix
     ./programs/nvim.nix
     ./programs/pass.nix
@@ -16,7 +17,10 @@
     ./programs/sway.nix
     ./programs/zathura.nix
     ./programs/zsh.nix
+  # ./colorscheme.nix
   ];
+
+  # colorscheme = import ./schemes/silk-dark.nix;
 
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
@@ -28,14 +32,15 @@
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    glib
     bottom
     discord
     fira
     fira-code
+    glib
     inkscape
     playerctl
     pulseaudio
+    socat
     spotify
     steam
     xdg-utils

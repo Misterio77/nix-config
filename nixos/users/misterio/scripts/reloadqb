@@ -4,4 +4,8 @@ if [[ "$(~/bin/darkmode query)" == "dark" ]]; then
 else
     echo 'scheme = "light"' > ~/.config/qutebrowser/scheme.py
 fi
-pgrep qutebrowser && qutebrowser :config-source
+
+socket="${XDG_RUNTIME_DIR}/qutebrowser/ipc-$(echo -n "$USER" | md5sum | cut -d' ' -f1)"
+if [ -S $socket ]; then
+    printf '{"args": [":config-source"], "target_arg": null, "protocol_version": 1}\n' | socat - UNIX-CONNECT:$socket
+fi

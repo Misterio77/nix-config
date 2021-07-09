@@ -43,6 +43,7 @@
           file = "~/.colors";
           template = "bash";
           rewrite = true;
+          hook = "systemctl --user reload rgbdaemon";
         }
         {
           file = "~/.nix-wallpaper.svg";

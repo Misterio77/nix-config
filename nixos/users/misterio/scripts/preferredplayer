@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 if [[ -z "$1" ]]; then
     setplayer="$(cat /run/user/$UID/currentplayer 2> /dev/null)"
-    players=$(mpris-ctl list | grep "$setplayer") && \
+    players=$(playerctl --list-all | grep "$setplayer") && \
     echo "$players" | head -1
 else
     echo "$1" > /run/user/$UID/currentplayer
