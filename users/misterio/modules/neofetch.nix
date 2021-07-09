@@ -17,7 +17,6 @@
         info "Icons" icons
         info "Terminal" term
         info "Terminal Font" term_font
-        prin "Color Scheme"  "$(flavours current)"
         info underline
         info "CPU" cpu
         prin "GPU" "$(glxinfo | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"

@@ -1,10 +1,9 @@
 { fetchFromGithub, config, pkgs, ... }:
 
-let hashed_passwords = import ./passwords.nix; in
 {
   imports = [
     ./hardware-configuration.nix
-    ./home.nix
+    ./users
   ];
 
   fonts.fonts = with pkgs; [
@@ -70,15 +69,6 @@ let hashed_passwords = import ./passwords.nix; in
   programs.dconf.enable = true;
 
   services.getty.autologinUser = "misterio";
-  users = {
-    mutableUsers = false;
-    users.misterio = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" "docker" ];
-      shell = pkgs.zsh;
-      initialHashedPassword = "${hashed_passwords.misterio}";
-    };
-  };
 
   virtualisation.docker.enable = true;
   hardware.ckb-next.enable = true;

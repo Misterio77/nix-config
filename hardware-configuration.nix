@@ -44,7 +44,7 @@
     };
 
   fileSystems."/etc/nixos" =
-    { device = "/dotfiles/nixos";
+    { device = "/dotfiles";
       fsType = "none";
       options = [ "bind" ];
     };

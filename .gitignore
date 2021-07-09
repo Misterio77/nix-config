@@ -1,3 +1,2 @@
-old
-nixos/passwords.nix
+users/*/password.nix
 .direnv
