@@ -1,3 +1,0 @@
-default:
-  extension: .css
-  output: hugo-base16-css

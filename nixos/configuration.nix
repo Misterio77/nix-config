@@ -68,7 +68,6 @@ let hashed_passwords = import ./passwords.nix; in
   };
 
   programs.dconf.enable = true;
-  services.dbus.packages = [ pkgs.gcr ];
 
   services.getty.autologinUser = "misterio";
   users = {
@@ -81,16 +80,9 @@ let hashed_passwords = import ./passwords.nix; in
     };
   };
 
-  virtualisation.docker = {
-    enable = true;
-  };
-
-  hardware.ckb-next = {
-    enable = true;
-  };
-  hardware.opengl = {
-    enable = true;
-  };
+  virtualisation.docker.enable = true;
+  hardware.ckb-next.enable = true;
+  hardware.opengl.enable = true;
 
   system.stateVersion = "21.11";
   

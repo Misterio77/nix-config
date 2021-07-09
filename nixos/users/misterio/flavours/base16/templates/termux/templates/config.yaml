@@ -1,6 +1,0 @@
-default:
-  extension: .properties
-  output: colors
-default-256:
-  extension: -256.properties
-  output: colors

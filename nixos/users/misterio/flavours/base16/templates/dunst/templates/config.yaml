@@ -1,3 +1,0 @@
-default:
-    extension: .dunstrc
-    output: themes

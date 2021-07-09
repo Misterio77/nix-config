@@ -1,7 +1,0 @@
-default:
-  extension: .itermcolors
-  output: itermcolors
-
-default-256:
-  extension: -256.itermcolors
-  output: itermcolors

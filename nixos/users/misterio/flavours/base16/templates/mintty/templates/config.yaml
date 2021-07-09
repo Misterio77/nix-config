@@ -1,6 +1,0 @@
-default:
-  extension: .minttyrc
-  output: mintty
-default-256:
-  extension: -256.minttyrc
-  output: mintty

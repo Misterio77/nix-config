@@ -1,3 +1,0 @@
-default:
-  extension: .py
-  output: pygments_base16

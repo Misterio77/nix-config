@@ -1,6 +1,0 @@
-default:
-  extension: .conf
-  output: colors
-default-256:
-  extension: -256.conf
-  output: colors

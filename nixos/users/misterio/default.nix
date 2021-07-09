@@ -3,24 +3,24 @@
 {
   imports = [
     ../../imports/impermanence/home-manager.nix
-    ./programs/alacritty.nix
-    ./programs/direnv.nix
-    ./programs/flavours.nix
-    ./programs/git.nix
-    ./programs/gpg-agent.nix
-    ./programs/rgbdaemon.nix
-    ./programs/neofetch.nix
-    ./programs/nvim.nix
-    ./programs/pass.nix
-    ./programs/qutebrowser.nix
-    ./programs/starship.nix
-    ./programs/sway.nix
-    ./programs/zathura.nix
-    ./programs/zsh.nix
-  # ./colorscheme.nix
+    ./modules/alacritty.nix
+    ./modules/direnv.nix
+    ./modules/git.nix
+    ./modules/gpg-agent.nix
+    ./modules/gtk.nix
+    ./modules/rgbdaemon.nix
+    ./modules/neofetch.nix
+    ./modules/nvim.nix
+    ./modules/pass.nix
+    ./modules/qutebrowser.nix
+    ./modules/starship.nix
+    ./modules/sway.nix
+    ./modules/zathura.nix
+    ./modules/zsh.nix
+    ./colorscheme.nix
   ];
 
-  # colorscheme = import ./schemes/silk-dark.nix;
+  colorscheme = import ./schemes;
 
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
@@ -40,30 +40,10 @@
     inkscape
     playerctl
     pulseaudio
-    socat
     spotify
     steam
     xdg-utils
   ];
-
-  gtk = {
-    enable = true;
-    font = {
-      name = "Fira Sans";
-      size = 12;
-    };
-    iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus";
-    };
-    theme = {
-      name = "FlatColor";
-    };
-  };
-
-  home.file.".themes/FlatColor" = {
-    source = "/dotfiles/nixos/users/misterio/themes/FlatColor";
-  };
 
   # Writable (persistent) data
   home.persistence."/data" = {

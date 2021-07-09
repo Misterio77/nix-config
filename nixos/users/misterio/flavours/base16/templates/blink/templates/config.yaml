@@ -1,3 +1,0 @@
-default:
-        extension: .js
-        output: colors

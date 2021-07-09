@@ -1,7 +1,0 @@
-preview: 
-    extension: .html
-    output: previews
-
-css: 
-    extension: .css
-    output: css 

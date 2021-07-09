@@ -1,3 +1,0 @@
-default:
-  extension: -theme.el
-  output: build

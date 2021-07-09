@@ -1,3 +1,0 @@
-default:
-    extension: .conf
-    output: colors

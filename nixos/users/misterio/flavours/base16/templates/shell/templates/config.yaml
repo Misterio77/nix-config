@@ -1,3 +1,0 @@
-default: 
-    extension: .sh
-    output: scripts

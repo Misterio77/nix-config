@@ -1,3 +1,0 @@
-default: 
-    extension: .reg
-    output: windows-command-prompt

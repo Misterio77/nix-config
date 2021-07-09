@@ -1,6 +1,0 @@
-default:
-  extension: .yml
-  output: colors
-default-256:
-  extension: -256.yml
-  output: colors

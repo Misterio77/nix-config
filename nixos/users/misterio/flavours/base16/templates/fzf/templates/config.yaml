@@ -1,7 +1,0 @@
-default:
-    extension: .config
-    output: bash
-
-fish:
-    extension: .fish
-    output: fish

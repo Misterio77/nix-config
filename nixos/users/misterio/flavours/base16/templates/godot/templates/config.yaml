@@ -1,3 +1,0 @@
-default:
-  extension: .tet
-  output: text_editor_themes

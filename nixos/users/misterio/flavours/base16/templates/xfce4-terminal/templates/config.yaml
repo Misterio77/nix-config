@@ -1,6 +1,0 @@
-default:
-    extension: .theme
-    output: colorschemes
-default.16:
-    extension: .16.theme
-    output: colorschemes
