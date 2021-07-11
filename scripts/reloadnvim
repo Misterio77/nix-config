@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-nvr --serverlist | \
-while read line; do
-    nvr --nostart -cc ':colorscheme base16' --servername $line & \
-done

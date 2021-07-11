@@ -1,6 +1,6 @@
 { lib, pkgs, config, ... }:
 
-let 
+let
   colors = config.colorscheme.colors;
   wallpaper = config.wallpaper.path;
   swayfader-pkg = pkgs.stdenv.mkDerivation {
@@ -11,26 +11,28 @@ let
       rev = "3f18eacb4b43ffd2d8c10a395a3e77bbb40ccee6";
       sha256 = "0x490g1g1vjrybnwna9z00r9i61d5sbrzq7qi7mdq6y94whwblla";
     };
-    buildInputs = with pkgs; [
-      (python3.withPackages (ps: with ps; [ i3ipc ]))
-    ];
+    buildInputs = [ (pkgs.python3.withPackages (ps: [ ps.i3ipc ])) ];
     dontBuild = true;
     dontConfigure = true;
-    installPhase = ''
-      install -Dm 0755 $src/swayfader.py $out/bin/swayfader
-    '';
+    installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
   };
-  # Get custom swaylock command
+  # Programs
+  grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
+  makoctl = "${pkgs.mako}/bin/makoctl";
+  zathura = "${pkgs.zathura}/bin/zathura";
+  qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
+  xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+  swayidle = "${pkgs.swayidle}/bin/swayidle";
+  swayfader = "${swayfader-pkg}/bin/swayfader";
+  pactl = "${pkgs.pulseaudio}/bin/pactl";
+  playerctl = "${pkgs.playerctl}/bin/playerctl";
+  # Swaylock with color arguments
   swaylock = import ./swaylock-custom.nix {
     package = pkgs.swaylock-effects;
-    # Pass our colorscheme
     colors = colors;
   };
 in {
-  home.packages = with pkgs; [
-    wl-clipboard
-    wf-recorder
-  ];
+  home.packages = with pkgs; [ wl-clipboard wf-recorder ];
 
   wayland.windowManager.sway = {
     enable = true;
@@ -38,6 +40,10 @@ in {
     wrapperFeatures.gtk = true;
     config = {
       bars = [ ];
+      fonts = {
+        names = [ "Fira Sans" ];
+        size = 12.0;
+      };
       output = {
         DP-1 = {
           res = "1920x1080@60hz";
@@ -57,7 +63,7 @@ in {
           workspace = "1";
         }
         {
-          output = "DPI-1";
+          output = "DP-1";
           workspace = "2";
         }
       ];
@@ -91,11 +97,7 @@ in {
           text = "${colors.base03}";
         };
       };
-      startup = let
-        xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
-        swayidle = "${pkgs.swayidle}/bin/swayidle";
-        swayfader = "${swayfader-pkg}/bin/swayfader";
-      in [
+      startup = [
         # Initial lock
         {
           command = "'${swaylock} -i ${wallpaper}'";
@@ -125,30 +127,53 @@ in {
         }
         # Set xwayland main monitor
         {
-          command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
+          command =
+            "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
         }
       ];
       window = { border = 2; };
-      keybindings = 
-      let
-        grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
-        makoctl = "${pkgs.mako}/bin/makoctl";
-        zathura = "${pkgs.zathura}/bin/zathura";
-        browser = "${pkgs.qutebrowser}/bin/qutebrowser";
-      in lib.mkOptionDefault {
+      keybindings = lib.mkOptionDefault {
+        # Splits
         "Mod4+minus" = "split v";
         "Mod4+backslash" = "split h";
+        # Scratchpad
         "Mod4+u" = "scratchpad show";
         "Mod4+Shift+u" = "move scratchpad";
+        # Move entire workspace
+        "Mod4+Mod1+h" = "move workspace to output left";
+        "Mod4+Mod1+Left" = "move workspace to output left";
+        "Mod4+Mod1+l" = "move workspace to output right";
+        "Mod4+Mod1+Right" = "move workspace to output right";
+        # Toggle monitors
+        "Mod4+Control+Left" = "output DP-1 toggle";
+        "Mod4+Control+Down" = "output HDMI-A-1 toggle";
+        # Lock screen
         "XF86Launch5" = "exec ${swaylock} --screenshots";
-        "Mod4+b" = "exec ${browser}";
-        "Mod4+z" = "exec ${zathura}";
+        # Volume
+        "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";
+        "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -1%";
+        "Shift+XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
+        "Shift+XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+        "Shift+XF86AudioMute" = "exec ${pactl} set-source-mute @DEFAULT_SINK@ toggle";
+        # Media
+        "XF86AudioNext" = "exec ${playerctl} next";
+        "XF86AudioPrev" = "exec ${playerctl} prev";
+        "XF86AudioPlay" = "exec ${playerctl} play-pause";
+        "XF86AudioStop" = "exec ${playerctl} stop";
+        # RGB Lights
+        # TODO
+        # Notifications
         "Mod4+w" = "exec ${makoctl} dismiss";
         "Mod4+shift+w" = "exec ${makoctl} dismiss -a";
+        # Programs
+        "Mod4+b" = "exec ${qutebrowser}";
+        "Mod4+z" = "exec ${zathura}";
         "Mod4+control+w" = "exec ${makoctl} invoke";
+        # Screenshot
+        "Print" = "exec ${grimshot} --notify copy output";
         "Shift+Print" = "exec ${grimshot} --notify copy active";
         "Control+Print" = "exec ${grimshot} --notify copy screen";
-        "Print" = "exec ${grimshot} --notify copy output";
         "Mod1+Print" = "exec ${grimshot} --notify copy area";
         "Mod4+Print" = "exec ${grimshot} --notify copy window";
       };
@@ -159,9 +184,10 @@ in {
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
           xkb_layout = "br";
         };
-        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
-          xkb_layout = "br";
-        };
+        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" =
+          {
+            xkb_layout = "br";
+          };
         "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
           pointer_accel = "1";
         };

@@ -1,1 +1,1 @@
-import ../../schemes/spaceduck.nix
+import ../../schemes/rose-pine-dawn.nix

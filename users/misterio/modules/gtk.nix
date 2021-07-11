@@ -39,16 +39,36 @@ let
   };
 in {
 
+  # Materia expects the binary rendersvg, instead of resvg, so we create a package that symlinks it
   nixpkgs.overlays = [
     (self: super: {
       rendersvg = self.runCommandNoCC "rendersvg" { } ''
         mkdir -p $out/bin
         ln -s ${self.resvg}/bin/resvg $out/bin/rendersvg
       '';
-      generated-gtk-theme = self.stdenv.mkDerivation rec {
+    })
+  ];
+
+  # GTK settings
+  gtk = {
+    enable = true;
+
+    font = {
+      name = "Fira Sans";
+      size = 12;
+    };
+
+    iconTheme = {
+      name = "Papirus";
+      package = pkgs.papirus-icon-theme;
+    };
+
+    theme = {
+      name = "${config.colorscheme.slug}";
+      package = pkgs.stdenv.mkDerivation rec {
         name = "generated-gtk-theme";
         src = materia-theme;
-        buildInputs = with self; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
+        buildInputs = with pkgs; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
         MATERIA_COLORS = materia_colors;
         phases = [ "unpackPhase" "installPhase" ];
         installPhase = ''
@@ -63,29 +83,6 @@ in {
           chmod 555 -R .
         '';
       };
-    })
-  ];
-
-  # GTK settings
-  gtk = {
-    enable = true;
-
-    font = {
-      name = "Fira Sans";
-      size = 12;
     };
-
-    iconTheme = {
-        name = "Papirus";
-      package = pkgs.papirus-icon-theme;
-    };
-
-    theme = {
-      name = "${config.colorscheme.slug}";
-      package = pkgs.generated-gtk-theme;
-    };
-
   };
-
-  home.sessionVariables.GTK_THEME = "${config.colorscheme.slug}";
 }

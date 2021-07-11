@@ -6,7 +6,7 @@
 # even returning non-zero status if fzf did too (useful for handling the user exiting fzf)
 
 # Create temp directory
-directory="/run/user/$UID/alacritty-fzf"
+directory="$XDG_RUNTIME_DIR/alacritty-fzf"
 mkdir -p "${directory}"
 
 # Get input from stdin
@@ -21,8 +21,8 @@ cat > "${directory}/input"
 cat <<'EOF' > "${directory}/inner"
 #!/usr/bin/env bash
 sleep 0.1
-directory="/run/user/$UID/alacritty-fzf"
-output=$(cat "${directory}/input" | fzf --color=16 "$@")
+directory="$XDG_RUNTIME_DIR/alacritty-fzf"
+output=$(cat "${directory}/input" | fzf "$@")
 echo $? > "${directory}/exitcode"
 echo "${output}" > "${directory}/output"
 EOF
@@ -36,6 +36,6 @@ cat "${directory}/output"
 # Get fzf exit code
 exitcode="$(cat "${directory}/exitcode")"
 # Remove tmp directory
-rm "${directory}"/* &> /dev/null
+#rm "${directory}"/* &> /dev/null
 # Exit with fzf exit code
 exit "${exitcode}"

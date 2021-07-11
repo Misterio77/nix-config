@@ -16,6 +16,8 @@ in {
     ../../imports/home-manager/nixos
   ];
 
+  security.pam.services.swaylock = {};
+  services.getty.autologinUser = "misterio";
   home-manager.useUserPackages = true;
   home-manager.users.misterio = {
     imports = [
@@ -24,6 +26,7 @@ in {
       ./../../modules/wallpaper.nix
       ./modules/alacritty.nix
       ./modules/direnv.nix
+      ./modules/fzf.nix
       ./modules/git.nix
       ./modules/gpg-agent.nix
       ./modules/gtk.nix
@@ -42,11 +45,7 @@ in {
     wallpaper.path = "/dotfiles/assets/Wallpapers/astronaut-minimalism.png";
     colorscheme = import ./current-scheme.nix;
 
-    programs.home-manager.enable = true;
     nixpkgs.config.allowUnfree = true;
-
-    # Scripts
-    home.file = { "bin".source = "/dotfiles/scripts"; };
 
     fonts.fontconfig.enable = true;
 
@@ -58,12 +57,16 @@ in {
       fira
       fira-code
       glib
-      playerctl
-      pulseaudio
+      gsettings-desktop-schemas
+      pinentry-gnome
       spotify
       steam
+      lutris
       xdg-utils
     ];
+
+    # Scripts
+    home.file = { "bin".source = "/dotfiles/scripts"; };
 
     # Writable (persistent) data
     home.persistence."/data" = {

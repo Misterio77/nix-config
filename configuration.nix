@@ -17,6 +17,9 @@
     };
     kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [ "quiet" "udev.log_priority=3" ];
+    kernel.sysctl = {
+      "vm.max_map_count" = 16777216;
+    };
     consoleLogLevel = 3;
     supportedFilesystems = ["btrfs"];
     loader = {
@@ -38,9 +41,8 @@
     networkmanager.enable = true;
   };
 
-  security.pam.services.swaylock = {};
-
   security.rtkit.enable = true;
+  services.dbus.packages = [ pkgs.gcr ];
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -69,11 +71,7 @@
   };
 
   programs.steam.enable = true;
-  
   programs.dconf.enable = true;
-
-  services.getty.autologinUser = "misterio";
-
   virtualisation.docker.enable = true;
   hardware.ckb-next.enable = true;
   hardware.opengl.enable = true;
