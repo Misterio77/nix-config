@@ -16,6 +16,8 @@
       font = "${pkgs.fira}/share/fonts/opentype/FiraSans-Regular.otf";
     };
     kernelPackages = pkgs.linuxPackages_zen;
+    kernelParams = [ "quiet" "udev.log_priority=3" ];
+    consoleLogLevel = 3;
     supportedFilesystems = ["btrfs"];
     loader = {
       systemd-boot = {
@@ -66,6 +68,8 @@
     enableSSHSupport = true;
   };
 
+  programs.steam.enable = true;
+  
   programs.dconf.enable = true;
 
   services.getty.autologinUser = "misterio";

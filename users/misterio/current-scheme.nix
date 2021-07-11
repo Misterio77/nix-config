@@ -1,1 +1,1 @@
-import ../../schemes/gruvbox-dark-pale.nix
+import ../../schemes/spaceduck.nix

@@ -46,7 +46,6 @@ in {
         ln -s ${self.resvg}/bin/resvg $out/bin/rendersvg
       '';
       generated-gtk-theme = self.stdenv.mkDerivation rec {
-
         name = "generated-gtk-theme";
         src = materia-theme;
         buildInputs = with self; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
@@ -77,7 +76,7 @@ in {
     };
 
     iconTheme = {
-      name = "Papirus-Dark";
+        name = "Papirus";
       package = pkgs.papirus-icon-theme;
     };
 

@@ -21,6 +21,7 @@ in {
     imports = [
       ../../imports/impermanence/home-manager.nix
       ./../../modules/colorscheme.nix
+      ./../../modules/wallpaper.nix
       ./modules/alacritty.nix
       ./modules/direnv.nix
       ./modules/git.nix
@@ -37,6 +38,8 @@ in {
       ./modules/zsh.nix
     ];
 
+    #wallpaper.generate = true;
+    wallpaper.path = "/dotfiles/assets/Wallpapers/astronaut-minimalism.png";
     colorscheme = import ./current-scheme.nix;
 
     programs.home-manager.enable = true;
@@ -51,11 +54,10 @@ in {
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
       bottom
       discord
-      gnome.gnome-terminal
+      dragon-drop
       fira
       fira-code
       glib
-      inkscape
       playerctl
       pulseaudio
       spotify

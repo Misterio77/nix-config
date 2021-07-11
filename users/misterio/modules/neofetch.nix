@@ -1,8 +1,10 @@
 { pkgs, ... }:
-{
+
+let
+  glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
+in {
   home.packages = with pkgs; [
     neofetch
-    glxinfo
   ];
   xdg.configFile."neofetch/config.conf".text = ''
     print_info() {
@@ -19,7 +21,7 @@
         info "Terminal Font" term_font
         info underline
         info "CPU" cpu
-        prin "GPU" "$(glxinfo | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
+        prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
         info "Memory" memory
         info "Disk" disk
         info cols

@@ -1,4 +1,4 @@
-{ pkgs, fetchFromGitHub, ... }:
+{ pkgs, ... }:
 
 let
   vim-dim = pkgs.vimUtils.buildVimPlugin {
