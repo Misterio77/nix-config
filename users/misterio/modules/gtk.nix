@@ -46,10 +46,27 @@ in {
         mkdir -p $out/bin
         ln -s ${self.resvg}/bin/resvg $out/bin/rendersvg
       '';
+      generated-gtk-theme = self.stdenv.mkDerivation rec {
+        name = "generated-gtk-theme";
+        src = materia-theme;
+        buildInputs = with self; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
+        MATERIA_COLORS = materia_colors;
+        phases = [ "unpackPhase" "installPhase" ];
+        installPhase = ''
+          HOME=/build
+          chmod 777 -R .
+          patchShebangs .
+          mkdir -p $out/share/themes
+          mkdir bin
+          sed -e 's/handle-horz-.*//' -e 's/handle-vert-.*//' -i ./src/gtk-2.0/assets.txt
+          echo "Changing colours:"
+          ./change_color.sh -o ${config.colorscheme.slug} "$MATERIA_COLORS" -i False -t "$out/share/themes"
+          chmod 555 -R .
+        '';
+      };
     })
   ];
 
-  # GTK settings
   gtk = {
     enable = true;
 
@@ -65,24 +82,7 @@ in {
 
     theme = {
       name = "${config.colorscheme.slug}";
-      package = pkgs.stdenv.mkDerivation rec {
-        name = "generated-gtk-theme";
-        src = materia-theme;
-        buildInputs = with pkgs; [ sassc bc which rendersvg meson ninja nodePackages.sass gtk4.dev optipng ];
-        MATERIA_COLORS = materia_colors;
-        phases = [ "unpackPhase" "installPhase" ];
-        installPhase = ''
-          HOME=/build
-          chmod 777 -R .
-          patchShebangs .
-          mkdir -p $out/share/themes
-          mkdir bin
-          sed -e 's/handle-horz-.*//' -e 's/handle-vert-.*//' -i ./src/gtk-2.0/assets.txt
-          echo "Changing colours:"
-          ./change_color.sh -o ${config.colorscheme.slug} "$MATERIA_COLORS" -i False -t "$out/share/themes"
-          chmod 555 -R .
-        '';
-      };
+      package = pkgs.generated-gtk-theme;
     };
   };
 }

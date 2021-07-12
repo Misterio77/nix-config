@@ -37,12 +37,13 @@ in {
       ./modules/qutebrowser.nix
       ./modules/starship.nix
       ./modules/sway.nix
+      ./modules/waybar.nix
       ./modules/zathura.nix
       ./modules/zsh.nix
     ];
 
-    #wallpaper.generate = true;
-    wallpaper.path = "/dotfiles/assets/Wallpapers/astronaut-minimalism.png";
+    wallpaper.generate = true;
+    #wallpaper.path = "/dotfiles/assets/Wallpapers/astronaut-minimalism.png";
     colorscheme = import ./current-scheme.nix;
 
     nixpkgs.config.allowUnfree = true;
@@ -58,6 +59,7 @@ in {
       fira-code
       glib
       gsettings-desktop-schemas
+      imv
       pinentry-gnome
       spotify
       steam

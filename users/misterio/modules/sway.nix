@@ -17,15 +17,18 @@ let
     installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
   };
   # Programs
+  alacritty = "${pkgs.alacritty}/bin/alacritty";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
   makoctl = "${pkgs.mako}/bin/makoctl";
   zathura = "${pkgs.zathura}/bin/zathura";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
+  nvim = "${pkgs.neovim}/bin/nvim";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swayfader = "${swayfader-pkg}/bin/swayfader";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+  wofi = "${pkgs.wofi}/bin/wofi -t ${alacritty}";
   # Swaylock with color arguments
   swaylock = import ./swaylock-custom.nix {
     package = pkgs.swaylock-effects;
@@ -40,6 +43,7 @@ in {
     wrapperFeatures.gtk = true;
     config = {
       bars = [ ];
+      menu = "${wofi} -S run";
       fonts = {
         names = [ "Fira Sans" ];
         size = 12.0;
@@ -168,6 +172,7 @@ in {
         "Mod4+shift+w" = "exec ${makoctl} dismiss -a";
         # Programs
         "Mod4+b" = "exec ${qutebrowser}";
+        "Mod4+v" = "exec ${alacritty} -e ${nvim}";
         "Mod4+z" = "exec ${zathura}";
         "Mod4+control+w" = "exec ${makoctl} invoke";
         # Screenshot
@@ -178,7 +183,7 @@ in {
         "Mod4+Print" = "exec ${grimshot} --notify copy window";
       };
       workspaceAutoBackAndForth = true;
-      terminal = "${pkgs.alacritty}/bin/alacritty";
+      terminal = "${alacritty}";
       modifier = "Mod4";
       input = {
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {

@@ -23,9 +23,11 @@
     consoleLogLevel = 3;
     supportedFilesystems = ["btrfs"];
     loader = {
+      timeout = 0;
       systemd-boot = {
         enable = true;
         consoleMode = "max";
+        editor = false;
       };
       efi.canTouchEfiVariables = true;
     };
@@ -71,6 +73,7 @@
   };
 
   programs.steam.enable = true;
+  programs.gamemode.enable = true;
   programs.dconf.enable = true;
   virtualisation.docker.enable = true;
   hardware.ckb-next.enable = true;

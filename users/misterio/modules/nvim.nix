@@ -82,6 +82,10 @@ in {
         autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
         autocmd BufLeave,FocusLost,InsertEnter   * set number norelativenumber
       augroup END
+      
+      "Fix nvim size according to terminal
+      "(https://github.com/neovim/neovim/issues/11330)
+      autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"
     '';
   };
 }

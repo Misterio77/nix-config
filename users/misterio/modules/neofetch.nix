@@ -13,7 +13,6 @@ in {
         info "OS" distro
         info "Kernel" kernel
         info "Uptime" uptime
-        info "Packages" packages
         info "Shell" shell
         info "WM" wm
         info "Icons" icons
@@ -29,7 +28,7 @@ in {
     title_fqdn="off"
     kernel_shorthand="on"
     distro_shorthand="off"
-    os_arch="on"
+    os_arch="off"
     uptime_shorthand="on"
     memory_percent="off"
     package_managers="on"
@@ -39,7 +38,7 @@ in {
     speed_shorthand="on"
     cpu_brand="on"
     cpu_speed="on"
-    cpu_cores="logical"
+    cpu_cores="off"
     cpu_temp="off"
     gpu_brand="on"
     gpu_type="all"
@@ -75,6 +74,7 @@ in {
     bar_color_total="distro"
     cpu_display="off"
     memory_display="off"
+    memory_unit="gib"
     battery_display="off"
     disk_display="off"
     image_backend="ascii"

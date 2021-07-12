@@ -1,1 +1,1 @@
-import ../../schemes/rose-pine-dawn.nix
+import ../../schemes/heetch.nix
