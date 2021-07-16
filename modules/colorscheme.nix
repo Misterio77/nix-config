@@ -32,7 +32,7 @@ in {
           inherit name;
           value = mkOption {
             type = types.strMatching "[a-fA-F0-9]{6}";
-            description = "Color ${name}.";
+            description = "${name} color.";
           };
         };
       in

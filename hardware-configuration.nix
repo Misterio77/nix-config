@@ -9,7 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.initrd.luks.devices."nixenc".device = "/dev/disk/by-uuid/320599e3-21f9-465e-a2f2-d078eccc34c0";
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];

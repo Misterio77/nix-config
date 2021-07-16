@@ -1,6 +1,7 @@
 { fetchFromGithub, config, pkgs, ... }:
 
 {
+  disabledModules = [ "services/misc/ethminer.nix" ];
   imports = [
     ./hardware-configuration.nix
     ./users
@@ -19,6 +20,7 @@
     kernelParams = [ "quiet" "udev.log_priority=3" ];
     kernel.sysctl = {
       "vm.max_map_count" = 16777216;
+      "abi.vsyscall32" = 0;
     };
     consoleLogLevel = 3;
     supportedFilesystems = ["btrfs"];
@@ -71,13 +73,29 @@
     enable = true;
     enableSSHSupport = true;
   };
+  hardware.opengl = {
+      enable = true;
+      extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
+  };
 
+  programs.gamemode = {
+    enable = true;
+    settings = {
+      gpu = {
+        apply_gpu_optimisations = "accept-responsibility";
+        gpu_device = 0;
+        amd_performance_level = "high";
+      };
+      custom = {
+        start = "${pkgs.systemd}/bin/systemctl --user stop ethminer";
+        end = "${pkgs.systemd}/bin/systemctl --user start ethminer";
+      };
+    };
+  };
   programs.steam.enable = true;
-  programs.gamemode.enable = true;
   programs.dconf.enable = true;
   virtualisation.docker.enable = true;
   hardware.ckb-next.enable = true;
-  hardware.opengl.enable = true;
 
   system.stateVersion = "21.11";
   

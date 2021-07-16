@@ -1,1 +1,1 @@
-import ../../schemes/heetch.nix
+import ../../schemes/rose-pine-moon.nix

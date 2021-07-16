@@ -13,10 +13,11 @@ in {
         info "OS" distro
         info "Kernel" kernel
         info "Uptime" uptime
+        info "Packages" packages
         info "Shell" shell
         info "WM" wm
+        info "Term" term
         info "Icons" icons
-        info "Terminal" term
         info "Terminal Font" term_font
         info underline
         info "CPU" cpu
@@ -79,6 +80,7 @@ in {
     disk_display="off"
     image_backend="ascii"
     image_source="auto"
+    #ascii_distro="nixos_small"
     ascii_distro="auto"
     ascii_colors=(distro)
     ascii_bold="on"

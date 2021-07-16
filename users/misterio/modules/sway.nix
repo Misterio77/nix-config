@@ -135,7 +135,13 @@ in {
             "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
         }
       ];
-      window = { border = 2; };
+      window = {
+        border = 2;
+        commands = [{
+          command = "move scratchpad";
+          criteria = { title = "Wine System Tray"; };
+        }];
+      };
       keybindings = lib.mkOptionDefault {
         # Splits
         "Mod4+minus" = "split v";
@@ -154,12 +160,17 @@ in {
         # Lock screen
         "XF86Launch5" = "exec ${swaylock} --screenshots";
         # Volume
-        "XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";
-        "XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -1%";
-        "Shift+XF86AudioRaiseVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
-        "Shift+XF86AudioLowerVolume" = "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioRaiseVolume" =
+          "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";
+        "XF86AudioLowerVolume" =
+          "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -1%";
+        "Shift+XF86AudioRaiseVolume" =
+          "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
+        "Shift+XF86AudioLowerVolume" =
+          "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
         "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
-        "Shift+XF86AudioMute" = "exec ${pactl} set-source-mute @DEFAULT_SINK@ toggle";
+        "Shift+XF86AudioMute" =
+          "exec ${pactl} set-source-mute @DEFAULT_SINK@ toggle";
         # Media
         "XF86AudioNext" = "exec ${playerctl} next";
         "XF86AudioPrev" = "exec ${playerctl} prev";
@@ -182,7 +193,6 @@ in {
         "Mod1+Print" = "exec ${grimshot} --notify copy area";
         "Mod4+Print" = "exec ${grimshot} --notify copy window";
       };
-      workspaceAutoBackAndForth = true;
       terminal = "${alacritty}";
       modifier = "Mod4";
       input = {

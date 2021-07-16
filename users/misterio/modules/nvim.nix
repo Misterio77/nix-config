@@ -46,18 +46,19 @@ in {
       }
       vim-toml
       vim-nix
-      rust-vim
       dart-vim-plugin
     ];
     extraConfig = ''
       "Reload automatically
       set autoread
       au CursorHold,CursorHoldI * checktime
+
       "Folding
       set foldmethod=syntax
       "Set fold level to highest in file
       "so everything starts out unfolded at just the right level
       autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+
       "Tabs
       set tabstop=4 "How many spaces equals a tab
       set softtabstop=4 "How many columns when you hit tab
@@ -66,6 +67,9 @@ in {
       "set noexpandtab "Use tabs
       "Two spaces with html and nix
       autocmd FileType html,nix setlocal ts=2 sts=2 sw=2
+
+      "Options when composing mutt mail
+      autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap
 
       "Clipboard
       set clipboard=unnamedplus

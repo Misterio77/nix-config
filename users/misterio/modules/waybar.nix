@@ -14,11 +14,11 @@ in {
         position = "top";
         modules-left = [ "sway/workspaces" "sway/mode" ];
         modules-center = [ "sway/window" ];
-        modules-right = [ "pulseaudio" "cpu" "custom/gpu" "memory" "clock" ];
+        modules-right = [ "custom/gamemode" "custom/ethminer" "pulseaudio" "cpu" "custom/gpu" "memory" "clock" ];
         modules = {
           clock = {
-              tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-              format-alt = "{:%d/%m/%Y}";
+            format = "{:%d/%m %H:%M}";
+            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           };
           cpu = {
             format = "{usage}% ";
@@ -26,6 +26,17 @@ in {
           };
           memory = {
             format = "{}% ";
+          };
+          "custom/ethminer" = {
+            exec-if = "systemctl --user is-active ethminer";
+            exec = "journalctl --user -n 10 -u ethminer | grep '-e \\ m\\ .*' | cut -d ' ' -f12-13";
+            interval = 1;
+            format = "{} ﲹ";
+          }; 
+          "custom/gamemode" = {
+            exec-if = "gamemoded --status | grep 'is active' -q";
+            interval = 2;
+            exec = "echo '\n Gamemode is active'";
           };
           "custom/gpu" = {
             exec = "cat /sys/class/drm/card0/device/gpu_busy_percent";

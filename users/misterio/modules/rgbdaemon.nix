@@ -1,28 +1,66 @@
-{ pkgs, ... }:
-{
-  imports = [ ./rgbdaemon_service.nix ];
-
-  home.packages = with pkgs; [
-    pastel
+{ config, pkgs, ... }:
+let
+  colors = config.colorscheme.colors;
+in {
+  imports = [
+    ../../../modules/rgbdaemon.nix
   ];
-  # Override pastel to master (https://github.com/rust-lang/rust/issues/81654)
-  # TODO: remove once pastel upgrades
   nixpkgs.overlays = [
     (self: super: {
       pastel = super.pastel.overrideAttrs (oldAttrs: rec {
         src = super.fetchFromGitHub {
           owner = "sharkdp";
           repo = "pastel";
-          rev = "4bed587d13fcf7624d2c8be31eb8b20588c8c5b8";
-          sha256 = "1ymzfm90gilbxh88b717rrnm6ylpgzj7h9b8qa34an8452qmzbg8";
+          rev = "v0.8.1";
+          sha256 = "12n1a9j61r4spx0zi2kk85nslv11j1s510asxqvj92ggqhr2s3sq";
         };
         cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
           inherit src;
-          outputHash = "14q5k74qy9g1gr5i6f3cs9ms31xm85gpa3yaikhwy0lyavvfk3d6";
+          outputHash = "12zachbg78ajx1n1mqp53rd00dzcss5cqhsq0119lalzc8b5zkrn";
         });
       });
     })
   ];
-
-  services.rgbdaemon.enable = true;
+  services.rgbdaemon = {
+    enable = true;
+    package = pkgs.stdenv.mkDerivation {
+      name = "rgbdaemon";
+      src = pkgs.fetchFromGitHub {
+        owner = "Misterio77";
+        repo = "rgbdaemon";
+        rev = "822fafa2a0fe825d63d694befdf226f836bd40a4";
+        sha256 = "1p1nqpfyxf0imhc7myccfs3587mks57mhfvfsm3rh0iz1798cqwv";
+      };
+      propagatedBuildInputs = with pkgs; [ pastel makeWrapper ];
+      dontBuild = true;
+      dontConfigure = true;
+      installPhase = ''
+        install -Dm 0755 $src/rgbdaemon.sh $out/bin/rgbdaemon
+      '';
+    };
+    interval = 0.8;
+    daemons = {
+      swayWorkspaces = true;
+      swayLock = true;
+      mute = true;
+      tty = true;
+      player = true;
+    };
+    colors = {
+      background = "${colors.base00}";
+      foreground = "${colors.base05}";
+      secondary = "${colors.base0B}";
+      tertiary = "${colors.base0E}";
+      quaternary = "${colors.base05}";
+    };
+    keyboard = {
+      device = "/dev/input/ckb1/cmd";
+      highlighted = [ "h" "j" "k" "l" "w" "a" "s" "d" "m3" "g11" "profswitch" ];
+    };
+    mouse = {
+      device = "/dev/input/ckb2/cmd";
+      dpi = 750;
+      highlighted = [ "wheel" "thumb" ];
+    };
+  };
 }
