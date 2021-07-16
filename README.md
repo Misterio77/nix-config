@@ -1,6 +1,6 @@
 # My NixOS configurations
 
-Here's my ephemeral NixOS setup files.
+Here's my NixOS config files.
 
 I'm just starting out with Nix, so it's not too much (for now).
 
@@ -12,21 +12,18 @@ Works with a tmpfs root (and home, using [home-manager](https://github.com/nix-c
 
 ### Todos
 - Learn flakes (seems cool)
-- Improve secret management (for now it all depends on my pgp key stored on `data`, waiting on my yubikey)
 
 ## How to setup
-
-Note: Remember to tweak (specially hostname and username) as necessary
 
 ### Create partitions
 First, create your boot partition (usually vfat) and btrfs partition (i usually encrypt it).
 
 We'll create a few subvolumes:
 - `nix` For (disposable) nix store data, no need to set snapshots.
-- `dotfiles` For configuration files, will be managed by home-manager as write-only, we'll also bind the `nixos` directory to `/etc/nixos` shortly. Intended to be tracked by git
+- `dotfiles` For configuration files. Intended to be tracked by git
 - `data` For persistent data, will be mounted writable. I suggest setting up snpashots.
 
-First mount your btrfs. Assuming you opened the encrypted btrfs partition at `nixenc`:
+First mount your btrfs, opening your encryption as needed. Assuming you opened the encrypted btrfs partition at `nixenc`:
 ```bash
 mount -t btrfs /dev/mapper/nixenv /mnt
 ```
