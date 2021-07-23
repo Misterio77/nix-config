@@ -33,7 +33,7 @@
       nix_shell = {
         impure_msg = "";
         pure_msg = "λ ";
-        symbol = " ";
+        symbol = "";
         format = "via [$symbol$state( $name)]($style) ";
       };
       conda = { symbol = " "; };

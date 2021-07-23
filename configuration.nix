@@ -1,7 +1,6 @@
 { fetchFromGithub, config, pkgs, ... }:
 
 {
-  disabledModules = [ "services/misc/ethminer.nix" ];
   imports = [
     ./hardware-configuration.nix
     ./users
@@ -36,6 +35,10 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  nix.package = pkgs.nixUnstable;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/Sao_Paulo";
@@ -53,6 +56,13 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+  };
+  services.postgresql = {
+    enable = true;
+    authentication = pkgs.lib.mkOverride 12 ''
+      local all all trust
+      host all all ::1/128 trust
+    '';
   };
 
   xdg.portal = {
@@ -98,5 +108,12 @@
   hardware.ckb-next.enable = true;
 
   system.stateVersion = "21.11";
-  
+
+  # Wireguard
+  networking.firewall = {
+    allowedUDPPorts = [ 51820 ];
+  };
+  networking.wg-quick.interfaces = {
+    #wg0 = import ./wg0.nix;
+  };
 }

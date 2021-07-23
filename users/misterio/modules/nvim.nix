@@ -1,13 +1,13 @@
 { pkgs, ... }:
 
 let
-  vim-dim = pkgs.vimUtils.buildVimPlugin {
-      name = "vim-dim";
+  vim-noctu = pkgs.vimUtils.buildVimPlugin {
+      name = "vim-noctu";
       src = pkgs.fetchFromGitHub {
-        owner = "jeffkreeftmeijer";
-        repo = "vim-dim";
-        rev = "8320a40f12cf89295afc4f13eb10159f29c43777";
-        sha256 = "0mnwr4kxhng4mzds8l72s5km1qww4bifn5pds68c7zzyyy17ffxh";
+        owner = "noahfrederick";
+        repo = "vim-noctu";
+        rev = "de2ff9855bccd72cd9ff3082bc89e4a4f36ea4fe";
+        sha256 = "sha256-fiMYfRlm/KiMQybL97RcWy3Y+0qim6kl3ZkBvCuv4ZM=";
       };
   };
 in {
@@ -28,7 +28,7 @@ in {
           let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
         '';
       }
-      vim-dim
+      vim-noctu
       auto-pairs
       vim-surround
       vim-markdown
@@ -40,7 +40,7 @@ in {
         plugin = vimtex;
         config = ''
           let g:vimtex_view_method = "zathura"
-          let g:vimtex_view_automatic = 0
+          let g:vimtex_view_automatic = 1
         '';
         #let g:vimtex_compiler_latexmk = {'options': ['-pdf','-shell-escape', '-verbose', '-file-line-error', '-synctex=1', '-interaction=nonstopmode',]}
       }
@@ -65,8 +65,8 @@ in {
       set shiftwidth=4 "How many to indent with reindent ops
       set expandtab "Use spaces
       "set noexpandtab "Use tabs
-      "Two spaces with html and nix
-      autocmd FileType html,nix setlocal ts=2 sts=2 sw=2
+      "Two spaces with html scss, and nix
+      autocmd FileType html,nix,scss setlocal ts=2 sts=2 sw=2
 
       "Options when composing mutt mail
       autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap
@@ -75,7 +75,7 @@ in {
       set clipboard=unnamedplus
 
       "Color scheme
-      colorscheme dim
+      colorscheme noctu
 
       "Conceal
       set conceallevel=2

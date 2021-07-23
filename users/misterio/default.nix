@@ -78,9 +78,11 @@ in {
       cbonsai
       clinfo
       cmatrix
+      delta
       discord
       dragon-drop
       ethminer-free
+      exa
       fira
       fira-code
       glib
@@ -90,6 +92,7 @@ in {
       lm_sensors
       lutris
       openssl
+      osu-lazer
       pinentry-gnome
       pipes
       spotify
@@ -112,6 +115,7 @@ in {
         ".local/share/Steam"
         ".local/share/lutris"
         ".config/lutris"
+        ".local/share/osu"
         ".local/share/Tabletop Simulator"
         ".config/Hero_Siege"
       ];

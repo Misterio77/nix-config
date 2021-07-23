@@ -10,6 +10,8 @@
       fi
     '';
     shellAliases = {
+      ls = "exa";
+      top = "btm";
       jqless = "jq -C | less -r";
       nr = "nixos-rebuild";
       nrs = "sudo nixos-rebuild switch --fast";
@@ -22,7 +24,7 @@
       mutt = "neomutt";
     };
     envExtra = ''
-      GLOBALIAS_FILTER_VALUES=(ls)
+      GLOBALIAS_FILTER_VALUES=()
     '';
     history = { size = 1000; };
     initExtra = ''
@@ -83,6 +85,7 @@
         };
       }
       {
+        file = "nix-shell.plugin.zsh";
         name = "zsh-nix-shell";
         src = pkgs.fetchFromGitHub {
           owner = "chisui";
