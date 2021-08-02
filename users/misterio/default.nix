@@ -55,8 +55,8 @@ in {
       ./modules/zsh.nix
     ];
 
-    wallpaper.generate = true;
-    #wallpaper.path = "/dotfiles/assets/Wallpapers/astronaut-minimalism.png";
+    #wallpaper.generate = true;
+    wallpaper.path = "/dotfiles/assets/Wallpapers/astronaut-minimalism.png";
     colorscheme = import ./current-scheme.nix;
 
     services.ethminer = {
@@ -97,6 +97,9 @@ in {
       pipes
       spotify
       steam
+      #gamescope
+      trash-cli
+      vulkan-tools
       xdg-utils
     ];
 

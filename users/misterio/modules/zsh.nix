@@ -10,6 +10,7 @@
       fi
     '';
     shellAliases = {
+      t = "trash";
       ls = "exa";
       top = "btm";
       jqless = "jq -C | less -r";

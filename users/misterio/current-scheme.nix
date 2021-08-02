@@ -1,1 +1,1 @@
-import ../../schemes/dracula.nix
+import ../../schemes/rose-pine-moon.nix

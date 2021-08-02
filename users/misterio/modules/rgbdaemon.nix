@@ -5,22 +5,6 @@ in {
   imports = [
     ../../../modules/rgbdaemon.nix
   ];
-  nixpkgs.overlays = [
-    (self: super: {
-      pastel = super.pastel.overrideAttrs (oldAttrs: rec {
-        src = super.fetchFromGitHub {
-          owner = "sharkdp";
-          repo = "pastel";
-          rev = "v0.8.1";
-          sha256 = "12n1a9j61r4spx0zi2kk85nslv11j1s510asxqvj92ggqhr2s3sq";
-        };
-        cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
-          inherit src;
-          outputHash = "12zachbg78ajx1n1mqp53rd00dzcss5cqhsq0119lalzc8b5zkrn";
-        });
-      });
-    })
-  ];
   services.rgbdaemon = {
     enable = true;
     package = pkgs.stdenv.mkDerivation {
