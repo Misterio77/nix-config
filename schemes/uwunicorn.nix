@@ -1,7 +1,7 @@
 {
   slug = "uwunicorn";
   name = "UwUnicorn";
-  author = "Fernando Marques (https://github.com/RakkiUwU)";
+  author = "Fernando Marques (https://github.com/RakkiUwU) and Gabriel Fontes (https://github.com/Misterio77)";
   colors = {
     base00 = "241b26";
     base01 = "2f2a3f";
@@ -11,13 +11,14 @@
     base05 = "eed5d9";
     base06 = "d9c2c6";
     base07 = "e4ccd0";
-    base08 = "877bb6"; #lavender
-    base09 = "de5b44"; #red
-    base0A = "a84a73"; #wine
-    base0B = "c965bf"; #pink
-    base0C = "9c5fce"; #purple
-    base0D = "6a9eb5"; #blue
-    base0E = "78a38f"; #green
-    base0F = "a3a079"; #yellow
+    base08 = "877bb6";
+    base09 = "de5b44";
+    base0A = "a84a73";
+    base0B = "c965bf";
+    base0C = "9c5fce";
+    base0D = "6a9eb5";
+    base0E = "78a38f";
+    base0F = "a3a079";
   };
 }
+

@@ -1,1 +1,1 @@
-import ../../schemes/rose-pine-moon.nix
+import ../../schemes/atlas.nix

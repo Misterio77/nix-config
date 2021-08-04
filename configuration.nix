@@ -41,9 +41,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [
-    (import ./pkgs)
-  ];
 
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''

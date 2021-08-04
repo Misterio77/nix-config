@@ -93,7 +93,7 @@ in {
       }
       #workspaces button.visible,
       #workspaces button.focused {
-        background-color: #${colors.base02};
+        background-color: #${colors.base01};
       }
       #workspaces button.focused {
         color: #${colors.base0A};

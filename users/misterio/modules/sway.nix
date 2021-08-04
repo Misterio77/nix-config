@@ -182,7 +182,7 @@ in {
           "exec ${pactl} set-source-mute @DEFAULT_SINK@ toggle";
         # Media
         "XF86AudioNext" = "exec ${playerctl} next";
-        "XF86AudioPrev" = "exec ${playerctl} prev";
+        "XF86AudioPrev" = "exec ${playerctl} previous";
         "XF86AudioPlay" = "exec ${playerctl} play-pause";
         "XF86AudioStop" = "exec ${playerctl} stop";
         # RGB Lights
