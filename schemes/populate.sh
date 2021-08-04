@@ -7,7 +7,6 @@ atelier: https://github.com/atelierbram/base16-atelier-schemes
 atlas: https://github.com/ajlende/base16-atlas-scheme
 black-metal: https://github.com/metalelf0/base16-black-metal-scheme
 blueish: https://github.com/TheMayoras/base16-blueish-scheme
-brogrammer: https://github.com/piggyslasher/base16-brogrammer-scheme
 brushtrees: https://github.com/WhiteAbeLincoln/base16-brushtrees-scheme
 circus: https://github.com/stepchowfun/base16-circus-scheme
 classic: https://github.com/detly/base16-classic-scheme
@@ -21,7 +20,6 @@ darkviolet: https://github.com/ruler501/base16-darkviolet-scheme
 default: https://github.com/chriskempson/base16-default-schemes
 dirtysea: https://github.com/tartansandal/base16-dirtysea-scheme
 dracula: https://github.com/dracula/base16-dracula-scheme
-edge: https://github.com/cjayross/base16-edge-schemes
 equilibrium: https://github.com/carloabelli/base16-equilibrium-scheme
 espresso: https://github.com/alexmirrington/base16-espresso-scheme
 eva: https://github.com/kjakapat/base16-eva-scheme
@@ -64,7 +62,6 @@ rose-pine: https://github.com/edunfelt/base16-rose-pine-scheme
 sagelight: https://github.com/cveldy/base16-sagelight-scheme
 sakura: https://github.com/Misterio77/base16-sakura-scheme
 sandcastle: https://github.com/gessig/base16-sandcastle-scheme
-shades-of-purple: https://github.com/ahmadawais/base16-shades-of-purple
 silk: https://github.com/misterio77/base16-silk-scheme
 snazzy: https://github.com/h404bi/base16-snazzy-scheme
 solarflare: https://github.com/mnussbaum/base16-solarflare-scheme
@@ -74,7 +71,6 @@ stella: https://github.com/Shrimpram/base16-stella-scheme
 summercamp: https://github.com/zoefiri/base16-summercamp
 summerfruit: https://github.com/cscorley/base16-summerfruit-scheme
 synth-midnight: https://github.com/michael-ball/base16-synth-midnight-scheme
-tango: https://github.com/Schnouki/base16-tango-scheme
 tender: https://github.com/DanManN/base16-tender-scheme
 tomorrow: https://github.com/chriskempson/base16-tomorrow-scheme
 twilight: https://github.com/hartbit/base16-twilight-scheme
@@ -90,6 +86,7 @@ zenburn: https://github.com/elnawe/base16-zenburn-scheme
 unclaimed: https://github.com/chriskempson/base16-unclaimed-schemes
 END
 
+rm ~/.local/share/flavours/base16/schemes -r
 mkdir -p ~/.local/share/flavours/base16/sources/schemes
 echo "$schemes_source" > ~/.local/share/flavours/base16/sources/schemes/list.yaml
 flavours -v update schemes
