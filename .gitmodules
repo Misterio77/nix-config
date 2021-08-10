@@ -1,6 +1,0 @@
-[submodule "imports/home-manager"]
-	path = imports/home-manager
-	url = git@github.com:nix-community/home-manager.git
-[submodule "imports/impermanence"]
-	path = imports/impermanence
-	url = git@github.com:nix-community/impermanence.git

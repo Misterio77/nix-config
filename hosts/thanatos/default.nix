@@ -1,16 +1,11 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ../../users
-  ];
+  imports = [ ./hardware-configuration.nix ../../users ];
 
   system.stateVersion = "21.11";
 
-  nixpkgs = {
-    config.allowUnfree = true;
-  };
+  nixpkgs = { config.allowUnfree = true; };
 
   nix = {
     package = pkgs.nixUnstable;
@@ -38,14 +33,12 @@
       "vm.max_map_count" = 16777216;
       "abi.vsyscall32" = 0;
     };
-    kernelModules = [
-      "v4l2loopback"
-    ];
+    kernelModules = [ "v4l2loopback" ];
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1 video_nr=9 card_label=a7III
     '';
     consoleLogLevel = 3;
-    supportedFilesystems = ["btrfs"];
+    supportedFilesystems = [ "btrfs" ];
     loader = {
       timeout = 0;
       systemd-boot = {
@@ -117,7 +110,7 @@
   xdg.portal = {
     enable = true;
     gtkUsePortal = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-gtk ];
   };
 
   hardware = {
@@ -128,12 +121,13 @@
   virtualisation.docker.enable = true;
 
   # https://github.com/NixOS/nixpkgs/issues/108598
-  environment.systemPackages = with pkgs; [
-    (steam.override {
-      extraProfile = ''
-        unset VK_ICD_FILENAMES
-        export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json:${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json:${pkgs.driversi686Linux.amdvlk}/share/vulkan/icd.d/amd_icd32.json
-      '';
-    })
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      (steam.override {
+        extraProfile = ''
+          unset VK_ICD_FILENAMES
+          export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json:${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json:${pkgs.driversi686Linux.amdvlk}/share/vulkan/icd.d/amd_icd32.json
+        '';
+      })
+    ];
 }

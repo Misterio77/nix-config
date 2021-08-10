@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, impermanence, ... }:
 
 {
   imports = [
@@ -38,7 +38,6 @@
     delta
     discord
     dragon-drop
-    ethminer-free
     exa
     fira
     fira-code
@@ -64,33 +63,32 @@
   fonts.fontconfig.enable = true;
 
   # Writable (persistent) data
-  /*
-  home.persistence."/data/home/misterio" = {
-    directories = [
-      "Documents"
-      "Downloads"
-      "Games"
-      "Pictures"
-      ".gnupg"
-      ".local/share/password-store"
-      ".local/share/Steam"
-      ".local/share/multimc"
-      ".local/share/lutris"
-      ".config/lutris"
-      ".local/share/osu"
-      ".local/share/Tabletop Simulator"
-      ".config/Hero_Siege"
-    ];
-    allowOther = false;
-  };
+  /* home.persistence."/data/home/misterio" = {
+       directories = [
+         "Documents"
+         "Downloads"
+         "Games"
+         "Pictures"
+         ".gnupg"
+         ".local/share/password-store"
+         ".local/share/Steam"
+         ".local/share/multimc"
+         ".local/share/lutris"
+         ".config/lutris"
+         ".local/share/osu"
+         ".local/share/Tabletop Simulator"
+         ".config/Hero_Siege"
+       ];
+       allowOther = false;
+     };
   */
 
-  colorscheme = import ../../../colors/heetch.nix;
+  colorscheme = import ../../../colors/paraiso.nix;
   wallpaper.generate = true;
   #wallpaper.path = "/dotfiles/users/misterio/Wallpapers/astronaut-minimalism.png";
 
   services.ethminer = {
-    enable = true;
+    enable = false;
     wallet = "0x16EeE21f85c06D3B983533b32Eef82d963d24f9a";
     pool = "eth-br.flexpool.io";
     port = 5555;
