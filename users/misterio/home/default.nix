@@ -1,8 +1,9 @@
-{ pkgs, impermanence, ... }:
+{ pkgs, ... }:
 
-{
+let
+  colors = import ../../../colors.nix;
+in {
   imports = [
-    #"${impermanence}/home-manager.nix"
     ./alacritty.nix
     ./direnv.nix
     ./fzf.nix
@@ -27,6 +28,11 @@
 
   home.username = "misterio";
   home.homeDirectory = "/home/misterio";
+
+  colorscheme = colors.gruvbox-light-hard;
+  wallpaper.generate = true;
+  #wallpaper.path = "/dotfiles/users/misterio/Wallpapers/astronaut-minimalism.png";
+
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -63,29 +69,24 @@
   fonts.fontconfig.enable = true;
 
   # Writable (persistent) data
-  /* home.persistence."/data/home/misterio" = {
-       directories = [
-         "Documents"
-         "Downloads"
-         "Games"
-         "Pictures"
-         ".gnupg"
-         ".local/share/password-store"
-         ".local/share/Steam"
-         ".local/share/multimc"
-         ".local/share/lutris"
-         ".config/lutris"
-         ".local/share/osu"
-         ".local/share/Tabletop Simulator"
-         ".config/Hero_Siege"
-       ];
-       allowOther = false;
-     };
-  */
-
-  colorscheme = import ../../../colors/paraiso.nix;
-  wallpaper.generate = true;
-  #wallpaper.path = "/dotfiles/users/misterio/Wallpapers/astronaut-minimalism.png";
+  home.persistence."/data/home/misterio" = {
+     directories = [
+       "Documents"
+       "Downloads"
+       "Games"
+       "Pictures"
+       ".gnupg"
+       ".local/share/password-store"
+       ".local/share/Steam"
+       ".local/share/multimc"
+       ".local/share/lutris"
+       ".config/lutris"
+       ".local/share/osu"
+       ".local/share/Tabletop Simulator"
+       ".config/Hero_Siege"
+     ];
+     allowOther = false;
+   };
 
   services.ethminer = {
     enable = false;

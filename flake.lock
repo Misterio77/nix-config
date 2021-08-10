@@ -18,40 +18,53 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1628547133,
-        "narHash": "sha256-KCOyWv81NxRO2vgqtu09bbndXmy3T/0PkSfrXxnFN+8=",
-        "owner": "nix-community",
+        "lastModified": 1628622820,
+        "narHash": "sha256-YIbEo97dEsMIBdbS9vnnT2A+745iQEUsxvYz2RbC78Y=",
+        "owner": "misterio77",
         "repo": "home-manager",
-        "rev": "5515ec99cc1a8df5b8ca2204f752e1501572fa1b",
+        "rev": "549968fc08d0cdf31c8cded220e1156a5cd7320e",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "misterio77",
+        "ref": "personal",
         "repo": "home-manager",
         "type": "github"
       }
     },
     "impermanence": {
       "locked": {
-        "lastModified": 1611747548,
-        "narHash": "sha256-2z5wmWda1uI4IkTZrW52jiHq3bzhYLc+GgjvaSd544M=",
-        "owner": "nix-community",
+        "lastModified": 1628522989,
+        "narHash": "sha256-7GazTJyg11C8E7xn1zm52Ee+Gl6Vy6rS1x1fAWZtkEg=",
+        "owner": "RiscadoA",
         "repo": "impermanence",
-        "rev": "58558845bc68dcf2bb32caa80564f7fe3f6cbc61",
+        "rev": "4cef52a4ab7faf2ea74c8d8ffc05f731421d0beb",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "RiscadoA",
         "repo": "impermanence",
         "type": "github"
       }
     },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1628622530,
+        "narHash": "sha256-McqY2UpKIQcZ2En0gF9cocLOLR9z6fg4u7ijolyVmbQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2582176554c6e483f1dc777542684acd7244c4a0",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1628465643,
         "narHash": "sha256-QSNw9bDq9uGUniQQtakRuw4m21Jxugm23SXLVgEV4DM=",
@@ -72,7 +85,7 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },

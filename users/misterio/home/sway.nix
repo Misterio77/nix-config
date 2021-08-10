@@ -17,7 +17,7 @@ let
     installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
   };
   # Programs
-  alacritty = "${pkgs.alacritty}/bin/alacritty";
+  alacritty = "${pkgs.alacritty-reload}/bin/alacritty";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
   makoctl = "${pkgs.mako}/bin/makoctl";
   nvim = "${pkgs.neovim}/bin/nvim";
@@ -104,9 +104,9 @@ in {
       };
       startup = [
         # Initial lock
-        {
-          command = "'${swaylock-command} -i ${wallpaper}'";
-        }
+        #{
+          #command = "'${swaylock-command} -i ${wallpaper}'";
+        #}
         # Focus main output
         {
           command = "swaymsg focus output HDMI-A-1";

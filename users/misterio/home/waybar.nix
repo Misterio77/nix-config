@@ -101,6 +101,7 @@ in {
       #workspaces button.visible,
       #workspaces button.focused {
         background-color: #${colors.base01};
+        color: #${colors.base04};
       }
       #workspaces button.focused {
         color: #${colors.base0A};

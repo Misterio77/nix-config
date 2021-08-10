@@ -2,7 +2,7 @@
 
 let
   colors = config.colorscheme.colors;
-  alacritty = "${pkgs.alacritty}/bin/alacritty";
+  alacritty = "${pkgs.alacritty-reload}/bin/alacritty";
   nvim = "${pkgs.neovim}/bin/nvim";
 in {
   programs.qutebrowser = {
