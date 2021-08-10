@@ -1,11 +1,8 @@
 { pkgs, ... }:
 
-let
-  glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
+let glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
 in {
-  home.packages = with pkgs; [
-    neofetch
-  ];
+  home.packages = with pkgs; [ neofetch ];
   xdg.configFile."neofetch/config.conf".text = ''
     print_info() {
         info title

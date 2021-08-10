@@ -2,7 +2,7 @@
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
-    nix-direnv = { 
+    nix-direnv = {
       enable = true;
       #enableFlakes = true;
     };

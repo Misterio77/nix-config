@@ -1,6 +1,5 @@
 { config, ... }:
-let
-  colors = config.colorscheme.colors;
+let colors = config.colorscheme.colors;
 in {
   programs.zathura = {
     enable = true;

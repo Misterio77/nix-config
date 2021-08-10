@@ -4,10 +4,10 @@ with lib;
 
 let
   cfg = config.services.ethminer;
-  poolUrl = escapeShellArg "stratum1+ssl://${cfg.wallet}.${cfg.rig}@${cfg.pool}:${toString cfg.port}";
-in
+  poolUrl = escapeShellArg
+    "stratum1+ssl://${cfg.wallet}.${cfg.rig}@${cfg.pool}:${toString cfg.port}";
 
-{
+in {
 
   ###### interface
 
@@ -49,7 +49,6 @@ in
 
   };
 
-
   ###### implementation
 
   config = mkIf cfg.enable {
@@ -60,13 +59,13 @@ in
         After = [ "network.target" ];
       };
       Service = {
-        ExecStartPre = "${pkgs.ethminer-free}/bin/.ethminer-wrapped --list-devices";
-        ExecStart = "${pkgs.ethminer-free}/bin/.ethminer-wrapped --opencl --report-hashrate --pool ${poolUrl}";
+        ExecStartPre =
+          "${pkgs.ethminer-free}/bin/.ethminer-wrapped --list-devices";
+        ExecStart =
+          "${pkgs.ethminer-free}/bin/.ethminer-wrapped --opencl --report-hashrate --pool ${poolUrl}";
         Restart = "always";
       };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
+      Install = { WantedBy = [ "default.target" ]; };
     };
   };
 }

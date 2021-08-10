@@ -1,9 +1,7 @@
 {
   programs.git = {
     enable = true;
-    aliases = {
-      graph = "log --all --decorate --oneline --graph";
-    };
+    aliases = { graph = "log --all --decorate --oneline --graph"; };
     userName = "Gabriel Fontes";
     userEmail = "eu@misterio.me";
     signing = {
@@ -11,8 +9,6 @@
       key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
     };
     lfs = { enable = true; };
-    ignores = [
-      ".direnv"
-    ];
+    ignores = [ ".direnv" ];
   };
 }

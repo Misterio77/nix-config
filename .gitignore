@@ -1,2 +1,3 @@
-users/*/password.nix
 .direnv
+result
+users/*/password.nix
