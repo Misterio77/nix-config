@@ -13,10 +13,7 @@
       ls = "exa";
       top = "btm";
       jqless = "jq -C | less -r";
-      nr = "nixos-rebuild";
-      nrs = "sudo nixos-rebuild switch --flake /dotfiles";
-      nre = "nixos-rebuild edit";
-      ns = "nix-shell";
+      rs = "sudo nixos-rebuild switch --flake /dotfiles";
       v = "nvim";
       vi = "nvim";
       vim = "nvim";
@@ -46,6 +43,10 @@
       zstyle ":completion:*" matcher-list "" "m:{[:lower:][:upper:]}={[:upper:][:lower:]}" "+l:|=* r:|=*"
 
       export PATH="$PATH":/dotfiles/scripts
+
+      function , {
+        nix run nixpkgs#$1 -- ''${@:2}
+      }
     '';
     plugins = [
       {
