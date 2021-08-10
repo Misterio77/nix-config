@@ -1,5 +1,6 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -p flavours -i bash
+#! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
 
 read -r -d '' schemes_source << END
 apprentice: https://github.com/casonadams/base16-apprentice-scheme
