@@ -1,7 +1,12 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, hardware, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ../../users ];
+  imports = [
+    #hardware.nixosModules.common-cpu-amd
+    #hardware.nixosModules.common-gpu-amd
+    ./hardware-configuration.nix
+    ../../users
+  ];
 
   system.stateVersion = "21.11";
 

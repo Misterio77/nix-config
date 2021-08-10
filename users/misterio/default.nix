@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  # User info
   users.users.misterio = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
@@ -8,6 +9,7 @@
     initialHashedPassword = import ./password.nix;
   };
 
+  # Allow swaylock
   security.pam.services.swaylock = { };
 
   # Autologin at tty1
