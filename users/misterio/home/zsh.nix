@@ -45,7 +45,7 @@
       zstyle ":completion:*" completer _complete
       zstyle ":completion:*" matcher-list "" "m:{[:lower:][:upper:]}={[:upper:][:lower:]}" "+l:|=* r:|=*"
 
-      export PATH="$PATH":$HOME/bin
+      export PATH="$PATH":/dotfiles/scripts
     '';
     plugins = [
       {

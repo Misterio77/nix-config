@@ -29,10 +29,8 @@ in {
   home.username = "misterio";
   home.homeDirectory = "/home/misterio";
 
-  colorscheme = colors.gruvbox-light-hard;
+  colorscheme = colors.pasque;
   wallpaper.generate = true;
-  #wallpaper.path = "/dotfiles/users/misterio/Wallpapers/astronaut-minimalism.png";
-
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
