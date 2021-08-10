@@ -45,7 +45,8 @@ in {
           interval = 2;
           exec = ''
             echo '
-             Gamemode is active''';
+             Gamemode is active
+          '';
         };
         "custom/gpu" = {
           exec = "cat /sys/class/drm/card0/device/gpu_busy_percent";
