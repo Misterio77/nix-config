@@ -9,9 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.initrd.luks.devices."nixenc".device = "/dev/disk/by-uuid/320599e3-21f9-465e-a2f2-d078eccc34c0";
-  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -41,12 +39,6 @@
     { device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
-    };
-
-  fileSystems."/etc/nixos" =
-    { device = "/dotfiles";
-      fsType = "none";
-      options = [ "bind" ];
     };
 
   swapDevices = [ ];

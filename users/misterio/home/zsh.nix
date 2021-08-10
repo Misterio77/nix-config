@@ -15,7 +15,7 @@
       top = "btm";
       jqless = "jq -C | less -r";
       nr = "nixos-rebuild";
-      nrs = "sudo nixos-rebuild switch --fast";
+      nrs = "sudo nixos-rebuild switch --flake /dotfiles";
       nre = "nixos-rebuild edit";
       ns = "nix-shell";
       v = "nvim";
@@ -23,6 +23,7 @@
       vim = "nvim";
       m = "m";
       mutt = "neomutt";
+      getip = "curl ifconfig.me";
     };
     envExtra = ''
       GLOBALIAS_FILTER_VALUES=()

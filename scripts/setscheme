@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-echo "import ../../schemes/$1" > /dotfiles/users/misterio/current-scheme.nix
-sudo nixos-rebuild switch --fast

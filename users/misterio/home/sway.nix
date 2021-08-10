@@ -31,12 +31,29 @@ let
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
   # Swaylock with color arguments
-  swaylock = import ./swaylock-custom.nix {
+  swaylock-command = import ./swaylock-command.nix {
     package = pkgs.swaylock-effects;
     colors = colors;
   };
 in {
   home.packages = with pkgs; [ wl-clipboard wf-recorder ];
+
+  security.pam.services.swaylock = {};
+
+  # Autologin at tty1
+  systemd.services."autovt@tty1" = {
+    description = "Autologin at the TTY1";
+    after = [ "systemd-logind.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = [
+      ""  # override upstream default with an empty ExecStart
+      "@${pkgs.utillinux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --autologin misterio --noclear %I $TERM"
+    ];
+    Restart = "always";
+    Type = "idle";
+    };
+  };
 
   wayland.windowManager.sway = {
     enable = true;
@@ -105,7 +122,7 @@ in {
       startup = [
         # Initial lock
         {
-          command = "'${swaylock} -i ${wallpaper}'";
+          command = "'${swaylock-command} -i ${wallpaper}'";
         }
         # Focus main output
         {
@@ -121,7 +138,7 @@ in {
         {
           command = ''
             ${swayidle} -w \
-                      timeout 600 '${swaylock} --screenshots --daemonize' \
+                      timeout 600 '${swaylock-command} --screenshots --daemonize' \
                       timeout 10 'pgrep -x swaylock && pactl set-source-mute @DEFAULT_SOURCE@ yes' \
                           resume 'pgrep -x swaylock && pactl set-source-mute @DEFAULT_SOURCE@ no' \
                       timeout 610 'pactl set-source-mute @DEFAULT_SOURCE@ yes' \
@@ -167,7 +184,7 @@ in {
         "Mod4+Control+Left" = "output DP-1 toggle";
         "Mod4+Control+Down" = "output HDMI-A-1 toggle";
         # Lock screen
-        "XF86Launch5" = "exec ${swaylock} --screenshots";
+        "XF86Launch5" = "exec ${swaylock-command} --screenshots";
         # Volume
         "XF86AudioRaiseVolume" =
           "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";
