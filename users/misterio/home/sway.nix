@@ -104,9 +104,9 @@ in {
       };
       startup = [
         # Initial lock
-        #{
-          #command = "'${swaylock-command} -i ${wallpaper}'";
-        #}
+        {
+          command = "'${swaylock-command} -i ${wallpaper}'";
+        }
         # Focus main output
         {
           command = "swaymsg focus output HDMI-A-1";
