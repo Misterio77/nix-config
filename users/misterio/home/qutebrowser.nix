@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-let 
+let
   colors = config.colorscheme.colors;
   alacritty = "${pkgs.alacritty}/bin/alacritty";
   nvim = "${pkgs.neovim}/bin/nvim";

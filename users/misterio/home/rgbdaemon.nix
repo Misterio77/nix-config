@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
-let
-  colors = config.colorscheme.colors;
+let colors = config.colorscheme.colors;
 in {
-  imports = [
-    ../../../modules/rgbdaemon.nix
-  ];
+  imports = [ ../../../modules/rgbdaemon.nix ];
   services.rgbdaemon = {
     enable = true;
     package = pkgs.stdenv.mkDerivation {

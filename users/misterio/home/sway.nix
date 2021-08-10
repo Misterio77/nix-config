@@ -38,29 +38,12 @@ let
 in {
   home.packages = with pkgs; [ wl-clipboard wf-recorder ];
 
-  security.pam.services.swaylock = {};
-
-  # Autologin at tty1
-  systemd.services."autovt@tty1" = {
-    description = "Autologin at the TTY1";
-    after = [ "systemd-logind.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStart = [
-      ""  # override upstream default with an empty ExecStart
-      "@${pkgs.utillinux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --autologin misterio --noclear %I $TERM"
-    ];
-    Restart = "always";
-    Type = "idle";
-    };
-  };
-
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = {
-      bars = [ ];
+      bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
       menu = "${wofi} -S run";
       fonts = {
         names = [ "Fira Sans" ];

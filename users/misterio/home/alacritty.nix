@@ -1,25 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
-let 
-  colors = config.colorscheme.colors;
-in { 
-  # TODO: remove when https://github.com/alacritty/alacritty/pull/5313 is merged
-  nixpkgs.overlays = [
-    (self: super: {
-      alacritty = super.alacritty.overrideAttrs (oldAttrs: rec {
-        src = super.fetchFromGitHub {
-          owner = "ncfavier";
-          repo = "alacritty";
-          rev = "5f392c2cb516a5ea198ebb48754c7c42157d21b3";
-          sha256 = "0358jc0axwk4g33z70pv6glkjzwpc4qx6555xamk5pxp4498j831";
-        };
-        cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
-          inherit src;
-          outputHash = "04pd3v586y1zpqqslwqqs4xxhp3aghkkh0rqhcrdnahb9i40fql1";
-        });
-      });
-    })
-  ];
+let colors = config.colorscheme.colors;
+in {
   programs.alacritty = {
     enable = true;
     settings = {
