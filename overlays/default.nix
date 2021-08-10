@@ -2,6 +2,7 @@
 
 {
   nixpkgs.overlays = [
+    # TODO: Remove when https://github.com/alacritty/alacritty/pull/5313 is merged
     (final: prev: {
       alacritty-reload = prev.alacritty.overrideAttrs (oldAttrs: rec {
         src = prev.fetchFromGitHub {
@@ -16,6 +17,7 @@
         });
       });
     })
+    # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/132941 is fixed
     (final: prev: {
       ethash = prev.ethash.overrideAttrs (oldAttrs: rec {
         src = prev.fetchFromGitHub {
