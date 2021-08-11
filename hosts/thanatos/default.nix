@@ -111,7 +111,12 @@
     droidcam.enable = true;
   };
 
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable = true;
+    sudo.extraConfig = ''
+      Defaults timestamp_type=global
+    '';
+  };
 
   xdg.portal = {
     enable = true;

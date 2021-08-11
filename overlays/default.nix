@@ -3,6 +3,83 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
+      setscheme-fzf = let
+        zenity = "${pkgs.gnome.zenity}/bin/zenity";
+        fzf = "${pkgs.alacritty-fzf}/bin/alacritty-fzf";
+        setscheme = "${pkgs.setscheme}/bin/setscheme";
+      in pkgs.stdenv.mkDerivation {
+        name = "setscheme-fzf";
+        src = pkgs.writeShellScriptBin "setscheme-fzf" ''
+          set -o pipefail
+          chosen=$(nix eval --impure --raw --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))' | ${fzf}) && \
+          password=$(sudo -nv 2> /dev/null || ${zenity} --password --title "Change color scheme") && \
+          echo $password | \
+          ${setscheme} $chosen --show-trace --verbose 2>&1 | \
+          stdbuf -oL -eL awk '/^ / { print int(+$2) ; next } $0 { print "# " $0 }' | \
+          ${zenity} --progress --pulsate --auto-close --auto-kill --title "Change color scheme"
+          if [ "$?" != "0" ]; then
+            ${zenity} --error --text "Error while applying configuration"
+          fi
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/bin/setscheme-fzf $out/bin/setscheme-fzf
+        '';
+      };
+    })
+    (final: prev: {
+      setscheme = pkgs.stdenv.mkDerivation {
+        name = "setscheme";
+        src = pkgs.writeShellScriptBin "setscheme" ''
+          sed -i "/colorscheme = /c \ \ colorscheme = colors.$1;" /dotfiles/users/$USER/home/default.nix && \
+          sudo -S nixos-rebuild switch --flake /dotfiles ''${@:2}
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/bin/setscheme $out/bin/setscheme
+        '';
+      };
+    })
+    (final: prev: {
+      alacritty-fzf = let
+        fzf = "${pkgs.fzf}/bin/fzf";
+        alacritty = "${pkgs.alacritty}/bin/alacritty";
+      in pkgs.stdenv.mkDerivation {
+        name = "alacritty-fzf";
+        src = pkgs.writeShellScriptBin "alacritty-fzf" ''
+          directory="$XDG_RUNTIME_DIR/alacritty-fzf"
+          mkdir -p "$directory"
+
+          tee > "$directory/input"
+
+          cat <<'EOF' > "$directory/inner"
+          #!/usr/bin/env bash
+          sleep 0.1
+          directory="$XDG_RUNTIME_DIR/alacritty-fzf"
+          output=$(cat "$directory/input" | ${fzf} "$@")
+          echo $? > "$directory/exitcode"
+          echo "$output" > "$directory/output"
+          EOF
+
+          chmod +x "$directory/inner"
+
+          ${alacritty} -t "Selector" --class AlacrittyFloatingSelector -e "$directory/inner" "$@"
+
+          cat "$directory/output"
+          exitcode="$(cat "$directory/exitcode")"
+          #rm "$directory"/* &> /dev/null
+          exit "$exitcode"
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/bin/alacritty-fzf $out/bin/alacritty-fzf
+        '';
+      };
+    })
+    (final: prev: {
       swayfader = pkgs.stdenv.mkDerivation {
         name = "swayfader";
         src = pkgs.fetchFromGitHub {

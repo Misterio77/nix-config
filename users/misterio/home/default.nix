@@ -26,38 +26,26 @@ in {
     ../../../modules/ethminer.nix
   ];
 
-  colorscheme = colors.pasque;
+  colorscheme = colors.uwunicorn;
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    asciinema
     bottom
-    cbonsai
-    clinfo
-    cmatrix
-    delta
     discord
     dragon-drop
     exa
     fira
     fira-code
-    glib
-    gnome.zenity
-    gsettings-desktop-schemas
-    imv
     lm_sensors
     lutris
     multimc
-    openssl
     osu-lazer
     pinentry-gnome
-    pipes
+    setscheme
     spotify
     steam
-    #gamescope
     trash-cli
-    vulkan-tools
     xdg-utils
   ];
 

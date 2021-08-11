@@ -12,9 +12,10 @@ let
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
+  setscheme-fzf = "${pkgs.setscheme-fzf}/bin/setscheme-fzf";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
-  wofi = "${pkgs.wofi}/bin/wofi -t ${alacritty}";
+  wofi = "${pkgs.wofi}/bin/wofi -i -e -t ${alacritty}";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
   # Swaylock with color arguments
@@ -58,6 +59,10 @@ in {
           output = "DP-1";
           workspace = "2";
         }
+      ];
+      floating.criteria = [
+        { app_id = "zenity"; }
+        { app_id = "AlacrittyFloating*"; }
       ];
       colors = {
         focused = {
@@ -109,15 +114,15 @@ in {
           command = ''
             ${swayidle} -w \
                       timeout 600 '${swaylock-command} --screenshots --daemonize' \
-                      timeout 10 'pgrep -x swaylock && pactl set-source-mute @DEFAULT_SOURCE@ yes' \
-                          resume 'pgrep -x swaylock && pactl set-source-mute @DEFAULT_SOURCE@ no' \
-                      timeout 610 'pactl set-source-mute @DEFAULT_SOURCE@ yes' \
-                          resume 'pactl set-source-mute @DEFAULT_SOURCE@ no' \
+                      timeout 10 'pgrep -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ yes' \
+                          resume 'pgrep -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ no' \
+                      timeout 610 '${pactl} set-source-mute @DEFAULT_SOURCE@ yes' \
+                          resume  '${pactl} set-source-mute @DEFAULT_SOURCE@ no' \
                       timeout 20  'pgrep -x swaylock && systemctl --user stop rgbdaemon' \
                           resume  'pgrep -x swaylock && systemctl --user start rgbdaemon' \
                       timeout 620 'systemctl --user stop rgbdaemon' \
                           resume  'systemctl --user start rgbdaemon' \
-                        timeout 20  'pgrep -x swaylock && swaymsg "output * dpms off"' \
+                      timeout 20  'pgrep -x swaylock && swaymsg "output * dpms off"' \
                           resume  'pgrep -x swaylock && swaymsg "output * dpms on"' \
                       timeout 620 'swaymsg "output * dpms off"' \
                           resume  'swaymsg "output * dpms on"' \
@@ -172,8 +177,8 @@ in {
         "XF86AudioPrev" = "exec ${playerctl} previous";
         "XF86AudioPlay" = "exec ${playerctl} play-pause";
         "XF86AudioStop" = "exec ${playerctl} stop";
-        # RGB Lights
-        # TODO
+        # Color scheme
+        "XF86Tools" = "exec ${setscheme-fzf}";
         # Notifications
         "Mod4+w" = "exec ${makoctl} dismiss";
         "Mod4+shift+w" = "exec ${makoctl} dismiss -a";

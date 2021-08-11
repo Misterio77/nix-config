@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-sed -i "/colorscheme = colors.*;/c \ \ colorscheme = colors.$1;" /dotfiles/users/$USER/home/default.nix && \
-sudo nixos-rebuild switch --flake /dotfiles
