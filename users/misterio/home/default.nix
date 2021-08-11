@@ -26,7 +26,7 @@ in {
     ../../../modules/ethminer.nix
   ];
 
-  colorscheme = colors.uwunicorn;
+  colorscheme = colors.pasque;
   wallpaper.generate = true;
 
   home.packages = with pkgs; [

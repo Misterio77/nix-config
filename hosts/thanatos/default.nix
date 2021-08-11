@@ -12,8 +12,13 @@
 
   nix = {
     package = pkgs.nixUnstable;
+    gc = {
+      automatic = true;
+      dates = "daily";
+    };
     extraOptions = ''
       experimental-features = nix-command flakes
+      warn-dirty = false
     '';
   };
 
