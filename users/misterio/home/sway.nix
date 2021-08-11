@@ -15,7 +15,7 @@ let
   setscheme-fzf = "${pkgs.setscheme-fzf}/bin/setscheme-fzf";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
-  wofi = "${pkgs.wofi}/bin/wofi -i -e -t ${alacritty}";
+  wofi = "${pkgs.wofi}/bin/wofi -M fuzzy -t ${alacritty}";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
   # Swaylock with color arguments
@@ -32,7 +32,7 @@ in {
     wrapperFeatures.gtk = true;
     config = {
       bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
-      menu = "${wofi} -S run";
+      menu = "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run";
       fonts = {
         names = [ "Fira Sans" ];
         size = 12.0;

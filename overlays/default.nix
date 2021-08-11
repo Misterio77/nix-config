@@ -3,6 +3,19 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
+      comma = pkgs.stdenv.mkDerivation {
+        name = "comma";
+        src = pkgs.writeShellScriptBin "comma" ''
+          nix run nixpkgs#$1 -- ''${@:2}
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/bin/comma "$out/bin/,"
+        '';
+      };
+    })
+    (final: prev: {
       setscheme-fzf = let
         zenity = "${pkgs.gnome.zenity}/bin/zenity";
         fzf = "${pkgs.alacritty-fzf}/bin/alacritty-fzf";
@@ -135,6 +148,14 @@
           rev = "v0.6.0";
           sha256 = "sha256-N30v9OZwTmDbltPPmeSa0uOGJhos1VzyS5zY9vVCWfA=";
         };
+      });
+    })
+    # Fixes https://todo.sr.ht/~scoopta/wofi/174
+    (final: prev: {
+      wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
+        patches = (oldAttrs.patches or []) ++ [
+          ./wofi-run-shell.patch
+        ];
       });
     })
   ];

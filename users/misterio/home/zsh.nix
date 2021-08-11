@@ -43,10 +43,6 @@
       zstyle ":completion:*" matcher-list "" "m:{[:lower:][:upper:]}={[:upper:][:lower:]}" "+l:|=* r:|=*"
 
       export PATH="$PATH":/dotfiles/scripts
-
-      function , {
-        nix run nixpkgs#$1 -- ''${@:2}
-      }
     '';
     plugins = [
       {

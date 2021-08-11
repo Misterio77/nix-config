@@ -26,12 +26,13 @@ in {
     ../../../modules/ethminer.nix
   ];
 
-  colorscheme = colors.pasque;
+  colorscheme = colors.paraiso;
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
+    comma
     discord
     dragon-drop
     exa
