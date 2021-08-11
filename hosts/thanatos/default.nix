@@ -19,6 +19,9 @@
   networking = {
     hostName = "thanatos";
     networkmanager.enable = true;
+    firewall = {
+      allowedTCPPorts = [ 25565 ];
+    };
   };
 
   i18n.defaultLocale = "en_US.UTF-8";

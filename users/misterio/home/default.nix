@@ -26,9 +26,6 @@ in {
     ../../../modules/ethminer.nix
   ];
 
-  home.username = "misterio";
-  home.homeDirectory = "/home/misterio";
-
   colorscheme = colors.pasque;
   wallpaper.generate = true;
 
