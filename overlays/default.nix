@@ -2,6 +2,38 @@
 
 {
   nixpkgs.overlays = [
+    (final: prev: {
+      swayfader = pkgs.stdenv.mkDerivation {
+        name = "swayfader";
+        src = pkgs.fetchFromGitHub {
+          owner = "Misterio77";
+          repo = "swayfader";
+          rev = "3f18eacb4b43ffd2d8c10a395a3e77bbb40ccee6";
+          sha256 = "0x490g1g1vjrybnwna9z00r9i61d5sbrzq7qi7mdq6y94whwblla";
+        };
+        buildInputs = [ (pkgs.python3.withPackages (ps: [ ps.i3ipc ])) ];
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
+      };
+    })
+    (final: prev: {
+      rgbdaemon = prev.stdenv.mkDerivation {
+        name = "rgbdaemon";
+        src = pkgs.fetchFromGitHub {
+          owner = "Misterio77";
+          repo = "rgbdaemon";
+          rev = "4c8ae65f9cd334b0a324ab0b4aedabbbcf617962";
+          sha256 = "sha256-ujXFiCflEIq+FOD5X0HO8bFPgXpG0VYbgBXOR5W3tKg=";
+        };
+        propagatedBuildInputs = with pkgs; [ pastel makeWrapper ];
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/rgbdaemon.sh $out/bin/rgbdaemon
+        '';
+      };
+    })
     # TODO: Remove when https://github.com/alacritty/alacritty/pull/5313 is merged
     (final: prev: {
       alacritty-reload = prev.alacritty.overrideAttrs (oldAttrs: rec {

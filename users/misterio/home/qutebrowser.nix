@@ -19,6 +19,10 @@ in {
         default_size = "12pt";
       };
       colors = {
+        webpage = {
+          preferred_color_scheme = "${config.colorscheme.kind}";
+          bg = "#ffffff";
+        };
         completion = {
           fg = "#${colors.base05}";
           match.fg = "#${colors.base09}";
@@ -138,7 +142,6 @@ in {
         tabs.selected.even.fg = "#${colors.base05}";
         tabs.selected.odd.bg = "#${colors.base02}";
         tabs.selected.odd.fg = "#${colors.base05}";
-        webpage.bg = "#ffffff";
       };
     };
     extraConfig = ''

@@ -36,7 +36,6 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/thanatos
-            ./overlays
             hardware.nixosModules.common-cpu-amd
             hardware.nixosModules.common-gpu-amd
           ] ++ users [ "misterio" ];

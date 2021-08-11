@@ -4,21 +4,7 @@ in {
   imports = [ ../../../modules/rgbdaemon.nix ];
   services.rgbdaemon = {
     enable = true;
-    package = pkgs.stdenv.mkDerivation {
-      name = "rgbdaemon";
-      src = pkgs.fetchFromGitHub {
-        owner = "Misterio77";
-        repo = "rgbdaemon";
-        rev = "822fafa2a0fe825d63d694befdf226f836bd40a4";
-        sha256 = "1p1nqpfyxf0imhc7myccfs3587mks57mhfvfsm3rh0iz1798cqwv";
-      };
-      propagatedBuildInputs = with pkgs; [ pastel makeWrapper ];
-      dontBuild = true;
-      dontConfigure = true;
-      installPhase = ''
-        install -Dm 0755 $src/rgbdaemon.sh $out/bin/rgbdaemon
-      '';
-    };
+    package = pkgs.rgbdaemon;
     interval = 0.8;
     daemons = {
       swayWorkspaces = true;

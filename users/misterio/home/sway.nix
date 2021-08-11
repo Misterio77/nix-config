@@ -3,19 +3,6 @@
 let
   colors = config.colorscheme.colors;
   wallpaper = config.wallpaper.path;
-  swayfader-pkg = pkgs.stdenv.mkDerivation {
-    name = "swayfader";
-    src = pkgs.fetchFromGitHub {
-      owner = "Misterio77";
-      repo = "swayfader";
-      rev = "3f18eacb4b43ffd2d8c10a395a3e77bbb40ccee6";
-      sha256 = "0x490g1g1vjrybnwna9z00r9i61d5sbrzq7qi7mdq6y94whwblla";
-    };
-    buildInputs = [ (pkgs.python3.withPackages (ps: [ ps.i3ipc ])) ];
-    dontBuild = true;
-    dontConfigure = true;
-    installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
-  };
   # Programs
   alacritty = "${pkgs.alacritty-reload}/bin/alacritty";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
@@ -25,7 +12,7 @@ let
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
-  swayfader = "${swayfader-pkg}/bin/swayfader";
+  swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   wofi = "${pkgs.wofi}/bin/wofi -t ${alacritty}";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
@@ -179,7 +166,7 @@ in {
           "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
         "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
         "Shift+XF86AudioMute" =
-          "exec ${pactl} set-source-mute @DEFAULT_SINK@ toggle";
+          "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
         # Media
         "XF86AudioNext" = "exec ${playerctl} next";
         "XF86AudioPrev" = "exec ${playerctl} previous";
