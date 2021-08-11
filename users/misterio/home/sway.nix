@@ -15,7 +15,7 @@ let
   setscheme-fzf = "${pkgs.setscheme-fzf}/bin/setscheme-fzf";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
-  wofi = "${pkgs.wofi}/bin/wofi -M fuzzy -t ${alacritty}";
+  wofi = "${pkgs.wofi}/bin/wofi -t ${alacritty}";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
   # Swaylock with color arguments
