@@ -100,8 +100,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "Misterio77";
           repo = "rgbdaemon";
-          rev = "4c8ae65f9cd334b0a324ab0b4aedabbbcf617962";
-          sha256 = "sha256-ujXFiCflEIq+FOD5X0HO8bFPgXpG0VYbgBXOR5W3tKg=";
+          rev = "28d12fb0458cdeaeeb75c4e211f786190d4873a2";
+          sha256 = "sha256-p1cwW33zRuZ4bHadGn6lzRLzuPyuBkcP/OYNsppNpZo=";
         };
         propagatedBuildInputs = with pkgs; [ pastel makeWrapper ];
         dontBuild = true;

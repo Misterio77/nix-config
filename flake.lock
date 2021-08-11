@@ -21,11 +21,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1628694907,
-        "narHash": "sha256-1l+rT9bS0opX6p2vw/pZdLE5AaPKeA1ZJw7PSqlwvek=",
+        "lastModified": 1628695661,
+        "narHash": "sha256-1t2mu9bm03y1vWPoPqXTK/CyTrVVWBuxD/52yL826Ds=",
         "owner": "misterio77",
         "repo": "home-manager",
-        "rev": "aa96ab0ae18889e1591ddc7570b15350ca5b94ba",
+        "rev": "298996a30124ffd034423bb0d9f861fadbd7d9f5",
         "type": "github"
       },
       "original": {
