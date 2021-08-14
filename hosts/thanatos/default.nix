@@ -17,7 +17,7 @@
       dates = "daily";
     };
     extraOptions = ''
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes ca-references
       warn-dirty = false
     '';
   };
@@ -132,6 +132,7 @@
   hardware = {
     ckb-next.enable = true;
     steam-hardware.enable = true;
+    opengl.enable = true;
   };
 
   virtualisation.docker.enable = true;

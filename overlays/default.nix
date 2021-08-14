@@ -6,7 +6,14 @@
       comma = pkgs.stdenv.mkDerivation {
         name = "comma";
         src = pkgs.writeShellScriptBin "comma" ''
-          nix run nixpkgs#$1 -- ''${@:2}
+          package=$(echo $1 | cut -d '.' -f1)
+          command=$(echo $1 | cut -d '.' -f2)
+
+          if [ -z "$command" ]; then
+            nix run nixpkgs#$package -- ''${@:2}
+          else
+            nix shell nixpkgs#$package -c $command -- ''${@:2}
+          fi
         '';
         dontBuild = true;
         dontConfigure = true;
@@ -137,17 +144,6 @@
           inherit src;
           outputHash = "sha256-jCNkdgSzoiOW+jh/q3jR9SsiVa/MC5iz6nXgXOqQhdc=";
         });
-      });
-    })
-    # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/132941 is fixed
-    (final: prev: {
-      ethash = prev.ethash.overrideAttrs (oldAttrs: rec {
-        src = prev.fetchFromGitHub {
-          owner = "chfast";
-          repo = "ethash";
-          rev = "v0.6.0";
-          sha256 = "sha256-N30v9OZwTmDbltPPmeSa0uOGJhos1VzyS5zY9vVCWfA=";
-        };
       });
     })
     # Fixes https://todo.sr.ht/~scoopta/wofi/174

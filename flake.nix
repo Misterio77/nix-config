@@ -11,33 +11,35 @@
   };
 
   outputs = { self, home-manager, nixpkgs, hardware, impermanence }:
-    let
-      # For a list of users, get their configuration (./users/name),
-      # plus their home-manager configuration (./users/name/home)
-      users = users:
-        nixpkgs.lib.forEach users (user: (./users + "/${user}")) ++ [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              sharedModules = [ impermanence.nixosModules.impermanence-home ];
-              users = builtins.listToAttrs (nixpkgs.lib.forEach users (user: {
-                name = "${user}";
-                value = (./users + "/${user}" + /home);
-              }));
-            };
-          }
-        ];
-    in {
-      # Hosts
-      nixosConfigurations = {
+    {
+      overlay = import ./overlays;
+      nixosConfigurations = let
+        # For a list of users, get their configuration (./users/name),
+        # plus their home-manager configuration (./users/name/home)
+        users = users:
+          nixpkgs.lib.forEach users (user: (./users + "/${user}")) ++ [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                sharedModules = [ impermanence.nixosModules.impermanence-home ];
+                users = builtins.listToAttrs (nixpkgs.lib.forEach users (user: {
+                  name = "${user}";
+                  value = (./users + "/${user}" + /home);
+                }));
+              };
+            }
+          ];
+      in {
+        # Hosts
         thanatos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./hosts/thanatos
             hardware.nixosModules.common-cpu-amd
             hardware.nixosModules.common-gpu-amd
+            hardware.nixosModules.common-pc-ssd
           ] ++ users [ "misterio" ];
         };
       };

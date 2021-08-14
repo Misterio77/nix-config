@@ -26,10 +26,11 @@ in {
     ../../../modules/ethminer.nix
   ];
 
-  colorscheme = colors.paraiso;
+  colorscheme = colors.pasque;
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
+    firefox-bin
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
     comma
@@ -48,6 +49,7 @@ in {
     steam
     trash-cli
     xdg-utils
+    vulkan-tools
   ];
 
   fonts.fontconfig.enable = true;
@@ -60,14 +62,15 @@ in {
        "Games"
        "Pictures"
        ".gnupg"
+       ".config/Hero_Siege"
+       ".config/lutris"
+       ".local/share/lutris"
        ".local/share/password-store"
        ".local/share/Steam"
        ".local/share/multimc"
-       ".local/share/lutris"
-       ".config/lutris"
        ".local/share/osu"
        ".local/share/Tabletop Simulator"
-       ".config/Hero_Siege"
+       #".local/share/direnv"
      ];
      allowOther = false;
    };
