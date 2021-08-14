@@ -2,23 +2,45 @@
 
 {
   nixpkgs.overlays = [
+    # A program that allows for quickly running packages from nixpkgs
+    # Inspired by https://github.com/Shopify/comma, but for flakes
+    # You can run a program whose name is the same as the package name using, for example:
+    # , jq --version
+    # Or specify the command using another comma, for example:
+    # , glib,gsettings --version
     (final: prev: {
       comma = pkgs.stdenv.mkDerivation {
         name = "comma";
         src = pkgs.writeShellScriptBin "comma" ''
-          package=$(echo $1 | cut -d '.' -f1)
-          command=$(echo $1 | cut -d '.' -f2)
+          package=$(echo "$1," | cut -d ',' -f1)
+          command=$(echo "$1," | cut -d ',' -f2)
 
           if [ -z "$command" ]; then
             nix run nixpkgs#$package -- ''${@:2}
           else
-            nix shell nixpkgs#$package -c $command -- ''${@:2}
+            nix shell nixpkgs#$package -c $command ''${@:2}
           fi
         '';
         dontBuild = true;
         dontConfigure = true;
         installPhase = ''
           install -Dm 0755 $src/bin/comma "$out/bin/,"
+        '';
+      };
+    })
+    # A zenity wrapper for using with SUDO_ASKPASS
+    (final: prev: {
+      zenity-askpass = let
+        zenity = "${pkgs.gnome.zenity}/bin/zenity";
+      in pkgs.stdenv.mkDerivation {
+        name = "zenity-askpass";
+        src = pkgs.writeShellScriptBin "zenity-askpass" ''
+          ${zenity} --password --timeout 10
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/bin/zenity-askpass $out/bin/zenity-askpass
         '';
       };
     })
@@ -32,14 +54,9 @@
         src = pkgs.writeShellScriptBin "setscheme-fzf" ''
           set -o pipefail
           chosen=$(nix eval --impure --raw --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))' | ${fzf}) && \
-          password=$(sudo -nv 2> /dev/null || ${zenity} --password --title "Change color scheme") && \
-          echo $password | \
-          ${setscheme} $chosen --show-trace --verbose 2>&1 | \
+          ${setscheme} -A $chosen --show-trace --verbose 2>&1 | \
           stdbuf -oL -eL awk '/^ / { print int(+$2) ; next } $0 { print "# " $0 }' | \
           ${zenity} --progress --pulsate --auto-close --auto-kill --title "Change color scheme"
-          if [ "$?" != "0" ]; then
-            ${zenity} --error --text "Error while applying configuration"
-          fi
         '';
         dontBuild = true;
         dontConfigure = true;
@@ -49,11 +66,20 @@
       };
     })
     (final: prev: {
-      setscheme = pkgs.stdenv.mkDerivation {
+      setscheme = let
+        zenity-askpass = "${pkgs.zenity-askpass}/bin/zenity-askpass";
+      in pkgs.stdenv.mkDerivation {
         name = "setscheme";
         src = pkgs.writeShellScriptBin "setscheme" ''
+          if [ "$1" == "-A" ]; then
+            sudo="sudo -A"
+            shift
+          else
+            sudo="sudo"
+          fi
+
           sed -i "/colorscheme = /c \ \ colorscheme = colors.$1;" /dotfiles/users/$USER/home/default.nix && \
-          sudo -S nixos-rebuild switch --flake /dotfiles ''${@:2}
+          SUDO_ASKPASS="${zenity-askpass}" $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
         '';
         dontBuild = true;
         dontConfigure = true;
@@ -62,6 +88,7 @@
         '';
       };
     })
+    # Runs fzf inside a (usually floating) alacritty term
     (final: prev: {
       alacritty-fzf = let
         fzf = "${pkgs.fzf}/bin/fzf";
