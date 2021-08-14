@@ -214,5 +214,10 @@ in {
         inner = 28;
       };
     };
+    # https://github.com/NixOS/nixpkgs/issues/119445#issuecomment-820507505
+    extraConfig = ''
+      exec dbus-update-activation-environment WAYLAND_DISPLAY
+      exec systemctl --user import-environment WAYLAND_DISPLAY
+    '';
   };
 }
