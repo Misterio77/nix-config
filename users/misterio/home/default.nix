@@ -28,7 +28,7 @@ in {
     ./zathura.nix
   ];
 
-  colorscheme = colors.paraiso;
+  colorscheme = colors.dracula;
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
