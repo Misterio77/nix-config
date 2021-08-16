@@ -78,7 +78,7 @@
             sudo="sudo"
           fi
 
-          sed -i "/colorscheme = /c \ \ colorscheme = colors.$1;" /dotfiles/users/$USER/home/default.nix && \
+          echo "\"$1\"" > /dotfiles/user/$USER/home/current-scheme.nix && \
           SUDO_ASKPASS="${zenity-askpass}" $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
         '';
         dontBuild = true;

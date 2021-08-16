@@ -28,7 +28,7 @@ in {
     ./zathura.nix
   ];
 
-  colorscheme = colors.dracula;
+  colorscheme = colors.${import ./current-scheme};
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
