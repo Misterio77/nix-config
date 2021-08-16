@@ -1,14 +1,11 @@
 { pkgs, ... }:
 
 {
-  # Require /data to be mounted at boot
-  fileSystems."/data".neededForBoot = true;
-
   # User info
   users.users.misterio = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     # Grab hashed password from /data
     passwordFile = "/data/home/misterio/.password";
   };

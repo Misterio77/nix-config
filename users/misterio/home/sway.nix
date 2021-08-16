@@ -4,7 +4,7 @@ let
   colors = config.colorscheme.colors;
   wallpaper = config.wallpaper.path;
   # Programs
-  alacritty = "${pkgs.alacritty-reload}/bin/alacritty";
+  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
   makoctl = "${pkgs.mako}/bin/makoctl";
   nvim = "${pkgs.neovim}/bin/nvim";
@@ -25,6 +25,11 @@ let
   };
 in {
   home.packages = with pkgs; [ wl-clipboard wf-recorder ];
+  home.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = true;
+    QT_QPA_PLATFORM = "wayland";
+    GDK_BACKEND = "wayland";
+  };
 
   wayland.windowManager.sway = {
     enable = true;
@@ -220,4 +225,20 @@ in {
       exec systemctl --user import-environment WAYLAND_DISPLAY
     '';
   };
+
+  programs.zsh.loginExtra = ''
+    if [[ "$(tty)" == /dev/tty1 ]]; then
+      exec sway
+    fi
+  '';
+  programs.fish.loginShellInit = ''
+    if test (tty) = /dev/tty1
+      exec sway
+    end
+  '';
+  programs.bash.profileExtra = ''
+    if [[ "$(tty)" == /dev/tty1 ]]; then
+      exec sway
+    fi
+  '';
 }

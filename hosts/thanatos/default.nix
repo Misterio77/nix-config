@@ -1,11 +1,26 @@
-{ config, nixpkgs, pkgs, ... }:
+{ config, nixpkgs, pkgs, hardware, impermanence, ... }:
 
 {
   imports = [
+    hardware.nixosModules.common-cpu-amd
+    hardware.nixosModules.common-gpu-amd
+    hardware.nixosModules.common-pc-ssd
+    impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
     ../../overlays
   ];
 
+  # Require /data to be mounted at boot
+  fileSystems."/data".neededForBoot = true;
+
+  environment.persistence."/data" = {
+    directories = [
+      "/var/log"
+      "/var/lib/docker"
+      "/var/lib/systemd"
+      "/var/lib/postgresql"
+    ];
+  };
   system.stateVersion = "21.11";
 
   nixpkgs = { config.allowUnfree = true; };
@@ -80,11 +95,13 @@
   };
 
   programs = {
-    zsh = {
+    fish = {
       enable = true;
-      enableBashCompletion = true;
-      enableCompletion = true;
-      promptInit = "";
+      vendor = {
+        completions.enable = true;
+        config.enable = true;
+        functions.enable = true;
+      };
     };
 
     ssh.startAgent = false;

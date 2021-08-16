@@ -160,7 +160,7 @@
     })
     # TODO: Remove when https://github.com/alacritty/alacritty/pull/5313 is merged
     (final: prev: {
-      alacritty-reload = prev.alacritty.overrideAttrs (oldAttrs: rec {
+      alacritty = prev.alacritty.overrideAttrs (oldAttrs: rec {
         src = prev.fetchFromGitHub {
           owner = "ncfavier";
           repo = "alacritty";
@@ -178,6 +178,14 @@
       wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
         patches = (oldAttrs.patches or []) ++ [
           ./wofi-run-shell.patch
+        ];
+      });
+    })
+    # Add suggestion for nix shell instead of nix-env
+    (final: prev: {
+      nix-index = prev.nix-index.overrideAttrs (oldAttrs: rec {
+        patches = (oldAttrs.patches or []) ++ [
+          ./nix-index-new-command.patch
         ];
       });
     })

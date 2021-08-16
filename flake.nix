@@ -3,10 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hardware.url = "github:nixos/nixos-hardware/master";
-    #home-manager.url = "github:nix-community/home-manager";
+    hardware.url = "github:nixos/nixos-hardware";
+    # home-manager.url = "github:nix-community/home-manager";
     home-manager.url = "github:misterio77/home-manager/personal";
-    #impermanence.url = "github:nix-community/impermanence";
+    # impermanence.url = "github:nix-community/impermanence";
     impermanence.url = "github:RiscadoA/impermanence";
   };
 
@@ -35,11 +35,9 @@
         # Hosts
         thanatos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit hardware impermanence; };
           modules = [
             ./hosts/thanatos
-            hardware.nixosModules.common-cpu-amd
-            hardware.nixosModules.common-gpu-amd
-            hardware.nixosModules.common-pc-ssd
           ] ++ users [ "misterio" ];
         };
       };

@@ -4,33 +4,34 @@ let
   colors = import ../../../colors.nix;
 in {
   imports = [
+    ../../../modules/colorscheme.nix
+    ../../../modules/ethminer.nix
+    ../../../modules/wallpaper.nix
     ./alacritty.nix
     ./direnv.nix
+    ./ethminer.nix
+    ./fish.nix
     ./fzf.nix
     ./git.nix
     ./gpg-agent.nix
     ./gtk.nix
-    ./qt.nix
-    ./rgbdaemon.nix
     ./neofetch.nix
+    ./nix-index.nix
     ./nvim.nix
     ./pass.nix
+    ./qt.nix
     ./qutebrowser.nix
+    ./rgbdaemon.nix
     ./starship.nix
     ./sway.nix
     ./waybar.nix
     ./zathura.nix
-    ./zsh.nix
-    ../../../modules/colorscheme.nix
-    ../../../modules/wallpaper.nix
-    ../../../modules/ethminer.nix
   ];
 
-  colorscheme = colors.pasque;
+  colorscheme = colors.paraiso;
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
-    firefox-bin
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
     comma
@@ -39,17 +40,19 @@ in {
     exa
     fira
     fira-code
+    firefox-bin
     lm_sensors
     lutris
     multimc
+    nodePackages.speed-test
     osu-lazer
     pinentry-gnome
     setscheme
     spotify
     steam
     trash-cli
-    xdg-utils
     vulkan-tools
+    xdg-utils
   ];
 
   fonts.fontconfig.enable = true;
@@ -61,25 +64,22 @@ in {
        "Downloads"
        "Games"
        "Pictures"
-       ".gnupg"
+       ".cache/nix-index"
        ".config/Hero_Siege"
        ".config/lutris"
-       ".local/share/lutris"
-       ".local/share/password-store"
+       ".gnupg"
        ".local/share/Steam"
+       ".local/share/Tabletop Simulator"
+       ".local/share/lutris"
        ".local/share/multimc"
        ".local/share/osu"
-       ".local/share/Tabletop Simulator"
-       #".local/share/direnv"
+       ".local/share/password-store"
+       ".local/share/direnv"
+     ];
+     files = [
+       ".steam/steam.token"
+       ".steam/registry.vdf"
      ];
      allowOther = false;
    };
-
-  services.ethminer = {
-    enable = true;
-    wallet = "0x16EeE21f85c06D3B983533b32Eef82d963d24f9a";
-    pool = "eth-br.flexpool.io";
-    port = 5555;
-    rig = "misterio";
-  };
 }
