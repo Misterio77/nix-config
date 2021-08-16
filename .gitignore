@@ -1,3 +1,4 @@
 .direnv
 result
 *.qcow2
+users/*/home/current-scheme.nix

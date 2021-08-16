@@ -78,7 +78,7 @@
             sudo="sudo"
           fi
 
-          echo "\"$1\"" > /dotfiles/user/$USER/home/current-scheme.nix && \
+          echo "\"$1\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
           SUDO_ASKPASS="${zenity-askpass}" $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
         '';
         dontBuild = true;
