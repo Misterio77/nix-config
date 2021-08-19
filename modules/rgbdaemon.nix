@@ -116,7 +116,9 @@ in {
         DAEMON_INTERVAL=${lib.strings.floatToString cfg.interval}
         KEYBOARD_DEVICE=${cfg.keyboard.device}
         MOUSE_DEVICE=${cfg.mouse.device}
-        KEYBOARD_HIGHLIGHTED=${lib.concatStringsSep "," cfg.keyboard.highlighted}
+        KEYBOARD_HIGHLIGHTED=${
+          lib.concatStringsSep "," cfg.keyboard.highlighted
+        }
         MOUSE_HIGHLIGHTED=${lib.concatStringsSep "," cfg.mouse.highlighted}
         COLOR_BACKGROUND=${cfg.colors.background}
         COLOR_FOREGROUND=${cfg.colors.foreground}

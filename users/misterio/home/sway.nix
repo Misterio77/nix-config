@@ -64,10 +64,8 @@ in {
           workspace = "2";
         }
       ];
-      floating.criteria = [
-        { app_id = "zenity"; }
-        { app_id = "AlacrittyFloating*"; }
-      ];
+      floating.criteria =
+        [ { app_id = "zenity"; } { app_id = "AlacrittyFloating*"; } ];
       colors = {
         focused = {
           border = "${colors.base0C}";
@@ -129,7 +127,7 @@ in {
                           resume  'pgrep -x swaylock && swaymsg "output * dpms on"' \
                       timeout 620 'swaymsg "output * dpms off"' \
                           resume  'swaymsg "output * dpms on"'
-            '';
+          '';
         }
         # Start waybar
         {
@@ -141,7 +139,7 @@ in {
             "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
         }
       ];
-      bars = [];
+      bars = [ ];
       window = {
         border = 2;
         commands = [{

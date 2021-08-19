@@ -1,6 +1,1 @@
-{ pkgs, config, ... }:
-{
-  programs.mako = {
-    enable = true;
-  };
-}
+{ pkgs, config, ... }: { programs.mako = { enable = true; }; }

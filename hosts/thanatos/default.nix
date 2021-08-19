@@ -14,12 +14,8 @@
   fileSystems."/data".neededForBoot = true;
 
   environment.persistence."/data" = {
-    directories = [
-      "/var/log"
-      "/var/lib/docker"
-      "/var/lib/systemd"
-      "/var/lib/postgresql"
-    ];
+    directories =
+      [ "/var/log" "/var/lib/docker" "/var/lib/systemd" "/var/lib/postgresql" ];
   };
   system.stateVersion = "21.11";
 
@@ -41,9 +37,7 @@
   networking = {
     hostName = "thanatos";
     networkmanager.enable = true;
-    firewall = {
-      allowedTCPPorts = [ 25565 51820 ];
-    };
+    firewall = { allowedTCPPorts = [ 25565 51820 ]; };
     wg-quick.interfaces = {
       # wg0 = import ./wg0.nix;
     };

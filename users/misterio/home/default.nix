@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
-let
-  colors = import ../../../colors.nix;
+let colors = import ../../../colors.nix;
 in {
   imports = [
     ../../../modules/colorscheme.nix
@@ -30,7 +29,7 @@ in {
     ./zathura.nix
   ];
 
-  colorscheme = colors.${ import ./current-scheme.nix };
+  colorscheme = colors.${import ./current-scheme.nix};
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
@@ -60,28 +59,25 @@ in {
 
   # Writable (persistent) data
   home.persistence."/data/home/misterio" = {
-     directories = [
-       "Documents"
-       "Downloads"
-       "Games"
-       "Pictures"
-       ".gnupg"
-       ".cache/nix-index"
-       ".config/Hero_Siege"
-       ".config/kdeconnect"
-       ".config/lutris"
-       ".local/share/Steam"
-       ".local/share/Tabletop Simulator"
-       ".local/share/direnv"
-       ".local/share/lutris"
-       ".local/share/multimc"
-       ".local/share/osu"
-       ".local/share/password-store"
-     ];
-     files = [
-       ".steam/steam.token"
-       ".steam/registry.vdf"
-     ];
-     allowOther = true;
-   };
+    directories = [
+      "Documents"
+      "Downloads"
+      "Games"
+      "Pictures"
+      ".gnupg"
+      ".cache/nix-index"
+      ".config/Hero_Siege"
+      ".config/kdeconnect"
+      ".config/lutris"
+      ".local/share/Steam"
+      ".local/share/Tabletop Simulator"
+      ".local/share/direnv"
+      ".local/share/lutris"
+      ".local/share/multimc"
+      ".local/share/osu"
+      ".local/share/password-store"
+    ];
+    files = [ ".steam/steam.token" ".steam/registry.vdf" ];
+    allowOther = true;
+  };
 }

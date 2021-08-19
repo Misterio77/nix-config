@@ -1,5 +1,5 @@
 {
-"3024" = {
+  "3024" = {
     slug = "3024";
     name = "3024";
     author = "Jan T. Sott (http://github.com/idleberg)";
@@ -23,7 +23,7 @@
     };
   };
 
-"apathy" = {
+  "apathy" = {
     slug = "apathy";
     name = "Apathy";
     author = "Jannik Siebert (https://github.com/janniks)";
@@ -47,7 +47,7 @@
     };
   };
 
-"apprentice" = {
+  "apprentice" = {
     slug = "apprentice";
     name = "Apprentice";
     author = "romainl";
@@ -71,7 +71,7 @@
     };
   };
 
-"ashes" = {
+  "ashes" = {
     slug = "ashes";
     name = "Ashes";
     author = "Jannik Siebert (https://github.com/janniks)";
@@ -95,7 +95,7 @@
     };
   };
 
-"atelier-cave" = {
+  "atelier-cave" = {
     slug = "atelier-cave";
     name = "Atelier Cave";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -119,7 +119,7 @@
     };
   };
 
-"atelier-cave-light" = {
+  "atelier-cave-light" = {
     slug = "atelier-cave-light";
     name = "Atelier Cave Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -143,7 +143,7 @@
     };
   };
 
-"atelier-dune" = {
+  "atelier-dune" = {
     slug = "atelier-dune";
     name = "Atelier Dune";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -167,7 +167,7 @@
     };
   };
 
-"atelier-dune-light" = {
+  "atelier-dune-light" = {
     slug = "atelier-dune-light";
     name = "Atelier Dune Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -191,7 +191,7 @@
     };
   };
 
-"atelier-estuary" = {
+  "atelier-estuary" = {
     slug = "atelier-estuary";
     name = "Atelier Estuary";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -215,7 +215,7 @@
     };
   };
 
-"atelier-estuary-light" = {
+  "atelier-estuary-light" = {
     slug = "atelier-estuary-light";
     name = "Atelier Estuary Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -239,7 +239,7 @@
     };
   };
 
-"atelier-forest" = {
+  "atelier-forest" = {
     slug = "atelier-forest";
     name = "Atelier Forest";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -263,7 +263,7 @@
     };
   };
 
-"atelier-forest-light" = {
+  "atelier-forest-light" = {
     slug = "atelier-forest-light";
     name = "Atelier Forest Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -287,7 +287,7 @@
     };
   };
 
-"atelier-heath" = {
+  "atelier-heath" = {
     slug = "atelier-heath";
     name = "Atelier Heath";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -311,7 +311,7 @@
     };
   };
 
-"atelier-heath-light" = {
+  "atelier-heath-light" = {
     slug = "atelier-heath-light";
     name = "Atelier Heath Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -335,7 +335,7 @@
     };
   };
 
-"atelier-lakeside" = {
+  "atelier-lakeside" = {
     slug = "atelier-lakeside";
     name = "Atelier Lakeside";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -359,7 +359,7 @@
     };
   };
 
-"atelier-lakeside-light" = {
+  "atelier-lakeside-light" = {
     slug = "atelier-lakeside-light";
     name = "Atelier Lakeside Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -383,7 +383,7 @@
     };
   };
 
-"atelier-plateau" = {
+  "atelier-plateau" = {
     slug = "atelier-plateau";
     name = "Atelier Plateau";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -407,7 +407,7 @@
     };
   };
 
-"atelier-plateau-light" = {
+  "atelier-plateau-light" = {
     slug = "atelier-plateau-light";
     name = "Atelier Plateau Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -431,7 +431,7 @@
     };
   };
 
-"atelier-savanna" = {
+  "atelier-savanna" = {
     slug = "atelier-savanna";
     name = "Atelier Savanna";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -455,7 +455,7 @@
     };
   };
 
-"atelier-savanna-light" = {
+  "atelier-savanna-light" = {
     slug = "atelier-savanna-light";
     name = "Atelier Savanna Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -479,7 +479,7 @@
     };
   };
 
-"atelier-seaside" = {
+  "atelier-seaside" = {
     slug = "atelier-seaside";
     name = "Atelier Seaside";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -503,7 +503,7 @@
     };
   };
 
-"atelier-seaside-light" = {
+  "atelier-seaside-light" = {
     slug = "atelier-seaside-light";
     name = "Atelier Seaside Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -527,7 +527,7 @@
     };
   };
 
-"atelier-sulphurpool" = {
+  "atelier-sulphurpool" = {
     slug = "atelier-sulphurpool";
     name = "Atelier Sulphurpool";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -551,7 +551,7 @@
     };
   };
 
-"atelier-sulphurpool-light" = {
+  "atelier-sulphurpool-light" = {
     slug = "atelier-sulphurpool-light";
     name = "Atelier Sulphurpool Light";
     author = "Bram de Haan (http://atelierbramdehaan.nl)";
@@ -575,7 +575,7 @@
     };
   };
 
-"atlas" = {
+  "atlas" = {
     slug = "atlas";
     name = "Atlas";
     author = "Alex Lende (https://ajlende.com)";
@@ -599,7 +599,7 @@
     };
   };
 
-"base16-vice-scheme" = {
+  "base16-vice-scheme" = {
     slug = "base16-vice-scheme";
     name = "vice";
     author = "Thomas Leon Highbaugh thighbaugh@zoho.com";
@@ -623,7 +623,7 @@
     };
   };
 
-"bespin" = {
+  "bespin" = {
     slug = "bespin";
     name = "Bespin";
     author = "Jan T. Sott";
@@ -647,7 +647,7 @@
     };
   };
 
-"black-metal" = {
+  "black-metal" = {
     slug = "black-metal";
     name = "Black Metal";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -671,7 +671,7 @@
     };
   };
 
-"black-metal-bathory" = {
+  "black-metal-bathory" = {
     slug = "black-metal-bathory";
     name = "Black Metal (Bathory)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -695,7 +695,7 @@
     };
   };
 
-"black-metal-burzum" = {
+  "black-metal-burzum" = {
     slug = "black-metal-burzum";
     name = "Black Metal (Burzum)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -719,7 +719,7 @@
     };
   };
 
-"black-metal-dark-funeral" = {
+  "black-metal-dark-funeral" = {
     slug = "black-metal-dark-funeral";
     name = "Black Metal (Dark Funeral)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -743,7 +743,7 @@
     };
   };
 
-"black-metal-gorgoroth" = {
+  "black-metal-gorgoroth" = {
     slug = "black-metal-gorgoroth";
     name = "Black Metal (Gorgoroth)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -767,7 +767,7 @@
     };
   };
 
-"black-metal-immortal" = {
+  "black-metal-immortal" = {
     slug = "black-metal-immortal";
     name = "Black Metal (Immortal)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -791,7 +791,7 @@
     };
   };
 
-"black-metal-khold" = {
+  "black-metal-khold" = {
     slug = "black-metal-khold";
     name = "Black Metal (Khold)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -815,7 +815,7 @@
     };
   };
 
-"black-metal-marduk" = {
+  "black-metal-marduk" = {
     slug = "black-metal-marduk";
     name = "Black Metal (Marduk)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -839,7 +839,7 @@
     };
   };
 
-"black-metal-mayhem" = {
+  "black-metal-mayhem" = {
     slug = "black-metal-mayhem";
     name = "Black Metal (Mayhem)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -863,7 +863,7 @@
     };
   };
 
-"black-metal-nile" = {
+  "black-metal-nile" = {
     slug = "black-metal-nile";
     name = "Black Metal (Nile)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -887,7 +887,7 @@
     };
   };
 
-"black-metal-venom" = {
+  "black-metal-venom" = {
     slug = "black-metal-venom";
     name = "Black Metal (Venom)";
     author = "metalelf0 (https://github.com/metalelf0)";
@@ -911,7 +911,7 @@
     };
   };
 
-"blueish" = {
+  "blueish" = {
     slug = "blueish";
     name = "better-contrast";
     author = "Ben Mayoras";
@@ -935,7 +935,7 @@
     };
   };
 
-"brewer" = {
+  "brewer" = {
     slug = "brewer";
     name = "Brewer";
     author = "Timothée Poisot (http://github.com/tpoisot)";
@@ -959,7 +959,7 @@
     };
   };
 
-"bright" = {
+  "bright" = {
     slug = "bright";
     name = "Bright";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -983,7 +983,7 @@
     };
   };
 
-"brushtrees" = {
+  "brushtrees" = {
     slug = "brushtrees";
     name = "Brush Trees";
     author = "Abraham White <abelincoln.white@gmail.com>";
@@ -1007,7 +1007,7 @@
     };
   };
 
-"brushtrees-dark" = {
+  "brushtrees-dark" = {
     slug = "brushtrees-dark";
     name = "Brush Trees Dark";
     author = "Abraham White <abelincoln.white@gmail.com>";
@@ -1031,7 +1031,7 @@
     };
   };
 
-"chalk" = {
+  "chalk" = {
     slug = "chalk";
     name = "Chalk";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1055,10 +1055,11 @@
     };
   };
 
-"circus" = {
+  "circus" = {
     slug = "circus";
     name = "Circus";
-    author = "Stephan Boyer (https://github.com/stepchowfun) and Esther Wang (https://github.com/ewang12)";
+    author =
+      "Stephan Boyer (https://github.com/stepchowfun) and Esther Wang (https://github.com/ewang12)";
     colors = {
       base00 = "191919";
       base01 = "202020";
@@ -1079,7 +1080,7 @@
     };
   };
 
-"classic-dark" = {
+  "classic-dark" = {
     slug = "classic-dark";
     name = "Classic Dark";
     author = "Jason Heeris (http://heeris.id.au)";
@@ -1103,7 +1104,7 @@
     };
   };
 
-"classic-light" = {
+  "classic-light" = {
     slug = "classic-light";
     name = "Classic Light";
     author = "Jason Heeris (http://heeris.id.au)";
@@ -1127,7 +1128,7 @@
     };
   };
 
-"codeschool" = {
+  "codeschool" = {
     slug = "codeschool";
     name = "Codeschool";
     author = "blockloop";
@@ -1151,7 +1152,7 @@
     };
   };
 
-"colors" = {
+  "colors" = {
     slug = "colors";
     name = "Colors";
     author = "mrmrs (http://clrs.cc)";
@@ -1175,7 +1176,7 @@
     };
   };
 
-"cupcake" = {
+  "cupcake" = {
     slug = "cupcake";
     name = "Cupcake";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1199,7 +1200,7 @@
     };
   };
 
-"cupertino" = {
+  "cupertino" = {
     slug = "cupertino";
     name = "Cupertino";
     author = "Defman21";
@@ -1223,7 +1224,7 @@
     };
   };
 
-"danqing" = {
+  "danqing" = {
     slug = "danqing";
     name = "DanQing";
     author = "Wenhan Zhu (Cosmos) (zhuwenhan950913@gmail.com)";
@@ -1247,7 +1248,7 @@
     };
   };
 
-"darcula" = {
+  "darcula" = {
     slug = "darcula";
     name = "Darcula";
     author = "jetbrains";
@@ -1271,7 +1272,7 @@
     };
   };
 
-"darkmoss" = {
+  "darkmoss" = {
     slug = "darkmoss";
     name = "darkmoss";
     author = "Gabriel Avanzi (https://github.com/avanzzzi)";
@@ -1295,7 +1296,7 @@
     };
   };
 
-"darktooth" = {
+  "darktooth" = {
     slug = "darktooth";
     name = "Darktooth";
     author = "Jason Milkins (https://github.com/jasonm23)";
@@ -1319,7 +1320,7 @@
     };
   };
 
-"darkviolet" = {
+  "darkviolet" = {
     slug = "darkviolet";
     name = "Dark Violet";
     author = "ruler501 (https://github.com/ruler501/base16-darkviolet)";
@@ -1343,7 +1344,7 @@
     };
   };
 
-"decaf" = {
+  "decaf" = {
     slug = "decaf";
     name = "Decaf";
     author = "Alex Mirrington (https://github.com/alexmirrington)";
@@ -1367,7 +1368,7 @@
     };
   };
 
-"default-dark" = {
+  "default-dark" = {
     slug = "default-dark";
     name = "Default Dark";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1391,7 +1392,7 @@
     };
   };
 
-"default-light" = {
+  "default-light" = {
     slug = "default-light";
     name = "Default Light";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1415,7 +1416,7 @@
     };
   };
 
-"dirtysea" = {
+  "dirtysea" = {
     slug = "dirtysea";
     name = "dirtysea";
     author = "Kahlil (Kal) Hodgson";
@@ -1439,10 +1440,11 @@
     };
   };
 
-"dracula" = {
+  "dracula" = {
     slug = "dracula";
     name = "Dracula";
-    author = "Mike Barkmin (http://github.com/mikebarkmin) based on Dracula Theme (http://github.com/dracula)";
+    author =
+      "Mike Barkmin (http://github.com/mikebarkmin) based on Dracula Theme (http://github.com/dracula)";
     colors = {
       base00 = "282936";
       base01 = "3a3c4e";
@@ -1463,7 +1465,7 @@
     };
   };
 
-"eighties" = {
+  "eighties" = {
     slug = "eighties";
     name = "Eighties";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1487,7 +1489,7 @@
     };
   };
 
-"embers" = {
+  "embers" = {
     slug = "embers";
     name = "Embers";
     author = "Jannik Siebert (https://github.com/janniks)";
@@ -1511,7 +1513,7 @@
     };
   };
 
-"emil" = {
+  "emil" = {
     slug = "emil";
     name = "emil";
     author = "limelier";
@@ -1535,7 +1537,7 @@
     };
   };
 
-"equilibrium-dark" = {
+  "equilibrium-dark" = {
     slug = "equilibrium-dark";
     name = "Equilibrium Dark";
     author = "Carlo Abelli";
@@ -1559,7 +1561,7 @@
     };
   };
 
-"equilibrium-gray-dark" = {
+  "equilibrium-gray-dark" = {
     slug = "equilibrium-gray-dark";
     name = "Equilibrium Gray Dark";
     author = "Carlo Abelli";
@@ -1583,7 +1585,7 @@
     };
   };
 
-"equilibrium-gray-light" = {
+  "equilibrium-gray-light" = {
     slug = "equilibrium-gray-light";
     name = "Equilibrium Gray Light";
     author = "Carlo Abelli";
@@ -1607,7 +1609,7 @@
     };
   };
 
-"equilibrium-light" = {
+  "equilibrium-light" = {
     slug = "equilibrium-light";
     name = "Equilibrium Light";
     author = "Carlo Abelli";
@@ -1631,10 +1633,11 @@
     };
   };
 
-"espresso" = {
+  "espresso" = {
     slug = "espresso";
     name = "Espresso";
-    author = "Unknown. Maintained by Alex Mirrington (https://github.com/alexmirrington)";
+    author =
+      "Unknown. Maintained by Alex Mirrington (https://github.com/alexmirrington)";
     colors = {
       base00 = "2d2d2d";
       base01 = "393939";
@@ -1655,7 +1658,7 @@
     };
   };
 
-"eva" = {
+  "eva" = {
     slug = "eva";
     name = "Eva";
     author = "kjakapat (https://github.com/kjakapat)";
@@ -1679,7 +1682,7 @@
     };
   };
 
-"eva-dim" = {
+  "eva-dim" = {
     slug = "eva-dim";
     name = "Eva Dim";
     author = "kjakapat (https://github.com/kjakapat)";
@@ -1703,7 +1706,7 @@
     };
   };
 
-"flat" = {
+  "flat" = {
     slug = "flat";
     name = "Flat";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1727,7 +1730,7 @@
     };
   };
 
-"framer" = {
+  "framer" = {
     slug = "framer";
     name = "Framer";
     author = "Framer (Maintained by Jesse Hoyos)";
@@ -1751,7 +1754,7 @@
     };
   };
 
-"fruit-soda" = {
+  "fruit-soda" = {
     slug = "fruit-soda";
     name = "Fruit Soda";
     author = "jozip";
@@ -1775,7 +1778,7 @@
     };
   };
 
-"gigavolt" = {
+  "gigavolt" = {
     slug = "gigavolt";
     name = "Gigavolt";
     author = "Aidan Swope (http://github.com/Whillikers)";
@@ -1799,7 +1802,7 @@
     };
   };
 
-"github" = {
+  "github" = {
     slug = "github";
     name = "Github";
     author = "Defman21";
@@ -1823,7 +1826,7 @@
     };
   };
 
-"google-dark" = {
+  "google-dark" = {
     slug = "google-dark";
     name = "Google Dark";
     author = "Seth Wright (http://sethawright.com)";
@@ -1847,7 +1850,7 @@
     };
   };
 
-"google-light" = {
+  "google-light" = {
     slug = "google-light";
     name = "Google Light";
     author = "Seth Wright (http://sethawright.com)";
@@ -1871,7 +1874,7 @@
     };
   };
 
-"grayscale-dark" = {
+  "grayscale-dark" = {
     slug = "grayscale-dark";
     name = "Grayscale Dark";
     author = "Alexandre Gavioli (https://github.com/Alexx2/)";
@@ -1895,7 +1898,7 @@
     };
   };
 
-"grayscale-light" = {
+  "grayscale-light" = {
     slug = "grayscale-light";
     name = "Grayscale Light";
     author = "Alexandre Gavioli (https://github.com/Alexx2/)";
@@ -1919,7 +1922,7 @@
     };
   };
 
-"greenscreen" = {
+  "greenscreen" = {
     slug = "greenscreen";
     name = "Green Screen";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -1943,10 +1946,11 @@
     };
   };
 
-"gruvbox-dark-hard" = {
+  "gruvbox-dark-hard" = {
     slug = "gruvbox-dark-hard";
     name = "Gruvbox dark, hard";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "1d2021";
       base01 = "3c3836";
@@ -1967,10 +1971,11 @@
     };
   };
 
-"gruvbox-dark-medium" = {
+  "gruvbox-dark-medium" = {
     slug = "gruvbox-dark-medium";
     name = "Gruvbox dark, medium";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "282828";
       base01 = "3c3836";
@@ -1991,10 +1996,11 @@
     };
   };
 
-"gruvbox-dark-pale" = {
+  "gruvbox-dark-pale" = {
     slug = "gruvbox-dark-pale";
     name = "Gruvbox dark, pale";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "262626";
       base01 = "3a3a3a";
@@ -2015,10 +2021,11 @@
     };
   };
 
-"gruvbox-dark-soft" = {
+  "gruvbox-dark-soft" = {
     slug = "gruvbox-dark-soft";
     name = "Gruvbox dark, soft";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "32302f";
       base01 = "3c3836";
@@ -2039,10 +2046,11 @@
     };
   };
 
-"gruvbox-light-hard" = {
+  "gruvbox-light-hard" = {
     slug = "gruvbox-light-hard";
     name = "Gruvbox light, hard";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "f9f5d7";
       base01 = "ebdbb2";
@@ -2063,10 +2071,11 @@
     };
   };
 
-"gruvbox-light-medium" = {
+  "gruvbox-light-medium" = {
     slug = "gruvbox-light-medium";
     name = "Gruvbox light, medium";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "fbf1c7";
       base01 = "ebdbb2";
@@ -2087,10 +2096,11 @@
     };
   };
 
-"gruvbox-light-soft" = {
+  "gruvbox-light-soft" = {
     slug = "gruvbox-light-soft";
     name = "Gruvbox light, soft";
-    author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
+    author =
+      "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
     colors = {
       base00 = "f2e5bc";
       base01 = "ebdbb2";
@@ -2111,10 +2121,11 @@
     };
   };
 
-"gruvbox-material-dark-hard" = {
+  "gruvbox-material-dark-hard" = {
     slug = "gruvbox-material-dark-hard";
     name = "Gruvbox Material Dark, Medium";
-    author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
+    author =
+      "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
     colors = {
       base00 = "202020";
       base01 = "2a2827";
@@ -2135,10 +2146,11 @@
     };
   };
 
-"gruvbox-material-dark-medium" = {
+  "gruvbox-material-dark-medium" = {
     slug = "gruvbox-material-dark-medium";
     name = "Gruvbox Material Dark, Medium";
-    author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
+    author =
+      "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
     colors = {
       base00 = "292828";
       base01 = "32302f";
@@ -2159,10 +2171,11 @@
     };
   };
 
-"gruvbox-material-dark-soft" = {
+  "gruvbox-material-dark-soft" = {
     slug = "gruvbox-material-dark-soft";
     name = "Gruvbox Material Dark, Soft";
-    author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
+    author =
+      "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
     colors = {
       base00 = "32302f";
       base01 = "3c3836";
@@ -2183,10 +2196,11 @@
     };
   };
 
-"gruvbox-material-light-hard" = {
+  "gruvbox-material-light-hard" = {
     slug = "gruvbox-material-light-hard";
     name = "Gruvbox Material Light, Hard";
-    author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
+    author =
+      "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
     colors = {
       base00 = "f9f5d7";
       base01 = "fbf1c7";
@@ -2207,10 +2221,11 @@
     };
   };
 
-"gruvbox-material-light-medium" = {
+  "gruvbox-material-light-medium" = {
     slug = "gruvbox-material-light-medium";
     name = "Gruvbox Material Light, Medium";
-    author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
+    author =
+      "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
     colors = {
       base00 = "fbf1c7";
       base01 = "f2e5bc";
@@ -2231,10 +2246,11 @@
     };
   };
 
-"gruvbox-material-light-soft" = {
+  "gruvbox-material-light-soft" = {
     slug = "gruvbox-material-light-soft";
     name = "Gruvbox Material Light, Soft";
-    author = "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
+    author =
+      "Mayush Kumar (https://github.com/MayushKumar), sainnhe (https://github.com/sainnhe/gruvbox-material-vscode)";
     colors = {
       base00 = "f2e5bc";
       base01 = "ebdbb2";
@@ -2255,7 +2271,7 @@
     };
   };
 
-"hardcore" = {
+  "hardcore" = {
     slug = "hardcore";
     name = "Hardcore";
     author = "Chris Caller";
@@ -2279,7 +2295,7 @@
     };
   };
 
-"harmonic-dark" = {
+  "harmonic-dark" = {
     slug = "harmonic-dark";
     name = "Harmonic16 Dark";
     author = "Jannik Siebert (https://github.com/janniks)";
@@ -2303,7 +2319,7 @@
     };
   };
 
-"harmonic-light" = {
+  "harmonic-light" = {
     slug = "harmonic-light";
     name = "Harmonic16 Light";
     author = "Jannik Siebert (https://github.com/janniks)";
@@ -2327,7 +2343,7 @@
     };
   };
 
-"heetch" = {
+  "heetch" = {
     slug = "heetch";
     name = "Heetch Dark";
     author = "Geoffrey Teale (tealeg@gmail.com)";
@@ -2351,7 +2367,7 @@
     };
   };
 
-"heetch-light" = {
+  "heetch-light" = {
     slug = "heetch-light";
     name = "Heetch Light";
     author = "Geoffrey Teale (tealeg@gmail.com)";
@@ -2375,7 +2391,7 @@
     };
   };
 
-"helios" = {
+  "helios" = {
     slug = "helios";
     name = "Helios";
     author = "Alex Meyer (https://github.com/reyemxela)";
@@ -2399,7 +2415,7 @@
     };
   };
 
-"hopscotch" = {
+  "hopscotch" = {
     slug = "hopscotch";
     name = "Hopscotch";
     author = "Jan T. Sott";
@@ -2423,7 +2439,7 @@
     };
   };
 
-"horizon-dark" = {
+  "horizon-dark" = {
     slug = "horizon-dark";
     name = "Horizon Dark";
     author = "Michaël Ball (http://github.com/michael-ball/)";
@@ -2447,7 +2463,7 @@
     };
   };
 
-"horizon-light" = {
+  "horizon-light" = {
     slug = "horizon-light";
     name = "Horizon Light";
     author = "Michaël Ball (http://github.com/michael-ball/)";
@@ -2471,7 +2487,7 @@
     };
   };
 
-"horizon-terminal-dark" = {
+  "horizon-terminal-dark" = {
     slug = "horizon-terminal-dark";
     name = "Horizon Dark";
     author = "Michaël Ball (http://github.com/michael-ball/)";
@@ -2495,7 +2511,7 @@
     };
   };
 
-"horizon-terminal-light" = {
+  "horizon-terminal-light" = {
     slug = "horizon-terminal-light";
     name = "Horizon Light";
     author = "Michaël Ball (http://github.com/michael-ball/)";
@@ -2519,7 +2535,7 @@
     };
   };
 
-"humanoid-dark" = {
+  "humanoid-dark" = {
     slug = "humanoid-dark";
     name = "Humanoid dark";
     author = "Thomas (tasmo) Friese";
@@ -2543,7 +2559,7 @@
     };
   };
 
-"humanoid-light" = {
+  "humanoid-light" = {
     slug = "humanoid-light";
     name = "Humanoid light";
     author = "Thomas (tasmo) Friese";
@@ -2567,7 +2583,7 @@
     };
   };
 
-"ia-dark" = {
+  "ia-dark" = {
     slug = "ia-dark";
     name = "iA Dark";
     author = "iA Inc. (modified by aramisgithub)";
@@ -2591,7 +2607,7 @@
     };
   };
 
-"ia-light" = {
+  "ia-light" = {
     slug = "ia-light";
     name = "iA Light";
     author = "iA Inc. (modified by aramisgithub)";
@@ -2615,7 +2631,7 @@
     };
   };
 
-"icy" = {
+  "icy" = {
     slug = "icy";
     name = "Icy Dark";
     author = "icyphox (https://icyphox.ga)";
@@ -2639,7 +2655,7 @@
     };
   };
 
-"irblack" = {
+  "irblack" = {
     slug = "irblack";
     name = "IR Black";
     author = "Timothée Poisot (http://timotheepoisot.fr)";
@@ -2663,7 +2679,7 @@
     };
   };
 
-"isotope" = {
+  "isotope" = {
     slug = "isotope";
     name = "Isotope";
     author = "Jan T. Sott";
@@ -2687,7 +2703,7 @@
     };
   };
 
-"katy" = {
+  "katy" = {
     slug = "katy";
     name = "Katy";
     author = "George Essig (https://github.com/gessig)";
@@ -2711,7 +2727,7 @@
     };
   };
 
-"kimber" = {
+  "kimber" = {
     slug = "kimber";
     name = "Kimber";
     author = "Mishka Nguyen (https://github.com/akhsiM)";
@@ -2735,7 +2751,7 @@
     };
   };
 
-"lime" = {
+  "lime" = {
     slug = "lime";
     name = "lime";
     author = "limelier";
@@ -2759,7 +2775,7 @@
     };
   };
 
-"macintosh" = {
+  "macintosh" = {
     slug = "macintosh";
     name = "Macintosh";
     author = "Rebecca Bettencourt (http://www.kreativekorp.com)";
@@ -2783,7 +2799,7 @@
     };
   };
 
-"marrakesh" = {
+  "marrakesh" = {
     slug = "marrakesh";
     name = "Marrakesh";
     author = "Alexandre Gavioli (http://github.com/Alexx2/)";
@@ -2807,7 +2823,7 @@
     };
   };
 
-"materia" = {
+  "materia" = {
     slug = "materia";
     name = "Materia";
     author = "Defman21";
@@ -2831,7 +2847,7 @@
     };
   };
 
-"material" = {
+  "material" = {
     slug = "material";
     name = "Material";
     author = "Nate Peterson";
@@ -2855,7 +2871,7 @@
     };
   };
 
-"material-darker" = {
+  "material-darker" = {
     slug = "material-darker";
     name = "Material Darker";
     author = "Nate Peterson";
@@ -2879,7 +2895,7 @@
     };
   };
 
-"material-lighter" = {
+  "material-lighter" = {
     slug = "material-lighter";
     name = "Material Lighter";
     author = "Nate Peterson";
@@ -2903,7 +2919,7 @@
     };
   };
 
-"material-palenight" = {
+  "material-palenight" = {
     slug = "material-palenight";
     name = "Material Palenight";
     author = "Nate Peterson";
@@ -2927,7 +2943,7 @@
     };
   };
 
-"material-vivid" = {
+  "material-vivid" = {
     slug = "material-vivid";
     name = "Material Vivid";
     author = "joshyrobot";
@@ -2951,7 +2967,7 @@
     };
   };
 
-"mellow-purple" = {
+  "mellow-purple" = {
     slug = "mellow-purple";
     name = "Mellow Purple";
     author = "gidsi";
@@ -2975,7 +2991,7 @@
     };
   };
 
-"mexico-light" = {
+  "mexico-light" = {
     slug = "mexico-light";
     name = "Mexico Light";
     author = "Sheldon Johnson";
@@ -2999,7 +3015,7 @@
     };
   };
 
-"mocha" = {
+  "mocha" = {
     slug = "mocha";
     name = "Mocha";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -3023,7 +3039,7 @@
     };
   };
 
-"monokai" = {
+  "monokai" = {
     slug = "monokai";
     name = "Monokai";
     author = "Wimer Hazenberg (http://www.monokai.nl)";
@@ -3047,7 +3063,7 @@
     };
   };
 
-"nebula" = {
+  "nebula" = {
     slug = "nebula";
     name = "Nebula";
     author = "Gabriel Fontes (https://github.com/Misterio77)";
@@ -3071,7 +3087,7 @@
     };
   };
 
-"nord" = {
+  "nord" = {
     slug = "nord";
     name = "Nord";
     author = "arcticicestudio";
@@ -3095,10 +3111,11 @@
     };
   };
 
-"nova" = {
+  "nova" = {
     slug = "nova";
     name = "Nova";
-    author = "George Essig (https://github.com/gessig), Trevor D. Miller (https://trevordmiller.com)";
+    author =
+      "George Essig (https://github.com/gessig), Trevor D. Miller (https://trevordmiller.com)";
     colors = {
       base00 = "3C4C55";
       base01 = "556873";
@@ -3119,7 +3136,7 @@
     };
   };
 
-"ocean" = {
+  "ocean" = {
     slug = "ocean";
     name = "Ocean";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -3143,7 +3160,7 @@
     };
   };
 
-"oceanicnext" = {
+  "oceanicnext" = {
     slug = "oceanicnext";
     name = "OceanicNext";
     author = "https://github.com/voronianski/oceanic-next-color-scheme";
@@ -3167,7 +3184,7 @@
     };
   };
 
-"one-light" = {
+  "one-light" = {
     slug = "one-light";
     name = "One Light";
     author = "Daniel Pfeifer (http://github.com/purpleKarrot)";
@@ -3191,7 +3208,7 @@
     };
   };
 
-"onedark" = {
+  "onedark" = {
     slug = "onedark";
     name = "OneDark";
     author = "Lalit Magant (http://github.com/tilal6991)";
@@ -3215,7 +3232,7 @@
     };
   };
 
-"outrun-dark" = {
+  "outrun-dark" = {
     slug = "outrun-dark";
     name = "Outrun Dark";
     author = "Hugo Delahousse (http://github.com/hugodelahousse/)";
@@ -3239,7 +3256,7 @@
     };
   };
 
-"pandora" = {
+  "pandora" = {
     slug = "pandora";
     name = "pandora";
     author = "Cassandra Fox";
@@ -3263,7 +3280,7 @@
     };
   };
 
-"paraiso" = {
+  "paraiso" = {
     slug = "paraiso";
     name = "Paraiso";
     author = "Jan T. Sott";
@@ -3287,7 +3304,7 @@
     };
   };
 
-"pasque" = {
+  "pasque" = {
     slug = "pasque";
     name = "Pasque";
     author = "Gabriel Fontes (https://github.com/Misterio77)";
@@ -3311,7 +3328,7 @@
     };
   };
 
-"phd" = {
+  "phd" = {
     slug = "phd";
     name = "PhD";
     author = "Hennig Hasemann (http://leetless.de/vim.html)";
@@ -3335,7 +3352,7 @@
     };
   };
 
-"pico" = {
+  "pico" = {
     slug = "pico";
     name = "Pico";
     author = "PICO-8 (http://www.lexaloffle.com/pico-8.php)";
@@ -3359,7 +3376,7 @@
     };
   };
 
-"pinky" = {
+  "pinky" = {
     slug = "pinky";
     name = "pinky";
     author = "Benjamin (https://github.com/b3nj5m1n)";
@@ -3383,7 +3400,7 @@
     };
   };
 
-"pop" = {
+  "pop" = {
     slug = "pop";
     name = "Pop";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -3407,7 +3424,7 @@
     };
   };
 
-"porple" = {
+  "porple" = {
     slug = "porple";
     name = "Porple";
     author = "Niek den Breeje (https://github.com/AuditeMarlow)";
@@ -3431,7 +3448,7 @@
     };
   };
 
-"primer-dark" = {
+  "primer-dark" = {
     slug = "primer-dark";
     name = "Primer Dark";
     author = "Jimmy Lin";
@@ -3455,7 +3472,7 @@
     };
   };
 
-"primer-dark-dimmed" = {
+  "primer-dark-dimmed" = {
     slug = "primer-dark-dimmed";
     name = "Primer Dark Dimmed";
     author = "Jimmy Lin";
@@ -3479,7 +3496,7 @@
     };
   };
 
-"primer-light" = {
+  "primer-light" = {
     slug = "primer-light";
     name = "Primer Light";
     author = "Jimmy Lin";
@@ -3503,7 +3520,7 @@
     };
   };
 
-"purpledream" = {
+  "purpledream" = {
     slug = "purpledream";
     name = "Purpledream";
     author = "malet";
@@ -3527,7 +3544,7 @@
     };
   };
 
-"qualia" = {
+  "qualia" = {
     slug = "qualia";
     name = "Qualia";
     author = "isaacwhanson";
@@ -3551,7 +3568,7 @@
     };
   };
 
-"railscasts" = {
+  "railscasts" = {
     slug = "railscasts";
     name = "Railscasts";
     author = "Ryan Bates (http://railscasts.com)";
@@ -3575,10 +3592,11 @@
     };
   };
 
-"rebecca" = {
+  "rebecca" = {
     slug = "rebecca";
     name = "Rebecca";
-    author = "Victor Borja (http://github.com/vic) based on Rebecca Theme (http://github.com/vic/rebecca-theme)";
+    author =
+      "Victor Borja (http://github.com/vic) based on Rebecca Theme (http://github.com/vic/rebecca-theme)";
     colors = {
       base00 = "292a44";
       base01 = "663399";
@@ -3599,7 +3617,7 @@
     };
   };
 
-"rose-pine" = {
+  "rose-pine" = {
     slug = "rose-pine";
     name = "Rosé Pine";
     author = "Emilia Dunfelt <sayhi@dunfelt.se>";
@@ -3623,7 +3641,7 @@
     };
   };
 
-"rose-pine-dawn" = {
+  "rose-pine-dawn" = {
     slug = "rose-pine-dawn";
     name = "Rosé Pine Dawn";
     author = "Emilia Dunfelt <sayhi@dunfelt.se>";
@@ -3647,7 +3665,7 @@
     };
   };
 
-"rose-pine-moon" = {
+  "rose-pine-moon" = {
     slug = "rose-pine-moon";
     name = "Rosé Pine Moon";
     author = "Emilia Dunfelt <sayhi@dunfelt.se>";
@@ -3671,7 +3689,7 @@
     };
   };
 
-"sagelight" = {
+  "sagelight" = {
     slug = "sagelight";
     name = "Sagelight";
     author = "Carter Veldhuizen";
@@ -3695,7 +3713,7 @@
     };
   };
 
-"sakura" = {
+  "sakura" = {
     slug = "sakura";
     name = "Sakura";
     author = "Misterio77 (http://github.com/Misterio77)";
@@ -3719,7 +3737,7 @@
     };
   };
 
-"sandcastle" = {
+  "sandcastle" = {
     slug = "sandcastle";
     name = "Sandcastle";
     author = "George Essig (https://github.com/gessig)";
@@ -3743,7 +3761,7 @@
     };
   };
 
-"seti" = {
+  "seti" = {
     slug = "seti";
     name = "Seti UI";
     author = "";
@@ -3767,7 +3785,7 @@
     };
   };
 
-"shapeshifter" = {
+  "shapeshifter" = {
     slug = "shapeshifter";
     name = "Shapeshifter";
     author = "Tyler Benziger (http://tybenz.com)";
@@ -3791,7 +3809,7 @@
     };
   };
 
-"silk-dark" = {
+  "silk-dark" = {
     slug = "silk-dark";
     name = "Silk Dark";
     author = "Gabriel Fontes (https://github.com/Misterio77)";
@@ -3815,7 +3833,7 @@
     };
   };
 
-"silk-light" = {
+  "silk-light" = {
     slug = "silk-light";
     name = "Silk Light";
     author = "Gabriel Fontes (https://github.com/Misterio77)";
@@ -3839,10 +3857,11 @@
     };
   };
 
-"snazzy" = {
+  "snazzy" = {
     slug = "snazzy";
     name = "Snazzy";
-    author = "Chawye Hsu (https://github.com/chawyehsu) based on Hyper Snazzy Theme (https://github.com/sindresorhus/hyper-snazzy)";
+    author =
+      "Chawye Hsu (https://github.com/chawyehsu) based on Hyper Snazzy Theme (https://github.com/sindresorhus/hyper-snazzy)";
     colors = {
       base00 = "282a36";
       base01 = "34353e";
@@ -3863,7 +3882,7 @@
     };
   };
 
-"solarflare" = {
+  "solarflare" = {
     slug = "solarflare";
     name = "Solar Flare";
     author = "Chuck Harmston (https://chuck.harmston.ch)";
@@ -3887,7 +3906,7 @@
     };
   };
 
-"solarflare-light" = {
+  "solarflare-light" = {
     slug = "solarflare-light";
     name = "Solar Flare Light";
     author = "Chuck Harmston (https://chuck.harmston.ch)";
@@ -3911,7 +3930,7 @@
     };
   };
 
-"solarized-dark" = {
+  "solarized-dark" = {
     slug = "solarized-dark";
     name = "Solarized Dark";
     author = "Ethan Schoonover (modified by aramisgithub)";
@@ -3935,7 +3954,7 @@
     };
   };
 
-"solarized-light" = {
+  "solarized-light" = {
     slug = "solarized-light";
     name = "Solarized Light";
     author = "Ethan Schoonover (modified by aramisgithub)";
@@ -3959,10 +3978,11 @@
     };
   };
 
-"spaceduck" = {
+  "spaceduck" = {
     slug = "spaceduck";
     name = "Spaceduck";
-    author = "Guillermo Rodriguez (https://github.com/pineapplegiant), packaged by Gabriel Fontes (https://github.com/Misterio77)";
+    author =
+      "Guillermo Rodriguez (https://github.com/pineapplegiant), packaged by Gabriel Fontes (https://github.com/Misterio77)";
     colors = {
       base00 = "16172d";
       base01 = "1b1c36";
@@ -3983,7 +4003,7 @@
     };
   };
 
-"spacemacs" = {
+  "spacemacs" = {
     slug = "spacemacs";
     name = "Spacemacs";
     author = "Nasser Alshammari (https://github.com/nashamri/spacemacs-theme)";
@@ -4007,7 +4027,7 @@
     };
   };
 
-"stella" = {
+  "stella" = {
     slug = "stella";
     name = "Stella";
     author = "Shrimpram";
@@ -4031,7 +4051,7 @@
     };
   };
 
-"summercamp" = {
+  "summercamp" = {
     slug = "summercamp";
     name = "summercamp";
     author = "zoe firi (zoefiri.github.io)";
@@ -4055,7 +4075,7 @@
     };
   };
 
-"summerfruit-dark" = {
+  "summerfruit-dark" = {
     slug = "summerfruit-dark";
     name = "Summerfruit Dark";
     author = "Christopher Corley (http://christop.club/)";
@@ -4079,7 +4099,7 @@
     };
   };
 
-"summerfruit-light" = {
+  "summerfruit-light" = {
     slug = "summerfruit-light";
     name = "Summerfruit Light";
     author = "Christopher Corley (http://christop.club/)";
@@ -4103,7 +4123,7 @@
     };
   };
 
-"synth-midnight-dark" = {
+  "synth-midnight-dark" = {
     slug = "synth-midnight-dark";
     name = "Synth Midnight Terminal Dark";
     author = "Michaël Ball (http://github.com/michael-ball/)";
@@ -4127,7 +4147,7 @@
     };
   };
 
-"synth-midnight-light" = {
+  "synth-midnight-light" = {
     slug = "synth-midnight-light";
     name = "Synth Midnight Terminal Light";
     author = "Michaël Ball (http://github.com/michael-ball/)";
@@ -4151,7 +4171,7 @@
     };
   };
 
-"tender" = {
+  "tender" = {
     slug = "tender";
     name = "tender";
     author = "Jacobo Tabernero (https://github/com/jacoborus/tender.vim)";
@@ -4175,7 +4195,7 @@
     };
   };
 
-"tomorrow" = {
+  "tomorrow" = {
     slug = "tomorrow";
     name = "Tomorrow";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -4199,7 +4219,7 @@
     };
   };
 
-"tomorrow-night" = {
+  "tomorrow-night" = {
     slug = "tomorrow-night";
     name = "Tomorrow Night";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -4223,7 +4243,7 @@
     };
   };
 
-"tomorrow-night-eighties" = {
+  "tomorrow-night-eighties" = {
     slug = "tomorrow-night-eighties";
     name = "Tomorrow Night";
     author = "Chris Kempson (http://chriskempson.com)";
@@ -4247,7 +4267,7 @@
     };
   };
 
-"tube" = {
+  "tube" = {
     slug = "tube";
     name = "London Tube";
     author = "Jan T. Sott";
@@ -4271,7 +4291,7 @@
     };
   };
 
-"twilight" = {
+  "twilight" = {
     slug = "twilight";
     name = "Twilight";
     author = "David Hart (https://github.com/hartbit)";
@@ -4295,7 +4315,7 @@
     };
   };
 
-"unikitty-dark" = {
+  "unikitty-dark" = {
     slug = "unikitty-dark";
     name = "Unikitty Dark";
     author = "Josh W Lewis (@joshwlewis)";
@@ -4319,7 +4339,7 @@
     };
   };
 
-"unikitty-light" = {
+  "unikitty-light" = {
     slug = "unikitty-light";
     name = "Unikitty Light";
     author = "Josh W Lewis (@joshwlewis)";
@@ -4343,7 +4363,7 @@
     };
   };
 
-"unikitty-reversible" = {
+  "unikitty-reversible" = {
     slug = "unikitty-reversible";
     name = "Unikitty Reversible";
     author = "Josh W Lewis (@joshwlewis)";
@@ -4367,10 +4387,11 @@
     };
   };
 
-"uwunicorn" = {
+  "uwunicorn" = {
     slug = "uwunicorn";
     name = "UwUnicorn";
-    author = "Fernando Marques (https://github.com/RakkiUwU) and Gabriel Fontes (https://github.com/Misterio77)";
+    author =
+      "Fernando Marques (https://github.com/RakkiUwU) and Gabriel Fontes (https://github.com/Misterio77)";
     colors = {
       base00 = "241b26";
       base01 = "2f2a3f";
@@ -4391,7 +4412,7 @@
     };
   };
 
-"vulcan" = {
+  "vulcan" = {
     slug = "vulcan";
     name = "vulcan";
     author = "Andrey Varfolomeev";
@@ -4415,7 +4436,7 @@
     };
   };
 
-"windows-10" = {
+  "windows-10" = {
     slug = "windows-10";
     name = "Windows 10";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4439,7 +4460,7 @@
     };
   };
 
-"windows-10-light" = {
+  "windows-10-light" = {
     slug = "windows-10-light";
     name = "Windows 10 Light";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4463,7 +4484,7 @@
     };
   };
 
-"windows-95" = {
+  "windows-95" = {
     slug = "windows-95";
     name = "Windows 95";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4487,7 +4508,7 @@
     };
   };
 
-"windows-95-light" = {
+  "windows-95-light" = {
     slug = "windows-95-light";
     name = "Windows 95 Light";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4511,7 +4532,7 @@
     };
   };
 
-"windows-highcontrast" = {
+  "windows-highcontrast" = {
     slug = "windows-highcontrast";
     name = "Windows High Contrast";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4535,7 +4556,7 @@
     };
   };
 
-"windows-highcontrast-light" = {
+  "windows-highcontrast-light" = {
     slug = "windows-highcontrast-light";
     name = "Windows High Contrast Light";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4559,7 +4580,7 @@
     };
   };
 
-"windows-nt" = {
+  "windows-nt" = {
     slug = "windows-nt";
     name = "Windows NT";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4583,7 +4604,7 @@
     };
   };
 
-"windows-nt-light" = {
+  "windows-nt-light" = {
     slug = "windows-nt-light";
     name = "Windows NT Light";
     author = "Fergus Collins (https://github.com/C-Fergus)";
@@ -4607,7 +4628,7 @@
     };
   };
 
-"woodland" = {
+  "woodland" = {
     slug = "woodland";
     name = "Woodland";
     author = "Jay Cornwall (https://jcornwall.com)";
@@ -4631,7 +4652,7 @@
     };
   };
 
-"xcode-dusk" = {
+  "xcode-dusk" = {
     slug = "xcode-dusk";
     name = "XCode Dusk";
     author = "Elsa Gonsiorowski (https://github.com/gonsie)";
@@ -4655,7 +4676,7 @@
     };
   };
 
-"zenburn" = {
+  "zenburn" = {
     slug = "zenburn";
     name = "Zenburn";
     author = "elnawe";
