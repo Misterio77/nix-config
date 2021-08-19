@@ -1,4 +1,4 @@
-{ config, nixpkgs, pkgs, hardware, impermanence, ... }:
+{ config, pkgs, nixpkgs, hardware, impermanence, ... }:
 
 {
   imports = [
@@ -35,13 +35,17 @@
       experimental-features = nix-command flakes ca-references
       warn-dirty = false
     '';
+    registry.nixpkgs.flake = nixpkgs;
   };
 
   networking = {
     hostName = "thanatos";
     networkmanager.enable = true;
     firewall = {
-      allowedTCPPorts = [ 25565 ];
+      allowedTCPPorts = [ 25565 51820 ];
+    };
+    wg-quick.interfaces = {
+      # wg0 = import ./wg0.nix;
     };
   };
 
@@ -131,6 +135,7 @@
     };
     dconf.enable = true;
     droidcam.enable = true;
+    kdeconnect.enable = true;
   };
 
   security = {

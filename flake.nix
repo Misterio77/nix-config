@@ -35,7 +35,7 @@
         # Hosts
         thanatos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit hardware impermanence; };
+          specialArgs = { inherit hardware nixpkgs impermanence; };
           modules = [
             ./hosts/thanatos
           ] ++ users [ "misterio" ];

@@ -20,6 +20,7 @@ in {
         "custom/gpu"
         "memory"
         "clock"
+        "tray"
       ];
       modules = {
         clock = {

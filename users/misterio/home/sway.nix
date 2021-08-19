@@ -36,7 +36,6 @@ in {
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = {
-      bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
       menu = "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run";
       fonts = {
         names = [ "Fira Sans" ];
@@ -114,7 +113,6 @@ in {
         }
         # Swayidle
         # Lock after 10 minutes
-        # Turn screen off and clear gpg pass after 20 seconds locked
         {
           command = ''
             ${swayidle} -w \
@@ -130,10 +128,12 @@ in {
                       timeout 20  'pgrep -x swaylock && swaymsg "output * dpms off"' \
                           resume  'pgrep -x swaylock && swaymsg "output * dpms on"' \
                       timeout 620 'swaymsg "output * dpms off"' \
-                          resume  'swaymsg "output * dpms on"' \
-                      timeout 20  'pgrep -x swaylock && gpg-connect-agent reloadagent /bye' \
-                      timeout 620 'gpg-connect-agent reloadagent /bye'
-          '';
+                          resume  'swaymsg "output * dpms on"'
+            '';
+        }
+        # Start waybar
+        {
+          command = "${pkgs.waybar}/bin/waybar";
         }
         # Set xwayland main monitor
         {
@@ -141,6 +141,7 @@ in {
             "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
         }
       ];
+      bars = [];
       window = {
         border = 2;
         commands = [{

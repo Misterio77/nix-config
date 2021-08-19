@@ -12,8 +12,11 @@
       m = "neomutt";
       mutt = "neomutt";
     };
+    shellAliases = {
+      getip = "curl ifconfig.me";
+    };
     functions = {
-      fish_greeting = "${pkgs.fortune}/bin/fortune";
+      fish_greeting = "${pkgs.fortune}/bin/fortune -s";
     };
     interactiveShellInit =
     # Use vim bindings and cursors

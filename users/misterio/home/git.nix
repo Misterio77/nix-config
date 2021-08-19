@@ -1,7 +1,7 @@
 {
   programs.git = {
     enable = true;
-    aliases = { graph = "log --all --decorate --oneline --graph"; };
+    aliases = { graph = "log --decorate --oneline --graph"; };
     userName = "Gabriel Fontes";
     userEmail = "eu@misterio.me";
     signing = {

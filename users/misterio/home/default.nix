@@ -15,6 +15,8 @@ in {
     ./git.nix
     ./gpg-agent.nix
     ./gtk.nix
+    ./kdeconnect.nix
+    ./mako.nix
     ./neofetch.nix
     ./nix-index.nix
     ./nvim.nix
@@ -34,13 +36,12 @@ in {
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
-    comma
     discord
     dragon-drop
     exa
     fira
     fira-code
-    firefox-bin
+    #firefox-bin
     lm_sensors
     lutris
     multimc
@@ -64,22 +65,23 @@ in {
        "Downloads"
        "Games"
        "Pictures"
+       ".gnupg"
        ".cache/nix-index"
        ".config/Hero_Siege"
+       ".config/kdeconnect"
        ".config/lutris"
-       ".gnupg"
        ".local/share/Steam"
        ".local/share/Tabletop Simulator"
+       ".local/share/direnv"
        ".local/share/lutris"
        ".local/share/multimc"
        ".local/share/osu"
        ".local/share/password-store"
-       ".local/share/direnv"
      ];
      files = [
        ".steam/steam.token"
        ".steam/registry.vdf"
      ];
-     allowOther = false;
+     allowOther = true;
    };
 }
