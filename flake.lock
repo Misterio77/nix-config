@@ -20,11 +20,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1629343871,
-        "narHash": "sha256-Gorp++fre/yHR1tWz9nV6Rf94xyfwJ/qR5sknRV+moE=",
+        "lastModified": 1629495024,
+        "narHash": "sha256-9jhDWarlbWKy8RWuzLG0E6C6W/o87WysjFoAGyRdZR8=",
         "owner": "misterio77",
         "repo": "home-manager",
-        "rev": "7ae5532e669d2839d06bd6838d9434c252b367bd",
+        "rev": "379027c30e5472e60120419e0c98911d6f93ae0d",
         "type": "github"
       },
       "original": {
@@ -51,10 +51,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1629048390,
-        "narHash": "sha256-do7HuXFSKyj4ulMlRvGigNZCqOaGD9i0M3OLkFQgEAc=",
-        "path": "/nix/store/1inzjq0zh5qrl0196qxicl0j83fia916-source",
-        "rev": "e41ba38114055832e5ba4a851e9c00149eef3e4a",
+        "lastModified": 1629292755,
+        "narHash": "sha256-5xMo32NVLnloY9DveqwJO/Cab1+PbTMPqU4WMmawX5M=",
+        "path": "/nix/store/gih766jr8d6rcdp30sm5gn93sqcfvapp-source",
+        "rev": "253aecf69ed7595aaefabde779aa6449195bebb7",
         "type": "path"
       },
       "original": {

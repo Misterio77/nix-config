@@ -40,13 +40,15 @@ in {
     exa
     fira
     fira-code
-    #firefox-bin
+    imv
     lm_sensors
     lutris
+    mpv
     multimc
     nodePackages.speed-test
     osu-lazer
     pinentry-gnome
+    ranger
     setscheme
     spotify
     steam
@@ -78,6 +80,6 @@ in {
       ".local/share/password-store"
     ];
     files = [ ".steam/steam.token" ".steam/registry.vdf" ];
-    allowOther = true;
+    allowOther = false;
   };
 }

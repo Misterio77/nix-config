@@ -5,8 +5,8 @@ in {
   home.packages = with pkgs; [ neofetch ];
   xdg.configFile."neofetch/config.conf".text = ''
     print_info() {
-        info title
-        info underline
+        # info title
+        # info underline
         info "OS" distro
         info "Kernel" kernel
         info "Uptime" uptime
@@ -14,14 +14,11 @@ in {
         info "Shell" shell
         info "WM" wm
         info "Term" term
-        info "Icons" icons
-        info "Terminal Font" term_font
-        info underline
-        info "CPU" cpu
-        prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
-        info "Memory" memory
-        info "Disk" disk
-        info cols
+        # info "CPU" cpu
+        # prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
+        # info "Memory" memory
+        # info "Disk" disk
+        # info cols
     }
     title_fqdn="off"
     kernel_shorthand="on"
@@ -74,7 +71,7 @@ in {
     memory_display="off"
     memory_unit="gib"
     battery_display="off"
-    disk_display="off"
+    disk_display="on"
     image_backend="ascii"
     image_source="auto"
     ascii_distro="nixos_small"

@@ -29,6 +29,7 @@ in {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";
     GDK_BACKEND = "wayland";
+    LIBSEAT_BACKEND = "logind";
   };
 
   wayland.windowManager.sway = {
@@ -198,6 +199,7 @@ in {
         "Control+Print" = "exec ${grimshot} --notify copy screen";
         "Mod1+Print" = "exec ${grimshot} --notify copy area";
         "Mod4+Print" = "exec ${grimshot} --notify copy window";
+        "Mod4+x" = "exec ${wofi} -S drun -I";
       };
       terminal = "${alacritty}";
       modifier = "Mod4";

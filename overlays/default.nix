@@ -109,21 +109,6 @@
         '';
       };
     })
-    # TODO: Remove when https://github.com/alacritty/alacritty/pull/5313 is merged
-    (final: prev: {
-      alacritty = prev.alacritty.overrideAttrs (oldAttrs: rec {
-        src = prev.fetchFromGitHub {
-          owner = "ncfavier";
-          repo = "alacritty";
-          rev = "5f392c2cb516a5ea198ebb48754c7c42157d21b3";
-          sha256 = "sha256-szPB8A8CGqU5Sf7evPOP/2xgWN5IFal4z95Yt44bNsM=";
-        };
-        cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
-          inherit src;
-          outputHash = "sha256-jCNkdgSzoiOW+jh/q3jR9SsiVa/MC5iz6nXgXOqQhdc=";
-        });
-      });
-    })
     # Fixes https://todo.sr.ht/~scoopta/wofi/174
     (final: prev: {
       wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
@@ -136,6 +121,41 @@
         patches = (oldAttrs.patches or [ ])
           ++ [ ./nix-index-new-command.patch ];
       });
+    })
+
+    # Overrides 
+
+    (final: prev: {
+      alacritty = prev.alacritty.overrideAttrs (oldAttrs: rec {
+        # TODO: Remove when https://github.com/alacritty/alacritty/pull/5313 is merged
+        src = prev.fetchFromGitHub {
+          owner = "ncfavier";
+          repo = "alacritty";
+          rev = "5f392c2cb516a5ea198ebb48754c7c42157d21b3";
+          sha256 = "sha256-szPB8A8CGqU5Sf7evPOP/2xgWN5IFal4z95Yt44bNsM=";
+        };
+        cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
+          inherit src;
+          outputHash = "sha256-jCNkdgSzoiOW+jh/q3jR9SsiVa/MC5iz6nXgXOqQhdc=";
+        });
+        postInstall = (oldAttrs.postInstall or " ") + ''
+          ln -s $out/bin/alacritty $out/bin/xterm
+        '';
+      });
+    })
+    (final: prev: {
+      nodePackages = prev.nodePackages // {
+        aws-azure-login = prev.nodePackages.aws-azure-login.overrideAttrs (oldAttrs: {
+          version = "3.5.0";
+          src = prev.fetchFromGitHub {
+            owner = "misterio77";
+            repo = "aws-azure-login";
+            rev = "23206f5a70b8ef4036dab76c7144f709e944d719";
+            sha256 = "sha256-JQct1z3Vg75uzpa9t6WLfSRLj/fueDJt5kSAm2K4q10=";
+          };
+          bypassCache = false;
+        });
+      };
     })
   ];
 }

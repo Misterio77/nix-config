@@ -88,7 +88,7 @@ in {
 
       "Fix nvim size according to terminal
       "(https://github.com/neovim/neovim/issues/11330)
-      autocmd VimEnter * :silent exec "!kill -s SIGWINCH $PPID"
+      autocmd VimEnter * silent exec "!kill -s SIGWINCH" getpid()
     '';
   };
 }
