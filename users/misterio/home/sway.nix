@@ -143,10 +143,16 @@ in {
       bars = [ ];
       window = {
         border = 2;
-        commands = [{
-          command = "move scratchpad";
-          criteria = { title = "Wine System Tray"; };
-        }];
+        commands = [
+          {
+            command = "move scratchpad";
+            criteria = { title = "Wine System Tray"; };
+          }
+          {
+            command = "move scratchpad";
+            criteria = { title = "Firefox — Sharing Indicator"; };
+          }
+        ];
       };
       keybindings = lib.mkOptionDefault {
         # Splits

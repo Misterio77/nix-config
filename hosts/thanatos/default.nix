@@ -38,9 +38,6 @@
     hostName = "thanatos";
     networkmanager.enable = true;
     firewall = { allowedTCPPorts = [ 25565 51820 ]; };
-    wg-quick.interfaces = {
-      # wg0 = import ./wg0.nix;
-    };
   };
 
   i18n.defaultLocale = "en_US.UTF-8";

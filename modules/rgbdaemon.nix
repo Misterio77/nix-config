@@ -133,7 +133,7 @@ in {
       '';
       onChange = ''
         echo "Reloading rgbdaemon"
-        $DRY_RUN_CMD ${pkgs.procps}/bin/pkill -u $USER -f -SIGHUP rgbdaemon
+        ${pkgs.procps}/bin/pkill -u $USER -f -SIGHUP rgbdaemon || true
       '';
     };
     systemd.user.services.rgbdaemon = {

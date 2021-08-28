@@ -26,6 +26,8 @@ in {
           let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
         '';
       }
+      open-browser
+      plantuml-syntax
       editorconfig-vim
       vim-noctu
       auto-pairs
@@ -64,8 +66,8 @@ in {
       set shiftwidth=4 "How many to indent with reindent ops
       set expandtab "Use spaces
       "set noexpandtab "Use tabs
-      "Two spaces with html, typescript, scss, and nix
-      autocmd FileType html,nix,scss,typescript setlocal ts=2 sts=2 sw=2
+      "Two spaces with html, typescript, scss, json, and nix
+      autocmd FileType json,html,nix,scss,typescript setlocal ts=2 sts=2 sw=2
 
       "Options when composing mutt mail
       autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap

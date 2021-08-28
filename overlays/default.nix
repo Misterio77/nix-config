@@ -2,6 +2,7 @@
 
 {
   nixpkgs.overlays = [
+
     # A zenity wrapper for using with SUDO_ASKPASS
     (final: prev: {
       zenity-askpass = let zenity = "${prev.gnome.zenity}/bin/zenity";
@@ -25,28 +26,40 @@
     (final: prev: {
       setscheme =
         let zenity-askpass = "${prev.zenity-askpass}/bin/zenity-askpass";
-        in prev.writeShellScriptBin "setscheme" ''
-          if [ "$1" == "-A" ]; then
-            sudo="sudo -A"
-            shift
-          else
-            sudo="sudo"
-          fi
+        in prev.stdenv.mkDerivation {
+          name = "setscheme";
+          version = "1.0";
+          src = prev.writeShellScriptBin "setscheme" ''
+            if [ "$1" == "-A" ]; then
+              sudo="sudo -A"
+              shift
+            else
+              sudo="sudo"
+            fi
 
-          if [ "$1" == "-L" ]; then
-            nix eval --impure --raw --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))'
-            exit 0
-          elif [ "$1" == "-R" ]; then
-            scheme=$(setscheme -L | ${prev.coreutils}/bin/shuf -n 1)
-            echo $scheme
-          else
-            scheme=$1
-          fi
+            if [ "$1" == "-L" ]; then
+              nix eval --raw --impure --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))' 2> /dev/null
+              exit 0
+            elif [ "$1" == "-R" ]; then
+              scheme=$(setscheme -L | ${prev.coreutils}/bin/shuf -n 1)
+              echo $scheme
+            else
+              scheme=$1
+            fi
 
-          echo "\"$scheme\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
-          SUDO_ASKPASS="${zenity-askpass}" $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
-        '';
-    })
+            echo "\"$scheme\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
+            SUDO_ASKPASS="${zenity-askpass}" $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
+          '';
+          dontBuild = true;
+          dontConfigure = true;
+          nativeBuildInputs = [ prev.installShellFiles ];
+          installPhase = ''
+            install -Dm 0755 $src/bin/setscheme $out/bin/setscheme
+            installShellCompletion --cmd setscheme \
+              --fish <(echo 'complete -c setscheme -d "Which scheme to set" -r -f -a "(setscheme -L)"')
+          '';
+        };
+      })
     # Runs fzf inside a (usually floating) alacritty term
     (final: prev: {
       alacritty-fzf = let

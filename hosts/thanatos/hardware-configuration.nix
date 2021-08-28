@@ -12,33 +12,35 @@
     "/dev/disk/by-uuid/320599e3-21f9-465e-a2f2-d078eccc34c0";
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [ "defaults" "size=4G" "mode=755" ];
-  };
+  fileSystems = {
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=4G" "mode=755" ];
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/28E4-87AC";
-    fsType = "vfat";
-  };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/28E4-87AC";
+      fsType = "vfat";
+    };
 
-  fileSystems."/data" = {
-    device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
-    fsType = "btrfs";
-    options = [ "subvol=data" ];
-  };
+    "/data" = {
+      device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
+      fsType = "btrfs";
+      options = [ "subvol=data" ];
+    };
 
-  fileSystems."/dotfiles" = {
-    device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
-    fsType = "btrfs";
-    options = [ "subvol=dotfiles" ];
-  };
+    "/dotfiles" = {
+      device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
+      fsType = "btrfs";
+      options = [ "subvol=dotfiles" ];
+    };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
-    fsType = "btrfs";
-    options = [ "subvol=nix" ];
+    "/nix" = {
+      device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
   };
 
   swapDevices = [ ];

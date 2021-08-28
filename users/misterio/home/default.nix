@@ -40,13 +40,16 @@ in {
     exa
     fira
     fira-code
+    firefox
     imv
+    jq
     lm_sensors
     lutris
     mpv
     multimc
     nodePackages.speed-test
     osu-lazer
+    pavucontrol
     pinentry-gnome
     ranger
     setscheme
