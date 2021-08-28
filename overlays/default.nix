@@ -59,7 +59,7 @@
               --fish <(echo 'complete -c setscheme -d "Which scheme to set" -r -f -a "(setscheme -L)"')
           '';
         };
-      })
+    })
     # Runs fzf inside a (usually floating) alacritty term
     (final: prev: {
       alacritty-fzf = let
@@ -158,16 +158,17 @@
     })
     (final: prev: {
       nodePackages = prev.nodePackages // {
-        aws-azure-login = prev.nodePackages.aws-azure-login.overrideAttrs (oldAttrs: {
-          version = "3.5.0";
-          src = prev.fetchFromGitHub {
-            owner = "misterio77";
-            repo = "aws-azure-login";
-            rev = "23206f5a70b8ef4036dab76c7144f709e944d719";
-            sha256 = "sha256-JQct1z3Vg75uzpa9t6WLfSRLj/fueDJt5kSAm2K4q10=";
-          };
-          bypassCache = false;
-        });
+        aws-azure-login = prev.nodePackages.aws-azure-login.overrideAttrs
+          (oldAttrs: {
+            version = "3.5.0";
+            src = prev.fetchFromGitHub {
+              owner = "misterio77";
+              repo = "aws-azure-login";
+              rev = "23206f5a70b8ef4036dab76c7144f709e944d719";
+              sha256 = "sha256-JQct1z3Vg75uzpa9t6WLfSRLj/fueDJt5kSAm2K4q10=";
+            };
+            bypassCache = false;
+          });
       };
     })
   ];
