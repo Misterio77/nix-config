@@ -5,12 +5,15 @@ let
   wallpaper = config.wallpaper.path;
   # Programs
   alacritty = "${config.programs.alacritty.package}/bin/alacritty";
+  alacritty-fzf = "${pkgs.alacritty-fzf}/bin/alacritty-fzf";
+  discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
   makoctl = "${pkgs.mako}/bin/makoctl";
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+  preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
   setscheme-fzf = "${pkgs.setscheme-fzf}/bin/setscheme-fzf";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
@@ -28,7 +31,6 @@ in {
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";
-    GDK_BACKEND = "wayland";
     LIBSEAT_BACKEND = "logind";
   };
 
@@ -110,6 +112,10 @@ in {
         {
           command = "${swayfader}";
         }
+        # Init discocss
+        {
+          command = "${discocss}";
+        }
         # Swayidle
         # Lock after 10 minutes
         {
@@ -184,10 +190,12 @@ in {
         "Shift+XF86AudioMute" =
           "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
         # Media
-        "XF86AudioNext" = "exec ${playerctl} next";
-        "XF86AudioPrev" = "exec ${playerctl} previous";
-        "XF86AudioPlay" = "exec ${playerctl} play-pause";
-        "XF86AudioStop" = "exec ${playerctl} stop";
+        "XF86AudioNext" = "exec player=$(${preferredplayer}) && ${playerctl} next --player $player";
+        "XF86AudioPrev" = "exec player=$(${preferredplayer}) && ${playerctl} previous --player $player";
+        "XF86AudioPlay" = "exec player=$(${preferredplayer}) && ${playerctl} play-pause --player $player";
+        "XF86AudioStop" = "exec player=$(${preferredplayer}) && ${playerctl} stop --player $player";
+        "Shift+XF86AudioPlay" = "exec player=$(${playerctl} -l | ${alacritty-fzf}) && ${preferredplayer} $player";
+        "Shift+XF86AudioStop" = "exec ${preferredplayer} none";
         # Color scheme
         "XF86Tools" = "exec ${setscheme-fzf}";
         # Notifications

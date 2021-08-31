@@ -12,8 +12,8 @@ in {
     anchor = "top-center";
     width = 400;
     height = 150;
-    borderSize = 3;
-    defaultTimeout = 8000;
+    borderSize = 2;
+    defaultTimeout = 12000;
     backgroundColor = "#${colors.base00}dd";
     borderColor = "#${colors.base03}dd";
     textColor = "#${colors.base05}dd";

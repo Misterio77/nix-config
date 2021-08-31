@@ -1,0 +1,18 @@
+diff --git a/swayfader.py b/swayfader.py
+index b4a8a72..d3d1916 100644
+--- a/swayfader.py
++++ b/swayfader.py
+@@ -1,3 +1,4 @@
++#!/usr/bin/env python3
+ from i3ipc import Connection, Event
+ from threading import Thread
+ from time import sleep
+@@ -7,7 +8,7 @@ FRAME_T = 0.01
+ 
+ # transparency values
+ CON_AC     = 1     # active window
+-CON_INAC   = 0.7   # inactive window
++CON_INAC   = 0.87   # inactive window
+ FLOAT_AC   = 1     # active floating window
+ FLOAT_INAC = 0.95  # inactive floating window
+ BOT_INAC   = 0.9   # bottom window

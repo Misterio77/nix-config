@@ -3,6 +3,35 @@
 {
   nixpkgs.overlays = [
 
+    (final: prev: {
+      preferredplayer = let playerctl = "${prev.playerctl}/bin/playerctl";
+      in prev.writeShellScriptBin "preferredplayer" ''
+        if [[ -z "$1" ]]; then
+            players=$(${playerctl} --list-all | \
+            grep "$(cat $XDG_RUNTIME_DIR/currentplayer 2> /dev/null || echo '.*')") && \
+            echo "$players" | head -1
+        else
+            echo "$1" > $XDG_RUNTIME_DIR/currentplayer
+        fi
+      '';
+    })
+    (final: prev: {
+      minicava = let cava = "${prev.cava}/bin/cava";
+      in prev.writeShellScriptBin "minicava" ''
+        dict="s/;//g;s/0/▁/g;s/1/▂/g;s/2/▃/g;s/3/▄/g;s/4/▅/g;s/5/▆/g;s/6/▇/g;s/7/█/g;"
+
+        config="
+        [general]
+        bars=7
+        [output]
+        method=raw
+        data_format=ascii
+        ascii_max_range=7
+        "
+
+        ${cava} -p <(echo "$config") | sed -u $dict
+      '';
+    })
     # A zenity wrapper for using with SUDO_ASKPASS
     (final: prev: {
       zenity-askpass = let zenity = "${prev.gnome.zenity}/bin/zenity";
@@ -96,12 +125,10 @@
         src = prev.fetchFromGitHub {
           owner = "Misterio77";
           repo = "swayfader";
-          rev = "3f18eacb4b43ffd2d8c10a395a3e77bbb40ccee6";
-          sha256 = "0x490g1g1vjrybnwna9z00r9i61d5sbrzq7qi7mdq6y94whwblla";
+          rev = "2be57f2e0685e52d1141c57fb62efebed6e276b3";
+          sha256 = "sha256-foMu5Qxx4PD5YI67TuEe+sydP+pERUjB3MyoGOhHrjw=";
         };
         buildInputs = [ (prev.python3.withPackages (ps: [ ps.i3ipc ])) ];
-        dontBuild = true;
-        dontConfigure = true;
         installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
       };
     })
@@ -111,8 +138,8 @@
         src = prev.fetchFromGitHub {
           owner = "Misterio77";
           repo = "rgbdaemon";
-          rev = "28d12fb0458cdeaeeb75c4e211f786190d4873a2";
-          sha256 = "sha256-p1cwW33zRuZ4bHadGn6lzRLzuPyuBkcP/OYNsppNpZo=";
+          rev = "83759ac45890049535b6b432f669beec19973d01";
+          sha256 = "sha256-susdY8mK0zjtFb68x9jNZlwGbHPM2EPXZ+EVhaYPxjc=";
         };
         propagatedBuildInputs = with prev; [ pastel makeWrapper ];
         dontBuild = true;
@@ -121,6 +148,12 @@
           install -Dm 0755 $src/rgbdaemon.sh $out/bin/rgbdaemon
         '';
       };
+    })
+    # Don't launch discord when using discocss
+    (final: prev: {
+      discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
+        patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];
+      });
     })
     # Fixes https://todo.sr.ht/~scoopta/wofi/174
     (final: prev: {

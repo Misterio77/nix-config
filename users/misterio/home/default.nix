@@ -8,6 +8,7 @@ in {
     ../../../modules/wallpaper.nix
     ./alacritty.nix
     ./direnv.nix
+    ./discocss.nix
     ./ethminer.nix
     ./fish.nix
     ./fzf.nix
@@ -30,6 +31,7 @@ in {
   ];
 
   colorscheme = colors.${import ./current-scheme.nix};
+  # wallpaper.path = "/home/misterio/Pictures/Wallpapers/sunset-forest-elk.png";
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
@@ -47,6 +49,7 @@ in {
     lutris
     mpv
     multimc
+    ncdu
     nodePackages.speed-test
     osu-lazer
     pavucontrol
@@ -71,6 +74,7 @@ in {
       "Pictures"
       ".gnupg"
       ".cache/nix-index"
+      ".config/discord"
       ".config/Hero_Siege"
       ".config/kdeconnect"
       ".config/lutris"

@@ -1,0 +1,37 @@
+diff --git a/discocss b/discocss
+index 05c21ae..7741aab 100755
+--- a/discocss
++++ b/discocss
+@@ -3,10 +3,11 @@
+ confdir="${XDG_CONFIG_HOME:=$HOME/.config}/discocss"
+ preloadFile="$confdir/preload.js"
+ cssFile="$confdir/custom.css"
++discord_type=${1:-discord}
+ 
+ mkdir -p "$confdir"
+ 
+-touch "$cssFile"
++touch "$cssFile" 2> /dev/null
+ 
+ cat <<EOF > "$preloadFile"
+ module.exports = () => {
+@@ -47,10 +48,10 @@ ln -f -s "$preloadFile" /tmp/discocss-preload.js
+ 
+ if [ "$(uname)" = "Darwin" ]; then
+   sed_options='-i ""'
+-  core_asar="$(echo "$HOME/Library/Application Support/discord/"*"/modules/discord_desktop_core/core.asar")"
++  core_asar="$(echo "$HOME/Library/Application Support/${discord_type}/"*"/modules/discord_desktop_core/core.asar")"
+ else
+   sed_options='-i'
+-  core_asar="$(echo "$XDG_CONFIG_HOME/discord/"*"/modules/discord_desktop_core/core.asar")"
++  core_asar="$(echo "$XDG_CONFIG_HOME/${discord_type}/"*"/modules/discord_desktop_core/core.asar")"
+ fi
+ 
+ app_preload_replace='s|  // App preload script, used to provide a replacement native API now that|try {require\(`/tmp/discocss-preload.js`)()} catch \(e\) {console.error\(e\);} |'
+@@ -59,6 +60,3 @@ frame_true_replace='s|    mainWindowOptions.frame = true;|}dp.mo(mainWindowOptio
+ causing_the_window_replace='s|// causing the window to be too small on a larger secondary display| dp.mw(mainWindow);                                                |'
+ LC_ALL=C sed $sed_options "$app_preload_replace; $launch_main_app_replace; $frame_true_replace; $causing_the_window_replace" \
+   "$core_asar"
+-
+-command -v discord && exec discord
+-command -v Discord && exec Discord

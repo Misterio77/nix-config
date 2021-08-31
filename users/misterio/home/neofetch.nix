@@ -9,15 +9,15 @@ in {
         # info underline
         info "OS" distro
         info "Kernel" kernel
-        info "Uptime" uptime
-        info "Packages" packages
+        # info "Uptime" uptime
+        # info "Packages" packages
         info "Shell" shell
         info "WM" wm
         info "Term" term
         # info "CPU" cpu
         # prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
-        # info "Memory" memory
-        # info "Disk" disk
+        info "Memory" memory
+        info "Disk" disk
         # info cols
     }
     title_fqdn="off"

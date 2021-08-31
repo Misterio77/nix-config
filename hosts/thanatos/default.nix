@@ -23,6 +23,7 @@
 
   nix = {
     package = pkgs.nixUnstable;
+    autoOptimiseStore = true;
     gc = {
       automatic = true;
       dates = "daily";

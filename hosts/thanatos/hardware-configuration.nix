@@ -39,7 +39,7 @@
     "/nix" = {
       device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
       fsType = "btrfs";
-      options = [ "subvol=nix" ];
+      options = [ "subvol=nix noatime" ];
     };
   };
 
