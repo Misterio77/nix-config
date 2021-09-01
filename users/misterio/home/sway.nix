@@ -24,7 +24,7 @@ let
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
 in {
-  home.packages = with pkgs; [ wl-clipboard wf-recorder ];
+  home.packages = with pkgs; [ wl-clipboard wf-recorder xdg-utils ];
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";

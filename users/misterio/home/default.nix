@@ -44,22 +44,20 @@ in {
   # wallpaper.generate = true;
 
   home.packages = with pkgs; [
+    # Cli
     bottom
     cachix
     dragon-drop
     exa
-    firefox
     imv
-    jq
-    lm_sensors
     ncdu
-    pavucontrol
     ranger
     setscheme
-    spotify
     trash-cli
-    vulkan-tools
-    xdg-utils
+
+    pavucontrol
+
+    spotify
   ];
 
   home.persistence."/data/home/misterio" = {
