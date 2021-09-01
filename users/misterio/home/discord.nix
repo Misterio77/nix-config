@@ -2,7 +2,8 @@
 
 let colors = config.colorscheme.colors;
 in {
-  home.packages = with pkgs; [ discocss ];
+  home.packages = with pkgs; [ discord discocss ];
+  home.persistence."/data/home/misterio".directories = [ ".config/discord" ];
   xdg.configFile."discocss/custom.css".text = ''
     .theme-dark {
         --header-primary: #${colors.base05};

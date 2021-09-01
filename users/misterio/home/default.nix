@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
-let colors = import ../../../colors.nix;
+let
+  colors = import ../../../colors.nix;
+  username = "${config.home.username}";
 in {
   imports = [
     ../../../modules/colorscheme.nix
@@ -8,23 +10,29 @@ in {
     ../../../modules/wallpaper.nix
     ./alacritty.nix
     ./direnv.nix
-    ./discocss.nix
+    ./discord.nix
     ./ethminer.nix
+    ./fira.nix
     ./fish.nix
     ./fzf.nix
     ./git.nix
-    ./gpg-agent.nix
+    ./gpg.nix
     ./gtk.nix
     ./kdeconnect.nix
+    ./lutris.nix
     ./mako.nix
+    ./multimc.nix
     ./neofetch.nix
     ./nix-index.nix
     ./nvim.nix
+    ./osu.nix
     ./pass.nix
     ./qt.nix
     ./qutebrowser.nix
     ./rgbdaemon.nix
+    ./runescape.nix
     ./starship.nix
+    ./steam.nix
     ./sway.nix
     ./swaylock.nix
     ./waybar.nix
@@ -36,60 +44,30 @@ in {
   # wallpaper.generate = true;
 
   home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
     cachix
-    discord
     dragon-drop
     exa
-    fira
-    fira-code
     firefox
     imv
     jq
     lm_sensors
-    lutris
-    mpv
-    multimc
     ncdu
-    nodePackages.speed-test
-    osu-lazer
     pavucontrol
-    pinentry-gnome
     ranger
     setscheme
     spotify
-    steam
     trash-cli
     vulkan-tools
     xdg-utils
   ];
 
-  fonts.fontconfig.enable = true;
-
-  # Writable (persistent) data
   home.persistence."/data/home/misterio" = {
     directories = [
       "Documents"
       "Downloads"
-      "Games"
       "Pictures"
-      "Jagex"
-      ".gnupg"
-      ".cache/nix-index"
-      ".config/discord"
-      ".config/Hero_Siege"
-      ".config/kdeconnect"
-      ".config/lutris"
-      ".local/share/Steam"
-      ".local/share/Tabletop Simulator"
-      ".local/share/direnv"
-      ".local/share/lutris"
-      ".local/share/multimc"
-      ".local/share/osu"
-      ".local/share/password-store"
     ];
-    files = [ ".steam/steam.token" ".steam/registry.vdf" ];
     allowOther = false;
   };
 }

@@ -6,4 +6,6 @@
       enableFlakes = true;
     };
   };
+
+  home.persistence."/data/home/misterio".directories = [ "Jagex" ];
 }
