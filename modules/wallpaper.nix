@@ -66,7 +66,7 @@ in {
     generated-nix-wallpaper = pkgs.stdenv.mkDerivation rec {
       name = "generated-nix-wallpaper";
       src = nix-wallpaper-template {
-        bg = "${colorscheme.colors.base02}";
+        bg = "${colorscheme.colors.base01}";
         fg1 = "${colorscheme.colors.base0C}";
         fg2 = "${colorscheme.colors.base0D}";
       };

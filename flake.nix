@@ -6,9 +6,10 @@
     hardware.url = "github:nixos/nixos-hardware";
     home-manager.url = "github:misterio77/home-manager/personal";
     impermanence.url = "github:RiscadoA/impermanence";
+    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, home-manager, nixpkgs, hardware, impermanence }: {
+  outputs = { self, home-manager, nixpkgs, hardware, impermanence, nur }: {
     overlay = import ./overlays;
     nixosConfigurations = let
       # For a list of users, get their configuration (./users/name),
@@ -32,7 +33,7 @@
       # Hosts
       thanatos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit hardware nixpkgs impermanence; };
+        specialArgs = { inherit hardware nixpkgs impermanence nur; };
         modules = [ ./hosts/thanatos ] ++ users [ "misterio" ];
       };
     };

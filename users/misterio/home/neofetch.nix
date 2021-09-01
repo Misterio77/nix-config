@@ -1,25 +1,8 @@
 { pkgs, ... }:
 
-let glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
-in {
-  home.packages = with pkgs; [ neofetch ];
-  xdg.configFile."neofetch/config.conf".text = ''
-    print_info() {
-        # info title
-        # info underline
-        info "OS" distro
-        info "Kernel" kernel
-        # info "Uptime" uptime
-        # info "Packages" packages
-        info "Shell" shell
-        info "WM" wm
-        info "Term" term
-        # info "CPU" cpu
-        # prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
-        info "Memory" memory
-        info "Disk" disk
-        # info cols
-    }
+let
+  glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
+  common = ''
     title_fqdn="off"
     kernel_shorthand="on"
     distro_shorthand="off"
@@ -56,9 +39,7 @@ in {
     underline_enabled="on"
     underline_char="-"
     separator=":"
-    block_range=(0 15)
     color_blocks="on"
-    block_width=3
     block_height=1
     col_offset="auto"
     bar_char_elapsed="-"
@@ -74,8 +55,6 @@ in {
     disk_display="on"
     image_backend="ascii"
     image_source="auto"
-    ascii_distro="nixos_small"
-    #ascii_distro="auto"
     ascii_colors=(distro)
     ascii_bold="on"
     image_loop="off"
@@ -88,4 +67,44 @@ in {
     background_color=
     stdout="off"
   '';
+in {
+  home.packages = with pkgs; [ neofetch ];
+  xdg.configFile = {
+    "neofetch/config_small.conf".text = ''
+      print_info() {
+          info title
+          info "os" distro
+          info "kernel" kernel
+          info "shell" shell
+          info "wm" wm
+          info "term" term
+          info "memory" memory
+          info cols
+      }
+      block_range=(1 7)
+      block_width=2
+      ascii_distro="nixos_small"
+    '' + common;
+    "neofetch/config.conf".text = ''
+      print_info() {
+          info title
+          info underline
+          info "OS" distro
+          info "Kernel" kernel
+          info "Uptime" uptime
+          info "Packages" packages
+          info "Shell" shell
+          info "WM" wm
+          info "Term" term
+          info "CPU" cpu
+          prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
+          info "Memory" memory
+          info "Disk" disk
+          info cols
+      }
+      block_range=(0 15)
+      block_width=3
+      ascii_distro="nixos"
+    '' + common;
+  };
 }

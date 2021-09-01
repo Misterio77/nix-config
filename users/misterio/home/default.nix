@@ -26,17 +26,19 @@ in {
     ./rgbdaemon.nix
     ./starship.nix
     ./sway.nix
+    ./swaylock.nix
     ./waybar.nix
     ./zathura.nix
   ];
 
   colorscheme = colors.${import ./current-scheme.nix};
-  # wallpaper.path = "/home/misterio/Pictures/Wallpapers/sunset-forest-elk.png";
-  wallpaper.generate = true;
+  wallpaper.path = "/home/misterio/Pictures/Wallpapers/blue-red-sky-clouds.jpg";
+  # wallpaper.generate = true;
 
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
     bottom
+    cachix
     discord
     dragon-drop
     exa
@@ -72,6 +74,7 @@ in {
       "Downloads"
       "Games"
       "Pictures"
+      "Jagex"
       ".gnupg"
       ".cache/nix-index"
       ".config/discord"

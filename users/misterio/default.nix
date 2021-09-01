@@ -4,7 +4,7 @@
   # User info
   users.users.misterio = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "audio" "wheel" "docker" ];
     shell = pkgs.fish;
     # Grab hashed password from /data
     passwordFile = "/data/home/misterio/.password";

@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, hardware, impermanence, ... }:
+{ config, pkgs, nixpkgs, hardware, impermanence, nur, ... }:
 
 {
   imports = [
@@ -19,7 +19,10 @@
   };
   system.stateVersion = "21.11";
 
-  nixpkgs = { config.allowUnfree = true; };
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ nur.overlay ];
+  };
 
   nix = {
     package = pkgs.nixUnstable;
@@ -74,13 +77,6 @@
 
   services = {
     dbus.packages = [ pkgs.gcr ];
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
     postgresql = {
       enable = true;
       authentication = pkgs.lib.mkOverride 12 ''
@@ -147,6 +143,10 @@
     ckb-next.enable = true;
     steam-hardware.enable = true;
     opengl.enable = true;
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+    };
   };
 
   virtualisation.docker.enable = true;

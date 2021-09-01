@@ -12,20 +12,17 @@ let
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
+  pkill = "${pkgs.procps}/bin/pkill";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
   setscheme-fzf = "${pkgs.setscheme-fzf}/bin/setscheme-fzf";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
+  swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   wofi = "${pkgs.wofi}/bin/wofi -t ${alacritty}";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
-  # Swaylock with color arguments
-  swaylock-command = import ./swaylock-command.nix {
-    package = pkgs.swaylock-effects;
-    colors = colors;
-  };
 in {
   home.packages = with pkgs; [ wl-clipboard wf-recorder ];
   home.sessionVariables = {
@@ -102,7 +99,7 @@ in {
       startup = [
         # Initial lock
         {
-          command = "'${swaylock-command} -i ${wallpaper}'";
+          command = "'${swaylock} -i ${wallpaper}'";
         }
         # Focus main output
         {
@@ -118,10 +115,13 @@ in {
         }
         # Swayidle
         # Lock after 10 minutes
+        # After 10 seconds of locked, mute mic
+        # After 20 seconds of locked, disable rgb lights and turn monitors off
         {
           command = ''
+            ${pkill} swayidle; \
             ${swayidle} -w \
-                      timeout 600 '${swaylock-command} --screenshots --daemonize' \
+                      timeout 600 '${swaylock} --screenshots --daemonize' \
                       timeout 10 'pgrep -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ yes' \
                           resume 'pgrep -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ no' \
                       timeout 610 '${pactl} set-source-mute @DEFAULT_SOURCE@ yes' \
@@ -135,6 +135,7 @@ in {
                       timeout 620 'swaymsg "output * dpms off"' \
                           resume  'swaymsg "output * dpms on"'
           '';
+          always = true;
         }
         # Start waybar
         {
@@ -176,7 +177,7 @@ in {
         "Mod4+Control+Left" = "output DP-1 toggle";
         "Mod4+Control+Down" = "output HDMI-A-1 toggle";
         # Lock screen
-        "XF86Launch5" = "exec ${swaylock-command} --screenshots";
+        "XF86Launch5" = "exec ${swaylock} --screenshots";
         # Volume
         "XF86AudioRaiseVolume" =
           "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";

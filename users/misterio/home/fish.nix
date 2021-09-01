@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   programs.fish = {
     enable = true;
     shellAbbrs = {
@@ -12,7 +12,11 @@
       m = "neomutt";
       mutt = "neomutt";
     };
-    shellAliases = { getip = "curl ifconfig.me"; };
+    shellAliases = {
+      getip = "curl ifconfig.me";
+      # I have no ideia why neofetch --config argument must be a relative path, but oh well
+      minifetch = "neofetch --config (realpath --relative-to=(pwd) ${config.xdg.configHome}/neofetch/config_small.conf)";
+    };
     functions = { fish_greeting = "${pkgs.fortune}/bin/fortune -s"; };
     interactiveShellInit =
       # Use vim bindings and cursors
