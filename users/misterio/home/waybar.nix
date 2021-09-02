@@ -18,7 +18,7 @@ in {
       modules-left = [
         "sway/workspaces"
         "sway/mode"
-        "custom/minicava"
+        # "custom/minicava"
         "custom/preferredplayer"
         "custom/player"
       ];
@@ -97,7 +97,7 @@ in {
           tooltip = true;
           format-icons = {
             "Celluloid" = "";
-            "Spotify" = "阮";
+            "spotify" = "阮";
             "qutebrowser" = "爵";
             "discord" = "ﭮ";
             "No player set" = "ﱘ";

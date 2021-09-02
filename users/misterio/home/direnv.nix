@@ -7,5 +7,5 @@
     };
   };
 
-  home.persistence."/data/home/misterio".directories = [ "Jagex" ];
+  home.persistence."/data/home/misterio".directories = [ ".local/share/direnv" ];
 }

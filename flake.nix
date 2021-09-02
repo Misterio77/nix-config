@@ -21,7 +21,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              sharedModules = [ impermanence.nixosModules.impermanence-home ];
+              sharedModules = [ impermanence.nixosModules.home-manager.impermanence ];
               users = builtins.listToAttrs (nixpkgs.lib.forEach users (user: {
                 name = "${user}";
                 value = (./users + "/${user}" + /home);

@@ -9,6 +9,6 @@
       key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
     };
     lfs = { enable = true; };
-    ignores = [ ".direnv" ];
+    ignores = [ ".direnv" "result" ];
   };
 }
