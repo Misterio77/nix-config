@@ -1,30 +1,31 @@
 { lib, pkgs, config, ... }:
 
 let
-  colors = config.colorscheme.colors;
+  colorscheme = config.colorscheme.colors;
   wallpaper = config.wallpaper.path;
   # Programs
-  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
-  alacritty-fzf = "${pkgs.alacritty-fzf}/bin/alacritty-fzf";
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
+  kitty = "${pkgs.kitty}/bin/kitty";
   makoctl = "${pkgs.mako}/bin/makoctl";
+  neomutt = "${pkgs.neomutt}/bin/neomutt";
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
+  pass-wofi = "${pkgs.pass-wofi}/bin/pass-wofi";
   pkill = "${pkgs.procps}/bin/pkill";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
-  setscheme-fzf = "${pkgs.setscheme-fzf}/bin/setscheme-fzf";
+  setscheme-wofi = "${pkgs.setscheme-wofi}/bin/setscheme-wofi";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-  wofi = "${pkgs.wofi}/bin/wofi -t ${alacritty}";
+  wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
 in {
-  home.packages = with pkgs; [ wl-clipboard wf-recorder xdg-utils ];
+  home.packages = with pkgs; [ wl-clipboard wf-recorder  ];
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";
@@ -35,8 +36,10 @@ in {
     enable = true;
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
-    config = {
-      menu = "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run";
+    config = rec {
+      terminal = "${kitty}";
+      menu =
+        "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run -t ${terminal}";
       fonts = {
         names = [ "Fira Sans" ];
         size = 12.0;
@@ -68,32 +71,32 @@ in {
         [ { app_id = "zenity"; } { app_id = "AlacrittyFloating*"; } ];
       colors = {
         focused = {
-          border = "${colors.base0C}";
-          childBorder = "${colors.base0C}";
-          indicator = "${colors.base09}";
-          background = "${colors.base00}";
-          text = "${colors.base05}";
+          border = "${colorscheme.base0C}";
+          childBorder = "${colorscheme.base0C}";
+          indicator = "${colorscheme.base09}";
+          background = "${colorscheme.base00}";
+          text = "${colorscheme.base05}";
         };
         focusedInactive = {
-          border = "${colors.base03}";
-          childBorder = "${colors.base03}";
-          indicator = "${colors.base03}";
-          background = "${colors.base00}";
-          text = "${colors.base04}";
+          border = "${colorscheme.base03}";
+          childBorder = "${colorscheme.base03}";
+          indicator = "${colorscheme.base03}";
+          background = "${colorscheme.base00}";
+          text = "${colorscheme.base04}";
         };
         unfocused = {
-          border = "${colors.base02}";
-          childBorder = "${colors.base02}";
-          indicator = "${colors.base02}";
-          background = "${colors.base00}";
-          text = "${colors.base03}";
+          border = "${colorscheme.base02}";
+          childBorder = "${colorscheme.base02}";
+          indicator = "${colorscheme.base02}";
+          background = "${colorscheme.base00}";
+          text = "${colorscheme.base03}";
         };
         urgent = {
-          border = "${colors.base09}";
-          childBorder = "${colors.base09}";
-          indicator = "${colors.base09}";
-          background = "${colors.base00}";
-          text = "${colors.base03}";
+          border = "${colorscheme.base09}";
+          childBorder = "${colorscheme.base09}";
+          indicator = "${colorscheme.base09}";
+          background = "${colorscheme.base00}";
+          text = "${colorscheme.base03}";
         };
       };
       startup = [
@@ -191,20 +194,26 @@ in {
         "Shift+XF86AudioMute" =
           "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
         # Media
-        "XF86AudioNext" = "exec player=$(${preferredplayer}) && ${playerctl} next --player $player";
-        "XF86AudioPrev" = "exec player=$(${preferredplayer}) && ${playerctl} previous --player $player";
-        "XF86AudioPlay" = "exec player=$(${preferredplayer}) && ${playerctl} play-pause --player $player";
-        "XF86AudioStop" = "exec player=$(${preferredplayer}) && ${playerctl} stop --player $player";
-        "Shift+XF86AudioPlay" = "exec player=$(${playerctl} -l | ${alacritty-fzf}) && ${preferredplayer} $player";
+        "XF86AudioNext" =
+          "exec player=$(${preferredplayer}) && ${playerctl} next --player $player";
+        "XF86AudioPrev" =
+          "exec player=$(${preferredplayer}) && ${playerctl} previous --player $player";
+        "XF86AudioPlay" =
+          "exec player=$(${preferredplayer}) && ${playerctl} play-pause --player $player";
+        "XF86AudioStop" =
+          "exec player=$(${preferredplayer}) && ${playerctl} stop --player $player";
+        "Shift+XF86AudioPlay" =
+          "exec player=$(${playerctl} -l | ${wofi} -S dmenu) && ${preferredplayer} $player";
         "Shift+XF86AudioStop" = "exec ${preferredplayer} none";
         # Color scheme
-        "XF86Tools" = "exec ${setscheme-fzf}";
+        "XF86Tools" = "exec ${setscheme-wofi}";
         # Notifications
         "Mod4+w" = "exec ${makoctl} dismiss";
         "Mod4+shift+w" = "exec ${makoctl} dismiss -a";
         # Programs
-        "Mod4+v" = "exec ${alacritty} -e ${nvim}";
-        "Mod4+o" = "exec ${alacritty} -e ${octave}";
+        "Mod4+v" = "exec ${terminal} -e ${nvim}";
+        "Mod4+o" = "exec ${terminal} -e ${octave}";
+        "Mod4+m" = "exec ${terminal} -e ${neomutt}";
         "Mod4+b" = "exec ${qutebrowser}";
         "Mod4+z" = "exec ${zathura}";
         "Mod4+control+w" = "exec ${makoctl} invoke";
@@ -214,9 +223,11 @@ in {
         "Control+Print" = "exec ${grimshot} --notify copy screen";
         "Mod1+Print" = "exec ${grimshot} --notify copy area";
         "Mod4+Print" = "exec ${grimshot} --notify copy window";
+        # Application menu
         "Mod4+x" = "exec ${wofi} -S drun -I";
+        # Pass wofi menu
+        "Scroll_Lock" = "exec ${pass-wofi}";
       };
-      terminal = "${alacritty}";
       modifier = "Mod4";
       input = {
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {

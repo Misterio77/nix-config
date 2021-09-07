@@ -7,7 +7,7 @@
       preferredplayer = let playerctl = "${prev.playerctl}/bin/playerctl";
       in prev.writeShellScriptBin "preferredplayer" ''
         if [[ -z "$1" ]]; then
-            players=$(${playerctl} --list-all | \
+            players=$(${playerctl} --list-all 2>/dev/null | \
             grep "$(cat $XDG_RUNTIME_DIR/currentplayer 2> /dev/null || echo '.*')") && \
             echo "$players" | head -1
         else
@@ -33,29 +33,91 @@
       '';
     })
     # A zenity wrapper for using with SUDO_ASKPASS
+    # TODO: move to a nixpkg-like file
     (final: prev: {
       zenity-askpass = let zenity = "${prev.gnome.zenity}/bin/zenity";
       in prev.writeShellScriptBin "zenity-askpass" ''
         ${zenity} --password --timeout 10
       '';
     })
+    # Setscheme graphical wrapper, using wofi and zenity
+    # TODO: move to a nixpkg-like file
     (final: prev: {
-      setscheme-fzf = let
+      setscheme-wofi = let
+        zenity-askpass = "${prev.zenity-askpass}/bin/zenity-askpass";
         zenity = "${prev.gnome.zenity}/bin/zenity";
-        fzf = "${pkgs.alacritty-fzf}/bin/alacritty-fzf";
+        wofi = "${pkgs.wofi}/bin/wofi";
         setscheme = "${pkgs.setscheme}/bin/setscheme";
-      in prev.writeShellScriptBin "setscheme-fzf" ''
+      in prev.writeShellScriptBin "setscheme-wofi" ''
         set -o pipefail
-        chosen=$(${setscheme} -L | ${fzf}) && \
-        ${setscheme} -A $chosen --show-trace --verbose 2>&1 | \
+        chosen=$(${setscheme} -L | ${wofi} -S dmenu) && \
+        SUDO_ASKPASS="${zenity-askpass}" ${setscheme} -A $chosen --show-trace --verbose 2>&1 | \
         stdbuf -oL -eL awk '/^ / { print int(+$2) ; next } $0 { print "# " $0 }' | \
         ${zenity} --progress --pulsate --auto-close --auto-kill --title "Change color scheme"
       '';
     })
     (final: prev: {
+      pass-wofi = let
+        wofi = "${pkgs.wofi}/bin/wofi -i";
+        jq = "${pkgs.jq}/bin/jq";
+        notify-send = "${pkgs.libnotify}/bin/notify-send";
+      in prev.writeShellScriptBin "pass-wofi" ''
+        cd ~/.local/share/password-store
+        focused="$(swaymsg -t get_tree | ${jq} -r '.. | (.nodes? // empty)[] | select(.focused==true)')"
+        app_id=$(${jq} -r '.app_id' <<< "$focused")
+        class=$(${jq} -r '.window_properties.class' <<< "$focused")
+
+        if [[ "$app_id" == "org.qutebrowser.qutebrowser" ]]; then
+            qutebrowser :yank
+            query=$(wl-paste | cut -d '/' -f3 | sed s/"www."//)
+        elif [[ "$class" == "Spotify" ]]; then
+            query="spotify.com"
+        elif [[ "$class" == "discord" ]]; then
+            query="discord.com"
+        fi
+
+        selected=$(find -L . -not -path '*\/.*' -path "*.gpg" -type f -printf '%P\n' | \
+          sed 's/.gpg$//g' | \
+          ${wofi} -S dmenu -Q "$query") || exit 2 
+
+        username=$(echo "$selected" | cut -d '/' -f2)
+        url=$(echo "$selected" | cut -d '/' -f1)
+
+        fields="Password
+        Username
+        OTP
+        URL"
+
+        field=$(printf "$fields" | ${wofi} -S dmenu) || field="Password"
+
+        case "$field" in
+            "Password")
+                value="$(pass "$selected" | head -n 1)" && [ -n "$value" ] || \
+                    { ${notify-send} "Error" "No password for $selected" -i error -t 6000; exit 3; }
+                ;;
+            "Username")
+                value="$username"
+                ;;
+            "URL")
+                value="$url"
+                ;;
+            "OTP")
+                value="$(pass otp "$selected")" || \
+                    { ${notify-send} "Error" "No OTP for $selected" -i error -t 6000; exit 3; }
+                ;;
+            *)
+                exit 4
+        esac
+
+        wl-copy "$value"
+        ${notify-send} "Copied $field:" "$value" -i edit-copy -t 4000
+      '';
+    })
+    # Script for changing color scheme
+    # TODO: move to a nixpkg-like file
+    (final: prev: {
       setscheme =
-        let zenity-askpass = "${prev.zenity-askpass}/bin/zenity-askpass";
-        in prev.stdenv.mkDerivation {
+        prev.stdenv.mkDerivation {
           name = "setscheme";
           version = "1.0";
           src = prev.writeShellScriptBin "setscheme" ''
@@ -77,7 +139,7 @@
             fi
 
             echo "\"$scheme\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
-            SUDO_ASKPASS="${zenity-askpass}" $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
+            $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
           '';
           dontBuild = true;
           dontConfigure = true;
@@ -89,36 +151,8 @@
           '';
         };
     })
-    # Runs fzf inside a (usually floating) alacritty term
-    (final: prev: {
-      alacritty-fzf = let
-        fzf = "${prev.fzf}/bin/fzf";
-        alacritty = "${prev.alacritty}/bin/alacritty";
-      in prev.writeShellScriptBin "alacritty-fzf" ''
-        directory="$XDG_RUNTIME_DIR/alacritty-fzf"
-        mkdir -p "$directory"
-
-        tee > "$directory/input"
-
-        cat <<'EOF' > "$directory/inner"
-        #!/usr/bin/env bash
-        sleep 0.1
-        directory="$XDG_RUNTIME_DIR/alacritty-fzf"
-        output=$(cat "$directory/input" | ${fzf} "$@")
-        echo $? > "$directory/exitcode"
-        echo "$output" > "$directory/output"
-        EOF
-
-        chmod +x "$directory/inner"
-
-        ${alacritty} -t "Selector" --class AlacrittyFloatingSelector -e "$directory/inner" "$@"
-
-        cat "$directory/output"
-        exitcode="$(cat "$directory/exitcode")"
-        #rm "$directory"/* &> /dev/null
-        exit "$exitcode"
-      '';
-    })
+    # Swayfader
+    # TODO: move to a nixpkg-like file
     (final: prev: {
       swayfader = prev.stdenv.mkDerivation {
         name = "swayfader";
@@ -133,13 +167,28 @@
       };
     })
     (final: prev: {
+      wshowkeys = prev.stdenv.mkDerivation {
+        name = "wshowkeys";
+        nativeBuildInputs = with prev; [ meson pkg-config wayland ninja ];
+        buildInputs = with prev; [ cairo libinput pango wayland-protocols libxkbcommon ];
+        src = prev.fetchFromGitHub {
+          owner = "ammgws";
+          repo = "wshowkeys";
+          rev = "e8bfc78f08ebdd1316daae59ecc77e62bba68b2b";
+          sha256 = "sha256-/HvNCQWsXOJZeCxHWmsLlbBDhBzF7XP/SPLdDiWMDC4=";
+        };
+      };
+    })
+    # My RGBDaemon
+    # TODO: move to a nixpkg-like file
+    (final: prev: {
       rgbdaemon = prev.stdenv.mkDerivation {
         name = "rgbdaemon";
         src = prev.fetchFromGitHub {
           owner = "Misterio77";
           repo = "rgbdaemon";
-          rev = "83759ac45890049535b6b432f669beec19973d01";
-          sha256 = "sha256-susdY8mK0zjtFb68x9jNZlwGbHPM2EPXZ+EVhaYPxjc=";
+          rev = "fe06bd5f8bbcf9cf9015d9663a44329548938eef";
+          sha256 = "sha256-05uc4fpYf1svuukDjSplPaI7vgTZO06RNWSPr7NvCX4=";
         };
         propagatedBuildInputs = with prev; [ pastel makeWrapper ];
         dontBuild = true;
@@ -168,41 +217,13 @@
           ++ [ ./nix-index-new-command.patch ];
       });
     })
-
-    # Overrides 
-
+    # Link kitty to xterm (to fix crappy drun behaviour)
     (final: prev: {
-      alacritty = prev.alacritty.overrideAttrs (oldAttrs: rec {
-        # TODO: Remove when https://github.com/alacritty/alacritty/pull/5313 is merged
-        src = prev.fetchFromGitHub {
-          owner = "ncfavier";
-          repo = "alacritty";
-          rev = "5f392c2cb516a5ea198ebb48754c7c42157d21b3";
-          sha256 = "sha256-szPB8A8CGqU5Sf7evPOP/2xgWN5IFal4z95Yt44bNsM=";
-        };
-        cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
-          inherit src;
-          outputHash = "sha256-jCNkdgSzoiOW+jh/q3jR9SsiVa/MC5iz6nXgXOqQhdc=";
-        });
+      kitty = prev.kitty.overrideAttrs (oldAttrs: rec {
         postInstall = (oldAttrs.postInstall or " ") + ''
-          ln -s $out/bin/alacritty $out/bin/xterm
+          ln -s $out/bin/kitty $out/bin/xterm
         '';
       });
-    })
-    (final: prev: {
-      nodePackages = prev.nodePackages // {
-        aws-azure-login = prev.nodePackages.aws-azure-login.overrideAttrs
-          (oldAttrs: {
-            version = "3.5.0";
-            src = prev.fetchFromGitHub {
-              owner = "misterio77";
-              repo = "aws-azure-login";
-              rev = "23206f5a70b8ef4036dab76c7144f709e944d719";
-              sha256 = "sha256-JQct1z3Vg75uzpa9t6WLfSRLj/fueDJt5kSAm2K4q10=";
-            };
-            bypassCache = false;
-          });
-      };
     })
   ];
 }

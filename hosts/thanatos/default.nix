@@ -10,12 +10,18 @@
     ../../overlays
   ];
 
-  # Require /data to be mounted at boot
-  fileSystems."/data".neededForBoot = true;
+  # Require /data/var to be mounted at boot
+  fileSystems."/data/var".neededForBoot = true;
 
   environment.persistence."/data" = {
     directories =
-      [ "/var/log" "/var/lib/docker" "/var/lib/systemd" "/var/lib/postgresql" ];
+      [
+        "/var/log"
+        "/var/lib/docker"
+        "/var/lib/systemd"
+        "/var/lib/postgresql"
+        "/srv"
+      ];
   };
   system.stateVersion = "21.11";
 
@@ -87,6 +93,9 @@
   };
 
   programs = {
+    fuse = {
+      userAllowOther = true;
+    };
     fish = {
       enable = true;
       vendor = {

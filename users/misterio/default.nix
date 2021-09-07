@@ -1,6 +1,9 @@
 { pkgs, ... }:
 
 {
+  # Require /data/home to be mounted at boot
+  fileSystems."/data/home".neededForBoot = true;
+
   # User info
   users.users.misterio = {
     isNormalUser = true;

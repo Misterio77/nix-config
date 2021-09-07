@@ -5,5 +5,6 @@
     package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
   };
 
-  home.persistence."/data/home/misterio".directories = [ ".local/share/password-store" ];
+  home.persistence."/data/home/misterio".directories =
+    [ ".local/share/password-store" ];
 }

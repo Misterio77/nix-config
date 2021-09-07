@@ -7,5 +7,6 @@
     };
   };
 
-  home.persistence."/data/home/misterio".directories = [ ".local/share/direnv" ];
+  home.persistence."/data/home/misterio".directories =
+    [ ".local/share/direnv" ];
 }

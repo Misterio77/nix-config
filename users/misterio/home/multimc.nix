@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = [ pkgs.multimc ];
-  home.persistence."/data/home/misterio".directories = [ ".local/share/multimc" ];
+  home.persistence."/data/games/misterio".directories =
+    [ ".local/share/multimc" ];
 }

@@ -8,21 +8,23 @@ in {
     ../../../modules/colorscheme.nix
     ../../../modules/ethminer.nix
     ../../../modules/wallpaper.nix
-    ./alacritty.nix
+    ./kitty.nix
     ./direnv.nix
     ./discord.nix
     ./ethminer.nix
     ./fira.nix
     ./fish.nix
-    ./fzf.nix
+    ./himalaya.nix
     ./git.nix
     ./gpg.nix
     ./gtk.nix
     ./kdeconnect.nix
     ./lutris.nix
+    ./mail.nix
     ./mako.nix
     ./multimc.nix
     ./neofetch.nix
+    ./neomutt.nix
     ./nix-index.nix
     ./nvim.nix
     ./osu.nix
@@ -40,8 +42,8 @@ in {
   ];
 
   colorscheme = colors.${import ./current-scheme.nix};
-  wallpaper.path = "/home/misterio/Pictures/Wallpapers/blue-red-sky-clouds.jpg";
-  # wallpaper.generate = true;
+  # wallpaper.path = "/home/misterio/Pictures/Wallpapers/cyberpunk-city.jpg";
+  wallpaper.generate = true;
 
   home.packages = with pkgs; [
     # Cli
@@ -54,18 +56,21 @@ in {
     ranger
     setscheme
     trash-cli
+    xdg-utils
+    ydotool
 
     pavucontrol
 
     spotify
+
+    wofi
   ];
 
-  home.persistence."/data/home/misterio" = {
-    directories = [
-      "Documents"
-      "Downloads"
-      "Pictures"
-    ];
-    allowOther = false;
+  home.persistence = {
+    "/data/home/misterio" = {
+      directories = [ "Documents" "Downloads" "Pictures" ];
+      allowOther = true;
+    };
+    "/data/games/misterio" = { allowOther = true; };
   };
 }

@@ -24,22 +24,40 @@
       fsType = "vfat";
     };
 
-    "/data" = {
+    "/data/games" = {
       device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
       fsType = "btrfs";
-      options = [ "subvol=data" ];
+      options = [ "subvol=data/games" "compress=zstd" ];
+    };
+
+    "/data/home" = {
+      device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
+      fsType = "btrfs";
+      options = [ "subvol=data/home" "compress=zstd" ];
+    };
+
+    "/data/srv" = {
+      device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
+      fsType = "btrfs";
+      options = [ "subvol=data/srv" "compress=zstd" ];
+    };
+
+    "/data/var" = {
+      device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
+      fsType = "btrfs";
+      options = [ "subvol=data/var" "compress=zstd" ];
     };
 
     "/dotfiles" = {
       device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
       fsType = "btrfs";
-      options = [ "subvol=dotfiles" ];
+      options = [ "subvol=dotfiles" "compress=zstd" ];
     };
 
     "/nix" = {
       device = "/dev/disk/by-uuid/53b00f4f-1dee-4aae-bc96-3982f2b04c90";
       fsType = "btrfs";
-      options = [ "subvol=nix noatime" ];
+      options = [ "subvol=nix" "noatime" "compress=zstd" ];
     };
   };
 

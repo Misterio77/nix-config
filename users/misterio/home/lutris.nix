@@ -1,29 +1,26 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = [ pkgs.lutris ];
 
   xdg.desktopEntries = {
-    league-of-legends = {
-      name = "League of Legends";
-      icon = "league-of-legends";
+    star-citizen = {
+      name = "Star Citizen";
+      icon = "stargus";
       exec = "lutris lutris:rungameid/1";
       categories = [ "Game" ];
       type = "Application";
     };
-    star-citizen = {
-      name = "Star Citizen";
-      icon = "stargus";
+    league-of-legends = {
+      name = "League of Legends";
+      icon = "league-of-legends";
       exec = "lutris lutris:rungameid/2";
       categories = [ "Game" ];
       type = "Application";
     };
   };
 
-  home.persistence."/data/home/misterio" = {
-    directories = [
-      "Games/Lutris"
-      ".config/lutris"
-      ".local/share/lutris"
-    ];
+  home.persistence = {
+    "/data/games/misterio" = {
+      directories = [ "Games/Lutris" ".config/lutris" ".local/share/lutris" ];
+    };
   };
 }

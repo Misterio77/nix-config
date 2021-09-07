@@ -1,9 +1,6 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.packages = with pkgs; [ pinentry-gnome ];
-  home.persistence."/data/home/misterio".directories = [
-    ".gnupg"
-  ];
+  home.persistence."/data/home/misterio".directories = [ ".gnupg" ];
 
   services.gpg-agent = {
     enable = true;

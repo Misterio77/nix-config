@@ -18,7 +18,6 @@ in {
       modules-left = [
         "sway/workspaces"
         "sway/mode"
-        # "custom/minicava"
         "custom/preferredplayer"
         "custom/player"
       ];
@@ -84,13 +83,10 @@ in {
           interval = 2;
           format = "{}% 力";
         };
-        "custom/minicava" = {
-          "exec" = "${minicava}";
-          "restart-interval" = 5;
-        };
         "custom/preferredplayer" = {
-          exec =
-            "${jq} -c -n --arg text \"$(player=$(${preferredplayer}) && echo $player | cut -d '.' -f 1 || echo No player set)\" '{text: $text, alt: $text, tooltip: $text}'";
+          exec = ''
+            ${jq} -c -n --arg text "$(player=$(${preferredplayer}) && echo $player | cut -d '.' -f 1 || echo No player set)" '{text: $text, alt: $text, tooltip: $text}'
+          '';
           return-type = "json";
           interval = 1;
           format = "{icon}";
@@ -104,9 +100,11 @@ in {
           };
         };
         "custom/player" = {
-          exec-if = "[[ \"$(player=$(${preferredplayer}) && ${playerctl} --player $player status)\" != \"Stopped\" ]]";
-          exec =
-            "player=$(${preferredplayer}) && ${playerctl} --player $player metadata --format '{\"text\": \"{{artist}} - {{title}}\", \"alt\": \"{{status}}\", \"tooltip\": \"{{title}} ({{artist}} - {{album}})\"}'";
+          exec-if = ''
+            [[ "$(player=$(${preferredplayer}) && ${playerctl} --player $player status)" != "Stopped" ]]'';
+          exec = ''
+            player=$(${preferredplayer}) && ${playerctl} --player $player metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}';
+          '';
           return-type = "json";
           interval = 1;
           max-length = 35;

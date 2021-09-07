@@ -3,7 +3,7 @@ let colors = config.colorscheme.colors;
 in {
   programs.mako = {
     enable = true;
-    iconPath = if config.colorscheme.kind ==  "dark" then
+    iconPath = if config.colorscheme.kind == "dark" then
       "${config.gtk.iconTheme.package}/share/icons/Papirus-Dark"
     else
       "${config.gtk.iconTheme.package}/share/icons/Papirus-Light";
