@@ -3,8 +3,11 @@
 let
   colors = config.colorscheme.colors;
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
+  gpg = "${pkgs.gnupg}/bin/gpg";
+  gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";
   gamemoded = "${pkgs.gamemode}/bin/gamemoded";
   minicava = "${pkgs.minicava}/bin/minicava";
+  notify-send = "${pkgs.libnotify}/bin/notify-send";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   jq = "${pkgs.jq}/bin/jq";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -29,8 +32,10 @@ in {
         "cpu"
         "custom/gpu"
         "memory"
+        "custom/unread-mail"
         "clock"
         "tray"
+        "custom/gpg-agent"
       ];
       modules = {
         clock = {
@@ -63,6 +68,29 @@ in {
             default = "祿";
           };
         };
+        "custom/unread-mail" = {
+          exec = ''
+            echo "  ($(find ~/Mail/personal/INBOX/new -type f | wc -l))"
+          '';
+          on-click = "${pkgs.kitty}/bin/kitty -e ${pkgs.neomutt}/bin/neomutt";
+          interval = 2;
+        };
+        "custom/gpg-agent" = {
+          # Check if GPG Agent is caching passphrase
+          exec = ''
+            ${gpg-connect-agent} 'KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des' /bye | grep -q " 1 " && \
+            echo -e "\nGPG is unlocked" || \
+            echo -e "\nGPG is locked"
+          '';
+          # Lock or unlock GPG agent
+          on-click = ''
+            ${gpg-connect-agent} 'KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des' /bye | grep " 1 " && \
+            (${gpg-connect-agent} reloadagent /bye && \
+            ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
+            echo "a" | ${gpg} --sign
+          '';
+          interval = 1;
+        };
         "custom/ethminer" = {
           exec-if = "systemctl --user is-active ethminer";
           exec =
@@ -73,10 +101,7 @@ in {
         "custom/gamemode" = {
           exec-if = "${gamemoded} --status | grep 'is active' -q";
           interval = 2;
-          exec = ''
-            echo '
-             Gamemode is active
-          '';
+          exec = "echo '' && echo 'Gamemode is active'";
         };
         "custom/gpu" = {
           exec = "cat /sys/class/drm/card0/device/gpu_busy_percent";
