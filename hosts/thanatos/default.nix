@@ -131,7 +131,7 @@
       remotePlay.openFirewall = true;
     };
     dconf.enable = true;
-    droidcam.enable = true;
+    # droidcam.enable = true;
     kdeconnect.enable = true;
   };
 

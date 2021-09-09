@@ -71,7 +71,7 @@ in {
         }
       ];
       floating.criteria =
-        [ { app_id = "zenity"; } { app_id = "AlacrittyFloating*"; } ];
+        [ { app_id = "zenity"; } { app_id = "AlacrittyFloating*"; } { class = "net-runelite-launcher-Launcher"; } ];
       colors = {
         focused = {
           border = "${colorscheme.base0C}";

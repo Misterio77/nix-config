@@ -61,10 +61,15 @@ in {
         config = ''
           let g:ale_completion_enabled = 1
           let g:ale_linters = {"c": ["clang"], "rust": ["analyzer", "cargo"]}
-          let g:ale_fixers = {"rust": ["rustfmt"], "sql": ["pgformatter"], "nix": ["nixfmt"]}
+          let g:ale_fixers = {"rust": ["rustfmt"], "sql": ["pgformatter"], "nix": ["nixfmt"], "json": ["jq"]}
           let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
         '';
       }
+      auto-pairs
+      editorconfig-vim
+      nerdtree
+      vim-numbertoggle
+      # Language specific (syntax highlighting, etc)
       {
         plugin = rust-vim;
         config = "let g:rust_fold = 1";
@@ -77,11 +82,8 @@ in {
           let g:vimtex_compiler_latexmk = {'build_dir': 'build' }
         '';
       }
-      auto-pairs
       dart-vim-plugin
-      editorconfig-vim
       mermaid
-      open-browser
       plantuml-syntax
       vim-markdown
       vim-nix
@@ -90,6 +92,8 @@ in {
       vim-toml
     ];
     extraConfig = ''
+      "Toggle nerdtree
+      nnoremap <Bslash> :NERDTreeToggle<CR>
       "Reload automatically
       set autoread
       au CursorHold,CursorHoldI * checktime
@@ -121,16 +125,12 @@ in {
       "Conceal
       set conceallevel=2
 
-      "Line numbers
-      augroup numbertoggle
-        autocmd!
-        autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-        autocmd BufLeave,FocusLost,InsertEnter   * set number norelativenumber
-      augroup END
-
       "Fix nvim size according to terminal
       "(https://github.com/neovim/neovim/issues/11330)
       autocmd VimEnter * silent exec "!kill -s SIGWINCH" getpid()
+
+      "Line numbers
+      set number relativenumber
     '';
   };
 }

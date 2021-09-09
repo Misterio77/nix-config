@@ -1,21 +1,38 @@
 { pkgs, ... }: {
-  home.packages = with pkgs.nur.repos.kira-bruneau; [ runescape-launcher ];
+  home.packages = with pkgs; [
+    runelite
+    nur.repos.kira-bruneau.runescape-launcher
+  ];
 
   home.persistence."/data/games/misterio".directories = [ "Jagex" ];
+
+  # Override .desktop for changing OSRS cache dir
+  # TODO: better way other than retyping the entire file?
+  xdg.desktopEntries = {
+    RuneLite = {
+      categories = [ "Game" ];
+      comment = "Open source Old School RuneScape client";
+      exec = "env _JAVA_OPTIONS=-Duser.home=/home/misterio/Jagex/ gamemoderun runelite";
+      genericName = "Oldschool RuneScape";
+      icon = "runescape";
+      name = "RuneLite";
+      terminal = false;
+      type = "Application";
+    };
+  };
 
   # Override .desktop for adding gamemoderun
   # TODO: better way other than retyping the entire file?
   xdg.desktopEntries = {
     runescape-launcher = {
-      type = "Application";
-      name = "RuneScape";
-      genericName = "RuneScape";
-      comment = "RuneScape - A Free MMORPG from Jagex Ltd.";
-      icon = "runescape";
-      terminal = false;
-      exec = "gamemoderun runescape-launcher %u";
       categories = [ "Game" ];
-      mimeType = [ "xscheme-handler/rs-launch" "x-scheme-handler/rs-launchs" ];
+      comment = "RuneScape - A Free MMORPG from Jagex Ltd.";
+      exec = "gamemoderun runescape-launcher %u";
+      genericName = "RuneScape";
+      icon = "runescape";
+      name = "RuneScape";
+      terminal = false;
+      type = "Application";
     };
   };
 }
