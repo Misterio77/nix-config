@@ -12,6 +12,7 @@ in {
     ./direnv.nix
     ./discord.nix
     ./ethminer.nix
+    ./element.nix
     ./fira.nix
     ./fish.nix
     ./himalaya.nix
@@ -60,9 +61,7 @@ in {
     ydotool
 
     pavucontrol
-
     spotify
-
     wofi
   ];
 
