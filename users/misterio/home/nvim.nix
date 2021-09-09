@@ -110,7 +110,7 @@ in {
       autocmd FileType json,html,nix,scss,typescript setlocal ts=2 sts=2 sw=2
 
       "Options when composing mutt mail
-      autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap
+      autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w
 
       "Clipboard
       set clipboard=unnamedplus

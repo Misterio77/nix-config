@@ -32,6 +32,11 @@
         key = "K";
         map = [ "index" "pager" ];
       }
+      {
+        action = ":set confirmappend=no\\n<tag-prefix><save-message>+Archive<enter>:set confirmappend=yes\\n";
+        key = "A";
+        map = [ "index" "pager" ];
+      }
     ];
     extraConfig = ''
       alternates "eu@misterio.me|gabriel.fontes@uget.express|g.fontes@usp.br"
