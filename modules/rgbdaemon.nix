@@ -109,6 +109,7 @@ in {
   config = mkIf cfg.enable {
     xdg.configFile."rgbdaemon.conf" = {
       text = ''
+        OPENRGB_BIN=${pkgs.openrgb}/bin/openrgb
         PASTEL_BIN=${pkgs.pastel}/bin/pastel
         PACTL_BIN=${pkgs.pulseaudio}/bin/pactl
         PLAYERCTL_BIN=${pkgs.playerctl}/bin/playerctl

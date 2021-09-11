@@ -2,11 +2,12 @@
 
 {
   imports = [
+    ./hardware-configuration.nix
     hardware.nixosModules.common-cpu-amd
     hardware.nixosModules.common-gpu-amd
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
-    ./hardware-configuration.nix
+    ../../modules/openrgb.nix
     ../../overlays
   ];
 
@@ -64,7 +65,7 @@
       "vm.max_map_count" = 16777216;
       "abi.vsyscall32" = 0;
     };
-    kernelModules = [ "v4l2loopback" ];
+    kernelModules = [ "v4l2loopback" "i2c-dev" "i2c-piix4" ];
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1 video_nr=9 card_label=a7III
     '';
@@ -150,6 +151,7 @@
 
   hardware = {
     ckb-next.enable = true;
+    openrgb.enable = true;
     steam-hardware.enable = true;
     opengl.enable = true;
     pulseaudio = {

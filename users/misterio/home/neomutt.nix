@@ -1,4 +1,4 @@
-{ pkgs,... }:
+{ pkgs, ... }:
 
 {
   programs.neomutt = {
@@ -14,14 +14,15 @@
       text_flowed = "yes";
       reverse_name = "yes";
     };
-    binds = [
-      {
-        action = "sidebar-toggle-visible";
-        key = "\\\\";
-        map = [ "index" "pager" ];
-      }
-    ];
-    macros = [
+    binds = [{
+      action = "sidebar-toggle-visible";
+      key = "\\\\";
+      map = [ "index" "pager" ];
+    }];
+    macros = let
+      qutebrowserpipe =
+        "cat /dev/stdin > /tmp/muttmail.html && ${pkgs.qutebrowser}/bin/qutebrowser /tmp/muttmail.html";
+    in [
       {
         action = "<sidebar-next><sidebar-open>";
         key = "J";
@@ -33,8 +34,20 @@
         map = [ "index" "pager" ];
       }
       {
-        action = ":set confirmappend=no\\n<tag-prefix><save-message>+Archive<enter>:set confirmappend=yes\\n";
+        action =
+          ":set confirmappend=no\\n<tag-prefix><save-message>+Archive<enter>:set confirmappend=yes\\n";
         key = "A";
+        map = [ "index" "pager" ];
+      }
+      {
+        action =
+          "<pipe-entry>${qutebrowserpipe}<enter><exit>";
+        key = "V";
+        map = [ "attach" ];
+      }
+      {
+        action = "<view-attachments><search>html<enter><pipe-entry>${qutebrowserpipe}<enter><exit>";
+        key = "V";
         map = [ "index" "pager" ];
       }
     ];
@@ -158,9 +171,7 @@
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
   systemd.user.services.mbsync = {
-    Unit = {
-      Description = "mbsync synchronization";
-    };
+    Unit = { Description = "mbsync synchronization"; };
     Service = {
       Type = "oneshot";
       ExecCondition = ''
@@ -170,9 +181,7 @@
     };
   };
   systemd.user.timers.mbsync = {
-    Unit = {
-      Description = "Automatic mbsync synchronization";
-    };
+    Unit = { Description = "Automatic mbsync synchronization"; };
     Timer = {
       OnBootSec = "30";
       OnUnitActiveSec = "1m";

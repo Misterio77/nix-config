@@ -2,7 +2,6 @@
 
 {
   nixpkgs.overlays = [
-
     (final: prev: {
       preferredplayer = let playerctl = "${prev.playerctl}/bin/playerctl";
       in prev.writeShellScriptBin "preferredplayer" ''
@@ -184,13 +183,13 @@
     (final: prev: {
       rgbdaemon = prev.stdenv.mkDerivation {
         name = "rgbdaemon";
+        version = "0.1";
         src = prev.fetchFromGitHub {
           owner = "Misterio77";
           repo = "rgbdaemon";
-          rev = "fe06bd5f8bbcf9cf9015d9663a44329548938eef";
-          sha256 = "sha256-05uc4fpYf1svuukDjSplPaI7vgTZO06RNWSPr7NvCX4=";
+          rev = "a7bf098a6dea1d280158627b887a0349fb9ad9c9";
+          sha256 = "sha256-tH6ykZ9nO2GkSyxtJOdeekL887CsGmqJR9cYM7iR/eQ=";
         };
-        propagatedBuildInputs = with prev; [ pastel makeWrapper ];
         dontBuild = true;
         dontConfigure = true;
         installPhase = ''
@@ -223,6 +222,18 @@
         postInstall = (oldAttrs.postInstall or " ") + ''
           ln -s $out/bin/kitty $out/bin/xterm
         '';
+      });
+    })
+    (final: prev: {
+      openrgb = prev.openrgb.overrideAttrs (oldAttrs: rec {
+        buildInputs = (oldAttrs.buildInputs or [  ]) ++ [ prev.mbedtls ];
+        version = "master";
+        src = prev.fetchFromGitLab {
+          owner = "CalcProgrammer1";
+          repo = "OpenRGB";
+          rev = "e4692cb5625fbc9634742d7043283f8bffa21bce";
+          sha256 = "sha256-+t3TfeqMvmj5T3GpbbCZ5toqJYZpRkvX4/TBN76KwkU=";
+        };
       });
     })
   ];
