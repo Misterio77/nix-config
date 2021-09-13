@@ -27,12 +27,13 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
-in {
+in rec {
   home.packages = with pkgs; [ wl-clipboard wf-recorder  ];
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";
     LIBSEAT_BACKEND = "logind";
+    TERMINAL = "kitty";
   };
 
   wayland.windowManager.sway = {

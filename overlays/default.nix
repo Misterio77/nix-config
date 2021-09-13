@@ -203,6 +203,13 @@
         patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];
       });
     })
+    # Spawn terminal with xdg-open, from https://gitlab.freedesktop.org/xdg/xdg-utils/-/issues/84
+    # Rebuilds a lot of stuff, sigh
+    (final: prev: {
+      xdg-utils = prev.xdg-utils.overrideAttrs (oldAttrs: rec {
+        patches = (oldAttrs.patches or [ ]) ++ [ ./xdg-open-terminal.patch ];
+      });
+    })
     # Fixes https://todo.sr.ht/~scoopta/wofi/174
     (final: prev: {
       wofi = prev.wofi.overrideAttrs (oldAttrs: rec {

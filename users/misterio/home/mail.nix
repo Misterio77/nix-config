@@ -27,9 +27,9 @@ in {
         primary = true;
         address = "eu@misterio.me";
         userName = address;
-        passwordCommand = "pass smtp.mailbox.org/${address}";
-        imap.host = "imap.mailbox.org";
-        smtp.host = "smtp.mailbox.org";
+        passwordCommand = "pass mail.gandi.net/${address}";
+        imap.host = "mail.gandi.net";
+        smtp.host = "mail.gandi.net";
         folders = { inbox = "INBOX"; };
         mbsync = {
           enable = true;
