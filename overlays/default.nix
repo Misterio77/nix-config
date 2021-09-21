@@ -115,40 +115,39 @@
     # Script for changing color scheme
     # TODO: move to a nixpkg-like file
     (final: prev: {
-      setscheme =
-        prev.stdenv.mkDerivation {
-          name = "setscheme";
-          version = "1.0";
-          src = prev.writeShellScriptBin "setscheme" ''
-            if [ "$1" == "-A" ]; then
-              sudo="sudo -A"
-              shift
-            else
-              sudo="sudo"
-            fi
+      setscheme = prev.stdenv.mkDerivation {
+        name = "setscheme";
+        version = "1.0";
+        src = prev.writeShellScriptBin "setscheme" ''
+          if [ "$1" == "-A" ]; then
+            sudo="sudo -A"
+            shift
+          else
+            sudo="sudo"
+          fi
 
-            if [ "$1" == "-L" ]; then
-              nix eval --raw --impure --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))' 2> /dev/null
-              exit 0
-            elif [ "$1" == "-R" ]; then
-              scheme=$(setscheme -L | ${prev.coreutils}/bin/shuf -n 1)
-              echo $scheme
-            else
-              scheme=$1
-            fi
+          if [ "$1" == "-L" ]; then
+            nix eval --raw --impure --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))' 2> /dev/null
+            exit 0
+          elif [ "$1" == "-R" ]; then
+            scheme=$(setscheme -L | ${prev.coreutils}/bin/shuf -n 1)
+            echo $scheme
+          else
+            scheme=$1
+          fi
 
-            echo "\"$scheme\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
-            $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
-          '';
-          dontBuild = true;
-          dontConfigure = true;
-          nativeBuildInputs = [ prev.installShellFiles ];
-          installPhase = ''
-            install -Dm 0755 $src/bin/setscheme $out/bin/setscheme
-            installShellCompletion --cmd setscheme \
-              --fish <(echo 'complete -c setscheme -d "Which scheme to set" -r -f -a "(setscheme -L)"')
-          '';
-        };
+          echo "\"$scheme\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
+          $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        nativeBuildInputs = [ prev.installShellFiles ];
+        installPhase = ''
+          install -Dm 0755 $src/bin/setscheme $out/bin/setscheme
+          installShellCompletion --cmd setscheme \
+            --fish <(echo 'complete -c setscheme -d "Which scheme to set" -r -f -a "(setscheme -L)"')
+        '';
+      };
     })
     # Swayfader
     # TODO: move to a nixpkg-like file
@@ -169,7 +168,13 @@
       wshowkeys = prev.stdenv.mkDerivation {
         name = "wshowkeys";
         nativeBuildInputs = with prev; [ meson pkg-config wayland ninja ];
-        buildInputs = with prev; [ cairo libinput pango wayland-protocols libxkbcommon ];
+        buildInputs = with prev; [
+          cairo
+          libinput
+          pango
+          wayland-protocols
+          libxkbcommon
+        ];
         src = prev.fetchFromGitHub {
           owner = "ammgws";
           repo = "wshowkeys";
@@ -233,7 +238,7 @@
     })
     (final: prev: {
       openrgb = prev.openrgb.overrideAttrs (oldAttrs: rec {
-        buildInputs = (oldAttrs.buildInputs or [  ]) ++ [ prev.mbedtls ];
+        buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ prev.mbedtls ];
         version = "master";
         src = prev.fetchFromGitLab {
           owner = "CalcProgrammer1";

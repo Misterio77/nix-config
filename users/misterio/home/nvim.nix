@@ -2,7 +2,8 @@
 
 let
   vim-noctu = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-noctu";
+    pname = "vim-noctu";
+    version = "1.8.0";
     src = pkgs.fetchFromGitHub {
       owner = "noahfrederick";
       repo = "vim-noctu";
@@ -11,7 +12,8 @@ let
     };
   };
   mermaid = pkgs.vimUtils.buildVimPlugin {
-    name = "mermaid.vim";
+    pname = "mermaid.vim";
+    version = "0.1";
     src = pkgs.fetchFromGitHub {
       owner = "mracos";
       repo = "mermaid.vim";

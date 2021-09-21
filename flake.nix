@@ -2,11 +2,14 @@
   description = "My NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
-    home-manager.url = "github:misterio77/home-manager/personal";
-    impermanence.url = "github:RiscadoA/impermanence";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
+    impermanence.url = "github:RiscadoA/impermanence";
+    home-manager = {
+      url = "github:misterio77/home-manager/personal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, home-manager, nixpkgs, hardware, impermanence, nur }: {
@@ -21,7 +24,8 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              sharedModules = [ impermanence.nixosModules.home-manager.impermanence ];
+              sharedModules =
+                [ impermanence.nixosModules.home-manager.impermanence ];
               users = builtins.listToAttrs (nixpkgs.lib.forEach users (user: {
                 name = "${user}";
                 value = (./users + "/${user}" + /home);

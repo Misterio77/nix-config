@@ -15,14 +15,13 @@
   fileSystems."/data/var".neededForBoot = true;
 
   environment.persistence."/data" = {
-    directories =
-      [
-        "/var/log"
-        "/var/lib/docker"
-        "/var/lib/systemd"
-        "/var/lib/postgresql"
-        "/srv"
-      ];
+    directories = [
+      "/var/log"
+      "/var/lib/docker"
+      "/var/lib/systemd"
+      "/var/lib/postgresql"
+      "/srv"
+    ];
   };
   system.stateVersion = "21.11";
 
@@ -83,6 +82,14 @@
   };
 
   services = {
+    /* pipewire = {
+         enable = true;
+         alsa.enable = true;
+         alsa.support32Bit = true;
+         pulse.enable = true;
+         jack.enable = true;
+       };
+    */
     dbus.packages = [ pkgs.gcr ];
     postgresql = {
       enable = true;
@@ -94,9 +101,7 @@
   };
 
   programs = {
-    fuse = {
-      userAllowOther = true;
-    };
+    fuse = { userAllowOther = true; };
     fish = {
       enable = true;
       vendor = {

@@ -24,11 +24,12 @@ let
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
+  waybar = "${pkgs.waybar}/bin/waybar";
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
 in rec {
-  home.packages = with pkgs; [ wl-clipboard wf-recorder  ];
+  home.packages = with pkgs; [ wl-clipboard wf-recorder slurp ];
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";
@@ -71,8 +72,11 @@ in rec {
           workspace = "2";
         }
       ];
-      floating.criteria =
-        [ { app_id = "zenity"; } { app_id = "AlacrittyFloating*"; } { class = "net-runelite-launcher-Launcher"; } ];
+      floating.criteria = [
+        { app_id = "zenity"; }
+        { app_id = "AlacrittyFloating*"; }
+        { class = "net-runelite-launcher-Launcher"; }
+      ];
       colors = {
         focused = {
           border = "${colorscheme.base0C}";
@@ -106,7 +110,11 @@ in rec {
       startup = [
         # Initial lock
         {
-          command = "'${swaylock} -i ${wallpaper}'";
+          command = "${swaylock} -i ${wallpaper}";
+        }
+        # Start idle daemon
+        {
+          command = "${swayidle} -w";
         }
         # Focus main output
         {
@@ -120,34 +128,9 @@ in rec {
         {
           command = "${discocss}";
         }
-        # Swayidle
-        # Lock after 10 minutes
-        # After 10 seconds of locked, mute mic
-        # After 20 seconds of locked, disable rgb lights and turn monitors off
-        {
-          command = ''
-            ${pkill} swayidle; \
-            ${swayidle} -w \
-                      timeout 600 '${swaylock} --screenshots --daemonize' \
-                      timeout 240 '${gpg-connect-agent} reloadagent /bye' \
-                      timeout 10  'pgrep -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ yes' \
-                          resume  'pgrep -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ no' \
-                      timeout 610 '${pactl} set-source-mute @DEFAULT_SOURCE@ yes' \
-                          resume  '${pactl} set-source-mute @DEFAULT_SOURCE@ no' \
-                      timeout 20  'pgrep -x swaylock && systemctl --user stop rgbdaemon' \
-                          resume  'pgrep -x swaylock && systemctl --user start rgbdaemon' \
-                      timeout 620 'systemctl --user stop rgbdaemon' \
-                          resume  'systemctl --user start rgbdaemon' \
-                      timeout 20  'pgrep -x swaylock && swaymsg "output * dpms off"' \
-                          resume  'pgrep -x swaylock && swaymsg "output * dpms on"' \
-                      timeout 620 'swaymsg "output * dpms off"' \
-                          resume  'swaymsg "output * dpms on"'
-          '';
-          always = true;
-        }
         # Start waybar
         {
-          command = "${pkgs.waybar}/bin/waybar";
+          command = "${waybar}";
         }
         # Set xwayland main monitor
         {

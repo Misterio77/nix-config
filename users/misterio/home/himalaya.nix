@@ -1,7 +1,0 @@
-{... }:
-
-{
-  programs.himalaya = {
-    enable = true;
-  };
-}

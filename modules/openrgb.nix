@@ -2,8 +2,7 @@
 
 with lib;
 
-let
-  cfg = config.hardware.openrgb;
+let cfg = config.hardware.openrgb;
 
 in {
   options.hardware.openrgb = {
@@ -23,7 +22,7 @@ in {
 
     systemd.services.openrgb = {
       description = "OpenRGB Daemon";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/openrgb --server";
         Restart = "on-failure";

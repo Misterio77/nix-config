@@ -14,8 +14,8 @@ in {
     ./ethminer.nix
     ./element.nix
     ./fira.nix
+    ./firefox.nix
     ./fish.nix
-    ./himalaya.nix
     ./git.nix
     ./gpg.nix
     ./gtk.nix
@@ -34,10 +34,12 @@ in {
     ./qutebrowser.nix
     ./rgbdaemon.nix
     ./runescape.nix
+    ./slack.nix
     ./starship.nix
     ./steam.nix
     ./sway.nix
     ./swaylock.nix
+    ./swayidle.nix
     ./waybar.nix
     ./zathura.nix
   ];

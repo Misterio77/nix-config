@@ -12,7 +12,8 @@
     RuneLite = {
       categories = [ "Game" ];
       comment = "Open source Old School RuneScape client";
-      exec = "env _JAVA_OPTIONS=-Duser.home=/home/misterio/Jagex/ gamemoderun runelite";
+      exec =
+        "env _JAVA_OPTIONS=-Duser.home=/home/misterio/Jagex/ gamemoderun runelite";
       genericName = "Oldschool RuneScape";
       icon = "runescape";
       name = "RuneLite";

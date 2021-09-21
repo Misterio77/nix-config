@@ -53,13 +53,18 @@
         map = [ "index" "pager" ];
       }
       {
-        action =
-          "<pipe-entry>${qutebrowserpipe}<enter><exit>";
+        action = "<pipe-entry>${qutebrowserpipe}<enter><exit>";
         key = "V";
         map = [ "attach" ];
       }
       {
-        action = "<view-attachments><search>html<enter><pipe-entry>${qutebrowserpipe}<enter><exit>";
+        action = "<pipe-message>${pkgs.urlscan}/bin/urlscan<enter><exit>";
+        key = "F";
+        map = [ "pager" ];
+      }
+      {
+        action =
+          "<view-attachments><search>html<enter><pipe-entry>${qutebrowserpipe}<enter><exit>";
         key = "V";
         map = [ "index" "pager" ];
       }
@@ -179,6 +184,24 @@
 
       # Border lines.
       color body          blue            default         "( *[-+=#*~_]){6,}"
+
+      # From https://github.com/jessfraz/dockerfiles/blob/master/mutt/.mutt/mutt-patch-highlighting.muttrc
+      color   body    brightwhite     default         ^(\s).*
+      color   body    cyan            default         ^(Signed-off-by).*
+      color   body    cyan            default         ^(Docker-DCO-1.1-Signed-off-by).*
+      color   body    brightwhite     default         ^(Cc)
+      color   body    yellow          default         "^diff \-.*"
+      color   body    brightwhite     default         "^index [a-f0-9].*"
+      color   body    brightblue      default         "^---$"
+      color   body    white           default         "^\-\-\- .*"
+      color   body    white           default         "^[\+]{3} .*"
+      color   body    green           default         "^[\+][^\+]+.*"
+      color   body    red             default         "^\-[^\-]+.*"
+      color   body    brightblue      default         "^@@ .*"
+      color   body    green           default         "LGTM"
+      color   body    brightmagenta   default         "-- Commit Summary --"
+      color   body    brightmagenta   default         "-- File Changes --"
+      color   body    brightmagenta   default         "-- Patch Links --"
     '';
   };
   programs.mbsync.enable = true;
