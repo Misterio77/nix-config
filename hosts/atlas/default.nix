@@ -53,7 +53,7 @@
   };
 
   networking = {
-    hostName = "thanatos";
+    hostName = "atlas";
     networkmanager.enable = true;
   };
 

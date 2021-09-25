@@ -18,8 +18,8 @@
     in {
       overlay = import ./overlays;
       nixosConfigurations = {
-        thanatos = lib.mkHost {
-          host = "thanatos";
+        atlas = lib.mkHost {
+          host = "atlas";
           system = "x86_64-linux";
           users = [ "misterio" ];
         };
