@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, hardware, impermanence, nur, ... }:
+{ config, pkgs, nixpkgs, hardware, impermanence, declarative-cachix, nur, ... }:
 
 {
   imports = [
@@ -7,6 +7,7 @@
     hardware.nixosModules.common-gpu-amd
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
+    declarative-cachix.nixosModules.declarative-cachix
     ../../modules/openrgb.nix
     ../../overlays
   ];
@@ -30,7 +31,14 @@
     overlays = [ nur.overlay ];
   };
 
+  cachix = [
+    {
+      name = "misterio";
+      sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
+    }
+  ];
   nix = {
+    trustedUsers = [ "misterio" ];
     package = pkgs.nixUnstable;
     autoOptimiseStore = true;
     gc = {
@@ -47,7 +55,6 @@
   networking = {
     hostName = "thanatos";
     networkmanager.enable = true;
-    firewall = { allowedTCPPorts = [ 25565 51820 ]; };
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -82,14 +89,23 @@
   };
 
   services = {
-    /* pipewire = {
-         enable = true;
-         alsa.enable = true;
-         alsa.support32Bit = true;
-         pulse.enable = true;
-         jack.enable = true;
-       };
-    */
+    /*
+    pipewire = {
+       enable = true;
+       alsa.enable = true;
+       alsa.support32Bit = true;
+       pulse.enable = true;
+       jack.enable = true;
+     };
+     */
+    avahi = {
+      enable = true;
+      nssmdns = true;
+      publish = {
+        enable = true;
+        userServices = true;
+      };
+    };
     dbus.packages = [ pkgs.gcr ];
     postgresql = {
       enable = true;
@@ -101,7 +117,7 @@
   };
 
   programs = {
-    fuse = { userAllowOther = true; };
+    fuse.userAllowOther = true;
     fish = {
       enable = true;
       vendor = {
@@ -155,6 +171,7 @@
   };
 
   hardware = {
+    opentabletdriver.enable = true;
     ckb-next.enable = true;
     openrgb.enable = true;
     steam-hardware.enable = true;

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, host, ... }:
 
 let
   colors = import ../../../colors.nix;
@@ -14,7 +14,6 @@ in {
     ./ethminer.nix
     ./element.nix
     ./fira.nix
-    ./firefox.nix
     ./fish.nix
     ./git.nix
     ./gpg.nix
@@ -44,24 +43,23 @@ in {
     ./zathura.nix
   ];
 
-  colorscheme = colors.${import ./current-scheme.nix};
-  # wallpaper.path = "/home/misterio/Pictures/Wallpapers/cyberpunk-city.jpg";
+  colorscheme = colors."${import ./current-scheme.nix}";
   wallpaper.generate = true;
 
   home.packages = with pkgs; [
     # Cli
     bottom
-    cachix
     dragon-drop
     exa
-    imv
     ncdu
     ranger
-    setscheme
     trash-cli
-    xdg-utils
-    ydotool
 
+    ydotool
+    xdg-utils
+    setscheme
+    imv
+    transmission-gtk
     pavucontrol
     spotify
     wofi
