@@ -49,17 +49,17 @@ in {
   home.packages = with pkgs; [
     # Cli
     bottom
-    dragon-drop
+    cachix
     exa
     ncdu
     ranger
     trash-cli
 
+    dragon-drop
     ydotool
     xdg-utils
     setscheme
     imv
-    transmission-gtk
     pavucontrol
     spotify
     wofi
