@@ -1,11 +1,8 @@
 { config, pkgs, ... }:
 let colors = config.colorscheme.colors;
 in {
-  imports = [ ../../../modules/rgbdaemon.nix ];
   services.rgbdaemon = {
     enable = true;
-    package = pkgs.rgbdaemon;
-    interval = 0.8;
     daemons = {
       swayWorkspaces = true;
       swayLock = true;

@@ -2,31 +2,29 @@
 
 let
   colors = import ../../../colors.nix;
-  username = "${config.home.username}";
 in {
   imports = [
-    ../../../modules/colorscheme.nix
-    ../../../modules/ethminer.nix
-    ../../../modules/wallpaper.nix
-    ./kitty.nix
     ./direnv.nix
-    ./discord.nix
-    ./ethminer.nix
-    ./element.nix
-    ./fira.nix
     ./fish.nix
     ./git.nix
+    ./neofetch.nix
+    ./nix-index.nix
+    ./nvim.nix
+    ./starship.nix
+  ] ++ (if host == "atlas" then [
+    ./discord.nix
+    ./element.nix
+    ./ethminer.nix
+    ./fira.nix
     ./gpg.nix
     ./gtk.nix
     ./kdeconnect.nix
+    ./kitty.nix
     ./lutris.nix
     ./mail.nix
     ./mako.nix
     ./multimc.nix
-    ./neofetch.nix
     ./neomutt.nix
-    ./nix-index.nix
-    ./nvim.nix
     ./osu.nix
     ./pass.nix
     ./qt.nix
@@ -34,14 +32,13 @@ in {
     ./rgbdaemon.nix
     ./runescape.nix
     ./slack.nix
-    ./starship.nix
     ./steam.nix
     ./sway.nix
-    ./swaylock.nix
     ./swayidle.nix
+    ./swaylock.nix
     ./waybar.nix
     ./zathura.nix
-  ];
+  ] else [ ]);
 
   colorscheme = colors."${import ./current-scheme.nix}";
   wallpaper.generate = true;
@@ -55,6 +52,8 @@ in {
     ranger
     trash-cli
 
+  ] ++ (if host == "atlas" then [
+    # Gui apps
     dragon-drop
     ydotool
     xdg-utils
@@ -63,7 +62,7 @@ in {
     pavucontrol
     spotify
     wofi
-  ];
+  ] else [ ]);
 
   home.persistence = {
     "/data/home/misterio" = {

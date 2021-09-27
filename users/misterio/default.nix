@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, host, ... }:
 
 {
   # Require /data/home to be mounted at boot
@@ -16,8 +16,9 @@
   # Allow swaylock
   security.pam.services.swaylock = { };
 
+
   # Autologin at tty1
-  systemd.services."autovt@tty1" = {
+  systemd.services."autovt@tty1" = pkgs.lib.mkIf (host == "atlas") {
     description = "Autologin at the TTY1";
     after = [ "systemd-logind.service" ];
     wantedBy = [ "multi-user.target" ];
@@ -30,5 +31,4 @@
       Type = "idle";
     };
   };
-
 }

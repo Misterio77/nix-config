@@ -23,6 +23,11 @@
           system = "x86_64-linux";
           users = [ "misterio" ];
         };
+        merope = lib.mkHost {
+          host = "merope";
+          system = "aarch64-linux";
+          users = [ ];
+        };
       };
     };
 }

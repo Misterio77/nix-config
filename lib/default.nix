@@ -5,14 +5,22 @@
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        declarative-cachix = inputs.declarative-cachix;
-        hardware = inputs.hardware;
-        impermanence = inputs.impermanence;
+        inherit host;
+        hardware = inputs.hardware.nixosModules;
         nixpkgs = inputs.nixpkgs;
         nur = inputs.nur;
       };
-      # Import host config
-      modules = [ ../hosts/${host} ]
+      modules = [
+        # Import host config
+        ../hosts/${host}
+        # My custom NixOS modules
+        ../modules/nixos
+        # Package overlays
+        ../overlays
+        # Import impermanence and cachix
+        inputs.impermanence.nixosModules.impermanence
+        inputs.declarative-cachix.nixosModules.declarative-cachix
+      ]
       # Plus system-level user config for each user
         ++ inputs.nixpkgs.lib.forEach users (user: ../users/${user})
         # And each user's home-manager config
@@ -23,8 +31,12 @@
               extraSpecialArgs = { inherit host; };
               useGlobalPkgs = true;
               useUserPackages = true;
-              sharedModules =
-                [ inputs.impermanence.nixosModules.home-manager.impermanence ];
+              sharedModules = [
+                # My custom home-manager modules
+                ../modules/home-manager
+                # Import impermanence
+                inputs.impermanence.nixosModules.home-manager.impermanence
+              ];
               users = builtins.listToAttrs (inputs.nixpkgs.lib.forEach users (user: {
                 name = user;
                 value = ../users/${user}/home;

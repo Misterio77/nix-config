@@ -1,15 +1,11 @@
-{ config, pkgs, nixpkgs, hardware, impermanence, declarative-cachix, nur, ... }:
+{ config, pkgs, nixpkgs, hardware, nur, ... }:
 
 {
   imports = [
     ./hardware-configuration.nix
-    hardware.nixosModules.common-cpu-amd
-    hardware.nixosModules.common-gpu-amd
-    hardware.nixosModules.common-pc-ssd
-    impermanence.nixosModules.impermanence
-    declarative-cachix.nixosModules.declarative-cachix
-    ../../modules/openrgb.nix
-    ../../overlays
+    hardware.common-cpu-amd
+    hardware.common-gpu-amd
+    hardware.common-pc-ssd
   ];
 
   # Require /data/var to be mounted at boot
@@ -171,11 +167,11 @@
   };
 
   hardware = {
-    opentabletdriver.enable = true;
     ckb-next.enable = true;
-    openrgb.enable = true;
-    steam-hardware.enable = true;
     opengl.enable = true;
+    openrgb.enable = true;
+    opentabletdriver.enable = true;
+    steam-hardware.enable = true;
     pulseaudio = {
       enable = true;
       support32Bit = true;
@@ -183,15 +179,4 @@
   };
 
   virtualisation.docker.enable = true;
-
-  # https://github.com/NixOS/nixpkgs/issues/108598
-  environment.systemPackages = with pkgs;
-    [
-      (steam.override {
-        extraProfile = ''
-          unset VK_ICD_FILENAMES
-          export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json:/usr/share/vulkan/icd.d/radeon_icd.i686.json:${pkgs.amdvlk}/share/vulkan/icd.d/amd_icd64.json:${pkgs.driversi686Linux.amdvlk}/share/vulkan/icd.d/amd_icd32.json
-        '';
-      })
-    ];
 }
