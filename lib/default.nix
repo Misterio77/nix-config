@@ -1,4 +1,4 @@
-{ inputs }: {
+inputs: {
   # Simplifies making a host
   # Takes the hostname, system type, and array of user names
   mkHost = { host, system, users ? [ ] }:

@@ -164,25 +164,6 @@
         installPhase = "install -Dm 0755 $src/swayfader.py $out/bin/swayfader";
       };
     })
-    (final: prev: {
-      wshowkeys = prev.stdenv.mkDerivation {
-        name = "wshowkeys";
-        nativeBuildInputs = with prev; [ meson pkg-config wayland ninja ];
-        buildInputs = with prev; [
-          cairo
-          libinput
-          pango
-          wayland-protocols
-          libxkbcommon
-        ];
-        src = prev.fetchFromGitHub {
-          owner = "ammgws";
-          repo = "wshowkeys";
-          rev = "e8bfc78f08ebdd1316daae59ecc77e62bba68b2b";
-          sha256 = "sha256-/HvNCQWsXOJZeCxHWmsLlbBDhBzF7XP/SPLdDiWMDC4=";
-        };
-      };
-    })
     # My RGBDaemon
     # TODO: move to a nixpkg-like file
     (final: prev: {

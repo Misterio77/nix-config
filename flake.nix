@@ -14,7 +14,7 @@
   };
 
   outputs = { ... } @ inputs:
-    let lib = import ./lib { inherit inputs; };
+    let lib = import ./lib inputs;
     in {
       overlay = import ./overlays;
       nixosConfigurations = {
