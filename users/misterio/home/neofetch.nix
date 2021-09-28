@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, host, ... }:
 
 let
   glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
@@ -24,10 +24,8 @@ let
     gtk_shorthand="on"
     gtk2="on"
     gtk3="on"
-    public_ip_host="http://ident.me"
-    public_ip_timeout=2
     de_version="off"
-    disk_show=('/' '/nix' '/backups')
+    disk_show=('/' '/nix')
     disk_subtitle="mount"
     disk_percent="on"
     music_player="auto"
@@ -97,7 +95,7 @@ in {
           info "WM" wm
           info "Term" term
           info "CPU" cpu
-          prin "GPU" "$(${glxinfo} | grep Device | cut -d ':' -f2 | cut -d '(' -f1)"
+          prin "GPU" "$(${glxinfo} -B | grep -Po '(?<=^OpenGL renderer string: ).*(?= \(.*\)$)')"
           info "Memory" memory
           info "Disk" disk
           info cols

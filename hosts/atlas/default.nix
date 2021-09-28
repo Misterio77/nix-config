@@ -99,6 +99,8 @@
       nssmdns = true;
       publish = {
         enable = true;
+        domain = true;
+        workstation = true;
         userServices = true;
       };
     };

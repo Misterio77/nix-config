@@ -3,6 +3,8 @@
 let
   colorscheme = config.colorscheme.colors;
   wallpaper = config.wallpaper.path;
+  # SSH Hosts
+  sshHosts = [ "merope.local" "ubuntu@vpn.uget.express" ];
   # Programs
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
@@ -21,6 +23,7 @@ let
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
   setscheme-wofi = "${pkgs.setscheme-wofi}/bin/setscheme-wofi";
+  ssh = "${pkgs.openssh}/bin/ssh";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
@@ -57,7 +60,7 @@ in rec {
         };
         HDMI-A-1 = {
           res = "2560x1080@75hz";
-          pos = "1920 70";
+          pos = "1920 0";
           bg = "${config.wallpaper.path} fill";
         };
       };
@@ -154,19 +157,19 @@ in rec {
       };
       keybindings = lib.mkOptionDefault {
         # Splits
-        "Mod4+minus" = "split v";
-        "Mod4+backslash" = "split h";
+        "${modifier}+minus" = "split v";
+        "${modifier}+backslash" = "split h";
         # Scratchpad
-        "Mod4+u" = "scratchpad show";
-        "Mod4+Shift+u" = "move scratchpad";
+        "${modifier}+u" = "scratchpad show";
+        "${modifier}+Shift+u" = "move scratchpad";
         # Move entire workspace
-        "Mod4+Mod1+h" = "move workspace to output left";
-        "Mod4+Mod1+Left" = "move workspace to output left";
-        "Mod4+Mod1+l" = "move workspace to output right";
-        "Mod4+Mod1+Right" = "move workspace to output right";
+        "${modifier}+Mod1+h" = "move workspace to output left";
+        "${modifier}+Mod1+Left" = "move workspace to output left";
+        "${modifier}+Mod1+l" = "move workspace to output right";
+        "${modifier}+Mod1+Right" = "move workspace to output right";
         # Toggle monitors
-        "Mod4+Control+Left" = "output DP-1 toggle";
-        "Mod4+Control+Down" = "output HDMI-A-1 toggle";
+        "${modifier}+Control+Left" = "output DP-1 toggle";
+        "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
         # Lock screen
         "XF86Launch5" = "exec ${swaylock} --screenshots";
         # Volume
@@ -196,23 +199,23 @@ in rec {
         # Color scheme
         "XF86Tools" = "exec ${setscheme-wofi}";
         # Notifications
-        "Mod4+w" = "exec ${makoctl} dismiss";
-        "Mod4+shift+w" = "exec ${makoctl} dismiss -a";
+        "${modifier}+w" = "exec ${makoctl} dismiss";
+        "${modifier}+shift+w" = "exec ${makoctl} dismiss -a";
         # Programs
-        "Mod4+v" = "exec ${terminal} -e ${nvim}";
-        "Mod4+o" = "exec ${terminal} -e ${octave}";
-        "Mod4+m" = "exec ${terminal} -e ${neomutt}";
-        "Mod4+b" = "exec ${qutebrowser}";
-        "Mod4+z" = "exec ${zathura}";
-        "Mod4+control+w" = "exec ${makoctl} invoke";
+        "${modifier}+v" = "exec ${terminal} -e ${nvim}";
+        "${modifier}+o" = "exec ${terminal} -e ${octave}";
+        "${modifier}+m" = "exec ${terminal} -e ${neomutt}";
+        "${modifier}+b" = "exec ${qutebrowser}";
+        "${modifier}+z" = "exec ${zathura}";
+        "${modifier}+control+w" = "exec ${makoctl} invoke";
         # Screenshot
         "Print" = "exec ${grimshot} --notify copy output";
         "Shift+Print" = "exec ${grimshot} --notify copy active";
         "Control+Print" = "exec ${grimshot} --notify copy screen";
         "Mod1+Print" = "exec ${grimshot} --notify copy area";
-        "Mod4+Print" = "exec ${grimshot} --notify copy window";
+        "${modifier}+Print" = "exec ${grimshot} --notify copy window";
         # Application menu
-        "Mod4+x" = "exec ${wofi} -S drun -I";
+        "${modifier}+x" = "exec ${wofi} -S drun -I";
         # Pass wofi menu
         "Scroll_Lock" = "exec ${pass-wofi}";
         # Lock or unlock gpg
@@ -221,6 +224,13 @@ in rec {
           (${gpg-connect-agent} reloadagent /bye && \
           ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
           echo "a"| ${gpg} --sign
+        '';
+        # Full screen across monitors
+        "${modifier}+shift+f" = "fullscreen toggle global";
+        # Open SSH menu
+        "${modifier}+s" = ''
+          exec host=$(echo '${pkgs.lib.concatStringsSep "\\n" sshHosts}' | ${wofi} -S dmenu) && \
+          ${terminal} -e ${ssh} ''${host}
         '';
       };
       modifier = "Mod4";

@@ -11,7 +11,7 @@
       vim = "nvim";
       m = "neomutt";
       mutt = "neomutt";
-      wl-root = "xhost si:localuser:root";
+      xhost-root = "xhost si:localuser:root";
     };
     shellAliases = {
       getip = "curl ifconfig.me";

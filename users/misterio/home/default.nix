@@ -30,7 +30,7 @@ in {
     ./qt.nix
     ./qutebrowser.nix
     ./rgbdaemon.nix
-    ./runescape.nix
+    # ./runescape.nix
     ./slack.nix
     ./steam.nix
     ./sway.nix
