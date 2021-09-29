@@ -59,7 +59,7 @@
     openssh = {
       enable = true;
       passwordAuthentication = false;
-      permitRootLogin = false;
+      permitRootLogin = "no";
     };
     avahi = {
       enable = true;
