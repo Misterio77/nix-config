@@ -7,7 +7,7 @@
   ];
 
   # Require /data/var to be mounted at boot
-  fileSystems."/data/var".neededForBoot = true;
+  fileSystems."/data".neededForBoot = true;
 
   environment.persistence."/data" = {
     directories = [
@@ -29,6 +29,7 @@
       sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
     }
   ];
+
   nix = {
     trustedUsers = [ "misterio" ];
     package = pkgs.nixUnstable;
@@ -79,6 +80,7 @@
     ssh.startAgent = true;
   };
 
+  /*
   hardware.deviceTree.overlays = [
     {
       # https://github.com/NixOS/nixpkgs/issues/135828#issuecomment-918359063
@@ -99,4 +101,5 @@
       '';
     }
   ];
+  */
 }

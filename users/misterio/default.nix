@@ -2,7 +2,7 @@
 
 {
   # Require /data/home to be mounted at boot
-  fileSystems."/data/home".neededForBoot = true;
+  fileSystems."${if host == "atlas" then "/data/home" else "/data"}".neededForBoot = true;
 
   # User info
   users.users.misterio = {
