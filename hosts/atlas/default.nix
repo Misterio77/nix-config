@@ -157,6 +157,7 @@
 
   security = {
     rtkit.enable = true;
+    # Global sudo caching
     sudo.extraConfig = ''
       Defaults timestamp_type=global
     '';

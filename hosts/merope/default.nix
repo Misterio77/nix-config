@@ -50,6 +50,13 @@
     networkmanager.enable = true;
   };
 
+  security = {
+    # Passwordless sudo (for remote build)
+    sudo.extraConfig = ''
+      %wheel         ALL = (ALL) NOPASSWD: ALL
+    '';
+  };
+
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/Sao_Paulo";
 

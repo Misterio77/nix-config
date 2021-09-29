@@ -95,7 +95,6 @@ in {
           info "WM" wm
           info "Term" term
           info "CPU" cpu
-          prin "GPU" "$(${glxinfo} -B | grep -Po '(?<=^OpenGL renderer string: ).*(?= \(.*\)$)')"
           info "Memory" memory
           info "Disk" disk
           info cols
