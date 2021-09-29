@@ -56,6 +56,11 @@
   boot.supportedFilesystems = [ "btrfs" ];
 
   services = {
+    openssh = {
+      enable = true;
+      passwordAuthentication = false;
+      permitRootLogin = false;
+    };
     avahi = {
       enable = true;
       nssmdns = true;
