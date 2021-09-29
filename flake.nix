@@ -26,7 +26,7 @@
         merope = lib.mkHost {
           host = "merope";
           system = "aarch64-linux";
-          users = [ ];
+          users = [ "misterio" ];
         };
       };
     };
