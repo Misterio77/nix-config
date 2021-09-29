@@ -29,6 +29,12 @@
       device = "/dev/disk/by-label/FIRMWARE";
       fsType = "vfat";
     };
+
+    "/nix" = {
+      device = "/data";
+      fsType = "auto";
+      options = [ "bind" ];
+    };
   };
 
   swapDevices = [ ];

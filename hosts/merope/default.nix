@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    hardware.raspberry-pi."4"
+    hardware.raspberry-pi-4
   ];
 
   # Require /data/var to be mounted at boot

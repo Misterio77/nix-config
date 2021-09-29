@@ -50,8 +50,6 @@ in {
     exa
     ncdu
     ranger
-    trash-cli
-
   ] ++ (if host == "atlas" then [
     # Gui apps
     dragon-drop
