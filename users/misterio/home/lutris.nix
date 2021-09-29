@@ -20,6 +20,7 @@
 
   home.persistence = {
     "/data/games/misterio" = {
+      allowOther = true;
       directories = [ "Games/Lutris" ".config/lutris" ".local/share/lutris" ];
     };
   };

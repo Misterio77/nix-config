@@ -69,6 +69,5 @@ in {
       directories = [ "Documents" "Downloads" "Pictures" ];
       allowOther = true;
     };
-    "/data/games/misterio" = { allowOther = true; };
   };
 }

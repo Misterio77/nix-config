@@ -2,6 +2,7 @@
   home.packages = [ pkgs.steam ];
   home.persistence = {
     "/data/games/misterio" = {
+      allowOther = true;
       directories = [
         "Games/Steam"
         ".config/Hero_Siege"
