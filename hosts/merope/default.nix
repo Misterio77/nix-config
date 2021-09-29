@@ -2,8 +2,9 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     hardware.raspberry-pi-4
+    ./hardware-configuration.nix
+    ./minecraft.nix
   ];
 
   # Require /data/var to be mounted at boot
@@ -13,7 +14,6 @@
     directories = [
       "/var/log"
       "/var/lib/systemd"
-      "/var/lib/minecraft"
       "/srv"
     ];
   };
@@ -62,19 +62,6 @@
   time.timeZone = "America/Sao_Paulo";
 
   services = {
-    minecraft-server = {
-      enable = false;
-      package = pkgs.papermc;
-      declarative = true;
-      eula = true;
-      jvmOpts = "-Xmx3G -Xms3G -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC";
-      openFirewall = true;
-      serverProperties = {
-        motd = "Teste teste";
-        enable-rcon = true;
-        "rcon.password" = "1609";
-      };
-    };
     openssh = {
       enable = true;
       passwordAuthentication = false;
