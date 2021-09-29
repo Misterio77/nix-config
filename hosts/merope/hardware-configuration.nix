@@ -31,7 +31,17 @@
     };
 
     "/nix" = {
-      device = "/data";
+      device = "/data/nix";
+      fsType = "auto";
+      options = [ "bind" ];
+    };
+    "/boot" = {
+      device = "/data/boot";
+      fsType = "auto";
+      options = [ "bind" ];
+    };
+    "/dotfiles" = {
+      device = "/data/dotfiles";
       fsType = "auto";
       options = [ "bind" ];
     };
