@@ -40,8 +40,8 @@ in {
     ./zathura.nix
   ] else [ ]);
 
-  colorscheme = colors."${import ./current-scheme.nix}";
-  wallpaper.generate = true;
+  colorscheme = colors.pasque;
+  wallpaper.generate = host == "atlas";
 
   home.packages = with pkgs; [
     # Cli
