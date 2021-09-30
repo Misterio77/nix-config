@@ -66,7 +66,7 @@ let
       chmod 555 -R .
     '';
   };
-in {
+in rec {
 
   gtk = {
     enable = true;
@@ -84,6 +84,13 @@ in {
     theme = {
       name = "${config.colorscheme.slug}";
       package = generated-gtk-theme;
+    };
+  };
+  services.xsettingsd = {
+    enable = true;
+    settings = {
+      "Net/ThemeName" = "${gtk.theme.name}";
+      "Net/IconThemeName" = "${gtk.iconTheme.name}";
     };
   };
 }

@@ -21,7 +21,7 @@
 
 
   # Autologin at tty1
-  systemd.services."autovt@tty1" = pkgs.lib.mkIf (host == "atlas") {
+  systemd.services."autovt@tty1" = if host == "atlas" then {
     description = "Autologin at the TTY1";
     after = [ "systemd-logind.service" ];
     wantedBy = [ "multi-user.target" ];
@@ -33,5 +33,5 @@
       Restart = "always";
       Type = "idle";
     };
-  };
+  } else {};
 }

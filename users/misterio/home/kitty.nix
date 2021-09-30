@@ -2,6 +2,9 @@
 
 let colors = config.colorscheme.colors;
 in {
+  home.sessionVariables = {
+    TERMINAL = "kitty";
+  };
   programs.fish.shellAliases.ssh = "kitty +kitten ssh";
   programs.kitty = {
     enable = true;

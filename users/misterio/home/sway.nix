@@ -18,7 +18,6 @@ let
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pass-wofi = "${pkgs.pass-wofi}/bin/pass-wofi";
-  pkill = "${pkgs.procps}/bin/pkill";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
@@ -37,7 +36,6 @@ in rec {
     MOZ_ENABLE_WAYLAND = true;
     QT_QPA_PLATFORM = "wayland";
     LIBSEAT_BACKEND = "logind";
-    TERMINAL = "kitty";
   };
 
   wayland.windowManager.sway = {
@@ -77,7 +75,6 @@ in rec {
       ];
       floating.criteria = [
         { app_id = "zenity"; }
-        { app_id = "AlacrittyFloating*"; }
         { class = "net-runelite-launcher-Launcher"; }
       ];
       colors = {

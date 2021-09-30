@@ -12,6 +12,7 @@
         motd = "Teste teste";
         enable-rcon = true;
         "rcon.password" = "1609";
+        enable-command-block = true;
       };
     };
   };
