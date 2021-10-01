@@ -10,7 +10,7 @@
     ../common.nix
   ];
 
-  networking.hostName = "default";
+  networking.hostName = "merope";
   nixpkgs = {
     config.allowUnfree = true;
     overlays = [ inputs.nur.overlay ];
