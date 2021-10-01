@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -p flavours -i bash
+#! nix-shell -p flavours -p nixfmt -i bash
 #! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz
 
 read -r -d '' schemes_source << END
@@ -15,6 +15,7 @@ codeschool: https://github.com/blockloop/base16-codeschool-scheme
 colors: https://github.com/hakatashi/base16-colors-scheme
 cupertino: https://github.com/Defman21/base16-cupertino
 danqing: https://github.com/CosmosAtlas/base16-danqing-scheme
+da-one: https://github.com/NNBnh/base16-da-one-schemes
 darcula: https://github.com/casonadams/base16-darcula-scheme
 darkmoss: https://github.com/avanzzzi/base16-darkmoss-scheme
 darkviolet: https://github.com/ruler501/base16-darkviolet-scheme
@@ -28,6 +29,7 @@ framer: https://github.com/jssee/base16-framer-scheme
 fruit-soda: https://github.com/jozip/base16-fruit-soda-scheme
 gigavolt: https://github.com/Whillikers/base16-gigavolt-scheme
 github: https://github.com/Defman21/base16-github-scheme
+gotham: https://github.com/sboysel/base16-gotham-scheme
 gruvbox: https://github.com/dawikur/base16-gruvbox-scheme
 gruvbox-material: https://github.com/MayushKumar/base16-gruvbox-material-scheme
 hardcore: https://github.com/callerc1/base16-hardcore-scheme
@@ -63,6 +65,7 @@ rose-pine: https://github.com/edunfelt/base16-rose-pine-scheme
 sagelight: https://github.com/cveldy/base16-sagelight-scheme
 sakura: https://github.com/Misterio77/base16-sakura-scheme
 sandcastle: https://github.com/gessig/base16-sandcastle-scheme
+shadesmear: https://github.com/HiRoS-neko/base16-shadesmear-scheme
 silk: https://github.com/misterio77/base16-silk-scheme
 snazzy: https://github.com/h404bi/base16-snazzy-scheme
 solarflare: https://github.com/mnussbaum/base16-solarflare-scheme
@@ -73,6 +76,7 @@ summercamp: https://github.com/zoefiri/base16-summercamp
 summerfruit: https://github.com/cscorley/base16-summerfruit-scheme
 synth-midnight: https://github.com/michael-ball/base16-synth-midnight-scheme
 tender: https://github.com/DanManN/base16-tender-scheme
+tokyonight: https://github.com/misterio77/base16-tokyonight-scheme
 tomorrow: https://github.com/chriskempson/base16-tomorrow-scheme
 twilight: https://github.com/hartbit/base16-twilight-scheme
 unikitty: https://github.com/joshwlewis/base16-unikitty
@@ -115,14 +119,6 @@ read -r -d '' template_contents << END
       base0D = "{{base0D-hex}}";
       base0E = "{{base0E-hex}}";
       base0F = "{{base0F-hex}}";
-      base10 = "{{base10-hex}}";
-      base11 = "{{base11-hex}}";
-      base12 = "{{base12-hex}}";
-      base13 = "{{base13-hex}}";
-      base14 = "{{base14-hex}}";
-      base15 = "{{base15-hex}}";
-      base16 = "{{base16-hex}}";
-      base17 = "{{base17-hex}}";
     };
   };
 END
@@ -133,3 +129,4 @@ flavours list -l | while read slug; do
     flavours build $scheme_path <( echo "$template_contents" ) >> colors.nix
 done
 echo "}" >> colors.nix
+nixfmt colors.nix

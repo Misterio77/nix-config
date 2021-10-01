@@ -1224,6 +1224,126 @@
     };
   };
 
+  "da-one-black" = {
+    slug = "da-one-black";
+    name = "Da One Black";
+    author = "NNB (https://github.com/NNBnh)";
+    colors = {
+      base00 = "000000";
+      base01 = "282828";
+      base02 = "585858";
+      base03 = "888888";
+      base04 = "c8c8c8";
+      base05 = "ffffff";
+      base06 = "ffffff";
+      base07 = "ffffff";
+      base08 = "fa7883";
+      base09 = "ffc387";
+      base0A = "ff9470";
+      base0B = "98c379";
+      base0C = "8af5ff";
+      base0D = "6bb8ff";
+      base0E = "e799ff";
+      base0F = "b3684f";
+    };
+  };
+
+  "da-one-gray" = {
+    slug = "da-one-gray";
+    name = "Da One Gray";
+    author = "NNB (https://github.com/NNBnh)";
+    colors = {
+      base00 = "181818";
+      base01 = "282828";
+      base02 = "585858";
+      base03 = "888888";
+      base04 = "c8c8c8";
+      base05 = "ffffff";
+      base06 = "ffffff";
+      base07 = "ffffff";
+      base08 = "fa7883";
+      base09 = "ffc387";
+      base0A = "ff9470";
+      base0B = "98c379";
+      base0C = "8af5ff";
+      base0D = "6bb8ff";
+      base0E = "e799ff";
+      base0F = "b3684f";
+    };
+  };
+
+  "da-one-ocean" = {
+    slug = "da-one-ocean";
+    name = "Da One Ocean";
+    author = "NNB (https://github.com/NNBnh)";
+    colors = {
+      base00 = "171726";
+      base01 = "22273d";
+      base02 = "525866";
+      base03 = "878d96";
+      base04 = "c8c8c8";
+      base05 = "ffffff";
+      base06 = "ffffff";
+      base07 = "ffffff";
+      base08 = "fa7883";
+      base09 = "ffc387";
+      base0A = "ff9470";
+      base0B = "98c379";
+      base0C = "8af5ff";
+      base0D = "6bb8ff";
+      base0E = "e799ff";
+      base0F = "b3684f";
+    };
+  };
+
+  "da-one-paper" = {
+    slug = "da-one-paper";
+    name = "Da One Paper";
+    author = "NNB (https://github.com/NNBnh)";
+    colors = {
+      base00 = "faf0dc";
+      base01 = "c8c8c8";
+      base02 = "888888";
+      base03 = "585858";
+      base04 = "282828";
+      base05 = "181818";
+      base06 = "000000";
+      base07 = "000000";
+      base08 = "de5d6e";
+      base09 = "ff9470";
+      base0A = "b3684f";
+      base0B = "76a85d";
+      base0C = "64b5a7";
+      base0D = "5890f8";
+      base0E = "c173d1";
+      base0F = "b3684f";
+    };
+  };
+
+  "da-one-white" = {
+    slug = "da-one-white";
+    name = "Da One White";
+    author = "NNB (https://github.com/NNBnh)";
+    colors = {
+      base00 = "ffffff";
+      base01 = "c8c8c8";
+      base02 = "888888";
+      base03 = "585858";
+      base04 = "282828";
+      base05 = "181818";
+      base06 = "000000";
+      base07 = "000000";
+      base08 = "de5d6e";
+      base09 = "ff9470";
+      base0A = "b3684f";
+      base0B = "76a85d";
+      base0C = "64b5a7";
+      base0D = "5890f8";
+      base0E = "c173d1";
+      base0F = "b3684f";
+    };
+  };
+
   "danqing" = {
     slug = "danqing";
     name = "DanQing";
@@ -1871,6 +1991,30 @@
       base0D = "3971ED";
       base0E = "A36AC7";
       base0F = "3971ED";
+    };
+  };
+
+  "gotham" = {
+    slug = "gotham";
+    name = "Gotham";
+    author = "Andrea Leopardi (arranged by Brett Jones)";
+    colors = {
+      base00 = "0c1014";
+      base01 = "11151c";
+      base02 = "091f2e";
+      base03 = "0a3749";
+      base04 = "245361";
+      base05 = "599cab";
+      base06 = "99d1ce";
+      base07 = "d3ebe9";
+      base08 = "c23127";
+      base09 = "d26937";
+      base0A = "edb443";
+      base0B = "33859E";
+      base0C = "2aa889";
+      base0D = "195466";
+      base0E = "888ca6";
+      base0F = "4e5166";
     };
   };
 
@@ -3785,6 +3929,54 @@
     };
   };
 
+  "shadesmear-dark" = {
+    slug = "shadesmear-dark";
+    name = "ShadeSmear Dark";
+    author = "Kyle Giammarco (http://kyle.giammar.co)";
+    colors = {
+      base00 = "232323";
+      base01 = "232323";
+      base02 = "4E4E4E";
+      base03 = "C0C0C0";
+      base04 = "DBDBDB";
+      base05 = "DBDBDB";
+      base06 = "E4E4E4";
+      base07 = "1C1C1C";
+      base08 = "A64270";
+      base09 = "CC5450";
+      base0A = "307878";
+      base0B = "71983B";
+      base0C = "C57D42";
+      base0D = "376388";
+      base0E = "D7AB54";
+      base0F = "6D6D6D";
+    };
+  };
+
+  "shadesmear-light" = {
+    slug = "shadesmear-light";
+    name = "ShadeSmear Light";
+    author = "Kyle Giammarco (http://kyle.giammar.co)";
+    colors = {
+      base00 = "DBDBDB";
+      base01 = "DBDBDB";
+      base02 = "C0C0C0";
+      base03 = "4E4E4E";
+      base04 = "232323";
+      base05 = "232323";
+      base06 = "1C1C1C";
+      base07 = "E4E4E4";
+      base08 = "A64270";
+      base09 = "CC5450";
+      base0A = "307878";
+      base0B = "71983B";
+      base0C = "C57D42";
+      base0D = "376388";
+      base0E = "D7AB54";
+      base0F = "6D6D6D";
+    };
+  };
+
   "shapeshifter" = {
     slug = "shapeshifter";
     name = "Shapeshifter";
@@ -4192,6 +4384,30 @@
       base0D = "b3deef";
       base0E = "d3b987";
       base0F = "a16946";
+    };
+  };
+
+  "tokyonight" = {
+    slug = "tokyonight";
+    name = "Tokyonight";
+    author = "Folke Lemaitre (https://github.com/folke)";
+    colors = {
+      base00 = "24283b";
+      base01 = "1f2335";
+      base02 = "292e42";
+      base03 = "565f89";
+      base04 = "a9b1d6";
+      base05 = "c0caf5";
+      base06 = "c0caf5";
+      base07 = "c0caf5";
+      base08 = "f7768e";
+      base09 = "ff9e64";
+      base0A = "e0af68";
+      base0B = "9ece6a";
+      base0C = "1abc9c";
+      base0D = "41a6b5";
+      base0E = "bb9af7";
+      base0F = "ff007c";
     };
   };
 
