@@ -1,4 +1,5 @@
 { pkgs, ... }: {
+  programs.mangohud.enable = true;
   home.packages = [ pkgs.steam ];
   home.persistence = {
     "/data/games/misterio" = {

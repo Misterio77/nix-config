@@ -115,6 +115,14 @@ read -r -d '' template_contents << END
       base0D = "{{base0D-hex}}";
       base0E = "{{base0E-hex}}";
       base0F = "{{base0F-hex}}";
+      base10 = "{{base10-hex}}";
+      base11 = "{{base11-hex}}";
+      base12 = "{{base12-hex}}";
+      base13 = "{{base13-hex}}";
+      base14 = "{{base14-hex}}";
+      base15 = "{{base15-hex}}";
+      base16 = "{{base16-hex}}";
+      base17 = "{{base17-hex}}";
     };
   };
 END

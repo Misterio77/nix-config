@@ -85,7 +85,6 @@
   };
 
   services = {
-    /*
     pipewire = {
        enable = true;
        alsa.enable = true;
@@ -93,7 +92,6 @@
        pulse.enable = true;
        jack.enable = true;
      };
-     */
     avahi = {
       enable = true;
       nssmdns = true;
@@ -175,10 +173,12 @@
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;
+    /*
     pulseaudio = {
       enable = true;
       support32Bit = true;
     };
+    */
   };
 
   virtualisation.docker.enable = true;

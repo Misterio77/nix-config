@@ -40,7 +40,7 @@ in {
     ./zathura.nix
   ] else [ ]);
 
-  colorscheme = colors.pasque;
+  colorscheme = colors.${import ./current-scheme.nix};
   wallpaper.generate = host == "atlas";
   systemd.user.startServices = "sd-switch";
 
@@ -51,6 +51,7 @@ in {
     exa
     ncdu
     ranger
+    comma
   ] ++ (if host == "atlas" then [
     # Gui apps
     dragon-drop

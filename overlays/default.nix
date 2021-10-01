@@ -112,6 +112,35 @@
         ${notify-send} "Copied $field:" "$value" -i edit-copy -t 4000
       '';
     })
+    # Script for quickly executing something
+    # TODO: move to a nixpkg-like file
+    (final: prev: {
+      comma = prev.stdenv.mkDerivation {
+        name = "comma";
+        version = "1.0";
+        src = prev.writeShellScriptBin "comma" ''
+          if [ -z "$1" ]; then
+            echo "You must specify a command" > /dev/stderr
+            exit 1
+          else
+            command="$1"
+            shift
+          fi
+
+          packages=$(nix-locate -r "bin/$command(-wrapped)?$") || { >&2 echo "No package found"; exit 2;}
+          package_line=$(grep -G "^coreutils.out " <<< "$packages" || grep -G "^''${command}-wrapper.out " <<< "$packages" || grep -G "^''${command}.out " <<< "$packages" || head -1 <<< "$packages")
+          package=$(echo "$package_line" | cut -d ' ' -f1)
+          >&2 printf "\033[0;32mUsing package\033[0m: ''${package}\n"
+
+          nix shell nixpkgs#"$package" --command "$command" $@
+        '';
+        dontBuild = true;
+        dontConfigure = true;
+        installPhase = ''
+          install -Dm 0755 $src/bin/comma "$out/bin/,"
+        '';
+      };
+    })
     # Script for changing color scheme
     # TODO: move to a nixpkg-like file
     (final: prev: {
