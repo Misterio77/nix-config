@@ -1,15 +1,24 @@
-{ config, pkgs, nixpkgs, hardware, nur, ... }:
+# System configuration for my main desktop PC
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
+    inputs.hardware.nixosModules.common-cpu-amd
+    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-pc-ssd
+    inputs.impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
-    hardware.common-cpu-amd
-    hardware.common-gpu-amd
-    hardware.common-pc-ssd
+    ../common.nix
   ];
 
-  # Require /data/var to be mounted at boot
+  networking.hostName = "atlas";
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ inputs.nur.overlay ];
+  };
+
   fileSystems."/data/var".neededForBoot = true;
+  fileSystems."/data/home".neededForBoot = true;
 
   environment.persistence."/data" = {
     directories = [
@@ -20,41 +29,6 @@
       "/srv"
     ];
   };
-  system.stateVersion = "21.11";
-
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ nur.overlay ];
-  };
-
-  cachix = [
-    {
-      name = "misterio";
-      sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
-    }
-  ];
-  nix = {
-    trustedUsers = [ "misterio" ];
-    package = pkgs.nixUnstable;
-    autoOptimiseStore = true;
-    gc = {
-      automatic = true;
-      dates = "daily";
-    };
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-references
-      warn-dirty = false
-    '';
-    registry.nixpkgs.flake = nixpkgs;
-  };
-
-  networking = {
-    hostName = "atlas";
-    networkmanager.enable = true;
-  };
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/Sao_Paulo";
 
   boot = {
     plymouth = {
@@ -92,16 +66,6 @@
        pulse.enable = true;
        jack.enable = true;
      };
-    avahi = {
-      enable = true;
-      nssmdns = true;
-      publish = {
-        enable = true;
-        domain = true;
-        workstation = true;
-        userServices = true;
-      };
-    };
     dbus.packages = [ pkgs.gcr ];
     postgresql = {
       enable = true;
@@ -113,16 +77,6 @@
   };
 
   programs = {
-    fuse.userAllowOther = true;
-    fish = {
-      enable = true;
-      vendor = {
-        completions.enable = true;
-        config.enable = true;
-        functions.enable = true;
-      };
-    };
-
     ssh.startAgent = false;
 
     gnupg.agent = {
@@ -166,6 +120,7 @@
     gtkUsePortal = true;
     extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
   };
+  security.pam.services.swaylock = { };
 
   hardware = {
     ckb-next.enable = true;
@@ -173,13 +128,31 @@
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;
-    /*
-    pulseaudio = {
-      enable = true;
-      support32Bit = true;
-    };
-    */
   };
 
   virtualisation.docker.enable = true;
+
+  # My user info
+  users.users.misterio = {
+    isNormalUser = true;
+    extraGroups = [ "audio" "wheel" "docker" "plugdev" ];
+    shell = pkgs.fish;
+    # Grab hashed password from /data
+    passwordFile = "/data/home/misterio/.password";
+  };
+
+  # Autologin me at tty1
+  systemd.services."autovt@tty1" = {
+    description = "Autologin at the TTY1";
+    after = [ "systemd-logind.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = [
+        "" # override upstream default with an empty ExecStart
+        "@${pkgs.utillinux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --autologin misterio --noclear %I $TERM"
+      ];
+      Restart = "always";
+      Type = "idle";
+    };
+  };
 }

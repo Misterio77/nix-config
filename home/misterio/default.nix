@@ -1,9 +1,8 @@
-{ pkgs, config, host, ... }:
+{ pkgs, config, hostname, inputs, ... }:
 
-let
-  colors = import ../../../colors.nix;
-in {
+{
   imports = [
+    inputs.impermanence.nixosModules.home-manager.impermanence
     ./direnv.nix
     ./fish.nix
     ./git.nix
@@ -11,7 +10,7 @@ in {
     ./nix-index.nix
     ./nvim.nix
     ./starship.nix
-  ] ++ (if host == "atlas" then [
+  ] ++ (if hostname == "atlas" then [
     ./discord.nix
     ./element.nix
     ./ethminer.nix
@@ -40,8 +39,16 @@ in {
     ./zathura.nix
   ] else [ ]);
 
-  colorscheme = colors.${import ./current-scheme.nix};
-  wallpaper.generate = host == "atlas";
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ inputs.nur.overlay ];
+  };
+
+  programs.home-manager.enable = true;
+
+  colorscheme = inputs.colorful.colorSchemes.${import ./current-scheme.nix};
+  wallpaper.generate = true;
+
   systemd.user.startServices = "sd-switch";
 
   home.packages = with pkgs; [
@@ -52,7 +59,7 @@ in {
     ncdu
     ranger
     comma
-  ] ++ (if host == "atlas" then [
+  ] ++ (if hostname == "atlas" then [
     # Gui apps
     dragon-drop
     ydotool

@@ -5,7 +5,8 @@
       ls = "exa";
       top = "btm";
       jqless = "jq -C | less -r";
-      rs = "nixos-rebuild switch --flake /dotfiles";
+      nrs = "nixos-rebuild switch --flake /dotfiles";
+      hms = "home-manager switch --flake /dotfiles";
       v = "nvim";
       vi = "nvim";
       vim = "nvim";

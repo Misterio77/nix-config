@@ -2,41 +2,87 @@
   description = "My NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
 
-    hardware.url = "github:nixos/nixos-hardware";
-    nur.url = "github:nix-community/NUR";
-    declarative-cachix.url = "github:jonascarpay/declarative-cachix";
-    impermanence.url = "github:RiscadoA/impermanence";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:misterio77/home-manager/personal";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    colorful.url = "github:misterio77/colorful";
+    hardware.url = "github:nixos/nixos-hardware";
+    impermanence.url = "github:RiscadoA/impermanence";
+    nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { ... } @ inputs:
-    let lib = import ./lib inputs;
-    in {
+  outputs = {... }@inputs:
+  let
+    # Make system configuration, given hostname and system type
+    mkSystem = { hostname, system }:
+      inputs.nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/${hostname}
+          ./modules/nixos
+          ./overlays
+        ];
+      };
+    # Make home configuration, given username, hostname, and system type
+    mkHome = { username, hostname, system }:
+      inputs.home-manager.lib.homeManagerConfiguration {
+        inherit username system;
+        extraSpecialArgs = { inherit inputs hostname; };
+        configuration = ./home/${username};
+        extraModules = [
+          ./modules/home-manager
+          ./overlays
+        ];
+        homeDirectory = "/home/${username}";
+      };
+  in {
       overlay = import ./overlays;
       nixosConfigurations = {
         # Main PC
-        # Development, production, gaming
-        # Wayland GUI
-        # R5 3600X, RX 5700XT, 32GB RAM, 512GB SSD
-        atlas = lib.mkHost {
-          host = "atlas";
+        atlas = mkSystem {
+          hostname = "atlas";
           system = "x86_64-linux";
-          users = [ "misterio" ];
         };
         # Raspberry Pi 4B
-        # Server usage
-        # Headless
-        # 8GB RAM, 64GB SD Card
-        merope = lib.mkHost {
-          host = "merope";
+        merope = mkSystem {
+          hostname = "merope";
           system = "aarch64-linux";
-          users = [ "misterio" ];
         };
       };
-    };
+      homeConfigurations = {
+        "misterio@atlas" = mkHome {
+          username = "misterio";
+          hostname = "atlas";
+          system = "x86_64-linux";
+        };
+        "misterio@merope" = mkHome {
+          username = "misterio";
+          hostname = "merope";
+          system = "aarch64-linux";
+        };
+      };
+    }
+    # Devshell for bootstrapping
+    // inputs.flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import inputs.nixpkgs { inherit system; };
+      home-manager = inputs.home-manager.defaultPackage.${system};
+    in {
+      devShell = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          git
+          neovim
+          nixUnstable
+          home-manager
+          nixfmt
+        ];
+      };
+    });
 }
-

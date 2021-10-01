@@ -31,26 +31,17 @@
         ${cava} -p <(echo "$config") | sed -u $dict
       '';
     })
-    # A zenity wrapper for using with SUDO_ASKPASS
-    # TODO: move to a nixpkg-like file
-    (final: prev: {
-      zenity-askpass = let zenity = "${prev.gnome.zenity}/bin/zenity";
-      in prev.writeShellScriptBin "zenity-askpass" ''
-        ${zenity} --password --timeout 10
-      '';
-    })
     # Setscheme graphical wrapper, using wofi and zenity
     # TODO: move to a nixpkg-like file
     (final: prev: {
       setscheme-wofi = let
-        zenity-askpass = "${prev.zenity-askpass}/bin/zenity-askpass";
         zenity = "${prev.gnome.zenity}/bin/zenity";
         wofi = "${pkgs.wofi}/bin/wofi";
         setscheme = "${pkgs.setscheme}/bin/setscheme";
       in prev.writeShellScriptBin "setscheme-wofi" ''
         set -o pipefail
         chosen=$(${setscheme} -L | ${wofi} -S dmenu) && \
-        SUDO_ASKPASS="${zenity-askpass}" ${setscheme} -A $chosen --show-trace --verbose 2>&1 | \
+        ${setscheme} $chosen --show-trace --verbose 2>&1 | \
         stdbuf -oL -eL awk '/^ / { print int(+$2) ; next } $0 { print "# " $0 }' | \
         ${zenity} --progress --pulsate --auto-close --auto-kill --title "Change color scheme"
       '';
@@ -148,15 +139,8 @@
         name = "setscheme";
         version = "1.0";
         src = prev.writeShellScriptBin "setscheme" ''
-          if [ "$1" == "-A" ]; then
-            sudo="sudo -A"
-            shift
-          else
-            sudo="sudo"
-          fi
-
           if [ "$1" == "-L" ]; then
-            nix eval --raw --impure --expr 'builtins.concatStringsSep "\n" (builtins.attrNames (import /dotfiles/colors.nix))' 2> /dev/null
+            nix eval --raw colorful#colorSchemes --apply 's: builtins.concatStringsSep "\n" (builtins.attrNames s)' 2> /dev/null
             exit 0
           elif [ "$1" == "-R" ]; then
             scheme=$(setscheme -L | ${prev.coreutils}/bin/shuf -n 1)
@@ -165,8 +149,8 @@
             scheme=$1
           fi
 
-          echo "\"$scheme\"" > /dotfiles/users/$USER/home/current-scheme.nix && \
-          $sudo nixos-rebuild switch --flake /dotfiles ''${@:2}
+          echo "\"$scheme\"" > /dotfiles/home/$USER/current-scheme.nix && \
+          home-manager switch --flake /dotfiles ''${@:2}
         '';
         dontBuild = true;
         dontConfigure = true;

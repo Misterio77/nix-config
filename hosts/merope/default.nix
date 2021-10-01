@@ -1,15 +1,22 @@
-{ config, pkgs, nixpkgs, hardware, nur, ... }:
+# System configuration for my Raspberry Pi 4
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
-    hardware.raspberry-pi-4
+    inputs.hardware.nixosModules.raspberry-pi-4
+    inputs.impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
     ./minecraft.nix
+    ../common.nix
   ];
 
-  # Require /data/var to be mounted at boot
-  fileSystems."/data".neededForBoot = true;
+  networking.hostName = "default";
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ inputs.nur.overlay ];
+  };
 
+  # Opt-in persistence on /data
   environment.persistence."/data" = {
     directories = [
       "/var/log"
@@ -17,39 +24,7 @@
       "/srv"
     ];
   };
-  system.stateVersion = "21.11";
-
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ nur.overlay ];
-  };
-
-  cachix = [
-    {
-      name = "misterio";
-      sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
-    }
-  ];
-
-  nix = {
-    trustedUsers = [ "misterio" ];
-    package = pkgs.nixUnstable;
-    autoOptimiseStore = true;
-    gc = {
-      automatic = true;
-      dates = "daily";
-    };
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-references
-      warn-dirty = false
-    '';
-    registry.nixpkgs.flake = nixpkgs;
-  };
-
-  networking = {
-    hostName = "merope";
-    networkmanager.enable = true;
-  };
+  fileSystems."/data".neededForBoot = true;
 
   security = {
     # Passwordless sudo (for remote build)
@@ -58,36 +33,14 @@
     '';
   };
 
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/Sao_Paulo";
-
-  services = {
-    openssh = {
-      enable = true;
-      passwordAuthentication = false;
-      permitRootLogin = "no";
-    };
-    avahi = {
-      enable = true;
-      nssmdns = true;
-      publish = {
-        enable = true;
-        userServices = true;
-      };
-    };
-  };
-
-  programs = {
-    fuse.userAllowOther = true;
-    fish = {
-      enable = true;
-      vendor = {
-        completions.enable = true;
-        config.enable = true;
-        functions.enable = true;
-      };
-    };
-
-    ssh.startAgent = true;
+  # My user info
+  users.users.misterio = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    shell = pkgs.fish;
+    # Grab hashed password from /data
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDci4wJghnRRSqQuX1z2xeaUR+p/muKzac0jw0mgpXE2T/3iVlMJJ3UXJ+tIbySP6ezt0GVmzejNOvUarPAm0tOcW6W0Ejys2Tj+HBRU19rcnUtf4vsKk8r5PW5MnwS8DqZonP5eEbhW2OrX5ZsVyDT+Bqrf39p3kOyWYLXT2wA7y928g8FcXOZjwjTaWGWtA+BxAvbJgXhU9cl/y45kF69rfmc3uOQmeXpKNyOlTk6ipSrOfJkcHgNFFeLnxhJ7rYxpoXnxbObGhaNqn7gc5mt+ek+fwFzZ8j6QSKFsPr0NzwTFG80IbyiyrnC/MeRNh7SQFPAESIEP8LK3PoNx2l1M+MjCQXsb4oIG2oYYMRa2yx8qZ3npUOzMYOkJFY1uI/UEE/j/PlQSzMHfpmWus4o2sijfr8OmVPGeoU/UnVPyINqHhyAd1d3Iji3y3LMVemHtp5wVcuswABC7IRVVKZYrMCXMiycY5n00ch6XTaXBwCY00y8B3Mzkd7Ofq98YHc= (none)"
+    ];
   };
 }
