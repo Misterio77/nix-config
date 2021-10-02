@@ -35,7 +35,7 @@
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit username system;
         extraSpecialArgs = { inherit inputs hostname; };
-        configuration = ./home/${username};
+        configuration = ./users/${username};
         extraModules = [
           ./modules/home-manager
           ./overlays
