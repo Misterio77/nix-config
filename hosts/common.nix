@@ -12,7 +12,7 @@
   nix = {
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
-      colorful.flake = inputs.colorful;
+      nix-colors.flake = inputs.nix-colors;
     };
     trustedUsers = [ "root" "@wheel" ];
     package = pkgs.nixUnstable;
