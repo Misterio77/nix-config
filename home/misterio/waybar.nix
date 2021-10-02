@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  colors = config.colorscheme.colors;
+  colors = config.nix-colors.colorscheme.colors;
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
   gpg = "${pkgs.gnupg}/bin/gpg";
   gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";

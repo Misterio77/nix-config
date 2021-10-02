@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  colorscheme = config.colorscheme.colors;
+  colorscheme = config.nix-colors.colorscheme.colors;
   wallpaper = config.wallpaper.path;
   # SSH Hosts
   sshHosts = [ "merope.local" "ubuntu@vpn.uget.express" ];

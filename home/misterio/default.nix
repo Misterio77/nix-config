@@ -1,8 +1,11 @@
 { pkgs, config, hostname, inputs, ... }:
 
-{
+let
+  colorschemes = inputs.nix-colors.colorSchemes;
+in {
   imports = [
     inputs.impermanence.nixosModules.home-manager.impermanence
+    inputs.nix-colors.homeManagerModule
     ./direnv.nix
     ./fish.nix
     ./git.nix
@@ -46,7 +49,7 @@
 
   programs.home-manager.enable = true;
 
-  colorscheme = inputs.colorful.colorSchemes.${import ./current-scheme.nix};
+  nix-colors.colorscheme = colorschemes.${import ./current-scheme.nix};
   wallpaper.generate = true;
 
   systemd.user.startServices = "sd-switch";

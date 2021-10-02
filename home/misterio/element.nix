@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 let
-  colorscheme = config.colorscheme;
+  colorscheme = config.nix-colors.colorscheme;
   colors = colorscheme.colors;
 in {
   home.packages = with pkgs; [ element-desktop ];

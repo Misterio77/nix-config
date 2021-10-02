@@ -1,20 +1,5 @@
 {
   "nodes": {
-    "colorful": {
-      "locked": {
-        "lastModified": 1633117459,
-        "narHash": "sha256-QaFXB76m+X9ZoQVMUudF1NWnEwhJqxKL/ahx02PLk0g=",
-        "owner": "misterio77",
-        "repo": "colorful",
-        "rev": "eedef662f1b0c3eab4205163f5e5036396e58384",
-        "type": "github"
-      },
-      "original": {
-        "owner": "misterio77",
-        "repo": "colorful",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -97,13 +82,28 @@
         "type": "github"
       }
     },
+    "nix-colors": {
+      "locked": {
+        "lastModified": 1633147843,
+        "narHash": "sha256-La6RvSdgivu/cKnMxKHZxwN4PBx1YuE8gCYnHRqMyGQ=",
+        "owner": "misterio77",
+        "repo": "nix-colors",
+        "rev": "f2e9f8a3b0893e43deddf894cca2158a92d20552",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "repo": "nix-colors",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1632820883,
-        "narHash": "sha256-MegRCaHkbD0f/Auwpowba0z+xaKLFlJ+7D7ZrgtmfvY=",
+        "lastModified": 1633080050,
+        "narHash": "sha256-T9I2WnlUzAIL70dk9V1jqaYk3nypy/cMkWR19S47ZHc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c21ba4f7bb4a3d621eb1d187e6b5e816bb85380c",
+        "rev": "82155ff501c7622cb2336646bb62f7624261f6d7",
         "type": "github"
       },
       "original": {
@@ -115,11 +115,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1633114116,
-        "narHash": "sha256-D7hFje6qSrkcz/eL4pQeF8RItJrJ8+Sl5mIDMUTxj5Y=",
+        "lastModified": 1633147647,
+        "narHash": "sha256-8SfW1qlmdqYYCAHHl6PKCEMtHB/TtR4hhH1RrgRLyc4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "04110b9b8ec46432d4e6618d0ec2f4d09a372dd2",
+        "rev": "3a96067006b5189315663906d3ce31b8b4d517ef",
         "type": "github"
       },
       "original": {
@@ -130,12 +130,12 @@
     },
     "root": {
       "inputs": {
-        "colorful": "colorful",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
         "nur": "nur"
       }

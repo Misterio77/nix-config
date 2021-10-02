@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  colors = config.colorscheme.colors;
+  colors = config.nix-colors.colorscheme.colors;
   rendersvg = pkgs.runCommandNoCC "rendersvg" { } ''
     mkdir -p $out/bin
     ln -s ${pkgs.resvg}/bin/resvg $out/bin/rendersvg
@@ -57,12 +57,12 @@ let
         WM_BORDER_FOCUS=${colors.base05}
         WM_BORDER_UNFOCUS=${colors.base03}
         UNITY_DEFAULT_LAUNCHER_STYLE=False
-        NAME=${config.colorscheme.slug}
+        NAME=${config.nix-colors.colorscheme.slug}
         MATERIA_STYLE_COMPACT=True
       EOF
 
       echo "Changing colours:"
-      ./change_color.sh -o ${config.colorscheme.slug} /build/gtk-colors -i False -t "$out/share/themes"
+      ./change_color.sh -o ${config.nix-colors.colorscheme.slug} /build/gtk-colors -i False -t "$out/share/themes"
       chmod 555 -R .
     '';
   };
@@ -82,7 +82,7 @@ in rec {
     };
 
     theme = {
-      name = "${config.colorscheme.slug}";
+      name = "${config.nix-colors.colorscheme.slug}";
       package = generated-gtk-theme;
     };
   };

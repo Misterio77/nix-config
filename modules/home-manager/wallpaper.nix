@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 with lib;
 let
-  colorscheme = config.colorscheme;
+  colorscheme = config.nix-colors.colorscheme;
   cfg = config.wallpaper;
   nix-wallpaper-template = { bg, fg1, fg2 }:
     pkgs.writeTextFile {
@@ -27,7 +27,7 @@ let
             <use transform="rotate(60,407.11,-715.79)" width="100%" height="100%" xlink:href="#path3336-6"/>
             <use transform="rotate(-60,407.31,-715.7)" width="100%" height="100%" xlink:href="#path3336-6"/>
             <use transform="rotate(180,407.42,-715.76)" width="100%" height="100%" xlink:href="#path3336-6"/>
-            <path 
+            <path
                 id="path4260-0"
                 d="m309.55-710.39 122.2 211.68-56.157 0.5268-32.624-56.869-32.856 56.565-27.902-0.011-14.291-24.69 46.81-80.49-33.229-57.826z"
                 color="#000000"

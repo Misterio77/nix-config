@@ -11,7 +11,7 @@
     home-manager.url = "github:misterio77/home-manager/personal";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    colorful.url = "github:misterio77/colorful";
+    nix-colors.url = "github:misterio77/nix-colors";
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:RiscadoA/impermanence";
     nur.url = "github:nix-community/NUR";
