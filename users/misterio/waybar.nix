@@ -21,6 +21,7 @@ in {
       modules-left = [
         "sway/workspaces"
         "sway/mode"
+        "custom/minicava"
         "custom/preferredplayer"
         "custom/player"
       ];
@@ -139,6 +140,10 @@ in {
             "Paused" = "";
             "Stopped" = "栗";
           };
+        };
+        "custom/minicava" = {
+          "exec" = "${minicava}";
+          "restart-interval" = 5;
         };
       };
     }];

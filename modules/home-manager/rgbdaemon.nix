@@ -109,12 +109,6 @@ in {
   config = mkIf cfg.enable {
     xdg.configFile."rgbdaemon.conf" = {
       text = ''
-        OPENRGB_BIN=${pkgs.openrgb}/bin/openrgb
-        PASTEL_BIN=${pkgs.pastel}/bin/pastel
-        PACTL_BIN=${pkgs.pulseaudio}/bin/pactl
-        PLAYERCTL_BIN=${pkgs.playerctl}/bin/playerctl
-        PREFERREDPLAYER_BIN=${pkgs.preferredplayer}/bin/preferredplayer
-        SWAYMSG_BIN=${pkgs.sway}/bin/swaymsg
         DAEMON_INTERVAL=${lib.strings.floatToString cfg.interval}
         KEYBOARD_DEVICE=${cfg.keyboard.device}
         MOUSE_DEVICE=${cfg.mouse.device}
@@ -134,7 +128,6 @@ in {
         ENABLE_PLAYER=${toString cfg.daemons.player}
       '';
       onChange = ''
-        echo "Reloading rgbdaemon"
         ${pkgs.procps}/bin/pkill -u $USER -f -SIGHUP rgbdaemon || true
       '';
     };

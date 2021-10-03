@@ -1,8 +1,8 @@
 { lib, pkgs, config, ... }:
 
 let
-  colorscheme = config.colorscheme.colors;
-  wallpaper = config.wallpaper.path;
+  colorscheme = config.colorscheme;
+
   # SSH Hosts
   sshHosts = [ "merope.local" "ubuntu@vpn.uget.express" ];
   # Programs
@@ -54,12 +54,12 @@ in rec {
         DP-1 = {
           res = "1920x1080@60hz";
           pos = "0 0";
-          bg = "${config.wallpaper.path} fill";
+          bg = "${config.wallpaper} fill";
         };
         HDMI-A-1 = {
           res = "2560x1080@75hz";
           pos = "1920 0";
-          bg = "${config.wallpaper.path} fill";
+          bg = "${config.wallpaper} fill";
         };
       };
       defaultWorkspace = "workspace number 1";
@@ -79,38 +79,38 @@ in rec {
       ];
       colors = {
         focused = {
-          border = "${colorscheme.base0C}";
-          childBorder = "${colorscheme.base0C}";
-          indicator = "${colorscheme.base09}";
-          background = "${colorscheme.base00}";
-          text = "${colorscheme.base05}";
+          border = "${colorscheme.colors.base0C}";
+          childBorder = "${colorscheme.colors.base0C}";
+          indicator = "${colorscheme.colors.base09}";
+          background = "${colorscheme.colors.base00}";
+          text = "${colorscheme.colors.base05}";
         };
         focusedInactive = {
-          border = "${colorscheme.base03}";
-          childBorder = "${colorscheme.base03}";
-          indicator = "${colorscheme.base03}";
-          background = "${colorscheme.base00}";
-          text = "${colorscheme.base04}";
+          border = "${colorscheme.colors.base03}";
+          childBorder = "${colorscheme.colors.base03}";
+          indicator = "${colorscheme.colors.base03}";
+          background = "${colorscheme.colors.base00}";
+          text = "${colorscheme.colors.base04}";
         };
         unfocused = {
-          border = "${colorscheme.base02}";
-          childBorder = "${colorscheme.base02}";
-          indicator = "${colorscheme.base02}";
-          background = "${colorscheme.base00}";
-          text = "${colorscheme.base03}";
+          border = "${colorscheme.colors.base02}";
+          childBorder = "${colorscheme.colors.base02}";
+          indicator = "${colorscheme.colors.base02}";
+          background = "${colorscheme.colors.base00}";
+          text = "${colorscheme.colors.base03}";
         };
         urgent = {
-          border = "${colorscheme.base09}";
-          childBorder = "${colorscheme.base09}";
-          indicator = "${colorscheme.base09}";
-          background = "${colorscheme.base00}";
-          text = "${colorscheme.base03}";
+          border = "${colorscheme.colors.base09}";
+          childBorder = "${colorscheme.colors.base09}";
+          indicator = "${colorscheme.colors.base09}";
+          background = "${colorscheme.colors.base00}";
+          text = "${colorscheme.colors.base03}";
         };
       };
       startup = [
         # Initial lock
         {
-          command = "${swaylock} -i ${wallpaper}";
+          command = "${swaylock} -i ${config.wallpaper}";
         }
         # Start idle daemon
         {
