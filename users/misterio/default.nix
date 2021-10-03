@@ -85,7 +85,7 @@ in {
 
   programs.home-manager.enable = true;
 
-  wallpaper.path = ../../wallpapers/desert-dunes.jpg;
+  wallpaper.path = ../../wallpapers/river-snow-forest-painting.png;
   colorscheme = colorschemeFromPicture config.wallpaper.path "dark";
 
   systemd.user.startServices = "sd-switch";
