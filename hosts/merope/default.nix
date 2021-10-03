@@ -1,20 +1,16 @@
 # System configuration for my Raspberry Pi 4
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, hardware, impermanence, ... }:
 
 {
   imports = [
-    inputs.hardware.nixosModules.raspberry-pi-4
-    inputs.impermanence.nixosModules.impermanence
+    hardware.nixosModules.raspberry-pi-4
+    impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
     ./minecraft.nix
     ../common.nix
   ];
 
   networking.hostName = "merope";
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ inputs.nur.overlay ];
-  };
 
   # Opt-in persistence on /data
   environment.persistence."/data" = {

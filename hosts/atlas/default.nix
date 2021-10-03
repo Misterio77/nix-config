@@ -1,21 +1,17 @@
 # System configuration for my main desktop PC
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, hardware, impermanence, ... }:
 
 {
   imports = [
-    inputs.hardware.nixosModules.common-cpu-amd
-    inputs.hardware.nixosModules.common-gpu-amd
-    inputs.hardware.nixosModules.common-pc-ssd
-    inputs.impermanence.nixosModules.impermanence
+    hardware.nixosModules.common-cpu-amd
+    hardware.nixosModules.common-gpu-amd
+    hardware.nixosModules.common-pc-ssd
+    impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
     ../common.nix
   ];
 
   networking.hostName = "atlas";
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ inputs.nur.overlay ];
-  };
 
   fileSystems."/data/var".neededForBoot = true;
   fileSystems."/data/home".neededForBoot = true;

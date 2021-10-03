@@ -17,13 +17,13 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = {... }@inputs:
+  outputs = { nixpkgs, home-manager, nix-colors, hardware, impermanence, nur, flake-utils, ... }:
   let
     # Make system configuration, given hostname and system type
     mkSystem = { hostname, system }:
-      inputs.nixpkgs.lib.nixosSystem {
+      nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit nixpkgs nix-colors hardware impermanence nur; };
         modules = [
           ./hosts/${hostname}
           ./modules/nixos
@@ -32,9 +32,9 @@
       };
     # Make home configuration, given username, hostname, and system type
     mkHome = { username, hostname, system }:
-      inputs.home-manager.lib.homeManagerConfiguration {
+      home-manager.lib.homeManagerConfiguration {
         inherit username system;
-        extraSpecialArgs = { inherit inputs hostname; };
+        extraSpecialArgs = { inherit hostname impermanence nix-colors nur; };
         configuration = ./users/${username};
         extraModules = [
           ./modules/home-manager
@@ -70,10 +70,10 @@
       };
     }
     # Devshell for bootstrapping
-    // inputs.flake-utils.lib.eachDefaultSystem (system:
+    // flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import inputs.nixpkgs { inherit system; };
-      home-manager = inputs.home-manager.defaultPackage.${system};
+      pkgs = import nixpkgs { inherit system; };
+      hm = home-manager.defaultPackage.${system};
     in {
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [
@@ -81,7 +81,7 @@
           neovim
           nixFlakes
           nixos-rebuild
-          home-manager
+          hm
           nixfmt
         ];
       };

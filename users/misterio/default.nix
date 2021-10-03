@@ -1,9 +1,9 @@
-{ pkgs, hostname, inputs, ... }:
+{ pkgs, hostname, impermanence, nix-colors, nur, ... }:
 
 {
   imports = [
-    inputs.impermanence.nixosModules.home-manager.impermanence
-    inputs.nix-colors.homeManagerModule
+    impermanence.nixosModules.home-manager.impermanence
+    nix-colors.homeManagerModule
 
     ./scheme.nix
 
@@ -48,7 +48,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ inputs.nur.overlay ];
+    overlays = [ nur.overlay ];
   };
 
   systemd.user.startServices = "sd-switch";

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, nix-colors, ... }:
 
 let
   colorschemeFromPicture = picture: kind:
@@ -40,6 +40,8 @@ let
       installPhase = "mkdir -p $out && cp default.nix $out";
     });
 in {
-  wallpaper.path = ../../wallpapers/mountain-pink-purple.jpg;
-  colorscheme = colorschemeFromPicture config.wallpaper.path "dark";
+  # wallpaper.path = ../../wallpapers/mountain-pink-purple.jpg;
+  # colorscheme = colorschemeFromPicture config.wallpaper.path "dark";
+  colorscheme = nix-colors.colorSchemes.paraiso;
+  wallpaper.generate = true;
 }

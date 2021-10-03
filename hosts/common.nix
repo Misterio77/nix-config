@@ -1,5 +1,5 @@
 # This file holds config that i use on all hosts
-{ pkgs, inputs, ... }:
+{ pkgs, nixpkgs, nix-colors, nur, ... }:
 
 {
   system.stateVersion = "21.11";
@@ -16,10 +16,16 @@
     homeBinInPath = true;
     localBinInPath = true;
   };
+
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ nur.overlay ];
+  };
+
   nix = {
     registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-      nix-colors.flake = inputs.nix-colors;
+      nixpkgs.flake = nixpkgs;
+      nix-colors.flake = nix-colors;
     };
     trustedUsers = [ "root" "@wheel" ];
     package = pkgs.nixUnstable;
