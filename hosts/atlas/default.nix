@@ -1,5 +1,5 @@
 # System configuration for my main desktop PC
-{ config, pkgs, hardware, impermanence, ... }:
+{ config, pkgs, hardware, impermanence, misterio-nur, ... }:
 
 {
   imports = [
@@ -7,6 +7,7 @@
     hardware.nixosModules.common-gpu-amd
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
+    misterio-nur.nixosModules.openrgb
     ./hardware-configuration.nix
     ../common.nix
   ];

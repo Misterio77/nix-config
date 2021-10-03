@@ -1,12 +1,8 @@
-{ pkgs, hostname, impermanence, nix-colors, nur, ... }:
+{ pkgs, hostname, impermanence, nix-colors, nur, misterio-nur, ... }:
 
 {
   imports = [
     impermanence.nixosModules.home-manager.impermanence
-    nix-colors.homeManagerModule
-
-    ./scheme.nix
-
     ./direnv.nix
     ./fish.nix
     ./git.nix
@@ -15,6 +11,9 @@
     ./nvim.nix
     ./starship.nix
   ] ++ (if hostname == "atlas" then [
+    nix-colors.homeManagerModule
+    ./scheme.nix
+
     ./discord.nix
     ./element.nix
     ./ethminer.nix
@@ -48,7 +47,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ nur.overlay ];
+    overlays = [ misterio-nur.overlay nur.overlay ];
   };
 
   systemd.user.startServices = "sd-switch";
@@ -70,6 +69,7 @@
       ydotool
       xdg-utils
       setscheme
+      setwallpaper
       imv
       pavucontrol
       spotify

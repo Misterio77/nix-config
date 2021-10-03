@@ -122,7 +122,7 @@ in rec {
         }
         # Add transparency
         {
-          command = "${swayfader}";
+          command = "${pkgs.swayfader}/bin/swayfader";
         }
         # Init discocss
         {

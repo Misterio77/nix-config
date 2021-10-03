@@ -1,7 +1,11 @@
 # This file holds config that i use on all hosts
-{ pkgs, nixpkgs, nix-colors, nur, ... }:
+{ pkgs, nixpkgs, nix-colors, nur, misterio-nur, declarative-cachix, ... }:
 
 {
+  imports = [
+    declarative-cachix.nixosModules.declarative-cachix
+  ];
+
   system.stateVersion = "21.11";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -17,9 +21,16 @@
     localBinInPath = true;
   };
 
+  cachix = [
+    {
+      name = "misterio";
+      sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
+    }
+  ];
+
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ nur.overlay ];
+    overlays = [ misterio-nur.overlay nur.overlay ];
   };
 
   nix = {

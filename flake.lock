@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "declarative-cachix": {
+      "locked": {
+        "lastModified": 1625560633,
+        "narHash": "sha256-Uhg950dgJiytcaecOJ3KB2MWDOdtUEogVyon9m6J/3g=",
+        "owner": "jonascarpay",
+        "repo": "declarative-cachix",
+        "rev": "1986455ab3e55804458bf6e7d2a5f5b8a68defce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jonascarpay",
+        "repo": "declarative-cachix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -81,6 +96,24 @@
         "type": "github"
       }
     },
+    "misterio-nur": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1633293744,
+        "narHash": "sha256-jEc+9u6XW0oWf0BGCbc2Tg3A/dLAW98MyDaZhgnWsGc=",
+        "owner": "misterio77",
+        "repo": "nur-packages",
+        "rev": "fe83a530c4e56f621e0c090452a9841164729cd2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "repo": "nur-packages",
+        "type": "github"
+      }
+    },
     "nix-colors": {
       "locked": {
         "lastModified": 1633229592,
@@ -98,6 +131,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1632383286,
+        "narHash": "sha256-WF49nWAN8saKDjXvXTiIIJRPDHgTkTYgTUMabnN+tRc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a3a23d9599b0a82e333ad91db2cdc479313ce154",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1633080050,
         "narHash": "sha256-T9I2WnlUzAIL70dk9V1jqaYk3nypy/cMkWR19S47ZHc=",
         "owner": "nixos",
@@ -114,11 +163,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1633268918,
-        "narHash": "sha256-hjeu/sZl4VSm3UkJvayOeK96ng+8anfaq0hQ0kLUxo4=",
+        "lastModified": 1633292146,
+        "narHash": "sha256-OW1sUF+xsBRthXsTUZULtLDwdjIjwyX3icp2QXhd1OQ=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d7a9c294134d308f8a1ab4df691d20489331299c",
+        "rev": "5aaddf32d5a05eceac793c09098b746cae6e7021",
         "type": "github"
       },
       "original": {
@@ -129,13 +178,15 @@
     },
     "root": {
       "inputs": {
+        "declarative-cachix": "declarative-cachix",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "misterio-nur": "misterio-nur",
         "nix-colors": "nix-colors",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nur": "nur"
       }
     }

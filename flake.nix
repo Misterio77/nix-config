@@ -11,38 +11,46 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-colors.url = "github:misterio77/nix-colors";
+    nur.url = "github:nix-community/NUR";
+    misterio-nur.url = "github:misterio77/nur-packages";
+
+    declarative-cachix.url = "github:jonascarpay/declarative-cachix";
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:RiscadoA/impermanence";
-    nur.url = "github:nix-community/NUR";
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { nixpkgs, home-manager, nix-colors, hardware, impermanence, nur, flake-utils, ... }:
-  let
-    # Make system configuration, given hostname and system type
-    mkSystem = { hostname, system }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit nixpkgs nix-colors hardware impermanence nur; };
-        modules = [
-          ./hosts/${hostname}
-          ./modules/nixos
-          ./overlays
-        ];
-      };
-    # Make home configuration, given username, hostname, and system type
-    mkHome = { username, hostname, system }:
-      home-manager.lib.homeManagerConfiguration {
-        inherit username system;
-        extraSpecialArgs = { inherit hostname impermanence nix-colors nur; };
-        configuration = ./users/${username};
-        extraModules = [
-          ./modules/home-manager
-          ./overlays
-        ];
-        homeDirectory = "/home/${username}";
-      };
-  in {
+  outputs = { nixpkgs, home-manager, nix-colors, hardware, impermanence, nur
+    , flake-utils, misterio-nur, declarative-cachix, ... }:
+    let
+      # Make system configuration, given hostname and system type
+      mkSystem = { hostname, system }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit nixpkgs nur misterio-nur declarative-cachix hardware
+              impermanence nix-colors;
+          };
+          modules = [
+            ./hosts/${hostname}
+            ./overlays
+          ];
+        };
+      # Make home configuration, given username, hostname, and system type
+      mkHome = { username, hostname, system }:
+        home-manager.lib.homeManagerConfiguration {
+          inherit username system;
+          extraSpecialArgs = {
+            inherit hostname nur misterio-nur impermanence nix-colors;
+          };
+          configuration = ./users/${username};
+          extraModules = [
+            ./modules/home-manager
+            ./overlays
+          ];
+          homeDirectory = "/home/${username}";
+        };
+    in {
       overlay = import ./overlays;
       nixosConfigurations = {
         # Main PC
@@ -69,21 +77,16 @@
         };
       };
     }
-    # Devshell for bootstrapping
     // flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = import nixpkgs { inherit system; };
-      hm = home-manager.defaultPackage.${system};
-    in {
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          git
-          neovim
-          nixFlakes
-          nixos-rebuild
-          hm
-          nixfmt
-        ];
-      };
-    });
+      let
+        pkgs = import nixpkgs { inherit system; };
+        hm = home-manager.defaultPackage.${system};
+      in {
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            hm
+            nixfmt
+          ];
+        };
+      });
 }
