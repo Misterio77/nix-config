@@ -12,7 +12,7 @@
     ./starship.nix
   ] ++ (if hostname == "atlas" then [
     nix-colors.homeManagerModule
-    ./scheme.nix
+    ./rice.nix
 
     ./discord.nix
     ./element.nix
