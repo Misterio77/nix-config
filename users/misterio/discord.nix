@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 
-let colors = config.nix-colors.colorscheme.colors;
+let colors = config.colorscheme.colors;
 in {
   home.packages = with pkgs; [ discord discocss ];
   home.persistence."/data/home/misterio".directories = [ ".config/discord" ];

@@ -9,6 +9,13 @@
 
   networking.networkmanager.enable = true;
 
+  environment = {
+    # Activate home-manager environment, if not already enabled
+    loginShellInit = ''[ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate 2> /dev/null'';
+
+    homeBinInPath = true;
+    localBinInPath = true;
+  };
   nix = {
     registry = {
       nixpkgs.flake = inputs.nixpkgs;

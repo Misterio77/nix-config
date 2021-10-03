@@ -25,7 +25,7 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/${hostname}
+          "./hosts/${hostname}"
           ./modules/nixos
           ./overlays
         ];
@@ -35,7 +35,7 @@
       inputs.home-manager.lib.homeManagerConfiguration {
         inherit username system;
         extraSpecialArgs = { inherit inputs hostname; };
-        configuration = ./users/${username};
+        configuration = "./users/${username}";
         extraModules = [
           ./modules/home-manager
           ./overlays
@@ -79,7 +79,8 @@
         buildInputs = with pkgs; [
           git
           neovim
-          nixUnstable
+          nixFlakes
+          nixos-rebuild
           home-manager
           nixfmt
         ];

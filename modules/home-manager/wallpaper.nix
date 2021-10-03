@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 with lib;
 let
-  colorscheme = config.nix-colors.colorscheme;
+  colorscheme = config.colorscheme;
   cfg = config.wallpaper;
   nix-wallpaper-template = { bg, fg1, fg2 }:
     pkgs.writeTextFile {

@@ -140,7 +140,7 @@
         version = "1.0";
         src = prev.writeShellScriptBin "setscheme" ''
           if [ "$1" == "-L" ]; then
-            nix eval --raw colorful#colorSchemes --apply 's: builtins.concatStringsSep "\n" (builtins.attrNames s)' 2> /dev/null
+            nix eval --raw nix-colors#colorSchemes --apply 's: builtins.concatStringsSep "\n" (builtins.attrNames s)' 2> /dev/null
             exit 0
           elif [ "$1" == "-R" ]; then
             scheme=$(setscheme -L | ${prev.coreutils}/bin/shuf -n 1)
@@ -149,7 +149,7 @@
             scheme=$1
           fi
 
-          echo "\"$scheme\"" > /dotfiles/home/$USER/current-scheme.nix && \
+          echo "\"$scheme\"" > /dotfiles/users/$USER/current-scheme.nix && \
           home-manager switch --flake /dotfiles ''${@:2}
         '';
         dontBuild = true;

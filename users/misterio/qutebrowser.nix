@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  colors = config.nix-colors.colorscheme.colors;
+  colors = config.colorscheme.colors;
   nvim = "${pkgs.neovim}/bin/nvim";
 in {
   programs.qutebrowser = {
@@ -19,7 +19,7 @@ in {
       };
       colors = {
         webpage = {
-          preferred_color_scheme = "${config.nix-colors.colorscheme.kind}";
+          preferred_color_scheme = "${config.colorscheme.kind}";
           bg = "#ffffff";
         };
         completion = {

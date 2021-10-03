@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
-let colors = config.nix-colors.colorscheme.colors;
+let colors = config.colorscheme.colors;
 in {
   home.sessionVariables = {
     TERMINAL = "kitty";

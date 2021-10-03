@@ -1,6 +1,6 @@
 { config, ... }:
 
-let colors = config.nix-colors.colorscheme.colors;
+let colors = config.colorscheme.colors;
 in {
   xdg.configFile."swaylock/config".text = ''
     effect-blur=20x3

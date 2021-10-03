@@ -132,6 +132,8 @@
 
   virtualisation.docker.enable = true;
 
+
+
   # My user info
   users.users.misterio = {
     isNormalUser = true;
