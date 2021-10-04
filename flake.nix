@@ -17,7 +17,7 @@
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:RiscadoA/impermanence";
-    nix-colors.url = "github:misterio77/nix-colors";
+    nix-colors.url = "github:Misterio77/nix-colors/wip-lib";
   };
 
   outputs = { nixpkgs, home-manager, nix-colors, hardware, impermanence, nur
@@ -64,6 +64,7 @@
           system = "aarch64-linux";
         };
       };
+
       homeConfigurations = {
         "misterio@atlas" = mkHome {
           username = "misterio";

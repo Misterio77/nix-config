@@ -12,12 +12,14 @@ Here's my NixOS/home-manager config files. Requires [Nix experimental command an
 - `modules`: A few modules i have for personal use (most should be upstreamed TBH)
 - `overlays`: A few custom packages (TODO make actual packages) and overwritten ones.
 
+
 ## About the installation
 This is hardware specific and can easily be changed by switching out `hardware-configuration.nxi` files.
 
 I use a erase my darlings-like setup. My desktop pc uses an encrypted btrfs partition, which has subvolumes for nix store, games, home (snapshotted), srv (snapshotted), and var. The pi is similar, but with a single ext4 partition for all that. The root filesystem is a tmpfs, on which the partitions are mounted to achieve opt-in state.
 
 I use home-manager as a standalone module, and, as such, i have to "manually" activate it. For this reason, i have a hook on loginShell that activates it, if not already active.
+
 
 ## How to bootstrap
 
