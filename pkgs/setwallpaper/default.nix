@@ -7,22 +7,19 @@ stdenv.mkDerivation {
   version = "1.0";
   src = writeShellScriptBin "setwallpaper" ''
     if [ "$1" == "-L" ]; then
-      find /dotfiles/wallpapers -type f -printf "%f\n"
+      find /dotfiles/wallpapers -type f -not -path '*/\.*' -printf "%f\n"
       exit 0
     elif [ "$1" == "-R" ]; then
       wallpaper=$(setwallpaper -L | ${coreutils}/bin/shuf -n 1)
       echo $wallpaper
+      exit 0
+    elif [ "$1" == "generate" ]; then
+      wallpaper="null"
     else
-      wallpaper=$1
+      wallpaper="\"$1\""
     fi
 
-    if [ "$wallpaper" == "generate" ]; then
-      content="null"
-    else
-      content="\"$wallpaper\""
-    fi
-
-    echo "$content" > /dotfiles/users/$USER/current-wallpaper.nix && \
+    echo "$wallpaper" > /dotfiles/users/$USER/current-wallpaper.nix && \
     home-manager switch --flake /dotfiles ''${@:2}
   '';
   dontBuild = true;

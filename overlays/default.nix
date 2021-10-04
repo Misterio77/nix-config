@@ -15,6 +15,9 @@
       setscheme-wofi = prev.callPackage ../pkgs/setscheme-wofi {
         inherit (pkgs.gnome) zenity;
       };
+      setwallpaper-wofi = prev.callPackage ../pkgs/setwallpaper-wofi {
+        inherit (pkgs.gnome) zenity;
+      };
 
       # Link kitty to xterm (to fix crappy drun behaviour)
       kitty = prev.kitty.overrideAttrs (oldAttrs: rec {

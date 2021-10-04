@@ -5,6 +5,7 @@ let
 
   # SSH Hosts
   sshHosts = [ "merope.local" "ubuntu@vpn.uget.express" ];
+
   # Programs
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
@@ -21,7 +22,6 @@ let
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
-  setscheme-wofi = "${pkgs.setscheme-wofi}/bin/setscheme-wofi";
   ssh = "${pkgs.openssh}/bin/ssh";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
@@ -156,19 +156,24 @@ in rec {
         # Splits
         "${modifier}+minus" = "split v";
         "${modifier}+backslash" = "split h";
+
         # Scratchpad
         "${modifier}+u" = "scratchpad show";
         "${modifier}+Shift+u" = "move scratchpad";
+
         # Move entire workspace
         "${modifier}+Mod1+h" = "move workspace to output left";
         "${modifier}+Mod1+Left" = "move workspace to output left";
         "${modifier}+Mod1+l" = "move workspace to output right";
         "${modifier}+Mod1+Right" = "move workspace to output right";
+
         # Toggle monitors
         "${modifier}+Control+Left" = "output DP-1 toggle";
         "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
+
         # Lock screen
         "XF86Launch5" = "exec ${swaylock} --screenshots";
+
         # Volume
         "XF86AudioRaiseVolume" =
           "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";
@@ -181,6 +186,7 @@ in rec {
         "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
         "Shift+XF86AudioMute" =
           "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+
         # Media
         "XF86AudioNext" =
           "exec player=$(${preferredplayer}) && ${playerctl} next --player $player";
@@ -193,11 +199,21 @@ in rec {
         "Shift+XF86AudioPlay" =
           "exec player=$(${playerctl} -l | ${wofi} -S dmenu) && ${preferredplayer} $player";
         "Shift+XF86AudioStop" = "exec ${preferredplayer} none";
+
+        # Wallpaper
+        "XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # Graphical picker
+        "Control+XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi -Q 'generate'"; # Generate
+        "Shift+XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi -Q $(${pkgs.setwallpaper}/bin/setwallpaper -R)"; # Random
+
         # Color scheme
-        "XF86Tools" = "exec ${setscheme-wofi}";
+        "XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # Graphical picker
+        "Control+XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi -Q 'generate'"; # Generate
+        "Shift+XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi -Q $(${pkgs.setscheme}/bin/setscheme -R)"; # Random
+
         # Notifications
         "${modifier}+w" = "exec ${makoctl} dismiss";
         "${modifier}+shift+w" = "exec ${makoctl} dismiss -a";
+
         # Programs
         "${modifier}+v" = "exec ${terminal} -e ${nvim}";
         "${modifier}+o" = "exec ${terminal} -e ${octave}";
@@ -205,16 +221,20 @@ in rec {
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
         "${modifier}+control+w" = "exec ${makoctl} invoke";
+
         # Screenshot
         "Print" = "exec ${grimshot} --notify copy output";
         "Shift+Print" = "exec ${grimshot} --notify copy active";
         "Control+Print" = "exec ${grimshot} --notify copy screen";
         "Mod1+Print" = "exec ${grimshot} --notify copy area";
         "${modifier}+Print" = "exec ${grimshot} --notify copy window";
+
         # Application menu
         "${modifier}+x" = "exec ${wofi} -S drun -I";
+
         # Pass wofi menu
         "Scroll_Lock" = "exec ${pass-wofi}";
+
         # Lock or unlock gpg
         "Shift+Scroll_Lock" = ''
           exec ${gpg-connect-agent} 'KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des' /bye | grep " 1 " && \
@@ -222,8 +242,10 @@ in rec {
           ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
           echo "a"| ${gpg} --sign
         '';
+
         # Full screen across monitors
         "${modifier}+shift+f" = "fullscreen toggle global";
+
         # Open SSH menu
         "${modifier}+s" = ''
           exec host=$(echo '${pkgs.lib.concatStringsSep "\\n" sshHosts}' | ${wofi} -S dmenu) && \

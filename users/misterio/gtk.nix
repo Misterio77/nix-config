@@ -1,12 +1,11 @@
 { config, pkgs, ... }:
 
 let
-  colors = config.colorscheme.colors;
   rendersvg = pkgs.runCommandNoCC "rendersvg" { } ''
     mkdir -p $out/bin
     ln -s ${pkgs.resvg}/bin/resvg $out/bin/rendersvg
   '';
-  generated-gtk-theme = pkgs.stdenv.mkDerivation rec {
+  generateMateriaGtkTheme = scheme: pkgs.stdenv.mkDerivation rec {
     name = "generated-gtk-theme";
     src = pkgs.fetchFromGitHub {
       owner = "nana-4";
@@ -36,33 +35,33 @@ let
       sed -e 's/handle-horz-.*//' -e 's/handle-vert-.*//' -i ./src/gtk-2.0/assets.txt
 
       cat > /build/gtk-colors << EOF
-        BTN_BG=${colors.base02}
-        BTN_FG=${colors.base06}
-        FG=${colors.base05}
-        BG=${colors.base00}
-        HDR_BTN_BG=${colors.base01}
-        HDR_BTN_FG=${colors.base05}
-        ACCENT_BG=${colors.base0B}
-        ACCENT_FG=${colors.base00}
-        HDR_FG=${colors.base05}
-        HDR_BG=${colors.base02}
-        MATERIA_SURFACE=${colors.base02}
-        MATERIA_VIEW=${colors.base01}
-        MENU_BG=${colors.base02}
-        MENU_FG=${colors.base06}
-        SEL_BG=${colors.base0D}
-        SEL_FG=${colors.base0E}
-        TXT_BG=${colors.base02}
-        TXT_FG=${colors.base06}
-        WM_BORDER_FOCUS=${colors.base05}
-        WM_BORDER_UNFOCUS=${colors.base03}
+        BTN_BG=${scheme.colors.base02}
+        BTN_FG=${scheme.colors.base06}
+        FG=${scheme.colors.base05}
+        BG=${scheme.colors.base00}
+        HDR_BTN_BG=${scheme.colors.base01}
+        HDR_BTN_FG=${scheme.colors.base05}
+        ACCENT_BG=${scheme.colors.base0B}
+        ACCENT_FG=${scheme.colors.base00}
+        HDR_FG=${scheme.colors.base05}
+        HDR_BG=${scheme.colors.base02}
+        MATERIA_SURFACE=${scheme.colors.base02}
+        MATERIA_VIEW=${scheme.colors.base01}
+        MENU_BG=${scheme.colors.base02}
+        MENU_FG=${scheme.colors.base06}
+        SEL_BG=${scheme.colors.base0D}
+        SEL_FG=${scheme.colors.base0E}
+        TXT_BG=${scheme.colors.base02}
+        TXT_FG=${scheme.colors.base06}
+        WM_BORDER_FOCUS=${scheme.colors.base05}
+        WM_BORDER_UNFOCUS=${scheme.colors.base03}
         UNITY_DEFAULT_LAUNCHER_STYLE=False
-        NAME=${config.colorscheme.slug}
+        NAME=${scheme.slug}
         MATERIA_STYLE_COMPACT=True
       EOF
 
       echo "Changing colours:"
-      ./change_color.sh -o ${config.colorscheme.slug} /build/gtk-colors -i False -t "$out/share/themes"
+      ./change_color.sh -o ${scheme.slug} /build/gtk-colors -i False -t "$out/share/themes"
       chmod 555 -R .
     '';
   };
@@ -83,7 +82,7 @@ in rec {
 
     theme = {
       name = "${config.colorscheme.slug}";
-      package = generated-gtk-theme;
+      package = generateMateriaGtkTheme config.colorscheme;
     };
   };
   services.xsettingsd = {

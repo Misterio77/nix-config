@@ -84,6 +84,9 @@
       in {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
+            git
+            neovim
+            nixUnstable
             hm
             nixfmt
           ];

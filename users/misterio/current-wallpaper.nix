@@ -1,1 +1,1 @@
-"pillar-nebula-cyan-yellow-space.jpg"
+"sunset-house-painting.jpg"

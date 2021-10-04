@@ -12,17 +12,14 @@ stdenv.mkDerivation {
     elif [ "$1" == "-R" ]; then
       scheme=$(setscheme -L | ${coreutils}/bin/shuf -n 1)
       echo $scheme
+      exit 0
+    elif [ "$1" == "generate" ]; then
+      scheme="null"
     else
-      scheme=$1
+      scheme="\"$1\""
     fi
 
-    if [ "$scheme" == "generate" ]; then
-      content="null"
-    else
-      content="\"$scheme\""
-    fi
-
-    echo "$content" > /dotfiles/users/$USER/current-scheme.nix && \
+    echo "$scheme" > /dotfiles/users/$USER/current-scheme.nix && \
     home-manager switch --flake /dotfiles ''${@:2}
   '';
   dontBuild = true;

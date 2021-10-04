@@ -13,6 +13,7 @@
   networking.hostName = "merope";
 
   # Opt-in persistence on /data
+  fileSystems."/data".neededForBoot = true;
   environment.persistence."/data" = {
     directories = [
       "/var/log"
@@ -20,7 +21,17 @@
       "/srv"
     ];
   };
-  fileSystems."/data".neededForBoot = true;
+  services.openssh.hostKeys = [
+    {
+      path = "/data/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }
+    {
+      path = "/data/etc/ssh/ssh_host_rsa_key";
+      type = "rsa";
+      bits = "4096";
+    }
+  ];
 
   security = {
     # Passwordless sudo (for remote build)
