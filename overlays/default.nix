@@ -4,13 +4,10 @@
   nixpkgs.overlays = [
     (final: prev: {
       comma = prev.callPackage ../pkgs/comma { };
-      minicava = prev.callPackage ../pkgs/minicava { };
-      pass-wofi = prev.callPackage ../pkgs/pass-wofi { };
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
       rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
       setscheme = prev.callPackage ../pkgs/setscheme { };
       setwallpaper = prev.callPackage ../pkgs/setwallpaper { };
-      swayfader = prev.callPackage ../pkgs/swayfader { };
 
       setscheme-wofi = prev.callPackage ../pkgs/setscheme-wofi {
         inherit (pkgs.gnome) zenity;
