@@ -3,7 +3,6 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      comma = prev.callPackage ../pkgs/comma { };
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
       rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
       setscheme = prev.callPackage ../pkgs/setscheme { };

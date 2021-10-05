@@ -59,10 +59,10 @@
       # Cli
       bottom
       cachix
+      comma
       exa
       ncdu
       ranger
-      comma
     ] ++ (if hostname == "atlas" then [
       setscheme
       setwallpaper
