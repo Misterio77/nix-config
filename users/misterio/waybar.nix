@@ -11,6 +11,7 @@ let
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   jq = "${pkgs.jq}/bin/jq";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+  wofi = "${pkgs.wofi}/bin/wofi";
 in {
   programs.waybar = {
     enable = true;
@@ -19,6 +20,7 @@ in {
       height = 42;
       position = "top";
       modules-left = [
+        "custom/menu"
         "sway/workspaces"
         "sway/mode"
         "custom/minicava"
@@ -68,6 +70,10 @@ in {
             focused = "綠";
             default = "祿";
           };
+        };
+        "custom/menu" = {
+          format = "";
+          on-click = "${wofi} -S drun -I";
         };
         "custom/unread-mail" = {
           exec = ''
@@ -189,6 +195,13 @@ in {
         color: #${colors.base00};
         margin: 0;
         padding: 0 12px;
+      }
+
+      #custom-menu {
+        background-color: #${colors.base0B};
+        color: #${colors.base00};
+        margin: 0 0 0 -15;
+        padding: 0 20px 0 15px;
       }
 
       #custom-preferredplayer {
