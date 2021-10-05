@@ -68,11 +68,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1633296444,
-        "narHash": "sha256-DnC7yVyoYFSsvFze16AWDa5iSHgtT1MbDGgp8rSC3H4=",
+        "lastModified": 1633372222,
+        "narHash": "sha256-uh2D+VCQnz/8QasGY8yZs+VHJ2XQyZldRtPvcaIq5rY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "099cbcf13e8219f07b493980a66fe64df0e32d09",
+        "rev": "88f9b333845d3d905463368efed5eabe304d75c2",
         "type": "github"
       },
       "original": {
@@ -116,16 +116,15 @@
     },
     "nix-colors": {
       "locked": {
-        "lastModified": 1633317792,
-        "narHash": "sha256-hPDOgYjYRfm6iOk9Ft5k7Ofhl5jvVoAFSsMlfSEUMA0=",
+        "lastModified": 1633318162,
+        "narHash": "sha256-rr6BMT4o66KWU9yXVv9W/yB/zMCVZC+zb4OvRftc/h8=",
         "owner": "Misterio77",
         "repo": "nix-colors",
-        "rev": "f361715602582c1adee1b8d72d910280e9fe4c3c",
+        "rev": "182b4b8709b8ffe4e9774a4c5d6877bf6bb9a21c",
         "type": "github"
       },
       "original": {
         "owner": "Misterio77",
-        "ref": "wip-lib",
         "repo": "nix-colors",
         "type": "github"
       }
@@ -148,11 +147,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1633263894,
-        "narHash": "sha256-InuWViZr3SL8PqRROkWhmSd3N8gGkiP7YaA7BRdjmhk=",
+        "lastModified": 1633351077,
+        "narHash": "sha256-z38JG4Bb0GtM1aF1pANVdp1dniMP23Yb3HnRoJRy2uU=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "01f2f2842aaa7f3af957fef93439d639e6941e6c",
+        "rev": "14aef06d9b3ad1d07626bdbb16083b83f92dc6c1",
         "type": "github"
       },
       "original": {
@@ -164,11 +163,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1633313179,
-        "narHash": "sha256-MZSgwEMeqVaKFFi+UNrxN90j70KwiNx7g2+iEIxxv1g=",
+        "lastModified": 1633391554,
+        "narHash": "sha256-r4qG7OXtllb4BK2RAA9arZaxQYzSyJXB8o7v4C2FEvU=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "11ba1d8db6cc2900cc0b0969e15a97062e9110a1",
+        "rev": "fa29cef9cccdb737265e71b61559647a2b590c58",
         "type": "github"
       },
       "original": {

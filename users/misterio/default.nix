@@ -64,16 +64,17 @@
       ranger
       comma
     ] ++ (if hostname == "atlas" then [
-      # Gui apps
-      dragon-drop
-      ydotool
-      xdg-utils
       setscheme
       setwallpaper
+
+      # Gui apps
+      dragon-drop
       imv
       pavucontrol
       spotify
       wofi
+      xdg-utils
+      ydotool
     ] else
       [ ]);
 

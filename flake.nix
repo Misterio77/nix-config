@@ -2,39 +2,35 @@
   description = "My NixOS configuration";
 
   inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-compat.url = "github:edolstra/flake-compat";
-    flake-compat.flake = false;
-
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    hardware.url = "github:nixos/nixos-hardware";
 
     nur.url = "github:nix-community/NUR";
     misterio-nur.url = "github:misterio77/nur-packages";
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
-    hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:RiscadoA/impermanence";
-    nix-colors.url = "github:Misterio77/nix-colors/wip-lib";
+    nix-colors.url = "github:Misterio77/nix-colors";
+
+    flake-utils.url = "github:numtide/flake-utils";
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
   };
 
-  outputs = { nixpkgs, home-manager, nix-colors, hardware, impermanence, nur
-    , flake-utils, misterio-nur, declarative-cachix, ... }:
+  outputs = { nixpkgs, home-manager, hardware, nur, misterio-nur
+    , declarative-cachix, impermanence, nix-colors, flake-utils, ... }:
     let
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit nixpkgs nur misterio-nur declarative-cachix hardware
+            inherit nixpkgs hardware nur misterio-nur declarative-cachix
               impermanence nix-colors;
           };
-          modules = [
-            ./hosts/${hostname}
-            ./overlays
-          ];
+          modules = [ ./hosts/${hostname} ./overlays ];
         };
       # Make home configuration, given username, hostname, and system type
       mkHome = { username, hostname, system }:
@@ -44,10 +40,7 @@
             inherit hostname nur misterio-nur impermanence nix-colors;
           };
           configuration = ./users/${username};
-          extraModules = [
-            ./modules/home-manager
-            ./overlays
-          ];
+          extraModules = [ ./modules/home-manager ./overlays ];
           homeDirectory = "/home/${username}";
         };
     in {
@@ -77,20 +70,13 @@
           system = "aarch64-linux";
         };
       };
-    }
-    // flake-utils.lib.eachDefaultSystem (system:
+    } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
         hm = home-manager.defaultPackage.${system};
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            git
-            neovim
-            nixUnstable
-            hm
-            nixfmt
-          ];
+          buildInputs = with pkgs; [ git neovim nixUnstable hm nixfmt ];
         };
       });
 }

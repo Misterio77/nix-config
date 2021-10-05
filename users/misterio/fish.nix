@@ -25,7 +25,10 @@
       minifetch =
         "neofetch --config (realpath --relative-to=(pwd) ${config.xdg.configHome}/neofetch/config_small.conf)";
     };
-    functions = { fish_greeting = "${pkgs.fortune}/bin/fortune -s"; };
+    functions = {
+      fish_greeting = "${pkgs.fortune}/bin/fortune -s";
+      wh = "readlink -f (which $argv)";
+    };
     interactiveShellInit =
       # Use vim bindings and cursors
       ''
