@@ -28,6 +28,7 @@
   };
 
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     plymouth = {
       enable = true;
       font = "${pkgs.fira}/share/fonts/opentype/FiraSans-Regular.otf";
@@ -88,10 +89,6 @@
           apply_gpu_optimisations = "accept-responsibility";
           gpu_device = 0;
           amd_performance_level = "high";
-        };
-        custom = {
-          start = "${pkgs.systemd}/bin/systemctl --user stop ethminer";
-          end = "${pkgs.systemd}/bin/systemctl --user start ethminer";
         };
       };
     };

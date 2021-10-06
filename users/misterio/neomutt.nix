@@ -27,11 +27,18 @@
       text_flowed = "yes";
       reverse_name = "yes";
     };
-    binds = [{
-      action = "sidebar-toggle-visible";
-      key = "\\\\";
-      map = [ "index" "pager" ];
-    }];
+    binds = [
+      {
+        action = "sidebar-toggle-visible";
+        key = "\\\\";
+        map = [ "index" "pager" ];
+      }
+      {
+        action = "group-reply";
+        key = "L";
+        map = [ "index" "pager" ];
+      }
+    ];
     macros = let
       qutebrowserpipe =
         "cat /dev/stdin > /tmp/muttmail.html && ${pkgs.qutebrowser}/bin/qutebrowser /tmp/muttmail.html";
@@ -75,15 +82,15 @@
       # From: https://github.com/altercation/mutt-colors-solarized/blob/master/mutt-colors-solarized-dark-16.muttrc
 
       # basic colors ---------------------------------------------------------
-      color normal        brightyellow    default         
-      color error         red             default         
-      color tilde         black           default         
-      color message       cyan            default         
-      color markers       red             white           
-      color attachment    white           default         
-      color search        brightmagenta   default         
-      color status        brightyellow    black           
-      color indicator     brightblack     yellow          
+      color normal        brightyellow    default
+      color error         red             default
+      color tilde         black           default
+      color message       cyan            default
+      color markers       red             white
+      color attachment    white           default
+      color search        brightmagenta   default
+      color status        brightyellow    black
+      color indicator     brightblack     yellow
       color tree          yellow          default                                     # arrow in threads
 
       # basic monocolor screen
@@ -129,22 +136,22 @@
 
       # message headers ------------------------------------------------------
 
-      color hdrdefault    brightgreen     default         
+      color hdrdefault    brightgreen     default
       color header        brightyellow    default         "^(From)"
       color header        blue            default         "^(Subject)"
 
       # body -----------------------------------------------------------------
 
-      color quoted        blue            default         
-      color quoted1       cyan            default         
-      color quoted2       yellow          default         
-      color quoted3       red             default         
-      color quoted4       brightred       default         
+      color quoted        blue            default
+      color quoted1       cyan            default
+      color quoted2       yellow          default
+      color quoted3       red             default
+      color quoted4       brightred       default
 
-      color signature     brightgreen     default         
-      color bold          black           default         
-      color underline     black           default         
-      color normal        default         default         
+      color signature     brightgreen     default
+      color bold          black           default
+      color underline     black           default
+      color normal        default         default
       color body          brightcyan      default         "[;:][-o][)/(|]"    # emoticons
       color body          brightcyan      default         "[;:][)(|]"         # emoticons
       color body          brightcyan      default         "[*]?((N)?ACK|CU|LOL|SCNR|BRB|BTW|CWYL|\

@@ -30,7 +30,6 @@ in {
       modules-center = [ "sway/window" ];
       modules-right = [
         "custom/gamemode"
-        "custom/ethminer"
         "pulseaudio"
         "cpu"
         "custom/gpu"
@@ -97,13 +96,6 @@ in {
             echo "a" | ${gpg} --sign
           '';
           interval = 1;
-        };
-        "custom/ethminer" = {
-          exec-if = "systemctl --user is-active ethminer";
-          exec =
-            "journalctl --user -n 10 -u ethminer | grep '-e \\ m\\ .*' | cut -d ' ' -f12-13";
-          interval = 1;
-          format = "{} ﲹ";
         };
         "custom/gamemode" = {
           exec-if = "${gamemoded} --status | grep 'is active' -q";

@@ -37,7 +37,7 @@
       # Fix bug with nix
       # https://github.com/nix-community/nix-direnv/issues/113#issuecomment-921328351
       nixUnstable = prev.nixUnstable.override (oldAttrs: rec {
-        patches = (oldAttrs.patches or [ ]) ++ [ ./nix-unset-is-macho.patch ];
+        patches = (oldAttrs.patches or [ ]) ++ [ ./nix-unset-is-macho.patch ./nix-sourcehut.patch ];
       });
 
       # Don't launch discord when using discocss

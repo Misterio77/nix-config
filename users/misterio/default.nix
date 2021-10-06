@@ -16,7 +16,6 @@
 
     ./discord.nix
     ./element.nix
-    ./ethminer.nix
     ./fira.nix
     ./gpg.nix
     ./gtk.nix
