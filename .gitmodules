@@ -1,3 +1,3 @@
 [submodule "wallpapers"]
 	path = wallpapers
-	url = ../../misterio77/wallpapers.git
+	url = ../wallpapers
