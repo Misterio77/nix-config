@@ -1,8 +1,253 @@
+diff --git a/Makefile.config.in b/Makefile.config.in
+index c8c4446b4..e7a81a6f2 100644
+--- a/Makefile.config.in
++++ b/Makefile.config.in
+@@ -18,6 +18,7 @@ LIBBROTLI_LIBS = @LIBBROTLI_LIBS@
+ LIBCURL_LIBS = @LIBCURL_LIBS@
+ OPENSSL_LIBS = @OPENSSL_LIBS@
+ LIBSECCOMP_LIBS = @LIBSECCOMP_LIBS@
++LIBPUGIXML_LIBS = @LIBPUGIXML_LIBS@
+ PACKAGE_NAME = @PACKAGE_NAME@
+ PACKAGE_VERSION = @PACKAGE_VERSION@
+ SHELL = @bash@
+diff --git a/configure.ac b/configure.ac
+index 65478ecc5..4c7f2b8c0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -202,6 +202,8 @@ if test "$machine_name" = "x86_64"; then
+ fi
+ AC_SUBST(HAVE_LIBCPUID, [$have_libcpuid])
+ 
++# Look for pugixml library.
++PKG_CHECK_MODULES([LIBPUGIXML], [pugixml >= 1.11], [CXXFLAGS="$LIBPUGIXML_CFLAGS $CXXFLAGS"])
+ 
+ # Look for libseccomp, required for Linux sandboxing.
+ case "$host_os" in
+@@ -263,6 +265,7 @@ AC_SUBST(doc_generate)
+ # Look for lowdown library.
+ PKG_CHECK_MODULES([LOWDOWN], [lowdown >= 0.8.0], [CXXFLAGS="$LOWDOWN_CFLAGS $CXXFLAGS"])
+ 
++
+ # Setuid installations.
+ AC_CHECK_FUNCS([setresuid setreuid lchown])
+ 
+diff --git a/doc/manual/generate-manpage.nix b/doc/manual/generate-manpage.nix
+index 244cfa0c2..4fc9abea1 100644
+--- a/doc/manual/generate-manpage.nix
++++ b/doc/manual/generate-manpage.nix
+@@ -1,4 +1,4 @@
+-{ command, renderLinks ? false }:
++command:
+ 
+ with builtins;
+ with import ./utils.nix;
+@@ -20,11 +20,7 @@ let
+            categories = sort (x: y: x.id < y.id) (unique (map (cmd: cmd.category) (attrValues def.commands)));
+            listCommands = cmds:
+              concatStrings (map (name:
+-               "* "
+-               + (if renderLinks
+-                  then "[`${command} ${name}`](./${appendName filename name}.md)"
+-                  else "`${command} ${name}`")
+-               + " - ${cmds.${name}.description}\n")
++               "* [`${command} ${name}`](./${appendName filename name}.md) - ${cmds.${name}.description}\n")
+                (attrNames cmds));
+          in
+          "where *subcommand* is one of the following:\n\n"
+diff --git a/doc/manual/local.mk b/doc/manual/local.mk
+index e43d9f2fb..a8c52f841 100644
+--- a/doc/manual/local.mk
++++ b/doc/manual/local.mk
+@@ -44,7 +44,7 @@ $(d)/src/SUMMARY.md: $(d)/src/SUMMARY.md.in $(d)/src/command-ref/new-cli
+ 
+ $(d)/src/command-ref/new-cli: $(d)/nix.json $(d)/generate-manpage.nix $(bindir)/nix
+ 	@rm -rf $@
+-	$(trace-gen) $(nix-eval) --write-to $@ --expr 'import doc/manual/generate-manpage.nix { command = builtins.readFile $<; renderLinks = true; }'
++	$(trace-gen) $(nix-eval) --write-to $@ --expr 'import doc/manual/generate-manpage.nix (builtins.readFile $<)'
+ 
+ $(d)/src/command-ref/conf-file.md: $(d)/conf-file.json $(d)/generate-options.nix $(d)/src/command-ref/conf-file-prefix.md $(bindir)/nix
+ 	@cat doc/manual/src/command-ref/conf-file-prefix.md > $@.tmp
+diff --git a/doc/manual/src/installation/prerequisites-source.md b/doc/manual/src/installation/prerequisites-source.md
+index 40cb79627..7826523e4 100644
+--- a/doc/manual/src/installation/prerequisites-source.md
++++ b/doc/manual/src/installation/prerequisites-source.md
+@@ -26,6 +26,10 @@
+     available for download from the official repository
+     <https://github.com/google/brotli>.
+ 
++  - The `libpugixml` library to deserialize XML. If your distribution
++    does not provide it, you can get it from
++    <https://github.com/zeux/pugixml>.
++
+   - cURL and its library. If your distribution does not provide it, you
+     can get it from <https://curl.haxx.se/>.
+ 
+diff --git a/flake.lock b/flake.lock
+index 861af1c54..96a69345b 100644
+--- a/flake.lock
++++ b/flake.lock
+@@ -3,11 +3,11 @@
+     "lowdown-src": {
+       "flake": false,
+       "locked": {
+-        "lastModified": 1633514407,
+-        "narHash": "sha256-Dw32tiMjdK9t3ETl5fzGrutQTzh2rufgZV4A/BbxuD4=",
++        "lastModified": 1632468475,
++        "narHash": "sha256-NNOm9CbdA8cuwbvaBHslGbPTiU6bh1Ao+MpEPx4rSGo=",
+         "owner": "kristapsdz",
+         "repo": "lowdown",
+-        "rev": "d2c2b44ff6c27b936ec27358a2653caaef8f73b8",
++        "rev": "6bd668af3fd098bdd07a1bedd399564141e275da",
+         "type": "github"
+       },
+       "original": {
+diff --git a/flake.nix b/flake.nix
+index 2a4149698..10629ddeb 100644
+--- a/flake.nix
++++ b/flake.nix
+@@ -91,6 +91,7 @@
+             boost
+             lowdown-nix
+             gmock
++            pugixml
+           ]
+           ++ lib.optionals stdenv.isLinux [libseccomp]
+           ++ lib.optional (stdenv.isLinux || stdenv.isDarwin) libsodium
+@@ -491,11 +492,7 @@
+           let pkgs = nixpkgsFor.${system}; in
+           pkgs.runCommand "install-tests" {
+             againstSelf = testNixVersions pkgs pkgs.nix pkgs.pkgs.nix;
+-            againstCurrentUnstable =
+-              # FIXME: temporarily disable this on macOS because of #3605.
+-              if system == "x86_64-linux"
+-              then testNixVersions pkgs pkgs.nix pkgs.nixUnstable
+-              else null;
++            againstCurrentUnstable = testNixVersions pkgs pkgs.nix pkgs.nixUnstable;
+             # Disabled because the latest stable version doesn't handle
+             # `NIX_DAEMON_SOCKET_PATH` which is required for the tests to work
+             # againstLatestStable = testNixVersions pkgs pkgs.nix pkgs.nixStable;
+diff --git a/src/libexpr/primops/fetchTree.cc b/src/libexpr/primops/fetchTree.cc
+index 1a69fe4e4..06bdec003 100644
+--- a/src/libexpr/primops/fetchTree.cc
++++ b/src/libexpr/primops/fetchTree.cc
+@@ -66,7 +66,7 @@ void emitTreeAttrs(
+     v.attrs->sort();
+ }
+ 
+-std::string fixURI(std::string uri, EvalState & state, const std::string & defaultScheme = "file")
++std::string fixURI(std::string uri, EvalState &state, const std::string & defaultScheme = "file")
+ {
+     state.checkURI(uri);
+     return uri.find("://") != std::string::npos ? uri : defaultScheme + "://" + uri;
+@@ -81,17 +81,23 @@ std::string fixURIForGit(std::string uri, EvalState & state)
+         return fixURI(uri, state);
+ }
+ 
++void addURI(EvalState &state, fetchers::Attrs &attrs, Symbol name, std::string v)
++{
++    string n(name);
++    attrs.emplace(name, n == "url" ? fixURI(v, state) : v);
++}
++
+ struct FetchTreeParams {
+     bool emptyRevFallback = false;
+     bool allowNameArgument = false;
+ };
+ 
+ static void fetchTree(
+-    EvalState & state,
+-    const Pos & pos,
+-    Value * * args,
+-    Value & v,
+-    std::optional<std::string> type,
++    EvalState &state,
++    const Pos &pos,
++    Value **args,
++    Value &v,
++    const std::optional<std::string> type,
+     const FetchTreeParams & params = FetchTreeParams{}
+ ) {
+     fetchers::Input input;
+@@ -104,33 +110,17 @@ static void fetchTree(
+ 
+         fetchers::Attrs attrs;
+ 
+-        if (auto aType = args[0]->attrs->get(state.sType)) {
+-            if (type)
+-                throw Error({
+-                    .msg = hintfmt("unexpected attribute 'type'"),
+-                    .errPos = pos
+-                });
+-            type = state.forceStringNoCtx(*aType->value, *aType->pos);
+-        } else if (!type)
+-            throw Error({
+-                .msg = hintfmt("attribute 'type' is missing in call to 'fetchTree'"),
+-                .errPos = pos
+-            });
+-
+-        attrs.emplace("type", type.value());
+-
+         for (auto & attr : *args[0]->attrs) {
+-            if (attr.name == state.sType) continue;
+             state.forceValue(*attr.value);
+-            if (attr.value->type() == nPath || attr.value->type() == nString) {
+-                auto s = state.coerceToString(*attr.pos, *attr.value, context, false, false);
+-                attrs.emplace(attr.name,
+-                    attr.name == "url"
+-                    ? type == "git"
+-                      ? fixURIForGit(s, state)
+-                      : fixURI(s, state)
+-                    : s);
+-            }
++            if (attr.value->type() == nPath || attr.value->type() == nString)
++                addURI(
++                    state,
++                    attrs,
++                    attr.name,
++                    state.coerceToString(*attr.pos, *attr.value, context, false, false)
++                );
++            else if (attr.value->type() == nString)
++                addURI(state, attrs, attr.name, attr.value->string.s);
+             else if (attr.value->type() == nBool)
+                 attrs.emplace(attr.name, Explicit<bool>{attr.value->boolean});
+             else if (attr.value->type() == nInt)
+@@ -140,6 +130,15 @@ static void fetchTree(
+                     attr.name, showType(*attr.value));
+         }
+ 
++        if (type)
++            attrs.emplace("type", type.value());
++
++        if (!attrs.count("type"))
++            throw Error({
++                .msg = hintfmt("attribute 'type' is missing in call to 'fetchTree'"),
++                .errPos = pos
++            });
++
+         if (!params.allowNameArgument)
+             if (auto nameIter = attrs.find("name"); nameIter != attrs.end())
+                 throw Error({
+@@ -147,6 +146,7 @@ static void fetchTree(
+                     .errPos = pos
+                 });
+ 
++
+         input = fetchers::Input::fromAttrs(std::move(attrs));
+     } else {
+         auto url = state.coerceToString(pos, *args[0], context, false, false);
 diff --git a/src/libfetchers/github.cc b/src/libfetchers/github.cc
-index ffc44e9e2..735fac2fb 100644
+index ffc44e9e2..5fa8e2a2c 100644
 --- a/src/libfetchers/github.cc
 +++ b/src/libfetchers/github.cc
-@@ -17,7 +17,7 @@ struct DownloadUrl
+@@ -8,6 +8,7 @@
+ 
+ #include <optional>
+ #include <nlohmann/json.hpp>
++#include <pugixml.hpp>
+ 
+ namespace nix::fetchers {
+ 
+@@ -17,7 +18,7 @@ struct DownloadUrl
      Headers headers;
  };
  
@@ -11,7 +256,7 @@ index ffc44e9e2..735fac2fb 100644
  const static std::string hostRegexS = "[a-zA-Z0-9.]*"; // FIXME: check
  std::regex hostRegex(hostRegexS, std::regex::ECMAScript);
  
-@@ -348,7 +348,57 @@ struct GitLabInputScheme : GitArchiveInputScheme
+@@ -348,7 +349,71 @@ struct GitLabInputScheme : GitArchiveInputScheme
      }
  };
  
@@ -24,21 +269,35 @@ index ffc44e9e2..735fac2fb 100644
 +        // SourceHut supports both PAT and OAuth2. See
 +        // https://man.sr.ht/meta.sr.ht/oauth.md
 +        return std::pair<std::string, std::string>("Authorization", fmt("Bearer %s", token));
++        // Note: This currently serves no purpose, as this kind of authorization
++        // does not allow for downloading tarballs on sourcehut private repos.
++        // Once it is implemented, however, should work as expected.
 +    }
 +
 +    Hash getRevFromRef(nix::ref<Store> store, const Input & input) const override
 +    {
++        auto ref = *input.getRef();
++        if (ref == "HEAD") {
++            ref = "";
++        } else {
++            ref = fmt("/%s", ref);
++        }
 +        auto host = maybeGetStrAttr(input.attrs, "host").value_or("git.sr.ht");
-+        auto url = fmt("https://%s/query?query=query{repositoryByOwner(owner:\"%s\",repo:\"%s\"){revparse_single(revspec:\"%s\"){id}}}",
-+            host, getStrAttr(input.attrs, "owner"), getStrAttr(input.attrs, "repo"), *input.getRef());
++        auto url = fmt("https://%s/%s/%s/log%s/rss.xml",
++            host, getStrAttr(input.attrs, "owner"), getStrAttr(input.attrs, "repo"), ref);
 +
 +        Headers headers = makeHeadersWithAuthTokens(host);
 +
-+        auto json = nlohmann::json::parse(
-+            readFile(
-+                store->toRealPath(
-+                    downloadFile(store, url, "source", false, headers).storePath)));
-+        auto rev = Hash::parseAny(std::string { json["data"]["repositoryByOwner"]["revparse_single"]["id"] }, htSHA1);
++        auto xmlFile = store->toRealPath(
++                downloadFile(store, url, "source", false, headers).storePath);
++
++        pugi::xml_document doc;
++        doc.load_file(xmlFile.c_str());
++
++        std::string commitUrl = doc.child("rss").child("channel").child("item").child_value("link");
++        auto id = commitUrl.substr(commitUrl.find("commit/")+7, commitUrl.length()-1);
++
++        auto rev = Hash::parseAny(id, htSHA1);
 +        debug("HEAD revision for '%s' is %s", url, rev.gitRev());
 +        return rev;
 +    }
@@ -69,6 +328,60 @@ index ffc44e9e2..735fac2fb 100644
 +static auto rSourceHutInputScheme = OnStartup([] { registerInputScheme(std::make_unique<SourceHutInputScheme>()); });
  
  }
+diff --git a/src/libfetchers/local.mk b/src/libfetchers/local.mk
+index 2e8869d83..f91b8f1bb 100644
+--- a/src/libfetchers/local.mk
++++ b/src/libfetchers/local.mk
+@@ -8,6 +8,6 @@ libfetchers_SOURCES := $(wildcard $(d)/*.cc)
+ 
+ libfetchers_CXXFLAGS += -I src/libutil -I src/libstore
+ 
+-libfetchers_LDFLAGS += -pthread
++libfetchers_LDFLAGS += -pthread $(LIBPUGIXML_LIBS)
+ 
+ libfetchers_LIBS = libutil libstore
+diff --git a/src/libstore/build/local-derivation-goal.cc b/src/libstore/build/local-derivation-goal.cc
+index 3fc156108..4cb43bc11 100644
+--- a/src/libstore/build/local-derivation-goal.cc
++++ b/src/libstore/build/local-derivation-goal.cc
+@@ -755,6 +755,7 @@ void LocalDerivationGoal::startBuilder()
+     result.startTime = time(0);
+ 
+     /* Fork a child to build the package. */
++    ProcessOptions options;
+ 
+ #if __linux__
+     if (useChroot) {
+@@ -797,6 +798,8 @@ void LocalDerivationGoal::startBuilder()
+ 
+         userNamespaceSync.create();
+ 
++        options.allowVfork = false;
++
+         Path maxUserNamespaces = "/proc/sys/user/max_user_namespaces";
+         static bool userNamespacesEnabled =
+             pathExists(maxUserNamespaces)
+@@ -854,7 +857,7 @@ void LocalDerivationGoal::startBuilder()
+             writeFull(builderOut.writeSide.get(),
+                 fmt("%d %d\n", usingUserNamespace, child));
+             _exit(0);
+-        });
++        }, options);
+ 
+         int res = helper.wait();
+         if (res != 0 && settings.sandboxFallback) {
+@@ -918,9 +921,10 @@ void LocalDerivationGoal::startBuilder()
+ #endif
+     {
+     fallback:
++        options.allowVfork = !buildUser && !drv->isBuiltin();
+         pid = startProcess([&]() {
+             runChild();
+-        });
++        }, options);
+     }
+ 
+     /* parent */
 diff --git a/src/libstore/globals.hh b/src/libstore/globals.hh
 index 8784d5faf..142be99d0 100644
 --- a/src/libstore/globals.hh
@@ -89,3 +402,70 @@ index 8784d5faf..142be99d0 100644
            ```
  
            Example `~/code/flake.nix`:
+diff --git a/src/libutil/util.cc b/src/libutil/util.cc
+index 563a72c12..0b261ca60 100644
+--- a/src/libutil/util.cc
++++ b/src/libutil/util.cc
+@@ -939,6 +939,9 @@ void killUser(uid_t uid)
+        users to which the current process can send signals.  So we
+        fork a process, switch to uid, and send a mass kill. */
+ 
++    ProcessOptions options;
++    options.allowVfork = false;
++
+     Pid pid = startProcess([&]() {
+ 
+         if (setuid(uid) == -1)
+@@ -961,7 +964,7 @@ void killUser(uid_t uid)
+         }
+ 
+         _exit(0);
+-    });
++    }, options);
+ 
+     int status = pid.wait();
+     if (status != 0)
+@@ -1082,7 +1085,8 @@ void runProgram2(const RunOptions & options)
+     // vfork implies that the environment of the main process and the fork will
+     // be shared (technically this is undefined, but in practice that's the
+     // case), so we can't use it if we alter the environment
+-    processOptions.allowVfork = !options.environment;
++    if (options.environment)
++        processOptions.allowVfork = false;
+ 
+     /* Fork. */
+     Pid pid = startProcess([&]() {
+diff --git a/src/libutil/util.hh b/src/libutil/util.hh
+index 29232453f..6d3e64949 100644
+--- a/src/libutil/util.hh
++++ b/src/libutil/util.hh
+@@ -262,7 +262,7 @@ struct ProcessOptions
+     string errorPrefix = "";
+     bool dieWithParent = true;
+     bool runExitHandlers = false;
+-    bool allowVfork = false;
++    bool allowVfork = true;
+ };
+ 
+ pid_t startProcess(std::function<void()> fun, const ProcessOptions & options = ProcessOptions());
+diff --git a/src/nix/main.cc b/src/nix/main.cc
+index 2c3976689..8aaf08813 100644
+--- a/src/nix/main.cc
++++ b/src/nix/main.cc
+@@ -187,14 +187,11 @@ static void showHelp(std::vector<std::string> subcommand, MultiCommand & topleve
+             , "/"),
+         *vUtils);
+ 
+-    auto vArgs = state.allocValue();
+-    state.mkAttrs(*vArgs, 16);
+-    auto vJson = state.allocAttr(*vArgs, state.symbols.create("command"));
++    auto vJson = state.allocValue();
+     mkString(*vJson, toplevel.toJSON().dump());
+-    vArgs->attrs->sort();
+ 
+     auto vRes = state.allocValue();
+-    state.callFunction(*vGenerateManpage, *vArgs, *vRes, noPos);
++    state.callFunction(*vGenerateManpage, *vJson, *vRes, noPos);
+ 
+     auto attr = vRes->attrs->get(state.symbols.create(mdName + ".md"));
+     if (!attr)
