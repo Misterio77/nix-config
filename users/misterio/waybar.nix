@@ -6,7 +6,7 @@ let
   gpg = "${pkgs.gnupg}/bin/gpg";
   gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";
   gamemoded = "${pkgs.gamemode}/bin/gamemoded";
-  minicava = "${pkgs.minicava}/bin/minicava";
+  minicava = "${pkgs.nur.repos.misterio.minicava}/bin/minicava";
   notify-send = "${pkgs.libnotify}/bin/notify-send";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   jq = "${pkgs.jq}/bin/jq";

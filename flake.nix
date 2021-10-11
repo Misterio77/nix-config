@@ -8,7 +8,6 @@
     hardware.url = "github:nixos/nixos-hardware";
 
     nur.url = "github:nix-community/NUR";
-    misterio-nur.url = "github:misterio77/nur-packages";
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
     impermanence.url = "github:RiscadoA/impermanence";
@@ -19,15 +18,15 @@
     flake-compat.flake = false;
   };
 
-  outputs = { nixpkgs, home-manager, hardware, nur, misterio-nur
-    , declarative-cachix, impermanence, nix-colors, flake-utils, ... }:
+  outputs = { nixpkgs, home-manager, hardware, nur,
+  declarative-cachix, impermanence, nix-colors, flake-utils, ... }:
     let
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit nixpkgs hardware nur misterio-nur declarative-cachix
+            inherit nixpkgs hardware nur declarative-cachix
               impermanence nix-colors;
           };
           modules = [ ./hosts/${hostname} ./overlays ];
@@ -37,7 +36,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit hostname nur misterio-nur impermanence nix-colors;
+            inherit hostname nur impermanence nix-colors;
           };
           configuration = ./users/${username};
           extraModules = [ ./modules/home-manager ./overlays ];

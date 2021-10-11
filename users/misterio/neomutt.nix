@@ -121,6 +121,7 @@
       color index         red             default         "~N~F~p"                    # new flagged messages to me
       color index         red             default         "~U~F~p"                    # new flagged messages to me
       color index         black           red             "~D"                        # deleted messages
+      color index         black           red             "~N~D"                      # unread deleted messages
       color index         brightcyan      default         "~v~(!~N)"                  # collapsed thread with no unread
       color index         yellow          default         "~v~(~N)"                   # collapsed thread with some unread
       color index         green           default         "~N~v~(~N)"                 # collapsed thread with unread parent

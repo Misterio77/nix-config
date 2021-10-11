@@ -1,5 +1,5 @@
 # System configuration for my main desktop PC
-{ config, pkgs, hardware, impermanence, misterio-nur, ... }:
+{ config, pkgs, hardware, nur, impermanence, ... }:
 
 {
   imports = [
@@ -7,7 +7,7 @@
     hardware.nixosModules.common-gpu-amd
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
-    misterio-nur.nixosModules.openrgb
+    nur.repos.misterio.nixosModules.openrgb
     ./hardware-configuration.nix
     ../common.nix
   ];
@@ -118,7 +118,25 @@
 
   hardware = {
     ckb-next.enable = true;
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        mesa.opencl
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+        rocm-runtime
+      ];
+      extraPackages32 = with pkgs; [
+        mesa.opencl
+        amdvlk
+        rocm-opencl-icd
+        rocm-opencl-runtime
+        rocm-runtime
+      ];
+      driSupport = true;
+      driSupport32Bit = true;
+    };
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;

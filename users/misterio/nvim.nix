@@ -1,16 +1,6 @@
 { pkgs, ... }:
 
 let
-  vim-noctu = pkgs.vimUtils.buildVimPlugin {
-    pname = "vim-noctu";
-    version = "1.8.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "noahfrederick";
-      repo = "vim-noctu";
-      rev = "de2ff9855bccd72cd9ff3082bc89e4a4f36ea4fe";
-      sha256 = "sha256-fiMYfRlm/KiMQybL97RcWy3Y+0qim6kl3ZkBvCuv4ZM=";
-    };
-  };
   mermaid = pkgs.vimUtils.buildVimPlugin {
     pname = "mermaid.vim";
     version = "0.1";
@@ -113,7 +103,7 @@ in {
       set expandtab "Use spaces
       "set noexpandtab "Use tabs
       "Two spaces with html, typescript, scss, json, and nix
-      autocmd FileType json,html,nix,scss,typescript setlocal ts=2 sts=2 sw=2
+      autocmd FileType json,html,htmldjango,nix,scss,typescript setlocal ts=2 sts=2 sw=2
 
       "Options when composing mutt mail
       autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w

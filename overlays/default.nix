@@ -9,10 +9,10 @@
       setwallpaper = prev.callPackage ../pkgs/setwallpaper { };
 
       setscheme-wofi = prev.callPackage ../pkgs/setscheme-wofi {
-        inherit (pkgs.gnome) zenity;
+        inherit (final.gnome) zenity;
       };
       setwallpaper-wofi = prev.callPackage ../pkgs/setwallpaper-wofi {
-        inherit (pkgs.gnome) zenity;
+        inherit (final.gnome) zenity;
       };
 
       # Link kitty to xterm (to fix crappy drun behaviour)
@@ -59,7 +59,7 @@
       });
 
       # Add suggestion for nix shell instead of nix-env
-      nix-index = prev.nix-index.overrideAttrs (oldAttrs: rec {
+      nix-index-unwrapped = prev.nix-index-unwrapped.overrideAttrs (oldAttrs: rec {
         patches = (oldAttrs.patches or [ ])
           ++ [ ./nix-index-new-command.patch ];
       });

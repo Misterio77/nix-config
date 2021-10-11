@@ -18,12 +18,12 @@ let
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
-  pass-wofi = "${pkgs.pass-wofi}/bin/pass-wofi";
+  pass-wofi = "${pkgs.nur.repos.misterio.pass-wofi}/bin/pass-wofi";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
   ssh = "${pkgs.openssh}/bin/ssh";
-  swayfader = "${pkgs.swayfader}/bin/swayfader";
+  swayfader = "${pkgs.nur.repos.misterio.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   waybar = "${pkgs.waybar}/bin/waybar";
@@ -122,7 +122,7 @@ in rec {
         }
         # Add transparency
         {
-          command = "${pkgs.swayfader}/bin/swayfader";
+          command = "${swayfader}";
         }
         # Init discocss
         {

@@ -7,7 +7,7 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+    [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "amdgpu" ];
   boot.initrd.luks.devices."nixenc".device =
     "/dev/disk/by-uuid/320599e3-21f9-465e-a2f2-d078eccc34c0";
   boot.extraModulePackages = [ ];

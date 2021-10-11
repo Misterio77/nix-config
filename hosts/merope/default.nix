@@ -6,7 +6,7 @@
     hardware.nixosModules.raspberry-pi-4
     impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
-    ./minecraft.nix
+    # ./minecraft.nix
     ../common.nix
   ];
 

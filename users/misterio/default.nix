@@ -1,4 +1,4 @@
-{ pkgs, hostname, impermanence, nix-colors, nur, misterio-nur, ... }:
+{ pkgs, hostname, impermanence, nix-colors, nur, ... }:
 
 {
   imports = [
@@ -46,7 +46,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ misterio-nur.overlay nur.overlay ];
+    overlays = [ nur.overlay ];
   };
 
   systemd.user.startServices = "sd-switch";
@@ -58,7 +58,7 @@
       # Cli
       bottom
       cachix
-      comma
+      pkgs.nur.repos.misterio.comma
       exa
       ncdu
       ranger
