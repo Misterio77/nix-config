@@ -48,7 +48,15 @@ in {
   programs.neovim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
+      # Colorscheme
+      {
+        plugin = vim-noctu;
+        config = ''
+          colorscheme noctu
+        '';
+      }
       # LSP and completion related
+      lsp-colors-nvim
       {
         plugin = nvim-lspconfig;
         config = ''
@@ -61,7 +69,7 @@ in {
           "JSON
           lua require'lspconfig'.jsonls.setup{}
           "SQL
-          lua require'lspconfig'.sqlls.setup{}
+          lua require'lspconfig'.sqls.setup{}
 
           "Go to declaration/definition
           map gD       :lua vim.lsp.buf.declaration()<CR>
@@ -93,9 +101,15 @@ in {
         '';
       }
       # QOL
+      {
+        plugin = nerdtree;
+        config = ''
+          "Toggle nerdtree
+          nmap <Bslash> :NERDTreeToggle<CR>
+        '';
+      }
       auto-pairs
       editorconfig-vim
-      nerdtree
       vim-numbertoggle
       vim-surround
       # Syntax
@@ -117,12 +131,8 @@ in {
       vim-markdown
       vim-nix
       vim-toml
-      # Colorscheme
-      vim-noctu
     ];
     extraConfig = ''
-      "Toggle nerdtree
-      nmap <Bslash> :NERDTreeToggle<CR>
       "Reload automatically
       set autoread
       au CursorHold,CursorHoldI * checktime
@@ -143,9 +153,6 @@ in {
 
       "Clipboard
       set clipboard=unnamedplus
-
-      "Color scheme
-      colorscheme noctu
 
       "Conceal
       set conceallevel=2
