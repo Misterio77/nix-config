@@ -1,13 +1,18 @@
 # System configuration for my main desktop PC
-{ config, pkgs, hardware, nur, impermanence, ... }:
+{ config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
 
+let
+  nur-no-pkgs = import nur {
+    nurpkgs = import nixpkgs { inherit system; };
+  };
+in
 {
   imports = [
     hardware.nixosModules.common-cpu-amd
     hardware.nixosModules.common-gpu-amd
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
-    nur.repos.misterio.nixosModules.openrgb
+    nur-no-pkgs.repos.misterio.modules.openrgb
     ./hardware-configuration.nix
     ../common.nix
   ];
@@ -58,12 +63,12 @@
 
   services = {
     pipewire = {
-       enable = true;
-       alsa.enable = true;
-       alsa.support32Bit = true;
-       pulse.enable = true;
-       jack.enable = true;
-     };
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
     dbus.packages = [ pkgs.gcr ];
     postgresql = {
       enable = true;

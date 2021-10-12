@@ -2,7 +2,7 @@
   description = "My NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=70088dc29994c32f8520150e34c6e57e8453f895";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     hardware.url = "github:nixos/nixos-hardware";
@@ -13,13 +13,22 @@
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:Misterio77/nix-colors";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    utils.url = "github:numtide/flake-utils";
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
   };
 
-  outputs = { nixpkgs, home-manager, hardware, nur,
-  declarative-cachix, impermanence, nix-colors, flake-utils, ... }:
+  outputs =
+    { nixpkgs
+    , home-manager
+    , hardware
+    , nur
+    , declarative-cachix
+    , impermanence
+    , nix-colors
+    , utils
+    , ...
+    }:
     let
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system }:
@@ -27,7 +36,7 @@
           inherit system;
           specialArgs = {
             inherit nixpkgs hardware nur declarative-cachix
-              impermanence nix-colors;
+              impermanence nix-colors system;
           };
           modules = [ (./hosts + "/${hostname}") ./overlays ];
         };
@@ -42,7 +51,8 @@
           extraModules = [ ./modules/home-manager ./overlays ];
           homeDirectory = "/home/${username}";
         };
-    in {
+    in
+    {
       overlay = import ./overlays;
       nixosConfigurations = {
         # Main PC
@@ -69,12 +79,13 @@
           system = "aarch64-linux";
         };
       };
-    } // flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in {
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ nixfmt rnix-lsp ];
-        };
-      });
+    } // utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      devShell = pkgs.mkShell {
+        buildInputs = with pkgs; [ nixfmt rnix-lsp ];
+      };
+    });
 }
