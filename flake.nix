@@ -29,7 +29,7 @@
             inherit nixpkgs hardware nur declarative-cachix
               impermanence nix-colors;
           };
-          modules = [ ./hosts/${hostname} ./overlays ];
+          modules = [ (./hosts + "/${hostname}") ./overlays ];
         };
       # Make home configuration, given username, hostname, and system type
       mkHome = { username, hostname, system }:
@@ -38,7 +38,7 @@
           extraSpecialArgs = {
             inherit hostname nur impermanence nix-colors;
           };
-          configuration = ./users/${username};
+          configuration = ./users + "/${username}";
           extraModules = [ ./modules/home-manager ./overlays ];
           homeDirectory = "/home/${username}";
         };
@@ -72,10 +72,9 @@
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-        hm = home-manager.defaultPackage.${system};
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ git neovim nixUnstable hm nixfmt ];
+          buildInputs = with pkgs; [ nixfmt rnix-lsp ];
         };
       });
 }

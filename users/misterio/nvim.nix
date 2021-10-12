@@ -48,20 +48,57 @@ in {
   programs.neovim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
+      # LSP and completion related
       {
-        plugin = ale;
+        plugin = nvim-lspconfig;
         config = ''
-          let g:ale_completion_enabled = 1
-          let g:ale_linters = {"c": ["clang"], "rust": ["analyzer", "cargo"]}
-          let g:ale_fixers = {"rust": ["rustfmt"], "sql": ["pgformatter"], "nix": ["nixfmt"], "json": ["jq"]}
-          let g:ale_rust_analyzer_config = {'checkOnSave': {'command': 'clippy', 'enable': v:true}}
+          "Rust
+          lua require'lspconfig'.rust_analyzer.setup{}
+          "C/C++
+          lua require'lspconfig'.clangd.setup{}
+          "Nix
+          lua require'lspconfig'.rnix.setup{}
+          "JSON
+          lua require'lspconfig'.jsonls.setup{}
+          "SQL
+          lua require'lspconfig'.sqlls.setup{}
+
+          "Go to declaration/definition
+          map gD       :lua vim.lsp.buf.declaration()<CR>
+          map gd       :lua vim.lsp.buf.definition()<CR>
+          "Diagnostics for current line
+          map <space>e :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+          "Format code
+          map <space>f :lua vim.lsp.buf.formatting()<CR>
+
+          "Show tooltip info
+          autocmd CursorHold <buf> :lua vim.lsp.buf.hover()<CR>
+          map K :lua vim.lsp.buf.hover()<CR>
         '';
       }
+      {
+        plugin = nvim-cmp;
+        config = ''
+          "Completions from buffer and lsp
+          lua require'cmp'.setup{sources={{name='nvim_lsp'},{name='buffer'}}}
+        '';
+      }
+      cmp-nvim-lsp
+      cmp-buffer
+      {
+        plugin = rust-tools-nvim;
+        config = ''
+          "Enable Rust typehints
+          lua require('rust-tools').setup{tools={autoSetHints = true}}
+        '';
+      }
+      # QOL
       auto-pairs
       editorconfig-vim
       nerdtree
       vim-numbertoggle
-      # Language specific (syntax highlighting, etc)
+      vim-surround
+      # Syntax
       {
         plugin = rust-vim;
         config = "let g:rust_fold = 1";
@@ -79,13 +116,13 @@ in {
       plantuml-syntax
       vim-markdown
       vim-nix
-      vim-noctu
-      vim-surround
       vim-toml
+      # Colorscheme
+      vim-noctu
     ];
     extraConfig = ''
       "Toggle nerdtree
-      nnoremap <Bslash> :NERDTreeToggle<CR>
+      nmap <Bslash> :NERDTreeToggle<CR>
       "Reload automatically
       set autoread
       au CursorHold,CursorHoldI * checktime
@@ -97,13 +134,9 @@ in {
       autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
       "Tabs
-      set tabstop=4 "How many spaces equals a tab
-      set softtabstop=4 "How many columns when you hit tab
-      set shiftwidth=4 "How many to indent with reindent ops
+      set ts=4 sts=4 sw=4 "4 char-wide tab
+      autocmd FileType json,html,htmldjango,nix,scss,typescript setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
       set expandtab "Use spaces
-      "set noexpandtab "Use tabs
-      "Two spaces with html, typescript, scss, json, and nix
-      autocmd FileType json,html,htmldjango,nix,scss,typescript setlocal ts=2 sts=2 sw=2
 
       "Options when composing mutt mail
       autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w
