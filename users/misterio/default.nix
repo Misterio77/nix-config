@@ -62,6 +62,7 @@
       exa
       ncdu
       ranger
+      rnix-lsp
     ] ++ (if hostname == "atlas" then [
       setscheme
       setwallpaper
