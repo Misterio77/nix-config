@@ -74,7 +74,6 @@ in
       enable = true;
       authentication = pkgs.lib.mkOverride 12 ''
         local all all trust
-        host all all ::1/128 trust
       '';
     };
   };
