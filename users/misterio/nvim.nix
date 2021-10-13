@@ -70,6 +70,8 @@ in {
           lua require'lspconfig'.jsonls.setup{}
           "SQL
           lua require'lspconfig'.sqls.setup{}
+          "Python
+          lua require'lspconfig'.pylsp.setup{}
 
           "Go to declaration/definition
           map gD       :lua vim.lsp.buf.declaration()<CR>

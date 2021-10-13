@@ -1,0 +1,6 @@
+# Direnv
+.direnv
+# Nix
+result
+# Rust build
+target

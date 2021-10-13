@@ -53,7 +53,6 @@
         };
     in
     {
-      overlay = import ./overlays;
       nixosConfigurations = {
         # Main PC
         atlas = mkSystem {
@@ -79,6 +78,8 @@
           system = "aarch64-linux";
         };
       };
+      overlay = import ./overlays;
+      templates = import ./templates;
     } // utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };

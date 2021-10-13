@@ -1,0 +1,15 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.c]
+ident_style = space
+ident_size = 4
+
+[Makefile*]
+ident_style = tab
+ident_size = 4

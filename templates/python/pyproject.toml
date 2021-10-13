@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "foo-bar"
+version = "0.1.0"
+description = "Foo Bar Python Project"
+authors = []
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+python-lsp-server = "^1.2"
+flake8 = "^3.9"
+flake8-annotations = "^2.6"
+pytest = "^6.2"
+
+[tool.poetry.scripts]
+foo-bar = 'foo_bar:main'
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
