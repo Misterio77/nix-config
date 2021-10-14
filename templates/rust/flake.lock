@@ -15,6 +15,26 @@
         "type": "github"
       }
     },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1632266297,
+        "narHash": "sha256-J1yeJk6Gud9ef2pEf6aKQemrfg1pVngYDSh+SAY94xk=",
+        "owner": "nmattia",
+        "repo": "naersk",
+        "rev": "ee7edec50b49ab6d69b06d62f1de554efccb1ccd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nmattia",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1633791597,
@@ -34,6 +54,7 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
+        "naersk": "naersk",
         "nixpkgs": "nixpkgs"
       }
     }
