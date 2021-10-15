@@ -4,9 +4,3 @@
 result
 # Build outputs
 build
-# Auto{make,conf}
-autom4te.cache
-config.status
-config.log
-Makefile
-configure

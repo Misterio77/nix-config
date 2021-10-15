@@ -1,5 +1,0 @@
-AC_INIT([foo-bar], 1.0)
-AC_PROG_CC
-AC_PROG_CXX
-AC_CONFIG_FILES(Makefile)
-AC_OUTPUT

@@ -17,7 +17,7 @@
         packages.${name} = pkgs.stdenv.mkDerivation rec {
           inherit name;
           src = ./.;
-          nativeBuildInputs = [ pkgs.autoreconfHook ];
+          makeFlags = [ "PREFIX=$(out)" ];
         };
         defaultPackage = packages.${name};
 

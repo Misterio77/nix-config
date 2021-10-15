@@ -1,9 +1,8 @@
-prefix = @prefix@
-exec_prefix = @exec_prefix@
-bindir = @bindir@
+PREFIX ?= /usr/local
+BIN_DIR ?= $(PREFIX)/bin
+
 
 TARGET_EXEC ?= foo-bar
-
 BUILD_DIR ?= ./build
 SRC_DIRS ?= ./src
 
@@ -34,10 +33,9 @@ clean:
 	$(RM) -r $(BUILD_DIR)
 
 install: $(BUILD_DIR)/$(TARGET_EXEC)
-	install -d $(bindir)
-	install -t $(bindir) $<
+	install -d $(BIN_DIR)
+	install -t $(BIN_DIR) $<
 
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p
-
