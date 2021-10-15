@@ -27,14 +27,15 @@ $(BUILD_DIR)/%.c.o: %.c
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
-
-
 clean:
 	$(RM) -r $(BUILD_DIR)
 
 install: $(BUILD_DIR)/$(TARGET_EXEC)
 	install -d $(BIN_DIR)
 	install -t $(BIN_DIR) $<
+
+run: $(BUILD_DIR)/$(TARGET_EXEC)
+	./$<
 
 -include $(DEPS)
 
