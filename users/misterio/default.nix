@@ -1,4 +1,4 @@
-{ pkgs, hostname, impermanence, nix-colors, nur, ... }:
+{ pkgs, hostname, impermanence, nix-colors, wallpapers, nur, ... }:
 
 {
   imports = [
@@ -16,6 +16,7 @@
 
     ./discord.nix
     ./element.nix
+    ./ethminer.nix
     ./fira.nix
     ./gpg.nix
     ./gtk.nix
@@ -46,7 +47,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ nur.overlay ];
+    overlays = [ nur.overlay wallpapers.overlay ];
   };
 
   systemd.user.startServices = "sd-switch";

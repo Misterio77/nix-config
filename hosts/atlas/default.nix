@@ -120,27 +120,30 @@ in
   };
   security.pam.services.swaylock = { };
 
+  environment.variables.OCL_ICD_VENDORS = "/run/opengl-driver";
+  environment.etc.amdgpu-custom-state.card0.text = ''
+    OD_SCLK:
+    0: 800Mhz
+    1: 2009Mhz
+    OD_MCLK:
+    1: 875MHz
+    OD_VDDC_CURVE:
+    0: 800MHz 720mV
+    1: 1404MHz 827mV
+    2: 2009MHz 1198mV
+    OD_RANGE:
+    SCLK:     800Mhz       2150Mhz
+    MCLK:     625Mhz        950Mhz
+    VDDC_CURVE_SCLK[0]:     800Mhz       2150Mhz
+    VDDC_CURVE_VOLT[0]:     750mV        1200mV
+    VDDC_CURVE_SCLK[1]:     800Mhz       2150Mhz
+    VDDC_CURVE_VOLT[1]:     750mV        1200mV
+    VDDC_CURVE_SCLK[2]:     800Mhz       2150Mhz
+    VDDC_CURVE_VOLT[2]:     750mV        1200mV
+  '';
   hardware = {
     ckb-next.enable = true;
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        mesa.opencl
-        amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
-        rocm-runtime
-      ];
-      extraPackages32 = with pkgs; [
-        mesa.opencl
-        amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
-        rocm-runtime
-      ];
-      driSupport = true;
-      driSupport32Bit = true;
-    };
+    opengl.enable = true;
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;

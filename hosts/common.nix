@@ -1,5 +1,5 @@
 # This file holds config that i use on all hosts
-{ pkgs, nixpkgs, nix-colors, nur, declarative-cachix, ... }:
+{ pkgs, nixpkgs, nix-colors, wallpapers, nur, declarative-cachix, ... }:
 
 {
   imports = [
@@ -30,7 +30,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ nur.overlay ];
+    overlays = [ nur.overlay wallpapers.overlay ];
   };
 
   nix = {
