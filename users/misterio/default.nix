@@ -67,6 +67,7 @@
     ] ++ (if hostname == "atlas" then [
       setscheme
       setwallpaper
+      amdgpu-clocks
 
       # Gui apps
       dragon-drop

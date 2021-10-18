@@ -59,6 +59,7 @@ in {
         After = [ "network.target" ];
       };
       Service = {
+        Environment = "OCL_ICD_VENDORS=/run/opengl-driver/etc/OpenCL/vendors/";
         ExecStartPre =
           "${pkgs.ethminer-free}/bin/.ethminer-wrapped --list-devices";
         ExecStart =

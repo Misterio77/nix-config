@@ -80,11 +80,17 @@ in
 
   programs = {
     ssh.startAgent = false;
-
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
     };
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+    };
+    dconf.enable = true;
+    # droidcam.enable = true;
+    kdeconnect.enable = true;
 
     gamemode = {
       enable = true;
@@ -94,15 +100,22 @@ in
           gpu_device = 0;
           amd_performance_level = "high";
         };
+        custom =
+        let
+          startHook = pkgs.writeShellScriptBin "start-hook.sh" ''
+            ${pkgs.systemd}/bin/systemctl --user stop ethminer
+            SUDO_ASKPASS=${pkgs.zenity-askpass}/bin/zenity-askpass /run/wrappers/bin/sudo -A USER_STATES_PATH=/etc/default/amdgpu-gaming-state ${pkgs.amdgpu-clocks}/bin/amdgpu-clocks
+          '';
+          endHook = pkgs.writeShellScriptBin "end-hook.sh" ''
+            ${pkgs.systemd}/bin/systemctl --user start ethminer
+            # SUDO_ASKPASS=${pkgs.zenity-askpass}/bin/zenity-askpass /run/wrappers/bin/sudo -A USER_STATES_PATH=/etc/default/amdgpu-custom-state ${pkgs.amdgpu-clocks}/bin/amdgpu-clocks
+          '';
+        in {
+          start = "${startHook}/bin/start-hook.sh";
+          end = "${endHook}/bin/end-hook.sh";
+        };
       };
     };
-    steam = {
-      enable = true;
-      remotePlay.openFirewall = true;
-    };
-    dconf.enable = true;
-    # droidcam.enable = true;
-    kdeconnect.enable = true;
   };
 
   security = {
@@ -110,6 +123,31 @@ in
     # Global sudo caching
     sudo.extraConfig = ''
       Defaults timestamp_type=global
+    '';
+  };
+  environment.etc = {
+    "default/amdgpu-custom-state.card0".text = ''
+      OD_SCLK:
+      1: 1400Mhz
+      OD_MCLK:
+      1: 890MHz
+      OD_VDDC_CURVE:
+      0: 1400MHz 836mV
+
+      FORCE_POWER_CAP: 150000000
+    '';
+    "default/amdgpu-gaming-state.card0".text = ''
+      OD_SCLK:
+      1: 2009Mhz
+      OD_MCLK:
+      1: 875MHz
+      OD_VDDC_CURVE:
+      0: 800MHz 780mV
+      1: 1404MHz 826mV
+      2: 2009MHz 1197mV
+
+      FORCE_PERF_LEVEL: auto
+      FORCE_POWER_CAP: 190000000
     '';
   };
 
@@ -120,27 +158,6 @@ in
   };
   security.pam.services.swaylock = { };
 
-  environment.variables.OCL_ICD_VENDORS = "/run/opengl-driver";
-  environment.etc.amdgpu-custom-state.card0.text = ''
-    OD_SCLK:
-    0: 800Mhz
-    1: 2009Mhz
-    OD_MCLK:
-    1: 875MHz
-    OD_VDDC_CURVE:
-    0: 800MHz 720mV
-    1: 1404MHz 827mV
-    2: 2009MHz 1198mV
-    OD_RANGE:
-    SCLK:     800Mhz       2150Mhz
-    MCLK:     625Mhz        950Mhz
-    VDDC_CURVE_SCLK[0]:     800Mhz       2150Mhz
-    VDDC_CURVE_VOLT[0]:     750mV        1200mV
-    VDDC_CURVE_SCLK[1]:     800Mhz       2150Mhz
-    VDDC_CURVE_VOLT[1]:     750mV        1200mV
-    VDDC_CURVE_SCLK[2]:     800Mhz       2150Mhz
-    VDDC_CURVE_VOLT[2]:     750mV        1200mV
-  '';
   hardware = {
     ckb-next.enable = true;
     opengl.enable = true;
