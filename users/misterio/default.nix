@@ -1,4 +1,4 @@
-{ pkgs, hostname, impermanence, nix-colors, wallpapers, nur, ... }:
+{ pkgs, hostname, impermanence, nix-colors, nur, ... }:
 
 {
   imports = [
@@ -27,6 +27,7 @@
     ./mako.nix
     ./multimc.nix
     ./neomutt.nix
+    ./obs.nix
     ./osu.nix
     ./pass.nix
     ./qt.nix
@@ -38,6 +39,7 @@
     ./sway.nix
     ./swayidle.nix
     ./swaylock.nix
+    ./yuzu.nix
     ./waybar.nix
     ./zathura.nix
   ] else
@@ -47,7 +49,7 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = [ nur.overlay wallpapers.overlay ];
+    overlays = [ nur.overlay ];
   };
 
   systemd.user.startServices = "sd-switch";
@@ -77,12 +79,13 @@
       wofi
       xdg-utils
       ydotool
-    ] else
-      [ ]);
+    ] else if hostname == "merope" then [
+      argononed
+    ] else [ ]);
 
   home.persistence = {
     "/data/home/misterio" = {
-      directories = [ "Documents" "Downloads" "Pictures" ];
+      directories = [ "Documents" "Downloads" "Pictures" "Videos" ];
       allowOther = true;
     };
   };

@@ -137,8 +137,7 @@
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
-        "utils": "utils",
-        "wallpapers": "wallpapers"
+        "utils": "utils"
       }
     },
     "utils": {
@@ -153,22 +152,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "wallpapers": {
-      "locked": {
-        "lastModified": 1634438309,
-        "narHash": "sha256-CBnoQ9xxLVveGgtH4rMsW53V7ScPFZtYm4703vGpq6s=",
-        "owner": "Misterio77",
-        "repo": "wallpapers",
-        "rev": "60a075d879d26c26d1b22ee13d3458d35d1ddc6f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Misterio77",
-        "repo": "wallpapers",
-        "rev": "60a075d879d26c26d1b22ee13d3458d35d1ddc6f",
         "type": "github"
       }
     }

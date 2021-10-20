@@ -15,6 +15,8 @@
       xhost-root = "xhost si:localuser:root";
     };
     shellAliases = {
+      miningclock = "sudo USER_STATES_PATH=/etc/default/amdgpu-custom-state amdgpu-clocks";
+      gamingclock = "sudo USER_STATES_PATH=/etc/default/amdgpu-gaming-state amdgpu-clocks";
       # SSH with kitty terminfo
       kssh = "kitty +kitten ssh";
       # Get ip

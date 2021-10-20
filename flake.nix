@@ -13,7 +13,6 @@
     impermanence.url = "github:RiscadoA/impermanence";
 
     nix-colors.url = "github:Misterio77/nix-colors";
-    wallpapers.url = "github:Misterio77/wallpapers/60a075d879d26c26d1b22ee13d3458d35d1ddc6f";
 
     utils.url = "github:numtide/flake-utils";
     flake-compat.url = "github:edolstra/flake-compat";
@@ -29,7 +28,6 @@
     , declarative-cachix
     , impermanence
     , nix-colors
-    , wallpapers
     , utils
     , ...
     }:
@@ -40,7 +38,7 @@
           inherit system;
           specialArgs = {
             inherit nixpkgs hardware nur declarative-cachix
-              impermanence nix-colors wallpapers system;
+              impermanence nix-colors system;
           };
           modules = [ (./hosts + "/${hostname}") ./overlays ];
         };
@@ -49,7 +47,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit hostname nur impermanence nix-colors wallpapers;
+            inherit hostname nur impermanence nix-colors;
           };
           configuration = ./users + "/${username}";
           extraModules = [ ./modules/home-manager ./overlays ];

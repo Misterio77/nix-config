@@ -15,7 +15,7 @@ in {
     };
 
   wallpaper = if currentWallpaper != null
-    then "${pkgs.wallpapers.${currentWallpaper}}/wallpaper"
+    then "${pkgs.wallpapers}/share/backgrounds/${currentWallpaper}"
     else nixWallpaperFromScheme {
       scheme = config.colorscheme;
       width = 2560;

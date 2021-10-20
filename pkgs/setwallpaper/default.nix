@@ -1,4 +1,4 @@
-{ lib, stdenv, writeShellScriptBin, installShellFiles, coreutils }:
+{ pkgs, lib, stdenv, writeShellScriptBin, installShellFiles, coreutils }:
 
 with lib;
 
@@ -7,7 +7,7 @@ stdenv.mkDerivation {
   version = "1.0";
   src = writeShellScriptBin "setwallpaper" ''
     if [ "$1" == "-L" ]; then
-      find /dotfiles/wallpapers -type f -not -path '*/\.*' -printf "%f\n"
+      find ${pkgs.wallpapers}/share/backgrounds -type f -not -path '*/\.*' -printf "%f\n"
       exit 0
     elif [ "$1" == "-R" ]; then
       wallpaper=$(setwallpaper -L | ${coreutils}/bin/shuf -n 1)
