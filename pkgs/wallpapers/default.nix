@@ -3,10 +3,10 @@ with lib;
 
 stdenv.mkDerivation rec {
   name = "wallpapers";
-  version = "4e9f4e4";
+  version = "595a4d0";
   src = fetchTarball {
     url = "https://github.com/Misterio77/wallpapers/releases/download/${version}/wallpapers.tar.gz";
-    sha256 = "sha256:1h67sd2hbf3l6dd0nyp90wi5j57vbd7fb8kgsadk7zscfpzx8dr8";
+    sha256 = "sha256:11sjcbgwsxwzwlidp30nfmiv6w5z6025d0c84lblm0pvda9zg98d";
   };
 
   dontBuild = true;

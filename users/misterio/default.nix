@@ -9,6 +9,7 @@
     ./neofetch.nix
     ./nix-index.nix
     ./nvim.nix
+    ./ranger.nix
     ./starship.nix
   ] ++ (if hostname == "atlas" then [
     nix-colors.homeManagerModule
@@ -64,7 +65,6 @@
       pkgs.nur.repos.misterio.comma
       exa
       ncdu
-      ranger
       rnix-lsp
     ] ++ (if hostname == "atlas" then [
       setscheme
