@@ -1,10 +1,16 @@
 # System configuration for my Raspberry Pi 4
-{ config, pkgs, hardware, impermanence, ... }:
+{ config, nixpkgs, system, pkgs, hardware, impermanence, nur, ... }:
 
+let
+  nur-no-pkgs = import nur {
+    nurpkgs = import nixpkgs { inherit system; };
+  };
+in
 {
   imports = [
     hardware.nixosModules.raspberry-pi-4
     impermanence.nixosModules.impermanence
+    nur-no-pkgs.repos.misterio.modules.argonone
     ./hardware-configuration.nix
     ../common.nix
   ];
@@ -45,6 +51,9 @@
   hardware.i2c.enable = true;
   hardware.raspberry-pi."4".i2c-bcm2708.enable = true;
   boot.kernelModules = [ "i2c-dev" "i2c-piix4" "i2c_bcm2835" ];
+
+  # Enable argonone fan daemon
+  hardware.argonone.enable = true;
 
   # My user info
   users.users.misterio = {

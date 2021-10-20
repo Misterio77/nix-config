@@ -7,7 +7,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     hardware.url = "github:nixos/nixos-hardware";
 
-    nur.url = "github:nix-community/NUR";
+    nur.url = "github:nix-community/NUR/master";
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
     impermanence.url = "github:RiscadoA/impermanence";
