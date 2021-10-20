@@ -40,7 +40,7 @@
             inherit nixpkgs hardware nur declarative-cachix
               impermanence nix-colors system;
           };
-          modules = [ (./hosts + "/${hostname}") ./overlays ];
+          modules = [ (./hosts + "/${hostname}") ./modules/nixos ./overlays ];
         };
       # Make home configuration, given username, hostname, and system type
       mkHome = { username, hostname, system }:
