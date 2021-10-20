@@ -47,11 +47,6 @@ in
     '';
   };
 
-  # Enable i2c gpio
-  hardware.i2c.enable = true;
-  hardware.raspberry-pi."4".i2c-bcm2708.enable = true;
-  boot.kernelModules = [ "i2c-dev" "i2c-piix4" "i2c_bcm2835" ];
-
   # Enable argonone fan daemon
   hardware.argonone.enable = true;
 
