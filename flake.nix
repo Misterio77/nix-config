@@ -66,6 +66,11 @@
           hostname = "merope";
           system = "aarch64-linux";
         };
+        # Gf's PC
+        maia = mkSystem {
+          hostname = "maia";
+          system = "x86_64-linux";
+        };
       };
 
       homeConfigurations = {
@@ -78,6 +83,11 @@
           username = "misterio";
           hostname = "merope";
           system = "aarch64-linux";
+        };
+        "layla@maia" = mkHome {
+          username = "layla";
+          hostname = "maia";
+          system = "x86_64-linux";
         };
       };
       overlay = import ./overlays;
