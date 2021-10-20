@@ -50,6 +50,12 @@ in
   # Enable argonone fan daemon
   hardware.argonone.enable = true;
 
+  # Enable sistemer telegram bot
+  services.sistemer-bot = {
+    enable = true;
+    tokenFile = "/srv/sistemer_bot.key";
+  };
+
   # My user info
   users.users.misterio = {
     isNormalUser = true;

@@ -6,6 +6,7 @@
       amdgpu-clocks = prev.callPackage ../pkgs/amdgpu-clocks { };
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
       rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
+      sistemer-bot = prev.callPackage ../pkgs/sistemer-bot { };
       zenity-askpass = prev.callPackage ../pkgs/zenity-askpass { };
       wallpapers = prev.callPackage ../pkgs/wallpapers { };
 
