@@ -80,7 +80,7 @@
       xdg-utils
       ydotool
     ] else if hostname == "merope" then [
-      argononed
+      nur.repos.argononed
     ] else [ ]);
 
   home.persistence = {
