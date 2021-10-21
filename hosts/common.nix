@@ -1,5 +1,5 @@
 # This file holds config that i use on all hosts
-{ pkgs, nixpkgs, nix-colors, nur, declarative-cachix, ... }:
+{ pkgs, lib, nixpkgs, nix-colors, nur, declarative-cachix, ... }:
 
 {
   imports = [
@@ -8,7 +8,7 @@
 
   system.stateVersion = "21.11";
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   time.timeZone = "America/Sao_Paulo";
 
   networking.networkmanager.enable = true;

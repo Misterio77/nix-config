@@ -24,11 +24,23 @@
     #
   ];
 
-  colorscheme = nix-colors.colorSchemes.pandora;
+  colorscheme = nix-colors.colorSchemes.dracula;
 
   home.persistence = {
     "/data/home/layla" = {
-      directories = [ "Documents" "Downloads" "Pictures" "Videos" ];
+      directories = [
+        "Documentos"
+        "Downloads"
+        "Imagens"
+        "Vídeos"
+        "Música"
+        "Desktop"
+        "Templates"
+        "Public"
+        "Jogos"
+        "Livros"
+        ".config/dconf"
+      ];
       allowOther = true;
     };
   };

@@ -72,7 +72,7 @@ in rec {
 
     font = {
       name = "Fira Sans";
-      size = 12;
+      size = 11;
     };
 
     iconTheme = {
