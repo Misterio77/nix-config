@@ -62,7 +62,6 @@ in
   };
 
   services = {
-    /*
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -70,7 +69,6 @@ in
       pulse.enable = true;
       jack.enable = true;
     };
-    */
     dbus.packages = [ pkgs.gcr ];
     postgresql = {
       enable = true;
@@ -166,7 +164,7 @@ in
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;
-    pulseaudio.enable = true;
+    # pulseaudio.enable = true;
   };
 
   virtualisation.docker.enable = true;

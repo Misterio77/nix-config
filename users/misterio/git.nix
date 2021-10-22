@@ -12,7 +12,11 @@
       signByDefault = false;
       key = "";
     };
-    extraConfig = { init = { defaultBranch = "main"; }; };
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
     lfs = { enable = true; };
     ignores = [ ".direnv" "result" ];
   };
