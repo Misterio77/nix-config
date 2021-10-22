@@ -22,6 +22,7 @@
 
   home.packages = with pkgs; [
     kdenlive
+    libreoffice
   ];
 
   colorscheme = nix-colors.colorSchemes.dracula;
