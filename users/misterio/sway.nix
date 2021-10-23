@@ -4,7 +4,11 @@ let
   colorscheme = config.colorscheme;
 
   # SSH Hosts
-  sshHosts = [ "merope.local" "ubuntu@vpn.uget.express" ];
+  sshHosts = [
+    "merope.local"
+    "maia.local"
+    "ubuntu@vpn.uget.express"
+  ];
 
   # Programs
   discocss = "${pkgs.discocss}/bin/discocss";
