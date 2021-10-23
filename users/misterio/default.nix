@@ -22,6 +22,8 @@
     ./gpg.nix
     ./gtk.nix
     ./kdeconnect.nix
+    ./khard.nix
+    ./khal.nix
     ./kitty.nix
     ./lutris.nix
     ./mail.nix
@@ -34,12 +36,14 @@
     ./qt.nix
     ./qutebrowser.nix
     ./rgbdaemon.nix
-    # ./runescape.nix
+    #./runescape.nix
     ./slack.nix
     ./steam.nix
     ./sway.nix
     ./swayidle.nix
     ./swaylock.nix
+    ./todoman.nix
+    ./vdirsyncer.nix
     ./yuzu.nix
     ./waybar.nix
     ./zathura.nix

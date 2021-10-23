@@ -20,6 +20,7 @@ let
   };
 in {
   home.persistence."/data/home/misterio".directories = [ "Mail" ];
+
   accounts.email = {
     maildirBasePath = "Mail";
     accounts = {
@@ -56,5 +57,26 @@ in {
         smtp.host = "smtp.gmail.com";
       } // common;
     };
+  };
+
+  programs.mbsync.enable = true;
+  programs.msmtp.enable = true;
+  systemd.user.services.mbsync = {
+    Unit = { Description = "mbsync synchronization"; };
+    Service = {
+      Type = "oneshot";
+      ExecCondition = ''
+        /bin/sh -c '${pkgs.gnupg}/bin/gpg-connect-agent "KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des" /bye | grep " 1 "'
+      '';
+      ExecStart = "${pkgs.isync}/bin/mbsync -a";
+    };
+  };
+  systemd.user.timers.mbsync = {
+    Unit = { Description = "Automatic mbsync synchronization"; };
+    Timer = {
+      OnBootSec = "30";
+      OnUnitActiveSec = "1m";
+    };
+    Install = { WantedBy = [ "timers.target" ]; };
   };
 }
