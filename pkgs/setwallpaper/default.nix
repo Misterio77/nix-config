@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     fi
 
     echo "$wallpaper" > /dotfiles/users/$USER/current-wallpaper.nix && \
-    home-manager switch --flake /dotfiles ''${@:2}
+    home-manager -v switch --flake /dotfiles ''${@:2}
   '';
   dontBuild = true;
   dontConfigure = true;

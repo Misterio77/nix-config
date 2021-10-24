@@ -39,13 +39,10 @@
         };
       });
 
-      /*
       # Add my patch for supporting sourcehut
-      nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
-        patches = oldAttrs.patches ++ [ ./nix-unset-is-macho.patch ./nix-sourcehut.patch ];
-        buildInputs = oldAttrs.buildInputs ++ [ prev.pugixml ];
+      nix_2_4 = prev.nix_2_4.overrideAttrs (oldAttrs: rec {
+        patches = oldAttrs.patches ++ [ ./nix-sourcehut.patch ];
       });
-      */
 
       # Don't launch discord when using discocss
       discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
@@ -67,6 +64,12 @@
       nix-index-unwrapped = prev.nix-index-unwrapped.overrideAttrs (oldAttrs: rec {
         patches = (oldAttrs.patches or [ ])
           ++ [ ./nix-index-new-command.patch ];
+      });
+
+      # Add named color support to todoman
+      todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
+        patches = (oldAttrs.patches or [ ])
+          ++ [ ./todoman-named-colors.patch ];
       });
     })
   ];

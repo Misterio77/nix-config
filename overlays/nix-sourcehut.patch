@@ -1,80 +1,28 @@
-diff --git a/Makefile.config.in b/Makefile.config.in
-index c8c4446b4..e7a81a6f2 100644
---- a/Makefile.config.in
-+++ b/Makefile.config.in
-@@ -18,6 +18,7 @@ LIBBROTLI_LIBS = @LIBBROTLI_LIBS@
- LIBCURL_LIBS = @LIBCURL_LIBS@
- OPENSSL_LIBS = @OPENSSL_LIBS@
- LIBSECCOMP_LIBS = @LIBSECCOMP_LIBS@
-+LIBPUGIXML_LIBS = @LIBPUGIXML_LIBS@
- PACKAGE_NAME = @PACKAGE_NAME@
- PACKAGE_VERSION = @PACKAGE_VERSION@
- SHELL = @bash@
-diff --git a/configure.ac b/configure.ac
-index 65478ecc5..425d5b3ba 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -202,6 +202,8 @@ if test "$machine_name" = "x86_64"; then
- fi
- AC_SUBST(HAVE_LIBCPUID, [$have_libcpuid])
- 
-+# Look for pugixml library.
-+PKG_CHECK_MODULES([LIBPUGIXML], [pugixml >= 1.11], [CXXFLAGS="$LIBPUGIXML_CFLAGS $CXXFLAGS"])
- 
- # Look for libseccomp, required for Linux sandboxing.
- case "$host_os" in
-diff --git a/doc/manual/src/installation/prerequisites-source.md b/doc/manual/src/installation/prerequisites-source.md
-index 40cb79627..7826523e4 100644
---- a/doc/manual/src/installation/prerequisites-source.md
-+++ b/doc/manual/src/installation/prerequisites-source.md
-@@ -26,6 +26,10 @@
-     available for download from the official repository
-     <https://github.com/google/brotli>.
- 
-+  - The `libpugixml` library to deserialize XML. If your distribution
-+    does not provide it, you can get it from
-+    <https://github.com/zeux/pugixml>.
-+
-   - cURL and its library. If your distribution does not provide it, you
-     can get it from <https://curl.haxx.se/>.
- 
-diff --git a/flake.nix b/flake.nix
-index 5f77e42d1..301982154 100644
---- a/flake.nix
-+++ b/flake.nix
-@@ -91,6 +91,7 @@
-             boost
-             lowdown
-             gmock
-+            pugixml
-           ]
-           ++ lib.optionals stdenv.isLinux [libseccomp]
-           ++ lib.optional (stdenv.isLinux || stdenv.isDarwin) libsodium
 diff --git a/src/libfetchers/github.cc b/src/libfetchers/github.cc
-index ffc44e9e2..5fa8e2a2c 100644
+index ffc44e9e2..f6797399e 100644
 --- a/src/libfetchers/github.cc
 +++ b/src/libfetchers/github.cc
 @@ -8,6 +8,7 @@
- 
+
  #include <optional>
  #include <nlohmann/json.hpp>
-+#include <pugixml.hpp>
- 
++#include <fstream>
+
  namespace nix::fetchers {
- 
+
 @@ -17,7 +18,7 @@ struct DownloadUrl
      Headers headers;
  };
- 
+
 -// A github or gitlab host
-+// A github, gitlab, or sourcehut host
++// A github, gitlab or sourcehut host
  const static std::string hostRegexS = "[a-zA-Z0-9.]*"; // FIXME: check
  std::regex hostRegex(hostRegexS, std::regex::ECMAScript);
- 
-@@ -348,7 +349,71 @@ struct GitLabInputScheme : GitArchiveInputScheme
+
+@@ -348,7 +349,90 @@ struct GitLabInputScheme : GitArchiveInputScheme
      }
  };
- 
+
 +struct SourceHutInputScheme : GitArchiveInputScheme
 +{
 +    std::string type() override { return "sourcehut"; }
@@ -91,29 +39,48 @@ index ffc44e9e2..5fa8e2a2c 100644
 +
 +    Hash getRevFromRef(nix::ref<Store> store, const Input & input) const override
 +    {
++        // TODO: In the future, when the sourcehut graphql API is implemented for mercurial
++        // and with anonymous access, this method should use it instead.
++
 +        auto ref = *input.getRef();
-+        if (ref == "HEAD") {
-+            ref = "";
-+        } else {
-+            ref = fmt("/%s", ref);
-+        }
++
 +        auto host = maybeGetStrAttr(input.attrs, "host").value_or("git.sr.ht");
-+        auto url = fmt("https://%s/%s/%s/log%s/rss.xml",
-+            host, getStrAttr(input.attrs, "owner"), getStrAttr(input.attrs, "repo"), ref);
++        auto base_url = fmt("https://%s/%s/%s",
++            host, getStrAttr(input.attrs, "owner"), getStrAttr(input.attrs, "repo"));
 +
 +        Headers headers = makeHeadersWithAuthTokens(host);
 +
-+        auto xmlFile = store->toRealPath(
-+                downloadFile(store, url, "source", false, headers).storePath);
++        std::string ref_uri;
++        if (ref == "HEAD") {
++            auto file = store->toRealPath(
++               downloadFile(store, fmt("%s/HEAD", base_url), "source", false, headers).storePath);
++            std::ifstream is(file);
++            std::string line;
++            getline(is, line);
++            ref_uri = line.substr(line.find("ref: ")+5, line.length()-1);
++        } else {
++            ref_uri = fmt("refs/heads/%s", ref);
++        }
 +
-+        pugi::xml_document doc;
-+        doc.load_file(xmlFile.c_str());
++        auto file = store->toRealPath(
++            downloadFile(store, fmt("%s/info/refs", base_url), "source", false, headers).storePath);
++        std::ifstream is(file);
 +
-+        std::string commitUrl = doc.child("rss").child("channel").child("item").child_value("link");
-+        auto id = commitUrl.substr(commitUrl.find("commit/")+7, commitUrl.length()-1);
++        std::string line;
++        std::string id;
++        while(getline(is, line)) {
++            auto index = line.find(ref_uri);
++            if (index != std::string::npos) {
++                id = line.substr(0, index-1);
++                break;
++            }
++        }
++        if(id.empty()) {
++            throw BadURL("in '%d', couldn't find ref '%d'", input.to_string(), ref);
++        }
 +
 +        auto rev = Hash::parseAny(id, htSHA1);
-+        debug("HEAD revision for '%s' is %s", url, rev.gitRev());
++        debug("HEAD revision for '%s' is %s", fmt("%s/%s", base_url, ref), rev.gitRev());
 +        return rev;
 +    }
 +
@@ -141,37 +108,5 @@ index ffc44e9e2..5fa8e2a2c 100644
  static auto rGitHubInputScheme = OnStartup([] { registerInputScheme(std::make_unique<GitHubInputScheme>()); });
  static auto rGitLabInputScheme = OnStartup([] { registerInputScheme(std::make_unique<GitLabInputScheme>()); });
 +static auto rSourceHutInputScheme = OnStartup([] { registerInputScheme(std::make_unique<SourceHutInputScheme>()); });
- 
+
  }
-diff --git a/src/libfetchers/local.mk b/src/libfetchers/local.mk
-index 2e8869d83..f91b8f1bb 100644
---- a/src/libfetchers/local.mk
-+++ b/src/libfetchers/local.mk
-@@ -8,6 +8,6 @@ libfetchers_SOURCES := $(wildcard $(d)/*.cc)
- 
- libfetchers_CXXFLAGS += -I src/libutil -I src/libstore
- 
--libfetchers_LDFLAGS += -pthread
-+libfetchers_LDFLAGS += -pthread $(LIBPUGIXML_LIBS)
- 
- libfetchers_LIBS = libutil libstore
-diff --git a/src/libstore/globals.hh b/src/libstore/globals.hh
-index 8784d5faf..142be99d0 100644
---- a/src/libstore/globals.hh
-+++ b/src/libstore/globals.hh
-@@ -900,10 +900,14 @@ public:
-             `type` is either `OAuth2` or `PAT` to indicate which type
-             of token is being specified.
- 
-+          * SourceHut: the token value is the string obtained either
-+            as the Personal Access Token (https://meta.sr.ht/oauth2/personal-token),
-+            or through OAuth2.
-+
-           Example `~/.config/nix/nix.conf`:
- 
-           ```
--          access-tokens = github.com=23ac...b289 gitlab.mycompany.com=PAT:A123Bp_Cd..EfG gitlab.com=OAuth2:1jklw3jk
-+          access-tokens = github.com=23ac...b289 gitlab.mycompany.com=PAT:A123Bp_Cd..EfG gitlab.com=OAuth2:1jklw3jk git.sr.ht=ACiMP...KI1c
-           ```
- 
-           Example `~/code/flake.nix`:
