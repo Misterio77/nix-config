@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     runelite
-    nur.repos.kira-bruneau.runescape-launcher
+    nur.repos.misterio.runescape-launcher
   ];
 
   home.persistence."/data/games/misterio".directories = [ "Jagex" ];

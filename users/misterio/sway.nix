@@ -20,7 +20,7 @@ let
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
-  pass-wofi = "${pkgs.nur.repos.misterio.pass-wofi}/bin/pass-wofi";
+  pass-wofi = "${pkgs.pass-wofi}/bin/pass-wofi";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
