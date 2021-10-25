@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 let
+  keyring = import ./keyring.nix { inherit pkgs; };
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-  gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";
 in {
@@ -11,7 +11,7 @@ in {
   # After 10 seconds of locked, mute mic
   # After 20 seconds of locked, disable rgb lights and turn monitors off
   xdg.configFile."swayidle/config".text = ''
-    timeout 240 '${gpg-connect-agent} reloadagent /bye'
+    timeout 240 '${keyring.lock}'
 
     timeout 600 '${swaylock} --screenshots --daemonize'
 

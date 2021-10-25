@@ -6,6 +6,7 @@
     directories = [
       "Calendars"
       "Contacts"
+      ".local/share/vdirsyncer"
     ];
   };
 
@@ -51,10 +52,12 @@
 
   systemd.user.services.vdirsyncer = {
     Unit = { Description = "vdirsyncer synchronization"; };
-    Service = {
+    Service = let
+      keyring = import ./keyring.nix { inherit pkgs; };
+    in {
       Type = "oneshot";
       ExecCondition = ''
-        /bin/sh -c '${pkgs.gnupg}/bin/gpg-connect-agent "KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des" /bye | grep " 1 "'
+        /bin/sh -c "${keyring.isUnlocked}"
       '';
       ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync";
     };

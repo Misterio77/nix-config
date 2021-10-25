@@ -63,10 +63,12 @@ in {
   programs.msmtp.enable = true;
   systemd.user.services.mbsync = {
     Unit = { Description = "mbsync synchronization"; };
-    Service = {
+    Service = let
+      keyring = import ./keyring.nix { inherit pkgs; };
+    in {
       Type = "oneshot";
       ExecCondition = ''
-        /bin/sh -c '${pkgs.gnupg}/bin/gpg-connect-agent "KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des" /bye | grep " 1 "'
+        /bin/sh -c "${keyring.isUnlocked}"
       '';
       ExecStart = "${pkgs.isync}/bin/mbsync -a";
     };

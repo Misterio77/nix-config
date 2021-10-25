@@ -1,18 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  colors = config.colorscheme.colors;
-  pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
-  gpg = "${pkgs.gnupg}/bin/gpg";
-  gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";
-  gamemoded = "${pkgs.gamemode}/bin/gamemoded";
-  minicava = "${pkgs.nur.repos.misterio.minicava}/bin/minicava";
-  notify-send = "${pkgs.libnotify}/bin/notify-send";
-  preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
-  jq = "${pkgs.jq}/bin/jq";
-  playerctl = "${pkgs.playerctl}/bin/playerctl";
-  wofi = "${pkgs.wofi}/bin/wofi";
-in {
+{
   programs.waybar = {
     enable = true;
     settings = [{
@@ -61,7 +49,7 @@ in {
             portable = "";
             default = [ "" "" "" ];
           };
-          on-click = "${pavucontrol}";
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         "sway/window" = { max-length = 50; };
         "sway/workspaces" = {
@@ -71,30 +59,29 @@ in {
             default = "祿";
           };
         };
-        "custom/menu" = {
+        "custom/menu" = let
+          wofi = "${pkgs.wofi}/bin/wofi";
+        in {
           format = "";
           on-click = "${wofi} -S drun -I";
         };
         "custom/unread-mail" = {
           exec = ''
-            echo "  ($(find ~/Mail/personal/INBOX/new -type f | wc -l))"
+            echo "  ($(find ~/Mail/*/INBOX/new -type f | wc -l))"
           '';
           on-click = "${pkgs.kitty}/bin/kitty -e ${pkgs.neomutt}/bin/neomutt";
           interval = 2;
         };
-        "custom/gpg-agent" = {
+        "custom/gpg-agent" = let
+          keyring = import ./keyring.nix { inherit pkgs; };
+        in {
           # Check if GPG Agent is caching passphrase
           exec = ''
-            ${gpg-connect-agent} 'KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des' /bye | grep -q " 1 " && \
-            echo -e "\nGPG is unlocked" || \
-            echo -e "\nGPG is locked"
+            ${keyring.isUnlocked} && echo -e "\nGPG is unlocked" || echo -e "\nGPG is locked"
           '';
           # Lock or unlock GPG agent
           on-click = ''
-            ${gpg-connect-agent} 'KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des' /bye | grep " 1 " && \
-            (${gpg-connect-agent} reloadagent /bye && \
-            ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
-            echo "a" | ${gpg} --sign
+            ${keyring.isUnlocked} && ${keyring.lock} || ${keyring.unlock}
           '';
           interval = 1;
         };
@@ -106,7 +93,7 @@ in {
           format = "{} ﲹ";
         };
         "custom/gamemode" = {
-          exec-if = "${gamemoded} --status | grep 'is active' -q";
+          exec-if = "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
           interval = 2;
           exec = "echo '' && echo 'Gamemode is active'";
         };
@@ -117,7 +104,7 @@ in {
         };
         "custom/preferredplayer" = {
           exec = ''
-            ${jq} -c -n --arg text "$(player=$(${preferredplayer}) && echo $player | cut -d '.' -f 1 || echo No player set)" '{text: $text, alt: $text, tooltip: $text}'
+            ${pkgs.jq}/bin/jq -c -n --arg text "$(player=$(${pkgs.preferredplayer}/bin/preferredplayer) && echo $player | cut -d '.' -f 1 || echo No player set)" '{text: $text, alt: $text, tooltip: $text}'
           '';
           return-type = "json";
           interval = 1;
@@ -131,7 +118,10 @@ in {
             "No player set" = "ﱘ";
           };
         };
-        "custom/player" = {
+        "custom/player" = let
+          playerctl = "${pkgs.playerctl}/bin/playerctl";
+          preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
+        in {
           exec-if = ''
             [[ "$(player=$(${preferredplayer}) && ${playerctl} --player $player status)" != "Stopped" ]]'';
           exec = ''
@@ -148,7 +138,7 @@ in {
           };
         };
         "custom/minicava" = {
-          "exec" = "${minicava}";
+          "exec" = "${pkgs.nur.repos.misterio.minicava}/bin/minicava";
           "restart-interval" = 5;
         };
       };
@@ -158,7 +148,9 @@ in {
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style = ''
+    style = let
+      colors = config.colorscheme.colors;
+    in ''
       * {
         border: none;
         border-radius: 0;

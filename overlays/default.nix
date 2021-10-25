@@ -4,11 +4,12 @@
   nixpkgs.overlays = [
     (final: prev: {
       amdgpu-clocks = prev.callPackage ../pkgs/amdgpu-clocks { };
+      pass-wofi = prev.callPackage ../pkgs/pass-wofi { };
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
       rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
       sistemer-bot = prev.callPackage ../pkgs/sistemer-bot { };
-      zenity-askpass = prev.callPackage ../pkgs/zenity-askpass { };
       wallpapers = prev.callPackage ../pkgs/wallpapers { };
+      zenity-askpass = prev.callPackage ../pkgs/zenity-askpass { };
 
       setscheme = prev.callPackage ../pkgs/setscheme { };
       setwallpaper = prev.callPackage ../pkgs/setwallpaper { };

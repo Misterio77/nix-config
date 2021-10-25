@@ -13,8 +13,6 @@ let
   # Programs
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
-  gpg = "${pkgs.gnupg}/bin/gpg";
-  gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";
   kitty = "${pkgs.kitty}/bin/kitty";
   makoctl = "${pkgs.mako}/bin/makoctl";
   neomutt = "${pkgs.neomutt}/bin/neomutt";
@@ -240,11 +238,12 @@ in rec {
         "Scroll_Lock" = "exec ${pass-wofi}";
 
         # Lock or unlock gpg
-        "Shift+Scroll_Lock" = ''
-          exec ${gpg-connect-agent} 'KEYINFO --no-ask B5076D6AB0783A842150876E8047AEE5604FB663 Err Pmt Des' /bye | grep " 1 " && \
-          (${gpg-connect-agent} reloadagent /bye && \
-          ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
-          echo "a"| ${gpg} --sign
+        "Shift+Scroll_Lock" = let
+          keyring = import ./keyring.nix { inherit pkgs; };
+        in ''
+          exec ${keyring.isUnlocked} && \
+          (${keyring.lock} && ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
+          ${keyring.unlock}
         '';
 
         # Full screen across monitors
