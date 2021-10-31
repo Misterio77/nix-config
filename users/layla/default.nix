@@ -24,6 +24,7 @@
     kdenlive
     libreoffice
     soundwire
+    pavucontrol
   ];
 
   colorscheme = nix-colors.colorSchemes.dracula;
