@@ -11,6 +11,9 @@
   ];
 
   networking.hostName = "maia";
+
+  networking.firewall.allowedUDPPorts = [ 59010 59011 ];
+
   i18n.defaultLocale = "pt_BR.UTF-8";
 
   fileSystems."/data".neededForBoot = true;
@@ -74,7 +77,7 @@
   users.users = {
     misterio = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" ];
       shell = pkgs.fish;
       passwordFile = "/data/home/misterio/.password";
       openssh.authorizedKeys.keys = [
@@ -83,7 +86,7 @@
     };
     layla = {
       isNormalUser = true;
-      extraGroups = [ "audio" "wheel" ];
+      extraGroups = [  "networkmanager" "audio" "wheel" ];
       shell = pkgs.fish;
       passwordFile = "/data/home/layla/.password";
     };

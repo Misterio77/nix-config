@@ -79,6 +79,7 @@ in
   };
 
   programs = {
+    adb.enable = true;
     ssh.startAgent = false;
     gnupg.agent = {
       enable = true;
@@ -174,7 +175,7 @@ in
   # My user info
   users.users.misterio = {
     isNormalUser = true;
-    extraGroups = [ "audio" "wheel" "docker" "plugdev" ];
+    extraGroups = [ "audio" "wheel" "docker" "networkmanager" "plugdev"  "adbusers"];
     shell = pkgs.fish;
     passwordFile = "/data/home/misterio/.password";
     openssh.authorizedKeys.keys = [

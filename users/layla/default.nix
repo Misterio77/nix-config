@@ -23,6 +23,7 @@
   home.packages = with pkgs; [
     kdenlive
     libreoffice
+    soundwire
   ];
 
   colorscheme = nix-colors.colorSchemes.dracula;

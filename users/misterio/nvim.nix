@@ -60,18 +60,22 @@ in {
       {
         plugin = nvim-lspconfig;
         config = ''
-          "Rust
-          lua require'lspconfig'.rust_analyzer.setup{}
-          "C/C++
-          lua require'lspconfig'.clangd.setup{}
-          "Nix
-          lua require'lspconfig'.rnix.setup{}
-          "JSON
-          lua require'lspconfig'.jsonls.setup{}
-          "SQL
-          lua require'lspconfig'.sqls.setup{}
-          "Python
-          lua require'lspconfig'.pylsp.setup{}
+          lua << EOF
+          --Rust
+          require'lspconfig'.rust_analyzer.setup{}
+          --C/C++
+          require'lspconfig'.clangd.setup{}
+          --Nix
+          require'lspconfig'.rnix.setup{}
+          --JSON
+          require'lspconfig'.jsonls.setup{}
+          --SQL
+          require'lspconfig'.sqls.setup{}
+          --Python
+          require'lspconfig'.pylsp.setup{}
+          --Lua
+          require'lspconfig'.sumneko_lua.setup{cmd = {"lua-language-server"}}
+          EOF
 
           "Go to declaration/definition
           map gD       :lua vim.lsp.buf.declaration()<CR>
