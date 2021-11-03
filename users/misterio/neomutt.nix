@@ -55,7 +55,7 @@
       }
       {
         action =
-          ":set confirmappend=no\\n<tag-prefix><save-message>+Archive<enter>:set confirmappend=yes\\n";
+          ":set confirmappend=no\\n<save-message>+Archive<enter>:set confirmappend=yes\\n";
         key = "A";
         map = [ "index" "pager" ];
       }
@@ -78,7 +78,9 @@
     ];
     extraConfig = ''
       alternates "eu@misterio.me|gabriel.fontes@uget.express|g.fontes@usp.br"
-
+    ''
+    +
+    ''
       # From: https://github.com/altercation/mutt-colors-solarized/blob/master/mutt-colors-solarized-dark-16.muttrc
 
       # basic colors ---------------------------------------------------------
@@ -102,6 +104,7 @@
       # index ----------------------------------------------------------------
 
       color index         red             default         "~A"                        # all messages
+      color index         black           red             "~D"                        # deleted messages
       color index         brightred       default         "~E"                        # expired messages
       color index         blue            default         "~N"                        # new messages
       color index         blue            default         "~O"                        # old messages
@@ -120,8 +123,6 @@
       color index         red             default         "~N~F"                      # new flagged messages
       color index         red             default         "~N~F~p"                    # new flagged messages to me
       color index         red             default         "~U~F~p"                    # new flagged messages to me
-      color index         black           red             "~D"                        # deleted messages
-      color index         black           red             "~N~D"                      # unread deleted messages
       color index         brightcyan      default         "~v~(!~N)"                  # collapsed thread with no unread
       color index         yellow          default         "~v~(~N)"                   # collapsed thread with some unread
       color index         green           default         "~N~v~(~N)"                 # collapsed thread with unread parent

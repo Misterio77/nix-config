@@ -4,7 +4,6 @@
   nixpkgs.overlays = [
     (final: prev: {
       amdgpu-clocks = prev.callPackage ../pkgs/amdgpu-clocks { };
-      pass-wofi = prev.callPackage ../pkgs/pass-wofi { };
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
       rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
       sistemer-bot = prev.callPackage ../pkgs/sistemer-bot { };
@@ -20,6 +19,10 @@
       };
       setwallpaper-wofi = prev.callPackage ../pkgs/setwallpaper-wofi {
         inherit (final.gnome) zenity;
+      };
+
+      pass-wofi = prev.callPackage ../pkgs/pass-wofi {
+        pass = final.pass.withExtensions (exts: [ exts.pass-otp ]);
       };
 
       # Link kitty to xterm (to fix crappy drun behaviour)

@@ -15,6 +15,7 @@ in
     nur-no-pkgs.repos.misterio.modules.openrgb
     ./hardware-configuration.nix
     ../common.nix
+    ./satisfactory.nix
   ];
 
   networking.hostName = "atlas";
@@ -133,7 +134,7 @@ in
       OD_MCLK:
       1: 890MHz
       OD_VDDC_CURVE:
-      0: 1400MHz 836mV
+      0: 1400MHz 880mV
 
       FORCE_POWER_CAP: 150000000
     '';
@@ -161,7 +162,11 @@ in
 
   hardware = {
     ckb-next.enable = true;
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [ amdvlk ];
+      driSupport = true;
+    };
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;
