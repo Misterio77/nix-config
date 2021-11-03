@@ -71,11 +71,6 @@
           ++ [ ./nix-index-new-command.patch ];
       });
 
-      # Add named color support to todoman
-      todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
-        patches = (oldAttrs.patches or [ ])
-          ++ [ ./todoman-named-colors.patch ];
-      });
     })
   ];
 }
