@@ -104,7 +104,7 @@
       # index ----------------------------------------------------------------
 
       color index         red             default         "~A"                        # all messages
-      color index         black           red             "~D"                        # deleted messages
+      color index         blue            default         "~N"                        # new messages
       color index         brightred       default         "~E"                        # expired messages
       color index         blue            default         "~N"                        # new messages
       color index         blue            default         "~O"                        # old messages
@@ -134,6 +134,8 @@
       color index         yellow          red             "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
       color index         yellow          default         "~(~N)"                     # messages in threads with some unread
       color index         green           default         "~S"                        # superseded messages
+      color index         black           red             "~D"                        # deleted messages
+      color index         black           red             "~N~D"                      # deleted messages
       color index         red             default         "~T"                        # tagged messages
 
       # message headers ------------------------------------------------------
