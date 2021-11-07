@@ -42,12 +42,12 @@
           };
           modules = [ (./hosts + "/${hostname}") ./modules/nixos ./overlays ];
         };
-      # Make home configuration, given username, hostname, and system type
-      mkHome = { username, hostname, system }:
+      # Make home configuration, given username, required features, and system type
+      mkHome = { username, features, system }:
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit hostname nur impermanence nix-colors;
+            inherit nur impermanence nix-colors features;
           };
           configuration = ./users + "/${username}";
           extraModules = [ ./modules/home-manager ./overlays ];
@@ -76,24 +76,23 @@
       homeConfigurations = {
         "misterio@atlas" = mkHome {
           username = "misterio";
-          hostname = "atlas";
+          features = [ "cli" "desktop-sway" "games" "mining" "persistence" "rgb" "trusted" ];
           system = "x86_64-linux";
         };
-
         "misterio@merope" = mkHome {
           username = "misterio";
-          hostname = "merope";
+          features = [ "cli" "persistence" ];
           system = "aarch64-linux";
+        };
+        "misterio@maia" = mkHome {
+          username = "misterio";
+          features = [ "cli" "persistence" ];
+          system = "x86_64-linux";
         };
 
         "layla@maia" = mkHome {
           username = "layla";
-          hostname = "maia";
-          system = "x86_64-linux";
-        };
-        "misterio@maia" = mkHome {
-          username = "misterio";
-          hostname = "maia";
+          features = [ ];
           system = "x86_64-linux";
         };
       };

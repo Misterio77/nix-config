@@ -3,10 +3,16 @@
 with nix-colors.lib { inherit pkgs; };
 
 let
-  currentWallpaper = import ./current-wallpaper.nix;
-  currentMode = import ./current-mode.nix;
-  currentScheme = import ./current-scheme.nix;
+  currentScheme = "spaceduck";
+  currentWallpaper = null;
+  currentMode = null;
 in {
+  imports = [ nix-colors.homeManagerModule ];
+  home.packages = with pkgs; [
+    setscheme
+    setwallpaper
+  ];
+
   colorscheme = if currentScheme != null
     then nix-colors.colorSchemes.${currentScheme}
     else colorschemeFromPicture {
