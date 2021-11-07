@@ -48,6 +48,10 @@ in
 
       "Line numbers
       set number relativenumber
+
+      "Scroll up and down
+      nmap <C-j> <C-e>
+      nmap <C-k> <C-y>
     '';
     plugins = with pkgs.vimPlugins; [
 
@@ -84,7 +88,7 @@ in
       {
         plugin = nvim-cmp;
         config = ''
-          lua <<EOF
+          lua << EOF
             local cmp = require('cmp')
             local lspkind = require('lspkind')
             cmp.setup{
@@ -98,7 +102,6 @@ in
                 ['<C-m>'] = cmp.mapping.select_prev_item({
                   behavior = cmp.SelectBehavior.Insert }
                 ),
-
                 ['<C-e>'] = cmp.mapping.close(),
               },
               sources = {
@@ -117,6 +120,7 @@ in
       vim-matchup
       { plugin = nvim-autopairs; config = "lua require('nvim-autopairs').setup{}"; }
       { plugin = better-escape-nvim; config = "lua require('better_escape').setup()"; }
+      { plugin = bufdelete-nvim; config = "nmap <C-q> :Bdelete<CR>"; }
 
       # UI
       { plugin = nvim-web-devicons; config = "lua require('nvim-web-devicons').setup{}"; }
@@ -128,8 +132,6 @@ in
           lua require('bufferline').setup{}
           nmap <C-h> :BufferLineCyclePrev<CR>
           nmap <C-l> :BufferLineCycleNext<CR>
-          nmap <C-f> :BufferLinePick<CR>
-          nmap <C-g> :BufferLinePickClose<CR>
         '';
       }
       {
