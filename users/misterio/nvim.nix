@@ -11,133 +11,12 @@ let
       sha256 = "sha256-mSr/UEdEGgi/otVQUTETKHykTZVP2+5kYWUuRJc0xZ4=";
     };
   };
-in {
-  home.sessionVariables = { EDITOR = "nvim"; };
-  home.packages = with pkgs; [ neovim-remote ];
-
-  xdg.desktopEntries = {
-    nvim = {
-      name = "Neovim";
-      genericName = "Text Editor";
-      comment = "Edit text files";
-      exec = "nvim %F";
-      icon = "nvim";
-      mimeType = [
-        "text/english"
-        "text/plain"
-        "text/x-makefile"
-        "text/x-c++hdr"
-        "text/x-c++src"
-        "text/x-chdr"
-        "text/x-csrc"
-        "text/x-java"
-        "text/x-moc"
-        "text/x-pascal"
-        "text/x-tcl"
-        "text/x-tex"
-        "application/x-shellscript"
-        "text/x-c"
-        "text/x-c++"
-      ];
-      terminal = true;
-      type = "Application";
-      categories = [ "Utility" "TextEditor" ];
-    };
-  };
+in
+{
+  imports = [ ./nvim-theme.nix ];
 
   programs.neovim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [
-      # Colorscheme
-      {
-        plugin = vim-noctu;
-        config = ''
-          colorscheme noctu
-        '';
-      }
-      # LSP and completion related
-      lsp-colors-nvim
-      {
-        plugin = nvim-lspconfig;
-        config = ''
-          lua << EOF
-          --Rust
-          require'lspconfig'.rust_analyzer.setup{}
-          --C/C++
-          require'lspconfig'.clangd.setup{}
-          --Nix
-          require'lspconfig'.rnix.setup{}
-          --JSON
-          require'lspconfig'.jsonls.setup{}
-          --SQL
-          require'lspconfig'.sqls.setup{}
-          --Python
-          require'lspconfig'.pylsp.setup{}
-          --Lua
-          require'lspconfig'.sumneko_lua.setup{cmd = {"lua-language-server"}}
-          EOF
-
-          "Go to declaration/definition
-          map gD       :lua vim.lsp.buf.declaration()<CR>
-          map gd       :lua vim.lsp.buf.definition()<CR>
-          "Diagnostics for current line
-          map <space>e :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-          "Format code
-          map <space>f :lua vim.lsp.buf.formatting()<CR>
-
-          "Show tooltip info
-          autocmd CursorHold <buf> :lua vim.lsp.buf.hover()<CR>
-          map K :lua vim.lsp.buf.hover()<CR>
-        '';
-      }
-      {
-        plugin = nvim-cmp;
-        config = ''
-          "Completions from buffer and lsp
-          lua require'cmp'.setup{sources={{name='nvim_lsp'},{name='buffer'}}}
-        '';
-      }
-      cmp-nvim-lsp
-      cmp-buffer
-      {
-        plugin = rust-tools-nvim;
-        config = ''
-          "Enable Rust typehints
-          lua require('rust-tools').setup{tools={autoSetHints = true}}
-        '';
-      }
-      # QOL
-      {
-        plugin = nerdtree;
-        config = ''
-          "Toggle nerdtree
-          nmap <Bslash> :NERDTreeToggle<CR>
-        '';
-      }
-      auto-pairs
-      editorconfig-vim
-      vim-numbertoggle
-      vim-surround
-      # Syntax
-      {
-        plugin = rust-vim;
-        config = "let g:rust_fold = 1";
-      }
-      {
-        plugin = vimtex;
-        config = ''
-          let g:vimtex_view_method = "zathura"
-          let g:vimtex_view_automatic = 1
-          let g:vimtex_compiler_latexmk = {'build_dir': 'build' }
-        '';
-      }
-      dart-vim-plugin
-      mermaid
-      plantuml-syntax
-      vim-markdown
-      vim-nix
-      vim-toml
-    ];
     extraConfig = ''
       "Reload automatically
       set autoread
@@ -170,5 +49,149 @@ in {
       "Line numbers
       set number relativenumber
     '';
+    plugins = with pkgs.vimPlugins; [
+
+      # LSP
+      {
+        plugin = nvim-lspconfig;
+        config = ''
+          lua << EOF
+            local lspconfig = require('lspconfig')
+            lspconfig.rust_analyzer.setup{} -- Rust
+            lspconfig.clangd.setup{} -- C/C++
+            lspconfig.rnix.setup{} -- Nix
+            lspconfig.jsonls.setup{} -- JSON
+            lspconfig.sqls.setup{cmd = {"sqls", "-config", "sqls.yml"}} -- SQL
+            lspconfig.pylsp.setup{} -- Python
+            lspconfig.sumneko_lua.setup{cmd = {"lua-language-server"}} -- Lua
+          EOF
+
+          nmap gD       :lua vim.lsp.buf.declaration()<CR>
+          nmap gd       :lua vim.lsp.buf.definition()<CR>
+          nmap <space>e :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+          nmap <space>f :lua vim.lsp.buf.formatting()<CR>
+
+          autocmd CursorHold <buf> :lua vim.lsp.buf.hover()<CR>
+          nmap K :lua vim.lsp.buf.hover()<CR>
+        '';
+      }
+      { plugin = rust-tools-nvim; config = "lua require('rust-tools').setup{tools={autoSetHints = true}}"; }
+
+      # Completions
+      cmp-nvim-lsp
+      cmp-buffer
+      lspkind-nvim
+      {
+        plugin = nvim-cmp;
+        config = ''
+          lua <<EOF
+            local cmp = require('cmp')
+            local lspkind = require('lspkind')
+            cmp.setup{
+              formatting = {
+                format = lspkind.cmp_format()
+              },
+              mapping = {
+                ['<C-n>'] = cmp.mapping.select_next_item({
+                  behavior = cmp.SelectBehavior.Insert }
+                ),
+                ['<C-m>'] = cmp.mapping.select_prev_item({
+                  behavior = cmp.SelectBehavior.Insert }
+                ),
+
+                ['<C-e>'] = cmp.mapping.close(),
+              },
+              sources = {
+                { name='nvim_lsp' },
+                { name='buffer' },
+              },
+            }
+          EOF
+        '';
+      }
+
+      # QOL
+      editorconfig-vim
+      vim-numbertoggle
+      vim-surround
+      vim-matchup
+      { plugin = nvim-autopairs; config = "lua require('nvim-autopairs').setup{}"; }
+      { plugin = better-escape-nvim; config = "lua require('better_escape').setup()"; }
+
+      # UI
+      { plugin = nvim-web-devicons; config = "lua require('nvim-web-devicons').setup{}"; }
+      { plugin = nvim-colorizer-lua; config = "lua require('colorizer').setup()"; }
+      { plugin = gitsigns-nvim; config = "lua require('gitsigns').setup()"; }
+      {
+        plugin = bufferline-nvim;
+        config = ''
+          lua require('bufferline').setup{}
+          nmap <C-h> :BufferLineCyclePrev<CR>
+          nmap <C-l> :BufferLineCycleNext<CR>
+          nmap <C-f> :BufferLinePick<CR>
+          nmap <C-g> :BufferLinePickClose<CR>
+        '';
+      }
+      {
+        plugin = nvim-tree-lua;
+        config = ''
+          lua require('nvim-tree').setup{}
+          nmap <C-p> :NvimTreeToggle<CR>
+        '';
+      }
+      {
+        plugin = feline-nvim;
+        config = ''
+          lua << EOF
+          local components = {
+            active = {},
+            inactive = {},
+          }
+          require('feline').setup()
+          EOF
+        '';
+      }
+
+      # Syntaxes
+      { plugin = rust-vim; config = "let g:rust_fold = 1"; }
+      dart-vim-plugin
+      mermaid
+      plantuml-syntax
+      vim-markdown
+      vim-nix
+      vim-toml
+    ];
+  };
+
+  home.sessionVariables = { EDITOR = "nvim"; };
+
+  xdg.desktopEntries = {
+    nvim = {
+      name = "Neovim";
+      genericName = "Text Editor";
+      comment = "Edit text files";
+      exec = "nvim %F";
+      icon = "nvim";
+      mimeType = [
+        "text/english"
+        "text/plain"
+        "text/x-makefile"
+        "text/x-c++hdr"
+        "text/x-c++src"
+        "text/x-chdr"
+        "text/x-csrc"
+        "text/x-java"
+        "text/x-moc"
+        "text/x-pascal"
+        "text/x-tcl"
+        "text/x-tex"
+        "application/x-shellscript"
+        "text/x-c"
+        "text/x-c++"
+      ];
+      terminal = true;
+      type = "Application";
+      categories = [ "Utility" "TextEditor" ];
+    };
   };
 }

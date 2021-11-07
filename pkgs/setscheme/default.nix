@@ -20,7 +20,7 @@ stdenv.mkDerivation {
     fi
 
     echo "$scheme" > /dotfiles/users/$USER/current-scheme.nix && \
-    home-manager -v switch --flake /dotfiles ''${@:2}
+    home-manager switch --flake /dotfiles ''${@:2}
   '';
   dontBuild = true;
   dontConfigure = true;

@@ -197,7 +197,6 @@
       color body          blue            default         "( *[-+=#*~_]){6,}"
 
       # From https://github.com/jessfraz/dockerfiles/blob/master/mutt/.mutt/mutt-patch-highlighting.muttrc
-      color   body    brightwhite     default         ^(\s).*
       color   body    cyan            default         ^(Signed-off-by).*
       color   body    cyan            default         ^(Docker-DCO-1.1-Signed-off-by).*
       color   body    brightwhite     default         ^(Cc)

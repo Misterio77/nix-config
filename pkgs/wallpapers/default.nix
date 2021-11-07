@@ -1,5 +1,4 @@
-{ lib, stdenv, fetchgit }:
-with lib;
+{ lib, stdenv }:
 
 stdenv.mkDerivation rec {
   name = "wallpapers";
@@ -19,6 +18,6 @@ stdenv.mkDerivation rec {
   meta = {
     description = "My wallpaper collection";
     homepage = "https://github.com/Misterio77/wallpapers";
-    platforms = platforms.all;
+    platforms = lib.platforms.all;
   };
 }
