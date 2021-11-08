@@ -3,9 +3,9 @@
 with nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme = "spaceduck";
-  currentWallpaper = null;
-  currentMode = null;
+  currentScheme = import ./current-scheme.nix;
+  currentWallpaper = import ./current-wallpaper.nix;
+  currentMode = import ./current-mode.nix;
 in {
   imports = [ nix-colors.homeManagerModule ];
   home.packages = with pkgs; [

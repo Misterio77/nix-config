@@ -5,6 +5,7 @@
     ./ui.nix
     ./lsp.nix
     ./syntax.nix
+    ./theme.nix
   ];
 
   programs.neovim = {
@@ -48,13 +49,13 @@
     plugins = with pkgs.vimPlugins; [
       # QOL
       editorconfig-vim
+      vim-fugitive
+      vim-illuminate
+      vim-matchup
       vim-numbertoggle
       vim-surround
-      vim-matchup
-      vim-fugitive
       { plugin = nvim-autopairs; config = "lua require('nvim-autopairs').setup{}"; }
       { plugin = better-escape-nvim; config = "lua require('better_escape').setup()"; }
-      { plugin = bufdelete-nvim; config = "nmap <C-q> :Bdelete<CR>"; }
     ];
   };
 

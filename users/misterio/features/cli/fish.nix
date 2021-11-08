@@ -12,7 +12,6 @@
       vim = "nvim";
       m = "neomutt";
       mutt = "neomutt";
-      xhost-root = "xhost si:localuser:root";
     };
     shellAliases = {
       miningclock = "sudo USER_STATES_PATH=/etc/default/amdgpu-custom-state amdgpu-clocks";
@@ -23,9 +22,6 @@
       getip = "curl ifconfig.me";
       # Clear screen and scrollbackbuffer
       clear = "clear && printf '\\033[2J\\033[3J\\033[1;1H'";
-      # I have no ideia why neofetch --config argument must be a relative path, but oh well
-      minifetch =
-        "neofetch --config (realpath --relative-to=(pwd) ${config.xdg.configHome}/neofetch/config_small.conf)";
     };
     functions = {
       fish_greeting = "${pkgs.fortune}/bin/fortune -s";

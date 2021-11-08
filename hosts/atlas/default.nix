@@ -127,6 +127,9 @@ in
       Defaults timestamp_type=global
     '';
   };
+  environment.systemPackages = with pkgs; [
+    amdgpu-clocks
+  ];
   environment.etc = {
     "default/amdgpu-custom-state.card0".text = ''
       OD_SCLK:

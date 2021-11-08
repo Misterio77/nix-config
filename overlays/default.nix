@@ -21,6 +21,12 @@
         inherit (final.gnome) zenity;
       };
 
+      vimPlugins = prev.vimPlugins // {
+        nvim-base16 = prev.vimPlugins.nvim-base16.overrideAttrs (oldAttrs: rec {
+          patches = (oldAttrs.patches or [ ]) ++ [ ./nvim-base16-more-highlights.patch ];
+        });
+      };
+
       pass-wofi = prev.callPackage ../pkgs/pass-wofi {
         pass = final.pass.withExtensions (exts: [ exts.pass-otp ]);
       };
