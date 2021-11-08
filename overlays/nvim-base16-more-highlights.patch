@@ -1,5 +1,5 @@
 diff --git a/lua/base16-colorscheme.lua b/lua/base16-colorscheme.lua
-index 5f4cc44..9d8723e 100644
+index 5f4cc44..c3447be 100644
 --- a/lua/base16-colorscheme.lua
 +++ b/lua/base16-colorscheme.lua
 @@ -97,19 +97,20 @@ function M.setup(colors)
@@ -28,10 +28,12 @@ index 5f4cc44..9d8723e 100644
  
      -- Standard syntax highlighting
      hi.Boolean      = { guifg = M.colors.base09, guibg = nil,             gui = nil,    guisp = nil }
-@@ -259,6 +260,36 @@ function M.setup(colors)
+@@ -259,6 +260,38 @@ function M.setup(colors)
      hi.TSDefinitionUsage = { guifg = nil, guibg = nil, gui = 'underline', guisp = M.colors.base04 }
      hi.TSCurrentScope    = { guifg = nil, guibg = nil, gui = 'bold',      guisp = nil }
  
++    hi.IndentBlankLine = { guifg = M.colors.base01, guibg = nil, gui = 'none', guisp = nil }
++
 +    -- Completion (nvim-cmp.lua)
 +    hi.CmpItemAbbr =           { guifg = M.colors.base05, guibg = 'none', gui = 'none', guisp = nil }
 +    hi.CmpItemAbbrDeprecated = { guifg = M.colors.base03, guibg = 'none', gui = 'none', guisp = nil }

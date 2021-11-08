@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   programs.neovim.plugins = with pkgs.vimPlugins; [
+    { plugin =  indent-blankline-nvim; config = "lua require('indent_blankline').setup{char_highlight_list={'IndentBlankLine'}}"; }
     { plugin = nvim-web-devicons; config = "lua require('nvim-web-devicons').setup{}"; }
     { plugin = nvim-colorizer-lua; config = "lua require('colorizer').setup()"; }
     { plugin = gitsigns-nvim; config = "lua require('gitsigns').setup()"; }
