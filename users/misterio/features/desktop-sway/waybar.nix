@@ -21,6 +21,7 @@ in {
       modules-right = [
         "custom/gamemode"
         "custom/ethminer"
+        "custom/theme"
         "pulseaudio"
         "cpu"
         "custom/gpu"
@@ -96,6 +97,10 @@ in {
           exec-if = "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
           interval = 2;
           exec = "echo '' && echo 'Gamemode is active'";
+        };
+        "custom/theme" = {
+          exec = "echo '  ${config.colorscheme.slug}'";
+          on-click = "${pkgs.setscheme-wofi}/bin/setscheme-wofi";
         };
         "custom/gpu" = {
           exec = "cat /sys/class/drm/card0/device/gpu_busy_percent";
