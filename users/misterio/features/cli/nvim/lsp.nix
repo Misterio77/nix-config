@@ -7,6 +7,9 @@
         config = ''
           lua << EOF
             local lspconfig = require('lspconfig')
+
+            lspconfig.dockerls.setup{} -- Docker
+            lspconfig.bashls.setup{} -- Bash
             lspconfig.rust_analyzer.setup{} -- Rust
             lspconfig.clangd.setup{} -- C/C++
             lspconfig.rnix.setup{} -- Nix
