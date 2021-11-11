@@ -39,7 +39,7 @@
       nix-colors.flake = nix-colors;
     };
     trustedUsers = [ "root" "@wheel" ];
-    package = pkgs.nix_2_4;
+    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes ca-references
       warn-dirty = false

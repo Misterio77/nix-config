@@ -49,13 +49,15 @@
     plugins = with pkgs.vimPlugins; [
       # QOL
       editorconfig-vim
+      registers-nvim
       vim-fugitive
       vim-illuminate
       vim-matchup
       vim-numbertoggle
       vim-surround
-      { plugin = nvim-autopairs; config = "lua require('nvim-autopairs').setup{}"; }
       { plugin = better-escape-nvim; config = "lua require('better_escape').setup()"; }
+      { plugin = range-highlight-nvim; config = "lua require('range-highlight').setup{}"; }
+      { plugin = nvim-autopairs; config = "lua require('nvim-autopairs').setup{}"; }
     ];
   };
 

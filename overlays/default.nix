@@ -25,6 +25,9 @@
         nvim-base16 = prev.vimPlugins.nvim-base16.overrideAttrs (oldAttrs: rec {
           patches = (oldAttrs.patches or [ ]) ++ [ ./nvim-base16-more-highlights.patch ];
         });
+        vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs (oldAttrs: rec {
+          patches = (oldAttrs.patches or [ ]) ++ [ ./vim-numbertoggle-command-mode.patch ];
+        });
       };
 
       pass-wofi = prev.callPackage ../pkgs/pass-wofi {
@@ -50,9 +53,13 @@
         };
       });
 
+      todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
+        patches = (oldAttrs.patches or [ ]) ++ [ ./todoman-kwargs-crash.patch ];
+      });
+
       # Add my patch for supporting sourcehut
       nix_2_4 = prev.nix_2_4.overrideAttrs (oldAttrs: rec {
-        patches = oldAttrs.patches ++ [ ./nix-sourcehut.patch ];
+        patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
       });
 
       # Don't launch discord when using discocss

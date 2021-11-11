@@ -1,0 +1,13 @@
+diff --git a/todoman/cli.py b/todoman/cli.py
+index b3bc373..14a2be8 100644
+--- a/todoman/cli.py
++++ b/todoman/cli.py
+@@ -626,7 +626,7 @@ def list(ctx, *args, **kwargs):
+     omited by default:
+     """
+     hide_list = (len([_ for _ in ctx.db.lists()]) == 1) or (  # noqa: C416
+-        len(kwargs["lists"]) == 1
++        (kwargs["lists"] and len(kwargs["lists"])) == 1
+     )
+ 
+     todos = ctx.db.todos(**kwargs)

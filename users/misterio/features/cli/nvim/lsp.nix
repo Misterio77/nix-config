@@ -9,14 +9,31 @@
             local lspconfig = require('lspconfig')
 
             lspconfig.dockerls.setup{} -- Docker
+
             lspconfig.bashls.setup{} -- Bash
-            lspconfig.rust_analyzer.setup{} -- Rust
+
+            lspconfig.rust_analyzer.setup{
+              settings = {
+                ["rust-analyzer"] = {
+                  checkOnSave = {
+                    command = "clippy",
+                  }
+                }
+              }
+            } -- Rust
+
             lspconfig.clangd.setup{} -- C/C++
+
             lspconfig.rnix.setup{} -- Nix
+
             lspconfig.jsonls.setup{} -- JSON
+
             lspconfig.sqls.setup{cmd = {"sqls", "-config", "sqls.yml"}} -- SQL
+
             lspconfig.pylsp.setup{} -- Python
+
             lspconfig.sumneko_lua.setup{cmd = {"lua-language-server"}} -- Lua
+
           EOF
 
           nmap gD       :lua vim.lsp.buf.declaration()<CR>
