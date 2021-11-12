@@ -26,6 +26,9 @@
       autocmd FileType json,html,htmldjango,nix,scss,typescript setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
       set expandtab "Use spaces
 
+      "Set tera to use htmldjango syntax
+      autocmd BufRead,BufNewFile *.tera setfiletype htmldjango
+
       "Options when composing mutt mail
       autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w
 

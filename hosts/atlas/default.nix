@@ -71,12 +71,7 @@ in
       jack.enable = true;
     };
     dbus.packages = [ pkgs.gcr ];
-    postgresql = {
-      enable = true;
-      authentication = pkgs.lib.mkOverride 12 ''
-        local all all trust
-      '';
-    };
+    postgresql.enable = true;
   };
 
   programs = {
