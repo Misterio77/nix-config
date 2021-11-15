@@ -6,7 +6,7 @@
 
   home.persistence = {
     "/data/home/misterio" = {
-      directories = [ "Documents" "Downloads" "Pictures" "Videos" ];
+      directories = [ "Documents" "Downloads" "Pictures" "Videos" ".local/share/containers" ];
       allowOther = true;
     };
   };

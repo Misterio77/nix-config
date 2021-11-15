@@ -28,6 +28,19 @@
         vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs (oldAttrs: rec {
           patches = (oldAttrs.patches or [ ]) ++ [ ./vim-numbertoggle-command-mode.patch ];
         });
+        gemini-vim-syntax = prev.vimUtils.buildVimPlugin {
+          pname = "gemini-vim-syntax";
+          version = "2021-11-15";
+          dontBuild = true;
+          src = prev.fetchFromGitea {
+            domain = "tildegit.org";
+            owner = "sloum";
+            repo = "gemini-vim-syntax";
+            rev = "596d1f36b386e5b2cc1af4f2f8285134626878d1";
+            sha256 = "sha256-4Ma74KdAWtr00NNV0DbDL0SwY6s4d2Ok1HaUvVzCrMA=";
+          };
+          meta.homepage = "https://tildegit.org/sloum/gemini-vim-syntax";
+        };
       };
 
       pass-wofi = prev.callPackage ../pkgs/pass-wofi {

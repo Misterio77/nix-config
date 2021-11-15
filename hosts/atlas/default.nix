@@ -26,7 +26,7 @@ in
   environment.persistence."/data" = {
     directories = [
       "/var/log"
-      "/var/lib/docker"
+      "/var/lib/containers"
       "/var/lib/systemd"
       "/var/lib/postgresql"
       "/srv"
@@ -172,7 +172,6 @@ in
   };
 
   virtualisation = {
-    docker.enable = true;
     podman.enable = true;
   };
 
@@ -181,7 +180,7 @@ in
   # My user info
   users.users.misterio = {
     isNormalUser = true;
-    extraGroups = [ "audio" "wheel" "docker" "networkmanager" "plugdev"  "adbusers"];
+    extraGroups = [ "audio" "wheel" "networkmanager" "plugdev"  "adbusers"];
     shell = pkgs.fish;
     passwordFile = "/data/home/misterio/.password";
     openssh.authorizedKeys.keys = [

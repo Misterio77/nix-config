@@ -21,6 +21,7 @@
   ];
 
   home.packages = with pkgs; [
+    lagrange
     dragon-drop
     imv
     pavucontrol

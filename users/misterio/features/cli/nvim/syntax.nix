@@ -7,5 +7,6 @@
       vim-markdown
       vim-nix
       vim-toml
+      gemini-vim-syntax
   ];
 }
