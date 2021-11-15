@@ -2,6 +2,7 @@
 {
   imports = [
     ./nvim
+    ./amfora.nix
     ./direnv.nix
     ./fish.nix
     ./git.nix
