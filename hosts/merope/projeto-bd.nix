@@ -20,5 +20,10 @@
         }
       ];
     };
+    environment.persistence."/data" = {
+      directories = [
+        "/var/lib/postgresql"
+      ];
+    };
   };
 }
