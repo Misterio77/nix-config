@@ -9,6 +9,7 @@
       "bd.misterio.me" = {
         dnsProvider = "gandiv5";
         credentialsFile = "/data/etc/gandi/acme.key";
+        keyType = "rsa4096";
       };
     };
   };
