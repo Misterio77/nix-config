@@ -4,7 +4,7 @@
       enable = true;
       database = "postgresql:///root?user=projetobd&host=/var/run/postgresql";
       openFirewall = true;
-      tlsChain = "/var/lib/acme/bd.misterio.me/chain.pem";
+      tlsChain = "/var/lib/acme/bd.misterio.me/fullchain.pem";
       tlsKey = "/var/lib/acme/bd.misterio.me/key.pem";
     };
 
