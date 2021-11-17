@@ -2,7 +2,7 @@
   services = {
     projeto-bd = {
       enable = true;
-      database = "postgresql:///root?user=projeto-bd&host=/var/run/postgresql";
+      database = "postgresql:///root?user=projetobd&host=/var/run/postgresql";
       openFirewall = true;
       tlsChain = "/var/lib/acme/bd.misterio.me/chain.pem";
       tlsKey = "/var/lib/acme/bd.misterio.me/key.pem";
@@ -10,20 +10,20 @@
 
     postgresql = {
       enable = true;
-      ensureDatabases = [ "projeto-bd" ];
+      ensureDatabases = [ "projetobd" ];
       ensureUsers = [
         {
-          name = "projeto-bd";
+          name = "projetobd";
           ensurePermissions = {
-            "DATABASE projeto-db" = "ALL PRIVILEGES";
+            "DATABASE projetobd" = "ALL PRIVILEGES";
           };
         }
       ];
     };
-    environment.persistence."/data" = {
-      directories = [
-        "/var/lib/postgresql"
-      ];
-    };
+  };
+  environment.persistence."/data" = {
+    directories = [
+      "/var/lib/postgresql"
+    ];
   };
 }
