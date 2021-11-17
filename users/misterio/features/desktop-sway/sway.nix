@@ -14,6 +14,7 @@ let
   keyring = import ../trusted/keyring.nix { inherit pkgs; };
 
   # Programs
+  amfora = "${pkgs.amfora}/bin/amfora";
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
   kitty = "${pkgs.kitty}/bin/kitty";
@@ -223,6 +224,7 @@ in rec {
         "${modifier}+v" = "exec ${terminal} -e ${nvim}";
         "${modifier}+o" = "exec ${terminal} -e ${octave}";
         "${modifier}+m" = "exec ${terminal} -e ${neomutt}";
+        "${modifier}+a" = "exec ${terminal} -e ${amfora}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
         "${modifier}+control+w" = "exec ${makoctl} invoke";

@@ -1,16 +1,20 @@
 # My NixOS configurations
 
-Here's my NixOS/home-manager config files. Requires [Nix experimental command and flakes](https://nixos.wiki/wiki/Flakes).
+Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.wiki/wiki/Flakes).
 
 ## Structure
 - `flake.nix`: Entrypoint for both hosts (`nixos-rebuild --flake`) and home configurations (`home-manager --flake`). Also exposes a devshell for boostrapping (`nix develop` or `nix-shell`).
 - `hosts`: System-wide configuration for my machines.
   - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Runs sway. Development, production, and gaming.
   - `merope`: Raspberry Pi 4 - 8GB RAM | Headless. Server usage.
+  - `maia`: Gf's PC - 16GB RAM, i5 6600, GTX 970 | Runs gnome. Production and gaming.
 - `users`: Home-manager configurations for my user(s)
   - `misterio`: That's me!
+  - `layla`: My sweet sweet girl
 - `modules`: A few modules i have for personal use (most should be upstreamed TBH)
-- `overlays`: A few custom packages (TODO make actual packages) and overwritten ones.
+- `overlays`: Patches and version overrides for some packages. Also callPackages stuff in `pkgs`.
+- `pkgs`: Some of my custom packages. There's a few others at [my NUR](https://github.com/misterio77/nur-packages).
+- `templates`: A couple project templates for different languages. Accessible via `nix init`.
 
 
 ## About the installation
