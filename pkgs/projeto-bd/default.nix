@@ -2,17 +2,20 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "projeto-bd";
-  version = "0.1.0";
-  postInstall = "cp -r templates assets $out/bin";
+  version = "1.0.0-pre1";
+  postInstall = ''
+    install -d $out/etc
+    cp -r templates assets $out/etc
+  '';
 
   src = fetchFromSourcehut {
     owner = "~misterio";
     repo = "BSI-SCC0540-projeto";
     rev = version;
-    sha256 = "sha256-3+0oyDCW6MWBH2QPZXUckkGYn/AUJdJcxUTq1zPjaEQ=";
+    sha256 = "sha256-V9hfXC4f3BpYIEWhLVbSLj4Qo+XgMtmtHUWbVSA7/nE=";
   };
 
-  cargoHash = "sha256-3R9nyu4jshPNmAmf9I7C0cn3krRlDaS4+J8fno4hkn8=";
+  cargoHash = "sha256-xNlspaKnQ2Uy9Xr/5cRZFaYbp7oj1dLTMzKgaeAYPq4=";
 
   meta = with lib; {
     description = "Projeto de BD 2021";

@@ -31,7 +31,7 @@ in {
     };
     port = mkOption {
       type = types.int;
-      default = if (cfg.tlsChain && cfg.tlsKey) then 443 else 80;
+      default = if (cfg.tlsChain != null && cfg.tlsKey != null) then 443 else 80;
       description = "Port number to bind to.";
     };
     openFirewall = mkOption {
@@ -48,10 +48,11 @@ in {
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/projeto-bd";
         Restart = "on-failure";
+        User = "projeto-db";
       };
       environment = {
-        ROCKET_TEMPLATE_DIR = "${cfg.package}/etc/projeto-bd/templates";
-        ROCKET_ASSETS_DIR = "${cfg.package}/etc/projeto-bd/assets";
+        ROCKET_TEMPLATE_DIR = "${cfg.package}/etc/templates";
+        ROCKET_ASSETS_DIR = "${cfg.package}/etc/assets";
         ROCKET_PORT = toString cfg.port;
         ROCKET_DATABASES = ''
           {database={url="${cfg.database}"}}
@@ -61,8 +62,16 @@ in {
         '';
       };
     };
+
     networking.firewall = mkIf cfg.openFirewall {
       allowedTCPPorts = [ cfg.port ];
     };
+
+    users.users.projeto-bd = {
+      description = "Projeto BD server service user";
+      isSystemUser = true;
+      group = "projeto-bd";
+    };
+    users.groups.projeto-bd = {};
   };
 }

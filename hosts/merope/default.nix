@@ -13,6 +13,7 @@ in
     nur-no-pkgs.repos.misterio.modules.argonone
     ./acme.nix
     ./ddclient.nix
+    ./projeto-bd.nix
     ./hardware-configuration.nix
     ../common.nix
   ];
