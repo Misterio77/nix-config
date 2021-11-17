@@ -1,4 +1,4 @@
-{ lib, features, nur, ... }:
+{ lib, features, nur, pkgs, ... }:
 
 {
   imports = [ ./rice.nix ] ++

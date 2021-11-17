@@ -8,7 +8,7 @@
     certs = {
       "bd.misterio.me" = {
         dnsProvider = "gandiv5";
-        credentialsFile = "/data/etc/gandi.key";
+        credentialsFile = "/data/etc/gandi/acme.key";
       };
     };
   };

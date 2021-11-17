@@ -7,6 +7,7 @@
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
       rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
       sistemer-bot = prev.callPackage ../pkgs/sistemer-bot { };
+      projeto-bd = prev.callPackage ../pkgs/projeto-bd { };
       soundwire = prev.libsForQt5.callPackage ../pkgs/soundwire { };
       wallpapers = prev.callPackage ../pkgs/wallpapers { };
       zenity-askpass = prev.callPackage ../pkgs/zenity-askpass { };

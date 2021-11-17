@@ -11,7 +11,8 @@ in
     hardware.nixosModules.raspberry-pi-4
     impermanence.nixosModules.impermanence
     nur-no-pkgs.repos.misterio.modules.argonone
-    ./letsencrypt.nix
+    ./acme.nix
+    ./ddclient.nix
     ./hardware-configuration.nix
     ../common.nix
   ];
