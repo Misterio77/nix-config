@@ -5,7 +5,7 @@ rustPlatform.buildRustPackage rec {
   version = "1.0.0-pre2";
   postInstall = ''
     install -d $out/etc
-    cp -r templates assets $out/etc
+    cp -r templates assets DDL.sql DML.sql $out/etc
   '';
 
   src = fetchFromSourcehut {
