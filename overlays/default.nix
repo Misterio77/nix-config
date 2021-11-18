@@ -1,7 +1,8 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, projeto-bd, ... }:
 
 {
   nixpkgs.overlays = [
+    projeto-bd.overlay
     (final: prev: {
       amdgpu-clocks = prev.callPackage ../pkgs/amdgpu-clocks { };
       preferredplayer = prev.callPackage ../pkgs/preferredplayer { };

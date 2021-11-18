@@ -3,9 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/04cf6dc67f8e29bd086ebd1dc9ad7c8262913347";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     hardware.url = "github:nixos/nixos-hardware";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nur.url = "github:nix-community/NUR";
 
@@ -15,20 +17,33 @@
     nix-colors.url = "github:Misterio77/nix-colors";
 
     utils.url = "github:numtide/flake-utils";
-    flake-compat.url = "github:edolstra/flake-compat";
-    flake-compat.flake = false;
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+
+    # Projects being worked on
+    projeto-bd = {
+      url = "git+https://git.sr.ht/~misterio/BSI-SCC0540-projeto?ref=main";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
 
   };
 
   outputs =
     { nixpkgs
-    , home-manager
     , hardware
+    , home-manager
     , nur
     , declarative-cachix
     , impermanence
     , nix-colors
     , utils
+    # Projects
+    , projeto-bd
     , ...
     }:
     let
@@ -38,7 +53,7 @@
           inherit system;
           specialArgs = {
             inherit nixpkgs hardware nur declarative-cachix
-              impermanence nix-colors system;
+              impermanence nix-colors system projeto-bd;
           };
           modules = [ (./hosts + "/${hostname}") ./modules/nixos ./overlays ];
         };
@@ -47,7 +62,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit nur impermanence nix-colors features;
+            inherit nur impermanence nix-colors features projeto-bd;
           };
           configuration = ./users + "/${username}";
           extraModules = [ ./modules/home-manager ./overlays ];

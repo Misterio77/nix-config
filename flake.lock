@@ -33,11 +33,11 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1636317251,
-        "narHash": "sha256-u1cWvvtGH5mfGkeIKrqw2usk4IL7wDiRcnJkUSiZq3Q=",
+        "lastModified": 1637170060,
+        "narHash": "sha256-He3CaRefpj9VctY9NMqyYc8blkrJK7AIj7z8YBxohq4=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "fd6f34afcf062761fb5035230f6297752bfedcba",
+        "rev": "ad0b7c5a9585f1b622560ab1a90b562a6ac45e18",
         "type": "github"
       },
       "original": {
@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1636520380,
-        "narHash": "sha256-gBiQ8+AQG6Dia34rqJDuqs6VFe/J1SjIhOZBeTXCKQI=",
+        "lastModified": 1637188941,
+        "narHash": "sha256-4aA5iNVhSDbKjsPeG4n0SvfPQ3sd9ve23b05bVztSq4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1e5c8e9bff00d0844bc3d25d1a98eab5633e600b",
+        "rev": "d85bf67c48f5c64ca39d3d48375e742e16933f4f",
         "type": "github"
       },
       "original": {
@@ -114,17 +114,41 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1636603669,
-        "narHash": "sha256-Cl+jVGVk3E+kNYd1vuN81V5qp9nfGXz/59vtbJ2vgYY=",
+        "lastModified": 1637199782,
+        "narHash": "sha256-syImCXb95JKOnwGVw17XvfvCz0ok4U6xVH67lCCqLDI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d5a42127bd1dfa76465d62d2717bdc06e12d70b7",
+        "rev": "467533257dda5b52185d8c2b78abe75095f259f1",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "NUR",
         "type": "github"
+      }
+    },
+    "projeto-bd": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1637204487,
+        "narHash": "sha256-UDItpG8v9C7zEkx6wDQ0orc/dFGbzK7JCXK4KLfrNI4=",
+        "ref": "main",
+        "rev": "b2cab3d2a6c8742f92dd9aba345bfe4f7ae73949",
+        "revCount": 35,
+        "type": "git",
+        "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
       }
     },
     "root": {
@@ -137,16 +161,17 @@
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
+        "projeto-bd": "projeto-bd",
         "utils": "utils"
       }
     },
     "utils": {
       "locked": {
-        "lastModified": 1634851050,
-        "narHash": "sha256-N83GlSGPJJdcqhUxSCS/WwW5pksYf3VP1M13cDRTSVA=",
+        "lastModified": 1637014545,
+        "narHash": "sha256-26IZAc5yzlD9FlDT54io1oqG/bBoyka+FJk5guaX4x4=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "c91f3de5adaf1de973b797ef7485e441a65b8935",
+        "rev": "bba5dcc8e0b20ab664967ad83d24d64cb64ec4f4",
         "type": "github"
       },
       "original": {
