@@ -2,7 +2,7 @@
   services = {
     projeto-bd = {
       enable = true;
-      database = "postgresql:///root?user=projetobd&host=/var/run/postgresql";
+      database = "postgresql:///projetobd?user=root&host=/var/run/postgresql";
       openFirewall = true;
       tlsChain = "/var/lib/acme/bd.misterio.me/fullchain.pem";
       tlsKey = "/var/lib/acme/bd.misterio.me/key.pem";
@@ -13,7 +13,7 @@
       ensureDatabases = [ "projetobd" ];
       ensureUsers = [
         {
-          name = "projetobd";
+          name = "root";
           ensurePermissions = {
             "DATABASE projetobd" = "ALL PRIVILEGES";
           };
