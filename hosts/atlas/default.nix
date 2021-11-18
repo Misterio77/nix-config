@@ -15,7 +15,7 @@ in
     nur-no-pkgs.repos.misterio.modules.openrgb
     ./hardware-configuration.nix
     ../common.nix
-    ./satisfactory.nix
+    # ./satisfactory.nix
   ];
 
   networking.hostName = "atlas";
