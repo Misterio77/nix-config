@@ -15,4 +15,5 @@
     overlays = [ nur.overlay ];
   };
   systemd.user.startServices = "sd-switch";
+  home.packages = [ pkgs.projeto-bd ];
 }

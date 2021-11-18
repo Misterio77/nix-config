@@ -42,11 +42,15 @@
     , impermanence
     , nix-colors
     , utils
-    # Projects
+      # Projects
     , projeto-bd
     , ...
     }:
     let
+      overlays = [
+        ./overlays
+        { nixpkgs.overlays = [ projeto-bd.overlay ]; }
+      ];
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system }:
         nixpkgs.lib.nixosSystem {
@@ -55,7 +59,7 @@
             inherit nixpkgs hardware nur declarative-cachix
               impermanence nix-colors system projeto-bd;
           };
-          modules = [ (./hosts + "/${hostname}") ./modules/nixos ./overlays ];
+          modules = [ (./hosts + "/${hostname}") ./modules/nixos ] ++ overlays;
         };
       # Make home configuration, given username, required features, and system type
       mkHome = { username, features, system }:
@@ -65,7 +69,7 @@
             inherit nur impermanence nix-colors features projeto-bd;
           };
           configuration = ./users + "/${username}";
-          extraModules = [ ./modules/home-manager ./overlays ];
+          extraModules = [ ./modules/home-manager ] ++ overlays;
           homeDirectory = "/home/${username}";
         };
     in
@@ -111,8 +115,6 @@
           system = "x86_64-linux";
         };
       };
-
-      overlay = import ./overlays;
 
       templates = import ./templates;
 
