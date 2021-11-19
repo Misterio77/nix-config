@@ -137,11 +137,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1637323390,
-        "narHash": "sha256-og1dSFG2XysEwEo4AcZLmXj7gndMQGYqYLr0Rt9N2LQ=",
-        "ref": "maina",
-        "rev": "792eb195fe48163bb5b2015e50adf2a14f3d234b",
-        "revCount": 54,
+        "lastModified": 1637332848,
+        "narHash": "sha256-f3KgdyOviYgTt6RDXt4/wRWlnbHnyGwDt9BjLVlrJ/o=",
+        "ref": "main",
+        "rev": "03da58a6a58c8013682f4cda318db5bd4bbfe8ae",
+        "revCount": 57,
         "type": "git",
         "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
       },
