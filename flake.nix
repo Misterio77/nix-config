@@ -2,7 +2,7 @@
   description = "My NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/04cf6dc67f8e29bd086ebd1dc9ad7c8262913347";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -24,6 +24,7 @@
 
     # Projects being worked on
     projeto-bd = {
+      # url = "sourcehut:~misterio/BSI-SCC0540-projeto";
       url = "git+https://git.sr.ht/~misterio/BSI-SCC0540-projeto?ref=main";
       inputs = {
         nixpkgs.follows = "nixpkgs";

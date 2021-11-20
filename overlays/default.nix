@@ -72,7 +72,7 @@
       });
 
       # Add my patch for supporting sourcehut
-      nix_2_4 = prev.nix_2_4.overrideAttrs (oldAttrs: rec {
+      nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
         patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
       });
 
