@@ -1,9 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, features, ... }:
 
 let
   colors = config.colorscheme.colors;
   nvim = "${pkgs.neovim}/bin/nvim";
-in {
+in
+{
+  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+    "/data/home/misterio".directories = [
+      ".config/qutebrowser/bookmarks"
+      ".config/qutebrowser/greasemonkey"
+      ".local/share/qutebrowser"
+    ];
+  };
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;

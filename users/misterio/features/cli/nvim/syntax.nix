@@ -8,5 +8,6 @@
       vim-nix
       vim-toml
       gemini-vim-syntax
+      kotlin-vim
   ];
 }
