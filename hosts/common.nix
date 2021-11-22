@@ -68,6 +68,7 @@
       };
     };
   };
+
   programs = {
     fuse.userAllowOther = true;
     fish = {

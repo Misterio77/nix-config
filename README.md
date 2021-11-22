@@ -5,9 +5,10 @@ Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.w
 ## Structure
 - `flake.nix`: Entrypoint for both hosts (`nixos-rebuild --flake`) and home configurations (`home-manager --flake`). Also exposes a devshell for boostrapping (`nix develop` or `nix-shell`).
 - `hosts`: System-wide configuration for my machines.
-  - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Runs sway. Development, production, and gaming.
-  - `merope`: Raspberry Pi 4 - 8GB RAM | Headless. Server usage.
-  - `maia`: Gf's PC - 16GB RAM, i5 6600, GTX 970 | Runs gnome. Production and gaming.
+  - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
+  - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
+  - `merope`: Raspberry Pi 4 - 8GB RAM | Server
+  - `maia`: Gf's PC - 16GB RAM, i5 6600, GTX 970 | GNOME
 - `users`: Home-manager configurations for my user(s)
   - `misterio`: That's me!
   - `layla`: My sweet sweet girl

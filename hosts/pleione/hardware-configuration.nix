@@ -6,7 +6,7 @@
   boot = {
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-      luks.devices."atlas".device = "/dev/disk/by-label/Atlas";
+      luks.devices."pleione".device = "/dev/disk/by-label/Pleione";
     };
     supportedFilesystems = [ "btrfs" ];
   };
@@ -24,39 +24,39 @@
     };
 
     "/data/games" = {
-      device = "/dev/mapper/atlas";
+      device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=data/games" "compress=zstd" ];
     };
 
     "/data/home" = {
-      device = "/dev/mapper/atlas";
+      device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=data/home" "compress=zstd" ];
       neededForBoot = true;
     };
 
     "/data/srv" = {
-      device = "/dev/mapper/atlas";
+      device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=data/srv" "compress=zstd" ];
     };
 
     "/data/var" = {
-      device = "/dev/mapper/atlas";
+      device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=data/var" "compress=zstd" ];
       neededForBoot = true;
     };
 
     "/dotfiles" = {
-      device = "/dev/mapper/atlas";
+      device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=dotfiles" "compress=zstd" ];
     };
 
     "/nix" = {
-      device = "/dev/mapper/atlas";
+      device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=nix" "noatime" "compress=zstd" ];
     };

@@ -1,26 +1,17 @@
-# System configuration for my main desktop PC
+# System configuration for my laptop
 { config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
 
-let
-  nur-no-pkgs = import nur {
-    nurpkgs = import nixpkgs { inherit system; };
-  };
-in
 {
   imports = [
     hardware.nixosModules.common-cpu-amd
     hardware.nixosModules.common-gpu-amd
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
-    nur-no-pkgs.repos.misterio.modules.openrgb
-    ../common.nix
     ./hardware-configuration.nix
-    # ./gpu-overclock.nix
-    # ./satisfactory.nix
-    # ./droidcam.nix
+    ../common.nix
   ];
 
-  networking.hostName = "atlas";
+  networking.hostName = "pleione";
 
   environment.persistence."/data" = {
     directories = [
@@ -53,15 +44,6 @@ in
       };
       efi.canTouchEfiVariables = true;
     };
-    # Allow compiling to ARM64
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
-    # Let's me play star citizen and lol
-    kernel.sysctl = {
-      "vm.max_map_count" = 16777216;
-      "abi.vsyscall32" = 0;
-    };
-    # Enables overclocking of gpu
-    initrd.kernelParams = [ "amdgpu.ppfeaturemask=0xfff7ffff" ];
   };
 
   services = {
@@ -77,20 +59,7 @@ in
   };
 
   programs = {
-    gamemode = {
-      enable = true;
-      settings = {
-        gpu = {
-          apply_gpu_optimisations = "accept-responsibility";
-          gpu_device = 0;
-          amd_performance_level = "high";
-        };
-        custom = {
-          start = "${pkgs.systemd}/bin/systemctl --user stop ethminer";
-          end = "${pkgs.systemd}/bin/systemctl --user start ethminer";
-        };
-      };
-    };
+    gamemode.enable = true;
 
     # Use GPG as SSH
     ssh.startAgent = false;
@@ -99,10 +68,7 @@ in
       enableSSHSupport = true;
     };
 
-    steam = {
-      enable = true;
-      remotePlay.openFirewall = true;
-    };
+    steam.enable = true;
     adb.enable = true;
     dconf.enable = true;
     kdeconnect.enable = true;
@@ -122,17 +88,7 @@ in
   };
   security.pam.services.swaylock = { };
 
-  hardware = {
-    ckb-next.enable = true;
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [ amdvlk ];
-      driSupport = true;
-    };
-    openrgb.enable = true;
-    opentabletdriver.enable = true;
-    steam-hardware.enable = true;
-  };
+  hardware.steam-hardware.enable = true;
 
   virtualisation = {
     podman.enable = true;
