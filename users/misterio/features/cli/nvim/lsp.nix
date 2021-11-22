@@ -34,6 +34,8 @@
 
             lspconfig.sumneko_lua.setup{cmd = {"lua-language-server"}} -- Lua
 
+            lspconfig.dartls.setup{} -- Dart
+
           EOF
 
           nmap gD       :lua vim.lsp.buf.declaration()<CR>

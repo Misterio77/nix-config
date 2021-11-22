@@ -81,6 +81,11 @@
           hostname = "atlas";
           system = "x86_64-linux";
         };
+        # Laptop
+        pleione = mkSystem {
+          hostname = "pleione";
+          system = "x86_64-linux";
+        };
         # Raspberry Pi 4B
         merope = mkSystem {
           hostname = "merope";
@@ -96,7 +101,12 @@
       homeConfigurations = {
         "misterio@atlas" = mkHome {
           username = "misterio";
-          features = [ "cli" "desktop-sway" "games" "mining" "persistence" "rgb" "trusted" ];
+          features = [ "cli" "desktop-sway" "mining" "persistence" "rgb" "trusted" ];
+          system = "x86_64-linux";
+        };
+        "misterio@pleione" = mkHome {
+          username = "misterio";
+          features = [ "cli" "desktop-sway" "games" "persistence" "trusted" ];
           system = "x86_64-linux";
         };
         "misterio@merope" = mkHome {

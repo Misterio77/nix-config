@@ -60,8 +60,6 @@ in
       "vm.max_map_count" = 16777216;
       "abi.vsyscall32" = 0;
     };
-    # Enables overclocking of gpu
-    initrd.kernelParams = [ "amdgpu.ppfeaturemask=0xfff7ffff" ];
   };
 
   services = {
