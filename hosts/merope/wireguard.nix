@@ -28,10 +28,18 @@ in
             ${iptables} -t nat -D POSTROUTING -o eth0 -j MASQUERADE
           '';
           peers = [
+            # Calaeno (phone)
             {
               publicKey = "OpU45rd0BrLPWHrtPtN8U5s4b3RU10B4TiHAN0p842g=";
               allowedIPs = [ "10.100.0.2/32" ];
             }
+            # Pleione (laptop)
+            /*
+            {
+              publicKey = "";
+              allowedIPs = [ "10.100.0.3/32" ];
+            }
+            */
           ];
         };
       };
