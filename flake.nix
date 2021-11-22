@@ -47,10 +47,13 @@
     , ...
     }:
     let
+      # My overlays, plus from external projects
+      overlay = (import ./overlays);
       overlays = [
-        ./overlays
-        { nixpkgs.overlays = [ projeto-bd.overlay ]; }
+        overlay
+        projeto-bd.overlay
       ];
+
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system }:
         nixpkgs.lib.nixosSystem {
@@ -59,7 +62,7 @@
             inherit nixpkgs hardware nur declarative-cachix
               impermanence nix-colors system projeto-bd;
           };
-          modules = [ (./hosts + "/${hostname}") ./modules/nixos ] ++ overlays;
+          modules = [ (./hosts + "/${hostname}") ./modules/nixos { nixpkgs.overlays = overlays; } ];
         };
       # Make home configuration, given username, required features, and system type
       mkHome = { username, features, system }:
@@ -69,11 +72,13 @@
             inherit nur impermanence nix-colors features projeto-bd;
           };
           configuration = ./users + "/${username}";
-          extraModules = [ ./modules/home-manager ] ++ overlays;
+          extraModules = [ ./modules/home-manager { nixpkgs.overlays = overlays; } ];
           homeDirectory = "/home/${username}";
         };
     in
     {
+      inherit overlay overlays;
+
       nixosConfigurations = {
         # Main PC
         atlas = mkSystem {
@@ -130,11 +135,11 @@
 
     } // utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs { inherit system overlays; };
     in
     {
       devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [ nixfmt rnix-lsp ];
+        buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp ];
       };
     });
 }
