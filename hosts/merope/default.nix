@@ -11,11 +11,13 @@ in
     hardware.nixosModules.raspberry-pi-4
     impermanence.nixosModules.impermanence
     nur-no-pkgs.repos.misterio.modules.argonone
+    ../common.nix
+    ./hardware-configuration.nix
+
     ./acme.nix
     ./ddclient.nix
     ./projeto-bd.nix
-    ./hardware-configuration.nix
-    ../common.nix
+    ./wireguard.nix
   ];
 
   networking.hostName = "merope";
@@ -47,6 +49,9 @@ in
       bits = "4096";
     }
   ];
+
+  # Enable wireguard ip forwarding
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   security = {
     # Passwordless sudo (for remote build)
