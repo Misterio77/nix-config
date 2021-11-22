@@ -137,18 +137,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1637483260,
-        "narHash": "sha256-Uz/SExsePp7q6tqHHTfQlp87cK2RrBug6Np4PYDt4sw=",
-        "ref": "main",
-        "rev": "eb7becb4e842ec28675ec82177d8f1021fff67c9",
-        "revCount": 78,
-        "type": "git",
-        "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
+        "lastModified": 1637612395,
+        "narHash": "sha256-MH6fOV0hkOk5K0gO96OAQJI+nQUzSHYXxH3Ia2Nv1AU=",
+        "owner": "~misterio",
+        "repo": "BSI-SCC0540-projeto",
+        "rev": "42226662875894a48aff02071427fe9666e65c30",
+        "type": "sourcehut"
       },
       "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
+        "owner": "~misterio",
+        "repo": "BSI-SCC0540-projeto",
+        "type": "sourcehut"
       }
     },
     "root": {
