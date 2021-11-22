@@ -22,7 +22,7 @@ in
 
   networking.networkmanager.extraConfig = ''
     [ipv4]
-    address1=192.168.0.10/24
+    address1=192.168.77.10/24
   '';
 
   # Opt-in persistence on /data
