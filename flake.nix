@@ -105,12 +105,12 @@
       homeConfigurations = {
         "misterio@atlas" = mkHome {
           username = "misterio";
-          features = [ "cli" "desktop-sway" "mining" "persistence" "rgb" "trusted" ];
+          features = [ "cli" "games" "desktop-sway" "trusted" "mining" "persistence" "rgb" ];
           system = "x86_64-linux";
         };
         "misterio@pleione" = mkHome {
           username = "misterio";
-          features = [ "cli" "desktop-sway" "games" "persistence" "trusted" ];
+          features = [ "cli" "persistence" "desktop-sway" "trusted" ];
           system = "x86_64-linux";
         };
         "misterio@merope" = mkHome {

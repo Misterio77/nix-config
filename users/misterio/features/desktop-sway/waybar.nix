@@ -13,7 +13,6 @@ in {
         "custom/menu"
         "sway/workspaces"
         "sway/mode"
-        "custom/minicava"
         "custom/preferredplayer"
         "custom/player"
       ];
@@ -141,10 +140,6 @@ in {
             "Paused" = "";
             "Stopped" = "栗";
           };
-        };
-        "custom/minicava" = {
-          "exec" = "${pkgs.nur.repos.misterio.minicava}/bin/minicava";
-          "restart-interval" = 5;
         };
       };
     }];
