@@ -16,7 +16,7 @@ in
     ../common.nix
     ./hardware-configuration.nix
     # ./gpu-overclock.nix
-    # ./satisfactory.nix
+    ./satisfactory.nix
     # ./droidcam.nix
   ];
 
