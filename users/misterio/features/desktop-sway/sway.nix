@@ -57,6 +57,11 @@ in rec {
         size = 12.0;
       };
       output = {
+        eDP-1 = {
+          res = "1920x1080@60hz";
+          pos = "0 0";
+          bg = "${config.wallpaper} fill";
+        };
         DP-1 = {
           res = "1920x1080@60hz";
           pos = "0 0";
