@@ -108,7 +108,8 @@ in {
         };
         "custom/preferredplayer" = {
           exec = ''
-            ${pkgs.jq}/bin/jq -c -n --arg text "$(player=$(${pkgs.preferredplayer}/bin/preferredplayer) && echo $player | cut -d '.' -f 1 || echo No player set)" '{text: $text, alt: $text, tooltip: $text}'
+            player="$(${pkgs.preferredplayer}/bin/preferredplayer || echo No player set)"; \
+            echo "{\"text\": \"$player\", \"alt\": \"$player\", \"tooltip\": \"$player\"}"
           '';
           return-type = "json";
           interval = 1;
