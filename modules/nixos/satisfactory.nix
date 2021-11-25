@@ -57,7 +57,7 @@ in {
       };
 
       preStart = ''
-          ${steamcmd} +login anonymous +force_install_dir "${cfg.dataDir}" +app_update 1690800 validate +quit
+          ${steamcmd} +force_install_dir "${cfg.dataDir}" +login anonymous +app_update 1690800 validate +quit
       '';
     };
 
