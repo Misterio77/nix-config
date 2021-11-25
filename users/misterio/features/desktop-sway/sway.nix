@@ -189,9 +189,21 @@ in rec {
         "${modifier}+Control+Left" = "output DP-1 toggle";
         "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
 
+        # Pass wofi menu
+        "Scroll_Lock" = "exec ${pass-wofi}"; #fn+k
+        "XF86Calculator" = "exec ${pass-wofi}"; #fn+f12
+
+        # Lock or unlock gpg
+        "Shift+Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) ''
+          exec ${keyring.isUnlocked} && \
+          (${keyring.lock} && ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
+          ${keyring.unlock}
+        '';
+
         # Lock screen
-        "XF86Launch5" = "exec ${swaylock} --screenshots";
-        "XF86Launch4" = "exec ${swaylock} --screenshots";
+        "XF86Launch5" = "exec ${swaylock} --screenshots"; # lock icon on k70
+        "XF86Launch4" = "exec ${swaylock} --screenshots"; # fn+q
+        "${modifier}+p" = "exec ${swaylock} --screenshots"; #fn+f7
 
         # Volume
         "XF86AudioRaiseVolume" =
@@ -222,14 +234,11 @@ in rec {
         "Shift+XF86AudioStop" = "exec ${preferredplayer} none";
 
         # Wallpaper
-        "XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # Graphical picker
-        "Control+XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi -Q 'generate'"; # Generate
-        "Shift+XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi -Q $(${pkgs.setwallpaper}/bin/setwallpaper -R)"; # Random
+        "XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # profile icon on k70
 
         # Color scheme
-        "XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # Graphical picker
-        "Control+XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi -Q 'generate'"; # Generate
-        "Shift+XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi -Q $(${pkgs.setscheme}/bin/setscheme -R)"; # Random
+        "XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # scheme icon on k70
+        "${modifier}+i" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # fn+f9
 
         # Notifications
         "${modifier}+w" = "exec ${makoctl} dismiss";
@@ -253,16 +262,6 @@ in rec {
 
         # Application menu
         "${modifier}+x" = "exec ${wofi} -S drun -I";
-
-        # Pass wofi menu
-        "Scroll_Lock" = "exec ${pass-wofi}";
-
-        # Lock or unlock gpg
-        "Shift+Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) ''
-          exec ${keyring.isUnlocked} && \
-          (${keyring.lock} && ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
-          ${keyring.unlock}
-        '';
 
         # Full screen across monitors
         "${modifier}+shift+f" = "fullscreen toggle global";
@@ -290,6 +289,7 @@ in rec {
         };
         "1739:52781:MSFT0001:00_06CB:CE2D_Touchpad" = {
           tap = "enabled";
+          dwt = "disabled";
         };
       };
       gaps = {

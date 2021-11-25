@@ -33,7 +33,7 @@ in
   '' +
 
   (if builtins.elem "trusted" features then ''
-    timeout 240 '${keyring.lock}'
+    timeout ${toString (lockTime / 3)} '${keyring.lock}'
   '' else "") +
 
   (if builtins.elem "rgb" features then ''
