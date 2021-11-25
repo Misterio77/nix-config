@@ -1,5 +1,7 @@
-{ pkgs, ... }: {
-  home.packages = [ pkgs.steam ];
+{ pkgs, config, ... }: {
+  home.packages = [
+    pkgs.steam
+  ];
   home.persistence = {
     "/data/home/layla" = {
       allowOther = true;
