@@ -1,10 +1,12 @@
+{ hostname, ... }:
 {
   imports = [
     ./lutris.nix
+    ./steam.nix
+  ] + (if hostname == "atlas" then [
     ./multimc.nix
     ./osu.nix
     ./runescape.nix
-    ./steam.nix
     ./yuzu.nix
-  ];
+  ] else [ ]);
 }

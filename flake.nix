@@ -70,7 +70,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit nur impermanence nix-colors features projeto-bd;
+            inherit nur impermanence nix-colors features projeto-bd hostname;
           };
           configuration = ./users + "/${username}";
           extraModules = [ ./modules/home-manager { nixpkgs.overlays = overlays; } ];
@@ -106,27 +106,32 @@
       homeConfigurations = {
         "misterio@atlas" = mkHome {
           username = "misterio";
-          features = [ "cli" "games" "desktop-sway" "trusted" "mining" "persistence" "rgb" ];
+          hostname = "atlas";
+          features = [ "cli" "games" "desktop-sway" "trusted" "persistence" "mining" "rgb" ];
           system = "x86_64-linux";
         };
         "misterio@pleione" = mkHome {
           username = "misterio";
-          features = [ "cli" "persistence" "desktop-sway" "trusted" ];
+          hostname = "pleione";
+          features = [ "cli" "games" "desktop-sway" "trusted" "persistence" ];
           system = "x86_64-linux";
         };
         "misterio@merope" = mkHome {
           username = "misterio";
+          hostname = "merope";
           features = [ "cli" "persistence" ];
           system = "aarch64-linux";
         };
         "misterio@maia" = mkHome {
           username = "misterio";
+          hostname = "maia";
           features = [ "cli" "persistence" ];
           system = "x86_64-linux";
         };
 
         "layla@maia" = mkHome {
           username = "layla";
+          hostname = "maia";
           features = [ ];
           system = "x86_64-linux";
         };
