@@ -18,6 +18,7 @@ let
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
   kitty = "${pkgs.kitty}/bin/kitty";
+  light = "${pkgs.light}/bin/light";
   makoctl = "${pkgs.mako}/bin/makoctl";
   neomutt = "${pkgs.neomutt}/bin/neomutt";
   notify-send = "${pkgs.libnotify}/bin/notify-send";
