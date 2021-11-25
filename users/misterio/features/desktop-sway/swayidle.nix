@@ -11,6 +11,7 @@ in {
   # After 10 seconds of locked, mute mic
   # After 20 seconds of locked, disable rgb lights and turn monitors off
   xdg.configFile."swayidle/config".text = ''
+    before-sleep '${swaylock} --screenshots --daemonize'
     timeout 600 '${swaylock} --screenshots --daemonize'
 
     timeout 10  '${pgrep} -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ yes' resume  '${pgrep} -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ no'
