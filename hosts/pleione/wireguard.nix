@@ -11,8 +11,9 @@
           peers = [
             {
               publicKey = "a3dmQRbDmCeWEUyiUxAIjoI5icfzw8llKv5BHTgCJw8=";
-              allowedIPs = [ "0.0.0.0/0" "::/0" ];
+              allowedIPs = [ "192.168.77.0/24" ];
               endpoint = "home.misterio.me:51820";
+              dynamicEndpointRefreshSeconds = 25;
               persistentKeepalive = 25;
             }
           ];
