@@ -66,7 +66,7 @@
           modules = [ (./hosts + "/${hostname}") ./modules/nixos { nixpkgs.overlays = overlays; } ];
         };
       # Make home configuration, given username, required features, and system type
-      mkHome = { username, features, system }:
+      mkHome = { username, features, system, hostname }:
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {

@@ -3,7 +3,7 @@
   imports = [
     ./lutris.nix
     ./steam.nix
-  ] + (if hostname == "atlas" then [
+  ] ++ (if hostname == "atlas" then [
     ./multimc.nix
     ./osu.nix
     ./runescape.nix
