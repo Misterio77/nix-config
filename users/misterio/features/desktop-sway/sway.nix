@@ -79,6 +79,10 @@ in rec {
       defaultWorkspace = "workspace number 1";
       workspaceOutputAssign = [
         {
+          output = "eDP-1";
+          workspace = "1";
+        }
+        {
           output = "HDMI-A-1";
           workspace = "1";
         }
