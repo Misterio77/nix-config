@@ -245,6 +245,7 @@ in rec {
         "${modifier}+shift+w" = "exec ${makoctl} dismiss -a";
 
         # Programs
+        "${modifier}+c" = "exec ${terminal}";
         "${modifier}+v" = "exec ${terminal} -e ${nvim}";
         "${modifier}+o" = "exec ${terminal} -e ${octave}";
         "${modifier}+m" = "exec ${terminal} -e ${neomutt}";
