@@ -5,8 +5,10 @@ let
 
   # SSH Hosts
   sshHosts = [
-    "merope.local"
+    "atlas.local"
     "maia.local"
+    "merope.local"
+    "pleione.local"
     "ubuntu@vpn.uget.express"
   ];
 
@@ -272,6 +274,9 @@ in rec {
           {
             xkb_layout = "br";
           };
+        "1:1:AT_Translated_Set_2_keyboard" = {
+          xkb_layout = "br";
+        };
         "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
           pointer_accel = "1";
         };

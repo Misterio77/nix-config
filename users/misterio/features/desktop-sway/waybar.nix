@@ -57,12 +57,9 @@ in {
         battery = {
           bat = "BAT0";
           interval = 40;
-          format-icons = ["" "" "" "" ""];
-          states = {
-            warning = 30;
-            critical = 16;
-          };
+          format-icons = ["" "" "" "" "" "" "" "" "" ""];
           format = "{capacity}% {icon}";
+          format-charging = "{capacity}% ";
         };
         "sway/window" = { max-length = 50; };
         "sway/workspaces" = {

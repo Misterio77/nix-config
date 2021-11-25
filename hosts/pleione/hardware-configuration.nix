@@ -62,5 +62,6 @@
       options = [ "subvol=nix" "noatime" "compress=zstd" ];
     };
   };
+  powerManagement.cpuFreqGovernor = "powersave";
 
 }
