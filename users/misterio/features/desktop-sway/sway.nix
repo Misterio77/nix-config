@@ -288,6 +288,9 @@ in rec {
         "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
           pointer_accel = "1";
         };
+        "1739:52781:MSFT0001:00_06CB:CE2D_Touchpad" = {
+          tap = "enabled";
+        };
       };
       gaps = {
         horizontal = 5;
