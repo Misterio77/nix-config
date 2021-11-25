@@ -8,6 +8,7 @@
     hardware.nixosModules.common-pc-ssd
     impermanence.nixosModules.impermanence
     ./hardware-configuration.nix
+    ./wireguard.nix
     ../common.nix
   ];
 

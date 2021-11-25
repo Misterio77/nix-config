@@ -187,6 +187,7 @@ in rec {
 
         # Lock screen
         "XF86Launch5" = "exec ${swaylock} --screenshots";
+        "XF86Launch4" = "exec ${swaylock} --screenshots";
 
         # Volume
         "XF86AudioRaiseVolume" =
@@ -196,6 +197,9 @@ in rec {
         "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
         "Shift+XF86AudioMute" =
           "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+        "XF86AudioMicMute" =
+          "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+
         # Brightness
         "XF86MonBrightnessUp" = "exec ${light} -A 10";
         "XF86MonBrightnessDown" = "exec ${light} -U 10";

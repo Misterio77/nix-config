@@ -34,12 +34,10 @@ in
               allowedIPs = [ "10.100.0.2/32" ];
             }
             # Pleione (laptop)
-            /*
             {
-              publicKey = "";
+              publicKey = "zAkZz0taqMnOpoOUgdBnWcRjaRvRVkv874oiYE4ZxV0=";
               allowedIPs = [ "10.100.0.3/32" ];
             }
-            */
           ];
         };
       };

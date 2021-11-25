@@ -24,6 +24,12 @@
       fsType = "vfat";
     };
 
+    "/data/etc" = {
+      device = "/dev/mapper/pleione";
+      fsType = "btrfs";
+      options = [ "subvol=data/etc" "compress=zstd" ];
+    };
+
     "/data/games" = {
       device = "/dev/mapper/pleione";
       fsType = "btrfs";
