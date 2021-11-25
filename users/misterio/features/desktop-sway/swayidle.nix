@@ -1,28 +1,43 @@
-{ pkgs, lib, features, ... }:
+{ pkgs, lib, features, hostname, ... }:
 
 let
   keyring = import ../trusted/keyring.nix { inherit pkgs; };
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";
-in {
+
+  lockTime = if hostname == "atlas" then 600 else 240;
+  isLocked = "${pgrep} -x swaylock";
+  actionLock = "${swaylock} --screenshots --daemonize";
+  actionMute = "${pactl} set-source-mute @DEFAULT_SOURCE@ yes";
+  actionUnmute = "${pactl} set-source-mute @DEFAULT_SOURCE@ no";
+  actionRgbOff = "systemctl --user stop rgbdaemon";
+  actionRgbOn = "systemctl --user start rgbdaemon";
+  actionDisplayOff = "swaymsg \"output * dpms off\"";
+  actionDisplayOn = "swaymsg \"output * dpms on\"";
+in
+{
   # Remove pgp passphrase cache after 4 minutes
   # Lock after 10 minutes
   # After 10 seconds of locked, mute mic
   # After 20 seconds of locked, disable rgb lights and turn monitors off
   xdg.configFile."swayidle/config".text = ''
-    before-sleep '${swaylock} --screenshots --daemonize'
-    timeout 600 '${swaylock} --screenshots --daemonize'
+    before-sleep        '${actionLock}'
+    timeout ${toString lockTime} '${actionLock}'
 
-    timeout 10  '${pgrep} -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ yes' resume  '${pgrep} -x swaylock && ${pactl} set-source-mute @DEFAULT_SOURCE@ no'
-    timeout 610 '${pactl} set-source-mute @DEFAULT_SOURCE@ yes' resume  '${pactl} set-source-mute @DEFAULT_SOURCE@ no'
+    timeout ${toString (lockTime + 10)} '${actionMute}' resume  '${actionUnmute}'
+    timeout 10  '${isLocked} && ${actionMute}' resume  '${isLocked} && ${actionUnmute}'
 
-    timeout 20  '${pgrep} -x swaylock && systemctl --user stop rgbdaemon' resume  '${pgrep} -x swaylock && systemctl --user start rgbdaemon'
-    timeout 620 'systemctl --user stop rgbdaemon' resume  'systemctl --user start rgbdaemon'
+    timeout ${toString (lockTime + 20)} '${actionDisplayOff}' resume  '${actionDisplayOn}'
+    timeout 20  '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
+  '' +
 
-    timeout 20  '${pgrep} -x swaylock && swaymsg "output * dpms off"' resume  '${pgrep} -x swaylock && swaymsg "output * dpms on"'
-    timeout 620 'swaymsg "output * dpms off"' resume  'swaymsg "output * dpms on"'
-  '' + (if builtins.elem "trusted" features then ''
+  (if builtins.elem "trusted" features then ''
     timeout 240 '${keyring.lock}'
+  '' else "") +
+
+  (if builtins.elem "rgb" features then ''
+    timeout ${toString (lockTime + 20)} '${actionRgbOff}' resume  '${actionRgbOn}'
+    timeout 20  '${isLocked} && ${actionRgbOff}' resume  '${isLocked} && ${actionRgbOn}'
   '' else "");
 }
