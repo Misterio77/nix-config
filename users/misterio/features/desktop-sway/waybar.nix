@@ -21,6 +21,7 @@ in {
         "custom/gamemode"
         "custom/ethminer"
         "custom/theme"
+        "battery"
         "pulseaudio"
         "cpu"
         "custom/gpu"
@@ -52,6 +53,16 @@ in {
             default = [ "" "" "" ];
           };
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+        };
+        battery = {
+          bat = "BAT0";
+          interval = 40;
+          states = {
+            warning = 30;
+            critical = 16;
+            format-icons = ["" "" "" "" ""];
+          };
+          format = "{capacity}% {icon}";
         };
         "sway/window" = { max-length = 50; };
         "sway/workspaces" = {

@@ -59,6 +59,8 @@
   };
 
   programs = {
+    light.enable = true;
+
     gamemode.enable = true;
 
     # Use GPG as SSH
@@ -97,7 +99,7 @@
   # My user info
   users.users.misterio = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "video" ];
     shell = pkgs.fish;
     passwordFile = "/data/home/misterio/.password";
     openssh.authorizedKeys.keys = [

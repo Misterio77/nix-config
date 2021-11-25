@@ -187,16 +187,15 @@ in rec {
 
         # Volume
         "XF86AudioRaiseVolume" =
-          "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +1%";
-        "XF86AudioLowerVolume" =
-          "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -1%";
-        "Shift+XF86AudioRaiseVolume" =
           "exec ${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
-        "Shift+XF86AudioLowerVolume" =
+        "XF86AudioLowerVolume" =
           "exec ${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
         "XF86AudioMute" = "exec ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
         "Shift+XF86AudioMute" =
           "exec ${pactl} set-source-mute @DEFAULT_SOURCE@ toggle";
+        # Brightness
+        "XF86MonBrightnessUp" = "exec ${light} -A 10";
+        "XF86MonBrightnessDown" = "exec ${light} -U 10";
 
         # Media
         "XF86AudioNext" =
