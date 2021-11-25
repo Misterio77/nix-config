@@ -72,7 +72,10 @@
       enableSSHSupport = true;
     };
 
-    steam.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+    };
     adb.enable = true;
     dconf.enable = true;
     kdeconnect.enable = true;
