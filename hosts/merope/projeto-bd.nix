@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   services = {
     projeto-bd = {
