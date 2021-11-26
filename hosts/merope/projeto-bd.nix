@@ -23,7 +23,7 @@
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          proxyPass = "http://localhost:${config.services.projeto-bd.port}";
+          proxyPass = "http://localhost:${toString config.services.projeto-bd.port}";
         };
       };
     };
