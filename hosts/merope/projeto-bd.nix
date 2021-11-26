@@ -4,6 +4,7 @@
       enable = true;
       database = "postgresql:///projetobd?user=root&host=/var/run/postgresql";
       openFirewall = true;
+      port = 8081;
     };
 
     postgresql = {
@@ -20,6 +21,9 @@
       "bd.misterio.me" = {
         forceSSL = true;
         enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:${config.services.projeto-bd.port}";
+        };
       };
     };
   };

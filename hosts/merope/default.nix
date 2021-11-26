@@ -62,14 +62,18 @@ in
       tokenFile = "/srv/sistemer_bot.key";
     };
 
-    # Enable nginx (usage as reverse proxy)
+    # Enable nginx and recommended settings
     nginx = {
       enable = true;
+      recommendedTlsSettings = true;
+      recommendedProxySettings = true;
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
     };
   };
   # Open ports for nginx
   networking.firewall.allowedTCPPorts = [ 80 443 ];
-  # Enable acme for usage with nginx servers
+  # Enable acme for usage with nginx vhosts
   security.acme = {
     email = "eu@misterio.me";
     acceptTerms = true;
