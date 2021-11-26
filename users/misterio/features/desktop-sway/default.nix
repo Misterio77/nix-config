@@ -21,6 +21,7 @@
   ];
 
   home.packages = with pkgs; [
+    waypipe
     dragon-drop
     imv
     pavucontrol
