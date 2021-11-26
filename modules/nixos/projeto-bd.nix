@@ -58,7 +58,7 @@ in
     users = {
       users.projetobd = {
         description = "Projeto BD service user";
-        isSystemUser = false;
+        isSystemUser = true;
         group = "projetobd";
       };
       groups.projetobd = { };
