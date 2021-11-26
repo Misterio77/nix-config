@@ -69,16 +69,17 @@ in
   };
   # Open ports for nginx
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+  # Enable acme for usage with nginx servers
+  security.acme = {
+    email = "eu@misterio.me";
+    acceptTerms = true;
+  };
 
   # Enable wireguard ip forwarding
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
-  security = {
-    # Passwordless sudo (for remote build)
-    sudo.extraConfig = ''
-      %wheel         ALL = (ALL) NOPASSWD: ALL
-    '';
-  };
+  # Passwordless sudo (for remote build)
+  security.sudo.extraConfig = "%wheel         ALL = (ALL) NOPASSWD: ALL";
 
   # Enable argonone fan daemon
   hardware.argonone.enable = true;
