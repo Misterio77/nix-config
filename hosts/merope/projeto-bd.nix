@@ -3,7 +3,7 @@
   services = {
     projeto-bd = {
       enable = true;
-      database = "postgresql:///projetobd?user=root&host=/var/run/postgresql";
+      database = "postgresql:///projetobd?user=projetobd&host=/var/run/postgresql";
       openFirewall = true;
       port = 8081;
     };
