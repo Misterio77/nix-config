@@ -33,6 +33,13 @@
     overlays = [ nur.overlay ];
   };
 
+  boot = {
+    # Quieter boot
+    kernelParams = [ "quiet" "udev.log_priority=3" ];
+    consoleLogLevel = 0;
+    initrd.verbose = false;
+  };
+
   nix = {
     registry = {
       nixpkgs.flake = nixpkgs;

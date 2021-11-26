@@ -21,6 +21,7 @@ in
   ];
 
   networking.hostName = "atlas";
+  networking.firewall.allowedTCPPorts = [ 80 ];
 
   environment.persistence."/data" = {
     directories = [
@@ -40,9 +41,6 @@ in
       enable = true;
       font = "${pkgs.fira}/share/fonts/opentype/FiraSans-Regular.otf";
     };
-    # More silent boot
-    kernelParams = [ "quiet" "udev.log_priority=3" ];
-    consoleLogLevel = 3;
     # Bootloader configuration
     loader = {
       timeout = 0;

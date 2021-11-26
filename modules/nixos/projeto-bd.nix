@@ -15,16 +15,6 @@ in
         The package implementing projeto bd
       '';
     };
-    tlsChain = mkOption {
-      type = types.nullOr types.path;
-      description = "File path containing certificate chain.";
-      default = null;
-    };
-    tlsKey = mkOption {
-      type = types.nullOr types.path;
-      description = "File path containing private key.";
-      default = null;
-    };
     database = mkOption {
       type = types.nullOr types.str;
       description = "Connection string for database.";
@@ -37,13 +27,13 @@ in
     };
     port = mkOption {
       type = types.int;
-      default = if (cfg.tlsChain != null && cfg.tlsKey != null) then 443 else 80;
+      default = 8080;
       description = "Port number to bind to.";
     };
     openFirewall = mkOption {
       type = types.bool;
       default = false;
-      description = "Whether to open ports in th firewall for the server.";
+      description = "Whether to open port in the firewall for the server.";
     };
   };
 
@@ -54,6 +44,7 @@ in
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/projeto-bd";
         Restart = "on-failure";
+        User = "projetobd";
       };
       environment = {
         ROCKET_ADDRESS = cfg.address;
@@ -61,9 +52,16 @@ in
         ROCKET_ASSETS_DIR = "${cfg.package}/etc/assets";
         ROCKET_PORT = toString cfg.port;
         ROCKET_DATABASES = "{database={url=\"${cfg.database}\"}}";
-        ROCKET_TLS = mkIf (cfg.tlsChain != null && cfg.tlsKey != null)
-          "{certs=\"${cfg.tlsChain}\",key=\"${cfg.tlsKey}\"}";
       };
+    };
+
+    users = {
+      users.projetobd = {
+        description = "Projeto BD service user";
+        isSystemUser = false;
+        group = "projetobd";
+      };
+      groups.projetobd = { };
     };
 
     networking.firewall = mkIf cfg.openFirewall {

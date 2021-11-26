@@ -14,7 +14,6 @@ in
     ../common.nix
     ./hardware-configuration.nix
 
-    ./acme.nix
     ./ddclient.nix
     ./projeto-bd.nix
     ./wireguard.nix
@@ -33,22 +32,43 @@ in
     directories = [
       "/var/log"
       "/var/lib/systemd"
+      "/var/lib/postgresql"
       "/srv"
     ];
   };
 
-  # Persist host ssh keys
-  services.openssh.hostKeys = [
-    {
-      path = "/data/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }
-    {
-      path = "/data/etc/ssh/ssh_host_rsa_key";
-      type = "rsa";
-      bits = "4096";
-    }
-  ];
+  services = {
+    # Persist host ssh keys
+    openssh.hostKeys = [
+      {
+        path = "/data/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+      {
+        path = "/data/etc/ssh/ssh_host_rsa_key";
+        type = "rsa";
+        bits = "4096";
+      }
+    ];
+
+    # Enable postgres
+    postgresql = {
+      enable = true;
+    };
+
+    # Enable sistemer telegram bot
+    sistemer-bot = {
+      enable = true;
+      tokenFile = "/srv/sistemer_bot.key";
+    };
+
+    # Enable nginx (usage as reverse proxy)
+    nginx = {
+      enable = true;
+    };
+  };
+  # Open ports for nginx
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   # Enable wireguard ip forwarding
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -62,12 +82,6 @@ in
 
   # Enable argonone fan daemon
   hardware.argonone.enable = true;
-
-  # Enable sistemer telegram bot
-  services.sistemer-bot = {
-    enable = true;
-    tokenFile = "/srv/sistemer_bot.key";
-  };
 
   # My user info
   users.users.misterio = {
