@@ -1,4 +1,4 @@
-{ lib, features, pkgs, config, ... }:
+{ lib, features, pkgs, config, hostname, ... }:
 
 let
   colorscheme = config.colorscheme;
@@ -36,10 +36,12 @@ let
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   waybar = "${pkgs.waybar}/bin/waybar";
+  wayvnc = "${pkgs.wayvnc}/bin/wayvnc";
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
-in rec {
+in
+rec {
   home.packages = with pkgs; [ wl-clipboard wf-recorder slurp ];
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
@@ -150,12 +152,12 @@ in rec {
         {
           command = "${waybar}";
         }
-        # Set xwayland main monitor
+        # Start WayVNC, only on atlas
+      ] ++ (if hostname == "atlas" then [
         {
-          command =
-            "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
+          command = "${wayvnc} 0.0.0.0 -o DP-1";
         }
-      ];
+      ] else [ ]);
       bars = [ ];
       window = {
         border = 2;

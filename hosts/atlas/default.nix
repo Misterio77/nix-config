@@ -21,7 +21,6 @@ in
   ];
 
   networking.hostName = "atlas";
-  networking.firewall.allowedTCPPorts = [ 80 ];
 
   environment.persistence."/data" = {
     directories = [
