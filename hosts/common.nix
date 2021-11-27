@@ -63,6 +63,7 @@
       enable = true;
       passwordAuthentication = false;
       permitRootLogin = "no";
+      forwardX11 = true;
     };
     avahi = {
       enable = true;
