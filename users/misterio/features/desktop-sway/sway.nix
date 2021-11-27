@@ -152,10 +152,14 @@ rec {
         {
           command = "${waybar}";
         }
-        # Start WayVNC, only on atlas
       ] ++ (if hostname == "atlas" then [
+        # Start WayVNC
         {
           command = "${wayvnc} 0.0.0.0 -o DP-1";
+        }
+        # Set primary monitor
+        {
+          command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
         }
       ] else [ ]);
       bars = [ ];
