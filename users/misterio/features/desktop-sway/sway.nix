@@ -142,7 +142,7 @@ rec {
         }
         # Add transparency
         {
-          command = "${swayfader}";
+          command = "SWAYFADER_CON_INAC=0.85 ${swayfader}";
         }
         # Init discocss
         {
