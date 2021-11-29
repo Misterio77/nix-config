@@ -100,31 +100,31 @@ rec {
       colors = {
         focused = {
           border = "${colorscheme.colors.base0C}";
-          childBorder = "${colorscheme.colors.base0C}";
-          indicator = "${colorscheme.colors.base09}";
           background = "${colorscheme.colors.base00}";
           text = "${colorscheme.colors.base05}";
+          indicator = "${colorscheme.colors.base09}";
+          childBorder = "${colorscheme.colors.base0C}";
         };
         focusedInactive = {
           border = "${colorscheme.colors.base03}";
-          childBorder = "${colorscheme.colors.base03}";
-          indicator = "${colorscheme.colors.base03}";
           background = "${colorscheme.colors.base00}";
           text = "${colorscheme.colors.base04}";
+          indicator = "${colorscheme.colors.base03}";
+          childBorder = "${colorscheme.colors.base03}";
         };
         unfocused = {
           border = "${colorscheme.colors.base02}";
-          childBorder = "${colorscheme.colors.base02}";
-          indicator = "${colorscheme.colors.base02}";
           background = "${colorscheme.colors.base00}";
           text = "${colorscheme.colors.base03}";
+          indicator = "${colorscheme.colors.base02}";
+          childBorder = "${colorscheme.colors.base02}";
         };
         urgent = {
           border = "${colorscheme.colors.base09}";
-          childBorder = "${colorscheme.colors.base09}";
-          indicator = "${colorscheme.colors.base09}";
           background = "${colorscheme.colors.base00}";
           text = "${colorscheme.colors.base03}";
+          indicator = "${colorscheme.colors.base09}";
+          childBorder = "${colorscheme.colors.base09}";
         };
       };
       startup = [
