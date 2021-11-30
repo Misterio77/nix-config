@@ -81,7 +81,7 @@ in {
     Unit = { Description = "Automatic mbsync synchronization"; };
     Timer = {
       OnBootSec = "30";
-      OnUnitActiveSec = "1m";
+      OnUnitActiveSec = "5m";
     };
     Install = { WantedBy = [ "timers.target" ]; };
   };
