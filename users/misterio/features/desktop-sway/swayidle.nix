@@ -1,7 +1,10 @@
 { pkgs, lib, features, hostname, ... }:
 
 let
+  isTrusted = builtins.elem "trusted" features;
+  hasRgb = builtins.elem "rgb" features;
   keyring = import ../trusted/keyring.nix { inherit pkgs; };
+
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";
@@ -22,22 +25,22 @@ in
   # After 10 seconds of locked, mute mic
   # After 20 seconds of locked, disable rgb lights and turn monitors off
   xdg.configFile."swayidle/config".text = ''
-    before-sleep        '${actionLock}'
+    before-sleep '${if isTrusted then "${keyring.lock}; " else ""} ${actionLock}'
     timeout ${toString lockTime} '${actionLock}'
 
     timeout ${toString (lockTime + 10)} '${actionMute}' resume  '${actionUnmute}'
-    timeout 10  '${isLocked} && ${actionMute}' resume  '${isLocked} && ${actionUnmute}'
+    timeout 10 '${isLocked} && ${actionMute}' resume  '${isLocked} && ${actionUnmute}'
 
     timeout ${toString (lockTime + 20)} '${actionDisplayOff}' resume  '${actionDisplayOn}'
-    timeout 20  '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
+    timeout 20 '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
   '' +
 
-  (if builtins.elem "trusted" features then ''
+  (if isTrusted then ''
     timeout ${toString (lockTime / 3)} '${keyring.lock}'
   '' else "") +
 
-  (if builtins.elem "rgb" features then ''
+  (if hasRgb then ''
     timeout ${toString (lockTime + 20)} '${actionRgbOff}' resume  '${actionRgbOn}'
-    timeout 20  '${isLocked} && ${actionRgbOff}' resume  '${isLocked} && ${actionRgbOn}'
+    timeout 20 '${isLocked} && ${actionRgbOff}' resume  '${isLocked} && ${actionRgbOn}'
   '' else "");
 }

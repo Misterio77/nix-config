@@ -66,7 +66,7 @@
     Unit = { Description = "Automatic vdirsyncer synchronization"; };
     Timer = {
       OnBootSec = "30";
-      OnUnitActiveSec = "1m";
+      OnUnitActiveSec = "5m";
     };
     Install = { WantedBy = [ "timers.target" ]; };
   };
