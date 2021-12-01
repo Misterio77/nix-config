@@ -310,20 +310,4 @@ rec {
       exec systemctl --user import-environment WAYLAND_DISPLAY
     '';
   };
-
-  programs.zsh.loginExtra = ''
-    if [[ "$(tty)" == /dev/tty1 ]]; then
-      exec sway
-    fi
-  '';
-  programs.fish.loginShellInit = ''
-    if test (tty) = /dev/tty1
-      exec sway
-    end
-  '';
-  programs.bash.profileExtra = ''
-    if [[ "$(tty)" == /dev/tty1 ]]; then
-      exec sway
-    fi
-  '';
 }

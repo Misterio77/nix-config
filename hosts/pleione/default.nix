@@ -46,7 +46,7 @@
       enable = true;
       settings = rec {
         initial_session = {
-          command = "sway";
+          command = "sway &> /dev/null";
           user = "misterio";
         };
         default_session = initial_session;
