@@ -15,7 +15,7 @@
 
   environment = {
     # Activate home-manager environment, if not already enabled
-    loginShellInit = ''[ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate 2> /dev/null'';
+    loginShellInit = ''[ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null'';
 
     homeBinInPath = true;
     localBinInPath = true;

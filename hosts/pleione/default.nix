@@ -42,6 +42,16 @@
   };
 
   services = {
+    greetd = {
+      enable = true;
+      settings = rec {
+        initial_session = {
+          command = "sway";
+          user = "misterio";
+        };
+        default_session = initial_session;
+      };
+    };
     pipewire = {
       enable = true;
       alsa.enable = true;
