@@ -15,12 +15,9 @@ in
     nur-no-pkgs.repos.misterio.modules.openrgb
     ../common.nix
     ./hardware-configuration.nix
-    # ./gpu-overclock.nix
-    ./satisfactory.nix
-    # ./droidcam.nix
-  ];
 
-  networking.hostName = "atlas";
+    ./satisfactory.nix
+  ];
 
   environment.persistence."/data" = {
     directories = [
@@ -59,18 +56,6 @@ in
     };
   };
 
-  services = {
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
-    dbus.packages = [ pkgs.gcr ];
-    postgresql.enable = true;
-  };
-
   programs = {
     gamemode = {
       enable = true;
@@ -103,27 +88,31 @@ in
     kdeconnect.enable = true;
   };
 
-  security = {
-    # Global sudo caching
-    sudo.extraConfig = ''
-      Defaults timestamp_type=global
-    '';
+  services = {
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
+    dbus.packages = [ pkgs.gcr ];
+    postgresql.enable = true;
   };
 
   xdg.portal = {
     enable = true;
     gtkUsePortal = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+    wlr.enable = true;
   };
-  security.pam.services.swaylock = { };
 
   hardware = {
-    ckb-next.enable = true;
     opengl = {
       enable = true;
       extraPackages = with pkgs; [ amdvlk ];
       driSupport = true;
     };
+    ckb-next.enable = true;
     openrgb.enable = true;
     opentabletdriver.enable = true;
     steam-hardware.enable = true;
@@ -131,16 +120,5 @@ in
 
   virtualisation = {
     podman.enable = true;
-  };
-
-  # My user info
-  users.users.misterio = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
-    shell = pkgs.fish;
-    passwordFile = "/data/home/misterio/.password";
-    openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDci4wJghnRRSqQuX1z2xeaUR+p/muKzac0jw0mgpXE2T/3iVlMJJ3UXJ+tIbySP6ezt0GVmzejNOvUarPAm0tOcW6W0Ejys2Tj+HBRU19rcnUtf4vsKk8r5PW5MnwS8DqZonP5eEbhW2OrX5ZsVyDT+Bqrf39p3kOyWYLXT2wA7y928g8FcXOZjwjTaWGWtA+BxAvbJgXhU9cl/y45kF69rfmc3uOQmeXpKNyOlTk6ipSrOfJkcHgNFFeLnxhJ7rYxpoXnxbObGhaNqn7gc5mt+ek+fwFzZ8j6QSKFsPr0NzwTFG80IbyiyrnC/MeRNh7SQFPAESIEP8LK3PoNx2l1M+MjCQXsb4oIG2oYYMRa2yx8qZ3npUOzMYOkJFY1uI/UEE/j/PlQSzMHfpmWus4o2sijfr8OmVPGeoU/UnVPyINqHhyAd1d3Iji3y3LMVemHtp5wVcuswABC7IRVVKZYrMCXMiycY5n00ch6XTaXBwCY00y8B3Mzkd7Ofq98YHc= (none)"
-    ];
   };
 }

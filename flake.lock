@@ -15,22 +15,6 @@
         "type": "github"
       }
     },
-    "flake-compat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1627913399,
-        "narHash": "sha256-hY8g6H2KFL8ownSiFeMOjwPC8P0ueXpCVEbxgda3pko=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "12c64ca55c1014cdc1b16ed5a804aa8576601ff2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
     "hardware": {
       "locked": {
         "lastModified": 1638182287,
@@ -154,7 +138,6 @@
     "root": {
       "inputs": {
         "declarative-cachix": "declarative-cachix",
-        "flake-compat": "flake-compat",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",

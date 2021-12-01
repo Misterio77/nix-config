@@ -1,5 +1,5 @@
 # System configuration for my Raspberry Pi 4
-{ config, nixpkgs, system, pkgs, hardware, impermanence, nur, ... }:
+{ config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
 
 let
   nur-no-pkgs = import nur {
@@ -19,15 +19,6 @@ in
     ./wireguard.nix
   ];
 
-  networking.hostName = "merope";
-
-  networking.networkmanager.extraConfig = ''
-    [ipv4]
-    address1=192.168.77.10/24
-  '';
-
-  # Opt-in persistence on /data
-  fileSystems."/data".neededForBoot = true;
   environment.persistence."/data" = {
     directories = [
       "/var/log"
@@ -37,24 +28,15 @@ in
     ];
   };
 
-  services = {
-    # Persist host ssh keys
-    openssh.hostKeys = [
-      {
-        path = "/data/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-      {
-        path = "/data/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-        bits = "4096";
-      }
-    ];
+  # Static IP address
+  networking.networkmanager.extraConfig = ''
+    [ipv4]
+    address1=192.168.77.10/24
+  '';
 
+  services = {
     # Enable postgres
-    postgresql = {
-      enable = true;
-    };
+    postgresql.enable = true;
 
     # Enable sistemer telegram bot
     sistemer-bot = {
@@ -73,28 +55,10 @@ in
   };
   # Open ports for nginx
   networking.firewall.allowedTCPPorts = [ 80 443 ];
-  # Enable acme for usage with nginx vhosts
-  security.acme = {
-    email = "eu@misterio.me";
-    acceptTerms = true;
-  };
-
-  # Enable wireguard ip forwarding
-  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
   # Passwordless sudo (for remote build)
-  security.sudo.extraConfig = "%wheel         ALL = (ALL) NOPASSWD: ALL";
+  security.sudo.extraConfig = "%wheel ALL = (ALL) NOPASSWD: ALL";
 
   # Enable argonone fan daemon
   hardware.argonone.enable = true;
-
-  # My user info
-  users.users.misterio = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "i2c" ];
-    shell = pkgs.fish;
-    openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDci4wJghnRRSqQuX1z2xeaUR+p/muKzac0jw0mgpXE2T/3iVlMJJ3UXJ+tIbySP6ezt0GVmzejNOvUarPAm0tOcW6W0Ejys2Tj+HBRU19rcnUtf4vsKk8r5PW5MnwS8DqZonP5eEbhW2OrX5ZsVyDT+Bqrf39p3kOyWYLXT2wA7y928g8FcXOZjwjTaWGWtA+BxAvbJgXhU9cl/y45kF69rfmc3uOQmeXpKNyOlTk6ipSrOfJkcHgNFFeLnxhJ7rYxpoXnxbObGhaNqn7gc5mt+ek+fwFzZ8j6QSKFsPr0NzwTFG80IbyiyrnC/MeRNh7SQFPAESIEP8LK3PoNx2l1M+MjCQXsb4oIG2oYYMRa2yx8qZ3npUOzMYOkJFY1uI/UEE/j/PlQSzMHfpmWus4o2sijfr8OmVPGeoU/UnVPyINqHhyAd1d3Iji3y3LMVemHtp5wVcuswABC7IRVVKZYrMCXMiycY5n00ch6XTaXBwCY00y8B3Mzkd7Ofq98YHc= (none)"
-    ];
-  };
 }

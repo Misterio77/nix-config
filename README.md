@@ -3,7 +3,7 @@
 Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.wiki/wiki/Flakes).
 
 ## Structure
-- `flake.nix`: Entrypoint for both hosts (`nixos-rebuild --flake`) and home configurations (`home-manager --flake`). Also exposes a devshell for boostrapping (`nix develop` or `nix-shell`).
+- `flake.nix`: Entrypoint for both hosts (`nixos-rebuild --flake`) and home configurations (`home-manager --flake`). Also exposes a devshell for boostrapping (`nix develop`).
 - `hosts`: System-wide configuration for my machines.
   - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
   - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
@@ -19,7 +19,7 @@ Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.w
 
 
 ## About the installation
-This is hardware specific and can easily be changed by switching out `hardware-configuration.nxi` files.
+This is hardware specific and can easily be changed by switching out `hardware-configuration.nix` files.
 
 I use a erase my darlings-like setup. My desktop pc uses an encrypted btrfs partition, which has subvolumes for nix store, games, home (snapshotted), srv (snapshotted), and var. The pi is similar, but with a single ext4 partition for all that. The root filesystem is a tmpfs, on which the partitions are mounted to achieve opt-in state.
 
@@ -28,7 +28,7 @@ I use home-manager as a standalone module, and, as such, i have to "manually" ac
 
 ## How to bootstrap
 
-All you need is bash, nix, and git. Just `nix-shell` (or `nix develop`, if already on flakes), and you should be good to go.
+All you need is bash, nix, and git. Just `nix develop`, and you should be good to go.
 
 `nixos-rebuild --flake .` To build system configuration
 

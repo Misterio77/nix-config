@@ -27,6 +27,7 @@
       device = "/dev/disk/by-uuid/9ded8eaf-5411-425b-9664-1208aadd11b9";
       fsType = "btrfs";
       options = [ "subvol=data" "compress=zstd" ];
+      neededForBoot = true;
     };
 
     "/dotfiles" = {

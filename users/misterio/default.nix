@@ -1,4 +1,4 @@
-{ lib, features, nur, pkgs, ... }:
+{ lib, features, pkgs, ... }:
 
 {
   imports = [ ./rice.nix ] ++
@@ -9,10 +9,6 @@
   programs = {
     home-manager.enable = true;
     git.enable = true;
-  };
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ nur.overlay ];
   };
   systemd.user.startServices = "sd-switch";
 }

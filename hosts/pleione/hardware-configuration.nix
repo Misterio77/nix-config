@@ -28,6 +28,7 @@
       device = "/dev/mapper/pleione";
       fsType = "btrfs";
       options = [ "subvol=data/etc" "compress=zstd" ];
+      neededForBoot = true;
     };
 
     "/data/games" = {

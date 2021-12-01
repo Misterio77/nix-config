@@ -17,10 +17,6 @@
     nix-colors.url = "github:Misterio77/nix-colors";
 
     utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
 
     # Projects being worked on
     projeto-bd = {
@@ -46,35 +42,58 @@
       # Projects
     , projeto-bd
     , ...
-    }:
+    }@inputs:
     let
       # My overlays, plus from external projects
       overlay = (import ./overlays);
       overlays = [
         overlay
         projeto-bd.overlay
+        nur.overlay
       ];
 
       # Make system configuration, given hostname and system type
-      mkSystem = { hostname, system }:
+      mkSystem = { hostname, system, users }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit nixpkgs hardware nur declarative-cachix
-              impermanence nix-colors system projeto-bd;
+              impermanence nix-colors system;
           };
-          modules = [ (./hosts + "/${hostname}") ./modules/nixos { nixpkgs.overlays = overlays; } ];
+          modules = [
+            ./modules/nixos
+            (./hosts + "/${hostname}")
+            {
+              networking.hostName = hostname;
+              # Apply overlay and allow unfree packages
+              nixpkgs = {
+                inherit overlays;
+                config.allowUnfree = true;
+              };
+              # Add each input as a registry
+              nix.registry = nixpkgs.lib.mapAttrs' (n: v: nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; })) inputs;
+            }
+            # System wide config for each user
+          ] ++ nixpkgs.lib.forEach users (u: ./users + "/${u}" + /system-wide.nix);
         };
       # Make home configuration, given username, required features, and system type
-      mkHome = { username, features, system, hostname }:
+      mkHome = { username, system, hostname, features ? [ ] }:
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit nur impermanence nix-colors features projeto-bd hostname;
+            inherit features hostname impermanence nix-colors;
           };
-          configuration = ./users + "/${username}";
-          extraModules = [ ./modules/home-manager { nixpkgs.overlays = overlays; } ];
           homeDirectory = "/home/${username}";
+          configuration = ./users + "/${username}";
+          extraModules = [
+            ./modules/home-manager
+            {
+              nixpkgs = {
+                inherit overlays;
+                config.allowUnfree = true;
+              };
+            }
+          ];
         };
     in
     {
@@ -85,21 +104,25 @@
         atlas = mkSystem {
           hostname = "atlas";
           system = "x86_64-linux";
+          users = [ "misterio" ];
         };
         # Laptop
         pleione = mkSystem {
           hostname = "pleione";
           system = "x86_64-linux";
+          users = [ "misterio" ];
         };
         # Raspberry Pi 4B
         merope = mkSystem {
           hostname = "merope";
           system = "aarch64-linux";
+          users = [ "misterio" ];
         };
         # Gf's PC
         maia = mkSystem {
           hostname = "maia";
           system = "x86_64-linux";
+          users = [ "layla" "misterio" ];
         };
       };
 

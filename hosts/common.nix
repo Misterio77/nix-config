@@ -1,5 +1,5 @@
 # This file holds config that i use on all hosts
-{ pkgs, lib, nixpkgs, nix-colors, nur, declarative-cachix, ... }:
+{ pkgs, lib, nixpkgs, declarative-cachix, ... }:
 
 {
   imports = [
@@ -28,11 +28,6 @@
     }
   ];
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ nur.overlay ];
-  };
-
   boot = {
     # Quieter boot
     kernelParams = [ "quiet" "udev.log_priority=3" ];
@@ -40,11 +35,13 @@
     initrd.verbose = false;
   };
 
+  # Enable acme for usage with nginx vhosts
+  security.acme = {
+    email = "eu@misterio.me";
+    acceptTerms = true;
+  };
+
   nix = {
-    registry = {
-      nixpkgs.flake = nixpkgs;
-      nix-colors.flake = nix-colors;
-    };
     trustedUsers = [ "root" "@wheel" ];
     package = pkgs.nixUnstable;
     extraOptions = ''
@@ -64,6 +61,18 @@
       passwordAuthentication = false;
       permitRootLogin = "no";
       forwardX11 = true;
+      # Persist host ssh keys
+      hostKeys = [
+        {
+          path = "/data/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+        {
+          path = "/data/etc/ssh/ssh_host_rsa_key";
+          type = "rsa";
+          bits = "4096";
+        }
+      ];
     };
     avahi = {
       enable = true;

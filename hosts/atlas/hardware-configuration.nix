@@ -23,6 +23,13 @@
       fsType = "vfat";
     };
 
+    "/data/etc" = {
+      device = "/dev/mapper/atlas";
+      fsType = "btrfs";
+      options = [ "subvol=data/etc" "compress=zstd" ];
+      neededForBoot = true;
+    };
+
     "/data/games" = {
       device = "/dev/mapper/atlas";
       fsType = "btrfs";

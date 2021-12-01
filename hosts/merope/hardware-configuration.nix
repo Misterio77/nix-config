@@ -15,6 +15,7 @@
     "/data" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
+      neededForBoot = true;
     };
 
     "/firmware" = {
