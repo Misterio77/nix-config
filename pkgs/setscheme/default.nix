@@ -15,11 +15,19 @@ stdenv.mkDerivation {
       exit 0
     elif [ "$1" == "generate" ]; then
       scheme="null"
+      if [ -z "$2" ]; then
+        mode="\"dark\""
+      else
+        mode="\"$2\""
+        shift 1
+      fi
     else
       scheme="\"$1\""
+      mode="null"
     fi
 
-    echo "$scheme" > /dotfiles/users/$USER/current-scheme.nix && \
+    sed -i "s/currentScheme = .*;/currentScheme = $scheme;/" /dotfiles/users/$USER/rice.nix && \
+    sed -i "s/currentMode = .*;/currentMode = $mode;/" /dotfiles/users/$USER/rice.nix && \
     home-manager switch --flake /dotfiles ''${@:2}
   '';
   dontBuild = true;

@@ -3,9 +3,9 @@
 with nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme = import ./current-scheme.nix;
-  currentWallpaper = import ./current-wallpaper.nix;
-  currentMode = import ./current-mode.nix;
+  currentScheme = null;
+  currentWallpaper = "cubist-crystal-brown-teal.jpg";
+  currentMode = "light";
 in {
   imports = [ nix-colors.homeManagerModule ];
   home.packages = with pkgs; [
