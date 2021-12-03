@@ -71,7 +71,9 @@
                 config.allowUnfree = true;
               };
               # Add each input as a registry
-              nix.registry = nixpkgs.lib.mapAttrs' (n: v: nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; })) inputs;
+              nix.registry = nixpkgs.lib.mapAttrs'
+                (n: v: nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; }))
+                inputs;
             }
             # System wide config for each user
           ] ++ nixpkgs.lib.forEach users (u: ./users + "/${u}" + /system-wide.nix);
@@ -155,7 +157,6 @@
         "layla@maia" = mkHome {
           username = "layla";
           hostname = "maia";
-          features = [ ];
           system = "x86_64-linux";
         };
       };
@@ -165,10 +166,11 @@
     } // utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system overlays; };
+      hm = home-manager.defaultPackage."${system}";
     in
     {
       devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp ];
+        buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp hm ];
       };
     });
 }

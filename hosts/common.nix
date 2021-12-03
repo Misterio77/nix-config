@@ -45,7 +45,7 @@
     trustedUsers = [ "root" "@wheel" ];
     package = pkgs.nixUnstable;
     extraOptions = ''
-      experimental-features = nix-command flakes ca-references
+      experimental-features = nix-command flakes
       warn-dirty = false
     '';
     autoOptimiseStore = true;
