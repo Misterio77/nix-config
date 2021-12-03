@@ -23,6 +23,7 @@ in
     directories = [
       "/var/log"
       "/var/lib/containers"
+      "/var/lib/docker"
       "/var/lib/systemd"
       "/var/lib/postgresql"
       "/srv"
@@ -129,6 +130,7 @@ in
   };
 
   virtualisation = {
+    docker.enable = true;
     podman.enable = true;
   };
 }

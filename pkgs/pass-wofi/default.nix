@@ -10,8 +10,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "Misterio77";
     repo = "pass-wofi";
-    rev = "269918667672ac11cff850b50aeaf53315e97e38";
-    sha256 = "sha256-IFGuL2UQHJ46Be5ZCXn3zKoYpxr62X+eYyNVYLKRf38=";
+    rev = "3233c2814f01e7162bf27be6803b74997fd10fd7";
+    sha256 = "sha256-9PN1NPMKvnYtMOWcZVTrFw4bxWfEH0NeHtFO6hPTrZk=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
