@@ -3,8 +3,8 @@
 with nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme = "horizon-dark";
-  currentWallpaper = "eclipse-moon-red.jpg";
+  currentScheme = "crystal-dark";
+  currentWallpaper = "cubist-crystal-brown-teal.jpg";
   currentMode = null;
 in {
   imports = [ nix-colors.homeManagerModule ];

@@ -37,11 +37,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1638415301,
-        "narHash": "sha256-iqszstbHaO5PYeBXQf1ukgYj/aq9wznBbZMrtYMZzgI=",
+        "lastModified": 1638571010,
+        "narHash": "sha256-KSO7u13VRLdklQTKYJaBSfVcurEvw+HifAsHR7V2i5E=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "de54d513c74bf8f4f3a58954b80b5f690639fe72",
+        "rev": "781d25b315def05cd7ede3765226c54216f0b1fe",
         "type": "github"
       },
       "original": {
@@ -67,15 +67,16 @@
     },
     "nix-colors": {
       "locked": {
-        "lastModified": 1637524031,
-        "narHash": "sha256-6dklAb7obavjpJpWJ3KSno/jvg8TV89vzvxz2BKQdsw=",
+        "lastModified": 1638574463,
+        "narHash": "sha256-sHqn7U4By05A71+CTzhovgsSQShRKbRGdrI395Ucj/Y=",
         "owner": "Misterio77",
         "repo": "nix-colors",
-        "rev": "c4feb9effb45f05b1a0e510aa51fbc7c358b271f",
+        "rev": "82138a7652e1e4e923602c0b43421a9bc37e093a",
         "type": "github"
       },
       "original": {
         "owner": "Misterio77",
+        "ref": "add-crystal",
         "repo": "nix-colors",
         "type": "github"
       }
@@ -98,11 +99,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1638435562,
-        "narHash": "sha256-l7+pHUJ3C2WVEWRDANHuIJ9R4AhxZoAgDC0HbkrjlWI=",
+        "lastModified": 1638632761,
+        "narHash": "sha256-+6yCF4rp/66huqNH8yMhZTInVnv1N7hF47/W3SsuKYk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "68bbcc08934f7185fb39d8abaf9b4dbcadf045bf",
+        "rev": "6a31aa562783dc70a551b82ff824c255b9d350ee",
         "type": "github"
       },
       "original": {
@@ -121,11 +122,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1637760446,
-        "narHash": "sha256-KdMurdyZQaIm7eOR97alMUB6NGapvGyM12dJKcmod6k=",
+        "lastModified": 1638541582,
+        "narHash": "sha256-OLEwxi3wHHTK6kJL8HkoA8lf4JBLZg/CbC/Iw2Dhq1c=",
         "ref": "main",
-        "rev": "b074a4fd321465be174a6ec2c65843b95e9e508a",
-        "revCount": 92,
+        "rev": "a81ea18167d1fea7a162eb54c005186438401eb7",
+        "revCount": 93,
         "type": "git",
         "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
       },
