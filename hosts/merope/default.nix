@@ -17,6 +17,7 @@ in
     ./ddclient.nix
     ./projeto-bd.nix
     ./wireguard.nix
+    ./minecraft.nix
   ];
 
   environment.persistence."/data" = {

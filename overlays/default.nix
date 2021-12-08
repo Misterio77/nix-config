@@ -17,6 +17,9 @@ final: prev: {
     inherit (final.gnome) zenity;
   };
 
+  # Experimental papermc version
+  papermc-experimental = prev.callPackage ../pkgs/papermc-experimental { };
+
   vimPlugins = prev.vimPlugins // {
     nvim-base16 = prev.vimPlugins.nvim-base16.overrideAttrs (oldAttrs: rec {
       patches = (oldAttrs.patches or [ ]) ++ [ ./nvim-base16-more-highlights.patch ];
