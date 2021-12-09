@@ -20,16 +20,22 @@
       }];
     };
 
-    nginx.virtualHosts = {
-      "mapa.misterio.me" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:8123";
+    nginx.virtualHosts =
+      let
+        location = "http://localhost:8123";
+      in
+      {
+        "mapa.misterio.me" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/".proxyPass = location;
         };
-        serverAliases = [ "mapa.merope.local" ];
+
+        "mapa.merope.local" = {
+          rejectSSL = true;
+          locations."/".proxyPass = location;
+        };
       };
-    };
 
     avahi.subdomains = [ "mapa" ];
   };

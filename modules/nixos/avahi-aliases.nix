@@ -3,8 +3,8 @@
 let cfg = config.services.avahi;
 in {
   options.services.avahi = {
-    subdomains = mkOption {
-      type = type.listOf types.str;
+    subdomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
       default = [];
       example = [ "example" "plex" ];
       description = ''
@@ -13,9 +13,9 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    systemd.services = builtins.listToAttrs lib.forEach cfg.subdomains (name: {
-      name = "avahi-alias@${name}.${cfg.hostName}.${cfg.domainName}";
+  config = lib.mkIf cfg.enable {
+    systemd.services = builtins.listToAttrs (lib.forEach cfg.subdomains (name: {
+      name = "avahi-alias@${name}";
       value = {
         description = "Publish ${name}.${cfg.hostName}.${cfg.domainName} as alias for ${cfg.hostName}.${cfg.domainName} via mdns";
         requires = [ "avahi-daemon.service" ];
@@ -23,10 +23,10 @@ in {
         serviceConfig = {
           Type = "simple";
           ExecStart = ''
-            ${pkgs.bash}/bin/bash -c "${pkgs.avahi}/bin/avahi-publish -a -R %I $(${avahi}/bin/avahi-resolve -4 -n ${cfg.hostName}.${cfg.domainName} | cut -f 2)"
+            ${pkgs.bash}/bin/bash -c "${pkgs.avahi}/bin/avahi-publish -a -R %I.$(${pkgs.avahi}/bin/avahi-resolve -4 -n ${cfg.hostName}.${cfg.domainName})"
           '';
         };
       };
-    });
+    }));
   };
 }

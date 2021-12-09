@@ -18,17 +18,23 @@
       }];
     };
 
-    nginx.virtualHosts = {
-      "bd.misterio.me" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${toString config.services.projeto-bd.port}";
+    nginx.virtualHosts =
+      let
+        location = "http://localhost:${toString config.services.projeto-bd.port}";
+      in
+      {
+        "bd.misterio.me" = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/".proxyPass = location;
         };
-        serverAliases = [ "bd.merope.local" ];
-      };
-    };
 
-    avahi.subdomains = [ "mapa" ];
+        "bd.merope.local" = {
+          rejectSSL = true;
+          locations."/".proxyPass = location;
+        };
+      };
+
+    avahi.subdomains = [ "bd" ];
   };
 }

@@ -4,5 +4,6 @@
     ./sistemer-bot.nix
     ./satisfactory.nix
     ./projeto-bd.nix
+    ./avahi-aliases.nix
   ];
 }
