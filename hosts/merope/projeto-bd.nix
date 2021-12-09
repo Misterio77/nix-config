@@ -25,6 +25,7 @@
         locations."/" = {
           proxyPass = "http://localhost:${toString config.services.projeto-bd.port}";
         };
+        serverAliases = [ "bd.merope.local" ];
       };
     };
   };

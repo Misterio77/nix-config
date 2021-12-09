@@ -19,6 +19,17 @@
         };
       }];
     };
+
+    nginx.virtualHosts = {
+      "mapa.misterio.me" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          proxyPass = "http://localhost:8123";
+        };
+        serverAliases = [ "mapa.merope.local" ];
+      };
+    };
   };
 
   networking.firewall = {
