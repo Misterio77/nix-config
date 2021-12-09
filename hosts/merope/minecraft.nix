@@ -30,6 +30,8 @@
         serverAliases = [ "mapa.merope.local" ];
       };
     };
+
+    avahi.subdomains = [ "mapa" ];
   };
 
   networking.firewall = {

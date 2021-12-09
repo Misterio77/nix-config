@@ -28,5 +28,7 @@
         serverAliases = [ "bd.merope.local" ];
       };
     };
+
+    avahi.subdomains = [ "mapa" ];
   };
 }
