@@ -1,25 +1,4 @@
 final: prev: {
-  amdgpu-clocks = prev.callPackage ../pkgs/amdgpu-clocks { };
-  preferredplayer = prev.callPackage ../pkgs/preferredplayer { };
-  rgbdaemon = prev.callPackage ../pkgs/rgbdaemon { };
-  sistemer-bot = prev.callPackage ../pkgs/sistemer-bot { };
-  soundwire = prev.libsForQt5.callPackage ../pkgs/soundwire { };
-  wallpapers = prev.callPackage ../pkgs/wallpapers { };
-  zenity-askpass = prev.callPackage ../pkgs/zenity-askpass { };
-
-  setscheme = prev.callPackage ../pkgs/setscheme { };
-  setwallpaper = prev.callPackage ../pkgs/setwallpaper { };
-
-  setscheme-wofi = prev.callPackage ../pkgs/setscheme-wofi {
-    inherit (final.gnome) zenity;
-  };
-  setwallpaper-wofi = prev.callPackage ../pkgs/setwallpaper-wofi {
-    inherit (final.gnome) zenity;
-  };
-
-  # Experimental papermc version
-  papermc-experimental = prev.callPackage ../pkgs/papermc-experimental { };
-
   vimPlugins = prev.vimPlugins // {
     nvim-base16 = prev.vimPlugins.nvim-base16.overrideAttrs (oldAttrs: rec {
       patches = (oldAttrs.patches or [ ]) ++ [ ./nvim-base16-more-highlights.patch ];
@@ -40,10 +19,6 @@ final: prev: {
       };
       meta.homepage = "https://tildegit.org/sloum/gemini-vim-syntax";
     };
-  };
-
-  pass-wofi = prev.callPackage ../pkgs/pass-wofi {
-    pass = final.pass.withExtensions (exts: [ exts.pass-otp ]);
   };
 
   # Link kitty to xterm (to fix crappy drun behaviour)
@@ -71,9 +46,9 @@ final: prev: {
 
   # Add my patch for supporting sourcehut
   /*
-  nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
+    nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
-  });
+    });
   */
 
   # Don't launch discord when using discocss
@@ -97,4 +72,4 @@ final: prev: {
     patches = (oldAttrs.patches or [ ])
       ++ [ ./nix-index-new-command.patch ];
   });
-}
+} // import ../pkgs { pkgs = final; }

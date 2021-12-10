@@ -3,7 +3,7 @@
 with nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme = "crystal-dark";
+  currentScheme = "spaceduck";
   currentWallpaper = "cubist-crystal-brown-teal.jpg";
   currentMode = null;
 in {

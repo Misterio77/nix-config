@@ -1,0 +1,23 @@
+image: nixos/unstable
+
+packages:
+  - nixos.nixUnstable
+  - nixos.cachix
+
+environment:
+  NIX_CONFIG: "experimental-features = nix-command flakes"
+
+secrets:
+  - f2907d38-97b4-4e7d-9fb9-57b3fb0135af
+
+tasks:
+- auth_cachix: |
+    cat ~/.cachix_token | cachix authtoken --stdin
+    cachix use misterio
+- build: |
+    cd nix-config
+    # Build all gtk themes
+    schemes=$(nix eval --raw .#packages.x86_64-linux.generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
+    nix --log-format raw build .#packages.x86_64-linux.generated-gtk-themes.{$schemes}
+- cache: |
+    nix path-info nix-config/result*/ -r | cachix push misterio

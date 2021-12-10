@@ -14,7 +14,7 @@
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
     impermanence.url = "github:RiscadoA/impermanence";
 
-    nix-colors.url = "github:Misterio77/nix-colors/add-crystal";
+    nix-colors.url = "github:Misterio77/nix-colors/add-gtk-theme";
 
     utils.url = "github:numtide/flake-utils";
 
@@ -169,6 +169,8 @@
       hm = home-manager.defaultPackage."${system}";
     in
     {
+      packages.generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes { inherit nix-colors; };
+
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp hm ];
       };

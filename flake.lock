@@ -67,16 +67,16 @@
     },
     "nix-colors": {
       "locked": {
-        "lastModified": 1638574463,
-        "narHash": "sha256-sHqn7U4By05A71+CTzhovgsSQShRKbRGdrI395Ucj/Y=",
+        "lastModified": 1639103726,
+        "narHash": "sha256-jrLFbtvKsW9QvQ8JwKjONC3WQpCOxjVvU+mYP5iVB7A=",
         "owner": "Misterio77",
         "repo": "nix-colors",
-        "rev": "82138a7652e1e4e923602c0b43421a9bc37e093a",
+        "rev": "babd4cd946afac3329df78922456e6355c54e8ce",
         "type": "github"
       },
       "original": {
         "owner": "Misterio77",
-        "ref": "add-crystal",
+        "ref": "add-gtk-theme",
         "repo": "nix-colors",
         "type": "github"
       }
@@ -99,11 +99,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1639093972,
-        "narHash": "sha256-zzQtHqHKAJHqEK0quv9JV606/CBFDc8oMeFimhizUmc=",
+        "lastModified": 1639100675,
+        "narHash": "sha256-6EtJTCYGLHiAyyCSpcMkmxR4uBDDWgZxCT067uhegJw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "c7d912eb7d838eed2a8798fe2b59d0a6bf504e2f",
+        "rev": "7f2c084fd23305ccfbe4334aa6c1bad584ab8612",
         "type": "github"
       },
       "original": {
