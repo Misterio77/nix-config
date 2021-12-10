@@ -21,7 +21,7 @@
     # Projects being worked on
     projeto-bd = {
       # url = "sourcehut:~misterio/BSI-SCC0540-projeto";
-      url = "git+https://git.sr.ht/~misterio/BSI-SCC0540-projeto?ref=main";
+      url = "git+https://git.sr.ht/~misterio/BSI-SCC0540-projeto?rev=a81ea18167d1fea7a162eb54c005186438401eb7";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         utils.follows = "utils";

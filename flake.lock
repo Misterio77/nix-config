@@ -37,11 +37,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1638571010,
-        "narHash": "sha256-KSO7u13VRLdklQTKYJaBSfVcurEvw+HifAsHR7V2i5E=",
+        "lastModified": 1638959036,
+        "narHash": "sha256-d75Ow/rV3nq4penfTJz9H3/OlIHttoKoJUDEfink/8k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "781d25b315def05cd7ede3765226c54216f0b1fe",
+        "rev": "829e89a16f4f96428d1b94e68d4c06107b5491c0",
         "type": "github"
       },
       "original": {
@@ -83,11 +83,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1638376152,
-        "narHash": "sha256-ucgLpVqhFnClH7YRUHBHnmiOd82RZdFR3XJt36ks5fE=",
+        "lastModified": 1638986258,
+        "narHash": "sha256-OceRdctKZRSgqQxVRvvNB0MaEnFMzQqjUffecoDE9eI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6daa4a5c045d40e6eae60a3b6e427e8700f1c07f",
+        "rev": "581d2d6c9cd5c289002203581d8aa0861963a933",
         "type": "github"
       },
       "original": {
@@ -99,11 +99,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1638632761,
-        "narHash": "sha256-+6yCF4rp/66huqNH8yMhZTInVnv1N7hF47/W3SsuKYk=",
+        "lastModified": 1639093972,
+        "narHash": "sha256-zzQtHqHKAJHqEK0quv9JV606/CBFDc8oMeFimhizUmc=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "6a31aa562783dc70a551b82ff824c255b9d350ee",
+        "rev": "c7d912eb7d838eed2a8798fe2b59d0a6bf504e2f",
         "type": "github"
       },
       "original": {
@@ -124,14 +124,13 @@
       "locked": {
         "lastModified": 1638541582,
         "narHash": "sha256-OLEwxi3wHHTK6kJL8HkoA8lf4JBLZg/CbC/Iw2Dhq1c=",
-        "ref": "main",
         "rev": "a81ea18167d1fea7a162eb54c005186438401eb7",
         "revCount": 93,
         "type": "git",
         "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
       },
       "original": {
-        "ref": "main",
+        "rev": "a81ea18167d1fea7a162eb54c005186438401eb7",
         "type": "git",
         "url": "https://git.sr.ht/~misterio/BSI-SCC0540-projeto"
       }
