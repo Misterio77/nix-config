@@ -5,7 +5,6 @@ in {
   home.sessionVariables = {
     TERMINAL = "kitty";
   };
-  programs.fish.shellAliases.ssh = "kitty +kitten ssh";
   programs.kitty = {
     enable = true;
     font = {

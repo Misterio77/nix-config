@@ -18,6 +18,6 @@ tasks:
     cd nix-config
     # Build all gtk themes
     schemes=$(nix eval --raw .#packages.x86_64-linux.generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
-    nix --log-format raw build .#packages.x86_64-linux.generated-gtk-themes.{$schemes}
+    bash -c "nix --log-format raw build .#packages.x86_64-linux.generated-gtk-themes.{$schemes}"
 - cache: |
     nix path-info nix-config/result*/ -r | cachix push misterio

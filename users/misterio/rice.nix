@@ -1,10 +1,13 @@
-{ pkgs, config, nix-colors, ... }:
+{ pkgs, config, nix-colors, hostname, ... }:
 
 with nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme = "spaceduck";
-  currentWallpaper = "cubist-crystal-brown-teal.jpg";
+  currentScheme.atlas = "nord";
+  currentScheme.pleione = "pasque";
+  currentScheme.merope = "nord";
+  currentWallpaper.atlas = "cubist-crystal-brown-teal.jpg";
+  currentWallpaper.pleione = "cubist-crystal-brown-teal.jpg";
   currentMode = null;
 in {
   imports = [ nix-colors.homeManagerModule ];
@@ -14,14 +17,14 @@ in {
   ];
 
   colorscheme = if currentScheme != null
-    then nix-colors.colorSchemes.${currentScheme}
+    then nix-colors.colorSchemes.${currentScheme.${hostname}}
     else colorschemeFromPicture {
       path = config.wallpaper;
       kind = currentMode;
     };
 
   wallpaper = if currentWallpaper != null
-    then "${pkgs.wallpapers}/share/backgrounds/${currentWallpaper}"
+    then "${pkgs.wallpapers}/share/backgrounds/${currentWallpaper.${hostname}}"
     else nixWallpaperFromScheme {
       scheme = config.colorscheme;
       width = 2560;

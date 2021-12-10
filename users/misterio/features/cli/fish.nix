@@ -97,6 +97,7 @@ let
   '';
 in
 {
+  home.packages = [ base16-shell ];
   programs.fish = {
     enable = true;
     shellAbbrs = {
@@ -111,6 +112,7 @@ in
       vim = "nvim";
       m = "neomutt";
       mutt = "neomutt";
+      s = "base16-shell";
     };
     shellAliases = {
       miningclock = "sudo USER_STATES_PATH=/etc/default/amdgpu-custom-state amdgpu-clocks";
@@ -125,6 +127,10 @@ in
     functions = {
       fish_greeting = "${pkgs.fortune}/bin/fortune -s";
       wh = "readlink -f (which $argv)";
+      ssh = ''
+        command ssh $argv
+        base16-shell
+      '';
     };
     interactiveShellInit =
       # Use vim bindings and cursors

@@ -26,7 +26,7 @@ stdenv.mkDerivation {
       mode="null"
     fi
 
-    sed -i "s/currentScheme = .*;/currentScheme = $scheme;/" /dotfiles/users/$USER/rice.nix && \
+    sed -i "s/currentScheme\.$HOSTNAME = .*;/currentScheme\.$HOSTNAME = $scheme;/" /dotfiles/users/$USER/rice.nix && \
     sed -i "s/currentMode = .*;/currentMode = $mode;/" /dotfiles/users/$USER/rice.nix && \
     home-manager switch --flake /dotfiles ''${@:2}
   '';

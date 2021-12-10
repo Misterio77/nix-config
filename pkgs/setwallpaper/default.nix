@@ -19,7 +19,7 @@ stdenv.mkDerivation {
       wallpaper="\"$1\""
     fi
 
-    sed -i "s/currentWallpaper = .*;/currentWallpaper = $wallpaper;/" /dotfiles/users/$USER/rice.nix && \
+    sed -i "s/currentWallpaper\.$HOSTNAME = .*;/currentWallpaper\.$HOSTNAME = $wallpaper;/" /dotfiles/users/$USER/rice.nix && \
     home-manager -v switch --flake /dotfiles ''${@:2}
   '';
   dontBuild = true;
