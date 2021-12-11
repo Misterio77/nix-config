@@ -16,7 +16,7 @@ in
     ../common.nix
     ./hardware-configuration.nix
 
-    ./satisfactory.nix
+    # ./satisfactory.nix
   ];
 
   environment.persistence."/data" = {
