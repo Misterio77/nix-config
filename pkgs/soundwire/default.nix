@@ -1,5 +1,5 @@
-{ lib, stdenv, fetchurl, autoPatchelfHook, wrapQtAppsHook
-, qtbase, curl, portaudio}:
+{ lib, stdenv, fetchurl, autoPatchelfHook, wrapQtAppsHook, qtbase, curl
+, portaudio }:
 
 stdenv.mkDerivation {
   name = "soundwire";
@@ -10,16 +10,9 @@ stdenv.mkDerivation {
     sha256 = "sha256-1g8qXAdQy4m8Mw0irGERYyeIfFOoeqweDcoj7mNGg80=";
   };
 
-  nativeBuildInputs = [
-    wrapQtAppsHook
-    autoPatchelfHook
-  ];
+  nativeBuildInputs = [ wrapQtAppsHook autoPatchelfHook ];
 
-  buildInputs = [
-    portaudio
-    curl
-    qtbase
-  ];
+  buildInputs = [ portaudio curl qtbase ];
 
   sourceRoot = ".";
 
@@ -29,7 +22,5 @@ stdenv.mkDerivation {
     install -Dm644 SoundWire-Server.desktop $out/share/applications/soundwire.desktop
   '';
 
-  meta = {
-    platforms = lib.platforms.linux;
-  };
+  meta = { platforms = lib.platforms.linux; };
 }

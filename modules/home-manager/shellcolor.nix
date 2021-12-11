@@ -28,8 +28,7 @@ let
   renderSettings = settings:
     lib.concatStrings (lib.mapAttrsToList renderSetting settings);
 
-in
-{
+in {
   options.programs.shellcolor = {
     enable = lib.mkEnableOption "shellcolor";
 
@@ -89,21 +88,24 @@ in
       '';
     };
 
-    programs.bash.initExtra = lib.mkIf cfg.enableBashIntegration (lib.mkBefore ''
-      ${package}/bin/shellcolord $$ & disown
-    '');
+    programs.bash.initExtra = lib.mkIf cfg.enableBashIntegration
+      (lib.mkBefore ''
+        ${package}/bin/shellcolord $$ & disown
+      '');
 
     programs.zsh.initExtra = lib.mkIf cfg.enableZshIntegration (lib.mkBefore ''
       ${package}/bin/shellcolord $$ & disown
     '');
 
-    programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration (lib.mkBefore ''
-      ${package}/bin/shellcolord $fish_pid & disown
-    '');
+    programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration
+      (lib.mkBefore ''
+        ${package}/bin/shellcolord $fish_pid & disown
+      '');
 
-    programs.ssh.extraConfig = lib.mkIf cfg.enableSshIntegration (lib.mkBefore ''
-      PermitLocalCommand=yes
-      LocalCommand=${localCommand}/bin/shellcolor-lc
-    '');
+    programs.ssh.extraConfig = lib.mkIf cfg.enableSshIntegration
+      (lib.mkBefore ''
+        PermitLocalCommand=yes
+        LocalCommand=${localCommand}/bin/shellcolor-lc
+      '');
   };
 }

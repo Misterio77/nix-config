@@ -20,12 +20,7 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.packages = with pkgs; [
-    kdenlive
-    libreoffice
-    soundwire
-    pavucontrol
-  ];
+  home.packages = with pkgs; [ kdenlive libreoffice soundwire pavucontrol ];
 
   colorscheme = nix-colors.colorSchemes.dracula;
 

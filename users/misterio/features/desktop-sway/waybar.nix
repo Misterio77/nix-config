@@ -1,7 +1,6 @@
 { config, features, lib, pkgs, ... }:
 
-let
-  keyring = import ../trusted/keyring.nix { inherit pkgs; };
+let keyring = import ../trusted/keyring.nix { inherit pkgs; };
 in {
   programs.waybar = {
     enable = true;
@@ -57,7 +56,7 @@ in {
         battery = {
           bat = "BAT0";
           interval = 40;
-          format-icons = ["" "" "" "" "" "" "" "" "" ""];
+          format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
           format = "{capacity}% {icon}";
           format-charging = "{capacity}% ";
         };
@@ -69,8 +68,7 @@ in {
             default = "祿";
           };
         };
-        "custom/menu" = let
-          wofi = "${pkgs.wofi}/bin/wofi";
+        "custom/menu" = let wofi = "${pkgs.wofi}/bin/wofi";
         in {
           format = "";
           on-click = "${wofi} -S drun -I";
@@ -79,7 +77,8 @@ in {
           exec = ''
             echo "  ($(find ~/Mail/*/INBOX/new -type f | wc -l))"
           '';
-          on-click = "${config.programs.alacritty.package}/bin/alacritty -e ${pkgs.neomutt}/bin/neomutt";
+          on-click =
+            "${config.programs.alacritty.package}/bin/alacritty -e ${pkgs.neomutt}/bin/neomutt";
           interval = 2;
         };
         "custom/gpg-agent" = lib.mkIf (builtins.elem "trusted" features) {
@@ -101,7 +100,8 @@ in {
           format = "{} ﲹ";
         };
         "custom/gamemode" = {
-          exec-if = "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
+          exec-if =
+            "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
           interval = 2;
           exec = "echo '' && echo 'Gamemode is active'";
         };
@@ -157,8 +157,7 @@ in {
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style = let
-      colors = config.colorscheme.colors;
+    style = let colors = config.colorscheme.colors;
     in ''
       * {
         border: none;

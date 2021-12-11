@@ -1,8 +1,3 @@
 { ... }: {
-  imports = [
-    ./rgbdaemon.nix
-    ./wallpaper.nix
-    ./ethminer.nix
-    ./shellcolor.nix
-  ];
+  imports = [ ./rgbdaemon.nix ./wallpaper.nix ./ethminer.nix ./shellcolor.nix ];
 }

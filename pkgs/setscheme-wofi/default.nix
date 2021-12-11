@@ -1,5 +1,4 @@
-{ lib, pkgs, stdenv, writeShellScriptBin
-, setscheme, wofi, zenity }:
+{ lib, pkgs, stdenv, writeShellScriptBin, setscheme, wofi, zenity }:
 
 with lib;
 
@@ -15,7 +14,8 @@ stdenv.mkDerivation {
   '';
   dontBuild = true;
   dontConfigure = true;
-  installPhase = "install -Dm 0755 $src/bin/setscheme-wofi $out/bin/setscheme-wofi";
+  installPhase =
+    "install -Dm 0755 $src/bin/setscheme-wofi $out/bin/setscheme-wofi";
 
   meta = {
     description = "A wofi graphical menu for setscheme";

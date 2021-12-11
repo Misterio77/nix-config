@@ -3,7 +3,8 @@ let
   mcVersion = "1.18.1";
   buildNum = "68";
   jar = fetchurl {
-    url = "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+    url =
+      "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
     sha256 = "sha256-+yb/6Aezhg3MIM857zojVBsMtGA87tN8R6pKZ1FlmiM=";
   };
 in stdenv.mkDerivation {
@@ -28,8 +29,8 @@ in stdenv.mkDerivation {
 
   meta = {
     description = "High-performance Minecraft Server";
-    homepage    = "https://papermc.io/";
-    license     = lib.licenses.gpl3Only;
-    platforms   = lib.platforms.unix;
+    homepage = "https://papermc.io/";
+    license = lib.licenses.gpl3Only;
+    platforms = lib.platforms.unix;
   };
 }

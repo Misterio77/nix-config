@@ -3,8 +3,7 @@
 with lib;
 let cfg = config.services.projeto-bd;
 
-in
-{
+in {
   options.services.projeto-bd = {
     enable = mkEnableOption "Projeto BD";
     package = mkOption {
@@ -51,7 +50,7 @@ in
         ROCKET_TEMPLATE_DIR = "${cfg.package}/etc/templates";
         ROCKET_ASSETS_DIR = "${cfg.package}/etc/assets";
         ROCKET_PORT = toString cfg.port;
-        ROCKET_DATABASES = "{database={url=\"${cfg.database}\"}}";
+        ROCKET_DATABASES = ''{database={url="${cfg.database}"}}'';
       };
     };
 
@@ -64,8 +63,7 @@ in
       groups.projetobd = { };
     };
 
-    networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ cfg.port ];
-    };
+    networking.firewall =
+      mkIf cfg.openFirewall { allowedTCPPorts = [ cfg.port ]; };
   };
 }

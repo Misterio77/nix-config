@@ -1,12 +1,8 @@
 # System configuration for my Raspberry Pi 4
 { config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
 
-let
-  nur-no-pkgs = import nur {
-    nurpkgs = import nixpkgs { inherit system; };
-  };
-in
-{
+let nur-no-pkgs = import nur { nurpkgs = import nixpkgs { inherit system; }; };
+in {
   imports = [
     hardware.nixosModules.raspberry-pi-4
     impermanence.nixosModules.impermanence
@@ -21,12 +17,8 @@ in
   ];
 
   environment.persistence."/data" = {
-    directories = [
-      "/var/log"
-      "/var/lib/systemd"
-      "/var/lib/postgresql"
-      "/srv"
-    ];
+    directories =
+      [ "/var/log" "/var/lib/systemd" "/var/lib/postgresql" "/srv" ];
   };
 
   # Static IP address

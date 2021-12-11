@@ -18,15 +18,16 @@ let
 in {
   programs.neovim.plugins = [
     pkgs.vimPlugins.nvim-base16
-    { plugin = nvim-scheme; config = "colorscheme nix-${slug}"; }
+    {
+      plugin = nvim-scheme;
+      config = "colorscheme nix-${slug}";
+    }
   ];
 
   # When configuration is written, reapply scheme
   xdg.configFile."nvim/init.vim".onChange =
-    let
-      nvr = "${pkgs.neovim-remote}/bin/nvr";
-    in
-    ''
+    let nvr = "${pkgs.neovim-remote}/bin/nvr";
+    in ''
       path=$(< ~/.config/nvim/init.vim head -1 | cut -d '=' -f2 )
       ${nvr} --serverlist | \
       while read server; do

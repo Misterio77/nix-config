@@ -10,12 +10,10 @@
   setscheme = pkgs.callPackage ./setscheme { };
   setwallpaper = pkgs.callPackage ./setwallpaper { };
 
-  setscheme-wofi = pkgs.callPackage ./setscheme-wofi {
-    inherit (pkgs.gnome) zenity;
-  };
-  setwallpaper-wofi = pkgs.callPackage ./setwallpaper-wofi {
-    inherit (pkgs.gnome) zenity;
-  };
+  setscheme-wofi =
+    pkgs.callPackage ./setscheme-wofi { inherit (pkgs.gnome) zenity; };
+  setwallpaper-wofi =
+    pkgs.callPackage ./setwallpaper-wofi { inherit (pkgs.gnome) zenity; };
 
   shellcolord = pkgs.callPackage ./shellcolord { };
 

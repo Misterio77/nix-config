@@ -3,8 +3,7 @@
 let
   colors = config.colorscheme.colors;
   nvim = "${pkgs.neovim}/bin/nvim";
-in
-{
+in {
   home.persistence = lib.mkIf (builtins.elem "persistence" features) {
     "/data/home/misterio".directories = [
       ".config/qutebrowser/bookmarks"

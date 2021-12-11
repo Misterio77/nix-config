@@ -14,9 +14,7 @@ stdenv.mkDerivation {
   installPhase = ''
     install -Dm 0755 $src/bin/zenity-askpass $out/bin/zenity-askpass
     wrapProgram $out/bin/zenity-askpass --set PATH \
-      "${makeBinPath [
-        pkgs.gnome.zenity
-      ]}"
+      "${makeBinPath [ pkgs.gnome.zenity ]}"
   '';
 
   meta = {

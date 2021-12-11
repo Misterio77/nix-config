@@ -1,5 +1,4 @@
-{ lib, stdenv, writeShellScriptBin
-, playerctl }:
+{ lib, stdenv, writeShellScriptBin, playerctl }:
 
 with lib;
 
@@ -17,7 +16,8 @@ stdenv.mkDerivation {
   '';
   dontBuild = true;
   dontConfigure = true;
-  installPhase = "install -Dm 0755 $src/bin/preferredplayer $out/bin/preferredplayer";
+  installPhase =
+    "install -Dm 0755 $src/bin/preferredplayer $out/bin/preferredplayer";
 
   meta = {
     description = "A script for setting a preferred player";

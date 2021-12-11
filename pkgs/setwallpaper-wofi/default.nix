@@ -1,5 +1,4 @@
-{ lib, pkgs, stdenv, writeShellScriptBin
-, setwallpaper, wofi, zenity }:
+{ lib, pkgs, stdenv, writeShellScriptBin, setwallpaper, wofi, zenity }:
 
 with lib;
 
@@ -15,7 +14,8 @@ stdenv.mkDerivation {
   '';
   dontBuild = true;
   dontConfigure = true;
-  installPhase = "install -Dm 0755 $src/bin/setwallpaper-wofi $out/bin/setwallpaper-wofi";
+  installPhase =
+    "install -Dm 0755 $src/bin/setwallpaper-wofi $out/bin/setwallpaper-wofi";
 
   meta = {
     description = "A wofi graphical menu for setwallpaper";

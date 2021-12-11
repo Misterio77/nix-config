@@ -1,12 +1,8 @@
 # System configuration for my main desktop PC
 { config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
 
-let
-  nur-no-pkgs = import nur {
-    nurpkgs = import nixpkgs { inherit system; };
-  };
-in
-{
+let nur-no-pkgs = import nur { nurpkgs = import nixpkgs { inherit system; }; };
+in {
   imports = [
     hardware.nixosModules.common-cpu-amd
     hardware.nixosModules.common-gpu-amd

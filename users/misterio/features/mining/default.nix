@@ -6,5 +6,6 @@
     port = 5555;
     rig = "misterio";
   };
-  home.sessionVariables.OCL_ICD_VENDORS = "/run/opengl-driver/etc/OpenCL/vendors/";
+  home.sessionVariables.OCL_ICD_VENDORS =
+    "/run/opengl-driver/etc/OpenCL/vendors/";
 }

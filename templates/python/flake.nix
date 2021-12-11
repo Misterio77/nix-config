@@ -16,9 +16,11 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         name = "foo-bar";
-        pkgs = import nixpkgs { inherit system; overlays = [ poetry2nix.overlay ]; };
-      in
-      rec {
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ poetry2nix.overlay ];
+        };
+      in rec {
         # nix build
         packages.${name} = pkgs.poetry2nix.mkPoetryApplication {
           projectDir = ./.;

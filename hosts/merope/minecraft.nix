@@ -4,7 +4,8 @@
       enable = true;
       package = pkgs.papermc-experimental;
       eula = true;
-      jvmOpts = "-Xmx3G -Xms3G -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -Dlog4j2.formatMsgNoLookups=true";
+      jvmOpts =
+        "-Xmx3G -Xms3G -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -Dlog4j2.formatMsgNoLookups=true";
     };
 
     mysql = {
@@ -14,28 +15,23 @@
       ensureDatabases = [ "minecraft" ];
       ensureUsers = [{
         name = "minecraft";
-        ensurePermissions = {
-          "minecraft.*" = "ALL PRIVILEGES";
-        };
+        ensurePermissions = { "minecraft.*" = "ALL PRIVILEGES"; };
       }];
     };
 
-    nginx.virtualHosts =
-      let
-        location = "http://localhost:8123";
-      in
-      {
-        "mapa.misterio.me" = {
-          forceSSL = true;
-          enableACME = true;
-          locations."/".proxyPass = location;
-        };
-
-        "mapa.merope.local" = {
-          rejectSSL = true;
-          locations."/".proxyPass = location;
-        };
+    nginx.virtualHosts = let location = "http://localhost:8123";
+    in {
+      "mapa.misterio.me" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = location;
       };
+
+      "mapa.merope.local" = {
+        rejectSSL = true;
+        locations."/".proxyPass = location;
+      };
+    };
 
     avahi.subdomains = [ "mapa" ];
   };

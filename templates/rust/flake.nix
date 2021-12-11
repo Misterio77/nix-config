@@ -14,8 +14,7 @@
         name = "foo-bar";
         pkgs = (import nixpkgs { inherit system; });
         naersk-lib = naersk.lib."${system}";
-      in
-      rec {
+      in rec {
         # nix build
         packages.${name} = naersk-lib.buildPackage {
           pname = name;

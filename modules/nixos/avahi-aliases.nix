@@ -5,7 +5,7 @@ in {
   options.services.avahi = {
     subdomains = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [];
+      default = [ ];
       example = [ "example" "plex" ];
       description = ''
         Additional subdomains to broadcast.
@@ -17,7 +17,8 @@ in {
     systemd.services = builtins.listToAttrs (lib.forEach cfg.subdomains (name: {
       name = "avahi-alias@${name}";
       value = {
-        description = "Publish ${name}.${cfg.hostName}.${cfg.domainName} as alias for ${cfg.hostName}.${cfg.domainName} via mdns";
+        description =
+          "Publish ${name}.${cfg.hostName}.${cfg.domainName} as alias for ${cfg.hostName}.${cfg.domainName} via mdns";
         requires = [ "avahi-daemon.service" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {

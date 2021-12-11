@@ -1,8 +1,6 @@
 { pkgs, ... }:
-let
-  iptables = "${pkgs.iptables}/bin/iptables";
-in
-{
+let iptables = "${pkgs.iptables}/bin/iptables";
+in {
   networking = {
     nat = {
       enable = true;

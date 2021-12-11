@@ -16,31 +16,40 @@ let
   actionUnmute = "${pactl} set-source-mute @DEFAULT_SOURCE@ no";
   actionRgbOff = "systemctl --user stop rgbdaemon";
   actionRgbOn = "systemctl --user start rgbdaemon";
-  actionDisplayOff = "swaymsg \"output * dpms off\"";
-  actionDisplayOn = "swaymsg \"output * dpms on\"";
-in
-{
+  actionDisplayOff = ''swaymsg "output * dpms off"'';
+  actionDisplayOn = ''swaymsg "output * dpms on"'';
+in {
   # Remove pgp passphrase cache after 4 minutes
   # Lock after 10 minutes
   # After 10 seconds of locked, mute mic
   # After 20 seconds of locked, disable rgb lights and turn monitors off
   xdg.configFile."swayidle/config".text = ''
-    before-sleep '${if isTrusted then "${keyring.lock}; " else ""} ${actionLock}'
+    before-sleep '${
+      if isTrusted then "${keyring.lock}; " else ""
+    } ${actionLock}'
     timeout ${toString lockTime} '${actionLock}'
 
-    timeout ${toString (lockTime + 10)} '${actionMute}' resume  '${actionUnmute}'
+    timeout ${
+      toString (lockTime + 10)
+    } '${actionMute}' resume  '${actionUnmute}'
     timeout 10 '${isLocked} && ${actionMute}' resume  '${isLocked} && ${actionUnmute}'
 
-    timeout ${toString (lockTime + 20)} '${actionDisplayOff}' resume  '${actionDisplayOn}'
+    timeout ${
+      toString (lockTime + 20)
+    } '${actionDisplayOff}' resume  '${actionDisplayOn}'
     timeout 20 '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
   '' +
 
-  (if isTrusted then ''
-    timeout ${toString (lockTime / 3)} '${keyring.lock}'
-  '' else "") +
+    (if isTrusted then ''
+      timeout ${toString (lockTime / 3)} '${keyring.lock}'
+    '' else
+      "") +
 
-  (if hasRgb then ''
-    timeout ${toString (lockTime + 20)} '${actionRgbOff}' resume  '${actionRgbOn}'
-    timeout 20 '${isLocked} && ${actionRgbOff}' resume  '${isLocked} && ${actionRgbOn}'
-  '' else "");
+    (if hasRgb then ''
+      timeout ${
+        toString (lockTime + 20)
+      } '${actionRgbOff}' resume  '${actionRgbOn}'
+      timeout 20 '${isLocked} && ${actionRgbOff}' resume  '${isLocked} && ${actionRgbOn}'
+    '' else
+      "");
 }

@@ -5,7 +5,8 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+      availableKernelModules =
+        [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
       luks.devices."pleione".device = "/dev/disk/by-label/Pleione";
     };
     kernelModules = [ "kvm-amd" ];

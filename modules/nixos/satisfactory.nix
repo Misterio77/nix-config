@@ -57,7 +57,7 @@ in {
       };
 
       preStart = ''
-          ${steamcmd} +force_install_dir "${cfg.dataDir}" +login anonymous +app_update 1690800 validate +quit
+        ${steamcmd} +force_install_dir "${cfg.dataDir}" +login anonymous +app_update 1690800 validate +quit
       '';
     };
 
@@ -68,7 +68,7 @@ in {
       isSystemUser = true;
       group = "satisfactory";
     };
-    users.groups.satisfactory = {};
+    users.groups.satisfactory = { };
 
     networking.firewall =
       mkIf cfg.openFirewall { allowedUDPPorts = [ 15777 7777 15000 ]; };

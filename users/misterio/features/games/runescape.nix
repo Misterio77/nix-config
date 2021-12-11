@@ -1,8 +1,5 @@
 { pkgs, features, lib, ... }: {
-  home.packages = with pkgs; [
-    runelite
-    nur.repos.misterio.runescape-launcher
-  ];
+  home.packages = with pkgs; [ runelite nur.repos.misterio.runescape-launcher ];
 
   home.persistence = lib.mkIf (builtins.elem "persistence" features) {
     "/data/games/misterio".directories = [ "Jagex" ];

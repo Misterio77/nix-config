@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   imports = [
     ./nvim
     ./amfora.nix

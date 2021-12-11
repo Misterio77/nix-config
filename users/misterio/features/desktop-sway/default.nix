@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   imports = [
     ./alacritty.nix
     ./discord.nix

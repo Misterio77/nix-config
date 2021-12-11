@@ -1,32 +1,9 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, fetchpatch
-, rustPlatform
+{ stdenv, lib, fetchFromGitHub, fetchpatch, rustPlatform
 
-, cmake
-, gzip
-, installShellFiles
-, makeWrapper
-, ncurses
-, pkg-config
-, python3
+, cmake, gzip, installShellFiles, makeWrapper, ncurses, pkg-config, python3
 
-, expat
-, fontconfig
-, freetype
-, libGL
-, libX11
-, libXcursor
-, libXi
-, libXrandr
-, libXxf86vm
-, libxcb
-, libxkbcommon
-, wayland
-, xdg-utils
-, zlib
-}:
+, expat, fontconfig, freetype, libGL, libX11, libXcursor, libXi, libXrandr
+, libXxf86vm, libxcb, libxkbcommon, wayland, xdg-utils, zlib }:
 let
   rpathLibs = [
     expat
@@ -39,13 +16,8 @@ let
     libXrandr
     libXxf86vm
     libxcb
-  ] ++ lib.optionals stdenv.isLinux [
-    libxkbcommon
-    wayland
-    zlib
-  ];
-in
-rustPlatform.buildRustPackage rec {
+  ] ++ lib.optionals stdenv.isLinux [ libxkbcommon wayland zlib ];
+in rustPlatform.buildRustPackage rec {
   pname = "alacritty";
   version = "master";
 
@@ -58,15 +30,8 @@ rustPlatform.buildRustPackage rec {
 
   cargoSha256 = "sha256-hHAlNxHvsKzqpOfnEmvAaMsrQynRXTLjdjGrUjFxAz0=";
 
-  nativeBuildInputs = [
-    cmake
-    gzip
-    installShellFiles
-    makeWrapper
-    ncurses
-    pkg-config
-    python3
-  ];
+  nativeBuildInputs =
+    [ cmake gzip installShellFiles makeWrapper ncurses pkg-config python3 ];
 
   buildInputs = rpathLibs;
 
@@ -76,7 +41,6 @@ rustPlatform.buildRustPackage rec {
     substituteInPlace alacritty/src/config/ui_config.rs \
       --replace xdg-open ${xdg-utils}/bin/xdg-open
   '';
-
 
   # TODO find out why tests fail
   doCheck = false;
@@ -111,6 +75,7 @@ rustPlatform.buildRustPackage rec {
     license = licenses.asl20;
     maintainers = with maintainers; [ Br1ght0ne mic92 ma27 ];
     platforms = platforms.unix;
-    changelog = "https://github.com/alacritty/alacritty/blob/v${version}/CHANGELOG.md";
+    changelog =
+      "https://github.com/alacritty/alacritty/blob/v${version}/CHANGELOG.md";
   };
 }

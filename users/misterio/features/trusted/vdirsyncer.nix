@@ -1,13 +1,9 @@
-{ pkgs, features, lib, ... }:
-{
+{ pkgs, features, lib, ... }: {
   home.packages = with pkgs; [ vdirsyncer ];
 
   home.persistence = lib.mkIf (builtins.elem "persistence" features) {
-    "/data/home/misterio".directories = [
-      "Calendars"
-      "Contacts"
-      ".local/share/vdirsyncer"
-    ];
+    "/data/home/misterio".directories =
+      [ "Calendars" "Contacts" ".local/share/vdirsyncer" ];
   };
 
   xdg.configFile."vdirsyncer/config".text = ''
@@ -52,8 +48,7 @@
 
   systemd.user.services.vdirsyncer = {
     Unit = { Description = "vdirsyncer synchronization"; };
-    Service = let
-      keyring = import ./keyring.nix { inherit pkgs; };
+    Service = let keyring = import ./keyring.nix { inherit pkgs; };
     in {
       Type = "oneshot";
       ExecCondition = ''

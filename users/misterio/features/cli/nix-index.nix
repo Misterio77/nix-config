@@ -1,5 +1,4 @@
-{ lib, features, ... }:
-{
+{ lib, features, ... }: {
   programs.nix-index.enable = true;
 
   home.persistence = lib.mkIf (builtins.elem "persistence" features) {

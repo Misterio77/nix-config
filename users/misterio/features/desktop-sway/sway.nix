@@ -40,8 +40,7 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
-in
-rec {
+in rec {
   home.packages = with pkgs; [ wl-clipboard wf-recorder slurp ];
   home.sessionVariables = {
     MOZ_ENABLE_WAYLAND = true;
@@ -149,9 +148,7 @@ rec {
           command = "${discocss}";
         }
         # Start waybar
-        {
-          command = "${waybar}";
-        }
+        { command = "${waybar}"; }
       ] ++ (if hostname == "atlas" then [
         # Start WayVNC
         {
@@ -159,9 +156,11 @@ rec {
         }
         # Set primary monitor
         {
-          command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
+          command =
+            "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
         }
-      ] else [ ]);
+      ] else
+        [ ]);
       bars = [ ];
       window = {
         border = 2;
@@ -196,8 +195,8 @@ rec {
         "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
 
         # Pass wofi menu
-        "Scroll_Lock" = "exec ${pass-wofi}"; #fn+k
-        "XF86Calculator" = "exec ${pass-wofi}"; #fn+f12
+        "Scroll_Lock" = "exec ${pass-wofi}"; # fn+k
+        "XF86Calculator" = "exec ${pass-wofi}"; # fn+f12
 
         # Lock or unlock gpg
         "Shift+Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) ''
@@ -209,7 +208,7 @@ rec {
         # Lock screen
         "XF86Launch5" = "exec ${swaylock} --screenshots"; # lock icon on k70
         "XF86Launch4" = "exec ${swaylock} --screenshots"; # fn+q
-        "${modifier}+p" = "exec ${swaylock} --screenshots"; #fn+f7
+        "${modifier}+p" = "exec ${swaylock} --screenshots"; # fn+f7
 
         # Volume
         "XF86AudioRaiseVolume" =
@@ -240,11 +239,14 @@ rec {
         "Shift+XF86AudioStop" = "exec ${preferredplayer} none";
 
         # Wallpaper
-        "XF86Tools" = "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # profile icon on k70
+        "XF86Tools" =
+          "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # profile icon on k70
 
         # Color scheme
-        "XF86Launch6" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # scheme icon on k70
-        "${modifier}+i" = "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # fn+f9
+        "XF86Launch6" =
+          "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # scheme icon on k70
+        "${modifier}+i" =
+          "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # fn+f9
 
         # Notifications
         "${modifier}+w" = "exec ${makoctl} dismiss";
@@ -275,7 +277,9 @@ rec {
 
         # Open SSH menu
         "${modifier}+s" = ''
-          exec host=$(echo '${pkgs.lib.concatStringsSep "\\n" sshHosts}' | ${wofi} -S dmenu) && \
+          exec host=$(echo '${
+            pkgs.lib.concatStringsSep "\\n" sshHosts
+          }' | ${wofi} -S dmenu) && \
           ${terminal} -e ${ssh} ''${host}
         '';
       };
@@ -288,9 +292,7 @@ rec {
           {
             xkb_layout = "br";
           };
-        "1:1:AT_Translated_Set_2_keyboard" = {
-          xkb_layout = "br";
-        };
+        "1:1:AT_Translated_Set_2_keyboard" = { xkb_layout = "br"; };
         "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
           pointer_accel = "1";
         };

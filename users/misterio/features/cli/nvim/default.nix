@@ -1,12 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [
-    ./ui.nix
-    ./lsp.nix
-    ./syntax.nix
-    ./theme.nix
-  ];
+  imports = [ ./ui.nix ./lsp.nix ./syntax.nix ./theme.nix ];
 
   programs.neovim = {
     enable = true;
@@ -58,9 +53,18 @@
       vim-matchup
       vim-numbertoggle
       vim-surround
-      { plugin = better-escape-nvim; config = "lua require('better_escape').setup()"; }
-      { plugin = range-highlight-nvim; config = "lua require('range-highlight').setup{}"; }
-      { plugin = nvim-autopairs; config = "lua require('nvim-autopairs').setup{}"; }
+      {
+        plugin = better-escape-nvim;
+        config = "lua require('better_escape').setup()";
+      }
+      {
+        plugin = range-highlight-nvim;
+        config = "lua require('range-highlight').setup{}";
+      }
+      {
+        plugin = nvim-autopairs;
+        config = "lua require('nvim-autopairs').setup{}";
+      }
     ];
   };
 

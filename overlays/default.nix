@@ -1,11 +1,15 @@
-final: prev: {
+final: prev:
+{
   vimPlugins = prev.vimPlugins // {
     nvim-base16 = prev.vimPlugins.nvim-base16.overrideAttrs (oldAttrs: rec {
-      patches = (oldAttrs.patches or [ ]) ++ [ ./nvim-base16-more-highlights.patch ];
+      patches = (oldAttrs.patches or [ ])
+        ++ [ ./nvim-base16-more-highlights.patch ];
     });
-    vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs (oldAttrs: rec {
-      patches = (oldAttrs.patches or [ ]) ++ [ ./vim-numbertoggle-command-mode.patch ];
-    });
+    vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs
+      (oldAttrs: rec {
+        patches = (oldAttrs.patches or [ ])
+          ++ [ ./vim-numbertoggle-command-mode.patch ];
+      });
     gemini-vim-syntax = prev.vimUtils.buildVimPlugin {
       pname = "gemini-vim-syntax";
       version = "2021-11-15";
@@ -38,10 +42,9 @@ final: prev: {
   });
 
   # Add my patch for supporting sourcehut
-  /*
-    nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
-    patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
-    });
+  /* nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
+     patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
+     });
   */
 
   # Don't launch discord when using discocss
@@ -62,7 +65,6 @@ final: prev: {
 
   # Add suggestion for nix shell instead of nix-env
   nix-index-unwrapped = prev.nix-index-unwrapped.overrideAttrs (oldAttrs: rec {
-    patches = (oldAttrs.patches or [ ])
-      ++ [ ./nix-index-new-command.patch ];
+    patches = (oldAttrs.patches or [ ]) ++ [ ./nix-index-new-command.patch ];
   });
 } // import ../pkgs { pkgs = final; }

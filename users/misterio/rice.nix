@@ -11,21 +11,20 @@ let
   currentMode = null;
 in {
   imports = [ nix-colors.homeManagerModule ];
-  home.packages = with pkgs; [
-    setscheme
-    setwallpaper
-  ];
+  home.packages = with pkgs; [ setscheme setwallpaper ];
 
-  colorscheme = if currentScheme != null
-    then nix-colors.colorSchemes.${currentScheme.${hostname}}
-    else colorschemeFromPicture {
+  colorscheme = if currentScheme != null then
+    nix-colors.colorSchemes.${currentScheme.${hostname}}
+  else
+    colorschemeFromPicture {
       path = config.wallpaper;
       kind = currentMode;
     };
 
-  wallpaper = if currentWallpaper != null
-    then "${pkgs.wallpapers}/share/backgrounds/${currentWallpaper.${hostname}}"
-    else nixWallpaperFromScheme {
+  wallpaper = if currentWallpaper != null then
+    "${pkgs.wallpapers}/share/backgrounds/${currentWallpaper.${hostname}}"
+  else
+    nixWallpaperFromScheme {
       scheme = config.colorscheme;
       width = 2560;
       height = 1080;

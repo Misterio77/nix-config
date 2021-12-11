@@ -5,8 +5,10 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-      luks.devices."nixenc".device = "/dev/disk/by-uuid/32d93839-2606-4472-a4ba-01b8510937bb";
+      availableKernelModules =
+        [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+      luks.devices."nixenc".device =
+        "/dev/disk/by-uuid/32d93839-2606-4472-a4ba-01b8510937bb";
     };
     kernelModules = [ "kvm-intel" ];
   };

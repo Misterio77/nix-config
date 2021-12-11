@@ -2,9 +2,7 @@
 
 let colors = config.colorscheme.colors;
 in {
-  home.sessionVariables = {
-    TERMINAL = "alacritty";
-  };
+  home.sessionVariables = { TERMINAL = "alacritty"; };
   programs.alacritty = {
     enable = true;
     package = pkgs.alacritty-ligatures;

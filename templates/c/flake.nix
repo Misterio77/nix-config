@@ -11,8 +11,7 @@
       let
         name = "foo-bar";
         pkgs = (import nixpkgs { inherit system; });
-      in
-      rec {
+      in rec {
         # nix build
         packages.${name} = pkgs.stdenv.mkDerivation rec {
           inherit name;

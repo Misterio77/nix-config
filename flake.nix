@@ -21,7 +21,8 @@
     # Projects being worked on
     projeto-bd = {
       # url = "sourcehut:~misterio/BSI-SCC0540-projeto";
-      url = "git+https://git.sr.ht/~misterio/BSI-SCC0540-projeto?ref=main&rev=a81ea18167d1fea7a162eb54c005186438401eb7";
+      url =
+        "git+https://git.sr.ht/~misterio/BSI-SCC0540-projeto?ref=main&rev=a81ea18167d1fea7a162eb54c005186438401eb7";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         utils.follows = "utils";
@@ -30,35 +31,22 @@
 
   };
 
-  outputs =
-    { nixpkgs
-    , hardware
-    , home-manager
-    , nur
-    , declarative-cachix
-    , impermanence
-    , nix-colors
-    , utils
-      # Projects
-    , projeto-bd
-    , ...
-    }@inputs:
+  outputs = { nixpkgs, hardware, home-manager, nur, declarative-cachix
+    , impermanence, nix-colors, utils
+    # Projects
+    , projeto-bd, ... }@inputs:
     let
       # My overlays, plus from external projects
       overlay = (import ./overlays);
-      overlays = [
-        overlay
-        projeto-bd.overlay
-        nur.overlay
-      ];
+      overlays = [ overlay projeto-bd.overlay nur.overlay ];
 
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system, users }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit nixpkgs hardware nur declarative-cachix
-              impermanence nix-colors system;
+            inherit nixpkgs hardware nur declarative-cachix impermanence
+              nix-colors system;
           };
           modules = [
             ./modules/nixos
@@ -71,12 +59,13 @@
                 config.allowUnfree = true;
               };
               # Add each input as a registry
-              nix.registry = nixpkgs.lib.mapAttrs'
-                (n: v: nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; }))
+              nix.registry = nixpkgs.lib.mapAttrs' (n: v:
+                nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; }))
                 inputs;
             }
             # System wide config for each user
-          ] ++ nixpkgs.lib.forEach users (u: ./users + "/${u}" + /system-wide.nix);
+          ] ++ nixpkgs.lib.forEach users
+            (u: ./users + "/${u}" + /system-wide.nix);
         };
       # Make home configuration, given username, required features, and system type
       mkHome = { username, system, hostname, features ? [ ] }:
@@ -97,8 +86,7 @@
             }
           ];
         };
-    in
-    {
+    in {
       inherit overlay overlays;
 
       nixosConfigurations = {
@@ -132,7 +120,15 @@
         "misterio@atlas" = mkHome {
           username = "misterio";
           hostname = "atlas";
-          features = [ "cli" "games" "desktop-sway" "trusted" "persistence" "mining" "rgb" ];
+          features = [
+            "cli"
+            "games"
+            "desktop-sway"
+            "trusted"
+            "persistence"
+            "mining"
+            "rgb"
+          ];
           system = "x86_64-linux";
         };
         "misterio@pleione" = mkHome {
@@ -164,18 +160,19 @@
       templates = import ./templates;
 
     } // utils.lib.eachDefaultSystem (system:
-    let
-      pkgs = import nixpkgs { inherit system overlays; };
-      hm = home-manager.defaultPackage."${system}";
-    in
-    {
-      packages = pkgs // {
-        generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes { inherit nix-colors; };
-        home-manager = hm;
-      };
+      let
+        pkgs = import nixpkgs { inherit system overlays; };
+        hm = home-manager.defaultPackage."${system}";
+      in {
+        packages = pkgs // {
+          generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes {
+            inherit nix-colors;
+          };
+          home-manager = hm;
+        };
 
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp hm ];
-      };
-    });
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp hm ];
+        };
+      });
 }

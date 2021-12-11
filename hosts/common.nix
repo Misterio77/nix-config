@@ -2,9 +2,7 @@
 { pkgs, lib, nixpkgs, declarative-cachix, ... }:
 
 {
-  imports = [
-    declarative-cachix.nixosModules.declarative-cachix
-  ];
+  imports = [ declarative-cachix.nixosModules.declarative-cachix ];
 
   system.stateVersion = "21.11";
 
@@ -15,22 +13,22 @@
 
   environment = {
     # Activate home-manager environment, if not already enabled
-    loginShellInit = ''[ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null'';
+    loginShellInit = ''
+      [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null'';
 
     homeBinInPath = true;
     localBinInPath = true;
   };
 
-  cachix = [
-    {
-      name = "misterio";
-      sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
-    }
-  ];
+  cachix = [{
+    name = "misterio";
+    sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
+  }];
 
   boot = {
     # Quieter boot
-    kernelParams = [ "quiet" "udev.log_priority=3" "vt.global_cursor_default=0" ];
+    kernelParams =
+      [ "quiet" "udev.log_priority=3" "vt.global_cursor_default=0" ];
     consoleLogLevel = 0;
     initrd.verbose = false;
   };
