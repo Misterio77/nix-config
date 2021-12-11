@@ -254,10 +254,10 @@ in rec {
 
         # Programs
         "${modifier}+c" = "exec ${terminal}";
-        "${modifier}+v" = "exec ${terminal} -e ${nvim}";
-        "${modifier}+o" = "exec ${terminal} -e ${octave}";
-        "${modifier}+m" = "exec ${terminal} -e ${neomutt}";
-        "${modifier}+a" = "exec ${terminal} -e ${amfora}";
+        "${modifier}+v" = "exec ${terminal} -e $SHELL -c ${nvim}";
+        "${modifier}+o" = "exec ${terminal} -e $SHELL -c ${octave}";
+        "${modifier}+m" = "exec ${terminal} -e $SHELL -c ${neomutt}";
+        "${modifier}+a" = "exec ${terminal} -e $SHELL -c ${amfora}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
         "${modifier}+control+w" = "exec ${makoctl} invoke";
@@ -280,7 +280,7 @@ in rec {
           exec host=$(echo '${
             pkgs.lib.concatStringsSep "\\n" sshHosts
           }' | ${wofi} -S dmenu) && \
-          ${terminal} -e ${ssh} ''${host}
+          ${terminal} -e ${ssh} $host
         '';
       };
       modifier = "Mod4";
