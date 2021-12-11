@@ -169,8 +169,10 @@
       hm = home-manager.defaultPackage."${system}";
     in
     {
-      packages.generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes { inherit nix-colors; };
-      packages.alacritty-ligatures = pkgs.alacritty-ligatures;
+      packages = pkgs // {
+        generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes { inherit nix-colors; };
+        home-manager = hm;
+      };
 
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp hm ];

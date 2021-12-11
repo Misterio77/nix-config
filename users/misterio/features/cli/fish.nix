@@ -28,13 +28,6 @@
     functions = {
       fish_greeting = "${pkgs.fortune}/bin/fortune -s";
       wh = "readlink -f (which $argv)";
-      ssh = let shellcolor = "${pkgs.shellcolord}/bin/shellcolor"; in
-        ''
-          ${shellcolor} disable $fish_pid
-          command ssh $argv
-          ${shellcolor} enable $fish_pid
-          ${shellcolor} apply $fish_pid
-        '';
     };
     interactiveShellInit =
       # Use vim bindings and cursors
@@ -73,34 +66,6 @@
         set -U fish_pager_color_description   yellow
         set -U fish_pager_color_prefix        'white' '--bold' '--underline'
         set -U fish_pager_color_progress      'brwhite' '--background=cyan'
-      '' +
-      # Start shellcolor daemon
-      ''
-        ${pkgs.shellcolord}/bin/shellcolord $fish_pid & disown
       '';
-
-  };
-  xdg.configFile."shellcolor.conf" = {
-    text = let colors = config.colorscheme.colors; in ''
-      base00=${colors.base00}
-      base01=${colors.base01}
-      base02=${colors.base02}
-      base03=${colors.base03}
-      base04=${colors.base04}
-      base05=${colors.base05}
-      base06=${colors.base06}
-      base07=${colors.base07}
-      base08=${colors.base08}
-      base09=${colors.base09}
-      base0A=${colors.base0A}
-      base0B=${colors.base0B}
-      base0C=${colors.base0C}
-      base0D=${colors.base0D}
-      base0E=${colors.base0E}
-      base0F=${colors.base0F}
-    '';
-    onChange = ''
-      timeout 1 ${pkgs.shellcolord}/bin/shellcolor apply || true
-    '';
   };
 }
