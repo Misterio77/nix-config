@@ -1,28 +1,27 @@
 { pkgs }: {
-  amdgpu-clocks = pkgs.callPackage ./amdgpu-clocks { };
-  preferredplayer = pkgs.callPackage ./preferredplayer { };
+  shellcolord = pkgs.callPackage ./shellcolord { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   sistemer-bot = pkgs.callPackage ./sistemer-bot { };
-  soundwire = pkgs.libsForQt5.callPackage ./soundwire { };
+
+  preferredplayer = pkgs.callPackage ./preferredplayer { };
   wallpapers = pkgs.callPackage ./wallpapers { };
   zenity-askpass = pkgs.callPackage ./zenity-askpass { };
 
   setscheme = pkgs.callPackage ./setscheme { };
   setwallpaper = pkgs.callPackage ./setwallpaper { };
 
+  pass-wofi = pkgs.callPackage ./pass-wofi {
+    pass = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
+  };
+
   setscheme-wofi =
     pkgs.callPackage ./setscheme-wofi { inherit (pkgs.gnome) zenity; };
   setwallpaper-wofi =
     pkgs.callPackage ./setwallpaper-wofi { inherit (pkgs.gnome) zenity; };
 
-  shellcolord = pkgs.callPackage ./shellcolord { };
-
-  # Experimental papermc version
-  papermc-experimental = pkgs.callPackage ./papermc-experimental { };
-
-  pass-wofi = pkgs.callPackage ./pass-wofi {
-    pass = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
-  };
 
   alacritty-ligatures = pkgs.callPackage ./alacritty-ligatures { };
+  amdgpu-clocks = pkgs.callPackage ./amdgpu-clocks { };
+  papermc-experimental = pkgs.callPackage ./papermc-experimental { };
+  soundwire = pkgs.libsForQt5.callPackage ./soundwire { };
 }
