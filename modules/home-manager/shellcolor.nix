@@ -9,13 +9,13 @@ let
     shell_pid=$(ps -o ppid= $ssh_pid)
 
     pre() {
-      ${package}/bin/shellcolor disable $shell_pid
+      ${package}/bin/shellcolor disable $shell_pid &>/dev/null || true
     }
 
     post() {
       while kill -0 $ssh_pid &>/dev/null; do sleep 0.1; done
-      ${package}/bin/shellcolor enable $shell_pid
-      ${package}/bin/shellcolor apply $shell_pid
+      ${package}/bin/shellcolor enable $shell_pid &>/dev/null || true
+      ${package}/bin/shellcolor apply $shell_pid &>/dev/null || true
     }
 
     pre
