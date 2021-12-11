@@ -76,7 +76,7 @@
       '' +
       # Start shellcolor daemon
       ''
-        ${pkgs.shellcolord}/bin/shellcolord $fish_pid &
+        ${pkgs.shellcolord}/bin/shellcolord $fish_pid & disown
       '';
 
   };
