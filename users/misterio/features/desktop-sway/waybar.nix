@@ -79,7 +79,7 @@ in {
           exec = ''
             echo "  ($(find ~/Mail/*/INBOX/new -type f | wc -l))"
           '';
-          on-click = "${pkgs.kitty}/bin/kitty -e ${pkgs.neomutt}/bin/neomutt";
+          on-click = "${config.programs.alacritty.package}/bin/alacritty -e ${pkgs.neomutt}/bin/neomutt";
           interval = 2;
         };
         "custom/gpg-agent" = lib.mkIf (builtins.elem "trusted" features) {

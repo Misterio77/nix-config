@@ -21,13 +21,6 @@ final: prev: {
     };
   };
 
-  # Link kitty to xterm (to fix crappy drun behaviour)
-  kitty = prev.kitty.overrideAttrs (oldAttrs: rec {
-    postInstall = (oldAttrs.postInstall or " ") + ''
-      ln -s $out/bin/kitty $out/bin/xterm
-    '';
-  });
-
   # Update openrgb
   openrgb = prev.openrgb.overrideAttrs (oldAttrs: rec {
     buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ prev.mbedtls ];

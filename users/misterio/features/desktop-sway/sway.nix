@@ -19,7 +19,7 @@ let
   amfora = "${pkgs.amfora}/bin/amfora";
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
-  kitty = "${pkgs.kitty}/bin/kitty";
+  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
   light = "${pkgs.light}/bin/light";
   makoctl = "${pkgs.mako}/bin/makoctl";
   neomutt = "${pkgs.neomutt}/bin/neomutt";
@@ -54,7 +54,7 @@ rec {
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = rec {
-      terminal = "${kitty}";
+      terminal = "${alacritty}";
       menu =
         "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run -t ${terminal}";
       fonts = {

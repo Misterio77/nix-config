@@ -1,13 +1,13 @@
 { pkgs, ... }:
 {
   imports = [
+    ./alacritty.nix
     ./discord.nix
     ./element.nix
     ./fira.nix
     ./firefox.nix
     ./gtk.nix
     ./kdeconnect.nix
-    ./kitty.nix
     ./mako.nix
     ./obs.nix
     ./qt.nix
