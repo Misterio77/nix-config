@@ -4,24 +4,6 @@ let
   cfg = config.programs.shellcolor;
   package = pkgs.shellcolord;
 
-  localCommand = pkgs.writeShellScriptBin "shellcolor-lc" ''
-    ssh_pid=$(ps -o ppid= $PPID)
-    shell_pid=$(ps -o ppid= $ssh_pid)
-
-    pre() {
-      ${package}/bin/shellcolor disable $shell_pid &>/dev/null || true
-    }
-
-    post() {
-      while kill -0 $ssh_pid &>/dev/null; do sleep 0.1; done
-      ${package}/bin/shellcolor enable $shell_pid &>/dev/null || true
-      ${package}/bin/shellcolor apply $shell_pid &>/dev/null || true
-    }
-
-    pre
-    post & disown
-  '';
-
   renderSetting = key: value: ''
     ${key}=${value}
   '';
@@ -54,11 +36,11 @@ in {
       '';
     };
 
-    enableSshIntegration = lib.mkOption {
-      default = true;
+    enableFishSshFunction = lib.mkOption {
+      default = false;
       type = lib.types.bool;
       description = ''
-        Whether to enable SSH integration.
+        Whether to enable SSH integration by replacing ssh with a fish function.
       '';
     };
 
@@ -102,10 +84,11 @@ in {
         ${package}/bin/shellcolord $fish_pid & disown
       '');
 
-    programs.ssh.extraConfig = lib.mkIf cfg.enableSshIntegration
-      (lib.mkBefore ''
-        PermitLocalCommand=yes
-        LocalCommand=${localCommand}/bin/shellcolor-lc
-      '');
+    programs.fish.functions.ssh = lib.mkIf cfg.enableFishSshFunction ''
+      ${package}/bin/shellcolor disable $fish_pid
+      command ssh $argv
+      ${package}/bin/shellcolor enable $fish_pid
+      ${package}/bin/shellcolor apply $fish_pid
+    '';
   };
 }
