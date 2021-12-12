@@ -37,6 +37,8 @@
 
           lspconfig.hls.setup{} -- Haskell
 
+          lspconfig.kotlin_language_server.setup{} -- Kotlin
+
         EOF
 
         nmap gD       :lua vim.lsp.buf.declaration()<CR>

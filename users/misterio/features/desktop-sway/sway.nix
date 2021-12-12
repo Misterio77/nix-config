@@ -313,17 +313,17 @@ in rec {
     '';
   };
 
-  programs.zsh.loginExtra = lib.mkAfter ''
+  programs.zsh.loginExtra = lib.mkBefore ''
     if [[ "$(tty)" == /dev/tty1 ]]; then
       exec sway &> /dev/null
     fi
   '';
-  programs.fish.loginShellInit = lib.mkAfter ''
+  programs.fish.loginShellInit = lib.mkBefore ''
     if test (tty) = /dev/tty1
       exec sway &> /dev/null
     end
   '';
-  programs.bash.profileExtra = lib.mkAfter ''
+  programs.bash.profileExtra = lib.mkBefore ''
     if [[ "$(tty)" == /dev/tty1 ]]; then
       exec sway &> /dev/null
     fi
