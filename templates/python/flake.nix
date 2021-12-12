@@ -26,19 +26,16 @@
           projectDir = ./.;
           overrides = [ pkgs.poetry2nix.defaultPoetryOverrides ];
         };
-        defaultPackage = self.packages.${system}.${name};
+        defaultPackage = packages.${name};
 
         # nix run
-        apps.${name} = {
-          type = "app";
-          program = "${packages.${name}}/bin/${name}";
-        };
+        apps.${name} = flake-utils.lib.mkApp { drv = packages.${name}; };
         defaultApp = apps.${name};
 
         # nix develop
         devShell = pkgs.mkShell {
+          inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ poetry ];
-          inputsFrom = builtins.attrValues self.packages.${system};
         };
       });
 }

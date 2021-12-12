@@ -12,6 +12,7 @@
       snrs = "sudo nixos-rebuild switch --flake /dotfiles";
       nrs = "nixos-rebuild switch --flake /dotfiles";
       hms = "home-manager switch --flake /dotfiles";
+      nd = "nix develop -c $SHELL";
 
       v = "nvim";
       vi = "nvim";

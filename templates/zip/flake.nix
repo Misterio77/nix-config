@@ -9,31 +9,33 @@
   outputs = { self, nixpkgs, utils }:
     utils.lib.eachDefaultSystem (system:
       let
+        name = "assignment1";
         pkgs = import nixpkgs { inherit system; };
-        pname = "assignment1";
         group = [ "10856803" ];
+        zipName = pkgs.lib.concatStringsSep "_" group;
       in rec {
-        packages.${pname} = let zipName = pkgs.lib.concatStringsSep "_" group;
-        in pkgs.stdenv.mkDerivation {
-          inherit pname;
-          version = "1.0";
-          src = ./.;
-          dontConfigure = true;
-          buildInputs = with pkgs; [ zip ];
-          buildPhase = ''
-            # Do stuff
-            zip -j ${zipName}.zip src/*
-          '';
-          installPhase = ''
-            mkdir -p $out
-            install -Dm644 ${zipName}.zip $out
-          '';
-        };
-        defaultPackage = packages.${pname};
+        # nix build
+        packages.${name} = pkgs.stdenv.mkDerivation {
+            inherit name;
+            version = "1.0";
+            src = ./.;
+            dontConfigure = true;
+            buildInputs = with pkgs; [ zip ];
+            buildPhase = ''
+              # Do stuff
+              zip -j ${zipName}.zip src/*
+            '';
+            installPhase = ''
+              mkdir -p $out
+              install -Dm644 ${zipName}.zip $out
+            '';
+          };
+        defaultPackage = packages.${name};
 
+        # nix develop
         devShell = pkgs.mkShell {
+          inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ unzip ];
-          inputsFrom = builtins.attrValues self.packages.${system};
         };
       });
 }

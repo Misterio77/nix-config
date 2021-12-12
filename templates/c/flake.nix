@@ -13,7 +13,7 @@
         pkgs = (import nixpkgs { inherit system; });
       in rec {
         # nix build
-        packages.${name} = pkgs.stdenv.mkDerivation rec {
+        packages.${name} = pkgs.clangStdenv.mkDerivation rec {
           inherit name;
           src = ./.;
           makeFlags = [ "PREFIX=$(out)" ];
@@ -21,16 +21,13 @@
         defaultPackage = packages.${name};
 
         # nix run
-        apps.${name} = {
-          type = "app";
-          program = "${packages.${name}}/bin/${name}";
-        };
+        apps.${name} = flake-utils.lib.mkApp { drv = packages.${name}; };
         defaultApp = apps.${name};
 
         # nix develop
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ clang clang-tools ];
-          inputsFrom = builtins.attrValues self.packages.${system};
+          inputsFrom = [ defaultPackage ];
+          buildInputs = with pkgs; [ clang-tools ];
         };
       });
 }
