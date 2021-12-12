@@ -1,8 +1,17 @@
 # This file holds config that i use on all hosts
-{ pkgs, lib, nixpkgs, declarative-cachix, ... }:
+{ pkgs, lib, nixpkgs, declarative-cachix, impermanence, ... }:
 
 {
-  imports = [ declarative-cachix.nixosModules.declarative-cachix ];
+  imports = [
+    declarative-cachix.nixosModules.declarative-cachix
+    impermanence.nixosModules.impermanence
+  ];
+
+  environment.persistence."/data".directories = [
+    "/var/log"
+    "/var/lib/systemd"
+    "/srv"
+  ];
 
   system.stateVersion = "21.11";
 

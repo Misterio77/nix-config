@@ -5,35 +5,13 @@
   imports = [
     hardware.nixosModules.common-cpu-intel
     hardware.nixosModules.common-pc-ssd
-    impermanence.nixosModules.impermanence
-    ../common.nix
+
     ./hardware-configuration.nix
+    ../common
+    ../common/steam.nix
   ];
 
   i18n.defaultLocale = "pt_BR.UTF-8";
-
-  environment.systemPackages = with pkgs;
-    [
-      (steam.override {
-        # Workaround for embedded browser not working.
-        #
-        # https://github.com/NixOS/nixpkgs/issues/137279
-        extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
-
-        # Workaround for an issue with VK_ICD_FILENAMES on nvidia hardware:
-        #
-        # - https://github.com/NixOS/nixpkgs/issues/126428 (bug)
-        # - https://github.com/NixOS/nixpkgs/issues/108598#issuecomment-858095726 (workaround)
-        extraProfile = ''
-          unset VK_ICD_FILENAMES
-          export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json:$VK_ICD_FILENAMES
-        '';
-      })
-    ];
-
-  environment.persistence."/data" = {
-    directories = [ "/var/log" "/var/lib/systemd" ];
-  };
 
   boot = {
     plymouth.enable = true;
@@ -60,10 +38,7 @@
     };
   };
 
-  programs = {
-    steam.enable = true;
-    dconf.enable = true;
-  };
+  programs.dconf.enable = true;
 
   security = { rtkit.enable = true; };
 
@@ -79,10 +54,28 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-    steam-hardware.enable = true;
     pulseaudio = {
       enable = true;
       support32Bit = true;
     };
   };
+
+  environment.systemPackages = with pkgs;
+    [
+      (steam.override {
+        # Workaround for embedded browser not working.
+        #
+        # https://github.com/NixOS/nixpkgs/issues/137279
+        extraPkgs = pkgs: with pkgs; [ pango harfbuzz libthai ];
+
+        # Workaround for an issue with VK_ICD_FILENAMES on nvidia hardware:
+        #
+        # - https://github.com/NixOS/nixpkgs/issues/126428 (bug)
+        # - https://github.com/NixOS/nixpkgs/issues/108598#issuecomment-858095726 (workaround)
+        extraProfile = ''
+          unset VK_ICD_FILENAMES
+          export VK_ICD_FILENAMES=${config.hardware.nvidia.package}/share/vulkan/icd.d/nvidia_icd.json:${config.hardware.nvidia.package.lib32}/share/vulkan/icd.d/nvidia_icd32.json:$VK_ICD_FILENAMES
+        '';
+      })
+    ];
 }
