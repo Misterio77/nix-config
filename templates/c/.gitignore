@@ -1,6 +1,4 @@
-# Direnv
-.direnv
-# Nix
+# Nix build
 result
-# Build outputs
+# make build
 build

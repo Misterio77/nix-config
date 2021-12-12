@@ -1,4 +1,4 @@
-# Direnv
-.direnv
-# Nix
+# nix build
 result
+# jit cache
+__pycache__

@@ -35,6 +35,8 @@
 
           lspconfig.dartls.setup{} -- Dart
 
+          lspconfig.hls.setup{} -- Haskell
+
         EOF
 
         nmap gD       :lua vim.lsp.buf.declaration()<CR>

@@ -1,26 +1,19 @@
 {
-  description = "Foo Bar Rust Project";
+  description = "Foo Bar Haskell Project";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-
-    naersk.url = "github:nmattia/naersk";
-    naersk.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, naersk }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         name = "foo-bar";
         pkgs = (import nixpkgs { inherit system; });
-        naersk-lib = naersk.lib."${system}";
       in rec {
         # nix build
-        packages.${name} = naersk-lib.buildPackage {
-          pname = name;
-          root = ./.;
-        };
+        packages.${name} = pkgs.haskellPackages.callCabal2nix name ./. { };
         defaultPackage = packages.${name};
 
         # nix run
@@ -30,7 +23,7 @@
         # nix develop
         devShell = pkgs.mkShell {
           inputsFrom =  [ defaultPackage ];
-          buildInputs = with pkgs; [ rustc rust-analyzer rustfmt clippy ];
+          buildInputs = with pkgs; [ haskell-language-server cabal-install ghc ];
         };
       });
 }

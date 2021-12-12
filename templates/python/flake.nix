@@ -4,15 +4,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    compat.url = "github:edolstra/flake-compat";
-    compat.flake = false;
 
     poetry2nix.url = "github:nix-community/poetry2nix";
     poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
     poetry2nix.inputs.flake-utils.follows = "flake-utils";
   };
 
-  outputs = { self, nixpkgs, poetry2nix, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, poetry2nix }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         name = "foo-bar";

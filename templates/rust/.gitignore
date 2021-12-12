@@ -1,6 +1,4 @@
-# Direnv
-.direnv
-# Nix
+# nix build
 result
-# Rust build
+# cargo build
 target

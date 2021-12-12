@@ -31,34 +31,10 @@
         "type": "github"
       }
     },
-    "poetry2nix": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1638854297,
-        "narHash": "sha256-mt5gMwAThp8FpcvRsKhs/y/VxLDNgH4MJJLlFbbs4gk=",
-        "owner": "nix-community",
-        "repo": "poetry2nix",
-        "rev": "a4b769203284c91529480adcbb4f17f04d3ff67b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "poetry2nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "poetry2nix": "poetry2nix"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
