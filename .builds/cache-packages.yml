@@ -16,8 +16,13 @@ tasks:
     cachix use misterio
 - build: |
     cd nix-config
+
+    # Build alacritty with ligatures
+    nix build .#alacritty-ligatures -o result-alacritty
+
     # Build all gtk themes
-    schemes=$(nix eval --raw .#packages.x86_64-linux.generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
-    bash -c "nix --log-format raw build .#packages.x86_64-linux.generated-gtk-themes.{$schemes}"
+    schemes=$(nix eval --raw .#generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
+    gtk_themes=$(eval .#generated-gtk-themes.{$schemes})
+    nix --log-format raw build $gtk_themes -o result-gtk-themes
 - cache: |
     nix path-info nix-config/result*/ -r | cachix push misterio
