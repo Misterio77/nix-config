@@ -11,7 +11,7 @@ secrets:
   - f2907d38-97b4-4e7d-9fb9-57b3fb0135af
 
 tasks:
-- auth_cachix: |
+- setup_cachix: |
     cat ~/.cachix_token | cachix authtoken --stdin
     cachix use misterio
 - build: |
@@ -23,6 +23,6 @@ tasks:
     # Build all gtk themes
     schemes=$(nix eval --raw .#generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
     gtk_themes=$(eval echo .#generated-gtk-themes.{$schemes})
-    nix --log-format raw build $gtk_themes -o result-gtk-themes
-- cache: |
+    nix build $gtk_themes -o result-gtk-themes
+- upload_cachix: |
     nix path-info nix-config/result*/ -r | cachix push misterio
