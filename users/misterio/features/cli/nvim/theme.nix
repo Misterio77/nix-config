@@ -4,7 +4,7 @@ let
   slug = config.colorscheme.slug;
   c = config.colorscheme.colors;
 
-  nvim-scheme = pkgs.writeTextDir "colors/nix-${slug}.vim" ''
+  nvim-scheme = ''
     let g:colors_name = 'nix-${slug}'
     lua << EOF
     require("base16-colorscheme").setup({
@@ -15,23 +15,28 @@ let
       })
     EOF
   '';
-in {
+in
+{
   programs.neovim.plugins = [
-    pkgs.vimPlugins.nvim-base16
     {
-      plugin = nvim-scheme;
+      plugin = pkgs.vimPlugins.nvim-base16;
       config = "colorscheme nix-${slug}";
     }
   ];
 
-  # When configuration is written, reapply scheme
-  xdg.configFile."nvim/init.vim".onChange =
-    let nvr = "${pkgs.neovim-remote}/bin/nvr";
-    in ''
-      path=$(< ~/.config/nvim/init.vim head -1 | cut -d '=' -f2 )
-      ${nvr} --serverlist | \
-      while read server; do
-        ${nvr} --nostart -cc ":set packpath^=$path | :set runtimepath^=$path | :colorscheme nix-${slug}" --servername $server & \
-      done
-    '';
+  xdg.configFile = {
+    "nvim/colors/nix-${slug}.vim".text = nvim-scheme;
+
+    # When configuration is written, reapply scheme
+    "nvim/init.vim".onChange =
+      let nvr = "${pkgs.neovim-remote}/bin/nvr";
+      in
+      ''
+        path=$(< ~/.config/nvim/init.vim head -1 | cut -d '=' -f2 )
+        ${nvr} --serverlist | \
+        while read server; do
+          ${nvr} --nostart -cc ":set packpath^=$path | :set runtimepath^=$path | :colorscheme nix-${slug}" --servername $server & \
+        done
+      '';
+  };
 }
