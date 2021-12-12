@@ -1,0 +1,4 @@
+# nix build
+result
+# Temporary diagrams
+*.png

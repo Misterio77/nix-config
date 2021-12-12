@@ -1,0 +1,25 @@
+@startuml
+skinparam linestyle ortho
+rectangle ":Vacinador" as vacinador
+rectangle "cid :Cidadão" as cid
+rectangle ":List<LoteEmEstoque>" as lots
+rectangle "lot :LoteEmEstoque" as lot
+rectangle ":TipoDeVacina" as tdv
+rectangle "VacinaAplicada" as va_c
+rectangle "va:VacinaAplicada" as va
+rectangle "local:LocalDeVacinação" as local
+
+
+vacinador --> lots: "1: lot := buscar(nroLote)"
+vacinador --> lot: "1.1: [lot] tdv := getTipoDeVacina()"
+vacinador --> lot: "1.2: naValidade := verificarValidade()"
+vacinador --> cid: "1.3: apto := aptoAReceber(tdb)"
+vacinador --> cid: "1.4: ultima := ultimaDose()"
+vacinador --> va_c: "2: [naValidade] and [apto] and [ultima < 3] \nva := criar(hoje, ultima+1, lot, local)"
+va_c --> va: "2.1: registrar(cid, lot, local)"
+va --> cid: "2.2: associar(va)"
+va --> va: "2.3: associar(lot)"
+va --> va: "2.4: associar(local)"
+va --> lot: "2.5: retirarEstoque(1)"
+
+@enduml

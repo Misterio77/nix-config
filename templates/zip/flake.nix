@@ -17,9 +17,7 @@
         # nix build
         packages.${name} = pkgs.stdenv.mkDerivation {
             inherit name;
-            version = "1.0";
             src = ./.;
-            dontConfigure = true;
             buildInputs = with pkgs; [ zip ];
             buildPhase = ''
               # Do stuff

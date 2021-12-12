@@ -19,4 +19,8 @@
     description = "Simple Zip package";
     path = ./zip;
   };
+  document = {
+    description = "Document building environment (pandoc)";
+    path = ./document;
+  };
 }
