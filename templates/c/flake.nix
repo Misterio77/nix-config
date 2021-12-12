@@ -29,7 +29,8 @@
 
         # nix develop
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ autoconf gnumake clang clang-tools ];
+          buildInputs = with pkgs; [ clang clang-tools ];
+          inputsFrom = builtins.attrValues self.packages.${system};
         };
       });
 }

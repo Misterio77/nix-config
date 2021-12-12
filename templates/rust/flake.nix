@@ -31,7 +31,8 @@
 
         # nix develop
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ rustc cargo rust-analyzer rustfmt clippy ];
+          buildInputs = with pkgs; [ rustc rust-analyzer rustfmt clippy ];
+          inputsFrom = builtins.attrValues self.packages.${system};
         };
       });
 }

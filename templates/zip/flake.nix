@@ -31,6 +31,9 @@
         };
         defaultPackage = packages.${pname};
 
-        devShell = pkgs.mkShell { buildInputs = with pkgs; [ zip unzip ]; };
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs; [ unzip ];
+          inputsFrom = builtins.attrValues self.packages.${system};
+        };
       });
 }
