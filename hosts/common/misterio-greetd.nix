@@ -3,12 +3,10 @@
     enable = true;
     settings = rec {
       initial_session = {
-        command = "$SHELL";
+        command = "$SHELL -l";
         user = "misterio";
       };
-      default_session = {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd $SHELL";
-      };
+      default_session = initial_session;
     };
   };
 }
