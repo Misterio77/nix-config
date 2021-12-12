@@ -37,19 +37,7 @@
     };
   };
 
-  services = {
-    greetd = {
-      enable = true;
-      settings = rec {
-        initial_session = {
-          command = "sway &> /dev/null";
-          user = "misterio";
-        };
-        default_session = initial_session;
-      };
-    };
-    dbus.packages = [ pkgs.gcr ];
-  };
+  services.dbus.packages = [ pkgs.gcr ];
 
   powerManagement.powertop.enable = true;
   programs = {
