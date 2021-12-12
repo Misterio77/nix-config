@@ -22,7 +22,7 @@ tasks:
 
     # Build all gtk themes
     schemes=$(nix eval --raw .#generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
-    gtk_themes=$(eval .#generated-gtk-themes.{$schemes})
+    gtk_themes=$(eval echo .#generated-gtk-themes.{$schemes})
     nix --log-format raw build $gtk_themes -o result-gtk-themes
 - cache: |
     nix path-info nix-config/result*/ -r | cachix push misterio
