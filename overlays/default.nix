@@ -3,12 +3,12 @@ final: prev:
   vimPlugins = prev.vimPlugins // {
     nvim-base16 = prev.vimPlugins.nvim-base16.overrideAttrs (oldAttrs: rec {
       patches = (oldAttrs.patches or [ ])
-        ++ [ ./nvim-base16-more-highlights.patch ];
+      ++ [ ./nvim-base16-more-highlights.patch ];
     });
     vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs
       (oldAttrs: rec {
         patches = (oldAttrs.patches or [ ])
-          ++ [ ./vim-numbertoggle-command-mode.patch ];
+        ++ [ ./vim-numbertoggle-command-mode.patch ];
       });
     gemini-vim-syntax = prev.vimUtils.buildVimPlugin {
       pname = "gemini-vim-syntax";
@@ -42,10 +42,9 @@ final: prev:
   });
 
   # Add my patch for supporting sourcehut
-  /* nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
-     patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
-     });
-  */
+  nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
+    patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
+  });
 
   # Don't launch discord when using discocss
   discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
