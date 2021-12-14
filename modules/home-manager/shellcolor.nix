@@ -79,7 +79,7 @@ in {
       ${package}/bin/shellcolord $$ & disown
     '');
 
-    programs.fish.shellInit = lib.mkIf cfg.enableFishIntegration
+    programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration
       (lib.mkBefore ''
         ${package}/bin/shellcolord $fish_pid & disown
       '');
