@@ -9,6 +9,7 @@
     vim-markdown
     vim-nix
     vim-toml
+    vim-syntax-shakespeare
     gemini-vim-syntax
     kotlin-vim
   ];
