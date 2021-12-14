@@ -12,5 +12,9 @@
     pinentryFlavor = "gnome3";
   };
 
+  programs.gpg = {
+    enable = true;
+  };
+
 }
 # vim: filetype=nix
