@@ -1,1 +1,10 @@
-{ ... }: { programs.ssh.enable = true; }
+{
+  programs.ssh =  {
+    enable = true;
+    matchBlocks = {
+      "gitlab.com" = {
+        addressFamily = "inet";
+      };
+    };
+  };
+}
