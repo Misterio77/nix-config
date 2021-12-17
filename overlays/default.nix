@@ -54,9 +54,11 @@ final: prev:
   });
 
   # Add my patch for supporting sourcehut
+  /*
   nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
   });
+  */
 
   # Don't launch discord when using discocss
   discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
