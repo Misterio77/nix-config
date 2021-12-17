@@ -2,6 +2,8 @@
 
 Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.wiki/wiki/Flakes).
 
+Looking for something simpler to start out with flakes? Try [my starter config repo](https://github.com/Misterio77/nix-starter-config).
+
 ## Structure
 - `flake.nix`: Entrypoint for both hosts (`nixos-rebuild --flake`) and home configurations (`home-manager --flake`). Also exposes a devshell for boostrapping (`nix develop`).
 - `hosts`: System-wide configuration for my machines.
