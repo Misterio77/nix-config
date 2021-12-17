@@ -1,11 +1,11 @@
 # System configuration for my laptop
-{ config, pkgs, hardware, impermanence, system, ... }:
+{ config, pkgs, system, inputs, ... }:
 
 {
   imports = [
-    hardware.nixosModules.common-cpu-amd
-    hardware.nixosModules.common-gpu-amd
-    hardware.nixosModules.common-pc-ssd
+    inputs.hardware.nixosModules.common-cpu-amd
+    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
     ../common

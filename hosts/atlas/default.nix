@@ -1,13 +1,13 @@
 # System configuration for my main desktop PC
-{ config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
+{ config, pkgs, system, inputs, ... }:
 
-let nur-no-pkgs = import nur { nurpkgs = import nixpkgs { inherit system; }; };
+let nur-no-pkgs = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; }; };
 in
 {
   imports = [
-    hardware.nixosModules.common-cpu-amd
-    hardware.nixosModules.common-gpu-amd
-    hardware.nixosModules.common-pc-ssd
+    inputs.hardware.nixosModules.common-cpu-amd
+    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-pc-ssd
     nur-no-pkgs.repos.misterio.modules.openrgb
 
     ./hardware-configuration.nix

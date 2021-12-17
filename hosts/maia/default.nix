@@ -1,10 +1,10 @@
 # System configuration for my gf's desktop PC
-{ config, pkgs, hardware, impermanence, ... }:
+{ config, pkgs, system, inputs, ... }:
 
 {
   imports = [
-    hardware.nixosModules.common-cpu-intel
-    hardware.nixosModules.common-pc-ssd
+    inputs.hardware.nixosModules.common-cpu-intel
+    inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
     ../common

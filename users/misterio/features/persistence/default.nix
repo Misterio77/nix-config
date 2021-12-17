@@ -1,5 +1,5 @@
-{ impermanence, ... }: {
-  imports = [ impermanence.nixosModules.home-manager.impermanence ];
+{ inputs, ... }: {
+  imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
   home.persistence = {
     "/data/home/misterio" = {

@@ -31,22 +31,18 @@
 
   };
 
-  outputs = { nixpkgs, hardware, home-manager, nur, declarative-cachix
-    , impermanence, nix-colors, utils
-    # Projects
-    , projeto-bd, ... }@inputs:
+  outputs = { nixpkgs, home-manager, utils, ... }@inputs:
     let
       # My overlays, plus from external projects
       overlay = (import ./overlays);
-      overlays = [ overlay projeto-bd.overlay nur.overlay ];
+      overlays = [ overlay inputs.projeto-bd.overlay inputs.nur.overlay ];
 
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system, users }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit nixpkgs hardware nur declarative-cachix impermanence
-              nix-colors system;
+            inherit inputs;
           };
           modules = [
             ./modules/nixos
@@ -59,8 +55,9 @@
                 config.allowUnfree = true;
               };
               # Add each input as a registry
-              nix.registry = nixpkgs.lib.mapAttrs' (n: v:
-                nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; }))
+              nix.registry = nixpkgs.lib.mapAttrs'
+                (n: v:
+                  nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; }))
                 inputs;
             }
             # System wide config for each user
@@ -72,7 +69,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit features hostname impermanence nix-colors;
+            inherit features hostname inputs;
           };
           homeDirectory = "/home/${username}";
           configuration = ./users + "/${username}";
@@ -86,7 +83,8 @@
             }
           ];
         };
-    in {
+    in
+    {
       inherit overlay overlays;
 
       nixosConfigurations = {
@@ -163,10 +161,11 @@
       let
         pkgs = import nixpkgs { inherit system overlays; };
         hm = home-manager.defaultPackage."${system}";
-      in {
+      in
+      {
         packages = pkgs // {
           generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes {
-            inherit nix-colors;
+            nix-colors = inputs.nix-colors;
           };
           home-manager = hm;
         };

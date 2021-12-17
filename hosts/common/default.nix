@@ -1,10 +1,10 @@
 # This file holds config that i use on all hosts
-{ pkgs, lib, nixpkgs, declarative-cachix, impermanence, ... }:
+{ config, pkgs, system, inputs, ... }:
 
 {
   imports = [
-    declarative-cachix.nixosModules.declarative-cachix
-    impermanence.nixosModules.impermanence
+    inputs.declarative-cachix.nixosModules.declarative-cachix
+    inputs.impermanence.nixosModules.impermanence
   ];
 
   environment.persistence."/data".directories = [
@@ -15,7 +15,7 @@
 
   system.stateVersion = "21.11";
 
-  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
+  i18n.defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
   time.timeZone = "America/Sao_Paulo";
 
   networking.networkmanager.enable = true;

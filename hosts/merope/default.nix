@@ -1,11 +1,11 @@
 # System configuration for my Raspberry Pi 4
-{ config, nixpkgs, pkgs, hardware, nur, impermanence, system, ... }:
+{ config, pkgs, system, inputs, ... }:
 
-let nur-no-pkgs = import nur { nurpkgs = import nixpkgs { inherit system; }; };
+let nur-no-pkgs = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; }; };
 in
 {
   imports = [
-    hardware.nixosModules.raspberry-pi-4
+    inputs.hardware.nixosModules.raspberry-pi-4
     nur-no-pkgs.repos.misterio.modules.argonone
 
     ./hardware-configuration.nix

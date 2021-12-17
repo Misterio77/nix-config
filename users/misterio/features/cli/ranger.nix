@@ -1,4 +1,4 @@
-{ pkgs, host, ... }:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [ ranger ];

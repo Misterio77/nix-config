@@ -1,9 +1,10 @@
-{ pkgs, hostname, impermanence, nix-colors, nur, ... }:
+{ config, pkgs, system, inputs, ... }:
 
 {
   imports = [
-    impermanence.nixosModules.home-manager.impermanence
-    nix-colors.homeManagerModule
+    inputs.impermanence.nixosModules.home-manager.impermanence
+    inputs.nix-colors.homeManagerModule
+
     ./firefox.nix
     ./git.nix
     # ./gnome-terminal.nix
@@ -13,16 +14,11 @@
 
   programs.home-manager.enable = true;
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ nur.overlay ];
-  };
-
   systemd.user.startServices = "sd-switch";
 
   home.packages = with pkgs; [ kdenlive libreoffice soundwire pavucontrol ];
 
-  colorscheme = nix-colors.colorSchemes.dracula;
+  colorscheme = inputs.nix-colors.colorSchemes.dracula;
 
   home.persistence = {
     "/data/home/layla" = {

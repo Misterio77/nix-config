@@ -1,4 +1,4 @@
-{ pkgs, host, ... }:
+{ pkgs, ... }:
 
 let
   glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
