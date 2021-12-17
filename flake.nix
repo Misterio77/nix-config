@@ -42,7 +42,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs;
+            inherit inputs system;
           };
           modules = [
             ./modules/nixos
@@ -69,7 +69,7 @@
         home-manager.lib.homeManagerConfiguration {
           inherit username system;
           extraSpecialArgs = {
-            inherit features hostname inputs;
+            inherit features hostname inputs system;
           };
           homeDirectory = "/home/${username}";
           configuration = ./users + "/${username}";

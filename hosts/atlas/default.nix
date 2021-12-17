@@ -1,14 +1,14 @@
 # System configuration for my main desktop PC
 { config, pkgs, system, inputs, ... }:
 
-let nur-no-pkgs = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; }; };
+let nur = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; }; };
 in
 {
   imports = [
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-gpu-amd
     inputs.hardware.nixosModules.common-pc-ssd
-    nur-no-pkgs.repos.misterio.modules.openrgb
+    nur.repos.misterio.modules.openrgb
 
     ./hardware-configuration.nix
     ../common
