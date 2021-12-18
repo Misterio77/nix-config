@@ -57,7 +57,7 @@
               # Add each input as a registry
               nix.registry = nixpkgs.lib.mapAttrs'
                 (n: v:
-                  nixpkgs.lib.nameValuePair ("${n}") ({ flake = inputs."${n}"; }))
+                  nixpkgs.lib.nameValuePair (n) ({ flake = v; }))
                 inputs;
             }
             # System wide config for each user
