@@ -1,6 +1,6 @@
 { stdenv, lib, fetchFromGitHub, fetchpatch, rustPlatform
 
-, cmake, gzip, installShellFiles, makeWrapper, ncurses, pkg-config, python3
+, cmake, gzip, installShellFiles, makeWrapper, ncurses, pkg-config, python3, harfbuzz
 
 , expat, fontconfig, freetype, libGL, libX11, libXcursor, libXi, libXrandr
 , libXxf86vm, libxcb, libxkbcommon, wayland, xdg-utils, zlib }:
@@ -24,14 +24,14 @@ in rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "fee1-dead";
     repo = pname;
-    rev = "77e6d029d9e0ce980c71abf793d50a9a5f4e1564";
-    sha256 = "sha256-h4XG9jJofjHs1l1hfcDkTVFocZ0k9Co2eTv36hV6FpU=";
+    rev = "6cd8751f3b68622c6978c3f20960b1925038aa24";
+    sha256 = "sha256-z8e8Y+DF4mIPNgKkqIoDrI7uavHbdsBdTe7nKL6HzK0=";
   };
 
-  cargoSha256 = "sha256-hHAlNxHvsKzqpOfnEmvAaMsrQynRXTLjdjGrUjFxAz0=";
+  cargoSha256 = "sha256-arEGZLZuzVAclplEssvaZypcLgjP3ffUUY4sDN7dG5Q=";
 
   nativeBuildInputs =
-    [ cmake gzip installShellFiles makeWrapper ncurses pkg-config python3 ];
+    [ cmake gzip installShellFiles makeWrapper ncurses pkg-config python3 harfbuzz ];
 
   buildInputs = rpathLibs;
 
@@ -53,7 +53,7 @@ in rustPlatform.buildRustPackage rec {
     #    strip: not enough room for program headers, try linking with -N
     # As a workaround, strip manually before running patchelf.
     strip -S $out/bin/alacritty
-    patchelf --set-rpath "${lib.makeLibraryPath rpathLibs}" $out/bin/alacritty
+    patchelf --set-rpath "${lib.makeLibraryPath rpathLibs + ":${stdenv.cc.cc.lib}/lib64"}" $out/bin/alacritty
   '' + ''
     installShellCompletion --zsh extra/completions/_alacritty
     installShellCompletion --bash extra/completions/alacritty.bash
@@ -65,7 +65,6 @@ in rustPlatform.buildRustPackage rec {
     tic -xe alacritty,alacritty-direct -o "$terminfo/share/terminfo" extra/alacritty.info
     mkdir -p $out/nix-support
     echo "$terminfo" >> $out/nix-support/propagated-user-env-packages
-    ln -s $out/bin/alacritty $out/bin/xterm
   '';
 
   dontPatchELF = true;
