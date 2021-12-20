@@ -12,5 +12,6 @@
     vim-syntax-shakespeare
     gemini-vim-syntax
     kotlin-vim
+    haskell-vim
   ];
 }

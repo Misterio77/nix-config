@@ -1,4 +1,6 @@
 module Main where
 
+import FooBar
+
 main :: IO ()
-main = putStrLn "Hello, World!"
+main = putStrLn fooBar
