@@ -12,7 +12,6 @@
     ../common/docker.nix
     ../common/misterio-greetd.nix
     ../common/pipewire.nix
-    ../common/podman.nix
     ../common/postgres.nix
     ../common/steam.nix
 

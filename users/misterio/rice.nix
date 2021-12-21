@@ -4,7 +4,7 @@ with inputs.nix-colors.lib { inherit pkgs; };
 
 let
   currentScheme.atlas = "spaceduck";
-  currentScheme.pleione = "silk-dark";
+  currentScheme.pleione = "silk-light";
   currentScheme.merope = "nord";
   currentWallpaper.atlas = "abstract-read-purple-pink.png";
   currentWallpaper.pleione = "cubist-crystal-brown-teal.jpg";
