@@ -6,6 +6,7 @@ let
   currentScheme.atlas = "atelier-cave-light";
   currentScheme.pleione = "silk-light";
   currentScheme.merope = "nord";
+  currentScheme.maia = "pasque";
   currentWallpaper.atlas = "abstract-read-purple-pink.png";
   currentWallpaper.pleione = "cubist-crystal-brown-teal.jpg";
   currentMode = null;

@@ -48,7 +48,10 @@
   };
 
   hardware = {
-    nvidia.package = config.boot.kernelPackages.nvidia_x11;
+    nvidia = {
+      package = config.boot.kernelPackages.nvidia_x11;
+      modesetting.enable = true;
+    };
     opengl = {
       enable = true;
       driSupport = true;
