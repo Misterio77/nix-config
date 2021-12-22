@@ -47,6 +47,11 @@ in
     };
   };
 
+  # Block eac cdn so i can play star citizen
+  networking.extraHosts = ''
+    127.0.0.1 modules-cdn.eac-prod.on.epicgames.com
+  '';
+
   programs = {
     gamemode = {
       enable = true;
