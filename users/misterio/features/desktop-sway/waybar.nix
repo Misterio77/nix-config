@@ -106,6 +106,7 @@ in {
           exec = "echo '' && echo 'Gamemode is active'";
         };
         "custom/theme" = {
+          max-length = 25;
           exec = "echo '  ${config.colorscheme.slug}'";
           on-click = "${pkgs.setscheme-wofi}/bin/setscheme-wofi";
         };

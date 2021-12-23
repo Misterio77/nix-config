@@ -3,14 +3,13 @@
 with inputs.nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme.atlas = "atelier-cave-light";
+  currentScheme.atlas = "solarflare";
   currentScheme.pleione = "silk-light";
   currentScheme.merope = "nord";
   currentScheme.maia = "pasque";
-  currentWallpaper.atlas = "abstract-red-purple-pink";
+  currentWallpaper.atlas = "cubist-orange-blue";
   currentWallpaper.pleione = "cubist-crystal-brown-teal";
   currentMode = null;
-  wallpaperPath = name: "${pkgs.wallpapers.${currentWallpaper.${hostname}}}/share/backgrounds/${currentWallpaper.${hostname}}";
 in
 {
   imports = [ inputs.nix-colors.homeManagerModule ];
@@ -27,7 +26,7 @@ in
 
   wallpaper =
     if currentWallpaper.${hostname} != null then
-      wallpaperPath currentWallpaper.${hostname}
+      pkgs.wallpapers.${currentWallpaper.${hostname}}
     else
       nixWallpaperFromScheme {
         scheme = config.colorscheme;

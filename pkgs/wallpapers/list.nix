@@ -425,4 +425,40 @@
     id = "ZiocLpU";
     sha256 = "1hd1k5gkfn2kvmrnc03w4mmwl96b2l943ixpccg7i6hlmvkqa303";
   }
+  {
+    name = "ships";
+    ext = "jpeg";
+    id = "e6E2IOc";
+    sha256 = "0vpxg5403nsnipzgibdah0i5kwkfbgm5kkv9kfa4zzdz2rrykkx5";
+  }
+  {
+    name = "scifi-cube";
+    ext = "jpeg";
+    id = "cpPjhaq";
+    sha256 = "186qfjxb1zkasp3wivcbh72wr2bcj2c90zncwypxlcfp8dl2cz7w";
+  }
+  {
+    name = "scifi-spaceship-clouds";
+    ext = "jpeg";
+    id = "HNPeX2h";
+    sha256 = "08cmf3nqzdkjwjjysy7cn9l2zjmvlkvwhpnbk644kcr1spvybw46";
+  }
+  {
+    name = "lake-houses-sunset-gold";
+    ext = "jpeg";
+    id = "JF4BZWw";
+    sha256 = "1wvfxylx3c4q8yx8bl60q63zk4cyjibdmmn42h246lhsr5qrff4m";
+  }
+  {
+    name = "cthulhu-side";
+    ext = "jpeg";
+    id = "lbSq5se";
+    sha256 = "0qa3x06gmc7a54b9hksa6zdg794mgk5l1yylbk7f0hzl7vz58a94";
+  }
+  {
+    name = "cthulhu-standing";
+    ext = "jpeg";
+    id = "ssi4zpM";
+    sha256 = "00wqp90q4x3nyr1bj40qw2wpppw7f4aq1vgww2jhm9ja0aafhmn5";
+  }
 ]

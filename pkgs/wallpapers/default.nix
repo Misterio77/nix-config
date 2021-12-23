@@ -2,19 +2,9 @@
 # imgur. You can manually include new wallpapers in list.nix, or generate them
 # from an imgur album using ./from_album.sh
 { pkgs }:
-let
-  callWallpaper = { name, ext, id, sha256 }: pkgs.callPackage ./wallpaper.nix {
-    wallpaper = { inherit name ext id sha256; };
-  };
-in
 builtins.listToAttrs (builtins.map
-  (e: {
-    name = e.name;
-    value = callWallpaper {
-      name = e.name;
-      ext = e.ext;
-      id = e.id;
-      sha256 = e.sha256;
-    };
+  (wallpaper: {
+    name = wallpaper.name;
+    value = (pkgs.callPackage ./wallpaper.nix { inherit wallpaper; });
   })
   (import ./list.nix))
