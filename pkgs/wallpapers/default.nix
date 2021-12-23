@@ -1,24 +1,20 @@
-{ lib, stdenv }:
-
-stdenv.mkDerivation rec {
-  name = "wallpapers";
-  version = "595a4d0";
-  src = fetchTarball {
-    url =
-      "https://github.com/Misterio77/wallpapers/releases/download/${version}/wallpapers.tar.gz";
-    sha256 = "sha256:11sjcbgwsxwzwlidp30nfmiv6w5z6025d0c84lblm0pvda9zg98d";
+# This exposes a attrset of wallpaper derivations, each one is fetch from
+# imgur. You can manually include new wallpapers in list.nix, or generate them
+# from an imgur album using ./from_album.sh
+{ pkgs }:
+let
+  callWallpaper = { name, ext, id, sha256 }: pkgs.callPackage ./wallpaper.nix {
+    wallpaper = { inherit name ext id sha256; };
   };
-
-  dontBuild = true;
-  dontConfigure = true;
-
-  installPhase = ''
-    install -Dm0644 -t $out/share/backgrounds *.{png,jpg}
-  '';
-
-  meta = {
-    description = "My wallpaper collection";
-    homepage = "https://github.com/Misterio77/wallpapers";
-    platforms = lib.platforms.all;
-  };
-}
+in
+builtins.listToAttrs (builtins.map
+  (e: {
+    name = e.name;
+    value = callWallpaper {
+      name = e.name;
+      ext = e.ext;
+      id = e.id;
+      sha256 = e.sha256;
+    };
+  })
+  (import ./list.nix))

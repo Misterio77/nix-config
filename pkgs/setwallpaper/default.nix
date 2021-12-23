@@ -7,7 +7,7 @@ stdenv.mkDerivation {
   version = "1.0";
   src = writeShellScriptBin "setwallpaper" ''
     if [ "$1" == "-L" ]; then
-      find ${pkgs.wallpapers}/share/backgrounds -type f -not -path '*/\.*' -printf "%f\n"
+      nix eval --raw self#wallpapers --apply 's: builtins.concatStringsSep "\n" (builtins.attrNames s)' 2> /dev/null
       exit 0
     elif [ "$1" == "-R" ]; then
       wallpaper=$(setwallpaper -L | ${coreutils}/bin/shuf -n 1)

@@ -1,10 +1,11 @@
 { pkgs }: {
+  wallpapers = pkgs.callPackage ./wallpapers { };
+
   shellcolord = pkgs.callPackage ./shellcolord { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   sistemer-bot = pkgs.callPackage ./sistemer-bot { };
 
   preferredplayer = pkgs.callPackage ./preferredplayer { };
-  wallpapers = pkgs.callPackage ./wallpapers { };
   zenity-askpass = pkgs.callPackage ./zenity-askpass { };
 
   setscheme = pkgs.callPackage ./setscheme { };
