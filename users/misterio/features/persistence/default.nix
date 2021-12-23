@@ -8,7 +8,6 @@
         "Downloads"
         "Pictures"
         "Videos"
-        ".local/share/containers"
       ];
       allowOther = true;
     };

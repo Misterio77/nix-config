@@ -241,6 +241,8 @@ in rec {
         # Wallpaper
         "XF86Tools" =
           "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # profile icon on k70
+        "${modifier}+Shift+i" =
+          "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # fn+shift+f9
 
         # Color scheme
         "XF86Launch6" =
