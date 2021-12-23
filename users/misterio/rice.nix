@@ -3,13 +3,13 @@
 with inputs.nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme.atlas = "solarflare";
+  currentScheme.atlas = null;
   currentScheme.pleione = "silk-light";
   currentScheme.merope = "nord";
   currentScheme.maia = "pasque";
-  currentWallpaper.atlas = "cubist-orange-blue";
+  currentWallpaper.atlas = "landscape-mountains-purple-blue";
   currentWallpaper.pleione = "cubist-crystal-brown-teal";
-  currentMode = null;
+  currentMode = "dark";
 in
 {
   imports = [ inputs.nix-colors.homeManagerModule ];
