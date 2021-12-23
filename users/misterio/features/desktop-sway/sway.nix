@@ -254,10 +254,10 @@ in rec {
 
         # Programs
         "${modifier}+c" = "exec ${terminal}";
-        "${modifier}+v" = "exec ${terminal} -e $SHELL -c ${nvim}";
-        "${modifier}+o" = "exec ${terminal} -e $SHELL -c ${octave}";
-        "${modifier}+m" = "exec ${terminal} -e $SHELL -c ${neomutt}";
-        "${modifier}+a" = "exec ${terminal} -e $SHELL -c ${amfora}";
+        "${modifier}+v" = "exec ${terminal} -e $SHELL -i -c ${nvim}";
+        "${modifier}+o" = "exec ${terminal} -e $SHELL -i -c ${octave}";
+        "${modifier}+m" = "exec ${terminal} -e $SHELL -i -c ${neomutt}";
+        "${modifier}+a" = "exec ${terminal} -e $SHELL -i -c ${amfora}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
         "${modifier}+control+w" = "exec ${makoctl} invoke";

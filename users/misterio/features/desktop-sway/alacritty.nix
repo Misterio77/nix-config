@@ -3,7 +3,10 @@
 let
   colors = config.colorscheme.colors;
   alacritty-xterm = pkgs.writeShellScriptBin "xterm" ''
-    ${config.programs.alacritty.package}/bin/alacritty -e $@
+    if [ "$1" = "-e" ]; then
+      shift 1
+    fi
+    ${config.programs.alacritty.package}/bin/alacritty -e "$SHELL" -ic "$*"
   '';
 in {
   home.packages = [ alacritty-xterm ];

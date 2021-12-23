@@ -19,6 +19,8 @@
     ./zathura.nix
   ];
 
+  xdg.mimeApps.enable = true;
+
   home.packages = with pkgs; [
     dragon-drop
     imv
