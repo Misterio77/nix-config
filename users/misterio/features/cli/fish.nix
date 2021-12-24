@@ -19,8 +19,6 @@
       vim = "nvim";
       m = "neomutt";
       mutt = "neomutt";
-
-      s = "base16-shell";
     };
     shellAliases = {
       # Get ip

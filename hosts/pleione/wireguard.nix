@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   networking = {
+    firewall.allowedUDPPorts = [ 51820 ];
     wireguard = {
       enable = true;
       interfaces = {
