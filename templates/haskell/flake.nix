@@ -7,13 +7,23 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+    let
+      name = "foo-bar";
+      overlay = final: prev: {
+        ${name} = final.haskellPackages.callCabal2nix name ./. { };
+      };
+      overlays = [ overlay ];
+    in
+    {
+      inherit overlay overlays;
+    } //
+    (flake-utils.lib.eachDefaultSystem (system:
       let
-        name = "foo-bar";
-        pkgs = (import nixpkgs { inherit system; });
-      in rec {
+        pkgs = import nixpkgs { inherit system overlay; };
+      in
+      rec {
         # nix build
-        packages.${name} = pkgs.haskellPackages.callCabal2nix name ./. { };
+        packages.${name} = pkgs.${name};
         defaultPackage = packages.${name};
 
         # nix run
@@ -22,9 +32,9 @@
 
         # nix develop
         devShell = pkgs.mkShell {
-          inputsFrom =  [ defaultPackage ];
+          inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ haskell-language-server cabal-install ghc ];
         };
-      });
+      }));
 }
 

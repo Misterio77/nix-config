@@ -11,19 +11,26 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, poetry2nix }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        name = "foo-bar";
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ poetry2nix.overlay ];
-        };
-      in rec {
-        # nix build
-        packages.${name} = pkgs.poetry2nix.mkPoetryApplication {
+    let
+      name = "foo-bar";
+      overlay = nixpkgs.lib.composeExtensions poetry2nix.overlay (final: prev: {
+        ${name} = final.poetry2nix.mkPoetryApplication {
           projectDir = ./.;
-          overrides = [ pkgs.poetry2nix.defaultPoetryOverrides ];
+          overrides = [ final.poetry2nix.defaultPoetryOverrides ];
         };
+      });
+      overlays = [ overlay ];
+    in
+    {
+      inherit overlay overlays;
+    } //
+    (flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system overlays; };
+      in
+      rec {
+        # nix build
+        packages.${name} = pkgs.${name};
         defaultPackage = packages.${name};
 
         # nix run
@@ -35,5 +42,5 @@
           inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ poetry ];
         };
-      });
+      }));
 }

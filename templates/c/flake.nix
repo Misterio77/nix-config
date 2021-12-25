@@ -7,17 +7,27 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        name = "foo-bar";
-        pkgs = (import nixpkgs { inherit system; });
-      in rec {
-        # nix build
-        packages.${name} = pkgs.clangStdenv.mkDerivation rec {
+    let
+      name = "foo-bar";
+      overlay = final: prev: {
+        ${name} = final.clangStdenv.mkDerivation rec {
           inherit name;
           src = ./.;
           makeFlags = [ "PREFIX=$(out)" ];
         };
+      };
+      overlays = [ overlay ];
+    in
+    {
+      inherit overlay overlays;
+    } //
+    (flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = (import nixpkgs { inherit system overlays; });
+      in
+      rec {
+        # nix build
+        packages.${name} = pkgs.${name};
         defaultPackage = packages.${name};
 
         # nix run
@@ -29,6 +39,6 @@
           inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ clang-tools ];
         };
-      });
+      }));
 }
 

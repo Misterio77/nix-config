@@ -10,17 +10,27 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, naersk }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        name = "foo-bar";
-        pkgs = (import nixpkgs { inherit system; });
-        naersk-lib = naersk.lib."${system}";
-      in rec {
-        # nix build
-        packages.${name} = naersk-lib.buildPackage {
+    let
+      name = "foo-bar";
+      overlay = nixpkgs.lib.composeExtensions naersk.overlay (final: prev: {
+        ${name} = final.naersk.buildPackage {
           pname = name;
           root = ./.;
         };
+      });
+      overlays = [ overlay ];
+    in
+    {
+      inherit overlay overlays;
+    } //
+    (flake-utils.lib.eachDefaultSystem (system:
+      let
+        name = "foo-bar";
+        pkgs = import nixpkgs { inherit system overlays; };
+      in
+      rec {
+        # nix build
+        packages.${name} = pkgs.${name};
         defaultPackage = packages.${name};
 
         # nix run
@@ -29,9 +39,9 @@
 
         # nix develop
         devShell = pkgs.mkShell {
-          inputsFrom =  [ defaultPackage ];
+          inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ rustc rust-analyzer rustfmt clippy ];
         };
-      });
+      }));
 }
 

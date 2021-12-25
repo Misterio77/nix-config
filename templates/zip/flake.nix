@@ -7,27 +7,36 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+    let
+      name = "foo-bar";
+      zipName = pkgs.lib.concatStringsSep "_" [ "10856803" ];
+      overlay = final: prev: {
+        ${name} = pkgs.stdenv.mkDerivation {
+          inherit name;
+          src = ./.;
+          buildInputs = with pkgs; [ zip ];
+          buildPhase = ''
+            # Do stuff
+            zip -j ${zipName}.zip src/*
+          '';
+          installPhase = ''
+            mkdir -p $out
+            install -Dm644 ${zipName}.zip $out
+          '';
+        };
+      };
+      overlays = [ overlay ];
+    in
+    {
+      inherit overlay overlays;
+    } //
+    (flake-utils.lib.eachDefaultSystem (system:
       let
-        name = "assignment1";
-        pkgs = import nixpkgs { inherit system; };
-        group = [ "10856803" ];
-        zipName = pkgs.lib.concatStringsSep "_" group;
-      in rec {
+        pkgs = import nixpkgs { inherit system overlays; };
+      in
+      rec {
         # nix build
-        packages.${name} = pkgs.stdenv.mkDerivation {
-            inherit name;
-            src = ./.;
-            buildInputs = with pkgs; [ zip ];
-            buildPhase = ''
-              # Do stuff
-              zip -j ${zipName}.zip src/*
-            '';
-            installPhase = ''
-              mkdir -p $out
-              install -Dm644 ${zipName}.zip $out
-            '';
-          };
+        packages.${name} = pkgs.${name};
         defaultPackage = packages.${name};
 
         # nix develop
@@ -35,5 +44,5 @@
           inputsFrom = [ defaultPackage ];
           buildInputs = with pkgs; [ unzip ];
         };
-      });
+      }));
 }
