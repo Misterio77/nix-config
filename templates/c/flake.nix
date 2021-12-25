@@ -23,7 +23,7 @@
     } //
     (flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = (import nixpkgs { inherit system overlays; });
+        pkgs = import nixpkgs { inherit system overlays; };
       in
       rec {
         # nix build
