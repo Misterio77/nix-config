@@ -21,7 +21,6 @@
               "224.0.0.251/32"
               "ff02::fb/128"
             ];
-            # allowedIPs = [ "::0/0" "0.0.0.0/0" ];
             endpoint = "home.misterio.me:51820";
             dynamicEndpointRefreshSeconds = 25;
             persistentKeepalive = 25;
