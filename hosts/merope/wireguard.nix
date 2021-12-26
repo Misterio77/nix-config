@@ -29,12 +29,12 @@ in {
             # Calaeno (phone)
             {
               publicKey = "OpU45rd0BrLPWHrtPtN8U5s4b3RU10B4TiHAN0p842g=";
-              allowedIPs = [ "10.100.0.2/32" ];
+              allowedIPs = [ "10.100.0.2/32" "224.0.0.251/32" ];
             }
             # Pleione (laptop)
             {
               publicKey = "zAkZz0taqMnOpoOUgdBnWcRjaRvRVkv874oiYE4ZxV0=";
-              allowedIPs = [ "10.100.0.3/32" ];
+              allowedIPs = [ "10.100.0.3/32" "224.0.0.251/32" ];
             }
           ];
         };
