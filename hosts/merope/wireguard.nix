@@ -1,5 +1,7 @@
 { pkgs, ... }:
-let iptables = "${pkgs.iptables}/bin/iptables";
+let
+  iptables = "${pkgs.iptables}/bin/iptables";
+  ip6tables = "${pkgs.iptables}/bin/ip6tables";
 in
 {
   networking = {
@@ -20,11 +22,17 @@ in
             ${iptables} -A FORWARD -i %i -j ACCEPT
             ${iptables} -A FORWARD -o %i -j ACCEPT
             ${iptables} -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+            ${ip6tables} -A FORWARD -i %i -j ACCEPT
+            ${ip6tables} -A FORWARD -o %i -j ACCEPT
+            ${ip6tables} -t nat -A POSTROUTING -o eth0 -j MASQUERADE
           '';
           postShutdown = ''
             ${iptables} -D FORWARD -i %i -j ACCEPT
             ${iptables} -D FORWARD -o %i -j ACCEPT
             ${iptables} -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+            ${ip6tables} -D FORWARD -i %i -j ACCEPT
+            ${ip6tables} -D FORWARD -o %i -j ACCEPT
+            ${ip6tables} -t nat -D POSTROUTING -o eth0 -j MASQUERADE
           '';
           peers = [
             # Calaeno (phone)
