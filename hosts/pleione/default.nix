@@ -34,6 +34,10 @@
       };
       efi.canTouchEfiVariables = true;
     };
+    # Let's me play lol
+    kernel.sysctl = {
+      "abi.vsyscall32" = 0;
+    };
   };
 
   services.dbus.packages = [ pkgs.gcr ];
