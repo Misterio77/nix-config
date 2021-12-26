@@ -13,7 +13,7 @@ in
       enable = true;
       interfaces = {
         wg0 = {
-          ips = [ "10.100.0.1/24" ];
+          ips = [ "10.100.0.1/24" "fdc9:281f:04d7:9ee9::1/64" ];
           listenPort = 51820;
           privateKeyFile = "/data/etc/wireguard/private.key";
           postSetup = ''
@@ -33,8 +33,10 @@ in
               allowedIPs = [
                 # Wireguard IPs
                 "10.100.0.2/32"
+                "fdc9:281f:04d7:9ee9::2/128"
                 # Multicast IPs
                 "224.0.0.251/32"
+                "ff02::fb/128"
               ];
             }
             # Pleione (laptop)
@@ -43,8 +45,10 @@ in
               allowedIPs = [
                 # Wireguard IPs
                 "10.100.0.3/32"
+                "fdc9:281f:04d7:9ee9::3/128"
                 # Multicast IPs
                 "224.0.0.251/32"
+                "ff02::fb/128"
               ];
             }
           ];
