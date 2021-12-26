@@ -90,6 +90,7 @@
         workstation = true;
         userServices = true;
       };
+      reflector = true;
     };
   };
 
