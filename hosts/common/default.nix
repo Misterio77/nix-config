@@ -10,6 +10,7 @@
   environment.persistence."/data".directories = [
     "/var/log"
     "/var/lib/systemd"
+    "/etc/NetworkManager/system-connections"
     "/srv"
   ];
 

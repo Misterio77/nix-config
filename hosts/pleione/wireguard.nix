@@ -26,6 +26,9 @@
             dynamicEndpointRefreshSeconds = 25;
             persistentKeepalive = 25;
           }];
+          postSetup = ''
+            ip link set wg0 multicast on
+          '';
         };
       };
     };
