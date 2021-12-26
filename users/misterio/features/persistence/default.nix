@@ -8,6 +8,8 @@
         "Downloads"
         "Pictures"
         "Videos"
+        ".cabal"
+        ".cargo"
       ];
       allowOther = true;
     };
