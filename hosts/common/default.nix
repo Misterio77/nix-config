@@ -93,6 +93,7 @@
       };
       reflector = true;
       openFirewall = true;
+      ipv6 = false;
     };
   };
 

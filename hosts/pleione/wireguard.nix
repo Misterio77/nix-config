@@ -13,13 +13,13 @@
             allowedIPs = [
               # Local net IPs
               "192.168.77.0/24"
-              "2804:14d:8084:a3f5:c991:c5f2:dcd5:1ea/64"
+              # "2804:14d:8084:a3f5:c991:c5f2:dcd5:1ea/64"
               # Wireguard IPs
               "10.100.0.0/24"
-              "fdc9:281f:04d7:9ee9::0/64"
+              # "fdc9:281f:04d7:9ee9::0/64"
               # Multicast IPs
               "224.0.0.251/32"
-              "ff02::fb/128"
+              # "ff02::fb/128"
             ];
             # allowedIPs = [ "::0/0" "0.0.0.0/0" ];
             endpoint = "home.misterio.me:51820";
