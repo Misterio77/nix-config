@@ -84,6 +84,7 @@
     avahi = {
       enable = true;
       nssmdns = true;
+      allowPointToPoint = true;
       publish = {
         enable = true;
         domain = true;
