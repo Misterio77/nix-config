@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let iptables = "${pkgs.iptables}/bin/iptables";
-in {
+in
+{
   networking = {
     nat = {
       enable = true;
@@ -29,12 +30,26 @@ in {
             # Calaeno (phone)
             {
               publicKey = "OpU45rd0BrLPWHrtPtN8U5s4b3RU10B4TiHAN0p842g=";
-              allowedIPs = [ "10.100.0.2/32" "224.0.0.251/32" "ff02::fb/128" ];
+              allowedIPs = [
+                # Wireguard IPs
+                "10.100.0.2/32"
+                "fdc9:281f:04d7:9ee9::2/64"
+                # Multicast IPs
+                "224.0.0.251/32"
+                "ff02::fb/128"
+              ];
             }
             # Pleione (laptop)
             {
               publicKey = "zAkZz0taqMnOpoOUgdBnWcRjaRvRVkv874oiYE4ZxV0=";
-              allowedIPs = [ "10.100.0.3/32" "224.0.0.251/32" "ff02::fb/128" ];
+              allowedIPs = [
+                # Wireguard IPs
+                "10.100.0.3/32"
+                "fdc9:281f:04d7:9ee9::3/64"
+                # Multicast IPs
+                "224.0.0.251/32"
+                "ff02::fb/128"
+              ];
             }
           ];
         };
