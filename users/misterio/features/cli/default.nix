@@ -20,5 +20,6 @@
     exa
     ncdu
     rnix-lsp
+    manix
   ];
 }

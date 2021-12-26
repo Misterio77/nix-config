@@ -91,6 +91,7 @@
         userServices = true;
       };
       reflector = true;
+      openFirewall = true;
     };
   };
 
