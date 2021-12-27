@@ -14,6 +14,7 @@
         ".config/unity3d/Berserk Games/Tabletop Simulator"
         ".config/unity3d/IronGate/Valheim"
         ".local/share/Tabletop Simulator"
+        ".paradoxlauncher"
       ];
       files = [ ".steam/steam.token" ".steam/registry.vdf" ];
     };
