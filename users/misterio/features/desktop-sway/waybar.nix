@@ -20,14 +20,16 @@ in {
         "custom/gamemode"
         "custom/ethminer"
         "custom/theme"
+        "network"
+        "custom/home"
         "battery"
         "pulseaudio"
-        "cpu"
-        "custom/gpu"
-        "memory"
-        "custom/unread-mail"
+        # "cpu"
+        # "custom/gpu"
+        # "memory"
         "clock"
         "tray"
+        "custom/unread-mail"
         "custom/gpg-agent"
       ];
       modules = {
@@ -68,6 +70,19 @@ in {
             default = "祿";
           };
         };
+        network = {
+          interval = 20;
+          format-wifi = "{essid}  ";
+          format-ethernet = "{ipaddr}/{cidr}  ";
+          format-disconnected = "";
+        };
+        "custom/home" = {
+          interval = 5;
+          exec = ''
+            ping -qc1 merope.local 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }'
+          '';
+          format = "{} ";
+        };
         "custom/menu" = let wofi = "${pkgs.wofi}/bin/wofi";
         in {
           format = "";
@@ -79,7 +94,7 @@ in {
           '';
           on-click =
             "${config.programs.alacritty.package}/bin/alacritty -e ${pkgs.neomutt}/bin/neomutt";
-          interval = 2;
+          interval = 5;
         };
         "custom/gpg-agent" = lib.mkIf (builtins.elem "trusted" features) {
           # Check if GPG Agent is caching passphrase
@@ -90,13 +105,13 @@ in {
           on-click = ''
             ${keyring.isUnlocked} && ${keyring.lock} || ${keyring.unlock}
           '';
-          interval = 1;
+          interval = 5;
         };
         "custom/ethminer" = {
           exec-if = "systemctl --user is-active ethminer";
           exec =
             "journalctl --user -n 10 -u ethminer | grep '-e \\ m\\ .*' | cut -d ' ' -f12-13";
-          interval = 1;
+          interval = 2;
           format = "{} ﲹ";
         };
         "custom/gamemode" = {
@@ -106,13 +121,12 @@ in {
           exec = "echo '' && echo 'Gamemode is active'";
         };
         "custom/theme" = {
-          max-length = 25;
-          exec = "echo '  ${config.colorscheme.slug}'";
+          format = "${config.colorscheme.slug} ";
           on-click = "${pkgs.setscheme-wofi}/bin/setscheme-wofi";
         };
         "custom/gpu" = {
           exec = "cat /sys/class/drm/card0/device/gpu_busy_percent";
-          interval = 2;
+          interval = 3;
           format = "{}% 力";
         };
         "custom/preferredplayer" = {
@@ -121,7 +135,7 @@ in {
             echo "{\"text\": \"$player\", \"alt\": \"$player\", \"tooltip\": \"$player\"}"
           '';
           return-type = "json";
-          interval = 1;
+          interval = 2;
           format = "{icon}";
           tooltip = true;
           format-icons = {
@@ -142,7 +156,7 @@ in {
             player=$(${preferredplayer}) && ${playerctl} --player $player metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}';
           '';
           return-type = "json";
-          interval = 1;
+          interval = 2;
           max-length = 35;
           format = "{icon}  {}";
           format-icons = {
@@ -189,6 +203,7 @@ in {
 
       #pulseaudio {
         padding: 0 8px;
+        margin-right: 5px;
       }
 
       #clock {
@@ -207,7 +222,7 @@ in {
 
       #custom-preferredplayer {
         margin-right: 2px;
-        margin-left: 10px;
+        margin-left: 5px;
       }
 
       #custom-player {
