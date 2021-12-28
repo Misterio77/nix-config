@@ -24,11 +24,6 @@
         enableACME = true;
         locations."/".proxyPass = location;
       };
-
-      "bd.merope.local" = {
-        rejectSSL = true;
-        locations."/".proxyPass = location;
-      };
     };
 
     avahi.subdomains = [ "bd" ];

@@ -26,11 +26,6 @@
         enableACME = true;
         locations."/".proxyPass = location;
       };
-
-      "mapa.merope.local" = {
-        rejectSSL = true;
-        locations."/".proxyPass = location;
-      };
     };
 
     avahi.subdomains = [ "mapa" ];
