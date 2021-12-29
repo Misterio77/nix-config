@@ -69,7 +69,19 @@
       fsType = "btrfs";
       options = [ "subvol=nix" "noatime" "compress=zstd" ];
     };
+
+    "/swap" = {
+      device = "/dev/mapper/pleione";
+      fsType = "btrfs";
+      options = [ "subvol=swap" "noatime" "compress=lzo" ];
+    };
   };
+
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 4096;
+  }];
+
   powerManagement.cpuFreqGovernor = "powersave";
 
 }
