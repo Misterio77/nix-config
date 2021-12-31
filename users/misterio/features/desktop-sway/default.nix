@@ -13,6 +13,7 @@
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
+    ./wofi.nix
     ./zathura.nix
   ];
 
@@ -26,5 +27,15 @@
     wofi
     xdg-utils
     ydotool
+    wl-clipboard
+    wf-recorder
+    slurp
   ];
+
+  home.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = true;
+    QT_QPA_PLATFORM = "wayland";
+    LIBSEAT_BACKEND = "logind";
+  };
+
 }

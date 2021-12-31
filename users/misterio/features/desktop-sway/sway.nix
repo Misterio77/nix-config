@@ -1,4 +1,4 @@
-{ lib, features, pkgs, config, ... }:
+{ lib, features, pkgs, config, hostname, ... }:
 
 let
   colorscheme = config.colorscheme;
@@ -36,62 +36,82 @@ let
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   waybar = "${pkgs.waybar}/bin/waybar";
-  wayvnc = "${pkgs.wayvnc}/bin/wayvnc";
   wofi = "${pkgs.wofi}/bin/wofi";
-  xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
-in rec {
-  home.packages = with pkgs; [ wl-clipboard wf-recorder slurp ];
-  home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = true;
-    QT_QPA_PLATFORM = "wayland";
-    LIBSEAT_BACKEND = "logind";
-  };
-
+in
+rec {
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = rec {
+      modifier = "Mod4";
       terminal = "${alacritty}";
-      menu =
-        "${wofi} -D run-always_parse_args=true -k /dev/null -i -e -S run -t ${terminal}";
+      menu = "${wofi} -S run";
       fonts = {
         names = [ "Fira Sans" ];
         size = 12.0;
       };
-      output = {
-        eDP-1 = {
-          res = "1920x1080@60hz";
-          pos = "0 0";
-          bg = "${config.wallpaper} fill";
+      output =
+        if hostname == "pleione" then {
+          eDP-1 = {
+            res = "1920x1080@60hz";
+            pos = "0 0";
+            bg = "${config.wallpaper} fill";
+          };
+        } else if hostname == "atlas" then {
+          DP-1 = {
+            res = "1920x1080@60hz";
+            pos = "0 0";
+            bg = "${config.wallpaper} fill";
+          };
+          HDMI-A-1 = {
+            res = "2560x1080@75hz";
+            pos = "1920 0";
+            bg = "${config.wallpaper} fill";
+          };
+        } else { };
+      defaultWorkspace = "workspace number 1";
+      workspaceOutputAssign =
+        if hostname == "pleione" then [
+          {
+            output = "eDP-1";
+            workspace = "1";
+          }
+        ] else if hostname == "atlas" then [
+          {
+            output = "HDMI-A-1";
+            workspace = "1";
+          }
+          {
+            output = "DP-1";
+            workspace = "2";
+          }
+        ] else [ ];
+      input = {
+        # Keyboards
+        "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
+          xkb_layout = "br";
         };
-        DP-1 = {
-          res = "1920x1080@60hz";
-          pos = "0 0";
-          bg = "${config.wallpaper} fill";
+        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
+          xkb_layout = "br";
         };
-        HDMI-A-1 = {
-          res = "2560x1080@75hz";
-          pos = "1920 0";
-          bg = "${config.wallpaper} fill";
+        "1:1:AT_Translated_Set_2_keyboard" = {
+          xkb_layout = "br";
+        };
+        # Mouses
+        "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
+          pointer_accel = "1";
+        };
+        "1739:52781:MSFT0001:00_06CB:CE2D_Touchpad" = {
+          tap = "enabled";
+          dwt = "disabled";
         };
       };
-      defaultWorkspace = "workspace number 1";
-      workspaceOutputAssign = [
-        {
-          output = "eDP-1";
-          workspace = "1";
-        }
-        {
-          output = "HDMI-A-1";
-          workspace = "1";
-        }
-        {
-          output = "DP-1";
-          workspace = "2";
-        }
-      ];
+      gaps = {
+        horizontal = 5;
+        inner = 28;
+      };
       floating.criteria = [
         { app_id = "zenity"; }
         { class = "net-runelite-launcher-Launcher"; }
@@ -134,10 +154,6 @@ in rec {
         # Start idle daemon
         {
           command = "${swayidle} -w";
-        }
-        # Focus main output
-        {
-          command = "swaymsg focus output HDMI-A-1";
         }
         # Add transparency
         {
@@ -261,7 +277,7 @@ in rec {
         "${modifier}+Print" = "exec ${grimshot} --notify copy window";
 
         # Application menu
-        "${modifier}+x" = "exec ${wofi} -S drun -I";
+        "${modifier}+x" = "exec ${wofi} -S drun";
 
         # Full screen across monitors
         "${modifier}+shift+f" = "fullscreen toggle global";
@@ -273,28 +289,6 @@ in rec {
           }' | ${wofi} -S dmenu) && \
           ${terminal} -e ${ssh} $host
         '';
-      };
-      modifier = "Mod4";
-      input = {
-        "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
-          xkb_layout = "br";
-        };
-        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" =
-          {
-            xkb_layout = "br";
-          };
-        "1:1:AT_Translated_Set_2_keyboard" = { xkb_layout = "br"; };
-        "6940:7051:ckb2:_CORSAIR_SCIMITAR_RGB_ELITE_Gaming_Mouse_vM" = {
-          pointer_accel = "1";
-        };
-        "1739:52781:MSFT0001:00_06CB:CE2D_Touchpad" = {
-          tap = "enabled";
-          dwt = "disabled";
-        };
-      };
-      gaps = {
-        horizontal = 5;
-        inner = 28;
       };
     };
     # https://github.com/NixOS/nixpkgs/issues/119445#issuecomment-820507505

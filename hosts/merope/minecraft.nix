@@ -11,7 +11,6 @@
     mysql = {
       enable = true;
       package = pkgs.mariadb;
-      bind = "0.0.0.0";
       ensureDatabases = [ "minecraft" ];
       ensureUsers = [{
         name = "minecraft";
