@@ -37,6 +37,7 @@ let
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   waybar = "${pkgs.waybar}/bin/waybar";
   wofi = "${pkgs.wofi}/bin/wofi";
+  xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
 in
 rec {
@@ -148,23 +149,19 @@ rec {
       };
       startup = [
         # Initial lock
-        {
-          command = "${swaylock} -i ${config.wallpaper}";
-        }
+        { command = "${swaylock} -i ${config.wallpaper}"; }
         # Start idle daemon
-        {
-          command = "${swayidle} -w";
-        }
+        { command = "${swayidle} -w"; }
         # Add transparency
-        {
-          command = "SWAYFADER_CON_INAC=0.85 ${swayfader}";
-        }
+        { command = "SWAYFADER_CON_INAC=0.85 ${swayfader}"; }
         # Init discocss
-        {
-          command = "${discocss}";
-        }
+        { command = "${discocss}"; }
         # Start waybar
         { command = "${waybar}"; }
+        (if hostname == "atlas" then {
+          # Set primary monitor
+          command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
+        } else { })
       ];
       bars = [ ];
       window = {

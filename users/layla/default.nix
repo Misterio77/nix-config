@@ -34,6 +34,7 @@
         "Jogos"
         "Livros"
         ".config/dconf"
+        ".config/StardewValley"
       ];
       allowOther = true;
     };
