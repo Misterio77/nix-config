@@ -37,18 +37,6 @@ final: prev:
     };
   };
 
-  # Update openrgb
-  openrgb = prev.openrgb.overrideAttrs (oldAttrs: rec {
-    buildInputs = (oldAttrs.buildInputs or [ ]) ++ [ prev.mbedtls ];
-    version = "master";
-    src = prev.fetchFromGitLab {
-      owner = "CalcProgrammer1";
-      repo = "OpenRGB";
-      rev = "e4692cb5625fbc9634742d7043283f8bffa21bce";
-      sha256 = "sha256-+t3TfeqMvmj5T3GpbbCZ5toqJYZpRkvX4/TBN76KwkU=";
-    };
-  });
-
   todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./todoman-kwargs-crash.patch ];
   });

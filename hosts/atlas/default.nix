@@ -12,7 +12,7 @@ in
 
     ./hardware-configuration.nix
     ../common
-    ../common/docker.nix
+    # ../common/docker.nix
     ../common/misterio-greetd.nix
     ../common/pipewire.nix
     ../common/postgres.nix

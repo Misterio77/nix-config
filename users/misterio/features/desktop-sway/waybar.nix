@@ -109,7 +109,7 @@ in
           exec =
             "journalctl --user -n 10 -u ethminer | grep '-e \\ m\\ .*' | cut -d ' ' -f12-13";
           interval = 2;
-          format = "ﲹ {}";
+          format = "{}";
         };
         "custom/gamemode" = {
           exec-if =

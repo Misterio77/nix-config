@@ -3,7 +3,6 @@
     ++ (if hostname == "atlas" then [
       ./osu.nix
       ./runescape.nix
-      ./yuzu.nix
     ] else
       [ ]);
 }

@@ -1,6 +1,6 @@
 { pkgs, features, lib, ... }: {
   programs.mangohud.enable = true;
-  home.packages = with pkgs; [ nur.repos.dukzcry.gamescope steam ];
+  home.packages = with pkgs; [ steam ];
 
   home.persistence = lib.mkIf (builtins.elem "persistence" features) {
     "/data/games/misterio" = {
