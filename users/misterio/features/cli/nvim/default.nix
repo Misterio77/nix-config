@@ -1,11 +1,16 @@
-{ pkgs, ... }:
+{ inputs, config, pkgs, ... }:
+
+with inputs.nix-colors.lib { inherit pkgs; };
 
 {
-  imports = [ ./ui.nix ./lsp.nix ./syntax.nix ./theme.nix ];
+  imports = [ ./ui.nix ./lsp.nix ./syntax.nix ];
 
   programs.neovim = {
     enable = true;
     extraConfig = ''
+      "Use truecolor
+      set termguicolors
+
       "Reload automatically
       set autoread
       au CursorHold,CursorHoldI * checktime
@@ -45,7 +50,6 @@
       nmap <C-k> <C-y>
     '';
     plugins = with pkgs.vimPlugins; [
-      # QOL
       editorconfig-vim
       registers-nvim
       vim-fugitive
@@ -65,8 +69,20 @@
         plugin = nvim-autopairs;
         config = "lua require('nvim-autopairs').setup{}";
       }
+      {
+        plugin = vimThemeFromScheme { scheme = config.colorscheme; };
+        config = "colorscheme nix-${config.colorscheme.slug}";
+      }
     ];
   };
+
+  xdg.configFile."nvim/init.vim".onChange = let
+    nvr = "${pkgs.neovim-remote}/bin/nvr";
+  in ''
+    ${nvr} --serverlist | while read server; do
+      ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
+    done
+  '';
 
   home.sessionVariables = { EDITOR = "nvim"; };
 

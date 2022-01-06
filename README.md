@@ -5,18 +5,18 @@ Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.w
 Looking for something simpler to start out with flakes? Try [my starter config repo](https://github.com/Misterio77/nix-starter-config).
 
 ## Structure
-- `flake.nix`: Entrypoint for both hosts (`nixos-rebuild --flake`) and home configurations (`home-manager --flake`). Also exposes a devshell for boostrapping (`nix develop`).
-- `hosts`: System-wide configuration for my machines.
+- `flake.nix`: Entrypoint for hosts and home configurations. Also exposes a devshell for boostrapping (`nix develop`).
+- `hosts`: System-wide configuration for my machines. Accessible via `nixos-rebuild --flake`.
   - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
   - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
   - `merope`: Raspberry Pi 4 - 8GB RAM | Server
   - `maia`: Gf's PC - 16GB RAM, i5 6600, GTX 970 | GNOME
-- `users`: Home-manager configurations for my user(s)
+- `users`: Home-manager configurations for my user(s). Acessible via `home-manager --flake`
   - `misterio`: That's me!
   - `layla`: My sweet sweet girl
-- `modules`: A few modules i have for personal use (most should be upstreamed TBH)
-- `overlays`: Patches and version overrides for some packages. Also callPackages stuff in `pkgs`.
-- `pkgs`: Some of my custom packages. There's a few others at [my NUR](https://github.com/misterio77/nur-packages).
+- `modules`: A few modules i have for personal use.
+- `overlays`: Patches and version overrides for some packages. Accessible via `nix build`.
+- `pkgs`: Some of my custom packages. There's a few others at [my NUR](https://github.com/misterio77/nur-packages). Also accessible via `nix build`.
 - `templates`: A couple project templates for different languages. Accessible via `nix init`.
 
 

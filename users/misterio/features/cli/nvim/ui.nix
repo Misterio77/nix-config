@@ -10,12 +10,15 @@
       config = "lua require('nvim-web-devicons').setup{}";
     }
     {
-      plugin = nvim-colorizer-lua;
-      config = "lua require('colorizer').setup()";
-    }
-    {
       plugin = gitsigns-nvim;
       config = "lua require('gitsigns').setup()";
+    }
+    {
+      plugin = nvim-colorizer-lua;
+      config = ''
+        set termguicolors
+        lua require('colorizer').setup()
+      '';
     }
 
     {
