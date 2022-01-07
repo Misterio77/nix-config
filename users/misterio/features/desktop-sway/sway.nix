@@ -158,11 +158,11 @@ rec {
         { command = "${discocss}"; }
         # Start waybar
         { command = "${waybar}"; }
-        (if hostname == "atlas" then {
-          # Set primary monitor
-          command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
-        } else { })
-      ];
+      ] ++
+      (if hostname == "atlas" then [{
+        # Set primary monitor
+        command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
+      }] else [ ]);
       bars = [ ];
       window = {
         border = 2;
