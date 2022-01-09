@@ -38,6 +38,11 @@
         key = "L";
         map = [ "index" "pager" ];
       }
+      {
+        action = "toggle-new";
+        key = "B";
+        map = [ "index" ];
+      }
     ];
     macros = let
       qutebrowserpipe =

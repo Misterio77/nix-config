@@ -5,6 +5,7 @@
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   sistemer-bot = pkgs.callPackage ./sistemer-bot { };
 
+  unread-mail = pkgs.callPackage ./unread-mail { };
   preferredplayer = pkgs.callPackage ./preferredplayer { };
   zenity-askpass = pkgs.callPackage ./zenity-askpass { };
 

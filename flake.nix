@@ -116,15 +116,7 @@
         "misterio@atlas" = mkHome {
           username = "misterio";
           hostname = "atlas";
-          features = [
-            "cli"
-            "games"
-            "desktop-sway"
-            "trusted"
-            "persistence"
-            "mining"
-            "rgb"
-          ];
+          features = [ "cli" "games" "desktop-sway" "trusted" "persistence" "rgb" ];
           system = "x86_64-linux";
         };
         "misterio@pleione" = mkHome {

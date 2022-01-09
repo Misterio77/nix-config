@@ -93,9 +93,14 @@ in
           on-click = "${pkgs.wofi}/bin/wofi -S drun";
         };
         "custom/unread-mail" = {
-          exec = "find ~/Mail/*/INBOX/new -type f | wc -l";
-          format = "  ({})";
-          interval = 5;
+          exec = "${pkgs.unread-mail}/bin/unread-mail";
+          return-type = "json";
+          format = "{icon}  ({})";
+          format-icons = {
+            "read" = "";
+            "unread" = "";
+          };
+          interval = 1;
         };
         "custom/gpg-agent" = lib.mkIf (builtins.elem "trusted" features) {
           # Check if GPG Agent is caching passphrase

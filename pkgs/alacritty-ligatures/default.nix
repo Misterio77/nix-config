@@ -24,8 +24,8 @@ in rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "fee1-dead";
     repo = pname;
-    rev = "6cd8751f3b68622c6978c3f20960b1925038aa24";
-    sha256 = "sha256-z8e8Y+DF4mIPNgKkqIoDrI7uavHbdsBdTe7nKL6HzK0=";
+    rev = "796cdfeeaae730b2224e910bf9f1dfa81abcfd51";
+    sha256 = "sha256-Vm/pcVDh6CcR2Sl3mrIvqWF+SmX4wqtLPEeQ5GcepPA=";
   };
 
   cargoSha256 = "sha256-arEGZLZuzVAclplEssvaZypcLgjP3ffUUY4sDN7dG5Q=";

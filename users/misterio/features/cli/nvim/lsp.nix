@@ -27,7 +27,7 @@
 
           lspconfig.jsonls.setup{} -- JSON
 
-          lspconfig.sqls.setup{cmd = {"sqls", "-config", "sqls.yml"}} -- SQL
+          lspconfig.sqls.setup{} -- SQL
 
           lspconfig.pylsp.setup{} -- Python
 
@@ -43,8 +43,8 @@
 
         nmap gD       :lua vim.lsp.buf.declaration()<CR>
         nmap gd       :lua vim.lsp.buf.definition()<CR>
-        nmap <space>e :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
         nmap <space>f :lua vim.lsp.buf.formatting()<CR>
+        nmap <space>e :lua vim.diagnostic.get()<CR>
 
         autocmd CursorHold <buf> :lua vim.lsp.buf.hover()<CR>
         nmap K :lua vim.lsp.buf.hover()<CR>
