@@ -26,8 +26,6 @@
         locations."/".proxyPass = location;
       };
     };
-
-    avahi.subdomains = [ "mapa" ];
   };
 
   networking.firewall = {

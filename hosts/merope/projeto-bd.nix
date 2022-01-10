@@ -25,7 +25,5 @@
         locations."/".proxyPass = location;
       };
     };
-
-    avahi.subdomains = [ "bd" ];
   };
 }
