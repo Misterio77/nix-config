@@ -16,6 +16,7 @@ in
     ./nginx.nix
     ./ddclient.nix
     ./projeto-bd.nix
+    ./paste-misterio-me.nix
     ./wireguard.nix
     ./minecraft.nix
   ];

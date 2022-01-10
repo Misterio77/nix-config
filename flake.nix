@@ -26,6 +26,13 @@
         utils.follows = "utils";
       };
     };
+    paste-misterio-me = {
+      url = "github:misterio77/paste.misterio.me/0.1.2";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
 
   };
 
@@ -33,7 +40,7 @@
     let
       # My overlays, plus from external projects
       overlay = (import ./overlays);
-      overlays = [ overlay inputs.projeto-bd.overlay inputs.nur.overlay ];
+      overlays = [ overlay inputs.nur.overlay inputs.projeto-bd.overlay inputs.paste-misterio-me.overlay ];
 
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system, users }:

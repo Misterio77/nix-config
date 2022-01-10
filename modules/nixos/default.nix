@@ -5,5 +5,6 @@
     ./satisfactory.nix
     ./projeto-bd.nix
     ./avahi-aliases.nix
+    ./paste-misterio-me.nix
   ];
 }

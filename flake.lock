@@ -112,6 +112,30 @@
         "type": "github"
       }
     },
+    "paste-misterio-me": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1641826337,
+        "narHash": "sha256-mx6Xie8xWcS1/JtalTgnbDJ7z8e7RfbBMtupbh3Ca0c=",
+        "owner": "misterio77",
+        "repo": "paste.misterio.me",
+        "rev": "9bccca5f2e1ef4a0757a29d6cbcdaea83343d9d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "ref": "0.1.2",
+        "repo": "paste.misterio.me",
+        "type": "github"
+      }
+    },
     "projeto-bd": {
       "inputs": {
         "nixpkgs": [
@@ -145,6 +169,7 @@
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
+        "paste-misterio-me": "paste-misterio-me",
         "projeto-bd": "projeto-bd",
         "utils": "utils"
       }
