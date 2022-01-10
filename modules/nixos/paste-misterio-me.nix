@@ -43,7 +43,7 @@ in {
       serviceConfig = {
         ExecStart = "${cfg.package}/bin/paste-misterio-me";
         Restart = "on-failure";
-        User = "paste-misterio-me";
+        User = "paste";
       };
       environment = {
         ROCKET_ADDRESS = cfg.address;
@@ -55,12 +55,12 @@ in {
     };
 
     users = {
-      users.paste-misterio-me = {
+      users.paste = {
         description = "paste.misterio.me service user";
         isSystemUser = true;
-        group = "paste-misterio-me";
+        group = "paste";
       };
-      groups.paste-misterio-me = { };
+      groups.paste = { };
     };
 
     networking.firewall =

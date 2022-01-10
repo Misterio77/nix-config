@@ -3,16 +3,16 @@
     paste-misterio-me = {
       enable = true;
       database =
-        "postgresql:///paste-misterio-me?user=paste-misterio-me&host=/var/run/postgresql";
+        "postgresql:///paste?user=paste&host=/var/run/postgresql";
       openFirewall = true;
       port = 8082;
     };
 
     postgresql = {
-      ensureDatabases = [ "paste-misterio-me" ];
+      ensureDatabases = [ "paste" ];
       ensureUsers = [{
-        name = "paste-misterio-me";
-        ensurePermissions = { "DATABASE paste-misterio-me" = "ALL PRIVILEGES"; };
+        name = "paste";
+        ensurePermissions = { "DATABASE paste" = "ALL PRIVILEGES"; };
       }];
     };
 
