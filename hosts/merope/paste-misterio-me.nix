@@ -4,6 +4,7 @@
       enable = true;
       database =
         "postgresql:///paste?user=paste&host=/var/run/postgresql";
+      environmentFile = "/srv/paste-misterio-me.key";
       openFirewall = true;
       port = 8082;
     };

@@ -29,6 +29,11 @@ in {
       default = 8080;
       description = "Port number to bind to.";
     };
+    environmentFile = mkOption {
+      type = types.nullOr types.path;
+      description = "File path containing environment variables (secret key, for example) for the server";
+      default = null;
+    };
     openFirewall = mkOption {
       type = types.bool;
       default = false;
@@ -44,6 +49,7 @@ in {
         ExecStart = "${cfg.package}/bin/paste-misterio-me";
         Restart = "on-failure";
         User = "paste";
+        EnvironmentFile = "${cfg.environmentFile}";
       };
       environment = {
         ROCKET_ADDRESS = cfg.address;
