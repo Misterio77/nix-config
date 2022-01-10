@@ -29,8 +29,8 @@
   };
 
   networking.firewall = {
-    # Minecraft, RCON
-    allowedTCPPorts = [ 25565 25575 ];
+    # Minecraft, RCON, Dynmap
+    allowedTCPPorts = [ 25565 25575 8123 ];
     # GeyserMC, PlasmoVoice
     allowedUDPPorts = [ 19132 60606 ];
   };
