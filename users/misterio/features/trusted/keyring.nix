@@ -8,5 +8,5 @@ in {
   isUnlocked =
     "${gpg-connect-agent} 'KEYINFO --list' /bye | grep ${keygrip} | grep -E 'D . . 1' -q";
   lock = "${gpg-connect-agent} reloadagent /bye";
-  unlock = "timeout 1 ${ssh} -T localhost -o StrictHostKeyChecking=no";
+  unlock = "${ssh} -T localhost -o StrictHostKeyChecking=no exit";
 }
