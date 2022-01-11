@@ -37,6 +37,11 @@ final: prev:
     };
   };
 
+  # https://github.com/NixOS/nixpkgs/issues/154297
+  notmuch = prev.notmuch.overrideAttrs (oldAttrs: rec {
+    doCheck = false;
+  });
+
   todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./todoman-kwargs-crash.patch ];
   });

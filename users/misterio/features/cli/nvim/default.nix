@@ -51,7 +51,6 @@ with inputs.nix-colors.lib { inherit pkgs; };
     '';
     plugins = with pkgs.vimPlugins; [
       editorconfig-vim
-      registers-nvim
       vim-fugitive
       vim-illuminate
       vim-matchup
@@ -68,6 +67,10 @@ with inputs.nix-colors.lib { inherit pkgs; };
       {
         plugin = nvim-autopairs;
         config = "lua require('nvim-autopairs').setup{}";
+      }
+      {
+        plugin = which-key-nvim;
+        config = "lua require('which-key').setup{}";
       }
       {
         plugin = vimThemeFromScheme { scheme = config.colorscheme; };

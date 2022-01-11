@@ -1,6 +1,21 @@
-{ config, features, lib, pkgs, ... }:
+{ config, features, lib, pkgs, hostname, ... }:
 
-let keyring = import ../trusted/keyring.nix { inherit pkgs; };
+let
+  keyring = import ../trusted/keyring.nix { inherit pkgs; };
+  xml = "${pkgs.xmlstarlet}/bin/xml";
+  jq = "${pkgs.jq}/bin/jq";
+  jqOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: ''
+    ${pre}
+    ${jq} -cn \
+      --arg text "${text}" \
+      --arg tooltip "${tooltip}" \
+      --arg alt "${alt}" \
+      --arg class "${class}" \
+      --arg percentage "${percentage}" \
+      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+  '';
+  ping = host: ''$(ping -qc1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+  pingTargets = builtins.filter (h: h != "${hostname}.local") [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
 in
 {
   programs.waybar = {
@@ -76,70 +91,110 @@ in
           };
         };
         network = {
-          interval = 20;
+          interval = 5;
           format-wifi = "   {essid}";
-          format-ethernet = " {ipaddr}/{cidr}";
+          format-ethernet = " Connected";
           format-disconnected = "";
+          tooltip-format = ''
+            {ifname}
+            {ipaddr}/{cidr}
+            Up: {bandwidthUpBits}
+            Down: {bandwidthDownBits}'';
         };
         "custom/home" = {
           interval = 5;
-          exec = ''
-            ping -qc1 merope.local 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }'
-          '';
+          return-type = "json";
+          exec = jqOutput {
+            text = ping "merope.local";
+            tooltip = builtins.concatStringsSep "\n"
+              (lib.forEach pingTargets (h: ''${h}: ${ping h}''));
+          };
           format = "  {}";
         };
         "custom/menu" = {
-          format = "";
+          return-type = "json";
+          exec = jqOutput {
+            text = "";
+            tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
+          };
           on-click = "${pkgs.wofi}/bin/wofi -S drun";
         };
         "custom/unread-mail" = {
-          exec = "${pkgs.unread-mail}/bin/unread-mail";
+          interval = 5;
           return-type = "json";
+          exec = jqOutput {
+            pre = ''
+              count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
+              if [ "$count" == "0" ]; then
+                subjects="No new mail"
+                status="read"
+              else
+                subjects=$(\
+                  grep -h "Subject: " -r ~/Mail/*/INBOX/new | cut -d ':' -f2- | \
+                  perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
+                )
+                status="unread"
+              fi
+            '';
+            text = "$count";
+            tooltip = "$subjects";
+            alt = "$status";
+          };
           format = "{icon}  ({})";
           format-icons = {
             "read" = "";
             "unread" = "";
           };
-          interval = 1;
         };
         "custom/gpg-agent" = lib.mkIf (builtins.elem "trusted" features) {
-          # Check if GPG Agent is caching passphrase
-          exec = ''
-            ${keyring.isUnlocked} && echo -e "\nGPG is unlocked" || echo -e "\nGPG is locked"
-          '';
-          interval = 5;
-        };
-        "custom/ethminer" = {
-          exec-if = "systemctl --user is-active ethminer";
-          exec =
-            "journalctl --user -n 10 -u ethminer | grep '-e \\ m\\ .*' | cut -d ' ' -f12-13";
-          interval = 2;
-          format = "{}";
+          interval = 3;
+          return-type = "json";
+          exec = jqOutput {
+            pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';
+            alt = "$status";
+            tooltip = "GPG is $status";
+          };
+          format = "{icon}";
+          format-icons = {
+            "locked" = "";
+            "unlocked" = "";
+          };
         };
         "custom/gamemode" = {
           exec-if =
             "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
-          interval = 2;
+          interval = 3;
           exec = ''
             echo '{"tooltip": "Gamemode is active"}'
           '';
           format = "";
         };
         "custom/theme" = {
-          format = "  ${config.colorscheme.slug}";
+          interval = "10";
+          return-type = "json";
+          exec = jqOutput {
+            text = "${config.colorscheme.slug}";
+            tooltip = "${config.colorscheme.name} theme";
+          };
+          format = "  {}";
         };
         "custom/gpu" = {
-          exec = "cat /sys/class/drm/card0/device/gpu_busy_percent";
           interval = 3;
+          return-type = "json";
+          exec = jqOutput {
+            text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
+            tooltip = "GPU Usage";
+          };
           format = "力  {}%";
         };
         "custom/preferredplayer" = {
-          exec = ''
-            player="$(${pkgs.preferredplayer}/bin/preferredplayer || echo No player set)"; \
-            echo "{\"alt\": \"$player\", \"tooltip\": \"$player \"}"
-          '';
-          return-type = "json";
           interval = 2;
+          return-type = "json";
+          exec = jqOutput {
+            pre = ''player="$(${pkgs.preferredplayer}/bin/preferredplayer || echo No player set)"'';
+            alt = "$player";
+            tooltip = "$player";
+          };
           format = "{icon}";
           format-icons = {
             "Celluloid" = "";
