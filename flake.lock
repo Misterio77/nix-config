@@ -122,16 +122,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1641855888,
-        "narHash": "sha256-K7AHCGUzQaNEY/VdYYRBp9NB2na/EV/rWM5iPWhKgvc=",
+        "lastModified": 1641863868,
+        "narHash": "sha256-MPlBHMJC6dONOTA5oUxx+cYuHrg8uxPLckO1H2uKzTM=",
         "owner": "misterio77",
         "repo": "paste.misterio.me",
-        "rev": "70cc978632cf3a60956a4636b919c8af59361c64",
+        "rev": "ff62c6e62d4f4c1e74580598f0cf4d0f0e647f38",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
-        "ref": "0.2.1",
+        "ref": "0.2.4",
         "repo": "paste.misterio.me",
         "type": "github"
       }

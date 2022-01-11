@@ -2,7 +2,10 @@
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    aliases = { graph = "log --decorate --oneline --graph"; };
+    aliases = {
+      pushall = "!git remote | xargs -L1 git push --all";
+      graph = "log --decorate --oneline --graph";
+    };
     userName = "Gabriel Fontes";
     userEmail = "eu@misterio.me";
     extraConfig = { init = { defaultBranch = "main"; }; };
