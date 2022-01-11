@@ -1,10 +1,8 @@
 { config, features, lib, pkgs, hostname, ... }:
 
-let
-  keyring = import ../trusted/keyring.nix { inherit pkgs; };
-  xml = "${pkgs.xmlstarlet}/bin/xml";
-  jq = "${pkgs.jq}/bin/jq";
-  jqOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: ''
+let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }:
+  let jq = "${pkgs.jq}/bin/jq"; in
+  ''
     ${pre}
     ${jq} -cn \
       --arg text "${text}" \
@@ -13,10 +11,7 @@ let
       --arg class "${class}" \
       --arg percentage "${percentage}" \
       '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-  '';
-  ping = host: ''$(ping -qc1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
-  pingTargets = builtins.filter (h: h != "${hostname}.local") [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
-in
+  ''; in
 {
   programs.waybar = {
     enable = true;
@@ -104,16 +99,21 @@ in
         "custom/home" = {
           interval = 5;
           return-type = "json";
-          exec = jqOutput {
-            text = ping "merope.local";
-            tooltip = builtins.concatStringsSep "\n"
-              (lib.forEach pingTargets (h: ''${h}: ${ping h}''));
-          };
+          exec =
+            let
+              ping = host: ''$(ping -qc1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+              pingTargets = builtins.filter (h: h != "${hostname}.local") [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
+            in
+            jsonOutput {
+              text = ping "merope.local";
+              tooltip = builtins.concatStringsSep "\n"
+                (lib.forEach pingTargets (h: ''${h}: ${ping h}''));
+            };
           format = "  {}";
         };
         "custom/menu" = {
           return-type = "json";
-          exec = jqOutput {
+          exec = jsonOutput {
             text = "";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
@@ -122,20 +122,21 @@ in
         "custom/unread-mail" = {
           interval = 5;
           return-type = "json";
-          exec = jqOutput {
-            pre = ''
-              count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
-              if [ "$count" == "0" ]; then
-                subjects="No new mail"
-                status="read"
-              else
-                subjects=$(\
-                  grep -h "Subject: " -r ~/Mail/*/INBOX/new | cut -d ':' -f2- | \
-                  perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
-                )
-                status="unread"
-              fi
-            '';
+          exec = jsonOutput {
+            pre = let xml = "${pkgs.xmlstarlet}/bin/xml"; in
+              ''
+                count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
+                if [ "$count" == "0" ]; then
+                  subjects="No new mail"
+                  status="read"
+                else
+                  subjects=$(\
+                    grep -h "Subject: " -r ~/Mail/*/INBOX/new | cut -d ':' -f2- | \
+                    perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
+                  )
+                  status="unread"
+                fi
+              '';
             text = "$count";
             tooltip = "$subjects";
             alt = "$status";
@@ -149,11 +150,13 @@ in
         "custom/gpg-agent" = lib.mkIf (builtins.elem "trusted" features) {
           interval = 3;
           return-type = "json";
-          exec = jqOutput {
-            pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';
-            alt = "$status";
-            tooltip = "GPG is $status";
-          };
+          exec =
+            let keyring = import ../trusted/keyring.nix { inherit pkgs; }; in
+            jsonOutput {
+              pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';
+              alt = "$status";
+              tooltip = "GPG is $status";
+            };
           format = "{icon}";
           format-icons = {
             "locked" = "";
@@ -172,7 +175,7 @@ in
         "custom/theme" = {
           interval = "10";
           return-type = "json";
-          exec = jqOutput {
+          exec = jsonOutput {
             text = "${config.colorscheme.slug}";
             tooltip = "${config.colorscheme.name} theme";
           };
@@ -181,7 +184,7 @@ in
         "custom/gpu" = {
           interval = 3;
           return-type = "json";
-          exec = jqOutput {
+          exec = jsonOutput {
             text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
             tooltip = "GPU Usage";
           };
@@ -190,7 +193,7 @@ in
         "custom/preferredplayer" = {
           interval = 2;
           return-type = "json";
-          exec = jqOutput {
+          exec = jsonOutput {
             pre = ''player="$(${pkgs.preferredplayer}/bin/preferredplayer || echo No player set)"'';
             alt = "$player";
             tooltip = "$player";
@@ -233,8 +236,7 @@ in
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
     style =
-      let colors = config.colorscheme.colors;
-      in
+      let colors = config.colorscheme.colors; in
       ''
         * {
           border: none;
