@@ -27,7 +27,7 @@
       };
     };
     paste-misterio-me = {
-      url = "github:misterio77/paste.misterio.me/0.3.0";
+      url = "github:misterio77/paste.misterio.me/0.3.1";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         utils.follows = "utils";
