@@ -25,7 +25,7 @@
       getip = "curl ifconfig.me";
     };
     functions = {
-      fish_greeting = "${pkgs.fortune}/bin/fortune -s";
+      fish_greeting = "";
       wh = "readlink -f (which $argv)";
     };
     interactiveShellInit =
