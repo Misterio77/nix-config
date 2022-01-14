@@ -44,7 +44,7 @@ in {
         --activity-card-background: var(--background-secondary);
     }
     body {
-        font-family: Fira Sans, sans serif;
+        font-family: ${config.fontProfiles.regular.family}, sans serif;
     }
     .scroller-1Bvpku {
         background-color: var(--background-primary);

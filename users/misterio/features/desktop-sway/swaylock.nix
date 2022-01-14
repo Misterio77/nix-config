@@ -1,12 +1,13 @@
 { config, ... }:
 
-let colors = config.colorscheme.colors;
+let
+  colors = config.colorscheme.colors;
 in {
   xdg.configFile."swaylock/config".text = ''
     effect-blur=20x3
     fade-in=0.1
 
-    font=Fira Sans
+    font=${config.fontProfiles.regular.family}
     font-size=15
 
     line-uses-inside

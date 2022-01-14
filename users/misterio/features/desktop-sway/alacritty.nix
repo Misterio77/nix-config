@@ -18,7 +18,7 @@ in {
       live_config_reload = false;
       font = {
         size = 12.0;
-        normal.family = "FiraCode Nerd Font";
+        normal.family = config.fontProfiles.monospace.family;
       };
       window = {
         padding = {

@@ -105,7 +105,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
               pingTargets = builtins.filter (h: h != "${hostname}.local") [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
             in
             jsonOutput {
-              text = ping "merope.local";
+              text = ping "misterio.me";
               tooltip = builtins.concatStringsSep "\n"
                 (lib.forEach pingTargets (h: ''${h}: ${ping h}''));
             };
@@ -241,7 +241,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
         * {
           border: none;
           border-radius: 0;
-          font-family: Fira Sans, Fira Code NerdFont;
+          font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
           font-size: 12pt;
           margin: 1px 0;
           padding: 0 8px;

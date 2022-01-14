@@ -50,7 +50,7 @@ rec {
       terminal = "${alacritty}";
       menu = "${wofi} -S run";
       fonts = {
-        names = [ "Fira Sans" ];
+        names = [ config.fontProfiles.regular.family ];
         size = 12.0;
       };
       output =

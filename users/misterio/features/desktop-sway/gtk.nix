@@ -6,7 +6,7 @@ rec {
   gtk = {
     enable = true;
     font = {
-      name = "Fira Sans";
+      name = config.fontProfiles.regular.family;
       size = 12;
     };
     iconTheme = {

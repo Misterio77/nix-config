@@ -30,7 +30,7 @@ in {
         position = "left";
       };
       fonts = {
-        default_family = "Fira Sans";
+        default_family = config.fontProfiles.regular.family;
         default_size = "12pt";
       };
       colors = {

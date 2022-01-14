@@ -2,7 +2,7 @@
   imports = [
     ./alacritty.nix
     ./discord.nix
-    ./fira.nix
+    ./font.nix
     ./firefox.nix
     ./gtk.nix
     ./kdeconnect.nix
@@ -22,6 +22,7 @@
   home.packages = with pkgs; [
     dragon-drop
     imv
+    ncspot
     pavucontrol
     spotify
     wofi
