@@ -265,7 +265,7 @@ rec {
         "${modifier}+Print" = "exec ${grimshot} --notify copy window";
 
         # Application menu
-        "${modifier}+x" = "exec ${wofi} -S drun -x 10 -y 10 -W 20% -H 60%";
+        "${modifier}+x" = "exec ${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
 
         # Full screen across monitors
         "${modifier}+shift+f" = "fullscreen toggle global";

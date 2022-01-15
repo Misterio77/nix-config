@@ -76,7 +76,6 @@
       },
       "original": {
         "owner": "Misterio77",
-        "ref": "testity-test",
         "repo": "nix-colors",
         "type": "github"
       }
