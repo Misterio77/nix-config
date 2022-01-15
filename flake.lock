@@ -67,16 +67,16 @@
     },
     "nix-colors": {
       "locked": {
-        "lastModified": 1641508823,
-        "narHash": "sha256-GmYZoYfu3iCjwwd9dqISlLkAsPE0/etea7fGLON9YBQ=",
+        "lastModified": 1642257683,
+        "narHash": "sha256-j1AdA6zRD4eqLhMqXXlvdP+ePoGCfAFIepodZ1kcjNs=",
         "owner": "Misterio77",
         "repo": "nix-colors",
-        "rev": "9b9e3ef54e1963a6174fb466bbaf37d4a87568d8",
+        "rev": "b26e7acb111b5ab1c8c1f05a79ab5f6aaeb62d3a",
         "type": "github"
       },
       "original": {
         "owner": "Misterio77",
-        "ref": "add-vim-scheme",
+        "ref": "testity-test",
         "repo": "nix-colors",
         "type": "github"
       }
