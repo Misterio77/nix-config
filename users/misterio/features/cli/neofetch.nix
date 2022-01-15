@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
@@ -73,6 +73,7 @@ let
         info "shell" shell
         info "wm" wm
         info "term" term
+        prin "scheme" "${config.colorscheme.slug}"
         info "memory" memory
         info cols
     }
@@ -91,6 +92,7 @@ let
         info "Shell" shell
         info "WM" wm
         info "Term" term
+        prin "Scheme" "${config.colorscheme.slug}"
         info "CPU" cpu
         info "Memory" memory
         info "Disk" disk

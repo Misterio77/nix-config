@@ -3,15 +3,6 @@
 let
   colorscheme = config.colorscheme;
 
-  # SSH Hosts
-  sshHosts = [
-    "atlas.local"
-    "maia.local"
-    "merope.local"
-    "pleione.local"
-    "ubuntu@vpn.uget.express"
-  ];
-
   # keyring
   keyring = import ../trusted/keyring.nix { inherit pkgs; };
 
@@ -274,18 +265,10 @@ rec {
         "${modifier}+Print" = "exec ${grimshot} --notify copy window";
 
         # Application menu
-        "${modifier}+x" = "exec ${wofi} -S drun";
+        "${modifier}+x" = "exec ${wofi} -S drun -x 10 -y 10 -W 20% -H 60%";
 
         # Full screen across monitors
         "${modifier}+shift+f" = "fullscreen toggle global";
-
-        # Open SSH menu
-        "${modifier}+s" = ''
-          exec host=$(echo '${
-            pkgs.lib.concatStringsSep "\\n" sshHosts
-          }' | ${wofi} -S dmenu) && \
-          ${terminal} -e ${ssh} $host
-        '';
       };
     };
     # https://github.com/NixOS/nixpkgs/issues/119445#issuecomment-820507505

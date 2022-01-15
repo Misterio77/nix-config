@@ -461,4 +461,34 @@
     id = "ssi4zpM";
     sha256 = "00wqp90q4x3nyr1bj40qw2wpppw7f4aq1vgww2jhm9ja0aafhmn5";
   }
+  {
+    name = "fox-forest-green";
+    ext = "jpeg";
+    id = "HdCMqmb";
+    sha256 = "1rkxvg6mjnraphinfbgb7jmd272qrdzlxfj3fc0bqlx9b0q5i0a2";
+  }
+  {
+    name = "city-pink-car-outrun";
+    ext = "jpeg";
+    id = "yC3GJi4";
+    sha256 = "0z2xa9i5d7688hmbys03avaz0kj74mzyhcpv7h4jx89hy0k0563r";
+  }
+  {
+    name = "city-pink-gold-sunset";
+    ext = "jpeg";
+    id = "0QU8UeV";
+    sha256 = "0kcn8c4iz8vg3fw99iwx16w69vp74fllir75yxdm94rhsjhwc44x";
+  }
+  {
+    name = "forest-blue-purple-deer";
+    ext = "jpeg";
+    id = "5p9moeS";
+    sha256 = "14dgj27kk7ax4fp08q7xpd6za75zn5zqadb9lzdj29bp6arh7ijx";
+  }
+  {
+    name = "city-pink-purple-scifi";
+    ext = "jpeg";
+    id = "XK9g9yK";
+    sha256 = "0qd0hc22dxfyax6yn0gcd9syl6gaaqr14zx2cf81jmqqlv7nx5cf";
+  }
 ]

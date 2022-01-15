@@ -43,6 +43,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
         "custom/home"
         "battery"
         "tray"
+        "custom/hostname"
       ];
       modules = {
         clock = {
@@ -101,11 +102,11 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           return-type = "json";
           exec =
             let
-              ping = host: ''$(ping -qc1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+              ping = host: ''$(ping -qc1 $(avahi-resolve-host-name ${host} | cut -f2) 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
               pingTargets = builtins.filter (h: h != "${hostname}.local") [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
             in
             jsonOutput {
-              text = ping "misterio.me";
+              text = ping "merope.local";
               tooltip = builtins.concatStringsSep "\n"
                 (lib.forEach pingTargets (h: ''${h}: ${ping h}''));
             };
@@ -118,6 +119,12 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
           on-click = "${pkgs.wofi}/bin/wofi -S drun";
+        };
+        "custom/hostname" = {
+          return-type = "json";
+          exec = jsonOutput {
+            text = "$(echo $USER)@$(hostname)";
+          };
         };
         "custom/unread-mail" = {
           interval = 5;
@@ -202,6 +209,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           format-icons = {
             "Celluloid" = "";
             "spotify" = "阮";
+            "ncspot" = "阮";
             "qutebrowser" = "爵";
             "discord" = "ﭮ";
             "No player set" = "ﱘ";
@@ -240,17 +248,26 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
       ''
         * {
           border: none;
-          border-radius: 0;
+          border-radius: 0px;
           font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
           font-size: 12pt;
           margin: 1px 0;
           padding: 0 8px;
         }
 
+        .modules-right {
+          margin-right: -15;
+        }
+
+        .modules-left {
+          margin-left: -15;
+        }
+
         window#waybar {
           color: #${colors.base05};
           background-color: #${colors.base01};
           border-bottom: 2px solid #${colors.base0C};
+          padding: 0;
         }
 
         #workspaces button {
@@ -279,7 +296,16 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           color: #${colors.base00};
           padding-left: 15px;
           padding-right: 22px;
-          margin-left: -15;
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        #custom-hostname {
+          background-color: #${colors.base0B};
+          color: #${colors.base00};
+          padding-left: 15px;
+          padding-right: 18px;
+          margin-right: 0;
           margin-top: 0;
           margin-bottom: 0;
         }
