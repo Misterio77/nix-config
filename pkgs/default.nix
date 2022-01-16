@@ -3,7 +3,6 @@
 
   shellcolord = pkgs.callPackage ./shellcolord { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
-  sistemer-bot = pkgs.callPackage ./sistemer-bot { };
 
   preferredplayer = pkgs.callPackage ./preferredplayer { };
 

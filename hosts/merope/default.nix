@@ -5,8 +5,10 @@ let nur = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; 
 in
 {
   imports = [
-    inputs.hardware.nixosModules.raspberry-pi-4
     nur.repos.misterio.modules.argonone
+    inputs.hardware.nixosModules.raspberry-pi-4
+    inputs.sistemer-bot.nixosModule
+    inputs.paste-misterio-me.nixosModule
 
     ./hardware-configuration.nix
     ../common
@@ -15,7 +17,6 @@ in
     ./sistemer-bot.nix
     ./nginx.nix
     ./ddclient.nix
-    ./projeto-bd.nix
     ./paste-misterio-me.nix
     ./wireguard.nix
     ./minecraft.nix
