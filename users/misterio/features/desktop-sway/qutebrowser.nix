@@ -20,6 +20,8 @@ in {
     "x-scheme-handler/qute" = [ "org.qutebrowser.qutebrowser.desktop" ];
   };
 
+
+  home.packages = [ pkgs.libsForQt5.qt5.qtwayland ];
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
