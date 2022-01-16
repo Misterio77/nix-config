@@ -2,7 +2,7 @@
   services = {
     minecraft-server = {
       enable = true;
-      package = pkgs.papermc-experimental;
+      package = pkgs.papermc;
       eula = true;
       jvmOpts =
         "-Xmx3G -Xms3G -XX:+UnlockExperimentalVMOptions -XX:+UseShenandoahGC -Dlog4j2.formatMsgNoLookups=true";

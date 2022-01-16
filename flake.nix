@@ -157,13 +157,14 @@
     } // utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system overlays; };
+
         hm = home-manager.defaultPackage."${system}";
+        gtkThemeFromScheme = (inputs.nix-colors.lib { inherit pkgs; }).gtkThemeFromScheme;
+        generated-gtk-themes =  builtins.mapAttrs (name: value: gtkThemeFromScheme { scheme = value; }) inputs.nix-colors.colorSchemes;
       in
       {
         packages = pkgs // {
-          generated-gtk-themes = pkgs.callPackage ./pkgs/generated-gtk-themes {
-            nix-colors = inputs.nix-colors;
-          };
+          inherit generated-gtk-themes;
           home-manager = hm;
         };
 

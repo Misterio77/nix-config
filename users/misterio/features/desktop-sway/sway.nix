@@ -18,7 +18,7 @@ let
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
-  pass-wofi = "${pkgs.pass-wofi}/bin/pass-wofi";
+  pass-wofi = "${pkgs.pass-wofi.override {pass = config.programs.password-store.package;}}/bin/pass-wofi";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
@@ -197,8 +197,8 @@ rec {
         "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
 
         # Pass wofi menu
-        "Scroll_Lock" = "exec ${pass-wofi}"; # fn+k
-        "XF86Calculator" = "exec ${pass-wofi}"; # fn+f12
+        "Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) "exec ${pass-wofi}"; # fn+k
+        "XF86Calculator" = lib.mkIf (builtins.elem "trusted" features) "exec ${pass-wofi}"; # fn+f12
 
         # Lock or unlock gpg
         "Shift+Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) ''

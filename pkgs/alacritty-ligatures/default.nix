@@ -1,9 +1,33 @@
-{ stdenv, lib, fetchFromGitHub, fetchpatch, rustPlatform
+{ stdenv
+, lib
+, fetchFromGitHub
+, fetchpatch
+, rustPlatform
 
-, cmake, gzip, installShellFiles, makeWrapper, ncurses, pkg-config, python3, harfbuzz
+, cmake
+, gzip
+, installShellFiles
+, makeWrapper
+, ncurses
+, pkg-config
+, python3
+, harfbuzz
 
-, expat, fontconfig, freetype, libGL, libX11, libXcursor, libXi, libXrandr
-, libXxf86vm, libxcb, libxkbcommon, wayland, xdg-utils, zlib }:
+, expat
+, fontconfig
+, freetype
+, libGL
+, libX11
+, libXcursor
+, libXi
+, libXrandr
+, libXxf86vm
+, libxcb
+, libxkbcommon
+, wayland
+, xdg-utils
+, zlib
+}:
 let
   rpathLibs = [
     expat
@@ -17,7 +41,8 @@ let
     libXxf86vm
     libxcb
   ] ++ lib.optionals stdenv.isLinux [ libxkbcommon wayland zlib ];
-in rustPlatform.buildRustPackage rec {
+in
+rustPlatform.buildRustPackage rec {
   pname = "alacritty";
   version = "master";
 

@@ -16,7 +16,7 @@
 
   systemd.user.startServices = "sd-switch";
 
-  home.packages = with pkgs; [ kdenlive libreoffice soundwire pavucontrol chromium ];
+  home.packages = with pkgs; [ kdenlive libreoffice soundwireserver pavucontrol chromium ];
 
   colorscheme = inputs.nix-colors.colorSchemes.dracula;
 
