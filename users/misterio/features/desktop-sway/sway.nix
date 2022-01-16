@@ -169,6 +169,15 @@ rec {
         ];
       };
       keybindings = lib.mkOptionDefault {
+        # Focus parent or child
+        "${modifier}+bracketleft" = "focus parent";
+        "${modifier}+bracketright" = "focus child";
+
+        # Layout types
+        "${modifier}+s" = "layout stacking";
+        "${modifier}+t" = "layout tabbed";
+        "${modifier}+e" = "layout toggle split";
+
         # Splits
         "${modifier}+minus" = "split v";
         "${modifier}+backslash" = "split h";
@@ -246,16 +255,15 @@ rec {
         # Notifications
         "${modifier}+w" = "exec ${makoctl} dismiss";
         "${modifier}+shift+w" = "exec ${makoctl} dismiss -a";
+        "${modifier}+control+w" = "exec ${makoctl} invoke";
 
         # Programs
-        "${modifier}+c" = "exec ${terminal}";
         "${modifier}+v" = "exec ${terminal} -e $SHELL -i -c ${nvim}";
         "${modifier}+o" = "exec ${terminal} -e $SHELL -i -c ${octave}";
         "${modifier}+m" = "exec ${terminal} -e $SHELL -i -c ${neomutt}";
         "${modifier}+a" = "exec ${terminal} -e $SHELL -i -c ${amfora}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
-        "${modifier}+control+w" = "exec ${makoctl} invoke";
 
         # Screenshot
         "Print" = "exec ${grimshot} --notify copy output";
