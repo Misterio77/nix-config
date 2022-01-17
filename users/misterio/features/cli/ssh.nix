@@ -5,6 +5,9 @@
       "gitlab.com" = {
         addressFamily = "inet";
       };
+      "*.local" = {
+        addressFamily = "inet";
+      };
     };
   };
 }
