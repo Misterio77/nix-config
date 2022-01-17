@@ -10,6 +10,7 @@
         "Videos"
         ".cabal"
         ".cargo"
+        ".local/share/containers"
       ];
       allowOther = true;
     };
