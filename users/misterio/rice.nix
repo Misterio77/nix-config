@@ -4,11 +4,11 @@ with inputs.nix-colors.lib { inherit pkgs; };
 
 let
   currentScheme.atlas = "spaceduck";
-  currentScheme.pleione = "silk-dark";
+  currentScheme.pleione = "paraiso";
   currentScheme.merope = "nord";
   currentScheme.maia = "ashes";
   currentWallpaper.atlas = "mountain-yosemite-purple";
-  currentWallpaper.pleione = "nebula-cyan-yellow";
+  currentWallpaper.pleione = "cyberpunk-city-red";
   currentMode = null;
 in
 {
