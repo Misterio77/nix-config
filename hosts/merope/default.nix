@@ -25,7 +25,7 @@ in
   # Static IP address
   networking.networkmanager.extraConfig = ''
     [ipv4]
-    address1=192.168.77.10/24
+    address=192.168.77.10/24
   '';
 
   # Open ports for nginx

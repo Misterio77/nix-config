@@ -69,13 +69,13 @@
       "locked": {
         "lastModified": 1642257683,
         "narHash": "sha256-j1AdA6zRD4eqLhMqXXlvdP+ePoGCfAFIepodZ1kcjNs=",
-        "owner": "Misterio77",
+        "owner": "misterio77",
         "repo": "nix-colors",
         "rev": "b26e7acb111b5ab1c8c1f05a79ab5f6aaeb62d3a",
         "type": "github"
       },
       "original": {
-        "owner": "Misterio77",
+        "owner": "misterio77",
         "repo": "nix-colors",
         "type": "github"
       }
@@ -98,11 +98,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1642354245,
-        "narHash": "sha256-p6S9IkW5jeJ12vGX5xco71VKTjp/0aR3XpUOWlmTvX8=",
+        "lastModified": 1642427020,
+        "narHash": "sha256-jCsU4VXq9FsyJkc6NvcAR3JxYVFQGT7CMuSvWpn3mz0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "816892aea5c46659d4cceb067c4f96479900db1d",
+        "rev": "8db0e2f948c2a988414b2e1cbe3dbb2ad8086c0f",
         "type": "github"
       },
       "original": {

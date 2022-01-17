@@ -21,6 +21,7 @@ in
     # ./satisfactory.nix
   ];
 
+  networking.firewall.enable = false;
   boot = {
     # Kernel
     kernelPackages = pkgs.linuxPackages_zen;
