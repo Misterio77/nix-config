@@ -10,7 +10,7 @@
 
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
     impermanence.url = "github:RiscadoA/impermanence";
-    nix-colors.url = "github:misterio77/nix-colors";
+    nix-colors.url = "github:narutoxy/nix-colors/5ae8ab6b2ccad1b9f3ca3135ab805ac440174940";
 
     utils.url = "github:numtide/flake-utils";
 

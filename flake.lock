@@ -67,16 +67,17 @@
     },
     "nix-colors": {
       "locked": {
-        "lastModified": 1642257683,
-        "narHash": "sha256-j1AdA6zRD4eqLhMqXXlvdP+ePoGCfAFIepodZ1kcjNs=",
-        "owner": "misterio77",
+        "lastModified": 1642432483,
+        "narHash": "sha256-XXubZIDGz9LYIbnz7WwvwkFKFKiJBkQrwVegLyaCL2I=",
+        "owner": "narutoxy",
         "repo": "nix-colors",
-        "rev": "b26e7acb111b5ab1c8c1f05a79ab5f6aaeb62d3a",
+        "rev": "5ae8ab6b2ccad1b9f3ca3135ab805ac440174940",
         "type": "github"
       },
       "original": {
-        "owner": "misterio77",
+        "owner": "narutoxy",
         "repo": "nix-colors",
+        "rev": "5ae8ab6b2ccad1b9f3ca3135ab805ac440174940",
         "type": "github"
       }
     },

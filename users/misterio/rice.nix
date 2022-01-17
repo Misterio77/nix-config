@@ -6,7 +6,7 @@ let
   currentScheme.atlas = "spaceduck";
   currentScheme.pleione = "silk-dark";
   currentScheme.merope = "nord";
-  currentScheme.maia = "pasque";
+  currentScheme.maia = "ashes";
   currentWallpaper.atlas = "mountain-yosemite-purple";
   currentWallpaper.pleione = "nebula-cyan-yellow";
   currentMode = null;
