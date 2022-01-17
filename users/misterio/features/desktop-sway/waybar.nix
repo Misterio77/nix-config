@@ -102,7 +102,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           return-type = "json";
           exec =
             let
-              ping = host: ''$(ping -qc1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+              ping = host: ''$(ping -q4c1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
               pingTargets = builtins.filter (h: h != "${hostname}.local") [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
             in
             jsonOutput {
