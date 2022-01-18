@@ -15,10 +15,10 @@
     utils.url = "github:numtide/flake-utils";
 
     # Nixified projects (usually hosted on merope)
-    paste-misterio-me.url = "github:misterio77/paste.misterio.me/0.3.6";
+    paste-misterio-me.url = "github:misterio77/paste.misterio.me";
     paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
     paste-misterio-me.inputs.utils.follows = "utils";
-    sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.3";
+    sistemer-bot.url = "github:misterio77/sistemer-bot";
     sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
     sistemer-bot.inputs.utils.follows = "utils";
   };
