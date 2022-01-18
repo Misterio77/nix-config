@@ -12,11 +12,37 @@ final: prev:
     patches = (oldAttrs.patches or [ ]) ++ [ ./todoman-kwargs-crash.patch ];
   });
 
+  ddclient = prev.ddclient.overrideAttrs (oldAttrs: rec {
+    version = "master";
+
+    src = final.fetchFromGitHub {
+      owner = "ddclient";
+      repo = "ddclient";
+      rev = "17160fb016448106d21742e53404f9e7a16348fc";
+      sha256 = "sha256-yyYp6+4zfV2OuQFJ8/YqUy/7wqAAyRx/ihHGdZEA9Mc=";
+    };
+
+    buildInputs = with final.perlPackages; [ IOSocketSSL DigestSHA1 DataValidateIP JSONPP IOSocketInet6 final.perl ];
+    nativeBuildInputs = [ final.autoreconfHook ];
+
+    preConfigure = ''
+      ./autogen
+      touch Makefile.PL
+    '';
+    installPhase = ''
+      runHook preInstall
+
+      install -Dm755 ddclient $out/bin/ddclient
+      install -Dm644 -t $out/share/doc/ddclient COPY* README.* ChangeLog.md
+
+      runHook postInstall
+    '';
+  });
   # Add my patch for supporting sourcehut
   /*
-  nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
+    nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./nix-sourcehut.patch ];
-  });
+    });
   */
 
   # Don't launch discord when using discocss
