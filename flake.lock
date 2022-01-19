@@ -130,6 +130,7 @@
       },
       "original": {
         "owner": "misterio77",
+        "ref": "0.3.7",
         "repo": "paste.misterio.me",
         "type": "github"
       }
@@ -167,6 +168,7 @@
       },
       "original": {
         "owner": "misterio77",
+        "ref": "1.1.4",
         "repo": "sistemer-bot",
         "type": "github"
       }
