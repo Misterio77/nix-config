@@ -2,6 +2,7 @@
   imports = [
     ./nvim
     ./amfora.nix
+    ./bat.nix
     ./fish.nix
     ./git.nix
     ./neofetch.nix
