@@ -7,14 +7,15 @@
     ./git.nix
     ./neofetch.nix
     ./nix-index.nix
+    ./pmis.nix
     ./ranger.nix
-    ./starship.nix
     ./shellcolor.nix
     ./ssh.nix
+    ./starship.nix
   ];
   home.packages = with pkgs; [
     # Cli
-    pkgs.nur.repos.misterio.comma
+    nur.repos.misterio.comma
     bottom
     cachix
     exa

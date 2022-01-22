@@ -18,6 +18,9 @@
     paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.0.0-pre.9";
     paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
     paste-misterio-me.inputs.utils.follows = "utils";
+    pmis.url = "github:misterio77/pmis/1.0.0-pre.5";
+    pmis.inputs.nixpkgs.follows = "nixpkgs";
+    pmis.inputs.utils.follows = "utils";
     sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.4";
     sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
     sistemer-bot.inputs.utils.follows = "utils";
@@ -27,7 +30,7 @@
     let
       # My overlays, plus from external projects
       overlay = (import ./overlays);
-      overlays = [ overlay inputs.nur.overlay inputs.sistemer-bot.overlay inputs.paste-misterio-me.overlay ];
+      overlays = [ overlay inputs.nur.overlay inputs.sistemer-bot.overlay inputs.paste-misterio-me.overlay inputs.pmis.overlay ];
 
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system, users }:

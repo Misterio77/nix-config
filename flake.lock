@@ -135,6 +135,30 @@
         "type": "github"
       }
     },
+    "pmis": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1642884113,
+        "narHash": "sha256-MJ4xq4C1ZMLjE23TY9swmjFCMJrpAMa21GESp1cNLNs=",
+        "owner": "misterio77",
+        "repo": "pmis",
+        "rev": "76502bf57c785350336e33722c9997a0a7f1a138",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "ref": "1.0.0-pre.5",
+        "repo": "pmis",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "declarative-cachix": "declarative-cachix",
@@ -145,6 +169,7 @@
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "paste-misterio-me": "paste-misterio-me",
+        "pmis": "pmis",
         "sistemer-bot": "sistemer-bot",
         "utils": "utils"
       }
