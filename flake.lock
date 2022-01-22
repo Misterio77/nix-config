@@ -121,16 +121,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1642886760,
-        "narHash": "sha256-2BL+k3L80EY7+1cD4unAAhtOOMMfjs56jQSnmwVj7Qw=",
+        "lastModified": 1642892019,
+        "narHash": "sha256-s+cRTmjNdqEYS4AFdR2qp6WmMuP82ys0yueAgmPkiM4=",
         "owner": "misterio77",
         "repo": "paste.misterio.me",
-        "rev": "d943e570b0b94aadd7d09bcc6e35469cdb3eed8e",
+        "rev": "e1fcd1c98fd015d9d26d0d7b7450cfde2a70d974",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
-        "ref": "1.0.0",
+        "ref": "1.0.1",
         "repo": "paste.misterio.me",
         "type": "github"
       }
@@ -145,16 +145,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1642886725,
-        "narHash": "sha256-bBhYoiHgXfWReDpaDBMfVLgqXHejdmu07T9OhxwcVaU=",
+        "lastModified": 1642891675,
+        "narHash": "sha256-P0J6eDOhpdMigbwgHDxKsgsFxgXNhvuin5vZLdJ6EgA=",
         "owner": "misterio77",
         "repo": "pmis",
-        "rev": "1bd9b1ac104b8c0f4f0393b9a52c1f97e7e543dc",
+        "rev": "6d6b5f88edffbfd770dadb413302b3bb262eb202",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
-        "ref": "1.0.0",
+        "ref": "1.0.1",
         "repo": "pmis",
         "type": "github"
       }
