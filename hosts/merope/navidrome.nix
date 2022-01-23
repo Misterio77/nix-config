@@ -6,6 +6,7 @@
       settings = {
         Address = "0.0.0.0";
         Port = 4533;
+        MusicFolder = "/srv/music";
       };
     };
 
@@ -20,5 +21,9 @@
           locations."/".proxyPass = location;
         };
       };
+  };
+
+  environment.persistence."/data" = {
+    directories = [ "/var/lib/navidrome" ];
   };
 }
