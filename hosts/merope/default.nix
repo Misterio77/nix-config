@@ -14,12 +14,13 @@ in
     ../common
     ../common/postgres.nix
 
-    ./sistemer-bot.nix
-    ./nginx.nix
     ./ddclient.nix
-    ./paste-misterio-me.nix
-    ./wireguard.nix
     ./minecraft.nix
+    ./navidrome.nix
+    ./nginx.nix
+    ./paste-misterio-me.nix
+    ./sistemer-bot.nix
+    ./wireguard.nix
   ];
 
   # Static IP address
