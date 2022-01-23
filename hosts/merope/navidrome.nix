@@ -15,7 +15,6 @@
       in
       {
         "music.misterio.me" = {
-          default = true;
           forceSSL = true;
           enableACME = true;
           locations."/".proxyPass = location;
