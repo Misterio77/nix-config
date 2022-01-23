@@ -2,13 +2,14 @@
   imports = [
     ./alacritty.nix
     ./discord.nix
-    ./font.nix
     ./firefox.nix
+    ./font.nix
     ./gtk.nix
     ./kdeconnect.nix
     ./mako.nix
     ./qt.nix
     ./qutebrowser.nix
+    ./sublime-music.nix
     ./sway.nix
     ./swayidle.nix
     ./swaylock.nix
