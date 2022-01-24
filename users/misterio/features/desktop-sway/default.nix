@@ -21,6 +21,7 @@
   xdg.mimeApps.enable = true;
 
   home.packages = with pkgs; [
+    deluge
     dragon-drop
     imv
     ncspot

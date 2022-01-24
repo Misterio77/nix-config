@@ -14,6 +14,7 @@ in
     ../common
     ../common/postgres.nix
 
+    ./deluge.nix
     ./ddclient.nix
     ./minecraft.nix
     ./navidrome.nix
