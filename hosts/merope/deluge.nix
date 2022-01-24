@@ -4,8 +4,8 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 58846 ];
-    allowedUDPPorts = [ 58846 ];
+    allowedTCPPorts = [ 58846 6881 ];
+    allowedUDPPorts = [ 58846 6881 ];
   };
 
   environment.persistence."/data" = {
