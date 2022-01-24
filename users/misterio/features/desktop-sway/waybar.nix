@@ -212,6 +212,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
             "ncspot" = "阮";
             "qutebrowser" = "爵";
             "discord" = "ﭮ";
+            "sublimemusic" = "";
             "No player set" = "ﱘ";
           };
         };
