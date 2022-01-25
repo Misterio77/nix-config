@@ -23,6 +23,11 @@
       fsType = "vfat";
     };
 
+    "/mnt/media" = {
+      device = "/dev/disk/by-label/MEDIA_HDD";
+      fsType = "ext4";
+    };
+
     "/nix" = {
       device = "/data/nix";
       fsType = "auto";
