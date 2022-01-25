@@ -11,6 +11,7 @@ in
     nur.repos.misterio.modules.openrgb
 
     ./hardware-configuration.nix
+    ./prometheus.nix
     ../common
     ../common/podman.nix
     ../common/misterio-greetd.nix
