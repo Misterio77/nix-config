@@ -21,7 +21,6 @@
       location = "http://localhost:${toString config.services.paste-misterio-me.port}";
     in {
       "paste.misterio.me" = {
-        default = true;
         forceSSL = true;
         enableACME = true;
         locations."/".proxyPass = location;
