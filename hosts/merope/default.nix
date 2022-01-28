@@ -9,6 +9,7 @@ in
     inputs.hardware.nixosModules.raspberry-pi-4
     inputs.sistemer-bot.nixosModule
     inputs.paste-misterio-me.nixosModule
+    inputs.disconic.nixosModule
 
     ./hardware-configuration.nix
     ../common
