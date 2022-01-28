@@ -16,6 +16,7 @@ in
 
     ./deluge.nix
     ./ddclient.nix
+    ./disconic.nix
     ./files-server.nix
     ./minecraft.nix
     ./navidrome.nix

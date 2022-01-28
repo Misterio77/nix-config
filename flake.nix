@@ -24,6 +24,9 @@
     sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.4";
     sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
     sistemer-bot.inputs.utils.follows = "utils";
+    disconic.url = "github:misterio77/disconic/0.1.0";
+    disconcic.inputs.nixpkgs.follows = "nixpkgs";
+    disconic.inputs.utils.follows = "utils";
   };
 
   outputs = { nixpkgs, home-manager, utils, ... }@inputs:
