@@ -35,6 +35,7 @@
         "Livros"
         ".config/dconf"
         ".config/StardewValley"
+        ".config/chromium"
       ];
       allowOther = true;
     };
