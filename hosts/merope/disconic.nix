@@ -4,6 +4,6 @@
     subsonicUrl = "https://music.misterio.me";
     subsonicUser = "misterio";
     subsonicPasswordFile = "/srv/disconic/password";
-    subsonicTokenFile = "/srv/disconic/token";
+    discordTokenFile = "/srv/disconic/token";
   };
 }

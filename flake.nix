@@ -24,7 +24,7 @@
     sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.4";
     sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
     sistemer-bot.inputs.utils.follows = "utils";
-    disconic.url = "github:misterio77/disconic/0.1.0";
+    disconic.url = "github:misterio77/disconic/0.1.1";
     disconic.inputs.nixpkgs.follows = "nixpkgs";
     disconic.inputs.utils.follows = "utils";
   };
@@ -33,7 +33,7 @@
     let
       # My overlays, plus from external projects
       overlay = (import ./overlays);
-      overlays = [ overlay inputs.nur.overlay inputs.sistemer-bot.overlay inputs.paste-misterio-me.overlay inputs.pmis.overlay ];
+      overlays = [ overlay inputs.nur.overlay inputs.sistemer-bot.overlay inputs.paste-misterio-me.overlay inputs.pmis.overlay inputs.disconic.overlay ];
 
       # Make system configuration, given hostname and system type
       mkSystem = { hostname, system, users }:
@@ -153,7 +153,7 @@
 
         hm = home-manager.defaultPackage."${system}";
         gtkThemeFromScheme = (inputs.nix-colors.lib { inherit pkgs; }).gtkThemeFromScheme;
-        generated-gtk-themes =  builtins.mapAttrs (name: value: gtkThemeFromScheme { scheme = value; }) inputs.nix-colors.colorSchemes;
+        generated-gtk-themes = builtins.mapAttrs (name: value: gtkThemeFromScheme { scheme = value; }) inputs.nix-colors.colorSchemes;
       in
       {
         packages = pkgs // {

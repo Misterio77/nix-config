@@ -15,6 +15,30 @@
         "type": "github"
       }
     },
+    "disconic": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1643388952,
+        "narHash": "sha256-JZJwn/ld7Yz5DZFp2Io/KC/6utB1qYYn3G85L/yURaw=",
+        "owner": "misterio77",
+        "repo": "disconic",
+        "rev": "660bb1ae17d7fae07b1831b91e72e1b37b54f353",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "ref": "0.1.1",
+        "repo": "disconic",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1641965797,
@@ -162,6 +186,7 @@
     "root": {
       "inputs": {
         "declarative-cachix": "declarative-cachix",
+        "disconic": "disconic",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
