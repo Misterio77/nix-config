@@ -38,6 +38,7 @@ final: prev:
       runHook postInstall
     '';
   });
+
   # Add my patch for supporting sourcehut
   /*
     nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {

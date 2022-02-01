@@ -23,6 +23,9 @@ tasks:
     # Build nix with patch
     nix build .#nixUnstable -o result-nix
 
+    # Build nix index with patch
+    nix build .#nix-index -o result-nix-index
+
     # Build all gtk themes
     schemes=$(nix eval --raw .#generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
     gtk_themes=$(eval echo .#generated-gtk-themes.{${schemes/override,overrideDerivation,}})
