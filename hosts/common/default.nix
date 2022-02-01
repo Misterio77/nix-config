@@ -51,13 +51,15 @@
   };
 
   nix = {
-    trustedUsers = [ "root" "@wheel" ];
+    settings = {
+      trusted-users = [ "root" "@wheel" ];
+      auto-optimise-store = true;
+    };
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
       warn-dirty = false
     '';
-    autoOptimiseStore = true;
     gc = {
       automatic = true;
       dates = "daily";

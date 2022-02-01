@@ -491,4 +491,10 @@
     id = "XK9g9yK";
     sha256 = "0qd0hc22dxfyax6yn0gcd9syl6gaaqr14zx2cf81jmqqlv7nx5cf";
   }
+  {
+    name = "outerwilds-strangers-homeworld";
+    ext = "png";
+    id = "OKuVxYE";
+    sha256 = "11l65a6g21rmgsv2s3nmb78fypd5p9586id72ad9zpnala2nwzqa";
+  }
 ]
