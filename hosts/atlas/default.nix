@@ -12,6 +12,7 @@ in
 
     ./hardware-configuration.nix
     ../common
+    ../common/flatpak.nix
     ../common/podman.nix
     ../common/misterio-greetd.nix
     ../common/pipewire.nix

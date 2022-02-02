@@ -3,7 +3,7 @@
 with inputs.nix-colors.lib { inherit pkgs; };
 
 let
-  currentScheme.atlas = null;
+  currentScheme.atlas = "atelier-sulphurpool";
   currentScheme.pleione = "paraiso";
   currentScheme.merope = "nord";
   currentScheme.maia = "ashes";
