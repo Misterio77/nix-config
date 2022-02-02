@@ -182,6 +182,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
         "custom/theme" = {
           interval = "10";
           return-type = "json";
+          max-length = 20;
           exec = jsonOutput {
             text = "${config.colorscheme.slug}";
             tooltip = "${config.colorscheme.name} theme";
