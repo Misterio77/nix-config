@@ -24,7 +24,7 @@
     sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.4";
     sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
     sistemer-bot.inputs.utils.follows = "utils";
-    disconic.url = "github:misterio77/disconic/0.2.0";
+    disconic.url = "github:misterio77/disconic/0.2.1";
     disconic.inputs.nixpkgs.follows = "nixpkgs";
     disconic.inputs.utils.follows = "utils";
   };
