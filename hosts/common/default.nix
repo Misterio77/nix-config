@@ -3,7 +3,6 @@
 
 {
   imports = [
-    inputs.declarative-cachix.nixosModules.declarative-cachix
     inputs.impermanence.nixosModules.impermanence
   ];
 
@@ -31,11 +30,6 @@
     localBinInPath = true;
   };
 
-  cachix = [{
-    name = "misterio";
-    sha256 = "1v4fn1m99brj9ydzzkk75h3f30rjmwz60czw2c1dnhlk6k1dsbih";
-  }];
-
   boot = {
     # Quieter boot
     kernelParams =
@@ -52,6 +46,15 @@
 
   nix = {
     settings = {
+      substituters = [
+        "https://nix-community.cachix.org"
+        "https://misterio.cachix.org"
+      ];
+      trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "misterio.cachix.org-1:cURMcHBuaSihTQ4/rhYmTwbbfWO8AnZEu6w4aNs3iKE="
+      ];
+
       trusted-users = [ "root" "@wheel" ];
       auto-optimise-store = true;
     };
