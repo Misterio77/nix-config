@@ -51,6 +51,12 @@
     kdeconnect.enable = true;
   };
 
+  # Lid settings
+  services.logind ={
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "lock";
+  };
+
   xdg.portal = {
     enable = true;
     gtkUsePortal = true;

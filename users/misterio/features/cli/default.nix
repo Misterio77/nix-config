@@ -21,5 +21,6 @@
     exa
     ncdu
     rnix-lsp
+    screen
   ];
 }
