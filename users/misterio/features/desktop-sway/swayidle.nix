@@ -1,4 +1,4 @@
-{ pkgs, lib, features, hostname, ... }:
+{ pkgs, lib, features, hostname, config, ... }:
 
 let
   isTrusted = builtins.elem "trusted" features;
@@ -11,7 +11,7 @@ let
 
   lockTime = if hostname == "atlas" then 600 else 240;
   isLocked = "${pgrep} -x swaylock";
-  actionLock = "${swaylock} --screenshots --daemonize";
+  actionLock = "${swaylock} -i ${config.wallpaper} --daemonize";
   actionMute = "${pactl} set-source-mute @DEFAULT_SOURCE@ yes";
   actionUnmute = "${pactl} set-source-mute @DEFAULT_SOURCE@ no";
   actionRgbOff = "systemctl --user stop rgbdaemon";
