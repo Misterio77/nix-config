@@ -17,6 +17,9 @@ tasks:
 - build: |
     cd nix-config
 
+    # Build pmis CLI
+    nix build .#pmis -o result-pmis
+
     # Build alacritty with ligatures
     nix build .#alacritty-ligatures -o result-alacritty
 
