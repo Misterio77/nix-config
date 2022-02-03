@@ -208,9 +208,9 @@ rec {
         '';
 
         # Lock screen
-        "XF86Launch5" = "exec ${swaylock} --screenshots"; # lock icon on k70
-        "XF86Launch4" = "exec ${swaylock} --screenshots"; # fn+q
-        "${modifier}+p" = "exec ${swaylock} --screenshots"; # fn+f7
+        "XF86Launch5" = "exec ${swaylock} -i ${config.wallpaper}";   # lock icon on k70
+        "XF86Launch4" = "exec ${swaylock} -i ${config.wallpaper}";   # fn+q
+        "${modifier}+p" = "exec ${swaylock} -i ${config.wallpaper}"; # fn+f7
 
         # Volume
         "XF86AudioRaiseVolume" =
