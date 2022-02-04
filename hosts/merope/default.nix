@@ -19,6 +19,7 @@ in
     ./ddclient.nix
     ./disconic.nix
     ./files-server.nix
+    ./jitsi.nix
     ./minecraft.nix
     ./navidrome.nix
     ./nginx.nix
