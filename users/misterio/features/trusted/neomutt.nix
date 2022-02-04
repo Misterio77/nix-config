@@ -14,6 +14,10 @@
       mimeType = [ "x-scheme-handler/mailto" ];
     };
   };
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/mailto" = "neomutt.desktop";
+  };
+
   programs.neomutt = {
     enable = true;
     vimKeys = true;
