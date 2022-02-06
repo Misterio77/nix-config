@@ -42,12 +42,6 @@
       neededForBoot = true;
     };
 
-    "/dotfiles" = {
-      device = "/dev/disk/by-label/${hostname}";
-      fsType = "btrfs";
-      options = [ "subvol=dotfiles" "compress=zstd" ];
-    };
-
     "/swap" = {
       device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";

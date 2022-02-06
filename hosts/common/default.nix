@@ -12,6 +12,7 @@
     "/var/lib/acme"
     "/etc/NetworkManager/system-connections"
     "/srv"
+    "/dotfiles"
   ];
 
   system.stateVersion = "21.11";
