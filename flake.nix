@@ -4,9 +4,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
+    nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nur.url = "github:nix-community/NUR";
 
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
@@ -28,83 +28,39 @@
     disconic.inputs.utils.follows = "utils";
   };
 
-  outputs = { nixpkgs, home-manager, utils, ... }@inputs:
+  outputs = { ... }@inputs:
     let
-      # My overlays, plus from external projects
-      overlay = (import ./overlays);
-      overlays = [ overlay inputs.nur.overlay inputs.sistemer-bot.overlay inputs.paste-misterio-me.overlay inputs.pmis.overlay inputs.disconic.overlay ];
-
-      # Make system configuration, given hostname and system type
-      mkSystem = { hostname, system, users }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs system;
-          };
-          modules = [
-            ./modules/nixos
-            (./hosts + "/${hostname}")
-            {
-              networking.hostName = hostname;
-              # Apply overlay and allow unfree packages
-              nixpkgs = {
-                inherit overlays;
-                config.allowUnfree = true;
-              };
-              # Add each input as a registry
-              nix.registry = nixpkgs.lib.mapAttrs'
-                (n: v:
-                  nixpkgs.lib.nameValuePair (n) ({ flake = v; }))
-                inputs;
-            }
-            # System wide config for each user
-          ] ++ nixpkgs.lib.forEach users
-            (u: ./users + "/${u}" + /system-wide.nix);
-        };
-      # Make home configuration, given username, required features, and system type
-      mkHome = { username, system, hostname, features ? [ ] }:
-        home-manager.lib.homeManagerConfiguration {
-          inherit username system;
-          extraSpecialArgs = {
-            inherit features hostname inputs system;
-          };
-          homeDirectory = "/home/${username}";
-          configuration = ./users + "/${username}";
-          extraModules = [
-            ./modules/home-manager
-            {
-              nixpkgs = {
-                inherit overlays;
-                config.allowUnfree = true;
-              };
-            }
-          ];
-        };
+      overlay = import ./overlays;
+      overlays = with inputs; [
+        overlay
+        nur.overlay
+        sistemer-bot.overlay
+        paste-misterio-me.overlay
+        pmis.overlay
+        disconic.overlay
+      ];
+      lib = import ./lib { inherit inputs overlays; };
     in
     {
       inherit overlay overlays;
 
       nixosConfigurations = {
-        # Main PC
-        atlas = mkSystem {
+        atlas = lib.mkSystem {
           hostname = "atlas";
           system = "x86_64-linux";
           users = [ "misterio" ];
         };
-        # Laptop
-        pleione = mkSystem {
+        pleione = lib.mkSystem {
           hostname = "pleione";
           system = "x86_64-linux";
           users = [ "misterio" ];
         };
-        # Raspberry Pi 4B
-        merope = mkSystem {
+        merope = lib.mkSystem {
           hostname = "merope";
           system = "aarch64-linux";
           users = [ "misterio" ];
         };
-        # Gf's PC
-        maia = mkSystem {
+        maia = lib.mkSystem {
           hostname = "maia";
           system = "x86_64-linux";
           users = [ "layla" "misterio" ];
@@ -112,56 +68,68 @@
       };
 
       homeConfigurations = {
-        "misterio@atlas" = mkHome {
+        "misterio@atlas" = lib.mkHome {
           username = "misterio";
+          system = "x86_64-linux";
           hostname = "atlas";
-          features = [ "cli" "games" "desktop-sway" "trusted" "persistence" "rgb" ];
-          system = "x86_64-linux";
+
+          persistence = true;
+          graphical = true;
+          keys = true;
+          colorscheme = "spaceduck";
+          wallpaper = "desert-dunes";
         };
-        "misterio@pleione" = mkHome {
+        "misterio@pleione" = lib.mkHome {
           username = "misterio";
+          system = "x86_64-linux";
           hostname = "pleione";
-          features = [ "cli" "games" "desktop-sway" "trusted" "persistence" ];
-          system = "x86_64-linux";
+
+          persistence = true;
+          graphical = true;
+          keys = true;
+          colorscheme = "paraiso";
+          wallpaper = "cyberpunk-city-red";
         };
-        "misterio@merope" = mkHome {
+        "misterio@merope" = lib.mkHome {
           username = "misterio";
-          hostname = "merope";
-          features = [ "cli" "persistence" ];
           system = "aarch64-linux";
+          hostname = "merope";
+
+          persistence = true;
+          colorscheme = "nord";
         };
-        "misterio@maia" = mkHome {
+        "misterio@maia" = lib.mkHome {
           username = "misterio";
-          hostname = "maia";
-          features = [ "cli" "persistence" ];
           system = "x86_64-linux";
+          hostname = "maia";
+
+          persistence = true;
+          colorscheme = "ashes";
         };
 
-        "layla@maia" = mkHome {
+        "layla@maia" = lib.mkHome {
           username = "layla";
           hostname = "maia";
           system = "x86_64-linux";
+
+          persistence = true;
+          graphical = true;
+          colorscheme = "dracula";
         };
       };
 
       templates = import ./templates;
 
-    } // utils.lib.eachDefaultSystem (system:
+    } // inputs.utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system overlays; };
-
-        hm = home-manager.defaultPackage."${system}";
-        gtkThemeFromScheme = (inputs.nix-colors.lib { inherit pkgs; }).gtkThemeFromScheme;
-        generated-gtk-themes = builtins.mapAttrs (name: value: gtkThemeFromScheme { scheme = value; }) inputs.nix-colors.colorSchemes;
+        pkgs = import inputs.nixpkgs { inherit system overlays; };
+        home-manager = inputs.home-manager.defaultPackage."${system}";
       in
       {
-        packages = pkgs // {
-          inherit generated-gtk-themes;
-          home-manager = hm;
-        };
+        packages = pkgs // { inherit home-manager; };
 
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp hm ];
+          buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp home-manager ];
         };
       });
 }

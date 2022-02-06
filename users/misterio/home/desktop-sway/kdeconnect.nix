@@ -1,4 +1,4 @@
-{ pkgs, config, lib, features, ... }:
+{ pkgs, config, lib, persistence, ... }:
 
 let
 
@@ -38,7 +38,7 @@ in {
     "kdeconnect-scripts/fortune.sh".source = "${script-fortune}/bin/fortune";
   };
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [ ".config/kdeconnect" ];
   };
 }

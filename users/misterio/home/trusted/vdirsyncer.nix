@@ -1,7 +1,7 @@
-{ pkgs, features, lib, ... }: {
+{ pkgs, persistence, lib, ... }: {
   home.packages = with pkgs; [ vdirsyncer ];
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories =
       [ "Calendars" "Contacts" ".local/share/vdirsyncer" ];
   };

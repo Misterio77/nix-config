@@ -1,4 +1,4 @@
-{ pkgs, features, lib, ... }: {
+{ pkgs, persistence, lib, ... }: {
 
   programs.password-store = {
     enable = true;
@@ -6,7 +6,7 @@
     package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
   };
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [ ".password-store" ];
   };
 }

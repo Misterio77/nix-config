@@ -1,7 +1,7 @@
-{ pkgs, features, lib, ... }: {
+{ pkgs, persistence, lib, ... }: {
   home.packages = with pkgs; [ runelite ];
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/games/misterio".directories = [ "Jagex" ];
   };
 

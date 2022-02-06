@@ -1,10 +1,10 @@
-{ config, features, pkgs, lib, ... }:
+{ config, persistence, pkgs, lib, ... }:
 
 let colors = config.colorscheme.colors;
 in {
   home.packages = with pkgs; [ discord discocss ];
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [ ".config/discord" ];
   };
 

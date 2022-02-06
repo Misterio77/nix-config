@@ -1,4 +1,4 @@
-{ pkgs, lib, features, ... }:
+{ pkgs, lib, persistence, ... }:
 
 let
   addons = pkgs.nur.repos.rycee.firefox-addons;
@@ -26,7 +26,7 @@ in
     };
   };
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [ ".mozilla/firefox" ];
   };
 }

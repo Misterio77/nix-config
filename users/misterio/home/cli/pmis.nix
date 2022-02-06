@@ -1,9 +1,9 @@
-{ lib, features, inputs, ... }: {
+{ lib, persistence, inputs, ... }: {
   imports = [ inputs.pmis.homeManagerModule ];
 
   programs.pmis.enable = true;
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [ ".config/pmis" ];
   };
 }

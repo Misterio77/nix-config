@@ -1,4 +1,4 @@
-{ pkgs, lib, features, hostname, ... }: {
+{ pkgs, lib, persistence, hostname, ... }: {
   home.packages = [ pkgs.lutris ];
 
   xdg.desktopEntries = {
@@ -18,7 +18,7 @@
     };
   };
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/games/misterio" = {
       allowOther = true;
       directories = [ "Games/Lutris" ".config/lutris" ".local/share/lutris" ];

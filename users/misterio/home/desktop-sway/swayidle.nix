@@ -1,8 +1,7 @@
-{ pkgs, lib, features, hostname, config, ... }:
+{ pkgs, lib, keys, hostname, config, ... }:
 
 let
-  isTrusted = builtins.elem "trusted" features;
-  hasRgb = builtins.elem "rgb" features;
+  hasRgb = hostname == "atlas";
   keyring = import ../trusted/keyring.nix { inherit pkgs; };
 
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
@@ -26,7 +25,7 @@ in
   # If has PGP, lock it after lockTime/4
   # If has RGB, turn off 20 seconds after locked
   xdg.configFile."swayidle/config".text = ''
-    before-sleep '${if isTrusted then "${keyring.lock}; " else ""} ${actionLock}'
+    before-sleep '${if keys then "${keyring.lock}; " else ""} ${actionLock}'
 
     timeout ${toString lockTime} '${actionLock}'
 
@@ -37,7 +36,7 @@ in
     timeout 20 '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
   '' +
 
-  (if isTrusted then ''
+  (if keys then ''
     timeout ${toString (lockTime / 3)} '${keyring.lock}'
   '' else "") +
 

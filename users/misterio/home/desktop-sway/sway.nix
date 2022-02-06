@@ -1,4 +1,4 @@
-{ lib, features, pkgs, config, hostname, ... }:
+{ lib, keys, pkgs, config, hostname, ... }:
 
 let
   colorscheme = config.colorscheme;
@@ -197,11 +197,11 @@ rec {
         "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
 
         # Pass wofi menu
-        "Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) "exec ${pass-wofi}"; # fn+k
-        "XF86Calculator" = lib.mkIf (builtins.elem "trusted" features) "exec ${pass-wofi}"; # fn+f12
+        "Scroll_Lock" = lib.mkIf keys "exec ${pass-wofi}"; # fn+k
+        "XF86Calculator" = lib.mkIf keys "exec ${pass-wofi}"; # fn+f12
 
         # Lock or unlock gpg
-        "Shift+Scroll_Lock" = lib.mkIf (builtins.elem "trusted" features) ''
+        "Shift+Scroll_Lock" = lib.mkIf keys ''
           exec ${keyring.isUnlocked} && \
           (${keyring.lock} && ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
           ${keyring.unlock}

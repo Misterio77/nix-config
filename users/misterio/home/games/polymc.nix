@@ -1,7 +1,7 @@
-{ pkgs, lib, features, ... }: {
+{ pkgs, lib, persistence, ... }: {
   home.packages = [ pkgs.polymc ];
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/games/misterio".directories = [ ".local/share/polymc" ];
   };
 }

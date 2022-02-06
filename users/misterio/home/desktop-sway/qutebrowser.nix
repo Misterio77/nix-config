@@ -1,10 +1,10 @@
-{ config, pkgs, lib, features, ... }:
+{ config, pkgs, lib, persistence, ... }:
 
 let
   colors = config.colorscheme.colors;
   nvim = "${pkgs.neovim}/bin/nvim";
 in {
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [
       ".config/qutebrowser/bookmarks"
       ".config/qutebrowser/greasemonkey"

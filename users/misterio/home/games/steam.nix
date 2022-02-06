@@ -1,8 +1,8 @@
-{ pkgs, features, lib, ... }: {
+{ pkgs, persistence, lib, ... }: {
   programs.mangohud.enable = true;
   home.packages = with pkgs; [ steam ];
 
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/games/misterio" = {
       allowOther = true;
       directories = [

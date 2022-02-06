@@ -1,4 +1,4 @@
-{ pkgs, features, lib, ... }:
+{ pkgs, persistence, lib, ... }:
 
 let
   common = rec {
@@ -21,7 +21,7 @@ let
     };
   };
 in {
-  home.persistence = lib.mkIf (builtins.elem "persistence" features) {
+  home.persistence = lib.mkIf persistence {
     "/data/home/misterio".directories = [ "Mail" ];
   };
 
