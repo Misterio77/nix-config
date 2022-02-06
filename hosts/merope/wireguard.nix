@@ -47,19 +47,23 @@ in
           postSetup = ''
             ip link set wg0 multicast on
 
+            ${iptables}  -A INPUT -i %i -j ACCEPT
             ${iptables}  -A FORWARD -i %i -j ACCEPT
             ${iptables}  -A FORWARD -o %i -j ACCEPT
             ${iptables}  -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
+            ${ip6tables}  -A INPUT -i %i -j ACCEPT
             ${ip6tables} -A FORWARD -i %i -j ACCEPT
             ${ip6tables} -A FORWARD -o %i -j ACCEPT
             ${ip6tables} -t nat -A POSTROUTING -o eth0 -j MASQUERADE
           '';
           postShutdown = ''
+            ${iptables}  -D INPUT -i %i -j ACCEPT
             ${iptables}  -D FORWARD -i %i -j ACCEPT
             ${iptables}  -D FORWARD -o %i -j ACCEPT
             ${iptables}  -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 
+            ${ip6tables} -D INPUT -i %i -j ACCEPT
             ${ip6tables} -D FORWARD -i %i -j ACCEPT
             ${ip6tables} -D FORWARD -o %i -j ACCEPT
             ${ip6tables} -t nat -D POSTROUTING -o eth0 -j MASQUERADE

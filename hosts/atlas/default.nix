@@ -52,20 +52,22 @@ in
   networking.extraHosts = ''
     127.0.0.1 modules-cdn.eac-prod.on.epicgames.com
   '';
+  # Route traffic to VPN network through merope
+  networking.interfaces.enp8s0 = {
+    ipv4.routes = [{
+      address = "10.100.0.1";
+      prefixLength = 24;
+      via = "192.168.77.10";
+    }];
+  };
 
   programs = {
     gamemode = {
       enable = true;
-      settings = {
-        gpu = {
-          apply_gpu_optimisations = "accept-responsibility";
-          gpu_device = 0;
-          amd_performance_level = "high";
-        };
-        custom = {
-          start = "${pkgs.systemd}/bin/systemctl --user stop ethminer";
-          end = "${pkgs.systemd}/bin/systemctl --user start ethminer";
-        };
+      settings.gpu = {
+        apply_gpu_optimisations = "accept-responsibility";
+        gpu_device = 0;
+        amd_performance_level = "high";
       };
     };
 
