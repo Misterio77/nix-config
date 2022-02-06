@@ -129,7 +129,7 @@
         packages = pkgs // { inherit home-manager; };
 
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp home-manager ];
+          buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp home-manager git ];
         };
       });
 }
