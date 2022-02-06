@@ -6,7 +6,7 @@
       settings = {
         Address = "0.0.0.0";
         Port = 4533;
-        MusicFolder = "/srv/music";
+        MusicFolder = "/media/music";
         CovertArtPriority = "*.jpg, cover.*, folder.*, front.*, embedded";
       };
     };

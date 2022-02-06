@@ -8,7 +8,7 @@
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system;
+        inherit inputs system hostname;
       };
       modules = [
         ../modules/nixos

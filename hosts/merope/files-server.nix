@@ -5,7 +5,7 @@
         default = true;
         forceSSL = true;
         enableACME = true;
-        locations."/".root = "/srv/files";
+        locations."/".root = "/media/files";
       };
     };
   };

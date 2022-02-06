@@ -1,12 +1,9 @@
-{ config, lib, pkgs, modulesPath, hostname, ... }:
+{ lib, hostname, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
-      luks.devices.${hostname}.device = "/dev/disk/by-label/${hostname}";
+      luks.devices."${hostname}".device = "/dev/disk/by-label/${hostname}";
       postDeviceCommands = lib.mkBefore ''
         mkdir -p /mnt
         mount -o subvol=/ /dev/mapper/${hostname} /mnt
@@ -23,7 +20,6 @@
         umount /mnt
       '';
     };
-    kernelModules = [ "kvm-amd" ];
     supportedFilesystems = [ "btrfs" ];
   };
 
@@ -58,19 +54,11 @@
       fsType = "btrfs";
       options = [ "subvol=swap" "noatime" "compress=lzo" ];
     };
-
-    "/boot" = {
-      device = "/dev/disk/by-label/ESP";
-      fsType = "vfat";
-    };
   };
 
   swapDevices = [{
     device = "/swap/swapfile";
     size = 4096;
   }];
-
-
-  powerManagement.cpuFreqGovernor = "powersave";
 
 }

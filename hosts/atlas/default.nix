@@ -12,10 +12,9 @@ in
 
     ./hardware-configuration.nix
     ../common
-    ../common/flatpak.nix
-    ../common/podman.nix
     ../common/misterio-greetd.nix
     ../common/pipewire.nix
+    ../common/podman.nix
     ../common/postgres.nix
     ../common/steam.nix
 

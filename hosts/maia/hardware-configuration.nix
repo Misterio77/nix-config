@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, hostname, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -6,42 +6,68 @@
   boot = {
     initrd = {
       availableKernelModules =
-        [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-      luks.devices."nixenc".device =
-        "/dev/disk/by-uuid/32d93839-2606-4472-a4ba-01b8510937bb";
+        [ "usbhid" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+      luks.devices.${hostname}.device = "/dev/disk/by-label/${hostname}";
+      postDeviceCommands = lib.mkBefore ''
+        mkdir -p /mnt
+        mount -o subvol=/ /dev/mapper/${hostname} /mnt
+
+        echo "Cleaning subvolume"
+        btrfs subvolume list -o /mnt/root | cut -f9 -d ' ' |
+        while read subvolume; do
+          btrfs subvolume delete "/mnt/$subvolume"
+        done && btrfs subvolume delete /mnt/root
+
+        echo "Restoring blank subvolume"
+        btrfs subvolume snapshot /mnt/root-blank /mnt/root
+
+        umount /mnt
+      '';
     };
     kernelModules = [ "kvm-intel" ];
+    supportedFilesystems = [ "btrfs" ];
   };
 
   fileSystems = {
     "/" = {
-      device = "none";
-      fsType = "tmpfs";
-      options = [ "defaults" "size=4G" "mode=755" ];
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/96C2-490B";
-      fsType = "vfat";
-    };
-
-    "/data" = {
-      device = "/dev/disk/by-uuid/9ded8eaf-5411-425b-9664-1208aadd11b9";
+      device = "/dev/mapper/${hostname}";
       fsType = "btrfs";
-      options = [ "subvol=data" "compress=zstd" ];
+      options = [ "subvol=root" "compress=zstd" ];
+    };
+
+    "/nix" = {
+      device = "/dev/mapper/${hostname}";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "noatime" "compress=zstd" ];
+    };
+
+    "/persist" = {
+      device = "/dev/mapper/${hostname}";
+      fsType = "btrfs";
+      options = [ "subvol=persist" "compress=zstd" ];
       neededForBoot = true;
     };
 
     "/dotfiles" = {
-      device = "/dev/disk/by-uuid/9ded8eaf-5411-425b-9664-1208aadd11b9";
+      device = "/dev/mapper/${hostname}";
       fsType = "btrfs";
       options = [ "subvol=dotfiles" "compress=zstd" ];
     };
 
-    "/nix" = {
-      device = "/dev/disk/by-uuid/9ded8eaf-5411-425b-9664-1208aadd11b9";
+    "/swap" = {
+      device = "/dev/mapper/${hostname}";
       fsType = "btrfs";
-      options = [ "subvol=nix" "compress=zstd" "noatime" ];
+      options = [ "subvol=swap" "noatime" "compress=lzo" ];
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-label/ESP";
+      fsType = "vfat";
     };
   };
+
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 4096;
+  }];
 }

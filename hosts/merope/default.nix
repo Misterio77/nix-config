@@ -16,7 +16,7 @@ in
     ../common/postgres.nix
 
     ./deluge.nix
-    ./ddclient.nix
+    # ./ddclient.nix
     ./disconic.nix
     ./files-server.nix
     ./jitsi.nix
