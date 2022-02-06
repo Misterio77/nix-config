@@ -24,12 +24,10 @@
       fsType = "vfat";
     };
 
-    /*
     "/media" = {
       device = "/dev/disk/by-label/MEDIA_HDD";
       fsType = "ext4";
     };
-    */
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
