@@ -28,6 +28,10 @@
 
     homeBinInPath = true;
     localBinInPath = true;
+    etc."nixos" = {
+      target = "nixos";
+      source = "/dotfiles";
+    };
   };
 
   boot = {

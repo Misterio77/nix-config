@@ -8,6 +8,21 @@
       availableKernelModules =
         [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
       luks.devices."pleione".device = "/dev/disk/by-label/Pleione";
+      postDeviceCommands = lib.mkBefore ''
+        mkdir -p /mnt
+        mount -o subvol=/ /dev/mapper/pleione /mnt
+
+        echo "Cleaning subvolume"
+        btrfs subvolume list -o /mnt/root | cut -f9 -d ' ' |
+        while read subvolume; do
+          btrfs subvolume delete "/mnt/$subvolume"
+        done && btrfs subvolume delete /mnt/root
+
+        echo "Restoring blank subvolume"
+        btrfs subvolume snapshot /mnt/root-blank /mnt/root
+
+        umount /mnt
+      '';
     };
     kernelModules = [ "kvm-amd" ];
     supportedFilesystems = [ "btrfs" ];
@@ -33,6 +48,12 @@
       neededForBoot = true;
     };
 
+    "/dotfiles" = {
+      device = "/dev/mapper/pleione";
+      fsType = "btrfs";
+      options = [ "subvol=dotfiles" "compress=zstd" ];
+    };
+
     "/swap" = {
       device = "/dev/mapper/pleione";
       fsType = "btrfs";
@@ -49,6 +70,7 @@
     device = "/swap/swapfile";
     size = 4096;
   }];
+
 
   powerManagement.cpuFreqGovernor = "powersave";
 

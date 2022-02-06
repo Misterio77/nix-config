@@ -10,9 +10,9 @@
 
       jqless = "jq -C | less -r";
 
-      snrs = "sudo nixos-rebuild switch --flake /dotfiles";
-      nrs = "nixos-rebuild switch --flake /dotfiles";
-      hms = "home-manager switch --flake /dotfiles";
+      snrs = "sudo nixos-rebuild switch";
+      nrs = "nixos-rebuild switch";
+      hms = "home-manager switch";
       nd = "nix develop -c $SHELL";
 
       v = "nvim";

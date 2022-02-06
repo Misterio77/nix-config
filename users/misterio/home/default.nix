@@ -1,4 +1,4 @@
-{ pkgs, lib, hostname, persistence, graphical, keys, colorscheme, wallpaper, ... }:
+{ config, hostname, persistence, graphical, keys, ... }:
 
 {
   imports =
@@ -7,4 +7,9 @@
     ++ (if persistence then [ ./persistence ] else [ ])
     ++ (if keys then [ ./trusted ] else [ ])
     ++ (if hostname == "atlas" then [ ./rgb ] else [ ]);
+
+    home.file."home-config" = {
+      target = ".config/nixpkgs";
+      source = config.lib.file.mkOutOfStoreSymlink "/dotfiles";
+    };
 }
