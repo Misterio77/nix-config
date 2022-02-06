@@ -1,4 +1,4 @@
-{ modulesPath, hostname, ... }:
+{ modulesPath, ... }:
 
 {
   imports = [
@@ -14,9 +14,8 @@
 
   fileSystems = {
     "/boot" = {
-      device = "/dev/mapper/${hostname}";
-      fsType = "btrfs";
-      options = [ "subvol=boot" "compress=zstd" ];
+      device = "/dev/disk/by-label/BOOT";
+      fsType = "ext4";
     };
 
     "/firmware" = {
