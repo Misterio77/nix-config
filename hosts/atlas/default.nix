@@ -12,6 +12,7 @@ in
 
     ./hardware-configuration.nix
     ../common
+    ../common/btrfs-optin-persistence.nix
     ../common/misterio-greetd.nix
     ../common/pipewire.nix
     ../common/podman.nix
