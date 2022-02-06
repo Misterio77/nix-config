@@ -19,8 +19,8 @@
 
         umount /mnt
       '';
+      supportedFilesystems = [ "btrfs" ];
     };
-    supportedFilesystems = [ "btrfs" ];
   };
 
   fileSystems = {
