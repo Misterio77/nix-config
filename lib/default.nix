@@ -11,8 +11,8 @@
         inherit inputs system;
       };
       modules = [
-        ./modules/nixos
-        ./hosts/${hostname}
+        ../modules/nixos
+        ../hosts/${hostname}
         {
           networking.hostName = hostname;
           # Apply overlay and allow unfree packages
@@ -28,7 +28,7 @@
         }
         # System wide config for each user
       ] ++ inputs.nixpkgs.lib.forEach users
-        (u: ./users/${u}/system);
+        (u: ../users/${u}/system);
     };
 
   mkHome =
@@ -47,9 +47,9 @@
         inherit system hostname persistence graphical keys colorscheme wallpaper inputs;
       };
       homeDirectory = "/home/${username}";
-      configuration = ./users/${username}/home;
+      configuration = ../users/${username}/home;
       extraModules = [
-        ./modules/home-manager
+        ../modules/home-manager
         # Base configuration
         {
           nixpkgs = {
