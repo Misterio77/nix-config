@@ -16,6 +16,7 @@
     "/boot" = {
       device = "/dev/disk/by-label/BOOT";
       fsType = "ext4";
+      neededForBoot = true;
     };
 
     "/firmware" = {
@@ -23,10 +24,12 @@
       fsType = "vfat";
     };
 
+    /*
     "/media" = {
       device = "/dev/disk/by-label/MEDIA_HDD";
       fsType = "ext4";
     };
+    */
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
