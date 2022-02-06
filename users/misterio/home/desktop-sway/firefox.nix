@@ -27,6 +27,6 @@ in
   };
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ ".mozilla/firefox" ];
+    "/persist/home/misterio".directories = [ ".mozilla/firefox" ];
   };
 }

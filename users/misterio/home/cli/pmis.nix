@@ -4,6 +4,6 @@
   programs.pmis.enable = true;
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ ".config/pmis" ];
+    "/persist/home/misterio".directories = [ ".config/pmis" ];
   };
 }

@@ -5,7 +5,7 @@ let
   nvim = "${pkgs.neovim}/bin/nvim";
 in {
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [
+    "/persist/home/misterio".directories = [
       ".config/qutebrowser/bookmarks"
       ".config/qutebrowser/greasemonkey"
       ".local/share/qutebrowser"

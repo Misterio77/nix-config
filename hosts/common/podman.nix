@@ -1,7 +1,7 @@
 {
   virtualisation.podman.enable = true;
 
-  environment.persistence."/data" = {
+  environment.persistence."/persist" = {
     directories = [
       "/var/lib/containers"
     ];

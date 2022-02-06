@@ -6,7 +6,7 @@
     inputs.impermanence.nixosModules.impermanence
   ];
 
-  environment.persistence."/data".directories = [
+  environment.persistence."/persist".directories = [
     "/var/log"
     "/var/lib/systemd"
     "/var/lib/acme"
@@ -78,11 +78,11 @@
       # Persist host ssh keys
       hostKeys = [
         {
-          path = "/data/etc/ssh/ssh_host_ed25519_key";
+          path = "/persist/etc/ssh/ssh_host_ed25519_key";
           type = "ed25519";
         }
         {
-          path = "/data/etc/ssh/ssh_host_rsa_key";
+          path = "/persist/etc/ssh/ssh_host_rsa_key";
           type = "rsa";
           bits = "4096";
         }

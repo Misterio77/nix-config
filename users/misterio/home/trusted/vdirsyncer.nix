@@ -2,7 +2,7 @@
   home.packages = with pkgs; [ vdirsyncer ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories =
+    "/persist/home/misterio".directories =
       [ "Calendars" "Contacts" ".local/share/vdirsyncer" ];
   };
 

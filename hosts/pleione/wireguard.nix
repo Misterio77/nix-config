@@ -7,7 +7,7 @@
         wg0 = {
           ips = [ "10.100.0.3/24" "fdc9:281f:04d7:9ee9::3/64" ];
           listenPort = 51820;
-          privateKeyFile = "/data/etc/wireguard/private.key";
+          privateKeyFile = "/persist/etc/wireguard/private.key";
           peers = [{
             publicKey = "a3dmQRbDmCeWEUyiUxAIjoI5icfzw8llKv5BHTgCJw8=";
             allowedIPs = [

@@ -7,6 +7,6 @@
   };
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ ".password-store" ];
+    "/persist/home/misterio".directories = [ ".password-store" ];
   };
 }

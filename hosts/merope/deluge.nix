@@ -8,7 +8,7 @@
     allowedUDPPorts = [ 58846 6881 ];
   };
 
-  environment.persistence."/data" = {
+  environment.persistence."/persist" = {
     directories = [ "/var/lib/deluge" ];
   };
 }

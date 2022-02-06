@@ -5,6 +5,6 @@
     zone = "misterio.me";
     domains = [ "home.misterio.me" ];
     username = "misterio";
-    passwordFile = "/data/etc/gandi/ddclient.key";
+    passwordFile = "/persist/etc/gandi/ddclient.key";
   };
 }

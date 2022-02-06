@@ -5,7 +5,7 @@ in {
   home.packages = with pkgs; [ discord discocss ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ ".config/discord" ];
+    "/persist/home/misterio".directories = [ ".config/discord" ];
   };
 
   xdg.configFile."discocss/custom.css".text = ''

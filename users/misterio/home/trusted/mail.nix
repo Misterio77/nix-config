@@ -22,7 +22,7 @@ let
   };
 in {
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ "Mail" ];
+    "/persist/home/misterio".directories = [ "Mail" ];
   };
 
   accounts.email = {

@@ -2,7 +2,7 @@
   users.users.misterio = {
     isNormalUser = true;
     shell = pkgs.fish;
-    passwordFile = "/data/home/misterio/.password";
+    passwordFile = "/persist/home/misterio/.password";
     extraGroups = [
       "networkmanager"
       "wheel"

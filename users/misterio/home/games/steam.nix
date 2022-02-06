@@ -3,7 +3,7 @@
   home.packages = with pkgs; [ steam ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/games/misterio" = {
+    "/persist/games/misterio" = {
       allowOther = true;
       directories = [
         "Games/Steam"

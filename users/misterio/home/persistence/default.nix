@@ -2,7 +2,7 @@
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
   home.persistence = {
-    "/data/home/misterio" = {
+    "/persist/home/misterio" = {
       directories = [
         "Documents"
         "Downloads"

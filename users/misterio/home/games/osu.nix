@@ -2,6 +2,6 @@
   home.packages = [ pkgs.osu-lazer ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/games/misterio".directories = [ ".local/share/osu" ];
+    "/persist/games/misterio".directories = [ ".local/share/osu" ];
   };
 }

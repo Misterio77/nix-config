@@ -2,7 +2,7 @@
   home.packages = with pkgs; [ pinentry-gnome ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ ".gnupg" ];
+    "/persist/home/misterio".directories = [ ".gnupg" ];
   };
 
   services.gpg-agent = {

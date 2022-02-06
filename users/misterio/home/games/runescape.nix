@@ -2,7 +2,7 @@
   home.packages = with pkgs; [ runelite ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/games/misterio".directories = [ "Jagex" ];
+    "/persist/games/misterio".directories = [ "Jagex" ];
   };
 
   # Override .desktop for changing OSRS cache dir

@@ -39,6 +39,6 @@ in {
   };
 
   home.persistence = lib.mkIf persistence {
-    "/data/home/misterio".directories = [ ".config/kdeconnect" ];
+    "/persist/home/misterio".directories = [ ".config/kdeconnect" ];
   };
 }

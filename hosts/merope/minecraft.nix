@@ -35,7 +35,7 @@
     allowedUDPPorts = [ 19132 60606 ];
   };
 
-  environment.persistence."/data" = {
+  environment.persistence."/persist" = {
     directories = [ "/var/lib/minecraft" "/var/lib/mysql" ];
   };
 }

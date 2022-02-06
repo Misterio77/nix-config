@@ -2,7 +2,7 @@
   users.users.layla = {
     isNormalUser = true;
     shell = pkgs.fish;
-    passwordFile = "/data/home/layla/.password";
+    passwordFile = "/persist/home/layla/.password";
     extraGroups = [ "networkmanager" "audio" "wheel" ];
   };
 }

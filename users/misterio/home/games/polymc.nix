@@ -2,6 +2,6 @@
   home.packages = [ pkgs.polymc ];
 
   home.persistence = lib.mkIf persistence {
-    "/data/games/misterio".directories = [ ".local/share/polymc" ];
+    "/persist/games/misterio".directories = [ ".local/share/polymc" ];
   };
 }

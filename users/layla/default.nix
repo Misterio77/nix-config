@@ -21,7 +21,7 @@
   colorscheme = inputs.nix-colors.colorSchemes.dracula;
 
   home.persistence = {
-    "/data/home/layla" = {
+    "/persist/home/layla" = {
       directories = [
         "Documentos"
         "Downloads"

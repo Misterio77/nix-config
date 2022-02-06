@@ -19,7 +19,7 @@
   };
 
   home.persistence = lib.mkIf persistence {
-    "/data/games/misterio" = {
+    "/persist/games/misterio" = {
       allowOther = true;
       directories = [ "Games/Lutris" ".config/lutris" ".local/share/lutris" ];
     };
