@@ -3,10 +3,9 @@
 {
   boot = {
     initrd = {
-      luks.devices."${hostname}".device = "/dev/disk/by-label/${hostname}";
       postDeviceCommands = lib.mkBefore ''
         mkdir -p /mnt
-        mount -o subvol=/ /dev/mapper/${hostname} /mnt
+        mount -o subvol=/ /dev/disk/by-label/${hostname} /mnt
 
         echo "Cleaning subvolume"
         btrfs subvolume list -o /mnt/root | cut -f9 -d ' ' |
@@ -25,32 +24,32 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/mapper/${hostname}";
+      device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [ "subvol=root" "compress=zstd" ];
     };
 
     "/nix" = {
-      device = "/dev/mapper/${hostname}";
+      device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [ "subvol=nix" "noatime" "compress=zstd" ];
     };
 
     "/persist" = {
-      device = "/dev/mapper/${hostname}";
+      device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [ "subvol=persist" "compress=zstd" ];
       neededForBoot = true;
     };
 
     "/dotfiles" = {
-      device = "/dev/mapper/${hostname}";
+      device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [ "subvol=dotfiles" "compress=zstd" ];
     };
 
     "/swap" = {
-      device = "/dev/mapper/${hostname}";
+      device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [ "subvol=swap" "noatime" "compress=lzo" ];
     };

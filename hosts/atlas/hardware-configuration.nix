@@ -4,6 +4,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../common/btrfs-optin-persistence.nix
+    ../common/encrypted-root.nix
   ];
 
   boot = {
