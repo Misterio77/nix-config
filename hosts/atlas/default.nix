@@ -23,8 +23,6 @@ in
 
   networking = {
     useDHCP = false;
-    useNetworkd = true;
-
     interfaces.enp8s0 = {
       useDHCP = true;
       wakeOnLan.enable = true;
