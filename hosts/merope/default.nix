@@ -29,19 +29,24 @@ in
   ];
 
   # Static IP address
-  networking.interfaces.eth0 = {
-    ipv4.addresses = [{
-      address = "192.168.77.10";
-      prefixLength = 24;
-    }];
-    ipv6.addresses = [{
-      address = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
-      prefixLength = 64;
-    }];
-  };
+  networking = {
+    useDHCP = false;
+    interfaces.eth0 = {
+      useDHCP = true;
+      wakeOnLan.enable = true;
 
-  # Open ports for nginx
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+      ipv4.addresses = [{
+        address = "192.168.77.10";
+        prefixLength = 24;
+      }];
+      ipv6.addresses = [{
+        address = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
+        prefixLength = 64;
+      }];
+    };
+    # Open ports for nginx
+    firewall.allowedTCPPorts = [ 80 443 ];
+  };
 
   # Passwordless sudo (for remote build)
   security.sudo.extraConfig = "%wheel ALL = (ALL) NOPASSWD: ALL";
