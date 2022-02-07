@@ -20,8 +20,6 @@
   i18n.defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
   time.timeZone = "America/Sao_Paulo";
 
-  networking.networkmanager.enable = true;
-
   environment = {
     # Activate home-manager environment, if not already enabled
     loginShellInit = ''

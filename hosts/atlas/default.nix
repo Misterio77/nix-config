@@ -21,7 +21,44 @@ in
     # ./satisfactory.nix
   ];
 
-  networking.firewall.enable = false;
+  networking = {
+    useDHCP = false;
+    useNetworkd = true;
+
+    interfaces.enp8s0 = {
+      useDHCP = true;
+      wakeOnLan.enable = true;
+
+      ipv4 = {
+        addresses = [{
+          address = "192.168.77.11";
+          prefixLength = 24;
+        }];
+        routes = [{
+          address = "10.100.0.0";
+          prefixLength = 24;
+          via = "192.168.77.10";
+        }];
+      };
+      ipv6 = {
+        addresses = [{
+          address = "2804:14d:8084:a484:eeee:eeee:eeee:eeee";
+          prefixLength = 64;
+        }];
+        routes = [{
+          address = "fdc9:281f:4d7:9ee9::";
+          prefixLength = 64;
+          via = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
+        }];
+      };
+    };
+
+    # Block eac cdn so i can play star citizen
+    extraHosts = ''
+      127.0.0.1 modules-cdn.eac-prod.on.epicgames.com
+    '';
+  };
+
   boot = {
     # Kernel
     kernelPackages = pkgs.linuxPackages_zen;
@@ -46,24 +83,6 @@ in
       "vm.max_map_count" = 16777216;
       "abi.vsyscall32" = 0;
     };
-  };
-
-  # Block eac cdn so i can play star citizen
-  networking.extraHosts = ''
-    127.0.0.1 modules-cdn.eac-prod.on.epicgames.com
-  '';
-  # Route traffic to VPN network through merope
-  networking.interfaces.enp8s0 = {
-    ipv4.routes = [{
-      address = "10.100.0.1";
-      prefixLength = 24;
-      via = "192.168.77.10";
-    }];
-    ipv6.routes = [{
-      address = "fdc9:281f:4d7:9ee9::";
-      prefixLength = 64;
-      via = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
-    }];
   };
 
   programs = {
