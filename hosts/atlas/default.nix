@@ -59,6 +59,11 @@ in
       prefixLength = 24;
       via = "192.168.77.10";
     }];
+    ipv6.routes = [{
+      address = "fdc9:281f:4d7:9ee9::1";
+      prefixLength = 64;
+      via = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
+    }];
   };
 
   programs = {
