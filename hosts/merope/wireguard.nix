@@ -22,26 +22,12 @@ in
             # Calaeno (phone)
             {
               publicKey = "OpU45rd0BrLPWHrtPtN8U5s4b3RU10B4TiHAN0p842g=";
-              allowedIPs = [
-                # Wireguard IPs
-                "10.100.0.2/32"
-                "fdc9:281f:04d7:9ee9::2/128"
-                # Multicast IPs
-                "224.0.0.251/32"
-                "ff02::fb/128"
-              ];
+              allowedIPs = [ "10.100.0.2/32" "fdc9:281f:04d7:9ee9::2/128" ];
             }
             # Pleione (laptop)
             {
               publicKey = "zAkZz0taqMnOpoOUgdBnWcRjaRvRVkv874oiYE4ZxV0=";
-              allowedIPs = [
-                # Wireguard IPs
-                "10.100.0.3/32"
-                "fdc9:281f:04d7:9ee9::3/128"
-                # Multicast IPs
-                "224.0.0.251/32"
-                "ff02::fb/128"
-              ];
+              allowedIPs = [ "10.100.0.3/32" "fdc9:281f:04d7:9ee9::3/128" ];
             }
           ];
           postSetup = ''

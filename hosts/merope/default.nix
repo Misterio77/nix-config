@@ -30,10 +30,10 @@ in
 
   # Static IP address
   networking.networkmanager.extraConfig = ''
-    [ipv4]
-    address=192.168.77.10/24
-    [ipv6]
-    address=2804:14d:8084:a484:afb6:38b4:49a9:ff58/64
+    [connection-ethernet-eth0]
+    match-device=interface-name:eth0
+    ipv4.addresses=192.168.77.10/24
+    ipv6.addresses=2804:14d:8084:a484:ffff:ffff:ffff:ffff/128
   '';
 
   # Open ports for nginx
