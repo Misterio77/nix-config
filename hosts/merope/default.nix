@@ -29,12 +29,16 @@ in
   ];
 
   # Static IP address
-  networking.networkmanager.extraConfig = ''
-    [connection-ethernet-eth0]
-    match-device=interface-name:eth0
-    ipv4.addresses=192.168.77.10/24
-    ipv6.addresses=2804:14d:8084:a484:ffff:ffff:ffff:ffff/128
-  '';
+  networking.interfaces.eth0 = {
+    ipv4.addresses = [{
+      address = "192.168.77.10";
+      prefixLength = 24;
+    }];
+    ipv6.addresses = [{
+      address = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
+      prefixLength = 64;
+    }];
+  };
 
   # Open ports for nginx
   networking.firewall.allowedTCPPorts = [ 80 443 ];
