@@ -45,7 +45,7 @@
     "/swap" = {
       device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
-      options = [ "subvol=swap" "noatime" "compress=lzo" ];
+      options = [ "subvol=swap" "noatime" ];
     };
   };
 
