@@ -1,0 +1,31 @@
+diff --git a/autoload/medieval.vim b/autoload/medieval.vim
+index eee3adc..91e99b9 100644
+--- a/autoload/medieval.vim
++++ b/autoload/medieval.vim
+@@ -1,3 +1,4 @@
++let s:tempfile = fnamemodify(tempname(), ':h') . '/medieval'
+ let s:fences = [{'start': '[`~]\{3,}'}, {'start': '\$\$'}]
+ let s:opts = ['name', 'target', 'require', 'tangle']
+ let s:optspat = '\(' . join(s:opts, '\|') . '\):\s*\([0-9A-Za-z_+.$#&/-]\+\)'
+@@ -196,18 +197,9 @@ function! s:callback(context, output) abort
+             call append(tstart + 1, a:output)
+         endif
+     else
+-        " Open result in scratch buffer
+-        if &splitbelow
+-            botright new
+-        else
+-            topleft new
+-        endif
+-
+-        call append(0, a:output)
+-        call deletebufline('%', '$')
+-        exec 'resize' &previewheight
+-        setlocal buftype=nofile bufhidden=delete nobuflisted noswapfile winfixheight
+-        wincmd p
++        " Open result in preview window
++        call writefile(a:output, s:tempfile)
++        exec 'pedit ' . s:tempfile
+     endif
+ endfunction
+ 

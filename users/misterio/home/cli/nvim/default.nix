@@ -35,9 +35,6 @@ with inputs.nix-colors.lib { inherit pkgs; };
       "Clipboard
       set clipboard=unnamedplus
 
-      "Conceal
-      set conceallevel=2
-
       "Fix nvim size according to terminal
       "(https://github.com/neovim/neovim/issues/11330)
       autocmd VimEnter * silent exec "!kill -s SIGWINCH" getpid()
@@ -76,16 +73,25 @@ with inputs.nix-colors.lib { inherit pkgs; };
         plugin = vimThemeFromScheme { scheme = config.colorscheme; };
         config = "colorscheme nix-${config.colorscheme.slug}";
       }
+      {
+        plugin = vim-medieval;
+        config = ''
+          nmap <buffer> Z <Plug>(medieval-eval)
+          let g:medieval_langs = ['haskell=runghc', 'sh']
+        '';
+      }
     ];
   };
 
-  xdg.configFile."nvim/init.vim".onChange = let
-    nvr = "${pkgs.neovim-remote}/bin/nvr";
-  in ''
-    ${nvr} --serverlist | while read server; do
-      ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
-    done
-  '';
+  xdg.configFile."nvim/init.vim".onChange =
+    let
+      nvr = "${pkgs.neovim-remote}/bin/nvr";
+    in
+    ''
+      ${nvr} --serverlist | while read server; do
+        ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
+      done
+    '';
 
   home.sessionVariables = { EDITOR = "nvim"; };
 
