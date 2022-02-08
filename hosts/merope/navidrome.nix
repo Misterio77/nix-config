@@ -7,7 +7,7 @@
         Address = "0.0.0.0";
         Port = 4533;
         MusicFolder = "/media/music";
-        CovertArtPriority = "*.jpg, cover.*, folder.*, front.*, embedded";
+        CovertArtPriority = "cover.*, folder.*, front.*, *.jpg, embedded";
       };
     };
 
