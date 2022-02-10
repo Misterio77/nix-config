@@ -497,4 +497,10 @@
     id = "OKuVxYE";
     sha256 = "11l65a6g21rmgsv2s3nmb78fypd5p9586id72ad9zpnala2nwzqa";
   }
+  {
+    name = "linkinpark-hybridtheory";
+    ext = "png";
+    id = "x8L2JA1";
+    sha256 = "151h7mrqkrfgq5fnpa5r4351d6nmd8k0bmxfnyld86avz2wblvgs";
+  }
 ]

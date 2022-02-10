@@ -24,9 +24,7 @@
     deluge
     dragon-drop
     imv
-    ncspot
     pavucontrol
-    spotify
     wofi
     xdg-utils
     ydotool

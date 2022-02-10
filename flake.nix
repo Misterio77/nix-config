@@ -77,7 +77,7 @@
           graphical = true;
           keys = true;
           colorscheme = "spaceduck";
-          wallpaper = "desert-dunes";
+          wallpaper = "linkinpark-hybridtheory";
         };
         "misterio@pleione" = lib.mkHome {
           username = "misterio";

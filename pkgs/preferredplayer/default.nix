@@ -1,4 +1,4 @@
-{ lib, stdenv, writeShellScriptBin, playerctl }:
+{ lib, stdenv, writeShellScriptBin, playerctl, procps, clematis }:
 
 with lib;
 
@@ -12,6 +12,8 @@ stdenv.mkDerivation {
         echo "$players" | head -1
     else
         echo "$1" > $XDG_RUNTIME_DIR/currentplayer
+        ${procps}/bin/pkill clematis
+        ${clematis}/bin/clematis -c <( echo "{\"whitelist\": [\"$1\"]}") & disown
     fi
   '';
   dontBuild = true;

@@ -17,4 +17,6 @@
     pkgs.callPackage ./setwallpaper-wofi { inherit (pkgs.gnome) zenity; };
 
   alacritty-ligatures = pkgs.callPackage ./alacritty-ligatures { };
+
+  clematis = pkgs.callPackage ./clematis { };
 }
