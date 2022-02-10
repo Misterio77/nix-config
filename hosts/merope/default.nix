@@ -30,7 +30,6 @@ in
 
   # Static IP address
   networking = {
-    networkmanager.enable = true;
     useDHCP = false;
     interfaces.eth0 = {
       useDHCP = true;

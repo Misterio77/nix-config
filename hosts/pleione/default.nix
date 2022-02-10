@@ -17,6 +17,9 @@
     ./wireguard.nix
   ];
 
+
+  networking.networkmanager.enable = true;
+
   boot = {
     # Kernel
     kernelPackages = pkgs.linuxPackages_zen;
