@@ -124,9 +124,11 @@
       let
         pkgs = import inputs.nixpkgs { inherit system overlays; };
         home-manager = inputs.home-manager.defaultPackage."${system}";
+        gtkThemeFromScheme = (inputs.nix-colors.lib { inherit pkgs; }).gtkThemeFromScheme;
+        generated-gtk-themes = builtins.mapAttrs (name: value: gtkThemeFromScheme { scheme = value; }) inputs.nix-colors.colorSchemes;
       in
       {
-        packages = pkgs // { inherit home-manager; };
+        packages = pkgs // { inherit home-manager generated-gtk-themes; };
 
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ nixUnstable nixfmt rnix-lsp home-manager git ];
