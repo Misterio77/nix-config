@@ -14,7 +14,7 @@ in
     ../common
     ../common/misterio-greetd.nix
     ../common/pipewire.nix
-    ../common/podman.nix
+    ../common/docker.nix
     ../common/postgres.nix
     ../common/steam.nix
 
