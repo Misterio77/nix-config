@@ -1,5 +1,5 @@
 { pkgs, persistence, lib, ... }: {
-  home.packages = with pkgs; [ runelite ];
+  home.packages = with pkgs; [ runelite nur.repos.misterio.runescape-launcher ];
 
   home.persistence = lib.mkIf persistence {
     "/persist/games/misterio".directories = [ "Jagex" ];
@@ -15,6 +15,20 @@
       genericName = "Oldschool RuneScape";
       icon = "runescape";
       name = "RuneLite";
+      terminal = false;
+      type = "Application";
+    };
+  };
+
+  # Override .desktop for adding gamemoderun
+  xdg.desktopEntries = {
+    runescape-launcher = {
+      categories = [ "Game" ];
+      comment = "RuneScape - A Free MMORPG from Jagex Ltd.";
+      exec = "gamemoderun runescape-launcher %u";
+      genericName = "RuneScape";
+      icon = "runescape";
+      name = "RuneScape";
       terminal = false;
       type = "Application";
     };

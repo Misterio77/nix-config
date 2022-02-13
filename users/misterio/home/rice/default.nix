@@ -1,7 +1,8 @@
 { pkgs, config, inputs, hostname, wallpaper, colorscheme, ... }:
 
-with inputs.nix-colors.lib { inherit pkgs; };
-{
+let
+  inherit (inputs.nix-colors.lib { inherit pkgs; }) colorschemeFromPicture nixWallpaperFromScheme;
+in {
   imports = [ inputs.nix-colors.homeManagerModule ];
 
   colorscheme =
@@ -10,7 +11,7 @@ with inputs.nix-colors.lib { inherit pkgs; };
     else
       colorschemeFromPicture {
         path = config.wallpaper;
-        kind = currentMode;
+        kind = "dark";
       };
 
   wallpaper =

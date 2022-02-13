@@ -240,18 +240,6 @@ rec {
           "exec player=$(${playerctl} -l | ${wofi} -S dmenu) && ${preferredplayer} $player";
         "Shift+XF86AudioStop" = "exec ${preferredplayer} none";
 
-        # Wallpaper
-        "XF86Tools" =
-          "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # profile icon on k70
-        "${modifier}+Shift+i" =
-          "exec ${pkgs.setwallpaper-wofi}/bin/setwallpaper-wofi"; # fn+shift+f9
-
-        # Color scheme
-        "XF86Launch6" =
-          "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # scheme icon on k70
-        "${modifier}+i" =
-          "exec ${pkgs.setscheme-wofi}/bin/setscheme-wofi"; # fn+f9
-
         # Notifications
         "${modifier}+w" = "exec ${makoctl} dismiss";
         "${modifier}+shift+w" = "exec ${makoctl} dismiss -a";
