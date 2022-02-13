@@ -1,4 +1,6 @@
-{ config, ... }: {
+{ config, inputs, ... }: {
+  inputs = [ inputs.paste-misterio-me.nixosModule ];
+
   services = {
     paste-misterio-me = {
       enable = true;

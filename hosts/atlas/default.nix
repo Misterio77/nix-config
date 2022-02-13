@@ -35,7 +35,7 @@ in
         routes = [{
           address = "10.100.0.0";
           prefixLength = 24;
-          via = "192.168.77.10";
+          via = "192.168.77.10"; # Route traffic intended for the VPN through merope
         }];
       };
       ipv6 = {
@@ -46,7 +46,7 @@ in
         routes = [{
           address = "fdc9:281f:4d7:9ee9::";
           prefixLength = 64;
-          via = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
+          via = "2804:14d:8084:a484:ffff:ffff:ffff:ffff"; # Route traffic intended for the VPN through merope
         }];
       };
     };

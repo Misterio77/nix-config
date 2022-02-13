@@ -1,4 +1,6 @@
-{
+{ inputs, ... }: {
+  inputs = [ inputs.disconic.nixosModule ];
+
   services.disconic = {
     enable = true;
     subsonicUrl = "https://music.misterio.me";
