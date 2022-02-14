@@ -6,12 +6,24 @@
       config = ''
         lua << EOF
           local lspconfig = require('lspconfig')
+          local capabilities = vim.lsp.protocol.make_client_capabilities()
+          capabilities.textDocument.completion.completionItem.snippetSupport = true
 
           lspconfig.dockerls.setup{} -- Docker
-
           lspconfig.bashls.setup{} -- Bash
+          lspconfig.clangd.setup{} -- C/C++
+          lspconfig.rnix.setup{} -- Nix
+          lspconfig.jsonls.setup{} -- JSON
+          lspconfig.sqls.setup{} -- SQL
+          lspconfig.pylsp.setup{} -- Python
+          lspconfig.sumneko_lua.setup{cmd = {"lua-language-server"}} -- Lua
+          lspconfig.dartls.setup{} -- Dart
+          lspconfig.hls.setup{} -- Haskell
+          lspconfig.kotlin_language_server.setup{} -- Kotlin
+          lspconfig.html.setup{} -- HTML
+          lspconfig.cssls.setup{capabilities = capabilities} -- CSS/SASS
 
-          lspconfig.rust_analyzer.setup{
+          lspconfig.rust_analyzer.setup{ -- Rust
             settings = {
               ["rust-analyzer"] = {
                 checkOnSave = {
@@ -19,26 +31,7 @@
                 }
               }
             }
-          } -- Rust
-
-          lspconfig.clangd.setup{} -- C/C++
-
-          lspconfig.rnix.setup{} -- Nix
-
-          lspconfig.jsonls.setup{} -- JSON
-
-          lspconfig.sqls.setup{} -- SQL
-
-          lspconfig.pylsp.setup{} -- Python
-
-          lspconfig.sumneko_lua.setup{cmd = {"lua-language-server"}} -- Lua
-
-          lspconfig.dartls.setup{} -- Dart
-
-          lspconfig.hls.setup{} -- Haskell
-
-          lspconfig.kotlin_language_server.setup{} -- Kotlin
-
+          }
         EOF
 
         nmap gD       :lua vim.lsp.buf.declaration()<CR>
