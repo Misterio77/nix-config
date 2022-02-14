@@ -23,9 +23,9 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 ## About the installation
 This is hardware specific and can easily be changed by switching out `hardware-configuration.nix` files.
 
-I use a erase my darlings-like setup. My desktop pc uses an encrypted btrfs partition, which has subvolumes for nix store, games, home (snapshotted), srv (snapshotted), and var. The pi is similar, but with a single ext4 partition for all that. The root filesystem is a tmpfs, on which the partitions are mounted to achieve opt-in state.
+All my computers use a single btrfs (encrypted on all except headless) partition, with subvolumes for `/nix`, a `/persist` directory (which I opt in using `impermanence`), swap file, and a root subvolume cleared on every boot.
 
-I use home-manager as a standalone module, and, as such, i have to "manually" activate it. For this reason, i have a hook on loginShell that activates it, if not already active.
+Home-manager is used in a standalone way, and because of opt-in persistence is activated on every boot with `loginShellInit`.
 
 
 ## How to bootstrap
