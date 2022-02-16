@@ -23,7 +23,7 @@ in {
 
       "Tabs
       set ts=4 sts=4 sw=4 "4 char-wide tab
-      autocmd FileType json,html,htmldjango,nix,scss,typescript,php,haskell setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
+      autocmd FileType json,html,htmldjango,nix,scss,typescript,php,haskell,tf setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
       set expandtab "Use spaces
 
       "Set tera to use htmldjango syntax

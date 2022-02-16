@@ -22,6 +22,7 @@
           lspconfig.kotlin_language_server.setup{} -- Kotlin
           lspconfig.html.setup{} -- HTML
           lspconfig.cssls.setup{capabilities = capabilities} -- CSS/SASS
+          lspconfig.terraformls.setup{filetypes={"terraform","tf","hcl"}} -- Terraform
 
           lspconfig.rust_analyzer.setup{ -- Rust
             settings = {
