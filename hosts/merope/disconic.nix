@@ -1,5 +1,5 @@
 { inputs, ... }: {
-  inputs = [ inputs.disconic.nixosModule ];
+  imports = [ inputs.disconic.nixosModule ];
 
   services.disconic = {
     enable = true;
