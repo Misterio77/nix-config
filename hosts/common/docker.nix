@@ -1,8 +1,9 @@
+{ lib, persistence, ... }:
 {
   virtualisation.docker.enable = true;
 
-  environment.persistence."/persist" = {
-    directories = [
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [
       "/var/lib/docker"
     ];
   };

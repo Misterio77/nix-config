@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ lib, pkgs, persistence, ... }: {
   services = {
     minecraft-server = {
       enable = true;
@@ -35,7 +35,7 @@
     allowedUDPPorts = [ 19132 60606 ];
   };
 
-  environment.persistence."/persist" = {
-    directories = [ "/var/lib/minecraft" "/var/lib/mysql" ];
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [ "/var/lib/minecraft" "/var/lib/mysql" ];
   };
 }

@@ -4,11 +4,12 @@
     { hostname
     , system
     , users ? [ ]
+    , persistence ? false
     }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system hostname;
+        inherit inputs system hostname persistence;
       };
       modules = [
         ../modules/nixos

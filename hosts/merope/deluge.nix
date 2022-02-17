@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ lib, config, persistence, ... }: {
   services.deluge = {
     enable = true;
   };
@@ -8,7 +8,7 @@
     allowedUDPPorts = [ 58846 6881 ];
   };
 
-  environment.persistence."/persist" = {
-    directories = [ "/var/lib/deluge" ];
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [ "/var/lib/deluge" ];
   };
 }

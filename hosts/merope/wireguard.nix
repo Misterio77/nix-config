@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, persistence, ... }:
 let
   iptables = "${pkgs.iptables}/bin/iptables";
   ip6tables = "${pkgs.iptables}/bin/ip6tables";
@@ -12,7 +12,8 @@ in
     };
     firewall.allowedUDPPorts = [ 51820 ];
     wireguard = {
-      enable = true;
+      # Only enable wireguard if we're persisting data (thus, have the key)
+      enable = persistence;
       interfaces = {
         wg0 = {
           ips = [ "10.100.0.1/24" "fdc9:281f:04d7:9ee9::1/64" ];

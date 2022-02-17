@@ -49,21 +49,25 @@
           hostname = "atlas";
           system = "x86_64-linux";
           users = [ "misterio" ];
+          persistence = true;
         };
         pleione = lib.mkSystem {
           hostname = "pleione";
           system = "x86_64-linux";
           users = [ "misterio" ];
+          persistence = true;
         };
         merope = lib.mkSystem {
           hostname = "merope";
           system = "aarch64-linux";
           users = [ "misterio" ];
+          persistence = true;
         };
         maia = lib.mkSystem {
           hostname = "maia";
           system = "x86_64-linux";
           users = [ "layla" "misterio" ];
+          persistence = true;
         };
       };
 

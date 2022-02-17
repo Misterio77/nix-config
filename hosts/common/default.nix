@@ -1,19 +1,21 @@
 # This file holds config that i use on all hosts
-{ config, pkgs, system, inputs, ... }:
+{ lib, config, pkgs, system, inputs, persistence, ... }:
 
 {
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
 
-  environment.persistence."/persist".directories = [
-    "/var/log"
-    "/var/lib/systemd"
-    "/var/lib/acme"
-    "/etc/NetworkManager/system-connections"
-    "/srv"
-    "/dotfiles"
-  ];
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [
+      "/var/log"
+      "/var/lib/systemd"
+      "/var/lib/acme"
+      "/etc/NetworkManager/system-connections"
+      "/srv"
+      "/dotfiles"
+    ];
+  };
 
   system.stateVersion = "21.11";
 

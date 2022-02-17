@@ -1,8 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, persistence, ... }: {
   networking = {
     firewall.allowedUDPPorts = [ 51820 ];
     wireguard = {
-      enable = true;
+      # Only enable wireguard if we're persisting data (thus, have the key)
+      enable = persistence;
       interfaces = {
         wg0 = {
           ips = [ "10.100.0.3/24" "fdc9:281f:04d7:9ee9::3/64" ];
