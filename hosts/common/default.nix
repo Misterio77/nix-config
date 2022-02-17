@@ -81,7 +81,7 @@
       permitRootLogin = "no";
       forwardX11 = true;
       # Persist host ssh keys
-      hostKeys = [
+      hostKeys = lib.mkIf persistence [
         {
           path = "/persist/etc/ssh/ssh_host_ed25519_key";
           type = "ed25519";
