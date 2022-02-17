@@ -1,8 +1,7 @@
-{ pkgs, lib, keys, hostname, config, ... }:
+{ pkgs, lib, hostname, config, ... }:
 
 let
   hasRgb = hostname == "atlas";
-  keyring = import ../trusted/keyring.nix { inherit pkgs; };
 
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
@@ -25,8 +24,6 @@ in
   # If has PGP, lock it after lockTime/4
   # If has RGB, turn off 20 seconds after locked
   xdg.configFile."swayidle/config".text = ''
-    before-sleep '${if keys then "${keyring.lock}; " else ""} ${actionLock}'
-
     timeout ${toString lockTime} '${actionLock}'
 
     timeout ${toString (lockTime + 10)} '${actionMute}' resume  '${actionUnmute}'
@@ -35,10 +32,6 @@ in
     timeout ${toString (lockTime + 20)} '${actionDisplayOff}' resume  '${actionDisplayOn}'
     timeout 20 '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
   '' +
-
-  (if keys then ''
-    timeout ${toString (lockTime / 3)} '${keyring.lock}'
-  '' else "") +
 
   (if hasRgb then ''
     timeout ${toString (lockTime + 20)} '${actionRgbOff}' resume  '${actionRgbOn}'

@@ -1,4 +1,4 @@
-{ inputs, lib, config, hostname, persistence, graphical, keys, ... }:
+{ inputs, lib, config, hostname, persistence, graphical, trusted, ... }:
 
 let impermanence = inputs.impermanence.nixosModules.home-manager.impermanence;
 in
@@ -10,7 +10,7 @@ in
       impermanence
     ]
     ++ (if graphical then [ ./desktop-sway ./games ] else [ ])
-    ++ (if keys then [ ./trusted ] else [ ])
+    ++ (if trusted then [ ./trusted ] else [ ])
     ++ (if hostname == "atlas" then [ ./rgb ] else [ ]);
 
   home.persistence = lib.mkIf persistence {

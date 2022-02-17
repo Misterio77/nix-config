@@ -5,8 +5,6 @@ let
   gpg-connect-agent = "${pkgs.gnupg}/bin/gpg-connect-agent";
   keygrip = "149F16412997785363112F3DBD713BC91D51B831";
 in {
-  isUnlocked =
-    "${gpg-connect-agent} 'KEYINFO --list' /bye | grep ${keygrip} | grep -E 'D . . 1' -q";
-  lock = "${gpg-connect-agent} reloadagent /bye";
+  isUnlocked = "${gpg-connect-agent} 'scd getinfo card_list' /bye | grep SERIALNO -q";
   unlock = "${ssh} -T localhost -o StrictHostKeyChecking=no exit";
 }

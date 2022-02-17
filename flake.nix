@@ -74,7 +74,7 @@
           hostname = "atlas";
 
           graphical = true;
-          keys = true;
+          trusted = true;
           colorscheme = "spaceduck";
           wallpaper = "linkinpark-hybridtheory";
         };
@@ -84,7 +84,7 @@
           hostname = "pleione";
 
           graphical = true;
-          keys = true;
+          trusted = true;
           colorscheme = "paraiso";
           wallpaper = "cyberpunk-city-red";
         };

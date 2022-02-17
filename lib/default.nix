@@ -39,14 +39,14 @@
     , hostname
     , persistence ? true
     , graphical ? false
-    , keys ? false
+    , trusted ? false
     , colorscheme ? "nord"
     , wallpaper ? null
     }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit username system;
       extraSpecialArgs = {
-        inherit system hostname persistence graphical keys colorscheme wallpaper inputs;
+        inherit system hostname persistence graphical trusted colorscheme wallpaper inputs;
       };
       homeDirectory = "/home/${username}";
       configuration = ../users/${username}/home;

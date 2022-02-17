@@ -1,10 +1,7 @@
-{ lib, keys, pkgs, config, hostname, ... }:
+{ lib, trusted, pkgs, config, hostname, ... }:
 
 let
   colorscheme = config.colorscheme;
-
-  # keyring
-  keyring = import ../trusted/keyring.nix { inherit pkgs; };
 
   # Programs
   amfora = "${pkgs.amfora}/bin/amfora";
@@ -197,19 +194,17 @@ rec {
         "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
 
         # Pass wofi menu
-        "Scroll_Lock" = lib.mkIf keys "exec ${pass-wofi}"; # fn+k
-        "XF86Calculator" = lib.mkIf keys "exec ${pass-wofi}"; # fn+f12
+        "Scroll_Lock" = lib.mkIf trusted "exec ${pass-wofi}"; # fn+k
+        "XF86Calculator" = lib.mkIf trusted "exec ${pass-wofi}"; # fn+f12
 
-        # Lock or unlock gpg
-        "Shift+Scroll_Lock" = lib.mkIf keys ''
-          exec ${keyring.isUnlocked} && \
-          (${keyring.lock} && ${notify-send} "Locked" "Cleared gpg passphrase cache" -i lock -t 3000) || \
-          ${keyring.unlock}
-        '';
+        # Unlock gpg
+        "Shift+Scroll_Lock" =
+          let keyring = import ../trusted/keyring.nix { inherit pkgs; };
+          in lib.mkIf trusted "exec ${keyring.unlock}";
 
         # Lock screen
-        "XF86Launch5" = "exec ${swaylock} -i ${config.wallpaper}";   # lock icon on k70
-        "XF86Launch4" = "exec ${swaylock} -i ${config.wallpaper}";   # fn+q
+        "XF86Launch5" = "exec ${swaylock} -i ${config.wallpaper}"; # lock icon on k70
+        "XF86Launch4" = "exec ${swaylock} -i ${config.wallpaper}"; # fn+q
         "${modifier}+p" = "exec ${swaylock} -i ${config.wallpaper}"; # fn+f7
 
         # Volume

@@ -1,4 +1,4 @@
-{ config, keys, lib, pkgs, hostname, ... }:
+{ config, trusted, lib, pkgs, hostname, ... }:
 
 let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }:
   let jq = "${pkgs.jq}/bin/jq"; in
@@ -154,11 +154,13 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
             "unread" = "";
           };
         };
-        "custom/gpg-agent" = lib.mkIf keys {
+        "custom/gpg-agent" = lib.mkIf trusted {
           interval = 3;
           return-type = "json";
           exec =
-            let keyring = import ../trusted/keyring.nix { inherit pkgs; }; in
+            let
+              keyring = import ../trusted/keyring.nix { inherit pkgs; };
+            in
             jsonOutput {
               pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';
               alt = "$status";
