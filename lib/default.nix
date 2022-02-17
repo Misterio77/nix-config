@@ -4,12 +4,13 @@
     { hostname
     , system
     , users ? [ ]
-    , persistence ? false
+    , persistence ? true
+    , disable-hm ? false
     }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system hostname persistence;
+        inherit inputs system hostname persistence disable-hm;
       };
       modules = [
         ../modules/nixos
@@ -36,7 +37,7 @@
     { username
     , system
     , hostname
-    , persistence ? false
+    , persistence ? true
     , graphical ? false
     , keys ? false
     , colorscheme ? "nord"

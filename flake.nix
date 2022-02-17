@@ -49,25 +49,21 @@
           hostname = "atlas";
           system = "x86_64-linux";
           users = [ "misterio" ];
-          persistence = true;
         };
         pleione = lib.mkSystem {
           hostname = "pleione";
           system = "x86_64-linux";
           users = [ "misterio" ];
-          persistence = true;
         };
         merope = lib.mkSystem {
           hostname = "merope";
           system = "aarch64-linux";
           users = [ "misterio" ];
-          persistence = true;
         };
         maia = lib.mkSystem {
           hostname = "maia";
           system = "x86_64-linux";
           users = [ "layla" "misterio" ];
-          persistence = true;
         };
       };
 
@@ -77,7 +73,6 @@
           system = "x86_64-linux";
           hostname = "atlas";
 
-          persistence = true;
           graphical = true;
           keys = true;
           colorscheme = "spaceduck";
@@ -88,7 +83,6 @@
           system = "x86_64-linux";
           hostname = "pleione";
 
-          persistence = true;
           graphical = true;
           keys = true;
           colorscheme = "paraiso";
@@ -99,7 +93,6 @@
           system = "aarch64-linux";
           hostname = "merope";
 
-          persistence = true;
           colorscheme = "nord";
         };
         "misterio@maia" = lib.mkHome {
@@ -107,7 +100,6 @@
           system = "x86_64-linux";
           hostname = "maia";
 
-          persistence = true;
           colorscheme = "ashes";
         };
 
@@ -116,7 +108,6 @@
           hostname = "maia";
           system = "x86_64-linux";
 
-          persistence = true;
           graphical = true;
           colorscheme = "dracula";
         };
