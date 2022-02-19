@@ -86,7 +86,7 @@
           graphical = true;
           trusted = true;
           colorscheme = "paraiso";
-          wallpaper = "cyberpunk-city-red";
+          wallpaper = "eclipse-moon-red";
         };
         "misterio@merope" = lib.mkHome {
           username = "misterio";

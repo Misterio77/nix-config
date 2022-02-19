@@ -165,7 +165,7 @@ rec {
           }
         ];
       };
-      keybindings = lib.mkOptionDefault {
+      keybindings = lib.mkOptionDefault rec {
         # Focus parent or child
         "${modifier}+bracketleft" = "focus parent";
         "${modifier}+bracketright" = "focus child";
