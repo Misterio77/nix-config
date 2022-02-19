@@ -75,8 +75,8 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "spaceduck";
-          wallpaper = "linkinpark-hybridtheory";
+          colorscheme = "rose-pine";
+          wallpaper = "autumn-mountains";
         };
         "misterio@pleione" = lib.mkHome {
           username = "misterio";
