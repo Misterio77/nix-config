@@ -4,10 +4,10 @@ let
   colorscheme = config.colorscheme;
 
   # Programs
+  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
   amfora = "${pkgs.amfora}/bin/amfora";
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
-  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
   light = "${pkgs.light}/bin/light";
   makoctl = "${pkgs.mako}/bin/makoctl";
   neomutt = "${pkgs.neomutt}/bin/neomutt";
@@ -26,6 +26,7 @@ let
   waybar = "${pkgs.waybar}/bin/waybar";
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+  yubikey-touch-detector = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector";
   zathura = "${pkgs.zathura}/bin/zathura";
 in
 rec {
@@ -146,6 +147,8 @@ rec {
         { command = "${discocss}"; }
         # Start waybar
         { command = "${waybar}"; }
+        # Start yubikey touch detector
+        { command = "${yubikey-touch-detector} --libnotify"; }
       ] ++
       (if hostname == "atlas" then [{
         # Set primary monitor
