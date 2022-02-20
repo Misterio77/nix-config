@@ -18,7 +18,7 @@ in
     ../common/postgres.nix
     ../common/steam.nix
 
-    # ./satisfactory.nix
+    ./factorio.nix
   ];
 
   networking = {

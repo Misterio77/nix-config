@@ -2,7 +2,7 @@
   description = "My NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:misterio77/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
     home-manager.url = "github:nix-community/home-manager";
@@ -75,7 +75,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "rose-pine";
+          colorscheme = "rose-pine-moon";
           wallpaper = "autumn-mountains";
         };
         "misterio@pleione" = lib.mkHome {
