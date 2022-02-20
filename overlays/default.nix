@@ -6,6 +6,16 @@ final: prev:
         patches = (oldAttrs.patches or [ ])
         ++ [ ./vim-numbertoggle-command-mode.patch ];
       });
+    vim-nix = prev.vimPlugins.vim-nix.overrideAttrs
+      (oldAttrs: rec {
+        version = "2022-02-20";
+        src = final.fetchFromGitHub {
+          owner = "hqurve";
+          repo = "vim-nix";
+          rev = "26abd9cb976b5f4da6da02ee81449a959027b958";
+          sha256 = "sha256-7TDW6Dgy/H7PRrIvTMpmXO5/3K5F1d4p3rLYon6h6OU=";
+        };
+      });
   } // import ../pkgs/vim-plugins { pkgs = final; };
 
   todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
