@@ -7,7 +7,7 @@ in {
 
   programs.neovim = {
     enable = true;
-    extraConfig = ''
+    extraConfig = /* vim */ ''
       "Use truecolor
       set termguicolors
 
@@ -86,8 +86,7 @@ in {
   xdg.configFile."nvim/init.vim".onChange =
     let
       nvr = "${pkgs.neovim-remote}/bin/nvr";
-    in
-    ''
+    in /* sh */ ''
       ${nvr} --serverlist | while read server; do
         ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
       done

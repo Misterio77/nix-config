@@ -3,7 +3,7 @@
     # LSP
     {
       plugin = nvim-lspconfig;
-      config = ''
+      config = /* vim */ ''
         lua << EOF
           local lspconfig = require('lspconfig')
           local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -46,7 +46,9 @@
     }
     {
       plugin = rust-tools-nvim;
-      config = "lua require('rust-tools').setup{tools={autoSetHints = true}}";
+      config = /* lua */ ''
+        lua require('rust-tools').setup{tools={autoSetHints = true}}
+      '';
     }
 
     # Completions
@@ -55,7 +57,7 @@
     lspkind-nvim
     {
       plugin = nvim-cmp;
-      config = ''
+      config = /* vim */ ''
         lua << EOF
           local cmp = require('cmp')
           local lspkind = require('lspkind')
