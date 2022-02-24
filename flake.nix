@@ -75,7 +75,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "rose-pine-moon";
+          colorscheme = "spaceduck";
           wallpaper = "autumn-mountains";
         };
         "misterio@pleione" = lib.mkHome {

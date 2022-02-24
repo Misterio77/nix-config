@@ -6,7 +6,7 @@
     game-name = "Setembrin";
     openFirewall = true;
     requireUserVerification = false;
-    bindIP = "192.168.77.11";
+    bind = "192.168.77.11";
   };
 
   environment.persistence = lib.mkIf persistence {

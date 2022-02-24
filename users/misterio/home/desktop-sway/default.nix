@@ -2,7 +2,6 @@
   imports = [
     ./alacritty.nix
     ./discord.nix
-    ./firefox.nix
     ./font.nix
     ./gtk.nix
     ./kdeconnect.nix
