@@ -51,5 +51,11 @@ in
   security.sudo.extraConfig = "%wheel ALL = (ALL) NOPASSWD: ALL";
 
   # Enable argonone fan daemon
-  hardware.argonone.enable = true;
+  hardware = {
+    argonone.enable = true;
+    raspberry-pi."4" = {
+      i2c0.enable = true;
+      i2c1.enable = true;
+    };
+  };
 }
