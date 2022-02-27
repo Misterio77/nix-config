@@ -14,15 +14,17 @@ in
 
     ./deluge.nix
     # ./ddclient.nix
-    ./disconic.nix
     ./files-server.nix
     ./jitsi.nix
     ./minecraft.nix
     ./navidrome.nix
     ./nginx.nix
-    ./paste-misterio-me.nix
-    ./sistemer-bot.nix
     ./wireguard.nix
+
+    ./disconic.nix
+    ./paste-misterio-me.nix
+    ./pokedex-pfpa.nix
+    ./sistemer-bot.nix
   ];
 
   # Static IP address

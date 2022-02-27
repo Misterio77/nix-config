@@ -17,15 +17,22 @@
     paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.3.0";
     paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
     paste-misterio-me.inputs.utils.follows = "utils";
+
     pmis.url = "github:misterio77/pmis/1.0.1";
     pmis.inputs.nixpkgs.follows = "nixpkgs";
     pmis.inputs.utils.follows = "utils";
+
     sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.4";
     sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
     sistemer-bot.inputs.utils.follows = "utils";
+
     disconic.url = "github:misterio77/disconic/0.2.1";
     disconic.inputs.nixpkgs.follows = "nixpkgs";
     disconic.inputs.utils.follows = "utils";
+
+    pokedex-pfpa.url = "github:misterio77/pokedex-pfpa";
+    pokedex-pfpa.inputs.nixpkgs.follows = "nixpkgs";
+    pokedex-pfpa.inputs.utils.follows = "utils";
   };
 
   outputs = { ... }@inputs:
@@ -38,6 +45,7 @@
         paste-misterio-me.overlay
         pmis.overlay
         disconic.overlay
+        pokedex-pfpa.overlay
       ];
       lib = import ./lib { inherit inputs overlays; };
     in
@@ -75,7 +83,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "spaceduck";
+          colorscheme = "rose-pine-moon";
           wallpaper = "autumn-mountains";
         };
         "misterio@pleione" = lib.mkHome {
