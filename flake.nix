@@ -30,7 +30,7 @@
     disconic.inputs.nixpkgs.follows = "nixpkgs";
     disconic.inputs.utils.follows = "utils";
 
-    pokedex-pfpa.url = "github:misterio77/pokedex-pfpa";
+    pokedex-pfpa.url = "github:misterio77/pokedex-pfpa/1.0.1";
     pokedex-pfpa.inputs.nixpkgs.follows = "nixpkgs";
     pokedex-pfpa.inputs.utils.follows = "utils";
   };

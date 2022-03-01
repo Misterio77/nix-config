@@ -26,11 +26,11 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1645346782,
-        "narHash": "sha256-3qd0cu+2kapIP7cdHW9n8zh1wCvRGg83K7/cCj5Xv+A=",
+        "lastModified": 1645855197,
+        "narHash": "sha256-0FvBpX/9n69vg+XgcMow0RIRYbTHav1uCbL9Xt9HvcA=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "1ccfe243aa6e94bf80f2a66f6be41d086d37fc87",
+        "rev": "c3c66f6db4ac74a59eb83d83e40c10046ebc0b8c",
         "type": "github"
       },
       "original": {
@@ -46,11 +46,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1645628011,
-        "narHash": "sha256-iNZCTjJ63TN5oM6rx2f4H0zaCbXM/iup7UWtQuCuyTM=",
+        "lastModified": 1645970334,
+        "narHash": "sha256-6nn4YF9bPtkxkB7bM6yJO3m//p3sGilxNQFjm1epLEM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "0b1745b4ef4c35ec5d554b176539730fcb5ec141",
+        "rev": "ea85f4b1fdf3f25cf97dc49f4a9ec4eafda2ea25",
         "type": "github"
       },
       "original": {
@@ -107,11 +107,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1645675667,
-        "narHash": "sha256-ZCRO9zrswTlH8Oa+4VnaDYSb4XfRJt7mGizZ51QvDLM=",
+        "lastModified": 1646137100,
+        "narHash": "sha256-60lcmQFZndRyOEMSElMFL4u0Za4r1ZGS1VGDutkriGM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "56d2eccbdd80d84139e35f48f9b272e7c704f8cc",
+        "rev": "0d53b8ef088ca8b00695b5b0b4840070d060dfb6",
         "type": "github"
       },
       "original": {
@@ -168,6 +168,30 @@
         "type": "github"
       }
     },
+    "pokedex-pfpa": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1646014638,
+        "narHash": "sha256-ANtXmynoSB9v8rrKaGXP1MtMgQvRACNzTYT8LiSDCXg=",
+        "owner": "misterio77",
+        "repo": "pokedex-pfpa",
+        "rev": "0a54a2b71f2a5487750cf45d0e24e89cb56e1497",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "ref": "1.0.1",
+        "repo": "pokedex-pfpa",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disconic": "disconic",
@@ -179,6 +203,7 @@
         "nur": "nur",
         "paste-misterio-me": "paste-misterio-me",
         "pmis": "pmis",
+        "pokedex-pfpa": "pokedex-pfpa",
         "sistemer-bot": "sistemer-bot",
         "utils": "utils"
       }
