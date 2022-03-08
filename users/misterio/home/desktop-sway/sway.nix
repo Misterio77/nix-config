@@ -28,6 +28,8 @@ let
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   yubikey-touch-detector = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector";
   zathura = "${pkgs.zathura}/bin/zathura";
+
+  spawn-alacritty = cmd: "${alacritty} msg create-window ${cmd} || ${alacritty} ${cmd}";
 in
 rec {
   wayland.windowManager.sway = {
@@ -36,7 +38,7 @@ rec {
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = "Mod4";
-      terminal = "${alacritty}";
+      terminal = spawn-alacritty "";
       menu = "${wofi} -S run";
       fonts = {
         names = [ config.fontProfiles.regular.family ];
@@ -244,10 +246,10 @@ rec {
         "${modifier}+control+w" = "exec ${makoctl} invoke";
 
         # Programs
-        "${modifier}+v" = "exec ${terminal} -e $SHELL -i -c ${nvim}";
-        "${modifier}+o" = "exec ${terminal} -e $SHELL -i -c ${octave}";
-        "${modifier}+m" = "exec ${terminal} -e $SHELL -i -c ${neomutt}";
-        "${modifier}+a" = "exec ${terminal} -e $SHELL -i -c ${amfora}";
+        "${modifier}+v" = "exec ${spawn-alacritty "-e $SHELL -i -c ${nvim}"}";
+        "${modifier}+o" = "exec ${spawn-alacritty "-e $SHELL -i -c ${octave}"}";
+        "${modifier}+m" = "exec ${spawn-alacritty "-e $SHELL -i -c ${neomutt}"}";
+        "${modifier}+a" = "exec ${spawn-alacritty "-e $SHELL -i -c ${amfora}"}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
 

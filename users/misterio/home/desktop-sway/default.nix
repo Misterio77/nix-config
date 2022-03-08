@@ -3,6 +3,7 @@
     ./alacritty.nix
     ./discord.nix
     ./font.nix
+    ./firefox.nix
     ./gtk.nix
     ./kdeconnect.nix
     ./mako.nix

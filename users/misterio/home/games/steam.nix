@@ -8,6 +8,7 @@
       directories = [
         "Games/Steam"
         ".local/share/Steam"
+        ".steam"
 
         ".factorio"
         ".config/Hero_Siege"
@@ -17,7 +18,6 @@
         ".local/share/Paradox Interactive"
         ".paradoxlauncher"
       ];
-      files = [ ".steam/steam.token" ".steam/registry.vdf" ];
     };
   };
 }
