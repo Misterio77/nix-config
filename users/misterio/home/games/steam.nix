@@ -8,7 +8,6 @@
       directories = [
         "Games/Steam"
         ".local/share/Steam"
-        ".steam"
 
         ".factorio"
         ".config/Hero_Siege"
