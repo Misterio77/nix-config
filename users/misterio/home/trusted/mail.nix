@@ -13,10 +13,8 @@ let
       text = ''
         ${realName}
 
-        PGP: ${gpg.key}
-
         https://misterio.me
-        gemini://misterio.me
+        PGP: ${gpg.key}
       '';
     };
   };
