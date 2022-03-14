@@ -5,8 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
@@ -14,25 +17,41 @@
     utils.url = "github:numtide/flake-utils";
 
     # Nixified projects (usually hosted on merope)
-    paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.3.0";
-    paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
-    paste-misterio-me.inputs.utils.follows = "utils";
-
-    pmis.url = "github:misterio77/pmis/1.0.1";
-    pmis.inputs.nixpkgs.follows = "nixpkgs";
-    pmis.inputs.utils.follows = "utils";
-
-    sistemer-bot.url = "github:misterio77/sistemer-bot/1.1.4";
-    sistemer-bot.inputs.nixpkgs.follows = "nixpkgs";
-    sistemer-bot.inputs.utils.follows = "utils";
-
-    disconic.url = "github:misterio77/disconic/0.2.1";
-    disconic.inputs.nixpkgs.follows = "nixpkgs";
-    disconic.inputs.utils.follows = "utils";
-
-    pokedex-pfpa.url = "github:misterio77/pokedex-pfpa/1.0.1";
-    pokedex-pfpa.inputs.nixpkgs.follows = "nixpkgs";
-    pokedex-pfpa.inputs.utils.follows = "utils";
+    paste-misterio-me = {
+      url = "github:misterio77/paste.misterio.me/1.3.0";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
+    pmis = {
+      url = "github:misterio77/pmis/1.0.1";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
+    sistemer-bot = {
+      url = "github:misterio77/sistemer-bot/1.1.4";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
+    disconic = {
+      url = "github:misterio77/disconic/0.2.1";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
+    pokedex-pfpa = {
+      url = "github:misterio77/pokedex-pfpa/1.0.1";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "utils";
+      };
+    };
   };
 
   outputs = { ... }@inputs:

@@ -49,16 +49,6 @@ final: prev:
     '';
   });
 
-  # Update to commit that includes my sourcehut patch (can't waitt!!!)
-  nixUnstable = prev.nixUnstable.overrideAttrs (oldAttrs: rec {
-    src = final.fetchFromGitHub {
-      owner = "NixOS";
-      repo = "nix";
-      rev = "92b8d4d8861b908a7ec500526a84155c597d6d2b";
-      sha256 = "sha256-mdwznVHawjYvav6/fkBnwV90ItwHapSjPhNafh37mV4=";
-    };
-  });
-
   # Don't launch discord when using discocss
   discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];
