@@ -59,8 +59,4 @@ final: prev:
     patches = (oldAttrs.patches or [ ]) ++ [ ./wofi-run-shell.patch ];
   });
 
-  # Add suggestion for nix shell instead of nix-env
-  nix-index-unwrapped = prev.nix-index-unwrapped.overrideAttrs (oldAttrs: rec {
-    patches = (oldAttrs.patches or [ ]) ++ [ ./nix-index-new-command.patch ];
-  });
 } // import ../pkgs { pkgs = final; }
