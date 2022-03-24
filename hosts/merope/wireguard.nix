@@ -22,7 +22,7 @@ in
           peers = [
             # Calaeno (phone)
             {
-              publicKey = "OpU45rd0BrLPWHrtPtN8U5s4b3RU10B4TiHAN0p842g=";
+              publicKey = "jKsTxxfV+oyIDz+0GxN3eMMsEuDTsIAg0BWMvOcHWBo=";
               allowedIPs = [
                 # Wireguard IPs
                 "10.100.0.2/32"
