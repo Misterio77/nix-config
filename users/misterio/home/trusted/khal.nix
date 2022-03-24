@@ -3,14 +3,9 @@
   xdg.configFile."khal/config".text = ''
     [calendars]
 
-    [[personal]]
-    path = ~/Calendars/personal
-
-    [[uget]]
-    path = ~/Calendars/3CCD-613E1900-311-38A00200
-
-    [[usp]]
-    path = ~/Calendars/3CCD-613E1700-30D-38A00200/
+    [[calendars]]
+    path = ~/Calendars/*
+    type = discover
 
     [locale]
     timeformat = %H:%M
