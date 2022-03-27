@@ -21,6 +21,7 @@
     cachix
     exa
     ncdu
+    ripgrep
     rnix-lsp
   ];
 }
