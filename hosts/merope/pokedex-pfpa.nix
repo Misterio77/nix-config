@@ -6,7 +6,6 @@
       enable = true;
       port = 8083;
       sessionKeyFile = /srv/pokedex.key;
-      openFirewall = true;
     };
 
     postgresql = {

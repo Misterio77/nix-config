@@ -102,8 +102,8 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "rose-pine-moon";
-          wallpaper = "autumn-mountains";
+          colorscheme = "spaceduck";
+          wallpaper = "planet-comets-blue-pink";
         };
         "misterio@pleione" = lib.mkHome {
           username = "misterio";
