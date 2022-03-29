@@ -31,8 +31,8 @@
   networking.firewall = {
     # Minecraft, RCON
     allowedTCPPorts = [ 25565 25575 ];
-    # GeyserMC, PlasmoVoice
-    allowedUDPPorts = [ 19132 60606 ];
+    # GeyserMC
+    allowedUDPPorts = [ 19132 ];
   };
 
   environment.persistence = lib.mkIf persistence {

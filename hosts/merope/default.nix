@@ -35,11 +35,11 @@ in
       wakeOnLan.enable = true;
 
       ipv4.addresses = [{
-        address = "192.168.77.10";
+        address = "192.168.77.11";
         prefixLength = 24;
       }];
       ipv6.addresses = [{
-        address = "2804:14d:8084:a484:ffff:ffff:ffff:ffff";
+        address = "2804:14d:8084:a484::1";
         prefixLength = 64;
       }];
     };
