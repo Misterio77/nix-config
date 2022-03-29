@@ -29,24 +29,24 @@ in
 
       ipv4 = {
         addresses = [{
-          address = "192.168.77.11";
+          address = "192.168.77.12";
           prefixLength = 24;
         }];
         routes = [{
           address = "10.100.0.0";
           prefixLength = 24;
-          via = "192.168.77.10"; # Route traffic intended for the VPN through merope
+          via = "192.168.77.11"; # Route traffic intended for the VPN through merope
         }];
       };
       ipv6 = {
         addresses = [{
-          address = "2804:14d:8084:a484:eeee:eeee:eeee:eeee";
+          address = "2804:14d:8084:a484::2";
           prefixLength = 64;
         }];
         routes = [{
           address = "fdc9:281f:4d7:9ee9::";
           prefixLength = 64;
-          via = "2804:14d:8084:a484:ffff:ffff:ffff:ffff"; # Route traffic intended for the VPN through merope
+          via = "2804:14d:8084:a484::1"; # Route traffic intended for the VPN through merope
         }];
       };
     };
