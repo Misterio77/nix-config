@@ -11,4 +11,6 @@
   alacritty-ligatures = pkgs.callPackage ./alacritty-ligatures { };
 
   clematis = pkgs.callPackage ./clematis { };
+
+  photoprism = pkgs.callPackage ./photoprism { };
 }
