@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
       url = "https://dl.photoprism.app/tensorflow/${systemName}/libtensorflow-${systemName}-${version}.tar.gz";
       sha256 =
         if system == "x86_64-linux" then "sha256-bZAC3PJxqcjuGM4RcNtzYtkg3FD3SrO5beDsPoKenzc="
-        else if system == "aarch64-linux" then lib.fakeSha256
+        else if system == "aarch64-linux" then "sha256-qnj4vhSWgrk8SIjzIH1/4waMxMsxMUvqdYZPaSaUJRk="
         else throw "Unsupported system";
     })
     # Upstream tensorflow tarball (with includes we'll need)
