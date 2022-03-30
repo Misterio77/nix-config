@@ -55,23 +55,7 @@ let
 
     buildInputs = [
       coreutils
-      (libtensorflow-bin.overrideAttrs (oA: rec {
-        # photoprism isn't compatible with tensorflow 2.x yet
-        # https://github.com/photoprism/photoprism/issues/222
-        version = "1.15.2";
-        src = fetchurl {
-          url = "https://files.misterio.me/libtensorflow-${system}-${version}.tar.gz";
-          sha256 =
-            if system == "x86_64-linux"
-            then "sha256-fLNRIqPouLKeudo/gCJ4q8+7CsTrccukv+w9EWyQXX4="
-            else if system == "aarch64-linux"
-            then "sha256-7ELK+oNDF6Vu8sfGVPiF+PZp1lJw3le406sfyH4AnkY="
-            else lib.fakeSha256;
-        };
-        meta = oA.meta // {
-          platforms = [ "aarch64-linux" "x86_64-linux" ];
-        };
-      }))
+      (pkgs.callPackage ./tensorflow.nix { })
     ];
 
     postPatch = ''

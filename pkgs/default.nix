@@ -13,4 +13,5 @@
   clematis = pkgs.callPackage ./clematis { };
 
   photoprism = pkgs.callPackage ./photoprism { };
+  photoprism-tf = pkgs.callPackage ./photoprism/tensorflow.nix { };
 }
