@@ -58,15 +58,15 @@ let
       (libtensorflow-bin.overrideAttrs (oA: rec {
         # photoprism isn't compatible with tensorflow 2.x yet
         # https://github.com/photoprism/photoprism/issues/222
-        version = "1.14.0";
+        version = "1.15.2";
         src = fetchurl {
           url = "https://files.misterio.me/libtensorflow-${system}-${version}.tar.gz";
           sha256 =
             if system == "x86_64-linux"
-            then "sha256-0wwVmB1HwIHtTDi1/r+VuSYJNv3EpLkLQ2tpgmUccRE="
+            then "sha256-fLNRIqPouLKeudo/gCJ4q8+7CsTrccukv+w9EWyQXX4="
             else if system == "aarch64-linux"
-            then lib.fakeSha256
-            else null;
+            then "sha256-7ELK+oNDF6Vu8sfGVPiF+PZp1lJw3le406sfyH4AnkY="
+            else lib.fakeSha256;
         };
         meta = oA.meta // {
           platforms = [ "aarch64-linux" "x86_64-linux" ];

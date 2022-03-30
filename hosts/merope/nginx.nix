@@ -5,5 +5,6 @@
     recommendedProxySettings = true;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
+    clientMaxBodySize = "300m";
   };
 }

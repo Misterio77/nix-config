@@ -19,6 +19,7 @@ in
     ./minecraft.nix
     ./navidrome.nix
     ./nginx.nix
+    ./photoprism.nix
     ./wireguard.nix
 
     ./disconic.nix

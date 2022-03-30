@@ -198,6 +198,7 @@ in
         createHome = true;
         isSystemUser = true;
       };
+      groups.${cfg.group} = { };
     };
 
     systemd.services.photoprism = {
