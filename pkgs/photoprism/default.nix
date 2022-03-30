@@ -14,6 +14,7 @@
 , libheif
 , exiftool
 , nodejs
+, system
 }:
 
 let
@@ -54,13 +55,21 @@ let
 
     buildInputs = [
       coreutils
-      (libtensorflow-bin.overrideAttrs (oA: {
+      (libtensorflow-bin.overrideAttrs (oA: rec {
         # photoprism isn't compatible with tensorflow 2.x yet
         # https://github.com/photoprism/photoprism/issues/222
-        version = "1.15.0";
+        version = "1.14.0";
         src = fetchurl {
-          url = "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.15.0.tar.gz";
-          sha256 = "sha256-3sv9WnCeztNSP1XM+iOTN6h+GrPgAO/aNhfbeeEDTe0=";
+          url = "https://files.misterio.me/libtensorflow-${system}-${version}.tar.gz";
+          sha256 =
+            if system == "x86_64-linux"
+            then "sha256-0wwVmB1HwIHtTDi1/r+VuSYJNv3EpLkLQ2tpgmUccRE="
+            else if system == "aarch64-linux"
+            then lib.fakeSha256
+            else null;
+        };
+        meta = oA.meta // {
+          platforms = [ "aarch64-linux" "x86_64-linux" ];
         };
       }))
     ];
@@ -147,7 +156,7 @@ stdenv.mkDerivation {
   meta = with lib; {
     homepage = "https://photoprism.app";
     description = "Personal Photo Management powered by Go and Google TensorFlow";
-    platforms = [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
     license = licenses.agpl3;
     maintainers = with maintainers; [ newam ];
   };
