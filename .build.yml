@@ -5,6 +5,8 @@ packages:
 
 environment:
   NIX_CONFIG: "experimental-features = nix-command flakes"
+  repo: "nix-config"
+  cachix: "misterio"
 
 secrets:
   - f2907d38-97b4-4e7d-9fb9-57b3fb0135af
@@ -12,7 +14,9 @@ secrets:
 tasks:
 - setup_cachix: |
     cachix authtoken --stdin < ~/.cachix_token
-    cachix use misterio
+    cachix use "$cachix"
 - build: |
-    cd nix-config
-    cachix watch-exec misterio nix build .#{pmis,alacritty-ligatures,comma,photoprism}
+    cd "$repo"
+    nix build .#{pmis,alacritty-ligatures,comma,photoprism}
+- upload_cachix: |
+    nix path-info "$repo"/result*/ -r | cachix push "$cachix"
