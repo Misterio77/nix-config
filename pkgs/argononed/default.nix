@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   pname = "argononed";
-  version = "unstable-2021-09-29";
+  version = "0.4.x-2022-03-31";
   src = fetchFromGitLab {
     owner = "DarkElvenAngel";
     repo = pname;
-    rev = "ee3df279f7954a8020313f5be15a2f9db0b71341";
-    sha256 = "sha256-iReXZ/OQq5F6bYl90ET3zJ3yNWv/LlndS3UHhs4K1eM=";
+    rev = "fe5753310bcc735818c8fe7d2a2ba397741c6f7b";
+    sha256 = "sha256-7NY+gIOLK7vrjVBpr5eUDpbk9vEcO5muVyR4brfp2mg=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
