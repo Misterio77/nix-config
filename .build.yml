@@ -11,7 +11,7 @@ secrets:
 
 tasks:
 - setup_cachix: |
-    cat ~/.cachix_token | cachix authtoken --stdin
+    cachix authtoken --stdin < ~/.cachix_token
     cachix use misterio
 - build: |
     cd nix-config
