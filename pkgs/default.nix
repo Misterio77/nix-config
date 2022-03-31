@@ -1,17 +1,14 @@
 { pkgs }: {
-  wallpapers = pkgs.callPackage ./wallpapers { };
-
-  shellcolord = pkgs.callPackage ./shellcolord { };
-  rgbdaemon = pkgs.callPackage ./rgbdaemon { };
-
-  preferredplayer = pkgs.callPackage ./preferredplayer { };
-
-  pass-wofi = pkgs.callPackage ./pass-wofi { };
-
   alacritty-ligatures = pkgs.callPackage ./alacritty-ligatures { };
-
+  argononed = pkgs.callPackage ./argononed { };
   clematis = pkgs.callPackage ./clematis { };
-
+  comma = pkgs.callPackage ./comma { };
+  minicava = pkgs.callPackage ./minicava { };
+  pass-wofi = pkgs.callPackage ./pass-wofi { };
   photoprism = pkgs.callPackage ./photoprism { };
-  photoprism-tf = pkgs.callPackage ./photoprism/tensorflow.nix { };
+  preferredplayer = pkgs.callPackage ./preferredplayer { };
+  rgbdaemon = pkgs.callPackage ./rgbdaemon { };
+  shellcolord = pkgs.callPackage ./shellcolord { };
+  swayfader = pkgs.callPackage ./swayfader { };
+  wallpapers = pkgs.callPackage ./wallpapers { };
 }

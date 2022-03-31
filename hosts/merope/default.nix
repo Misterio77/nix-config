@@ -5,7 +5,6 @@ let nur = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; 
 in
 {
   imports = [
-    nur.repos.misterio.modules.argonone
     inputs.hardware.nixosModules.raspberry-pi-4
 
     ./hardware-configuration.nix

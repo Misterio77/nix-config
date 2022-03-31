@@ -12,8 +12,7 @@
       specialArgs = {
         inherit inputs system hostname persistence disable-hm;
       };
-      modules = [
-        ../modules/nixos
+      modules = builtins.attrValues (import ../modules/nixos) ++ [
         ../hosts/${hostname}
         {
           networking.hostName = hostname;
@@ -50,8 +49,7 @@
       };
       homeDirectory = "/home/${username}";
       configuration = ../users/${username}/home;
-      extraModules = [
-        ../modules/home-manager
+      extraModules = builtins.attrValues (import ../modules/home-manager) ++ [
         # Base configuration
         {
           nixpkgs = {

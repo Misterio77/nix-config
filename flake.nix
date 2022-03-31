@@ -145,11 +145,9 @@
     } // inputs.utils.lib.eachDefaultSystem (system:
       let
         pkgs = import inputs.nixpkgs { inherit system overlays; };
-        gtkThemeFromScheme = (inputs.nix-colors.lib { inherit pkgs; }).gtkThemeFromScheme;
-        generated-gtk-themes = builtins.mapAttrs (name: value: gtkThemeFromScheme { scheme = value; }) inputs.nix-colors.colorSchemes;
       in
       {
-        packages = pkgs // { inherit generated-gtk-themes; };
+        packages = pkgs;
 
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ nixfmt rnix-lsp home-manager git ];

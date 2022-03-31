@@ -20,7 +20,7 @@ let
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
   ssh = "${pkgs.openssh}/bin/ssh";
-  swayfader = "${pkgs.nur.repos.misterio.swayfader}/bin/swayfader";
+  swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   waybar = "${pkgs.waybar}/bin/waybar";

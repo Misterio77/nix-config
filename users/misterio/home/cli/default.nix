@@ -16,7 +16,7 @@
   ];
   home.packages = with pkgs; [
     # Cli
-    nur.repos.misterio.comma
+    comma
     bottom
     cachix
     exa
