@@ -38,3 +38,16 @@ All you need is bash, nix, and git. Just `nix develop`, and you should be good t
 `nixos-rebuild --flake .` To build system configuration
 
 `home-manager --flake .` To build user configuration
+
+## Secrets
+
+On my desktop and laptop, I use `pass` for managing passwords, which are encrypted using PGP together with a YubiKey. I use this same PGP keychain for SSH, so secrets are easy to grab from a fresh host.
+
+Secrets on my headless pi (merope) are stored on the persist directories (usually `/srv`), I don't bother managing them since they're easily rotated if needed.
+
+## Unixpornish stuff
+![screenshot](https://preview.redd.it/q8z05dsvrvb81.png?width=960&crop=smart&auto=webp&s=d66264a468c0ca194cc8cbb2ab80829eea7921a7)
+
+That's how my sway setups (desktop and laptop) look like.
+
+If you're interested in my WM configurations, they're managed by home-manager and are located at `users/misterio/home/desktop-sway`.
