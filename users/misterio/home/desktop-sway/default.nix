@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./alacritty.nix
     ./discord.nix
     ./font.nix
     ./firefox.nix
@@ -13,7 +14,6 @@
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
-    ./wezterm.nix
     ./wofi.nix
     ./zathura.nix
   ];

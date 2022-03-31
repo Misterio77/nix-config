@@ -4,7 +4,7 @@ let
   colorscheme = config.colorscheme;
 
   # Programs
-  wezterm = "${pkgs.wezterm}/bin/wezterm";
+  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
   amfora = "${pkgs.amfora}/bin/amfora";
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
@@ -28,6 +28,8 @@ let
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   yubikey-touch-detector = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector";
   zathura = "${pkgs.zathura}/bin/zathura";
+
+  spawn-alacritty = cmd: "${alacritty} msg create-window ${cmd} || ${alacritty} ${cmd}";
 in
 rec {
   wayland.windowManager.sway = {
@@ -36,7 +38,7 @@ rec {
     wrapperFeatures.gtk = true;
     config = rec {
       modifier = "Mod4";
-      terminal = wezterm;
+      terminal = spawn-alacritty "";
       menu = "${wofi} -S run";
       fonts = {
         names = [ config.fontProfiles.regular.family ];
@@ -244,10 +246,10 @@ rec {
         "${modifier}+control+w" = "exec ${makoctl} invoke";
 
         # Programs
-        "${modifier}+v" = "exec ${wezterm} start -- $SHELL -ic ${nvim}";
-        "${modifier}+o" = "exec ${wezterm} start -- $SHELL -ic ${octave}";
-        "${modifier}+m" = "exec ${wezterm} start -- $SHELL -ic ${neomutt}";
-        "${modifier}+a" = "exec ${wezterm} start -- $SHELL -ic ${amfora}";
+        "${modifier}+v" = "exec ${spawn-alacritty "-e $SHELL -i -c ${nvim}"}";
+        "${modifier}+o" = "exec ${spawn-alacritty "-e $SHELL -i -c ${octave}"}";
+        "${modifier}+m" = "exec ${spawn-alacritty "-e $SHELL -i -c ${neomutt}"}";
+        "${modifier}+a" = "exec ${spawn-alacritty "-e $SHELL -i -c ${amfora}"}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
 
