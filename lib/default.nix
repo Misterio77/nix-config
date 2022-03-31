@@ -1,5 +1,7 @@
 { inputs, overlays }:
 {
+  importAttrset = path: builtins.mapAttrs (_: v: import v) (import path);
+
   mkSystem =
     { hostname
     , system

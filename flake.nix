@@ -71,6 +71,9 @@
     {
       inherit overlay overlays;
 
+      nixosModules = lib.importAttrset ./modules/nixos;
+      homeManagerModules = lib.importAttrset ./modules/home-manager;
+
       nixosConfigurations = {
         atlas = lib.mkSystem {
           hostname = "atlas";
@@ -147,10 +150,13 @@
         pkgs = import inputs.nixpkgs { inherit system overlays; };
       in
       {
+        # Allows 'nix build .#package-name', including vanilla, overlayed, and custom packages
         packages = pkgs;
 
+        # 'nix develop' for bootstrapping
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ nixfmt rnix-lsp home-manager git ];
+          NIX_CONFIG = "experimental-features = nix-command flakes";
         };
       });
 }
