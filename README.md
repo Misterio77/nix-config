@@ -1,3 +1,6 @@
+[![builds.sr.ht status](https://builds.sr.ht/~misterio/nix-config.svg)](https://builds.sr.ht/~misterio/nix-config)
+[![built with nix](https://img.shields.io/static/v1?logo=nixos&logoColor=white&label=&message=Built%20with%20Nix&color=41439a)](https://builtwithnix.org)
+
 # My NixOS configurations
 
 Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.wiki/wiki/Flakes).
@@ -16,14 +19,14 @@ Looking for something simpler to start out with flakes? Try [my starter config r
   - `layla`: My sweet sweet girl
 - `modules`: A few modules i have for personal use.
 - `overlays`: Patches and version overrides for some packages. Accessible via `nix build`.
-- `pkgs`: Some of my custom packages. There's a few others at [my NUR](https://github.com/misterio77/nur-packages). Also accessible via `nix build`.
+- `pkgs`: My custom packages. Also accessible via `nix build`. You can compose these into your own configuration by using my flake's overlay or through NUR.
 - `templates`: A couple project templates for different languages. Accessible via `nix init`.
 
 
 ## About the installation
 This is hardware specific and can easily be changed by switching out `hardware-configuration.nix` files.
 
-All my computers use a single btrfs (encrypted on all except headless) partition, with subvolumes for `/nix`, a `/persist` directory (which I opt in using `impermanence`), swap file, and a root subvolume cleared on every boot.
+All my computers use a single btrfs (encrypted on all except headless systems) partition, with subvolumes for `/nix`, a `/persist` directory (which I opt in using `impermanence`), swap file, and a root subvolume (cleared on every boot).
 
 Home-manager is used in a standalone way, and because of opt-in persistence is activated on every boot with `loginShellInit`.
 
