@@ -2,7 +2,8 @@
 
 let
   inherit (inputs.nix-colors.lib { inherit pkgs; }) vimThemeFromScheme;
-in {
+in
+{
   imports = [ ./ui.nix ./lsp.nix ./syntax.nix ];
 
   programs.neovim = {
@@ -55,27 +56,37 @@ in {
       vim-surround
       {
         plugin = better-escape-nvim;
-        config = "lua require('better_escape').setup()";
+        config = /* lua */ ''
+          lua require('better_escape').setup()
+        '';
       }
       {
         plugin = range-highlight-nvim;
-        config = "lua require('range-highlight').setup{}";
+        config = /* lua */ ''
+          lua require('range-highlight').setup{}
+        '';
       }
       {
         plugin = nvim-autopairs;
-        config = "lua require('nvim-autopairs').setup{}";
+        config = /* lua */ ''
+          lua require('nvim-autopairs').setup{}
+        '';
       }
       {
         plugin = which-key-nvim;
-        config = "lua require('which-key').setup{}";
+        config = /* lua */ ''
+          lua require('which-key').setup{}
+        '';
       }
       {
         plugin = vimThemeFromScheme { scheme = config.colorscheme; };
-        config = "colorscheme nix-${config.colorscheme.slug}";
+        config = /* vim */ ''
+          colorscheme nix-${config.colorscheme.slug}
+        '';
       }
       {
         plugin = vim-medieval;
-        config = ''
+        config = /* vim */ ''
           nmap <buffer> Z <Plug>(medieval-eval)
           let g:medieval_langs = ['haskell=runghc', 'sh']
         '';
@@ -86,13 +97,14 @@ in {
   xdg.configFile."nvim/init.vim".onChange =
     let
       nvr = "${pkgs.neovim-remote}/bin/nvr";
-    in /* sh */ ''
+    in
+      /* sh */ ''
       ${nvr} --serverlist | while read server; do
         ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
       done
     '';
 
-  home.sessionVariables = { EDITOR = "nvim"; };
+  home.sessionVariables.EDITOR = "nvim";
 
   xdg.desktopEntries = {
     nvim = {
