@@ -42,7 +42,7 @@
       extraSpecialArgs = {
         inherit inputs system hostname;
       };
-      configuration = ../hosts/${hostname};
+      config = ../hosts/${hostname};
       extraModules = builtins.attrValues (import ../modules/nixondroid);
       pkgs = import inputs.nixpkgs {
         inherit system;
