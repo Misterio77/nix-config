@@ -43,7 +43,15 @@
         inherit inputs system hostname;
       };
       config = ../hosts/${hostname};
-      extraModules = builtins.attrValues (import ../modules/nixondroid);
+      extraModules = builtins.attrValues (import ../modules/nixondroid) ++ [
+        {
+          # Add each input as a registry
+          nix.registry = inputs.nixpkgs.lib.mapAttrs'
+            (n: v:
+              inputs.nixpkgs.lib.nameValuePair (n) ({ flake = v; }))
+            inputs;
+        }
+      ];
       pkgs = import inputs.nixpkgs {
         inherit system;
         overlays = overlays ++ [ inputs.nix-on-droid.overlay ];
