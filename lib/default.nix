@@ -46,7 +46,7 @@
       extraModules = builtins.attrValues (import ../modules/nixondroid);
       pkgs = import inputs.nixpkgs {
         inherit system;
-        overlays = overlays ++ inputs.nix-on-droid.overlay;
+        overlays = overlays ++ [ inputs.nix-on-droid.overlay ];
       };
     };
 
