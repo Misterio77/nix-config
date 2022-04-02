@@ -17,6 +17,7 @@ in
     ./jitsi.nix
     ./minecraft.nix
     ./navidrome.nix
+    ./nextcloud.nix
     ./nginx.nix
     ./photoprism.nix
     ./wireguard.nix
