@@ -7,12 +7,11 @@
     , system
     , users ? [ ]
     , persistence ? true
-    , disable-hm ? false
     }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system hostname persistence disable-hm;
+        inherit inputs system hostname persistence;
       };
       modules = builtins.attrValues (import ../modules/nixos) ++ [
         ../hosts/${hostname}
@@ -32,6 +31,23 @@
         # System wide config for each user
       ] ++ inputs.nixpkgs.lib.forEach users
         (u: ../users/${u}/system);
+    };
+
+  mkDroidSystem =
+    { hostname
+    , system
+    }:
+    inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+      inherit system;
+      extraSpecialArgs = {
+        inherit inputs system hostname;
+      };
+      configuration = ../hosts/${hostname};
+      extraModules = builtins.attrValues (import ../modules/nixondroid);
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = overlays ++ inputs.nix-on-droid.overlay;
+      };
     };
 
   mkHome =

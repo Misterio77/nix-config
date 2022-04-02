@@ -11,6 +11,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
@@ -97,6 +103,13 @@
         };
       };
 
+      nixOnDroidConfigurations = {
+        calaeno = lib.mkDroidSystem {
+          hostname = "calaeno";
+          system = "aarch64-linux";
+        };
+      };
+
       homeConfigurations = {
         "misterio@atlas" = lib.mkHome {
           username = "misterio";
@@ -124,6 +137,14 @@
           hostname = "merope";
 
           colorscheme = "nord";
+        };
+        "misterio@calaeno" = lib.mkHome {
+          username = "misterio";
+          system = "aarch64-linux";
+          hostname = "calaeno";
+
+          colorscheme = "pasque";
+          persistence = false;
         };
         "misterio@maia" = lib.mkHome {
           username = "misterio";
