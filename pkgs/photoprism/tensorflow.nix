@@ -1,18 +1,23 @@
 { lib
 , stdenv
 , fetchurl
-, system
 }:
 
 with lib;
 let
+  inherit (stdenv.hostPlatform) system;
+
   rpath = makeLibraryPath ([ stdenv.cc.libc stdenv.cc.cc.lib ]);
 
-  systemName =
-    if system == "x86_64-linux" then "amd64"
-    else if system == "aarch64-linux" then "arm64"
-    else throw "Unsupported system";
+  systemName = {
+    x86_64-linux = "amd64";
+    aarch64-linux = "arm64";
+  }.${stdenv.hostPlatform.system} or (throw "Unsupported system");
 
+  sha256 = {
+    x86_64-linux = "sha256-bZAC3PJxqcjuGM4RcNtzYtkg3FD3SrO5beDsPoKenzc=";
+    aarch64-linux = "sha256-qnj4vhSWgrk8SIjzIH1/4waMxMsxMUvqdYZPaSaUJRk=";
+  }.${stdenv.hostPlatform.system} or (throw "Unsupported system");
 
 in
 stdenv.mkDerivation rec {
@@ -22,11 +27,8 @@ stdenv.mkDerivation rec {
   srcs = [
     # Downstream photoprism libtensorflow tarball (with pre-built libs for both arm64 and amd64)
     (fetchurl {
+      inherit sha256;
       url = "https://dl.photoprism.app/tensorflow/${systemName}/libtensorflow-${systemName}-${version}.tar.gz";
-      sha256 =
-        if system == "x86_64-linux" then "sha256-bZAC3PJxqcjuGM4RcNtzYtkg3FD3SrO5beDsPoKenzc="
-        else if system == "aarch64-linux" then "sha256-qnj4vhSWgrk8SIjzIH1/4waMxMsxMUvqdYZPaSaUJRk="
-        else throw "Unsupported system";
     })
     # Upstream tensorflow tarball (with includes we'll need)
     (fetchurl {
