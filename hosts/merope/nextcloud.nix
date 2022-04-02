@@ -1,12 +1,12 @@
-{ lib, config, persistence, ... }:
+{ lib, pkgs, persistence, ... }:
 {
   services = {
     nextcloud = {
+      package = pkgs.nextcloud23;
       enable = true;
       hostName = "nextcloud.misterio.me";
-      nginx.enable = true;
       https = true;
-      adminpassFile = "/srv/nextcloud.password";
+      config.adminpassFile = "/srv/nextcloud.password";
     };
 
     nginx.virtualHosts =
