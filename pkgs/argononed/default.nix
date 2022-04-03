@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   pname = "argononed";
-  version = "0.4.x-2022-03-31";
+  version = "0.3.3";
   src = fetchFromGitLab {
     owner = "DarkElvenAngel";
     repo = pname;
-    rev = "fe5753310bcc735818c8fe7d2a2ba397741c6f7b";
-    sha256 = "sha256-7NY+gIOLK7vrjVBpr5eUDpbk9vEcO5muVyR4brfp2mg=";
+    rev = "d50040115beece36a0259cef2248eff467286207";
+    sha256 = "sha256-3GBEzBh5VuuPh+iZeLBV/7oTX0Zqs8pcvfOXgDt68WQ=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
@@ -36,5 +36,6 @@ stdenv.mkDerivation rec {
     description = "A replacement daemon for the Argon One Raspberry Pi case";
     license = licenses.mit;
     platforms = platforms.all;
+    maintainers = [ maintainers.misterio ];
   };
 }
