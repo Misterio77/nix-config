@@ -8,6 +8,7 @@ in {
       package = pkgs.nextcloud23;
       enable = true;
       https = true;
+      home = "/media/nextcloud";
       config.adminpassFile = "/srv/nextcloud.password";
     };
 
@@ -15,9 +16,5 @@ in {
       forceSSL = true;
       enableACME = true;
     };
-  };
-
-  environment.persistence = lib.mkIf persistence {
-    "/persist".directories = [ "/var/lib/nextcloud" ];
   };
 }
