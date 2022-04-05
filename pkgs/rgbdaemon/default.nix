@@ -1,5 +1,9 @@
-{ lib, stdenv, fetchFromGitHub, makeWrapper, findutils, gnugrep, procps, gawk
-, coreutils, openrgb, pastel, pulseaudio, playerctl, preferredplayer, sway }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, makeWrapper
+, pkgs
+}:
 
 with lib;
 
@@ -22,7 +26,7 @@ stdenv.mkDerivation {
     install -Dm 0755 rgbdaemon.sh $out/bin/rgbdaemon
     wrapProgram $out/bin/rgbdaemon --set PATH \
       "${
-        makeBinPath [
+        makeBinPath (with pkgs; [
           findutils
           gnugrep
           procps
@@ -34,7 +38,7 @@ stdenv.mkDerivation {
           playerctl
           preferredplayer
           sway
-        ]
+        ])
       }"
   '';
 

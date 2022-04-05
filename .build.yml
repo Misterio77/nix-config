@@ -22,4 +22,4 @@ tasks:
 - upload_cachix: |
     nix path-info "$repo"/result*/ -r | cachix push "$cachix"
 - update_nur: |
-    curl -XPOST "https://nur-update.herokuapp.com/update?repo=${nur}";
+    curl -XPOST "https://nur-update.herokuapp.com/update?repo=${nur}"
