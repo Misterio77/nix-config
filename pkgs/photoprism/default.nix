@@ -142,6 +142,6 @@ stdenv.mkDerivation {
     description = "Personal Photo Management powered by Go and Google TensorFlow";
     platforms = [ "x86_64-linux" "aarch64-linux" ];
     license = licenses.agpl3;
-    maintainers = with maintainers; [ newam ];
+    # maintainers = with maintainers; [ newam ];
   };
 }
