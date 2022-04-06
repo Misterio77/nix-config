@@ -2,7 +2,18 @@
 , stdenv
 , fetchFromGitHub
 , makeWrapper
+, findutils
+, gnugrep
+, procps
+, gawk
+, coreutils
+, openrgb
+, pastel
+, pulseaudio
+, playerctl
+, sway
 , pkgs
+, preferredplayer ? pkgs.nur.misterio.preferredplayer
 }:
 
 with lib;
@@ -26,7 +37,7 @@ stdenv.mkDerivation {
     install -Dm 0755 rgbdaemon.sh $out/bin/rgbdaemon
     wrapProgram $out/bin/rgbdaemon --set PATH \
       "${
-        makeBinPath (with pkgs; [
+        makeBinPath [
           findutils
           gnugrep
           procps
@@ -38,7 +49,7 @@ stdenv.mkDerivation {
           playerctl
           preferredplayer
           sway
-        ])
+        ]
       }"
   '';
 
