@@ -1,4 +1,4 @@
-{ lib, stdenv, writeShellScriptBin, playerctl, procps, pkgs, clematis ? pkgs.nur.misterio.clematis }:
+{ lib, stdenv, writeShellScriptBin, playerctl, procps, pkgs, clematis ? pkgs.callPackage ../clematis { } }:
 
 with lib;
 

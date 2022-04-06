@@ -13,7 +13,7 @@
 , playerctl
 , sway
 , pkgs
-, preferredplayer ? pkgs.nur.misterio.preferredplayer
+, preferredplayer ? pkgs.callPackage ../preferredplayer { }
 }:
 
 with lib;
