@@ -9,7 +9,7 @@
   outputs = { self, nixpkgs, utils }:
     let
       name = "foo-bar";
-      overlay = final: prev: {
+      overlay = final: _prev: {
         ${name} = final.callPackage ./default.nix { };
       };
       overlays = [ overlay ];

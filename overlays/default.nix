@@ -7,7 +7,7 @@ final: prev:
         ++ [ ./vim-numbertoggle-command-mode.patch ];
       });
     vim-nix = prev.vimPlugins.vim-nix.overrideAttrs
-      (oldAttrs: rec {
+      (_oldAttrs: rec {
         version = "2022-02-20";
         src = final.fetchFromGitHub {
           owner = "hqurve";

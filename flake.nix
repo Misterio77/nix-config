@@ -155,7 +155,7 @@
 
         # 'nix develop' for bootstrapping
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ nixfmt rnix-lsp home-manager git ];
+          buildInputs = with pkgs; [ home-manager git ];
           NIX_CONFIG = "experimental-features = nix-command flakes";
         };
       });

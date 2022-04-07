@@ -15,13 +15,16 @@
     ./starship.nix
   ];
   home.packages = with pkgs; [
-    # Cli
+    # CLI Utils
     comma
     bottom
     cachix
     exa
     ncdu
     ripgrep
+    # Nix tooling
     rnix-lsp
+    nixfmt
+    deadnix
   ];
 }

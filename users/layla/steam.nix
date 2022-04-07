@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, ... }: {
   home.packages = [ pkgs.steam ];
   home.persistence = {
     "/persist/home/layla" = {

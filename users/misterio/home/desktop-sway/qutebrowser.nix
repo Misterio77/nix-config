@@ -2,7 +2,6 @@
 
 let
   colors = config.colorscheme.colors;
-  nvim = "${pkgs.neovim}/bin/nvim";
 in {
   home.persistence = lib.mkIf persistence {
     "/persist/home/misterio".directories = [

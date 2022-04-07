@@ -11,7 +11,6 @@ let
   light = "${pkgs.light}/bin/light";
   makoctl = "${pkgs.mako}/bin/makoctl";
   neomutt = "${pkgs.neomutt}/bin/neomutt";
-  notify-send = "${pkgs.libnotify}/bin/notify-send";
   nvim = "${pkgs.neovim}/bin/nvim";
   octave = "${pkgs.octave}/bin/octave";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
@@ -19,7 +18,6 @@ let
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
-  ssh = "${pkgs.openssh}/bin/ssh";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";

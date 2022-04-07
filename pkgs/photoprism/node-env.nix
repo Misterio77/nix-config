@@ -109,7 +109,7 @@ let
     );
 
   # Recursively composes the dependencies of a package
-  composePackage = { name, packageName, src, dependencies ? [], ... }@args:
+  composePackage = { packageName, src, dependencies ? [], ... }:
     builtins.addErrorContext "while evaluating node package '${packageName}'" ''
       installPackage "${packageName}" "${src}"
       ${includeDependencies { inherit dependencies; }}
@@ -190,7 +190,7 @@ let
   # dependencies in the package.json file to the versions that are actually
   # being used.
 
-  pinpointDependenciesOfPackage = { packageName, dependencies ? [], production ? true, ... }@args:
+  pinpointDependenciesOfPackage = { packageName, dependencies ? [], production ? true, ... }:
     ''
       if [ -d "${packageName}" ]
       then
@@ -391,7 +391,6 @@ let
     { name
     , packageName
     , version
-    , dependencies ? []
     , buildInputs ? []
     , production ? true
     , npmFlags ? ""
@@ -540,19 +539,9 @@ let
   # Builds a development shell
   buildNodeShell =
     { name
-    , packageName
     , version
-    , src
     , dependencies ? []
     , buildInputs ? []
-    , production ? true
-    , npmFlags ? ""
-    , dontNpmInstall ? false
-    , bypassCache ? false
-    , reconstructLock ? false
-    , dontStrip ? true
-    , unpackPhase ? "true"
-    , buildPhase ? "true"
     , ... }@args:
 
     let

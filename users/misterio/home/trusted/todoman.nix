@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [ todoman ];
   xdg.configFile."todoman/config.py".text = ''
     path = "~/Calendars/*"

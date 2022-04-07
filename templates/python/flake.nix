@@ -13,7 +13,7 @@
   outputs = { self, nixpkgs, flake-utils, poetry2nix }:
     let
       name = "foo-bar";
-      overlay = nixpkgs.lib.composeExtensions poetry2nix.overlay (final: prev: {
+      overlay = nixpkgs.lib.composeExtensions poetry2nix.overlay (final: _prev: {
         ${name} = final.poetry2nix.mkPoetryApplication {
           projectDir = ./.;
           overrides = [ final.poetry2nix.defaultPoetryOverrides ];

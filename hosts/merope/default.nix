@@ -1,8 +1,6 @@
 # System configuration for my Raspberry Pi 4
-{ config, pkgs, system, inputs, ... }:
+{ inputs, ... }:
 
-let nur = import inputs.nur { nurpkgs = import inputs.nixpkgs { inherit system; }; };
-in
 {
   imports = [
     inputs.hardware.nixosModules.raspberry-pi-4

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 let colors = config.colorscheme.colors;
 in {
   programs.mako = {

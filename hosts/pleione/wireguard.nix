@@ -1,4 +1,4 @@
-{ pkgs, persistence, ... }: {
+{ persistence, ... }: {
   networking = {
     firewall.allowedUDPPorts = [ 51820 ];
     wireguard = {

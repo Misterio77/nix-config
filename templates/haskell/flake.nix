@@ -9,7 +9,7 @@
   outputs = { self, nixpkgs, flake-utils }:
     let
       name = "foo-bar";
-      overlay = final: prev: {
+      overlay = final: _prev: {
         ${name} = final.haskellPackages.callCabal2nix name ./. { };
       };
       overlays = [ overlay ];

@@ -1,5 +1,5 @@
 # System configuration for my gf's desktop PC
-{ config, pkgs, system, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [

@@ -1,4 +1,4 @@
-{ lib, config, persistence, ... }: {
+{ lib, persistence, ... }: {
   services.deluge = {
     enable = true;
   };

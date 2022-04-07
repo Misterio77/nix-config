@@ -1,5 +1,5 @@
 # System configuration for my laptop
-{ config, pkgs, system, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [

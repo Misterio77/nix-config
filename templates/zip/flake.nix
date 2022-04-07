@@ -10,7 +10,7 @@
     let
       name = "foo-bar";
       zipName = pkgs.lib.concatStringsSep "_" [ "10856803" ];
-      overlay = final: prev: {
+      overlay = _final: _prev: {
         ${name} = pkgs.stdenv.mkDerivation {
           inherit name;
           src = ./.;

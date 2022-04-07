@@ -1,5 +1,5 @@
 # This file holds config that i use on all hosts
-{ lib, config, pkgs, system, inputs, persistence, disable-hm, ... }:
+{ lib, config, pkgs, system, inputs, persistence, ... }:
 
 {
   imports = [
@@ -16,8 +16,6 @@
       "/dotfiles"
     ];
   };
-
-  system.stateVersion = "21.11";
 
   i18n.defaultLocale = pkgs.lib.mkDefault "en_US.UTF-8";
   time.timeZone = "America/Sao_Paulo";

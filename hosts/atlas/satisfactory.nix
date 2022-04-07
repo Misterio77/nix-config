@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   services = {
     satisfactory-server = {
       enable = true;

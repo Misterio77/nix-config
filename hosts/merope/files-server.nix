@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ ... }: {
   services.nginx.virtualHosts = {
     "files.misterio.me" = {
       default = true;

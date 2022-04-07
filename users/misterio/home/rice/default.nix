@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, hostname, wallpaper, colorscheme, ... }:
+{ pkgs, config, inputs, wallpaper, colorscheme, ... }:
 
 let
   inherit (inputs.nix-colors.lib { inherit pkgs; }) colorschemeFromPicture nixWallpaperFromScheme;

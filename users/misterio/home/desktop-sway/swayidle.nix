@@ -1,4 +1,4 @@
-{ pkgs, lib, hostname, config, ... }:
+{ pkgs, hostname, config, ... }:
 
 let
   hasRgb = hostname == "atlas";

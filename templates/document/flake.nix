@@ -9,7 +9,7 @@
   outputs = { self, nixpkgs, flake-utils }:
     let
       name = "foo-bar";
-      overlay = final: prev:
+      overlay = _final: _prev:
         {
           ${name} = pkgs.stdenv.mkDerivation {
             inherit name;

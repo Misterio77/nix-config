@@ -7,12 +7,11 @@
     , system
     , users ? [ ]
     , persistence ? true
-    , disable-hm ? false
     }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system hostname persistence disable-hm;
+        inherit inputs system hostname persistence;
       };
       modules = builtins.attrValues (import ../modules/nixos) ++ [
         ../hosts/${hostname}

@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 
 let
-  glxinfo = "${pkgs.glxinfo}/bin/glxinfo";
   common = ''
     title_fqdn="off"
     kernel_shorthand="on"
@@ -80,27 +79,6 @@ let
     block_range=(1 7)
     block_width=2
     ascii_distro="nixos_small"
-  '';
-  big = ''
-    print_info() {
-        info title
-        info underline
-        info "OS" distro
-        info "Kernel" kernel
-        info "Uptime" uptime
-        info "Packages" packages
-        info "Shell" shell
-        info "WM" wm
-        info "Term" term
-        prin "Scheme" "${config.colorscheme.slug}"
-        info "CPU" cpu
-        info "Memory" memory
-        info "Disk" disk
-        info cols
-    }
-    block_range=(0 15)
-    block_width=3
-    ascii_distro="nixos"
   '';
 in {
   home.packages = with pkgs; [ neofetch ];
