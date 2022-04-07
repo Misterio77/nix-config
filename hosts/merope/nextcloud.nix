@@ -1,21 +1,20 @@
 { lib, pkgs, persistence, ... }:
-{
+let
+  hostName = "nextcloud.misterio.me";
+in {
   services = {
     nextcloud = {
+      inherit hostName;
       package = pkgs.nextcloud23;
       enable = true;
-      hostName = "nextcloud.misterio.me";
       https = true;
       config.adminpassFile = "/srv/nextcloud.password";
     };
 
-    nginx.virtualHosts =
-      {
-        "nextcloud.misterio.me" = {
-          forceSSL = true;
-          enableACME = true;
-        };
-      };
+    nginx.virtualHosts.${hostName} = {
+      forceSSL = true;
+      enableACME = true;
+    };
   };
 
   environment.persistence = lib.mkIf persistence {
