@@ -10,7 +10,6 @@
     ../common/postgres.nix
 
     ./deluge.nix
-    # ./ddclient.nix
     ./files-server.nix
     ./jitsi.nix
     ./minecraft.nix
@@ -20,10 +19,7 @@
     ./photoprism.nix
     ./wireguard.nix
 
-    ./disconic.nix
     ./paste-misterio-me.nix
-    ./pokedex-pfpa.nix
-    ./sistemer-bot.nix
   ];
 
   # Static IP address

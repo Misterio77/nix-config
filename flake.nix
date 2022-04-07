@@ -16,37 +16,8 @@
 
     utils.url = "github:numtide/flake-utils";
 
-    # Nixified projects (usually hosted on merope)
     paste-misterio-me = {
       url = "github:misterio77/paste.misterio.me/1.3.0";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "utils";
-      };
-    };
-    pmis = {
-      url = "github:misterio77/pmis/1.0.1";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "utils";
-      };
-    };
-    sistemer-bot = {
-      url = "github:misterio77/sistemer-bot/1.1.4";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "utils";
-      };
-    };
-    disconic = {
-      url = "github:misterio77/disconic/0.2.1";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "utils";
-      };
-    };
-    pokedex-pfpa = {
-      url = "github:misterio77/pokedex-pfpa/1.0.1";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         utils.follows = "utils";
@@ -60,11 +31,7 @@
       overlays = with inputs; [
         overlay
         nur.overlay
-        sistemer-bot.overlay
         paste-misterio-me.overlay
-        pmis.overlay
-        disconic.overlay
-        pokedex-pfpa.overlay
       ];
       lib = import ./lib { inherit inputs overlays; };
     in

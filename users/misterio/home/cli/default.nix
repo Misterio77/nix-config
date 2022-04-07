@@ -7,7 +7,6 @@
     ./git.nix
     ./neofetch.nix
     ./nix-index.nix
-    ./pmis.nix
     ./ranger.nix
     ./screen.nix
     ./shellcolor.nix
