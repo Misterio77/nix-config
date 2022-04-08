@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 
-with lib;
 let
   cfg = config.hardware.argonone;
-in {
+in
+{
   options.hardware.argonone = {
-    enable = mkEnableOption "the driver for Argon One Raspberry Pi case fan and power button";
-    package = mkOption {
+    enable = lib.mkEnableOption "the driver for Argon One Raspberry Pi case fan and power button";
+    package = lib.mkOption {
       type = types.package;
       default = pkgs.argononed;
       defaultText = "pkgs.argononed";
@@ -16,7 +16,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     hardware.i2c.enable = true;
     hardware.deviceTree.overlays = [
       {
@@ -42,7 +42,7 @@ in {
     ];
     environment.systemPackages = [ cfg.package ];
     systemd.services.argononed = {
-      description = "Argon One Fan and Button Daemon Service";
+      description = "Argon One Raspberry Pi case Daemon Service";
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "forking";
@@ -52,5 +52,7 @@ in {
       };
     };
   };
+
+  meta.maintainers = with lib.maintainers; [ misterio77 ];
 
 }
