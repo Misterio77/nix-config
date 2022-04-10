@@ -1,5 +1,5 @@
 # This file holds config that i use on all hosts
-{ lib, config, pkgs, system, inputs, persistence, ... }:
+{ lib, config, pkgs, inputs, persistence, ... }:
 
 {
   imports = [

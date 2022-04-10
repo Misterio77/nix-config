@@ -1,4 +1,4 @@
-{ lib, pkgs, persistence, ... }:
+{ pkgs, ... }:
 let
   hostName = "nextcloud.misterio.me";
 in {
