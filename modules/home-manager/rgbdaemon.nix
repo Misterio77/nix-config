@@ -87,7 +87,7 @@ in {
         default = 750;
       };
       highlighted = mkOption {
-        type = types.listOf (types.str);
+        type = types.listOf types.str;
         description = "Always highlighted mouse keys";
         default = [ ];
       };
@@ -99,7 +99,7 @@ in {
         default = "/dev/input/ckb1/cmd";
       };
       highlighted = mkOption {
-        type = types.listOf (types.str);
+        type = types.listOf types.str;
         description = "Always highlighted keyboard keys";
         default = [ ];
       };

@@ -1,7 +1,9 @@
 { lib, trusted, pkgs, config, hostname, ... }:
 
 let
-  colorscheme = config.colorscheme;
+  inherit (config.colorscheme) colors;
+
+  modifier = "Mod4";
 
   # Programs
   alacritty = "${config.programs.alacritty.package}/bin/alacritty";
@@ -28,14 +30,13 @@ let
   zathura = "${pkgs.zathura}/bin/zathura";
 
   spawn-alacritty = cmd: "${alacritty} msg create-window ${cmd} || ${alacritty} ${cmd}";
-in
-rec {
+in {
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
-    config = rec {
-      modifier = "Mod4";
+    config = {
+      inherit modifier;
       terminal = spawn-alacritty "";
       menu = "${wofi} -S run";
       fonts = {
@@ -108,32 +109,32 @@ rec {
       ];
       colors = {
         focused = {
-          border = "${colorscheme.colors.base0C}";
-          background = "${colorscheme.colors.base00}";
-          text = "${colorscheme.colors.base05}";
-          indicator = "${colorscheme.colors.base09}";
-          childBorder = "${colorscheme.colors.base0C}";
+          border = "${colors.base0C}";
+          background = "${colors.base00}";
+          text = "${colors.base05}";
+          indicator = "${colors.base09}";
+          childBorder = "${colors.base0C}";
         };
         focusedInactive = {
-          border = "${colorscheme.colors.base03}";
-          background = "${colorscheme.colors.base00}";
-          text = "${colorscheme.colors.base04}";
-          indicator = "${colorscheme.colors.base03}";
-          childBorder = "${colorscheme.colors.base03}";
+          border = "${colors.base03}";
+          background = "${colors.base00}";
+          text = "${colors.base04}";
+          indicator = "${colors.base03}";
+          childBorder = "${colors.base03}";
         };
         unfocused = {
-          border = "${colorscheme.colors.base02}";
-          background = "${colorscheme.colors.base00}";
-          text = "${colorscheme.colors.base03}";
-          indicator = "${colorscheme.colors.base02}";
-          childBorder = "${colorscheme.colors.base02}";
+          border = "${colors.base02}";
+          background = "${colors.base00}";
+          text = "${colors.base03}";
+          indicator = "${colors.base02}";
+          childBorder = "${colors.base02}";
         };
         urgent = {
-          border = "${colorscheme.colors.base09}";
-          background = "${colorscheme.colors.base00}";
-          text = "${colorscheme.colors.base03}";
-          indicator = "${colorscheme.colors.base09}";
-          childBorder = "${colorscheme.colors.base09}";
+          border = "${colors.base09}";
+          background = "${colors.base00}";
+          text = "${colors.base03}";
+          indicator = "${colors.base09}";
+          childBorder = "${colors.base09}";
         };
       };
       startup = [
@@ -168,7 +169,7 @@ rec {
           }
         ];
       };
-      keybindings = lib.mkOptionDefault rec {
+      keybindings = lib.mkOptionDefault {
         # Focus parent or child
         "${modifier}+bracketleft" = "focus parent";
         "${modifier}+bracketright" = "focus child";

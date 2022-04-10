@@ -25,7 +25,7 @@
     };
   };
 
-  outputs = { ... }@inputs:
+  outputs = inputs:
     let
       overlay = import ./overlays;
       overlays = with inputs; [

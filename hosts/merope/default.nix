@@ -1,7 +1,5 @@
 # System configuration for my Raspberry Pi 4
-{ inputs, ... }:
-
-{
+{ inputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.raspberry-pi-4
 
@@ -38,8 +36,6 @@
         prefixLength = 64;
       }];
     };
-    # Open ports for nginx
-    firewall.allowedTCPPorts = [ 80 443 ];
   };
 
   # Passwordless sudo (for remote build)

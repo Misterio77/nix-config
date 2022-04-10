@@ -1,6 +1,6 @@
 { inputs, overlays }:
 {
-  importAttrset = path: builtins.mapAttrs (_: v: import v) (import path);
+  importAttrset = path: builtins.mapAttrs (_: import) (import path);
 
   mkSystem =
     { hostname
@@ -25,7 +25,7 @@
           # Add each input as a registry
           nix.registry = inputs.nixpkgs.lib.mapAttrs'
             (n: v:
-              inputs.nixpkgs.lib.nameValuePair (n) ({ flake = v; }))
+              inputs.nixpkgs.lib.nameValuePair n { flake = v; })
             inputs;
         }
         # System wide config for each user

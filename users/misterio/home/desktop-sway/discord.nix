@@ -1,6 +1,6 @@
 { config, persistence, pkgs, lib, ... }:
 
-let colors = config.colorscheme.colors;
+let inherit (config.colorscheme) colors;
 in {
   home.packages = with pkgs; [ discord discocss ];
 

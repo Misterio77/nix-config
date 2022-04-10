@@ -248,7 +248,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
     style =
-      let colors = config.colorscheme.colors; in
+      let inherit (config.colorscheme) colors; in
       ''
         * {
           border: none;

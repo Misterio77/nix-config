@@ -1,7 +1,5 @@
 # System configuration for my gf's desktop PC
-{ config, pkgs, inputs, ... }:
-
-{
+{ config, pkgs, inputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-pc-ssd

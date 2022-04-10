@@ -1,5 +1,5 @@
 { config, ... }:
-let colors = config.colorscheme.colors;
+let inherit (config.colorscheme) colors;
 in {
   programs.shellcolor = {
     enable = true;

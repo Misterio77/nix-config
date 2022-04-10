@@ -2,8 +2,8 @@
 stdenv.mkDerivation rec {
   name = "wallpaper-${wallpaper.name}.${wallpaper.ext}";
   src = fetchurl {
+    inherit (wallpaper) sha256;
     url = "https://i.imgur.com/${wallpaper.id}.${wallpaper.ext}";
-    sha256 = wallpaper.sha256;
   };
   dontUnpack = true;
   dontBuild = true;

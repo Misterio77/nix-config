@@ -1,9 +1,9 @@
 { config, ... }:
-let colors = config.colorscheme.colors;
+let inherit (config.colorscheme) colors kind;
 in {
   programs.mako = {
     enable = true;
-    iconPath = if config.colorscheme.kind == "dark" then
+    iconPath = if kind == "dark" then
       "${config.gtk.iconTheme.package}/share/icons/Papirus-Dark"
     else
       "${config.gtk.iconTheme.package}/share/icons/Papirus-Light";

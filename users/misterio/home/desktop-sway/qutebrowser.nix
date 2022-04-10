@@ -1,7 +1,6 @@
 { config, pkgs, lib, persistence, ... }:
 
-let
-  colors = config.colorscheme.colors;
+let inherit (config.colorscheme) colors kind;
 in {
   home.persistence = lib.mkIf persistence {
     "/persist/home/misterio".directories = [
@@ -36,7 +35,7 @@ in {
       };
       colors = {
         webpage = {
-          preferred_color_scheme = "${config.colorscheme.kind}";
+          preferred_color_scheme = kind;
           bg = "#ffffff";
         };
         completion = {

@@ -1,5 +1,4 @@
-{ lib, config, persistence, ... }:
-{
+{ lib, config, persistence, ... }: {
   services = {
     photoprism = {
       enable = true;

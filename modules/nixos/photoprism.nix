@@ -193,7 +193,7 @@ in
 
     users = {
       users.${cfg.user} = {
-        group = cfg.group;
+        inherit (cfg) group;
         home = cfg.dataDir;
         createHome = true;
         isSystemUser = true;

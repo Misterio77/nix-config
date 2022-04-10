@@ -1,6 +1,6 @@
 { inputs, lib, config, hostname, persistence, graphical, trusted, ... }:
 
-let impermanence = inputs.impermanence.nixosModules.home-manager.impermanence;
+let inherit (inputs.impermanence.nixosModules.home-manager) impermanence;
 in
 {
   imports =

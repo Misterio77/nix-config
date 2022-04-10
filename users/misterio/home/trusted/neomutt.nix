@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   xdg.desktopEntries = {
     neomutt = {
       name = "Neomutt";

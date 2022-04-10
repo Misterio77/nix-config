@@ -1,5 +1,4 @@
-{ lib, persistence, ... }:
-{
+{ lib, persistence, ... }: {
   services.factorio = {
     enable = true;
     lan = true;

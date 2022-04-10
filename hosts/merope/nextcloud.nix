@@ -1,7 +1,8 @@
 { pkgs, ... }:
 let
   hostName = "nextcloud.misterio.me";
-in {
+in
+{
   services = {
     nextcloud = {
       inherit hostName;

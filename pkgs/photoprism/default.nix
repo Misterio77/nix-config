@@ -73,10 +73,10 @@ let
     CGO_LDFLAGS = "-fuse-ld=gold";
   };
 
-  nodeDependencies = (import ./node-composition.nix {
+  inherit (import ./node-composition.nix {
     inherit pkgs nodejs;
     inherit (stdenv.hostPlatform) system;
-  }).nodeDependencies;
+  }) nodeDependencies;
 
   frontend = stdenv.mkDerivation {
     name = "photoprism-frontend";

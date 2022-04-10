@@ -1,7 +1,5 @@
 # This file holds config that i use on all hosts
-{ lib, config, pkgs, inputs, persistence, ... }:
-
-{
+{ lib, config, pkgs, inputs, persistence, ... }: {
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];

@@ -7,7 +7,7 @@ with lib;
 let
   inherit (stdenv.hostPlatform) system;
 
-  rpath = makeLibraryPath ([ stdenv.cc.libc stdenv.cc.cc.lib ]);
+  rpath = makeLibraryPath [ stdenv.cc.libc stdenv.cc.cc.lib ];
 
   systemName = {
     x86_64-linux = "amd64";

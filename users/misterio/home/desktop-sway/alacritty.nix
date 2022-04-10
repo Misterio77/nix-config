@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  colors = config.colorscheme.colors;
+  inherit (config.colorscheme) colors;
   alacritty-xterm = pkgs.writeShellScriptBin "xterm" ''
     if [ "$1" = "-e" ]; then
       shift 1

@@ -15,15 +15,11 @@ let
     write-data=${stateDir}
   '';
   serverSettings = {
+    inherit (cfg) description username password token;
     name = cfg.game-name;
-    description = cfg.description;
     visibility = {
-      public = cfg.public;
-      lan = cfg.lan;
+      inherit (cfg) public lan;
     };
-    username = cfg.username;
-    password = cfg.password;
-    token = cfg.token;
     game_password = cfg.game-password;
     require_user_verification = cfg.requireUserVerification;
     max_upload_in_kilobytes_per_second = 0;
@@ -66,7 +62,7 @@ in
 
       admins = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         example = [ "username" ];
         description = ''
           List of player names which will be admin.
@@ -114,7 +110,7 @@ in
       };
       mods = mkOption {
         type = types.listOf types.package;
-        default = [];
+        default = [ ];
         description = ''
           Mods the server should install and activate.
           The derivations in this list must "build" the mod by simply copying
@@ -139,8 +135,8 @@ in
       };
       extraSettings = mkOption {
         type = types.attrs;
-        default = {};
-        example = { admins = [ "username" ];};
+        default = { };
+        example = { admins = [ "username" ]; };
         description = ''
           Extra game configuration that will go into server-settings.json
         '';
@@ -225,17 +221,17 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.factorio = {
-      description   = "Factorio headless server";
-      wantedBy      = [ "multi-user.target" ];
-      after         = [ "network.target" ];
+      description = "Factorio headless server";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
 
       preStart = toString [
         "test -e ${stateDir}/saves/${cfg.saveName}.zip"
         "||"
         "${cfg.package}/bin/factorio"
-          "--config=${cfg.configFile}"
-          "--create=${mkSavePath cfg.saveName}"
-          (optionalString (cfg.mods != []) "--mod-directory=${modDir}")
+        "--config=${cfg.configFile}"
+        "--create=${mkSavePath cfg.saveName}"
+        (optionalString (cfg.mods != [ ]) "--mod-directory=${modDir}")
       ];
 
       serviceConfig = {
@@ -251,8 +247,8 @@ in
           "--bind=${cfg.bind}"
           "--start-server=${mkSavePath cfg.saveName}"
           "--server-settings=${serverSettingsFile}"
-          (optionalString (cfg.mods != []) "--mod-directory=${modDir}")
-          (optionalString (cfg.admins != []) "--server-adminlist=${serverAdminsFile}")
+          (optionalString (cfg.mods != [ ]) "--mod-directory=${modDir}")
+          (optionalString (cfg.admins != [ ]) "--server-adminlist=${serverAdminsFile}")
         ];
 
         # Sandboxing
@@ -271,6 +267,6 @@ in
       };
     };
 
-    networking.firewall.allowedUDPPorts = if cfg.openFirewall then [ cfg.port ] else [];
+    networking.firewall.allowedUDPPorts = if cfg.openFirewall then [ cfg.port ] else [ ];
   };
 }

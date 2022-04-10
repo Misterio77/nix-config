@@ -1,4 +1,4 @@
-{ ... }: {
+{
   services = {
     satisfactory-server = {
       enable = true;

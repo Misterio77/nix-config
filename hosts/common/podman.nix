@@ -1,5 +1,4 @@
-{ lib, persistence, ... }:
-{
+{ lib, persistence, ... }: {
   virtualisation.podman.enable = true;
 
   environment.persistence = lib.mkIf persistence {

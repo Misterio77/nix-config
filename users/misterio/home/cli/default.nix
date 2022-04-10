@@ -25,5 +25,6 @@
     rnix-lsp
     nixfmt
     deadnix
+    statix
   ];
 }
