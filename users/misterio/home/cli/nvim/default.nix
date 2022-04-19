@@ -16,8 +16,6 @@ in
       set autoread
       au CursorHold,CursorHoldI * checktime
 
-      "Folding
-      set foldmethod=syntax
       "Set fold level to highest in file
       "so everything starts out unfolded at just the right level
       autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))

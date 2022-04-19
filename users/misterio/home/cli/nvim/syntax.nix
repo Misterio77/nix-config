@@ -1,9 +1,6 @@
 { pkgs, ... }: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
-    {
-      plugin = rust-vim;
-      config = "let g:rust_fold = 1";
-    }
+    rust-vim
     dart-vim-plugin
     plantuml-syntax
     vim-markdown
