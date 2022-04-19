@@ -5,7 +5,46 @@
     {
       plugin = telescope-nvim;
       config = /* vim */ ''
-        lua require('telescope').setup{}
+        lua << EOF
+        local actions = require('telescope.actions')
+        local action_state = require('telescope.actions.state')
+        local telescope_custom_actions = {}
+
+        function telescope_custom_actions._multiopen(prompt_bufnr, open_cmd)
+          local picker = action_state.get_current_picker(prompt_bufnr)
+          local selected_entry = action_state.get_selected_entry()
+          local num_selections = #picker:get_multi_selection()
+          if not num_selections or num_selections <= 1 then
+              actions.add_selection(prompt_bufnr)
+          end
+          actions.send_selected_to_qflist(prompt_bufnr)
+          vim.cmd("cfdo " .. open_cmd)
+        end
+        function telescope_custom_actions.multi_selection_open(prompt_bufnr)
+          telescope_custom_actions._multiopen(prompt_bufnr, "edit")
+        end
+
+
+        require('telescope').setup {
+          defaults = {
+            mappings = {
+              i = {
+                ['<C-j>'] = actions.move_selection_next,
+                ['<C-k>'] = actions.move_selection_previous,
+                ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+                ['<s-tab>'] = actions.toggle_selection + actions.move_selection_previous,
+                ['<cr>'] = telescope_custom_actions.multi_selection_open
+              },
+              n = {
+                ['<tab>'] = actions.toggle_selection + actions.move_selection_next,
+                ['<s-tab>'] = actions.toggle_selection + actions.move_selection_previous,
+                ['<cr>'] = telescope_custom_actions.multi_selection_open
+              }
+            },
+          }
+        }
+        EOF
+
         nnoremap <leader>ff <cmd>Telescope find_files<cr>
         nnoremap <leader>fg <cmd>Telescope live_grep<cr>
         nnoremap <leader>fb <cmd>Telescope buffers<cr>
