@@ -18,10 +18,6 @@ final: prev:
       });
   } // import ../pkgs/vim-plugins { pkgs = final; };
 
-  todoman = prev.todoman.overrideAttrs (oldAttrs: rec {
-    patches = (oldAttrs.patches or [ ]) ++ [ ./todoman-kwargs-crash.patch ];
-  });
-
   # Don't launch discord when using discocss
   discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];
