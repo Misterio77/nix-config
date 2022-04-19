@@ -1,9 +1,12 @@
-{ lib, stdenv, fetchFromGitHub, makeWrapper, gradle_6, jdk11, perl, writeText }:
+{ lib, fetchFromGitHub, callPackage, makeWrapper, jdk11, gradle_6 }:
 let
-  pname = "xiaomitoolv2";
+  buildGradle = callPackage ./gradle-env.nix { };
+in
+buildGradle rec {
+  pname = "xiaomitool";
   version = "unstable-2021-03-25";
-  jdk = jdk11;
-  gradle = gradle_6;
+
+  envSpec = ./gradle-env.json;
 
   src = fetchFromGitHub {
     owner = "francescotescari";
@@ -12,85 +15,24 @@ let
     sha256 = "sha256-QffTGyv+JCF0Phz5GgLLs8gtypYIjZ9MPNO57ksFWNw=";
   };
 
+  buildInputs = [ makeWrapper ];
+
   patches = [ ./fix-captcha.patch ./update-api-params.patch ];
 
-  deps = stdenv.mkDerivation {
-    pname = "${pname}-deps";
-    inherit src patches version;
-
-    nativeBuildInputs = [ gradle jdk perl ];
-
-    buildPhase = ''
-      export GRADLE_USER_HOME=$(mktemp -d)
-      gradle --no-daemon --info build
-    '';
-
-    # Mavenize dependency paths
-    # e.g. org.codehaus.groovy/groovy/2.4.0/{hash}/groovy-2.4.0.jar -> org/codehaus/groovy/groovy/2.4.0/groovy-2.4.0.jar
-    installPhase = ''
-      find $GRADLE_USER_HOME/caches/modules-2 -type f -regex '.*\.\(jar\|pom\)' \
-        | perl -pe 's#(.*/([^/]+)/([^/]+)/([^/]+)/[0-9a-f]{30,40}/([^/\s]+))$# ($x = $2) =~ tr|\.|/|; "install -Dm444 $1 \$out/$x/$3/$4/$5" #e' \
-        | sh
-    '';
-
-    outputHashMode = "recursive";
-    outputHashAlgo = "sha256";
-    # outputHash = "sha256-85U9qZswLHt3csgPf0N4/BtVF94I+An4OGklKs0Xvac=";
-  };
-
-  # Point to our local deps repo
-  gradleInit = writeText "init.gradle" ''
-    settingsEvaluated { settings ->
-      settings.pluginManagement {
-        repositories {
-          clear()
-          maven { url '${deps}' }
-        }
-      }
-    }
-    logger.lifecycle 'Replacing Maven repositories with ${deps}...'
-    gradle.projectsLoaded {
-      rootProject.allprojects {
-        buildscript {
-          repositories {
-            clear()
-            maven { url '${deps}' }
-          }
-        }
-        repositories {
-          clear()
-          maven { url '${deps}' }
-        }
-      }
-    }
-  '';
-in
-
-stdenv.mkDerivation {
-  inherit pname version src patches;
-
-  nativeBuildInputs = [ gradle jdk makeWrapper ];
-
-  buildPhase = ''
-    runHook preBuild
-
-    export GRADLE_USER_HOME=$(mktemp -d)
-    gradle --offline --no-daemon --info --init-script ${gradleInit} distTar
-
-    runHook postBuild
-  '';
+  gradleFlags = [ "installDist"];
+  gradlePackage = gradle_6;
 
   installPhase = ''
-    runHook preInstall
-
-    install -Dm644 build/libs/XiaomiToolV2.jar $out/lib/xiaomitool.jar
-
+    find .
     mkdir -p $out
-    tar xf build/distributions/XiaomiToolV2.tar --strip-components=1 --directory $out/
-
-    wrapProgram $out/bin/xiaomitool \
-      --set JAVA_HOME "${jdk}"
-
-    runHook postInstall
+    cp -r build/install/XiaomiToolV2/* $out/
+    mv $out/bin/{XiaomiToolV2,xiaomitool}
+    rm $out/bin/XiaomiToolV2.bat
   '';
+
+  postFixup = ''
+  wrapProgram $out/bin/xiaomitool \
+    --set JAVA_HOME "${jdk11}"
+  '';
+
 }

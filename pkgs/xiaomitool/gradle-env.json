@@ -1,0 +1,1844 @@
+{
+  "": {
+    "name": "XiaomiToolV2",
+    "version": "unspecified",
+    "path": "",
+    "gradle": {
+      "version": "6.5",
+      "type": "bin",
+      "url": "https://services.gradle.org/distributions/gradle-6.5-bin.zip",
+      "sha256": "23e7d37e9bb4f8dabb8a3ea7fdee9dd0428b9b1a71d298aefd65b11dccea220f",
+      "nativeVersion": "0.22-milestone-3"
+    },
+    "dependencies": {
+      "settings": [],
+      "plugin": [
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-core",
+            "version": "3.13.5",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javaparser-core-3.13.5.jar",
+          "path": "com/github/javaparser/javaparser-core/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-core/3.13.5/javaparser-core-3.13.5.jar"
+          ],
+          "sha256": "3ad8087c59e6a13b699a4917897086ae30f9834b5d5718d88d1b321c887b461a"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-core",
+            "version": "3.13.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javaparser-core-3.13.5.pom",
+          "path": "com/github/javaparser/javaparser-core/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-core/3.13.5/javaparser-core-3.13.5.pom"
+          ],
+          "sha256": "4371244f44169f05d831eef4a3975e8f02762260ee374aa5b195dd30bd79a98b"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-parent",
+            "version": "3.13.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javaparser-parent-3.13.5.pom",
+          "path": "com/github/javaparser/javaparser-parent/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-parent/3.13.5/javaparser-parent-3.13.5.pom"
+          ],
+          "sha256": "083e6824737bd2b675882624151f0dcf2fb7540729d5e49f90c41d0540677073"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-symbol-solver-core",
+            "version": "3.13.5",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javaparser-symbol-solver-core-3.13.5.jar",
+          "path": "com/github/javaparser/javaparser-symbol-solver-core/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-symbol-solver-core/3.13.5/javaparser-symbol-solver-core-3.13.5.jar"
+          ],
+          "sha256": "09adb3cda5efece7e62996bf8be43eeb831b1e649dd13ef161e327d3ba66cea3"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-symbol-solver-core",
+            "version": "3.13.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javaparser-symbol-solver-core-3.13.5.pom",
+          "path": "com/github/javaparser/javaparser-symbol-solver-core/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-symbol-solver-core/3.13.5/javaparser-symbol-solver-core-3.13.5.pom"
+          ],
+          "sha256": "18a873ada89d1fbe5fb3beefcdea3be8848b3b535f2ff042c403eeab8b088fd1"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-symbol-solver-logic",
+            "version": "3.13.5",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javaparser-symbol-solver-logic-3.13.5.jar",
+          "path": "com/github/javaparser/javaparser-symbol-solver-logic/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-symbol-solver-logic/3.13.5/javaparser-symbol-solver-logic-3.13.5.jar"
+          ],
+          "sha256": "593a9659b70c0ef0677431d7ad8680ef9c86aa71deab9fb35db2b028d5de7973"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-symbol-solver-logic",
+            "version": "3.13.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javaparser-symbol-solver-logic-3.13.5.pom",
+          "path": "com/github/javaparser/javaparser-symbol-solver-logic/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-symbol-solver-logic/3.13.5/javaparser-symbol-solver-logic-3.13.5.pom"
+          ],
+          "sha256": "1bf9d50f28c6f24c5aeda6c642e45a48cde22d94b5e52cd4cfa3d370ee3f69d6"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-symbol-solver-model",
+            "version": "3.13.5",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javaparser-symbol-solver-model-3.13.5.jar",
+          "path": "com/github/javaparser/javaparser-symbol-solver-model/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-symbol-solver-model/3.13.5/javaparser-symbol-solver-model-3.13.5.jar"
+          ],
+          "sha256": "0d71c0d24d9f86181b198446ee8ddf18a597130877903c2276d3015ffe45383f"
+        },
+        {
+          "id": {
+            "group": "com.github.javaparser",
+            "name": "javaparser-symbol-solver-model",
+            "version": "3.13.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javaparser-symbol-solver-model-3.13.5.pom",
+          "path": "com/github/javaparser/javaparser-symbol-solver-model/3.13.5",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/github/javaparser/javaparser-symbol-solver-model/3.13.5/javaparser-symbol-solver-model-3.13.5.pom"
+          ],
+          "sha256": "39cf4dd454b1ed489afc7c89d0500163f282e214c34dc99ce3faf75bd2490c8e"
+        },
+        {
+          "id": {
+            "group": "com.google.code.findbugs",
+            "name": "jsr305",
+            "version": "3.0.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "jsr305-3.0.2.jar",
+          "path": "com/google/code/findbugs/jsr305/3.0.2",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"
+          ],
+          "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7"
+        },
+        {
+          "id": {
+            "group": "com.google.code.findbugs",
+            "name": "jsr305",
+            "version": "3.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "jsr305-3.0.2.pom",
+          "path": "com/google/code/findbugs/jsr305/3.0.2",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom"
+          ],
+          "sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe"
+        },
+        {
+          "id": {
+            "group": "com.google.errorprone",
+            "name": "error_prone_annotations",
+            "version": "2.2.0",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "error_prone_annotations-2.2.0.jar",
+          "path": "com/google/errorprone/error_prone_annotations/2.2.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.jar"
+          ],
+          "sha256": "6ebd22ca1b9d8ec06d41de8d64e0596981d9607b42035f9ed374f9de271a481a"
+        },
+        {
+          "id": {
+            "group": "com.google.errorprone",
+            "name": "error_prone_annotations",
+            "version": "2.2.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "error_prone_annotations-2.2.0.pom",
+          "path": "com/google/errorprone/error_prone_annotations/2.2.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/errorprone/error_prone_annotations/2.2.0/error_prone_annotations-2.2.0.pom"
+          ],
+          "sha256": "5e0258ea1ba4e51a133742680bc22448f7ab214be4073e8619f645ef1be42dd5"
+        },
+        {
+          "id": {
+            "group": "com.google.errorprone",
+            "name": "error_prone_parent",
+            "version": "2.2.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "error_prone_parent-2.2.0.pom",
+          "path": "com/google/errorprone/error_prone_parent/2.2.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/errorprone/error_prone_parent/2.2.0/error_prone_parent-2.2.0.pom"
+          ],
+          "sha256": "c460902ddf5ece68832c6b271ce52a0928b05cf3a6ac81a8f548c73cbd541138"
+        },
+        {
+          "id": {
+            "group": "com.google.gradle",
+            "name": "osdetector-gradle-plugin",
+            "version": "1.6.1",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "osdetector-gradle-plugin-1.6.1.jar",
+          "path": "com/google/gradle/osdetector-gradle-plugin/1.6.1",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/gradle/osdetector-gradle-plugin/1.6.1/osdetector-gradle-plugin-1.6.1.jar"
+          ],
+          "sha256": "37f4a6d92f258762ecf62fd77186522bbecb5da1b20debc78f8361b856df0da7"
+        },
+        {
+          "id": {
+            "group": "com.google.gradle",
+            "name": "osdetector-gradle-plugin",
+            "version": "1.6.1",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "osdetector-gradle-plugin-1.6.1.pom",
+          "path": "com/google/gradle/osdetector-gradle-plugin/1.6.1",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/gradle/osdetector-gradle-plugin/1.6.1/osdetector-gradle-plugin-1.6.1.pom"
+          ],
+          "sha256": "8b831113a94e097bc49e1eca4d327fd22340570454d44cbb71c252b99e6c4c3f"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "failureaccess",
+            "version": "1.0",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "failureaccess-1.0.jar",
+          "path": "com/google/guava/failureaccess/1.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/failureaccess/1.0/failureaccess-1.0.jar"
+          ],
+          "sha256": "d084bef9cd07a8537a1753e4850a69b7e8bab1d1e22e9f3a1e4826309a7a2336"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "failureaccess",
+            "version": "1.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "failureaccess-1.0.pom",
+          "path": "com/google/guava/failureaccess/1.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/failureaccess/1.0/failureaccess-1.0.pom"
+          ],
+          "sha256": "cd1679adfc5eb56a7dca57edfa86499875300e763ba22dc9ff483fc5cc3c9a9a"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava",
+            "version": "27.0-jre",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "guava-27.0-jre.jar",
+          "path": "com/google/guava/guava/27.0-jre",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/guava/27.0-jre/guava-27.0-jre.jar"
+          ],
+          "sha256": "63b09db6861011e7fb2481be7790c7fd4b03f0bb884b3de2ecba8823ad19bf3f"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava",
+            "version": "27.0-jre",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "guava-27.0-jre.pom",
+          "path": "com/google/guava/guava/27.0-jre",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/guava/27.0-jre/guava-27.0-jre.pom"
+          ],
+          "sha256": "87a7cae265a762a9819794601e9352702f3c31afab2eeb87b92d3590778e6065"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava-parent",
+            "version": "26.0-android",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "guava-parent-26.0-android.pom",
+          "path": "com/google/guava/guava-parent/26.0-android",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom"
+          ],
+          "sha256": "f8698ab46ca996ce889c1afc8ca4f25eb8ac6b034dc898d4583742360016cc04"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava-parent",
+            "version": "27.0-jre",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "guava-parent-27.0-jre.pom",
+          "path": "com/google/guava/guava-parent/27.0-jre",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/guava-parent/27.0-jre/guava-parent-27.0-jre.pom"
+          ],
+          "sha256": "dea6d8ebf9ef4eba79cbd2aba7185254de5c3f656e9adf4bbeef25475aad750e"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "listenablefuture",
+            "version": "9999.0-empty-to-avoid-conflict-with-guava",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+          "path": "com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"
+          ],
+          "sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "listenablefuture",
+            "version": "9999.0-empty-to-avoid-conflict-with-guava",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom",
+          "path": "com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom"
+          ],
+          "sha256": "18d4b1db26153d4e55079ce1f76bb1fe05cdb862ef9954a88cbcc4ff38b8679b"
+        },
+        {
+          "id": {
+            "group": "com.google.j2objc",
+            "name": "j2objc-annotations",
+            "version": "1.1",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "j2objc-annotations-1.1.jar",
+          "path": "com/google/j2objc/j2objc-annotations/1.1",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar"
+          ],
+          "sha256": "2994a7eb78f2710bd3d3bfb639b2c94e219cedac0d4d084d516e78c16dddecf6"
+        },
+        {
+          "id": {
+            "group": "com.google.j2objc",
+            "name": "j2objc-annotations",
+            "version": "1.1",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "j2objc-annotations-1.1.pom",
+          "path": "com/google/j2objc/j2objc-annotations/1.1",
+          "urls": [
+            "https://plugins.gradle.org/m2/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.pom"
+          ],
+          "sha256": "f0c98c571e93a7cb4dd18df0fa308f0963e7a0620ac2d4244e61e709d03ad6be"
+        },
+        {
+          "id": {
+            "group": "kr.motd.maven",
+            "name": "os-maven-plugin",
+            "version": "1.6.0",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "os-maven-plugin-1.6.0.jar",
+          "path": "kr/motd/maven/os-maven-plugin/1.6.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/kr/motd/maven/os-maven-plugin/1.6.0/os-maven-plugin-1.6.0.jar"
+          ],
+          "sha256": "1cd9d6c089f966711bc7d9564976b3ffe65102616a5247681cc23095cfbdd1ac"
+        },
+        {
+          "id": {
+            "group": "kr.motd.maven",
+            "name": "os-maven-plugin",
+            "version": "1.6.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "os-maven-plugin-1.6.0.pom",
+          "path": "kr/motd/maven/os-maven-plugin/1.6.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/kr/motd/maven/os-maven-plugin/1.6.0/os-maven-plugin-1.6.0.pom"
+          ],
+          "sha256": "cd151f51078a46777b50f8283b882a8ace0c08bbbe17446b3f9ea63c8122fca8"
+        },
+        {
+          "id": {
+            "group": "org.checkerframework",
+            "name": "checker-qual",
+            "version": "2.5.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "checker-qual-2.5.2.jar",
+          "path": "org/checkerframework/checker-qual/2.5.2",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.jar"
+          ],
+          "sha256": "64b02691c8b9d4e7700f8ee2e742dce7ea2c6e81e662b7522c9ee3bf568c040a"
+        },
+        {
+          "id": {
+            "group": "org.checkerframework",
+            "name": "checker-qual",
+            "version": "2.5.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "checker-qual-2.5.2.pom",
+          "path": "org/checkerframework/checker-qual/2.5.2",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/checkerframework/checker-qual/2.5.2/checker-qual-2.5.2.pom"
+          ],
+          "sha256": "dc4cd438a36462d013c2338c8e206d102a322a00f33729e8955ee219859c9ede"
+        },
+        {
+          "id": {
+            "group": "org.codehaus.mojo",
+            "name": "animal-sniffer-annotations",
+            "version": "1.17",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "animal-sniffer-annotations-1.17.jar",
+          "path": "org/codehaus/mojo/animal-sniffer-annotations/1.17",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.jar"
+          ],
+          "sha256": "92654f493ecfec52082e76354f0ebf87648dc3d5cec2e3c3cdb947c016747a53"
+        },
+        {
+          "id": {
+            "group": "org.codehaus.mojo",
+            "name": "animal-sniffer-annotations",
+            "version": "1.17",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "animal-sniffer-annotations-1.17.pom",
+          "path": "org/codehaus/mojo/animal-sniffer-annotations/1.17",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/codehaus/mojo/animal-sniffer-annotations/1.17/animal-sniffer-annotations-1.17.pom"
+          ],
+          "sha256": "e956ab5d2eb48fabae12300d0cd2d3294d4a2a41abc2068c23cb4d60ad76cbe5"
+        },
+        {
+          "id": {
+            "group": "org.codehaus.mojo",
+            "name": "animal-sniffer-parent",
+            "version": "1.17",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "animal-sniffer-parent-1.17.pom",
+          "path": "org/codehaus/mojo/animal-sniffer-parent/1.17",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/codehaus/mojo/animal-sniffer-parent/1.17/animal-sniffer-parent-1.17.pom"
+          ],
+          "sha256": "18a03df16e2a184c582db7b125633c15fb7714027a84c1b532d72933dc08b81f"
+        },
+        {
+          "id": {
+            "group": "org.codehaus.mojo",
+            "name": "mojo-parent",
+            "version": "40",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "mojo-parent-40.pom",
+          "path": "org/codehaus/mojo/mojo-parent/40",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/codehaus/mojo/mojo-parent/40/mojo-parent-40.pom"
+          ],
+          "sha256": "fc648dcdc404f8bf66e0583914ecf980176618201227bea114fae85043cb755e"
+        },
+        {
+          "id": {
+            "group": "org.javamodularity",
+            "name": "moduleplugin",
+            "version": "1.7.0",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "moduleplugin-1.7.0.jar",
+          "path": "org/javamodularity/moduleplugin/1.7.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/javamodularity/moduleplugin/1.7.0/moduleplugin-1.7.0.jar"
+          ],
+          "sha256": "6ceb3f578be614d0199b2e89be79da850608bdd6022cb8b5107a355a35607095"
+        },
+        {
+          "id": {
+            "group": "org.javamodularity",
+            "name": "moduleplugin",
+            "version": "1.7.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "moduleplugin-1.7.0.pom",
+          "path": "org/javamodularity/moduleplugin/1.7.0",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/javamodularity/moduleplugin/1.7.0/moduleplugin-1.7.0.pom"
+          ],
+          "sha256": "6201ec4a86d082e98b0567d236bd91aa5f5de0175211ca312f8d6a9d4e84730b"
+        },
+        {
+          "id": {
+            "group": "org.javassist",
+            "name": "javassist",
+            "version": "3.24.0-GA",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javassist-3.24.0-GA.jar",
+          "path": "org/javassist/javassist/3.24.0-GA",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/javassist/javassist/3.24.0-GA/javassist-3.24.0-GA.jar"
+          ],
+          "sha256": "aba81efa678b621203fb89aeff81d6f126f7a9dd709401e5609c42976684ae23"
+        },
+        {
+          "id": {
+            "group": "org.javassist",
+            "name": "javassist",
+            "version": "3.24.0-GA",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javassist-3.24.0-GA.pom",
+          "path": "org/javassist/javassist/3.24.0-GA",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/javassist/javassist/3.24.0-GA/javassist-3.24.0-GA.pom"
+          ],
+          "sha256": "c9d3790f030276541d118a11be67fd271bf81e301b962780e542c2e5f636c1b1"
+        },
+        {
+          "id": {
+            "group": "org.jooq",
+            "name": "joor",
+            "version": "0.9.13",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "joor-0.9.13.jar",
+          "path": "org/jooq/joor/0.9.13",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/jooq/joor/0.9.13/joor-0.9.13.jar"
+          ],
+          "sha256": "4c64dcec5c3350d74527b8fb64647df63673cb272a7e34a9f3575d6e01315c3b"
+        },
+        {
+          "id": {
+            "group": "org.jooq",
+            "name": "joor",
+            "version": "0.9.13",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "joor-0.9.13.pom",
+          "path": "org/jooq/joor/0.9.13",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/jooq/joor/0.9.13/joor-0.9.13.pom"
+          ],
+          "sha256": "9105d34daa35bbebc34c3a238e2cd0f975849823665ba65799f826033005bf4b"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-plugin",
+            "version": "0.0.9",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javafx-plugin-0.0.9.jar",
+          "path": "org/openjfx/javafx-plugin/0.0.9",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.0.9/javafx-plugin-0.0.9.jar"
+          ],
+          "sha256": "e83157e89e3e3adf180e155e0690ff5463485b1cffb91cc7fc7687466f946d8f"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-plugin",
+            "version": "0.0.9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-plugin-0.0.9.pom",
+          "path": "org/openjfx/javafx-plugin/0.0.9",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/openjfx/javafx-plugin/0.0.9/javafx-plugin-0.0.9.pom"
+          ],
+          "sha256": "1d9bc9ae5a080ac1c674df77060a8d93e2f05c2f00000fb146c0d48037a5f4ab"
+        },
+        {
+          "id": {
+            "group": "org.openjfx.javafxplugin",
+            "name": "org.openjfx.javafxplugin.gradle.plugin",
+            "version": "0.0.9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "org.openjfx.javafxplugin.gradle.plugin-0.0.9.pom",
+          "path": "org/openjfx/javafxplugin/org.openjfx.javafxplugin.gradle.plugin/0.0.9",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/openjfx/javafxplugin/org.openjfx.javafxplugin.gradle.plugin/0.0.9/org.openjfx.javafxplugin.gradle.plugin-0.0.9.pom"
+          ],
+          "sha256": "00264e2db85c69090c283e5616101754f39d816d20b5930f7097b23a9872fbd7"
+        },
+        {
+          "id": {
+            "group": "org.sonatype.oss",
+            "name": "oss-parent",
+            "version": "7",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "oss-parent-7.pom",
+          "path": "org/sonatype/oss/oss-parent/7",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/sonatype/oss/oss-parent/7/oss-parent-7.pom"
+          ],
+          "sha256": "b51f8867c92b6a722499557fc3a1fdea77bdf9ef574722fe90ce436a29559454"
+        },
+        {
+          "id": {
+            "group": "org.sonatype.oss",
+            "name": "oss-parent",
+            "version": "9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "oss-parent-9.pom",
+          "path": "org/sonatype/oss/oss-parent/9",
+          "urls": [
+            "https://plugins.gradle.org/m2/org/sonatype/oss/oss-parent/9/oss-parent-9.pom"
+          ],
+          "sha256": "fb40265f982548212ff82e362e59732b2187ec6f0d80182885c14ef1f982827a"
+        }
+      ],
+      "buildscript": [],
+      "project": [
+        {
+          "id": {
+            "group": "com.google.code.findbugs",
+            "name": "jsr305",
+            "version": "3.0.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "jsr305-3.0.2.jar",
+          "path": "com/google/code/findbugs/jsr305/3.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar"
+          ],
+          "sha256": "766ad2a0783f2687962c8ad74ceecc38a28b9f72a2d085ee438b7813e928d0c7"
+        },
+        {
+          "id": {
+            "group": "com.google.code.findbugs",
+            "name": "jsr305",
+            "version": "3.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "jsr305-3.0.2.pom",
+          "path": "com/google/code/findbugs/jsr305/3.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom"
+          ],
+          "sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe"
+        },
+        {
+          "id": {
+            "group": "com.google.errorprone",
+            "name": "error_prone_annotations",
+            "version": "2.3.4",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "error_prone_annotations-2.3.4.jar",
+          "path": "com/google/errorprone/error_prone_annotations/2.3.4",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar"
+          ],
+          "sha256": "baf7d6ea97ce606c53e11b6854ba5f2ce7ef5c24dddf0afa18d1260bd25b002c"
+        },
+        {
+          "id": {
+            "group": "com.google.errorprone",
+            "name": "error_prone_annotations",
+            "version": "2.3.4",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "error_prone_annotations-2.3.4.pom",
+          "path": "com/google/errorprone/error_prone_annotations/2.3.4",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.pom"
+          ],
+          "sha256": "1326738a4b4f7ccacf607b866a11fb85193ef60f6a59461187ce7265f9be5bed"
+        },
+        {
+          "id": {
+            "group": "com.google.errorprone",
+            "name": "error_prone_parent",
+            "version": "2.3.4",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "error_prone_parent-2.3.4.pom",
+          "path": "com/google/errorprone/error_prone_parent/2.3.4",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/errorprone/error_prone_parent/2.3.4/error_prone_parent-2.3.4.pom"
+          ],
+          "sha256": "40495b437a60d2398f0fdfc054b89d9c394a82347a274a0721c2e950a4302186"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "failureaccess",
+            "version": "1.0.1",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "failureaccess-1.0.1.jar",
+          "path": "com/google/guava/failureaccess/1.0.1",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar"
+          ],
+          "sha256": "a171ee4c734dd2da837e4b16be9df4661afab72a41adaf31eb84dfdaf936ca26"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "failureaccess",
+            "version": "1.0.1",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "failureaccess-1.0.1.pom",
+          "path": "com/google/guava/failureaccess/1.0.1",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.pom"
+          ],
+          "sha256": "e96042ce78fecba0da2be964522947c87b40a291b5fd3cd672a434924103c4b9"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava",
+            "version": "29.0-jre",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "guava-29.0-jre.jar",
+          "path": "com/google/guava/guava/29.0-jre",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/guava/29.0-jre/guava-29.0-jre.jar"
+          ],
+          "sha256": "b22c5fb66d61e7b9522531d04b2f915b5158e80aa0b40ee7282c8bfb07b0da25"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava",
+            "version": "29.0-jre",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "guava-29.0-jre.pom",
+          "path": "com/google/guava/guava/29.0-jre",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/guava/29.0-jre/guava-29.0-jre.pom"
+          ],
+          "sha256": "9027e934098903d287f1ba61c8b65f01d1d1e1da7a6fbcc04bf3de0544014426"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava-parent",
+            "version": "26.0-android",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "guava-parent-26.0-android.pom",
+          "path": "com/google/guava/guava-parent/26.0-android",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/guava-parent/26.0-android/guava-parent-26.0-android.pom"
+          ],
+          "sha256": "f8698ab46ca996ce889c1afc8ca4f25eb8ac6b034dc898d4583742360016cc04"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "guava-parent",
+            "version": "29.0-jre",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "guava-parent-29.0-jre.pom",
+          "path": "com/google/guava/guava-parent/29.0-jre",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/guava-parent/29.0-jre/guava-parent-29.0-jre.pom"
+          ],
+          "sha256": "6a57f9e02f78dfa2f4bda3416065a64426ae1b66de228cf6e196e2e1912553bf"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "listenablefuture",
+            "version": "9999.0-empty-to-avoid-conflict-with-guava",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar",
+          "path": "com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"
+          ],
+          "sha256": "b372a037d4230aa57fbeffdef30fd6123f9c0c2db85d0aced00c91b974f33f99"
+        },
+        {
+          "id": {
+            "group": "com.google.guava",
+            "name": "listenablefuture",
+            "version": "9999.0-empty-to-avoid-conflict-with-guava",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom",
+          "path": "com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.pom"
+          ],
+          "sha256": "18d4b1db26153d4e55079ce1f76bb1fe05cdb862ef9954a88cbcc4ff38b8679b"
+        },
+        {
+          "id": {
+            "group": "com.google.j2objc",
+            "name": "j2objc-annotations",
+            "version": "1.3",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "j2objc-annotations-1.3.jar",
+          "path": "com/google/j2objc/j2objc-annotations/1.3",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar"
+          ],
+          "sha256": "21af30c92267bd6122c0e0b4d20cccb6641a37eaf956c6540ec471d584e64a7b"
+        },
+        {
+          "id": {
+            "group": "com.google.j2objc",
+            "name": "j2objc-annotations",
+            "version": "1.3",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "j2objc-annotations-1.3.pom",
+          "path": "com/google/j2objc/j2objc-annotations/1.3",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.pom"
+          ],
+          "sha256": "5faca824ba115bee458730337dfdb2fcea46ba2fd774d4304edbf30fa6a3f055"
+        },
+        {
+          "id": {
+            "group": "com.google.protobuf",
+            "name": "protobuf-java",
+            "version": "3.7.0",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "protobuf-java-3.7.0.jar",
+          "path": "com/google/protobuf/protobuf-java/3.7.0",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/protobuf/protobuf-java/3.7.0/protobuf-java-3.7.0.jar"
+          ],
+          "sha256": "dc7f93e3a3dc2c11be5ba9672af3e26410f0a3289312dbf2260d4d8a0c711a51"
+        },
+        {
+          "id": {
+            "group": "com.google.protobuf",
+            "name": "protobuf-java",
+            "version": "3.7.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "protobuf-java-3.7.0.pom",
+          "path": "com/google/protobuf/protobuf-java/3.7.0",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/protobuf/protobuf-java/3.7.0/protobuf-java-3.7.0.pom"
+          ],
+          "sha256": "2eb5d5f9663069be2bbecd07836c67bbcfe4dd6b951d022f6f58da361c005e3b"
+        },
+        {
+          "id": {
+            "group": "com.google.protobuf",
+            "name": "protobuf-parent",
+            "version": "3.7.0",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "protobuf-parent-3.7.0.pom",
+          "path": "com/google/protobuf/protobuf-parent/3.7.0",
+          "urls": [
+            "https://jcenter.bintray.com/com/google/protobuf/protobuf-parent/3.7.0/protobuf-parent-3.7.0.pom"
+          ],
+          "sha256": "912a56ff543e6990cc908e75b3e14ebc675e57d2a558d23c3f068001f2e5702c"
+        },
+        {
+          "id": {
+            "group": "com.jhlabs",
+            "name": "filters",
+            "version": "2.0.235",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "filters-2.0.235.jar",
+          "path": "com/jhlabs/filters/2.0.235",
+          "urls": [
+            "https://jcenter.bintray.com/com/jhlabs/filters/2.0.235/filters-2.0.235.jar"
+          ],
+          "sha256": "be6a1d54ebb043495e31e25e72b440f69156a5624cdd7e1c55c47e30d4fae308"
+        },
+        {
+          "id": {
+            "group": "com.jhlabs",
+            "name": "filters",
+            "version": "2.0.235",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "filters-2.0.235.pom",
+          "path": "com/jhlabs/filters/2.0.235",
+          "urls": [
+            "https://jcenter.bintray.com/com/jhlabs/filters/2.0.235/filters-2.0.235.pom"
+          ],
+          "sha256": "b19a3da13f976143b4572f1ccf31cd13296c1f17e3abd1811855b5de5cf82569"
+        },
+        {
+          "id": {
+            "group": "com.mortennobel",
+            "name": "java-image-scaling",
+            "version": "0.8.6",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "java-image-scaling-0.8.6.jar",
+          "path": "com/mortennobel/java-image-scaling/0.8.6",
+          "urls": [
+            "https://jcenter.bintray.com/com/mortennobel/java-image-scaling/0.8.6/java-image-scaling-0.8.6.jar"
+          ],
+          "sha256": "fabd02916eed5cd1cd5881d94970ea3c74e140b4c21acc6b640ddf3ed1472b95"
+        },
+        {
+          "id": {
+            "group": "com.mortennobel",
+            "name": "java-image-scaling",
+            "version": "0.8.6",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "java-image-scaling-0.8.6.pom",
+          "path": "com/mortennobel/java-image-scaling/0.8.6",
+          "urls": [
+            "https://jcenter.bintray.com/com/mortennobel/java-image-scaling/0.8.6/java-image-scaling-0.8.6.pom"
+          ],
+          "sha256": "b567fa2dae5a7ecbcb64d935a990727ca92236779b51ddfae96dbd45cb596f5e"
+        },
+        {
+          "id": {
+            "group": "commons-codec",
+            "name": "commons-codec",
+            "version": "1.11",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "commons-codec-1.11.jar",
+          "path": "commons-codec/commons-codec/1.11",
+          "urls": [
+            "https://jcenter.bintray.com/commons-codec/commons-codec/1.11/commons-codec-1.11.jar"
+          ],
+          "sha256": "e599d5318e97aa48f42136a2927e6dfa4e8881dff0e6c8e3109ddbbff51d7b7d"
+        },
+        {
+          "id": {
+            "group": "commons-codec",
+            "name": "commons-codec",
+            "version": "1.11",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-codec-1.11.pom",
+          "path": "commons-codec/commons-codec/1.11",
+          "urls": [
+            "https://jcenter.bintray.com/commons-codec/commons-codec/1.11/commons-codec-1.11.pom"
+          ],
+          "sha256": "c1e7140d1dea8fdf3528bc1e3c5444ac0b541297311f45f9806c213ec3ee9a10"
+        },
+        {
+          "id": {
+            "group": "commons-io",
+            "name": "commons-io",
+            "version": "2.6",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "commons-io-2.6.jar",
+          "path": "commons-io/commons-io/2.6",
+          "urls": [
+            "https://jcenter.bintray.com/commons-io/commons-io/2.6/commons-io-2.6.jar"
+          ],
+          "sha256": "f877d304660ac2a142f3865badfc971dec7ed73c747c7f8d5d2f5139ca736513"
+        },
+        {
+          "id": {
+            "group": "commons-io",
+            "name": "commons-io",
+            "version": "2.6",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-io-2.6.pom",
+          "path": "commons-io/commons-io/2.6",
+          "urls": [
+            "https://jcenter.bintray.com/commons-io/commons-io/2.6/commons-io-2.6.pom"
+          ],
+          "sha256": "0c23863893a2291f5a7afdbd8d15923b3948afd87e563fa341cdcf6eae338a60"
+        },
+        {
+          "id": {
+            "group": "commons-logging",
+            "name": "commons-logging",
+            "version": "1.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "commons-logging-1.2.jar",
+          "path": "commons-logging/commons-logging/1.2",
+          "urls": [
+            "https://jcenter.bintray.com/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"
+          ],
+          "sha256": "daddea1ea0be0f56978ab3006b8ac92834afeefbd9b7e4e6316fca57df0fa636"
+        },
+        {
+          "id": {
+            "group": "commons-logging",
+            "name": "commons-logging",
+            "version": "1.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-logging-1.2.pom",
+          "path": "commons-logging/commons-logging/1.2",
+          "urls": [
+            "https://jcenter.bintray.com/commons-logging/commons-logging/1.2/commons-logging-1.2.pom"
+          ],
+          "sha256": "c91ab5aa570d86f6fd07cc158ec6bc2c50080402972ee9179fe24100739fbb20"
+        },
+        {
+          "id": {
+            "group": "junit",
+            "name": "junit",
+            "version": "4.13",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "junit-4.13.jar",
+          "path": "junit/junit/4.13",
+          "urls": [
+            "https://jcenter.bintray.com/junit/junit/4.13/junit-4.13.jar"
+          ],
+          "sha256": "4b8532f63bdc0e0661507f947eb324a954d1dbac631ad19c8aa9a00feed1d863"
+        },
+        {
+          "id": {
+            "group": "junit",
+            "name": "junit",
+            "version": "4.13",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "junit-4.13.pom",
+          "path": "junit/junit/4.13",
+          "urls": [
+            "https://jcenter.bintray.com/junit/junit/4.13/junit-4.13.pom"
+          ],
+          "sha256": "9a0dc4c3fa2b086e708226737ef4bb37847c3cb1ce4e203517c09f6305b2267e"
+        },
+        {
+          "id": {
+            "group": "org.apache",
+            "name": "apache",
+            "version": "13",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "apache-13.pom",
+          "path": "org/apache/apache/13",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/apache/13/apache-13.pom"
+          ],
+          "sha256": "ff513db0361fd41237bef4784968bc15aae478d4ec0a9496f811072ccaf3841d"
+        },
+        {
+          "id": {
+            "group": "org.apache",
+            "name": "apache",
+            "version": "18",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "apache-18.pom",
+          "path": "org/apache/apache/18",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/apache/18/apache-18.pom"
+          ],
+          "sha256": "7831307285fd475bbc36b20ae38e7882f11c3153b1d5930f852d44eda8f33c17"
+        },
+        {
+          "id": {
+            "group": "org.apache",
+            "name": "apache",
+            "version": "19",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "apache-19.pom",
+          "path": "org/apache/apache/19",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/apache/19/apache-19.pom"
+          ],
+          "sha256": "91f7a33096ea69bac2cbaf6d01feb934cac002c48d8c8cfa9c240b40f1ec21df"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-compress",
+            "version": "1.17",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "commons-compress-1.17.jar",
+          "path": "org/apache/commons/commons-compress/1.17",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-compress/1.17/commons-compress-1.17.jar"
+          ],
+          "sha256": "5282f3aed46fe7c2542025fd4adc991df2229174995106a5557f4587fafbee0d"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-compress",
+            "version": "1.17",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-compress-1.17.pom",
+          "path": "org/apache/commons/commons-compress/1.17",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-compress/1.17/commons-compress-1.17.pom"
+          ],
+          "sha256": "a993c96a1edc6de4f6f6d31cb023279034b09601146111a266415389f77b7352"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-lang3",
+            "version": "3.7",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "commons-lang3-3.7.jar",
+          "path": "org/apache/commons/commons-lang3/3.7",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7.jar"
+          ],
+          "sha256": "6e8dc31e046508d9953c96534edf0c2e0bfe6f468966b5b842b3f87e43b6a847"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-lang3",
+            "version": "3.7",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-lang3-3.7.pom",
+          "path": "org/apache/commons/commons-lang3/3.7",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-lang3/3.7/commons-lang3-3.7.pom"
+          ],
+          "sha256": "16bf63e86f5ea0404e89ed0f654b0915bea0030129aea9531d74369b71f764da"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-parent",
+            "version": "34",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-parent-34.pom",
+          "path": "org/apache/commons/commons-parent/34",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-parent/34/commons-parent-34.pom"
+          ],
+          "sha256": "3a2e69d06d641d1f3b293126dc9e2e4ea6563bf8c36c87e0ab6fa4292d04b79c"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-parent",
+            "version": "42",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-parent-42.pom",
+          "path": "org/apache/commons/commons-parent/42",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-parent/42/commons-parent-42.pom"
+          ],
+          "sha256": "cd313494c670b483ec256972af1698b330e598f807002354eb765479f604b09c"
+        },
+        {
+          "id": {
+            "group": "org.apache.commons",
+            "name": "commons-parent",
+            "version": "46",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "commons-parent-46.pom",
+          "path": "org/apache/commons/commons-parent/46",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/commons/commons-parent/46/commons-parent-46.pom"
+          ],
+          "sha256": "62245fb206e12a7d764029de19aa6d614a77cfea8be0c6eb1a9bc8d60b8cef26"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpclient",
+            "version": "4.5.5",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "httpclient-4.5.5.jar",
+          "path": "org/apache/httpcomponents/httpclient/4.5.5",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpclient/4.5.5/httpclient-4.5.5.jar"
+          ],
+          "sha256": "7e97724443ad2a25ad8c73183431d47cc7946271bcbbdfa91a8a17522a566573"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpclient",
+            "version": "4.5.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "httpclient-4.5.5.pom",
+          "path": "org/apache/httpcomponents/httpclient/4.5.5",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpclient/4.5.5/httpclient-4.5.5.pom"
+          ],
+          "sha256": "db3b0198e11f3aa5fa51310c915b818c134a8cbcb82fc81ddf95ba2313862626"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpcomponents-client",
+            "version": "4.5.5",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "httpcomponents-client-4.5.5.pom",
+          "path": "org/apache/httpcomponents/httpcomponents-client/4.5.5",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpcomponents-client/4.5.5/httpcomponents-client-4.5.5.pom"
+          ],
+          "sha256": "1445d012158f941731a6062c7eab740093ea2745b46b54de236b3f7787e99bf3"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpcomponents-core",
+            "version": "4.4.9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "httpcomponents-core-4.4.9.pom",
+          "path": "org/apache/httpcomponents/httpcomponents-core/4.4.9",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpcomponents-core/4.4.9/httpcomponents-core-4.4.9.pom"
+          ],
+          "sha256": "32e66095a919456fc76a10c7865e70c9a14c62bbba847026420a055652366b18"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpcomponents-parent",
+            "version": "9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "httpcomponents-parent-9.pom",
+          "path": "org/apache/httpcomponents/httpcomponents-parent/9",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpcomponents-parent/9/httpcomponents-parent-9.pom"
+          ],
+          "sha256": "2656c7e40bdbe6b6f958798f7d6918b50b544df0e23b52ce3731b9ccc20b5f8c"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpcomponents-parent",
+            "version": "10",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "httpcomponents-parent-10.pom",
+          "path": "org/apache/httpcomponents/httpcomponents-parent/10",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpcomponents-parent/10/httpcomponents-parent-10.pom"
+          ],
+          "sha256": "caaf967d94afb21753f36082c6086206bd1f48825ff596932cceba72b65d39fa"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpcore",
+            "version": "4.4.9",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "httpcore-4.4.9.jar",
+          "path": "org/apache/httpcomponents/httpcore/4.4.9",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar"
+          ],
+          "sha256": "1b4a1c0b9b4222eda70108d3c6e2befd4a6be3d9f78ff53dd7a94966fdf51fc5"
+        },
+        {
+          "id": {
+            "group": "org.apache.httpcomponents",
+            "name": "httpcore",
+            "version": "4.4.9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "httpcore-4.4.9.pom",
+          "path": "org/apache/httpcomponents/httpcore/4.4.9",
+          "urls": [
+            "https://jcenter.bintray.com/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.pom"
+          ],
+          "sha256": "6e94bd777beedeff9b5e770cf654b530325781034b2746c632b131ec74ad513c"
+        },
+        {
+          "id": {
+            "group": "org.checkerframework",
+            "name": "checker-qual",
+            "version": "2.11.1",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "checker-qual-2.11.1.jar",
+          "path": "org/checkerframework/checker-qual/2.11.1",
+          "urls": [
+            "https://jcenter.bintray.com/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar"
+          ],
+          "sha256": "015224a4b1dc6de6da053273d4da7d39cfea20e63038169fc45ac0d1dc9c5938"
+        },
+        {
+          "id": {
+            "group": "org.checkerframework",
+            "name": "checker-qual",
+            "version": "2.11.1",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "checker-qual-2.11.1.pom",
+          "path": "org/checkerframework/checker-qual/2.11.1",
+          "urls": [
+            "https://jcenter.bintray.com/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.pom"
+          ],
+          "sha256": "cf2e0c90d8f757455f4a258ea609739053663bd5da6a79d9bd53f935a47de79c"
+        },
+        {
+          "id": {
+            "group": "org.hamcrest",
+            "name": "hamcrest-core",
+            "version": "1.3",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "hamcrest-core-1.3.jar",
+          "path": "org/hamcrest/hamcrest-core/1.3",
+          "urls": [
+            "https://jcenter.bintray.com/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
+          ],
+          "sha256": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
+        },
+        {
+          "id": {
+            "group": "org.hamcrest",
+            "name": "hamcrest-core",
+            "version": "1.3",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "hamcrest-core-1.3.pom",
+          "path": "org/hamcrest/hamcrest-core/1.3",
+          "urls": [
+            "https://jcenter.bintray.com/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.pom"
+          ],
+          "sha256": "fde386a7905173a1b103de6ab820727584b50d0e32282e2797787c20a64ffa93"
+        },
+        {
+          "id": {
+            "group": "org.hamcrest",
+            "name": "hamcrest-parent",
+            "version": "1.3",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "hamcrest-parent-1.3.pom",
+          "path": "org/hamcrest/hamcrest-parent/1.3",
+          "urls": [
+            "https://jcenter.bintray.com/org/hamcrest/hamcrest-parent/1.3/hamcrest-parent-1.3.pom"
+          ],
+          "sha256": "6d535f94efb663bdb682c9f27a50335394688009642ba7a9677504bc1be4129b"
+        },
+        {
+          "id": {
+            "group": "org.json",
+            "name": "json",
+            "version": "20180130",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "json-20180130.jar",
+          "path": "org/json/json/20180130",
+          "urls": [
+            "https://jcenter.bintray.com/org/json/json/20180130/json-20180130.jar"
+          ],
+          "sha256": "3eddf6d9d50e770650e62abe62885f4393aa911430ecde73ebafb1ffd2cfad16"
+        },
+        {
+          "id": {
+            "group": "org.json",
+            "name": "json",
+            "version": "20180130",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "json-20180130.pom",
+          "path": "org/json/json/20180130",
+          "urls": [
+            "https://jcenter.bintray.com/org/json/json/20180130/json-20180130.pom"
+          ],
+          "sha256": "f6ad3a886760af0903f5252f0000a736d196e3ccad43583c680938cb12fba794"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-17.0.2.pom",
+          "path": "org/openjfx/javafx/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx/17.0.2/javafx-17.0.2.pom"
+          ],
+          "sha256": "36141bab55bddc9be6d54ecdce326b11d5c59d44b50c4f623a96b05d42e538ab"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-base",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-base-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-base/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar"
+          ],
+          "sha256": "5706c25523a3130a030f867ee53a7c1a2cad4d1c4242dcc6df0fb2c1242ea5f8"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-base",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javafx-base-17.0.2.jar",
+          "path": "org/openjfx/javafx-base/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar"
+          ],
+          "sha256": "453e4ad3467094f3fcc0c2b6037994cb067593f91922a20207580a7f3d53b71c"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-base",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-base-17.0.2.pom",
+          "path": "org/openjfx/javafx-base/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.pom"
+          ],
+          "sha256": "bac56c345c886a5c0a66b51a34d1bbf0df67d341048bda9e7b328521c5286c93"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-controls",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-controls-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-controls/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar"
+          ],
+          "sha256": "8eaaebd5a8b413ca8cfcf7638d7e6693190a880c74079584fb1af8426d64e67b"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-controls",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javafx-controls-17.0.2.jar",
+          "path": "org/openjfx/javafx-controls/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar"
+          ],
+          "sha256": "d7c94677a4e1bd68c7686081233b3d0426a0d345dfedef9d45adb19c31ec2672"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-controls",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-controls-17.0.2.pom",
+          "path": "org/openjfx/javafx-controls/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.pom"
+          ],
+          "sha256": "607115b41e773d18f7bc17f767e19ca86e313bae15dfdea5f78720de306918fa"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-fxml",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-fxml-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-fxml/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar"
+          ],
+          "sha256": "f0b7fc6b80f9c70e1332ddb38f01a7ee6acaa567aaa54283cd6ec95e929adf32"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-fxml",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-fxml-17.0.2.pom",
+          "path": "org/openjfx/javafx-fxml/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2.pom"
+          ],
+          "sha256": "e81b4ec51c85fedffa7c001cd48fe670074da0df60de4408b9b438c4e1ae4b6c"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-graphics",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-graphics-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-graphics/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar"
+          ],
+          "sha256": "3c5f2a59910e8f22628592d23bdae5714ad4554d99433ca8a0f085b940b0d18f"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-graphics",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javafx-graphics-17.0.2.jar",
+          "path": "org/openjfx/javafx-graphics/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar"
+          ],
+          "sha256": "6c8df43a15129977cb3cd98faf30eecbf29a52d18862cefbd28428fa132a1847"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-graphics",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-graphics-17.0.2.pom",
+          "path": "org/openjfx/javafx-graphics/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.pom"
+          ],
+          "sha256": "4ebdf85dd57acdb50bafcc23bef67e17363a04ed229b8a6ae34fd59fd1930a27"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-media",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-media-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-media/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-media/17.0.2/javafx-media-17.0.2-linux.jar"
+          ],
+          "sha256": "e07660feb7e1288c172b9120da8bef869e18716f5222bdf1392e18f03264b569"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-media",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar"
+          },
+          "name": "javafx-media-17.0.2.jar",
+          "path": "org/openjfx/javafx-media/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-media/17.0.2/javafx-media-17.0.2.jar"
+          ],
+          "sha256": "dec1f1c645df549bfb453f34c074bd9cbcdb7441a0568630f4d2b52b3915f9fd"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-media",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-media-17.0.2.pom",
+          "path": "org/openjfx/javafx-media/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-media/17.0.2/javafx-media-17.0.2.pom"
+          ],
+          "sha256": "e6423b6cdd4fd5767ba834116fcaee1d7d0a7aaea1a12a1eaf10e249cdee4a71"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-swing",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-swing-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-swing/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2-linux.jar"
+          ],
+          "sha256": "2f71bcc34d5a1efb710ab3e6142bdfab9882537dda0c456234d7bb107aedbc71"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-swing",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-swing-17.0.2.pom",
+          "path": "org/openjfx/javafx-swing/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2.pom"
+          ],
+          "sha256": "d4aa550b7ec7dc6aebac34966e0f2594589aa4ebee5c63eff9d633faf6de3318"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-web",
+            "version": "17.0.2",
+            "type": "jar",
+            "extension": "jar",
+            "classifier": "linux"
+          },
+          "name": "javafx-web-17.0.2-linux.jar",
+          "path": "org/openjfx/javafx-web/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-web/17.0.2/javafx-web-17.0.2-linux.jar"
+          ],
+          "sha256": "4ff2d7ef199ef34c8bc58f2683248fe9311cc8448231b23f05b2c7966faf2f83"
+        },
+        {
+          "id": {
+            "group": "org.openjfx",
+            "name": "javafx-web",
+            "version": "17.0.2",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "javafx-web-17.0.2.pom",
+          "path": "org/openjfx/javafx-web/17.0.2",
+          "urls": [
+            "https://jcenter.bintray.com/org/openjfx/javafx-web/17.0.2/javafx-web-17.0.2.pom"
+          ],
+          "sha256": "1e28d0c8a32284c5e99e237440fa0e208511bf6507a78d6f83a53d58d4fde6ce"
+        },
+        {
+          "id": {
+            "group": "org.sonatype.oss",
+            "name": "oss-parent",
+            "version": "7",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "oss-parent-7.pom",
+          "path": "org/sonatype/oss/oss-parent/7",
+          "urls": [
+            "https://jcenter.bintray.com/org/sonatype/oss/oss-parent/7/oss-parent-7.pom"
+          ],
+          "sha256": "b51f8867c92b6a722499557fc3a1fdea77bdf9ef574722fe90ce436a29559454"
+        },
+        {
+          "id": {
+            "group": "org.sonatype.oss",
+            "name": "oss-parent",
+            "version": "9",
+            "type": "pom",
+            "extension": "pom"
+          },
+          "name": "oss-parent-9.pom",
+          "path": "org/sonatype/oss/oss-parent/9",
+          "urls": [
+            "https://jcenter.bintray.com/org/sonatype/oss/oss-parent/9/oss-parent-9.pom"
+          ],
+          "sha256": "fb40265f982548212ff82e362e59732b2187ec6f0d80182885c14ef1f982827a"
+        }
+      ]
+    }
+  }
+}
