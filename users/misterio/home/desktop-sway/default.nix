@@ -22,7 +22,7 @@
 
   home.packages = with pkgs; [
     deluge
-    dragon-drop
+    xdragon
     imv
     pavucontrol
     wofi

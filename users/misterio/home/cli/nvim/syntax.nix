@@ -18,5 +18,13 @@
       plugin = pgsql-vim;
       config = "let g:sql_type_default = 'pgsql'";
     }
+    {
+      plugin = nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars);
+      config = /* vim */ ''
+        lua require('nvim-treesitter.configs').setup{highlight={enable=true}}
+        set foldmethod=expr
+        set foldexpr=nvim_treesitter#foldexpr()
+      '';
+    }
   ];
 }

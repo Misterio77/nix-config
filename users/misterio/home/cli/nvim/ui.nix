@@ -1,5 +1,29 @@
 { pkgs, ... }: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
+    vim-illuminate
+    vim-numbertoggle
+    {
+      plugin = telescope-nvim;
+      config = /* vim */ ''
+        lua require('telescope').setup{}
+        nnoremap <leader>ff <cmd>Telescope find_files<cr>
+        nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+        nnoremap <leader>fb <cmd>Telescope buffers<cr>
+        nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+      '';
+    }
+    {
+      plugin = which-key-nvim;
+      config = /* lua */ ''
+        lua require('which-key').setup{}
+      '';
+    }
+    {
+      plugin = range-highlight-nvim;
+      config = /* lua */ ''
+        lua require('range-highlight').setup{}
+      '';
+    }
     {
       plugin = indent-blankline-nvim;
       config = /* lua */ ''

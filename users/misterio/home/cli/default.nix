@@ -21,6 +21,8 @@
     exa
     ncdu
     ripgrep
+    fd
+    distrobox
     # Nix tooling
     rnix-lsp
     nixfmt

@@ -48,11 +48,10 @@ in
       nmap <C-k> <C-y>
     '';
     plugins = with pkgs.vimPlugins; [
+      plenary-nvim
       editorconfig-vim
       vim-fugitive
-      vim-illuminate
       vim-matchup
-      vim-numbertoggle
       vim-surround
       {
         plugin = better-escape-nvim;
@@ -61,21 +60,9 @@ in
         '';
       }
       {
-        plugin = range-highlight-nvim;
-        config = /* lua */ ''
-          lua require('range-highlight').setup{}
-        '';
-      }
-      {
         plugin = nvim-autopairs;
         config = /* lua */ ''
           lua require('nvim-autopairs').setup{}
-        '';
-      }
-      {
-        plugin = which-key-nvim;
-        config = /* lua */ ''
-          lua require('which-key').setup{}
         '';
       }
       {
