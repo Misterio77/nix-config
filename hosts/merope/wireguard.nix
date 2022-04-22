@@ -22,7 +22,7 @@ in
           peers = [
             # Asterope (phone)
             {
-              publicKey = "K5oExYphRVuBjvzAl3SrGx68khEZpODvWb0EqdJn0VM=";
+              publicKey = "vQdP7VH+/Xu6vxYpV9ExY8jVT10af96WNsQhR5Emsms=";
               allowedIPs = [
                 # Wireguard IPs
                 "10.100.0.2/32"
