@@ -26,7 +26,6 @@ let
   waybar = "${pkgs.waybar}/bin/waybar";
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
-  yubikey-touch-detector = "${pkgs.yubikey-touch-detector}/bin/yubikey-touch-detector";
   zathura = "${pkgs.zathura}/bin/zathura";
 
   spawn-alacritty = cmd: "${alacritty} msg create-window ${cmd} || ${alacritty} ${cmd}";
@@ -148,8 +147,6 @@ in {
         { command = "${discocss}"; }
         # Start waybar
         { command = "${waybar}"; }
-        # Start yubikey touch detector
-        { command = "${yubikey-touch-detector} --libnotify"; }
       ] ++
       (if hostname == "atlas" then [{
         # Set primary monitor
