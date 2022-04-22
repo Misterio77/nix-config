@@ -37,7 +37,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
       ];
       modules-right = [
         "custom/gamemode"
-        "custom/ethminer"
+        "custom/gammastep"
         "custom/theme"
         "network"
         "custom/home"
@@ -176,13 +176,23 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           exec-if =
             "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
           interval = 3;
-          exec = ''
-            echo '{"tooltip": "Gamemode is active"}'
-          '';
-          format = "";
+          return-type = "json";
+          exec = jsonOutput {
+            tooltip = "Gamemode is active";
+          };
+          format = " ";
+        };
+        "custom/gammastep" = {
+          exec-if = "${pkgs.systemd}/bin/systemctl --user -q is-active gammastep";
+          interval = 3;
+          return-type = "json";
+          exec = jsonOutput {
+            tooltip = "Gammastep is active";
+          };
+          format = "";
         };
         "custom/theme" = {
-          interval = "10";
+          interval = 10;
           return-type = "json";
           max-length = 20;
           exec = jsonOutput {
