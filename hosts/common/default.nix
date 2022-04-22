@@ -71,6 +71,7 @@
   };
 
   services = {
+    geoclue2.enable = true;
     pcscd.enable = true;
     openssh = {
       enable = true;

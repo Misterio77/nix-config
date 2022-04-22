@@ -4,6 +4,7 @@
     ./discord.nix
     ./font.nix
     ./firefox.nix
+    ./gammastep.nix
     ./gtk.nix
     ./kdeconnect.nix
     ./mako.nix
