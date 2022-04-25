@@ -7,6 +7,7 @@
         Port = 4533;
         MusicFolder = "/media/music";
         CovertArtPriority = "*.jpg, *.JPG, *.png, *.PNG, embedded";
+        AutoImportPlaylists = false;
       };
     };
 

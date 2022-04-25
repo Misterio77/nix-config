@@ -145,8 +145,6 @@ in {
         { command = "SWAYFADER_CON_INAC=0.85 ${swayfader}"; }
         # Init discocss
         { command = "${discocss}"; }
-        # Start waybar
-        { command = "${waybar}"; }
       ] ++
       (if hostname == "atlas" then [{
         # Set primary monitor

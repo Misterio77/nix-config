@@ -15,6 +15,10 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
 {
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = true;
+      target = "sway-session.target";
+    };
     settings = [{
       layer = "top";
       height = 42;
@@ -181,15 +185,6 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
             tooltip = "Gamemode is active";
           };
           format = " ";
-        };
-        "custom/gammastep" = {
-          exec-if = "${pkgs.systemd}/bin/systemctl --user -q is-active gammastep";
-          interval = 3;
-          return-type = "json";
-          exec = jsonOutput {
-            tooltip = "Gammastep is active";
-          };
-          format = "";
         };
         "custom/theme" = {
           interval = 10;
