@@ -1,6 +1,7 @@
 # From https://github.com/newam/nixpkgs
 { lib, pkgs, stdenv, buildGoModule, fetchFromGitHub, fetchzip, coreutils, fetchurl, darktable, rawtherapee, ffmpeg, libheif, exiftool, nodejs }:
 
+with lib;
 let
   version = "unstable-2022-03-02";
   pname = "photoprism";
@@ -42,21 +43,23 @@ let
 
     srcs = [
       # Downstream photoprism libtensorflow tarball (with pre-built libs for both arm64 and amd64)
-      (fetchurl {
-        sha256 = {
-          x86_64-linux = "sha256-bZAC3PJxqcjuGM4RcNtzYtkg3FD3SrO5beDsPoKenzc=";
-          aarch64-linux = "sha256-qnj4vhSWgrk8SIjzIH1/4waMxMsxMUvqdYZPaSaUJRk=";
-        }.system or (throw "Unsupported system");
+      (
+        let
+          sha256 = {
+            x86_64-linux = "sha256-bZAC3PJxqcjuGM4RcNtzYtkg3FD3SrO5beDsPoKenzc=";
+            aarch64-linux = "sha256-qnj4vhSWgrk8SIjzIH1/4waMxMsxMUvqdYZPaSaUJRk=";
+          }.${system} or (throw "Unsupported system");
 
-        url =
-          let
-            systemName = {
-              x86_64-linux = "amd64";
-              aarch64-linux = "arm64";
-            }.system or (throw "Unsupported system");
-          in
-          "https://dl.photoprism.app/tensorflow/${systemName}/libtensorflow-${systemName}-${version}.tar.gz";
-      })
+          systemName = {
+            x86_64-linux = "amd64";
+            aarch64-linux = "arm64";
+          }.${system} or (throw "Unsupported system");
+        in
+        fetchurl {
+          inherit sha256;
+          url = "https://dl.photoprism.app/tensorflow/${systemName}/libtensorflow-${systemName}-${version}.tar.gz";
+        }
+      )
       # Upstream tensorflow tarball (with includes we'll need)
       (fetchurl {
         url = "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.15.0.tar.gz";
