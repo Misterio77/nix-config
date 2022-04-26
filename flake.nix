@@ -73,7 +73,6 @@
           graphical = true;
           trusted = true;
           colorscheme = "spaceduck";
-          wallpaper = "planet-comets-blue-pink";
         };
         "misterio@pleione" = lib.mkHome {
           username = "misterio";
@@ -83,7 +82,6 @@
           graphical = true;
           trusted = true;
           colorscheme = "paraiso";
-          wallpaper = "eclipse-moon-red";
         };
         "misterio@merope" = lib.mkHome {
           username = "misterio";
