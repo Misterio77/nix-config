@@ -72,7 +72,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "phd";
+          colorscheme = "paraiso";
         };
         "misterio@pleione" = lib.mkHome {
           username = "misterio";
@@ -81,7 +81,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "paraiso";
+          colorscheme = "silk-dark";
         };
         "misterio@merope" = lib.mkHome {
           username = "misterio";
