@@ -2,6 +2,7 @@
   imports = [
     ./kitty.nix
     ./discord.nix
+    ./firefox.nix
     ./font.nix
     ./gammastep.nix
     ./gtk.nix
