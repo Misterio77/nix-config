@@ -14,19 +14,22 @@
     ./starship.nix
   ];
   home.packages = with pkgs; [
-    # CLI Utils
-    comma
-    bottom
-    cachix
-    exa
-    ncdu
-    ripgrep
-    fd
-    distrobox
-    # Nix tooling
-    rnix-lsp
-    nixfmt
-    deadnix
-    statix
+    cachix # For managing my binary cache
+    comma # Run not installed programs by sticking a , before them
+    distrobox # Nice escape hatch, integrates docker images with my environment
+
+    bottom # System viewer
+    ncdu # TUI disk usage
+    exa # Better ls
+    ripgrep # Better grep
+    fd # Better find
+    httpie # Better curl
+    jq # JSON pretty printer and manipulator
+    tidy-viewer # CSV/TSV pretty printer
+
+    rnix-lsp # Nix LSP
+    nixfmt # Nix formatter
+    deadnix # Nix dead code locator
+    statix # Nix linter
   ];
 }
