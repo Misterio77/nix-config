@@ -2,7 +2,6 @@
   # Add (some) LSP packages here (others are per-project, to avoid big stuff)
   home.packages = with pkgs; [
     editorconfig-checker
-    codespell
     nodePackages.jsonlint
   ];
 
@@ -83,11 +82,12 @@
                   null_ls.builtins.diagnostics.deadnix,
 
                   -- General
-                  null_ls.builtins.diagnostics.codespell,
                   null_ls.builtins.diagnostics.editorconfig_checker.with({
                     command = "editorconfig-checker",
                   }),
-                  null_ls.builtins.diagnostics.trail_space,
+                  null_ls.builtins.diagnostics.trail_space.with({
+                    disabled_filetypes = { "mail" },
+                  }),
               },
           })
         EOF
