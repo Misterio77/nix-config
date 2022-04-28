@@ -1,15 +1,11 @@
 { lib, trusted, pkgs, config, hostname, ... }:
 
 let
-  inherit (config.colorscheme) colors;
-
-  modifier = "Mod4";
-
   # Programs
-  alacritty = "${config.programs.alacritty.package}/bin/alacritty";
   amfora = "${pkgs.amfora}/bin/amfora";
   discocss = "${pkgs.discocss}/bin/discocss";
   grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
+  kitty = "${config.programs.kitty.package}/bin/kitty";
   light = "${pkgs.light}/bin/light";
   makoctl = "${pkgs.mako}/bin/makoctl";
   neomutt = "${pkgs.neomutt}/bin/neomutt";
@@ -23,20 +19,20 @@ let
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-  waybar = "${pkgs.waybar}/bin/waybar";
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
 
-  spawn-alacritty = cmd: "${alacritty} msg create-window ${cmd} || ${alacritty} ${cmd}";
+  inherit (config.colorscheme) colors;
+  modifier = "Mod4";
+  terminal = kitty;
 in {
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = true;
     wrapperFeatures.gtk = true;
     config = {
-      inherit modifier;
-      terminal = spawn-alacritty "";
+      inherit modifier terminal;
       menu = "${wofi} -S run";
       fonts = {
         names = [ config.fontProfiles.regular.family ];
@@ -240,10 +236,10 @@ in {
         "${modifier}+control+w" = "exec ${makoctl} invoke";
 
         # Programs
-        "${modifier}+v" = "exec ${spawn-alacritty "-e $SHELL -i -c ${nvim}"}";
-        "${modifier}+o" = "exec ${spawn-alacritty "-e $SHELL -i -c ${octave}"}";
-        "${modifier}+m" = "exec ${spawn-alacritty "-e $SHELL -i -c ${neomutt}"}";
-        "${modifier}+a" = "exec ${spawn-alacritty "-e $SHELL -i -c ${amfora}"}";
+        "${modifier}+v" = "exec ${terminal} $SHELL -i -c ${nvim}";
+        "${modifier}+o" = "exec ${terminal} $SHELL -i -c ${octave}";
+        "${modifier}+m" = "exec ${terminal} $SHELL -i -c ${neomutt}";
+        "${modifier}+a" = "exec ${terminal} $SHELL -i -c ${amfora}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
 

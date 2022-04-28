@@ -1,9 +1,23 @@
 { pkgs, ... }: {
+  # Add (some) LSP packages here (others are per-project, to avoid big stuff)
+  home.packages = with pkgs; [
+    editorconfig-checker
+    codespell
+    nodePackages.jsonlint
+  ];
+
   programs.neovim.plugins = with pkgs.vimPlugins; [
     # LSP
     {
       plugin = nvim-lspconfig;
       config = /* vim */ ''
+        nmap gD       :lua vim.lsp.buf.declaration()<CR>
+        nmap gd       :lua vim.lsp.buf.definition()<CR>
+        nmap <space>f :lua vim.lsp.buf.formatting()<CR>
+
+        autocmd CursorHold <buf> :lua vim.lsp.buf.hover()<CR>
+        nmap K :lua vim.lsp.buf.hover()<CR>
+
         lua << EOF
           local lspconfig = require('lspconfig')
           local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -13,15 +27,11 @@
           lspconfig.bashls.setup{} -- Bash
           lspconfig.clangd.setup{} -- C/C++
           lspconfig.rnix.setup{} -- Nix
-          lspconfig.jsonls.setup{} -- JSON
-          lspconfig.sqls.setup{} -- SQL
           lspconfig.pylsp.setup{} -- Python
           lspconfig.sumneko_lua.setup{cmd = {"lua-language-server"}} -- Lua
           lspconfig.dartls.setup{} -- Dart
           lspconfig.hls.setup{} -- Haskell
           lspconfig.kotlin_language_server.setup{} -- Kotlin
-          lspconfig.html.setup{} -- HTML
-          lspconfig.cssls.setup{capabilities = capabilities} -- CSS/SASS
           lspconfig.terraformls.setup{filetypes={"terraform","tf","hcl"}} -- Terraform
 
           lspconfig.rust_analyzer.setup{ -- Rust
@@ -33,15 +43,61 @@
               }
             }
           }
+
+          local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+          for type, icon in pairs(signs) do
+            local hl = "DiagnosticSign" .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+          end
         EOF
+      '';
+    }
+    {
+      plugin = null-ls-nvim;
+      config = /* vim */ ''
+        lua << EOF
+          local null_ls = require("null-ls")
+          null_ls.setup({
+              sources = {
+                  -- Make
+                  null_ls.builtins.diagnostics.checkmake,
+                  -- Latex
+                  null_ls.builtins.diagnostics.chktex,
+                  -- HTML & templates
+                  null_ls.builtins.diagnostics.tidy,
+                  null_ls.builtins.formatting.tidy,
+                  null_ls.builtins.diagnostics.curlylint,
+                  -- Markdown
+                  null_ls.builtins.diagnostics.markdownlint,
+                  null_ls.builtins.formatting.markdownlint,
+                  -- SQL
+                  null_ls.builtins.diagnostics.sqlfluff,
+                  null_ls.builtins.formatting.sqlfluff,
+                  -- JSON
+                  null_ls.builtins.formatting.jq,
+                  null_ls.builtins.diagnostics.jsonlint,
 
-        nmap gD       :lua vim.lsp.buf.declaration()<CR>
-        nmap gd       :lua vim.lsp.buf.definition()<CR>
-        nmap <space>f :lua vim.lsp.buf.formatting()<CR>
-        nmap <space>e :lua vim.diagnostic.get()<CR>
+                  -- Nix
+                  null_ls.builtins.diagnostics.statix,
+                  null_ls.builtins.code_actions.statix,
+                  null_ls.builtins.diagnostics.deadnix,
 
-        autocmd CursorHold <buf> :lua vim.lsp.buf.hover()<CR>
-        nmap K :lua vim.lsp.buf.hover()<CR>
+                  -- General
+                  null_ls.builtins.diagnostics.codespell,
+                  null_ls.builtins.diagnostics.editorconfig_checker.with({
+                    command = "editorconfig-checker",
+                  }),
+                  null_ls.builtins.diagnostics.trail_space,
+              },
+          })
+        EOF
+      '';
+    }
+    {
+      plugin = trouble-nvim;
+      config = /* vim */ ''
+        nnoremap <space>e <cmd>TroubleToggle<cr>
+        lua require('trouble').setup{}
       '';
     }
     {

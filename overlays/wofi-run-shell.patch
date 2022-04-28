@@ -4,7 +4,7 @@ diff -r 2cd009548707 src/wofi.c
 @@ -40,8 +40,6 @@
  #include <pango/pango.h>
  #include <gdk/gdkwayland.h>
- 
+
 -static const char* terminals[] = {"kitty", "termite", "alacritty", "gnome-terminal", "weston-terminal"};
 -
  enum matching_mode {
@@ -12,7 +12,7 @@ diff -r 2cd009548707 src/wofi.c
  	MATCHING_MODE_FUZZY
 @@ -915,13 +913,16 @@
  }
- 
+
  void wofi_term_run(const char* cmd) {
 -	if(terminal != NULL) {
 -		execlp(terminal, terminal, "-e", cmd, NULL);
@@ -23,7 +23,7 @@ diff -r 2cd009548707 src/wofi.c
 +    if (!term) term = terminal;
 +
 +	if(term != NULL) {
-+		execlp(term, term, "-e", shell, "-i", "-c", cmd, NULL);
++		execlp(term, term, shell, "-i", "-c", cmd, NULL);
  	}
 -	size_t term_count = sizeof(terminals) / sizeof(char*);
 -	for(size_t count = 0; count < term_count; ++count) {

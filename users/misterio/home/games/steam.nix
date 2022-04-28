@@ -1,5 +1,4 @@
 { pkgs, persistence, lib, ... }: {
-  programs.mangohud.enable = true;
   home.packages = with pkgs; [ steam ];
 
   home.persistence = lib.mkIf persistence {

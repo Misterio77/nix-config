@@ -22,6 +22,8 @@
     shellAliases = {
       # Get ip
       getip = "curl ifconfig.me";
+      # SSH with kitty terminfo
+      kssh = "kitty +kitten ssh";
     };
     functions = {
       fish_greeting = "";

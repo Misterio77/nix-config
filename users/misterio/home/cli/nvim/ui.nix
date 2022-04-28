@@ -5,6 +5,11 @@
     {
       plugin = telescope-nvim;
       config = /* vim */ ''
+        nnoremap <leader>ff <cmd>Telescope find_files<cr>
+        nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+        nnoremap <leader>fb <cmd>Telescope buffers<cr>
+        nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
         lua << EOF
         local actions = require('telescope.actions')
         local action_state = require('telescope.actions.state')
@@ -44,11 +49,6 @@
           }
         }
         EOF
-
-        nnoremap <leader>ff <cmd>Telescope find_files<cr>
-        nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-        nnoremap <leader>fb <cmd>Telescope buffers<cr>
-        nnoremap <leader>fh <cmd>Telescope help_tags<cr>
       '';
     }
     {

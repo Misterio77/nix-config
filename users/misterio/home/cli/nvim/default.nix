@@ -1,7 +1,7 @@
 { inputs, config, pkgs, ... }:
 
 let
-  inherit (inputs.nix-colors.lib { inherit pkgs; }) vimThemeFromScheme;
+  vimThemeFromScheme = import ./theme.nix { inherit pkgs; };
 in
 {
   imports = [ ./ui.nix ./lsp.nix ./syntax.nix ];

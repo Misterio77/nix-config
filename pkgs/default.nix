@@ -1,5 +1,4 @@
 { pkgs }: {
-  alacritty-ligatures = pkgs.callPackage ./alacritty-ligatures { };
   argononed = pkgs.callPackage ./argononed { };
   clematis = pkgs.callPackage ./clematis { };
   comma = pkgs.callPackage ./comma { };

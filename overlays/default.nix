@@ -24,6 +24,10 @@ final: prev:
     patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];
   });
 
+  xdg-utils = prev.xdg-utils.overrideAttrs (oldAttrs: rec {
+    patches = (oldAttrs.patches or [ ]) ++ [ ./xdg-open-spawn-terminal.diff ];
+  });
+
   # Fixes https://todo.sr.ht/~scoopta/wofi/174
   wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./wofi-run-shell.patch ];

@@ -1,9 +1,8 @@
 { pkgs, ... }: {
   imports = [
-    ./alacritty.nix
+    ./kitty.nix
     ./discord.nix
     ./font.nix
-    ./firefox.nix
     ./gammastep.nix
     ./gtk.nix
     ./kdeconnect.nix
@@ -22,6 +21,7 @@
   xdg.mimeApps.enable = true;
 
   home.packages = with pkgs; [
+    mimeo
     deluge
     xdragon
     imv

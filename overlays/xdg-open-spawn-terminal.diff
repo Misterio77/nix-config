@@ -1,0 +1,21 @@
+diff --git a/scripts/xdg-open.in b/scripts/xdg-open.in
+index 0fbd63d..d04cdae 100644
+--- a/scripts/xdg-open.in
++++ b/scripts/xdg-open.in
+@@ -270,7 +270,15 @@ search_desktop_file()
+             args=$(( $args - 1 ))
+         done
+         [ $replaced -eq 1 ] || set -- "$@" "$target"
+-        "$command_exec" "$@"
++
++        if [ x"$(get_key "${file}" "Terminal")" = x"true" ]; then
++            if [ -z "$TERMINAL" ]; then
++                TERMINAL="xterm -e"
++            fi
++            $TERMINAL "$command_exec" "$@" &
++        else
++            "$command_exec" "$@"
++        fi
+
+         if [ $? -eq 0 ]; then
+             exit_success
