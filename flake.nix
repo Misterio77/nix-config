@@ -72,7 +72,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "spaceduck";
+          colorscheme = "phd";
         };
         "misterio@pleione" = lib.mkHome {
           username = "misterio";
@@ -112,12 +112,17 @@
 
     } // inputs.utils.lib.eachDefaultSystem (system:
       let
+        inherit (inputs.nix-colors.lib { inherit pkgs; }) gtkThemeFromScheme;
+        inherit (inputs.nix-colors) colorSchemes;
+        inherit (builtins) mapAttrs;
         pkgs = import inputs.nixpkgs { inherit system overlays; };
       in
       {
         # Allows 'nix build .#package-name', including vanilla, overlayed, and custom packages
-        packages = pkgs;
-
+        packages = pkgs // {
+          # Add custom generated gtk themes
+          generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;
+        };
         # 'nix develop' for bootstrapping
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ home-manager git ];
