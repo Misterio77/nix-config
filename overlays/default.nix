@@ -6,6 +6,7 @@ final: prev:
         patches = (oldAttrs.patches or [ ])
         ++ [ ./vim-numbertoggle-command-mode.patch ];
       });
+    # Enable language fencing
     vim-nix = prev.vimPlugins.vim-nix.overrideAttrs
       (_oldAttrs: rec {
         version = "2022-02-20";

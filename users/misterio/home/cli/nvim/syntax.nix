@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  inherit (builtins) removeAttrs attrValues;
+in {
   programs.neovim.plugins = with pkgs.vimPlugins; [
     rust-vim
     dart-vim-plugin
@@ -16,7 +19,10 @@
       config = "let g:sql_type_default = 'pgsql'";
     }
     {
-      plugin = nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars);
+      plugin = nvim-treesitter.withPlugins (p:
+        # Disable tree-sitter-nix
+        attrValues (removeAttrs p [ "tree-sitter-nix" ])
+      );
       config = /* vim */ ''
         lua require('nvim-treesitter.configs').setup{highlight={enable=true}}
         set foldmethod=expr
