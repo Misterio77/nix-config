@@ -27,7 +27,7 @@
 
   outputs = inputs:
     let
-      overlay = import ./overlays;
+      overlay = import ./overlays { inherit inputs; };
       overlays = with inputs; [
         overlay
         nur.overlay
@@ -111,18 +111,11 @@
       templates = import ./templates;
 
     } // inputs.utils.lib.eachDefaultSystem (system:
-      let
-        inherit (inputs.nix-colors.lib { inherit pkgs; }) gtkThemeFromScheme;
-        inherit (inputs.nix-colors) colorSchemes;
-        inherit (builtins) mapAttrs;
-        pkgs = import inputs.nixpkgs { inherit system overlays; };
-      in
+      let pkgs = import inputs.nixpkgs { inherit system overlays; }; in
       {
         # Allows 'nix build .#package-name', including vanilla, overlayed, and custom packages
-        packages = pkgs // {
-          # Add custom generated gtk themes
-          generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;
-        };
+        packages = pkgs;
+
         # 'nix develop' for bootstrapping
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ home-manager git ];

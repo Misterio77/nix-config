@@ -1,4 +1,10 @@
-final: prev:
+{ inputs, ... }: final: prev:
+let
+  inherit (inputs.nix-colors.lib { pkgs = final; }) gtkThemeFromScheme;
+  inherit (inputs.nix-colors) colorSchemes;
+  inherit (builtins) mapAttrs;
+  inherit (final) fetchFromGitHub;
+in
 {
   vimPlugins = prev.vimPlugins // {
     vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs
@@ -10,7 +16,7 @@ final: prev:
     vim-nix = prev.vimPlugins.vim-nix.overrideAttrs
       (_oldAttrs: rec {
         version = "2022-02-20";
-        src = final.fetchFromGitHub {
+        src = fetchFromGitHub {
           owner = "hqurve";
           repo = "vim-nix";
           rev = "26abd9cb976b5f4da6da02ee81449a959027b958";
@@ -32,5 +38,7 @@ final: prev:
   wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./wofi-run-shell.patch ];
   });
+
+  generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;
 
 } // import ../pkgs { pkgs = final; }
