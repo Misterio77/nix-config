@@ -1,4 +1,3 @@
-# From https://github.com/newam/nixpkgs
 { config, lib, pkgs, ... }:
 
 let
@@ -40,13 +39,13 @@ in
     port = mkOption {
       type = types.int;
       default = 2342;
-      description = "Photoprism web UI port.";
+      description = "The port to serve the web interface at.";
     };
 
     openFirewall = mkOption {
       type = types.bool;
       default = false;
-      description = "Open the web UI port in the firewall for photoprism.";
+      description = "Open the web interface port in the firewall for photoprism.";
     };
 
     databaseDriver = mkOption {
@@ -271,7 +270,7 @@ in
           else cfg.databaseDsn;
 
         PHOTOPRISM_DETECT_NSFW = toString cfg.detectNsfw;
-        PHOTOPRISM_ALLOW_NSFW = toString cfg.allowNsfw;
+        PHOTOPRISM_UPLOAD_NSFW = toString cfg.allowNsfw;
         PHOTOPRISM_EXPERIMENTAL = toString cfg.experimental;
         PHOTOPRISM_ORIGINALS_LIMIT = toString cfg.originalsLimit;
         PHOTOPRISM_PUBLIC = toString cfg.public;
@@ -285,11 +284,6 @@ in
         PHOTOPRISM_ASSETS_PATH = "${cfg.package}/assets";
         PHOTOPRISM_ORIGINALS_PATH = cfg.originalsDir;
         PHOTOPRISM_IMPORT_PATH = "${cfg.dataDir}/import";
-
-        PHOTOPRISM_THUMB_UNCACHED = "false";
-        PHOTOPRISM_UPLOAD_NSFW = "true";
-        PHOTOPRISM_DISABLE_SETTINGS = "false";
-        PHOTOPRISM_DISABLE_TENSORFLOW = "false";
       } cfg.extraEnv;
     };
   };
