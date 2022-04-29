@@ -34,6 +34,7 @@
       target = "nixos";
       source = "/dotfiles";
     };
+    systemPackages = with pkgs; [ kitty.terminfo ];
   };
 
   boot = {
