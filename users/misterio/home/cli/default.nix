@@ -31,5 +31,7 @@
     nixfmt # Nix formatter
     deadnix # Nix dead code locator
     statix # Nix linter
+
+    deploy-rs.deploy-rs
   ];
 }

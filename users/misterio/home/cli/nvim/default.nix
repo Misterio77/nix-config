@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   vimThemeFromScheme = import ./theme.nix { inherit pkgs; };

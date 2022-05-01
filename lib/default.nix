@@ -1,10 +1,14 @@
-{ inputs, overlays }:
+{ inputs, ... }:
+let
+  inherit (builtins) mapAttrs attrValues;
+in
 {
-  importAttrset = path: builtins.mapAttrs (_: import) (import path);
+  importAttrset = path: mapAttrs (_: import) (import path);
 
   mkSystem =
     { hostname
     , system
+    , overlays ? { }
     , users ? [ ]
     , persistence ? true
     }:
@@ -13,13 +17,13 @@
       specialArgs = {
         inherit inputs system hostname persistence;
       };
-      modules = builtins.attrValues (import ../modules/nixos) ++ [
+      modules = attrValues (import ../modules/nixos) ++ [
         ../hosts/${hostname}
         {
           networking.hostName = hostname;
           # Apply overlay and allow unfree packages
           nixpkgs = {
-            inherit overlays;
+            overlays = attrValues overlays;
             config.allowUnfree = true;
           };
           # Add each input as a registry
@@ -36,6 +40,7 @@
   mkHome =
     { username
     , system
+    , overlays ? { }
     , hostname
     , persistence ? true
     , graphical ? false
@@ -50,11 +55,11 @@
       };
       homeDirectory = "/home/${username}";
       configuration = ../users/${username}/home;
-      extraModules = builtins.attrValues (import ../modules/home-manager) ++ [
+      extraModules = attrValues (import ../modules/home-manager) ++ [
         # Base configuration
         {
           nixpkgs = {
-            inherit overlays;
+            overlays = attrValues overlays;
             config.allowUnfree = true;
           };
           programs = {
@@ -65,4 +70,8 @@
         }
       ];
     };
+
+  deployNixos = configuration:
+    inputs.deploy-rs.lib.${configuration.config.nixpkgs.system}.activate.nixos
+      configuration;
 }

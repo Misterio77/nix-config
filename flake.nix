@@ -4,60 +4,73 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
     nur.url = "github:nix-community/NUR";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
-    utils.url = "github:numtide/flake-utils";
-
-    paste-misterio-me = {
-      url = "github:misterio77/paste.misterio.me/1.3.0";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        utils.follows = "utils";
-      };
-    };
+    paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.3.0";
+    paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs:
     let
-      overlay = import ./overlays { inherit inputs; };
-      overlays = with inputs; [
-        overlay
-        nur.overlay
-        paste-misterio-me.overlay
-      ];
-      lib = import ./lib { inherit inputs overlays; };
+      my-lib = import ./lib { inherit inputs; };
+      inherit (builtins) attrValues;
+      inherit (my-lib) mkSystem mkHome deployNixos importAttrset;
+      inherit (inputs.nixpkgs.lib) genAttrs systems;
+      forAllSystems = genAttrs systems.supported.hydra;
     in
-    {
-      inherit overlay overlays;
+    rec {
+      overlays = {
+        default = import ./overlay { inherit inputs; };
+        nur = inputs.nur.overlay;
+        paste-misterio-me = inputs.paste-misterio-me.overlay;
+        deploy-rs = inputs.deploy-rs.overlay;
+      };
 
-      nixosModules = lib.importAttrset ./modules/nixos;
-      homeManagerModules = lib.importAttrset ./modules/home-manager;
+      packages = forAllSystems (system:
+        let
+          pkgs = import inputs.nixpkgs { inherit system; overlays = attrValues overlays; };
+        in
+        builtins.removeAttrs pkgs [ "system" ]
+      );
+
+      devShells = forAllSystems (system: {
+        default = import ./shell.nix { pkgs = packages.${system}; };
+      });
+
+      nixosModules = importAttrset ./modules/nixos;
+      homeManagerModules = importAttrset ./modules/home-manager;
+
+      templates = import ./templates;
 
       nixosConfigurations = {
-        atlas = lib.mkSystem {
+        atlas = mkSystem {
+          inherit overlays;
           hostname = "atlas";
           system = "x86_64-linux";
           users = [ "misterio" ];
         };
-        pleione = lib.mkSystem {
+        pleione = mkSystem {
+          inherit overlays;
           hostname = "pleione";
           system = "x86_64-linux";
           users = [ "misterio" ];
         };
-        merope = lib.mkSystem {
+        merope = mkSystem {
+          inherit overlays;
           hostname = "merope";
           system = "aarch64-linux";
           users = [ "misterio" ];
         };
-        maia = lib.mkSystem {
+        maia = mkSystem {
+          inherit overlays;
           hostname = "maia";
           system = "x86_64-linux";
           users = [ "layla" "misterio" ];
@@ -65,7 +78,8 @@
       };
 
       homeConfigurations = {
-        "misterio@atlas" = lib.mkHome {
+        "misterio@atlas" = mkHome {
+          inherit overlays;
           username = "misterio";
           system = "x86_64-linux";
           hostname = "atlas";
@@ -74,7 +88,8 @@
           trusted = true;
           colorscheme = "paraiso";
         };
-        "misterio@pleione" = lib.mkHome {
+        "misterio@pleione" = mkHome {
+          inherit overlays;
           username = "misterio";
           system = "x86_64-linux";
           hostname = "pleione";
@@ -83,14 +98,16 @@
           trusted = true;
           colorscheme = "silk-dark";
         };
-        "misterio@merope" = lib.mkHome {
+        "misterio@merope" = mkHome {
+          inherit overlays;
           username = "misterio";
           system = "aarch64-linux";
           hostname = "merope";
 
           colorscheme = "nord";
         };
-        "misterio@maia" = lib.mkHome {
+        "misterio@maia" = mkHome {
+          inherit overlays;
           username = "misterio";
           system = "x86_64-linux";
           hostname = "maia";
@@ -98,7 +115,8 @@
           colorscheme = "ashes";
         };
 
-        "layla@maia" = lib.mkHome {
+        "layla@maia" = mkHome {
+          inherit overlays;
           username = "layla";
           hostname = "maia";
           system = "x86_64-linux";
@@ -108,18 +126,14 @@
         };
       };
 
-      templates = import ./templates;
-
-    } // inputs.utils.lib.eachDefaultSystem (system:
-      let pkgs = import inputs.nixpkgs { inherit system overlays; }; in
-      {
-        # Allows 'nix build .#package-name', including vanilla, overlayed, and custom packages
-        packages = pkgs;
-
-        # 'nix develop' for bootstrapping
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ home-manager git ];
-          NIX_CONFIG = "experimental-features = nix-command flakes";
+      deploy = {
+        user = "root";
+        nodes = {
+          merope = {
+            hostname = "merope.local";
+            profiles.system.path = deployNixos nixosConfigurations.merope;
+          };
         };
-      });
+      };
+    };
 }
