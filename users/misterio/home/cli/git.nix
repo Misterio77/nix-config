@@ -8,7 +8,10 @@
     };
     userName = "Gabriel Fontes";
     userEmail = "eu@misterio.me";
-    extraConfig = { init = { defaultBranch = "main"; }; };
+    extraConfig = {
+      init.defaultBranch = "main";
+      url."https://github.com/".insteadOf = "git://github.com/";
+    };
     lfs = { enable = true; };
     ignores = [ ".direnv" "result" ];
   };

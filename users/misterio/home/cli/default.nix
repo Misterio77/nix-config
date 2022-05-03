@@ -31,6 +31,7 @@
     nixfmt # Nix formatter
     deadnix # Nix dead code locator
     statix # Nix linter
+    haskellPackages.nix-derivation # Inspecting derivations
 
     deploy-rs.deploy-rs
   ];

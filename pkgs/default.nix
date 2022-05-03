@@ -1,4 +1,6 @@
 { pkgs }: {
+  apgdiff = pkgs.callPackage ./apgdiff { };
+  apgdiff-docker = pkgs.callPackage ./apgdiff/docker.nix { };
   argononed = pkgs.callPackage ./argononed { };
   clematis = pkgs.callPackage ./clematis { };
   comma = pkgs.callPackage ./comma { };

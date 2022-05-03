@@ -86,7 +86,7 @@
 
           graphical = true;
           trusted = true;
-          colorscheme = "paraiso";
+          colorscheme = "phd";
         };
         "misterio@pleione" = mkHome {
           inherit overlays;
