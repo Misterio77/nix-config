@@ -205,7 +205,7 @@ in
 
         # Unlock gpg
         "Shift+Scroll_Lock" =
-          let keyring = import ../trusted/keyring.nix { inherit pkgs; };
+          let keyring = import ../../trusted/keyring.nix { inherit pkgs; };
           in lib.mkIf trusted "exec ${keyring.unlock}";
 
         # Lock screen

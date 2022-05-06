@@ -163,7 +163,7 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           return-type = "json";
           exec =
             let
-              keyring = import ../trusted/keyring.nix { inherit pkgs; };
+              keyring = import ../../trusted/keyring.nix { inherit pkgs; };
             in
             jsonOutput {
               pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';

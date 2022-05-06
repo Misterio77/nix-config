@@ -1,32 +1,22 @@
 { pkgs, ... }: {
   imports = [
-    ./kitty.nix
-    ./discord.nix
-    ./firefox.nix
-    ./font.nix
+    ../common
     ./gammastep.nix
-    ./gtk.nix
-    ./kdeconnect.nix
+    ./kitty.nix
     ./mako.nix
     ./qt.nix
-    ./qutebrowser.nix
-    ./sublime-music.nix
     ./sway.nix
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
     ./wofi.nix
-    ./zathura.nix
   ];
 
   xdg.mimeApps.enable = true;
 
   home.packages = with pkgs; [
     mimeo
-    deluge
-    xdragon
     imv
-    pavucontrol
     wofi
     xdg-utils
     ydotool

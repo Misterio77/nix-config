@@ -11,7 +11,7 @@ in
       ./rice
       impermanence
     ]
-    ++ optional (null != desktop) ./desktop-${desktop}
+    ++ optional (null != desktop) ./desktop/${desktop}
     ++ optional games ./games
     ++ optional trusted ./trusted
     ++ optional rgb ./rgb;
