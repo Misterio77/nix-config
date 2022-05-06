@@ -1,4 +1,4 @@
-{ lib, trusted, pkgs, config, hostname, ... }:
+{ lib, trusted, pkgs, config, ... }:
 
 let
   # Programs
@@ -16,6 +16,7 @@ let
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
   qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
+  slurp = "${pkgs.slurp}/bin/slurp";
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
@@ -26,7 +27,23 @@ let
   inherit (config.colorscheme) colors;
   modifier = "Mod4";
   terminal = kitty;
-in {
+
+  # Set primary xwayland monitor
+  primary-xwayland = pkgs.writeShellScriptBin "primary-xwayland" /* bash */ ''
+    set -euo pipefail
+
+    if [ "$#" -ge 1 ] && [ "$1" == "largest" ]; then
+      output=$(${xrandr} --listmonitors | tail -n +2 | awk '{printf "%s %s\n", $3, $4}' | sort | tail -1 | cut -d ' ' -f2)
+    else
+      selected=$(${slurp} -f "%wx%h+%x+%y" -o)
+      output=$(${xrandr} | grep "$selected" | cut -d ' ' -f1)
+    fi
+
+    echo "Setting $output"
+    ${xrandr} --output "$output" --primary
+  '';
+in
+{
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = true;
@@ -38,42 +55,38 @@ in {
         names = [ config.fontProfiles.regular.family ];
         size = 12.0;
       };
-      output =
-        if hostname == "pleione" then {
-          eDP-1 = {
-            res = "1920x1080@60hz";
-            pos = "0 0";
-            bg = "${config.wallpaper} fill";
-          };
-        } else if hostname == "atlas" then {
-          DP-1 = {
-            res = "1920x1080@60hz";
-            pos = "0 0";
-            bg = "${config.wallpaper} fill";
-          };
-          HDMI-A-1 = {
-            res = "2560x1080@75hz";
-            pos = "1920 0";
-            bg = "${config.wallpaper} fill";
-          };
-        } else { };
+      output = {
+        eDP-1 = {
+          res = "1920x1080@60hz";
+          pos = "0 0";
+          bg = "${config.wallpaper} fill";
+        };
+        DP-1 = {
+          res = "1920x1080@60hz";
+          pos = "0 0";
+          bg = "${config.wallpaper} fill";
+        };
+        HDMI-A-1 = {
+          res = "2560x1080@75hz";
+          pos = "1920 0";
+          bg = "${config.wallpaper} fill";
+        };
+      };
       defaultWorkspace = "workspace number 1";
-      workspaceOutputAssign =
-        if hostname == "pleione" then [
-          {
-            output = "eDP-1";
-            workspace = "1";
-          }
-        ] else if hostname == "atlas" then [
-          {
-            output = "HDMI-A-1";
-            workspace = "1";
-          }
-          {
-            output = "DP-1";
-            workspace = "2";
-          }
-        ] else [ ];
+      workspaceOutputAssign = [
+        {
+          output = "eDP-1";
+          workspace = "1";
+        }
+        {
+          output = "HDMI-A-1";
+          workspace = "1";
+        }
+        {
+          output = "DP-1";
+          workspace = "2";
+        }
+      ];
       input = {
         # Keyboards
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
@@ -141,11 +154,9 @@ in {
         { command = "SWAYFADER_CON_INAC=0.85 ${swayfader}"; }
         # Init discocss
         { command = "${discocss}"; }
-      ] ++
-      (if hostname == "atlas" then [{
-        # Set primary monitor
-        command = "${xrandr} --output $(${xrandr} | grep 'XWAYLAND.*2560x1080' | awk '{printf $1}') --primary";
-      }] else [ ]);
+        # Set biggest monitor as xwayland primary
+        { command = "${primary-xwayland} largest"; }
+      ];
       bars = [ ];
       window = {
         border = 2;
@@ -264,6 +275,7 @@ in {
     '';
   };
 
+  # Start automatically on tty1
   programs.zsh.loginExtra = lib.mkBefore ''
     if [[ "$(tty)" == /dev/tty1 ]]; then
       exec sway &> /dev/null
@@ -279,4 +291,7 @@ in {
       exec sway &> /dev/null
     fi
   '';
+
+  home.packages = [ primary-xwayland ];
+
 }

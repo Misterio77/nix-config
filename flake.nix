@@ -54,26 +54,27 @@
         atlas = mkSystem {
           inherit overlays;
           hostname = "atlas";
-          system = "x86_64-linux";
           users = [ "misterio" ];
+          persistence = true;
         };
         pleione = mkSystem {
           inherit overlays;
           hostname = "pleione";
-          system = "x86_64-linux";
           users = [ "misterio" ];
+          persistence = true;
         };
         merope = mkSystem {
           inherit overlays;
-          hostname = "merope";
           system = "aarch64-linux";
+          hostname = "merope";
           users = [ "misterio" ];
+          persistence = true;
         };
         maia = mkSystem {
           inherit overlays;
           hostname = "maia";
-          system = "x86_64-linux";
           users = [ "layla" "misterio" ];
+          persistence = true;
         };
       };
 
@@ -81,47 +82,54 @@
         "misterio@atlas" = mkHome {
           inherit overlays;
           username = "misterio";
-          system = "x86_64-linux";
-          hostname = "atlas";
 
-          graphical = true;
+          desktop = "sway";
+          persistence = true;
           trusted = true;
-          colorscheme = "phd";
+          rgb = true;
+          games = true;
+          colorscheme = "spaceduck";
         };
         "misterio@pleione" = mkHome {
           inherit overlays;
           username = "misterio";
-          system = "x86_64-linux";
-          hostname = "pleione";
 
-          graphical = true;
+          desktop = "sway";
+          persistence = true;
           trusted = true;
-          colorscheme = "silk-dark";
+          laptop = true;
+          games = true;
+          colorscheme = "paraiso";
         };
         "misterio@merope" = mkHome {
           inherit overlays;
           username = "misterio";
           system = "aarch64-linux";
-          hostname = "merope";
 
+          persistence = true;
           colorscheme = "nord";
         };
         "misterio@maia" = mkHome {
           inherit overlays;
           username = "misterio";
-          system = "x86_64-linux";
-          hostname = "maia";
 
+          desktop = "gnome";
+          persistence = true;
           colorscheme = "ashes";
+        };
+        "misterio@gelos" = mkHome {
+          inherit overlays;
+          username = "misterio";
+
+          desktop = "gnome";
+          colorscheme = "phd";
         };
 
         "layla@maia" = mkHome {
           inherit overlays;
           username = "layla";
-          hostname = "maia";
-          system = "x86_64-linux";
 
-          graphical = true;
+          desktop = "gnome";
           colorscheme = "dracula";
         };
       };

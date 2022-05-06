@@ -1,13 +1,11 @@
-{ pkgs, hostname, config, ... }:
+{ pkgs, rgb, laptop, config, ... }:
 
 let
-  hasRgb = hostname == "atlas";
-
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";
 
-  lockTime = if hostname == "atlas" then 600 else 240;
+  lockTime = if laptop then 240 else 600;
   isLocked = "${pgrep} -x swaylock";
   actionLock = "${swaylock} -i ${config.wallpaper} --daemonize";
   actionMute = "${pactl} set-source-mute @DEFAULT_SOURCE@ yes";
@@ -33,7 +31,7 @@ in
     timeout 20 '${isLocked} && ${actionDisplayOff}' resume  '${isLocked} && ${actionDisplayOn}'
   '' +
 
-  (if hasRgb then ''
+  (if rgb then ''
     timeout ${toString (lockTime + 20)} '${actionRgbOff}' resume  '${actionRgbOn}'
     timeout 20 '${isLocked} && ${actionRgbOff}' resume  '${isLocked} && ${actionRgbOn}'
   '' else "");

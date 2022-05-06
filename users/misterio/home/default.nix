@@ -1,6 +1,8 @@
-{ inputs, lib, config, hostname, persistence, graphical, trusted, ... }:
+{ inputs, lib, games, config, rgb, persistence, desktop, trusted, ... }:
 
-let inherit (inputs.impermanence.nixosModules.home-manager) impermanence;
+let
+  inherit (inputs.impermanence.nixosModules.home-manager) impermanence;
+  inherit (lib) optional mkIf;
 in
 {
   imports =
@@ -9,11 +11,12 @@ in
       ./rice
       impermanence
     ]
-    ++ (if graphical then [ ./desktop-sway ./games ] else [ ])
-    ++ (if trusted then [ ./trusted ] else [ ])
-    ++ (if hostname == "atlas" then [ ./rgb ] else [ ]);
+    ++ optional (null != desktop) ./desktop-${desktop}
+    ++ optional games ./games
+    ++ optional trusted ./trusted
+    ++ optional rgb ./rgb;
 
-  home.persistence = lib.mkIf persistence {
+  home.persistence = mkIf persistence {
     "/persist/home/misterio" = {
       directories = [
         "Documents"

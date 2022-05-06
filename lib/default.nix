@@ -7,10 +7,10 @@ in
 
   mkSystem =
     { hostname
-    , system
+    , system ? "x86_64-linux"
     , overlays ? { }
     , users ? [ ]
-    , persistence ? true
+    , persistence ? false
     }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
@@ -39,19 +39,21 @@ in
 
   mkHome =
     { username
-    , system
+    , system ? "x86_64-linux"
     , overlays ? { }
-    , hostname
-    , persistence ? true
-    , graphical ? false
+    , persistence ? false
+    , desktop ? null
     , trusted ? false
+    , laptop ? false
+    , rgb ? false
+    , games ? false
     , colorscheme ? "nord"
     , wallpaper ? null
     }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit username system;
       extraSpecialArgs = {
-        inherit system hostname persistence graphical trusted colorscheme wallpaper inputs;
+        inherit system persistence desktop trusted colorscheme wallpaper inputs rgb laptop games;
       };
       homeDirectory = "/home/${username}";
       configuration = ../users/${username}/home;
