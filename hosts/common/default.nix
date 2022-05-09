@@ -110,10 +110,6 @@
       reflector = true;
       openFirewall = true;
     };
-    zerotierone = {
-      enable = true;
-      joinNetworks = [ "233ccaac275e306f" ];
-    };
   };
 
   programs = {
