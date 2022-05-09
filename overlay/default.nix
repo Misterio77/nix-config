@@ -4,6 +4,8 @@ let
   inherit (inputs.nix-colors) colorSchemes;
   inherit (builtins) mapAttrs;
   inherit (final) fetchFromGitHub;
+  inherit (final.stdenv.hostPlatform) system;
+  inherit (import inputs.nixpkgs-photoprism { inherit system; }) photoprism;
 in
 {
   vimPlugins = prev.vimPlugins // {
@@ -40,5 +42,7 @@ in
   });
 
   generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;
+
+  inherit photoprism;
 
 } // import ../pkgs { pkgs = final; }

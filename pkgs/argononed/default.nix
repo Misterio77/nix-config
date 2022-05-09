@@ -43,6 +43,6 @@ stdenv.mkDerivation rec {
     description = "A replacement daemon for the Argon One Raspberry Pi case";
     license = licenses.mit;
     platforms = platforms.all;
-    # maintainers = [ maintainers.misterio77 ];
+    maintainers = [ maintainers.misterio77 ];
   };
 }

@@ -58,6 +58,6 @@ stdenv.mkDerivation {
     homepage = "https://github.com/Misterio77/rgbdaemon";
     license = licenses.mit;
     platforms = platforms.all;
-    # maintainers = with maintainers; [ misterio77 ];
+    maintainers = with maintainers; [ misterio77 ];
   };
 }

@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-photoprism.url = "github:misterio77/nixpkgs/init-photoprism";
     hardware.url = "github:nixos/nixos-hardware";
 
     home-manager.url = "github:nix-community/home-manager";

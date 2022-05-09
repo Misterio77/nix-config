@@ -32,6 +32,6 @@ in {
   };
 
   meta = {
-    # maintainers = with lib.maintainers; [ misterio77 ];
+    maintainers = with lib.maintainers; [ misterio77 ];
   };
 }

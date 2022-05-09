@@ -25,7 +25,7 @@ stdenv.mkDerivation {
     description = "A script for setting a preferred player";
     license = licenses.mit;
     platforms = platforms.all;
-    # maintainers = with maintainers; [ misterio77 ];
+    maintainers = with maintainers; [ misterio77 ];
   };
 }
 

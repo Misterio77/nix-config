@@ -119,6 +119,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-photoprism": {
+      "locked": {
+        "lastModified": 1651669294,
+        "narHash": "sha256-Oa0MwlG6df7h7j898qB0tqBT+He6OogsGxPD2LCruWY=",
+        "owner": "misterio77",
+        "repo": "nixpkgs",
+        "rev": "0aaf6fffaf54c20605682a919dbf539cc01ca201",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "ref": "init-photoprism",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1650294908,
@@ -164,6 +180,7 @@
         "impermanence": "impermanence",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-photoprism": "nixpkgs-photoprism",
         "nur": "nur",
         "paste-misterio-me": "paste-misterio-me"
       }

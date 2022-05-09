@@ -19,6 +19,6 @@ stdenv.mkDerivation rec {
     homepage = "https://git.sr.ht/~misterio/${name}";
     license = licenses.unlicense;
     platforms = platforms.all;
-    # maintainers = with maintainers; [ misterio77 ];
+    maintainers = with maintainers; [ misterio77 ];
   };
 }

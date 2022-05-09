@@ -38,7 +38,7 @@ stdenv.mkDerivation {
     description = "Automatically shell into whatever package provides a command you asked for";
     license = licenses.mit;
     platforms = platforms.all;
-    # maintainers = with maintainers; [ misterio77 ];
+    maintainers = with maintainers; [ misterio77 ];
   };
 }
 
