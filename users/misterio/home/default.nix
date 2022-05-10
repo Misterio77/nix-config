@@ -16,6 +16,9 @@ in
     ++ optional trusted ./trusted
     ++ optional rgb ./rgb;
 
+  # https://github.com/nix-community/home-manager/issues/2942
+  nixpkgs.config.allowUnfreePredicate = _: true;
+
   home.persistence = mkIf persistence {
     "/persist/home/misterio" = {
       directories = [

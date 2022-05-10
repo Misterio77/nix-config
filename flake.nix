@@ -2,19 +2,22 @@
   description = "My NixOS configuration";
 
   inputs = {
+    # Core
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-photoprism.url = "github:misterio77/nixpkgs/init-photoprism";
     hardware.url = "github:nixos/nixos-hardware";
 
+    # Nix tooling
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Community flakes
     nur.url = "github:nix-community/NUR";
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
+    # Nixified projects
     paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.3.0";
     paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -36,10 +39,7 @@
       };
 
       packages = forAllSystems (system:
-        let
-          pkgs = import inputs.nixpkgs { inherit system; overlays = attrValues overlays; };
-        in
-        builtins.removeAttrs pkgs [ "system" ]
+        import inputs.nixpkgs { inherit system; overlays = attrValues overlays; }
       );
 
       devShells = forAllSystems (system: {
@@ -89,7 +89,7 @@
           trusted = true;
           rgb = true;
           games = true;
-          colorscheme = "spaceduck";
+          colorscheme = "tokyo-night-light";
         };
         "misterio@pleione" = mkHome {
           inherit overlays;
