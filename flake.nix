@@ -118,7 +118,13 @@
           persistence = true;
           colorscheme = "ashes";
         };
-        "misterio@gelos" = mkHome {
+        "misterio@lab" = mkHome {
+          inherit overlays;
+          username = "misterio";
+
+          colorscheme = "dracula";
+        };
+        "misterio@lab-gnone" = mkHome {
           inherit overlays;
           username = "misterio";
 
