@@ -1,7 +1,6 @@
 {
   imports = [
     ./git-sign.nix
-    ./gpg.nix
     ./khal.nix
     ./khard.nix
     ./mail.nix

@@ -80,6 +80,7 @@
       };
 
       homeConfigurations = {
+        # Personal computers
         "misterio@atlas" = mkHome {
           inherit overlays;
           username = "misterio";
@@ -118,19 +119,26 @@
           persistence = true;
           colorscheme = "ashes";
         };
+
+        # Generic lab configurations
         "misterio@lab" = mkHome {
           inherit overlays;
           username = "misterio";
 
           colorscheme = "dracula";
         };
-        "misterio@lab-gnone" = mkHome {
+        "misterio@lab-graphical" = mkHome {
           inherit overlays;
           username = "misterio";
 
           desktop = "gnome";
           colorscheme = "phd";
         };
+        # GELOS lab computers
+        "misterio@emperor" = homeConfigurations."misterio@lab";
+        "misterio@galapagos" = homeConfigurations."misterio@lab";
+        "misterio@macaroni" = homeConfigurations."misterio@lab-graphical";
+        "misterio@rockhopper" = homeConfigurations."misterio@lab-graphical";
 
         "layla@maia" = mkHome {
           inherit overlays;

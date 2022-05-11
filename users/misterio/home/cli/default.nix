@@ -5,6 +5,7 @@
     ./bat.nix
     ./fish.nix
     ./git.nix
+    ./gpg.nix
     ./neofetch.nix
     ./nix-index.nix
     ./ranger.nix
@@ -32,7 +33,5 @@
     deadnix # Nix dead code locator
     statix # Nix linter
     haskellPackages.nix-derivation # Inspecting derivations
-
-    deploy-rs.deploy-rs
   ];
 }
