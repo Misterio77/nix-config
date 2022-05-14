@@ -63,8 +63,7 @@
                   -- Latex
                   null_ls.builtins.diagnostics.chktex,
                   -- HTML & templates
-                  null_ls.builtins.diagnostics.tidy,
-                  null_ls.builtins.formatting.tidy,
+                  null_ls.builtins.formatting.prettier,
                   null_ls.builtins.diagnostics.curlylint,
                   -- Markdown
                   null_ls.builtins.diagnostics.markdownlint,

@@ -86,12 +86,6 @@
         lua require('colorizer').setup()
       '';
     }
-    {
-      plugin = marks-nvim;
-      config = /* vim */ ''
-        lua require('marks').setup{default_mappings=false,builtin_marks={".", "\"", "'", "<", ">", "^"}}
-      '';
-    }
 
     {
       plugin = barbar-nvim;

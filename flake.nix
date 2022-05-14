@@ -90,7 +90,7 @@
           trusted = true;
           rgb = true;
           games = true;
-          colorscheme = "tokyo-night-light";
+          colorscheme = "rose-pine-moon";
         };
         "misterio@pleione" = mkHome {
           inherit overlays;

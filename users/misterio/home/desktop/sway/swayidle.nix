@@ -1,4 +1,4 @@
-{ pkgs, rgb, laptop, config, ... }:
+{ pkgs, rgb, laptop, ... }:
 
 let
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
@@ -7,7 +7,7 @@ let
 
   lockTime = if laptop then 240 else 600;
   isLocked = "${pgrep} -x swaylock";
-  actionLock = "${swaylock} -i ${config.wallpaper} --daemonize";
+  actionLock = "${swaylock} -S --daemonize";
   actionMute = "${pactl} set-source-mute @DEFAULT_SOURCE@ yes";
   actionUnmute = "${pactl} set-source-mute @DEFAULT_SOURCE@ no";
   actionRgbOff = "systemctl --user stop rgbdaemon";
