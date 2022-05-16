@@ -72,8 +72,4 @@ in
         }
       ];
     };
-
-  deployNixos = configuration:
-    inputs.deploy-rs.lib.${configuration.config.nixpkgs.system}.activate.nixos
-      configuration;
 }

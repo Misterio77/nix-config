@@ -9,7 +9,7 @@
     ../common
     ../common/misterio-greetd.nix
     ../common/pipewire.nix
-    ../common/docker.nix
+    ../common/podman.nix
     ../common/postgres.nix
     ../common/steam.nix
 
@@ -111,4 +111,6 @@
     openrgb.enable = true;
     opentabletdriver.enable = true;
   };
+
+  system.stateVersion = "22.05";
 }

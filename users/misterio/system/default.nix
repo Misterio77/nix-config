@@ -3,6 +3,7 @@
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = [
+      "users"
       "networkmanager"
       "wheel"
       "i2c"

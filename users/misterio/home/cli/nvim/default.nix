@@ -71,9 +71,13 @@ in
       }
       {
         plugin = vim-medieval;
-        config = /* vim */ ''
-          nmap <buffer> Z <Plug>(medieval-eval)
-          let g:medieval_langs = ['haskell=runghc', 'sh']
+        config = let
+          psqlf = "${pkgs.writeShellScriptBin "psqlf" ''
+            psql -f "$@"
+          ''}/bin/psqlf";
+        in /* vim */ ''
+          nmap Z <Plug>(medieval-eval)
+          let g:medieval_langs = ['haskell=runghc', 'sql=${psqlf}', 'sh']
         '';
       }
     ];

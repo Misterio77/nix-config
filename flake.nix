@@ -9,8 +9,6 @@
     # Nix tooling
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     # Community flakes
     nur.url = "github:nix-community/NUR";
@@ -26,7 +24,7 @@
     let
       my-lib = import ./lib { inherit inputs; };
       inherit (builtins) attrValues;
-      inherit (my-lib) mkSystem mkHome deployNixos importAttrset;
+      inherit (my-lib) mkSystem mkHome importAttrset;
       inherit (inputs.nixpkgs.lib) genAttrs systems;
       forAllSystems = genAttrs systems.supported.hydra;
     in
@@ -35,7 +33,6 @@
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
-        deploy-rs = inputs.deploy-rs.overlay;
       };
 
       packages = forAllSystems (system:
@@ -146,16 +143,6 @@
 
           desktop = "gnome";
           colorscheme = "dracula";
-        };
-      };
-
-      deploy = {
-        user = "root";
-        nodes = {
-          merope = {
-            hostname = "merope.local";
-            profiles.system.path = deployNixos nixosConfigurations.merope;
-          };
         };
       };
     };

@@ -8,8 +8,7 @@
 
       jqless = "jq -C | less -r";
 
-      snrs = "sudo nixos-rebuild switch";
-      nrs = "nixos-rebuild switch";
+      nrs = "nixos-rebuild switch --use-remote-sudo";
       hms = "home-manager switch";
       nd = "nix develop -c $SHELL";
 
