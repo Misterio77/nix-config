@@ -9,8 +9,6 @@ python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 python-lsp-server = "^1.2"
-flake8 = "^3.9"
-flake8-annotations = "^2.6"
 
 [tool.poetry.scripts]
 foo-bar = 'foo_bar:main'
