@@ -1,48 +1,37 @@
 {
-  description = "Foo Bar Simple Zip Package";
+  description = "Foo Bar Zip Project";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    let
-      name = "foo-bar";
-      zipName = pkgs.lib.concatStringsSep "_" [ "10856803" ];
-      overlay = _final: _prev: {
-        ${name} = pkgs.stdenv.mkDerivation {
-          inherit name;
-          src = ./.;
-          buildInputs = with pkgs; [ zip ];
-          buildPhase = ''
-            # Do stuff
-            zip -j ${zipName}.zip src/*
-          '';
-          installPhase = ''
-            mkdir -p $out
-            install -Dm644 ${zipName}.zip $out
-          '';
+  outputs = { self, nixpkgs, utils }:
+    {
+      overlays = rec {
+        default = f: p: {
+          foo-bar = f.callPackage ./. { };
         };
       };
-      overlays = [ overlay ];
-    in
-    {
-      inherit overlay overlays;
     } //
-    (flake-utils.lib.eachDefaultSystem (system:
+    (utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system overlays; };
+        inherit (builtins) attrValues;
+        pkgs = import nixpkgs { inherit system; overlays = attrValues self.overlays; };
       in
       rec {
-        # nix build
-        packages.${name} = pkgs.${name};
-        defaultPackage = packages.${name};
+        packages = rec {
+          inherit (pkgs) foo-bar;
+          default = foo-bar;
+        };
 
-        # nix develop
-        devShell = pkgs.mkShell {
-          inputsFrom = [ defaultPackage ];
-          buildInputs = with pkgs; [ unzip ];
+        devShells = rec {
+          foo-bar = pkgs.mkShell {
+            inputsFrom = [ packages.foo-bar ];
+            buildInputs = with pkgs; [ unzip ];
+          };
+          default = foo-bar;
         };
       }));
 }
+
