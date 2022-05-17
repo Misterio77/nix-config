@@ -3,59 +3,34 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    let
-      name = "foo-bar";
-      overlay = _final: _prev:
-        {
-          ${name} = pkgs.stdenv.mkDerivation {
-            inherit name;
-            src = ./.;
-            buildInputs = with pkgs; [ pandoc texlive.combined.scheme-small plantuml pandoc-plantuml-filter ];
-            buildPhase = ''
-              shopt -s globstar
-
-              # Convert diagrams to markdown with code blocks
-              for diagram in src/**/*.uml; do
-                markdown="''${diagram/.uml/.md}"
-                echo '```plantuml' > "$markdown"
-                cat $diagram >> "$markdown"
-                echo '```' >> "$markdown"
-              done
-
-              # Build markdowns into pdf
-              pandoc src/**/*.md -o document.pdf \
-                --filter pandoc-plantuml
-            '';
-            installPhase = ''
-              mkdir -p $out
-              install -Dm644 *.pdf $out
-            '';
-          };
-        };
-      overlays = [ overlay ];
-    in
+  outputs = { self, nixpkgs, utils }:
     {
-      inherit overlay overlays;
+      overlays = rec {
+        default = f: p: {
+          foo-bar = f.callPackage ./. { };
+        };
+      };
     } //
-    (flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          pkgs = import nixpkgs { inherit system overlays; };
-        in
-        rec {
-          # nix build
-          packages.${name} = pkgs.${name};
-          defaultPackage = packages.${name};
+    (utils.lib.eachDefaultSystem (system:
+      let
+        inherit (builtins) attrValues;
+        pkgs = import nixpkgs { inherit system; overlays = attrValues self.overlays; };
+      in
+      rec {
+        packages = rec {
+          inherit (pkgs) foo-bar;
+          default = foo-bar;
+        };
 
-          # nix develop
-          devShell =
-            pkgs.mkShell {
-              inputsFrom = [ defaultPackage ];
-              buildInputs = with pkgs; [ inotify-tools ];
-            };
-        }));
+        devShells = rec {
+          foo-bar = pkgs.mkShell {
+            inputsFrom = [ packages.foo-bar ];
+          };
+          default = foo-bar;
+        };
+      }));
 }
+
