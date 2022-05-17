@@ -1,4 +1,4 @@
-{ lib, trusted, pkgs, config, ... }:
+{ lib, trusted, pkgs, config, laptop, ... }:
 
 let
   # Programs
@@ -61,38 +61,29 @@ in
           pos = "0 0";
           bg = "${config.wallpaper} fill";
         };
-        DP-1 = {
+        DP-3 = {
           res = "1920x1080@60hz";
           pos = "0 0";
           bg = "${config.wallpaper} fill";
         };
-        HDMI-A-1 = {
+        DP-1 = {
           res = "2560x1080@75hz";
           pos = "1920 0";
           bg = "${config.wallpaper} fill";
         };
+        DP-2 = {
+          res = "1920x1080@60hz";
+          pos = "4480 0";
+          bg = "${config.wallpaper} fill";
+        };
       };
       defaultWorkspace = "workspace number 1";
-      workspaceOutputAssign = [
-        {
-          output = "eDP-1";
-          workspace = "1";
-        }
-        {
-          output = "HDMI-A-1";
-          workspace = "1";
-        }
-        {
-          output = "DP-1";
-          workspace = "2";
-        }
-      ];
       input = {
         # Keyboards
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
           xkb_layout = "br";
         };
-        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
+        "6940:6985:ckb2:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
           xkb_layout = "br";
         };
         "1:1:AT_Translated_Set_2_keyboard" = {
@@ -155,7 +146,7 @@ in
         # Init discocss
         { command = "${discocss}"; }
         # Set biggest monitor as xwayland primary
-        { command = "${primary-xwayland} largest"; }
+        { command = "${primary-xwayland}/bin/primary-xwayland largest"; }
       ];
       bars = [ ];
       window = {
@@ -196,8 +187,9 @@ in
         "${modifier}+Mod1+Right" = "move workspace to output right";
 
         # Toggle monitors
-        "${modifier}+Control+Left" = "output DP-1 toggle";
-        "${modifier}+Control+Down" = "output HDMI-A-1 toggle";
+        "${modifier}+Control+Left"  = "output DP-3 toggle";
+        "${modifier}+Control+Down"  = "output DP-1 toggle";
+        "${modifier}+Control+Right" = "output DP-2 toggle";
 
         # Pass wofi menu
         "Scroll_Lock" = lib.mkIf trusted "exec ${pass-wofi}"; # fn+k

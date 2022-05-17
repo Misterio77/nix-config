@@ -18,11 +18,11 @@ in {
       quaternary = "${colors.base05}";
     };
     keyboard = {
-      device = "/dev/input/ckb1/cmd";
+      device = "/dev/input/ckb2/cmd";
       highlighted = [ "h" "j" "k" "l" "w" "a" "s" "d" "m3" "g11" "profswitch" ];
     };
     mouse = {
-      device = "/dev/input/ckb2/cmd";
+      device = "/dev/input/ckb1/cmd";
       dpi = 750;
       highlighted = [ "wheel" "thumb" ];
     };
