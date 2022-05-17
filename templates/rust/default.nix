@@ -9,9 +9,4 @@ rustPlatform.buildRustPackage rec {
   src = lib.cleanSource ./.;
 
   cargoLock.lockFile = ./Cargo.lock;
-
-  meta = with lib; {
-    inherit (manifest) description homepage;
-    platforms = platforms.all;
-  };
 }

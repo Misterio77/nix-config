@@ -7,32 +7,30 @@
   };
 
   outputs = { self, nixpkgs, utils }:
-    let
-      name = "foo-bar";
-      overlay = final: _prev: {
-        ${name} = final.callPackage ./default.nix { };
+    {
+      overlays = rec {
+        default = f: p: {
+          foo-bar = f.callPackage ./. { };
+        };
       };
-      overlays = [ overlay ];
-    in {
-      inherit overlay overlays;
     } //
     (utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system overlays; };
+        inherit (builtins) attrValues;
+        pkgs = import nixpkgs { inherit system; overlays = attrValues self.overlays; };
       in
       rec {
-        # nix build
-        packages.${name} = pkgs.${name};
-        defaultPackage = packages.${name};
+        packages = rec {
+          inherit (pkgs) foo-bar;
+          default = foo-bar;
+        };
 
-        # nix run
-        apps.${name} = utils.lib.mkApp { drv = packages.${name}; };
-        defaultApp = apps.${name};
-
-        # nix develop
-        devShell = pkgs.mkShell {
-          inputsFrom = [ defaultPackage ];
-          buildInputs = with pkgs; [ rustc rust-analyzer rustfmt clippy ];
+        devShells = rec {
+          foo-bar = pkgs.mkShell {
+            inputsFrom = [ packages.foo-bar ];
+            buildInputs = with pkgs; [ rustc rust-analyzer cargo rustfmt clippy ];
+          };
+          default = foo-bar;
         };
       }));
 }
