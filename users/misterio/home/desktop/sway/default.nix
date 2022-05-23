@@ -23,6 +23,7 @@
     wl-clipboard
     wf-recorder
     slurp
+    xdragon
   ];
 
   home.sessionVariables = {
