@@ -1,4 +1,4 @@
-{ lib, trusted, pkgs, config, laptop, ... }:
+{ lib, trusted, pkgs, config, ... }:
 
 let
   # Programs
@@ -58,7 +58,7 @@ in
       output = {
         eDP-1 = {
           res = "1920x1080@60hz";
-          pos = "0 0";
+          pos = "0 15";
           bg = "${config.wallpaper} fill";
         };
         DP-3 = {
@@ -68,7 +68,7 @@ in
         };
         DP-1 = {
           res = "2560x1080@75hz";
-          pos = "1920 0";
+          pos = "1920 65";
           bg = "${config.wallpaper} fill";
         };
         DP-2 = {
