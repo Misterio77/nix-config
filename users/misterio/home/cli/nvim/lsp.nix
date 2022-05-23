@@ -124,7 +124,7 @@
               ['<C-n>'] = cmp.mapping.select_next_item({
                 behavior = cmp.SelectBehavior.Insert }
               ),
-              ['<C-m>'] = cmp.mapping.select_prev_item({
+              ['<C-p>'] = cmp.mapping.select_prev_item({
                 behavior = cmp.SelectBehavior.Insert }
               ),
               ['<C-e>'] = cmp.mapping.close(),
