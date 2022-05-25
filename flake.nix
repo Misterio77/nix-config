@@ -87,7 +87,7 @@
           trusted = true;
           rgb = true;
           games = true;
-          colorscheme = "rose-pine-moon";
+          colorscheme = "dracula";
         };
         "misterio@pleione" = mkHome {
           inherit overlays;

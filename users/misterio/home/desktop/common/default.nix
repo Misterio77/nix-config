@@ -1,6 +1,7 @@
 {
   imports = [
     ./discord.nix
+    ./deluge.nix
     ./firefox.nix
     ./font.nix
     ./gtk.nix
