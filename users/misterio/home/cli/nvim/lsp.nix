@@ -9,7 +9,7 @@
     # LSP
     {
       plugin = nvim-lspconfig;
-      config = /* vim */ ''
+      config = ''
         nmap gD       :lua vim.lsp.buf.declaration()<CR>
         nmap gd       :lua vim.lsp.buf.definition()<CR>
         nmap <space>f :lua vim.lsp.buf.formatting()<CR>
@@ -53,7 +53,7 @@
     }
     {
       plugin = null-ls-nvim;
-      config = /* vim */ ''
+      config = ''
         lua << EOF
           local null_ls = require("null-ls")
           null_ls.setup({
@@ -94,14 +94,14 @@
     }
     {
       plugin = trouble-nvim;
-      config = /* vim */ ''
+      config = ''
         nnoremap <space>e <cmd>TroubleToggle<cr>
         lua require('trouble').setup{}
       '';
     }
     {
       plugin = rust-tools-nvim;
-      config = /* lua */ ''
+      config = ''
         lua require('rust-tools').setup{tools={autoSetHints = true}}
       '';
     }
@@ -112,7 +112,7 @@
     lspkind-nvim
     {
       plugin = nvim-cmp;
-      config = /* vim */ ''
+      config = ''
         lua << EOF
           local cmp = require('cmp')
           local lspkind = require('lspkind')

@@ -4,7 +4,7 @@
     vim-numbertoggle
     {
       plugin = telescope-nvim;
-      config = /* vim */ ''
+      config = ''
         nnoremap <space>t <cmd>Telescope find_files<cr>
         nnoremap <space>g <cmd>Telescope live_grep<cr>
 
@@ -51,37 +51,37 @@
     }
     {
       plugin = which-key-nvim;
-      config = /* lua */ ''
+      config = ''
         lua require('which-key').setup{}
       '';
     }
     {
       plugin = range-highlight-nvim;
-      config = /* lua */ ''
+      config = ''
         lua require('range-highlight').setup{}
       '';
     }
     {
       plugin = indent-blankline-nvim;
-      config = /* lua */ ''
+      config = ''
         lua require('indent_blankline').setup{char_highlight_list={'IndentBlankLine'}}
       '';
     }
     {
       plugin = nvim-web-devicons;
-      config = /* lua */  ''
+      config = ''
         lua require('nvim-web-devicons').setup{}
       '';
     }
     {
       plugin = gitsigns-nvim;
-      config = /* lua */ ''
+      config = ''
         lua require('gitsigns').setup()
       '';
     }
     {
       plugin = nvim-colorizer-lua;
-      config = /* vim */ ''
+      config = ''
         set termguicolors
         lua require('colorizer').setup()
       '';
@@ -89,7 +89,7 @@
 
     {
       plugin = barbar-nvim;
-      config = /* vim */ ''
+      config = ''
         let bufferline = get(g:, 'bufferline', {})
         let bufferline.animation = v:true
         nmap <C-h> :BufferPrevious<CR>
@@ -101,7 +101,7 @@
 
     {
       plugin = nvim-tree-lua;
-      config = /* vim */ ''
+      config = ''
         lua require('nvim-tree').setup{}
         nmap <C-p> :NvimTreeToggle<CR>
       '';
