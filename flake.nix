@@ -98,7 +98,7 @@
           trusted = true;
           laptop = true;
           games = true;
-          colorscheme = "paraiso";
+          colorscheme = "ayu-mirage";
         };
         "misterio@merope" = mkHome {
           inherit overlays;
