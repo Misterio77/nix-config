@@ -32,6 +32,7 @@
           lspconfig.hls.setup{} -- Haskell
           lspconfig.kotlin_language_server.setup{} -- Kotlin
           lspconfig.terraformls.setup{filetypes={"terraform","tf","hcl"}} -- Terraform
+          lspconfig.solargraph.setup{} -- Ruby
 
           lspconfig.rust_analyzer.setup{ -- Rust
             settings = {
