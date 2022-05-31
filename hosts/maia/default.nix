@@ -12,16 +12,8 @@
   i18n.defaultLocale = "pt_BR.UTF-8";
 
   boot = {
-    plymouth.enable = true;
-    kernelPackages = pkgs.linuxPackages_zen;
-    supportedFilesystems = [ "btrfs" ];
     loader = {
-      timeout = 0;
-      systemd-boot = {
-        enable = true;
-        consoleMode = "max";
-        editor = false;
-      };
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
   };

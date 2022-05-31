@@ -53,27 +53,16 @@
   };
 
   boot = {
-    # Kernel
-    kernelPackages = pkgs.linuxPackages_zen;
-    # Plymouth (currently only starts at phase 2)
-    plymouth = {
-      enable = true;
-    };
-    # Bootloader configuration
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
     loader = {
-      timeout = 0;
-      systemd-boot = {
-        enable = true;
-        consoleMode = "max";
-        editor = false;
-      };
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    # Allow compiling to ARM64
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    # Let's me play star citizen and lol
     kernel.sysctl = {
+      # Star citizen fix
       "vm.max_map_count" = 16777216;
+      # LoL fix
       "abi.vsyscall32" = 0;
     };
   };

@@ -20,23 +20,13 @@
   networking.networkmanager.enable = true;
 
   boot = {
-    # Kernel
-    kernelPackages = pkgs.linuxPackages_zen;
-    # Plymouth (currently only starts at phase 2)
-    plymouth = {
-      enable = true;
-    };
+    kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
     loader = {
-      timeout = 0;
-      systemd-boot = {
-        enable = true;
-        consoleMode = "max";
-        editor = false;
-      };
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    # Let's me play lol
     kernel.sysctl = {
+      # LoL fix
       "abi.vsyscall32" = 0;
     };
   };

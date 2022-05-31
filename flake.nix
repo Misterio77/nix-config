@@ -26,7 +26,7 @@
       inherit (builtins) attrValues;
       inherit (my-lib) mkSystem mkHome importAttrset;
       inherit (inputs.nixpkgs.lib) genAttrs systems;
-      forAllSystems = genAttrs systems.supported.hydra;
+      forAllSystems = genAttrs systems.flakeExposed;
     in
     rec {
       overlays = {
@@ -137,6 +137,7 @@
         "misterio@macaroni" = homeConfigurations."misterio@lab-graphical";
         "misterio@rockhopper" = homeConfigurations."misterio@lab-graphical";
 
+        # GF's configuration
         "layla@maia" = mkHome {
           inherit overlays;
           username = "layla";
