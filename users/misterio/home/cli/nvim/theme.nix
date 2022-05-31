@@ -3,7 +3,7 @@ let
   c = scheme.colors;
   inherit (scheme) slug;
 in
-pkgs.writeTextDir "colors/nix-${slug}.vim" ''
+pkgs.writeTextDir "colors/nix-${slug}.vim" /* vim */ ''
   let g:colors_name="nix-${slug}"
 
   set termguicolors

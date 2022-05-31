@@ -8,7 +8,7 @@ in
 
   programs.neovim = {
     enable = true;
-    extraConfig = ''
+    extraConfig = /* vim */ ''
       "Use truecolor
       set termguicolors
 
@@ -53,29 +53,29 @@ in
       vim-surround
       {
         plugin = better-escape-nvim;
-        config = ''
+        config = /* vim */ ''
           lua require('better_escape').setup()
         '';
       }
       {
         plugin = nvim-autopairs;
-        config = ''
+        config = /* vim */ ''
           lua require('nvim-autopairs').setup{}
         '';
       }
       {
         plugin = vimThemeFromScheme { scheme = config.colorscheme; };
-        config = ''
+        config = /* vim */ ''
           colorscheme nix-${config.colorscheme.slug}
         '';
       }
       {
         plugin = vim-medieval;
         config = let
-          psqlf = "${pkgs.writeShellScriptBin "psqlf" ''
+          psqlf = "${pkgs.writeShellScriptBin "psqlf" /* sh */ ''
             psql -f "$@"
           ''}/bin/psqlf";
-        in ''
+        in /* vim */ ''
           nmap Z <Plug>(medieval-eval)
           let g:medieval_langs = ['haskell=runghc', 'sql=${psqlf}', 'sh']
         '';
@@ -87,7 +87,7 @@ in
     let
       nvr = "${pkgs.neovim-remote}/bin/nvr";
     in
-      ''
+      /* sh */ ''
       ${nvr} --serverlist | while read server; do
         ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
       done
