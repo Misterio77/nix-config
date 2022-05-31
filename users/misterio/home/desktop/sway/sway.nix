@@ -83,7 +83,7 @@ in
         "6940:6985:Corsair_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard" = {
           xkb_layout = "br";
         };
-        "6940:6985:ckb2:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
+        "6940:6985:ckb1:_CORSAIR_K70_RGB_MK.2_Mechanical_Gaming_Keyboard_vKB" = {
           xkb_layout = "br";
         };
         "1:1:AT_Translated_Set_2_keyboard" = {
