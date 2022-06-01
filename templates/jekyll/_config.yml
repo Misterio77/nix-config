@@ -1,0 +1,6 @@
+name: Foo Bar
+exclude:
+  - gemset.nix
+  - default.nix
+  - flake.nix
+  - flake.lock
