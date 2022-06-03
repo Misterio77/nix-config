@@ -1,4 +1,9 @@
-{ pkgs, persistence, ... }: {
+{ pkgs, persistence, lib, homeConfigs, ... }:
+let
+  homeConfig = homeConfigs.misterio;
+  hasSway = homeConfig.wayland.windowManager.sway.enable or false;
+in
+{
   users.users.misterio = {
     isNormalUser = true;
     shell = pkgs.fish;
@@ -25,6 +30,5 @@
     # Set empty password when not using persistence, to allow bootstrapping
     password = "";
   });
-
-  security.pam.services.swaylock = { };
+  security.pam.services.swaylock = lib.mkIf hasSway { };
 }
