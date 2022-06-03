@@ -117,6 +117,7 @@
         lua << EOF
           local cmp = require('cmp')
           local lspkind = require('lspkind')
+
           cmp.setup{
             formatting = {
               format = lspkind.cmp_format()
@@ -131,8 +132,15 @@
               ['<C-e>'] = cmp.mapping.close(),
             },
             sources = {
+              {
+                name='buffer',
+                option = {
+                get_bufnrs = function()
+                  return vim.api.nvim_list_bufs()
+                end
+                },
+              },
               { name='nvim_lsp' },
-              { name='buffer' },
             },
           }
         EOF
