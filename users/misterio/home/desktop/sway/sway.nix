@@ -20,6 +20,7 @@ let
   swayfader = "${pkgs.swayfader}/bin/swayfader";
   swayidle = "${pkgs.swayidle}/bin/swayidle";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
+  wl-mirror = "${pkgs.wl-mirror}/bin/wl-mirror";
   wofi = "${pkgs.wofi}/bin/wofi";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   zathura = "${pkgs.zathura}/bin/zathura";
@@ -29,7 +30,7 @@ let
   terminal = kitty;
 
   # Set primary xwayland monitor
-  primary-xwayland = pkgs.writeShellScriptBin "primary-xwayland" /* bash */ ''
+  primary-xwayland-pkg = pkgs.writeShellScriptBin "primary-xwayland" /* bash */ ''
     set -euo pipefail
 
     if [ "$#" -ge 1 ] && [ "$1" == "largest" ]; then
@@ -42,6 +43,14 @@ let
     echo "Setting $output"
     ${xrandr} --output "$output" --primary
   '';
+  primary-xwayland = "${primary-xwayland-pkg}/bin/primary-xwayland";
+  # Mirror selected display
+  wl-mirror-pick-pkg = pkgs.writeShellScriptBin "wl-mirror-pick" /* bash */ ''
+    set -euo pipefail
+    output=$(${slurp} -f "%o" -o)
+    ${wl-mirror} "$output"
+  '';
+  wl-mirror-pick = "${wl-mirror-pick-pkg}/bin/wl-mirror-pick";
 in
 {
   wayland.windowManager.sway = {
@@ -146,7 +155,7 @@ in
         # Init discocss
         { command = "${discocss}"; }
         # Set biggest monitor as xwayland primary
-        { command = "${primary-xwayland}/bin/primary-xwayland largest"; }
+        { command = "${primary-xwayland} largest"; }
       ];
       bars = [ ];
       window = {
@@ -244,6 +253,7 @@ in
         "${modifier}+a" = "exec ${terminal} $SHELL -i -c ${amfora}";
         "${modifier}+b" = "exec ${qutebrowser}";
         "${modifier}+z" = "exec ${zathura}";
+        "${modifier}+n" = "exec ${wl-mirror-pick}";
 
         # Screenshot
         "Print" = "exec ${grimshot} --notify copy output";
@@ -283,6 +293,6 @@ in
     fi
   '';
 
-  home.packages = [ primary-xwayland ];
+  home.packages = [ primary-xwayland-pkg ];
 
 }

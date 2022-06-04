@@ -15,15 +15,16 @@
   xdg.mimeApps.enable = true;
 
   home.packages = with pkgs; [
-    mimeo
     imv
+    mimeo
+    slurp
+    wf-recorder
+    wl-clipboard
+    wl-mirror
     wofi
     xdg-utils
-    ydotool
-    wl-clipboard
-    wf-recorder
-    slurp
     xdragon
+    ydotool
   ];
 
   home.sessionVariables = {
