@@ -18,7 +18,6 @@ in
       size = 12;
     };
     settings = {
-      confirm_os_window_close = 0;
       window_padding_width = 15;
       foreground = "#${colors.base05}";
       background = "#${colors.base00}";

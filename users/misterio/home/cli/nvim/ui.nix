@@ -3,6 +3,14 @@
     vim-illuminate
     vim-numbertoggle
     {
+      plugin = undotree;
+      config = /* vim */ ''
+        let g:undotree_SetFocusWhenToggle = 1
+        nmap <C-n> :UndotreeToggle<cr>
+      '';
+    }
+    undotree
+    {
       plugin = telescope-nvim;
       config = /* vim */ ''
         nnoremap <space>t <cmd>Telescope find_files<cr>
