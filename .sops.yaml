@@ -12,6 +12,6 @@ creation_rules:
   - path_regex: secrets/[^/]+\.ya?ml$
     key_groups:
       - <<: *all
-  - path_regex: users/misterio/system/password.yaml
+  - path_regex: hosts/common/passwords.yaml
     key_groups:
       - <<: *all

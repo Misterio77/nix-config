@@ -5,8 +5,8 @@
 
     ./hardware-configuration.nix
     ../common
-    ../common/podman.nix
-    ../common/postgres.nix
+    ../common/modules/podman.nix
+    ../common/modules/postgres.nix
 
     ./deluge.nix
     ./files-server.nix

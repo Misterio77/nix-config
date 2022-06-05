@@ -1,8 +1,7 @@
-{ pkgs, config, lib, homeConfigs, ... }:
+{ pkgs, config, lib, homeConfig, ... }:
 let
   inherit (lib) mkIf;
-  homeConfig = homeConfigs.misterio;
-  hasSway = homeConfig.wayland.windowManager.sway.enable;
+  hasSway = homeConfig.wayland.windowManager.sway.enable or false;
 in
 {
   users.users.misterio = {
@@ -27,7 +26,7 @@ in
   };
 
   sops.secrets.misterio-password = {
-    sopsFile = ./password.yaml;
+    sopsFile = ./passwords.yaml;
     neededForUsers = true;
   };
 

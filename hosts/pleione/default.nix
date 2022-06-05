@@ -7,11 +7,11 @@
 
     ./hardware-configuration.nix
     ../common
-    ../common/misterio-greetd.nix
-    ../common/pipewire.nix
-    ../common/podman.nix
-    ../common/postgres.nix
-    ../common/steam.nix
+    ../common/modules/misterio-greetd.nix
+    ../common/modules/pipewire.nix
+    ../common/modules/podman.nix
+    ../common/modules/postgres.nix
+    ../common/modules/steam.nix
 
     ./wireguard.nix
   ];

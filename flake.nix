@@ -46,6 +46,7 @@
         paste-misterio-me = inputs.paste-misterio-me.overlay;
       };
 
+      /*
       packages = forAllSystems (system:
         import inputs.nixpkgs { inherit system; overlays = attrValues overlays; }
       );
@@ -53,6 +54,7 @@
       devShells = forAllSystems (system: {
         default = import ./shell.nix { pkgs = packages.${system}; };
       });
+      */
 
       nixosModules = importAttrset ./modules/nixos;
       homeManagerModules = importAttrset ./modules/home-manager;
@@ -63,20 +65,17 @@
         atlas = mkSystem {
           inherit overlays;
           hostname = "atlas";
-          users = [ "misterio" ];
           persistence = true;
         };
         pleione = mkSystem {
           inherit overlays;
           hostname = "pleione";
-          users = [ "misterio" ];
           persistence = true;
         };
         merope = mkSystem {
           inherit overlays;
           system = "aarch64-linux";
           hostname = "merope";
-          users = [ "misterio" ];
           persistence = true;
         };
       };

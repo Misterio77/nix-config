@@ -1,25 +1,11 @@
 # This file holds config that i use on all hosts
-{ lib, config, pkgs, inputs, persistence, ... }: {
+{ lib, config, pkgs, ... }: {
   imports = [
-    inputs.impermanence.nixosModules.impermanence
-    inputs.sops-nix.nixosModules.sops
+    ./acme.nix
+    ./persist.nix
+    ./sops.nix
+    ./users.nix
   ];
-
-  environment.persistence = lib.mkIf persistence {
-    "/persist".directories = [
-      "/var/log"
-      "/var/lib/systemd"
-      "/var/lib/acme"
-      "/etc/NetworkManager/system-connections"
-      "/srv"
-      "/dotfiles"
-    ];
-  };
-
-  sops = {
-    defaultSopsFile = ../../secrets/main.yml;
-    age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
-  };
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -50,12 +36,6 @@
       [ "quiet" "udev.log_priority=3" "vt.global_cursor_default=0" ];
     consoleLogLevel = 0;
     initrd.verbose = false;
-  };
-
-  # Enable acme for usage with nginx vhosts
-  security.acme = {
-    defaults.email = "eu@misterio.me";
-    acceptTerms = true;
   };
 
   nix = {
@@ -90,19 +70,6 @@
       enable = true;
       passwordAuthentication = false;
       permitRootLogin = "no";
-      forwardX11 = true;
-      # Persist host ssh keys
-      hostKeys = lib.mkIf persistence [
-        {
-          path = "/persist/etc/ssh/ssh_host_ed25519_key";
-          type = "ed25519";
-        }
-        {
-          path = "/persist/etc/ssh/ssh_host_rsa_key";
-          type = "rsa";
-          bits = "4096";
-        }
-      ];
     };
     avahi = {
       enable = true;

@@ -1,7 +1,7 @@
 { inputs, ... }:
 let
-  inherit (builtins) mapAttrs attrValues listToAttrs;
-  inherit (inputs.nixpkgs.lib) nixosSystem mapAttrs' nameValuePair forEach;
+  inherit (builtins) mapAttrs attrValues;
+  inherit (inputs.nixpkgs.lib) nixosSystem mapAttrs' nameValuePair;
 in
 {
   importAttrset = path: mapAttrs (_: import) (import path);
@@ -10,19 +10,14 @@ in
     { hostname
     , system ? "x86_64-linux"
     , overlays ? { }
-    , users ? [ ]
     , persistence ? false
     }:
     nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs system hostname persistence users;
-        # Expose home-configurations for each user on that system
-        homeConfigs = listToAttrs (forEach users (username: {
-          name = username;
-          # Fallback to empty set if the configuration does not exist
-          value = inputs.self.outputs.homeConfigurations."${username}@${hostname}".config or { };
-        }));
+        inherit inputs system hostname persistence;
+        # Expose home-configurations for my user on that system
+        homeConfig = inputs.self.outputs.homeConfigurations."misterio@${hostname}".config or { };
       };
       modules = attrValues (import ../modules/nixos) ++ [
         ../hosts/${hostname}
@@ -39,9 +34,7 @@ in
               nameValuePair n { flake = v; })
             inputs;
         }
-        # System wide config for each user
-      ] ++ forEach users
-        (u: ../users/${u}/system);
+      ];
     };
 
   mkHome =
@@ -63,7 +56,7 @@ in
         inherit system persistence desktop trusted colorscheme wallpaper inputs rgb laptop games;
       };
       homeDirectory = "/home/${username}";
-      configuration = ../users/${username}/home;
+      configuration = ../home;
       extraModules = attrValues (import ../modules/home-manager) ++ [
         # Base configuration
         {
