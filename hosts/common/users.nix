@@ -4,6 +4,7 @@ let
   hasSway = homeConfig.wayland.windowManager.sway.enable or false;
 in
 {
+  users.mutableUsers = false;
   users.users.misterio = {
     isNormalUser = true;
     shell = pkgs.fish;

@@ -5,6 +5,7 @@
 
     ./hardware-configuration.nix
     ../common
+    ../common/modules/passwordless-sudo.nix
     ../common/modules/podman.nix
     ../common/modules/postgres.nix
 
@@ -37,9 +38,6 @@
       }];
     };
   };
-
-  # Passwordless sudo (for remote build)
-  security.sudo.extraConfig = "%wheel ALL = (ALL) NOPASSWD: ALL";
 
   # Enable argonone fan daemon
   hardware.argonone.enable = true;
