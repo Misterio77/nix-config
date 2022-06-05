@@ -12,6 +12,7 @@
     ../common/modules/podman.nix
     ../common/modules/postgres.nix
     ../common/modules/steam.nix
+    ../common/modules/tailscale.nix
 
     # ./factorio.nix
   ];

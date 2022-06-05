@@ -5,6 +5,7 @@ keys:
   - &hosts
     age:
     - &atlas age1hm5lf4qk84r4wh00atn6hpts7mpdx80adq26wht2e5qh9ewvhyaszfv82d
+    - &merope age1709qfrwglm75v5x8lpuhryt83k6p6c90npplzzec6a5w8ct93ejscpqpc3
   - &all
     <<: [*users, *hosts]
 

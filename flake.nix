@@ -46,7 +46,6 @@
         paste-misterio-me = inputs.paste-misterio-me.overlay;
       };
 
-      /*
       packages = forAllSystems (system:
         import inputs.nixpkgs { inherit system; overlays = attrValues overlays; }
       );
@@ -54,7 +53,6 @@
       devShells = forAllSystems (system: {
         default = import ./shell.nix { pkgs = packages.${system}; };
       });
-      */
 
       nixosModules = importAttrset ./modules/nixos;
       homeManagerModules = importAttrset ./modules/home-manager;
