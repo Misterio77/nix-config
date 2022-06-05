@@ -15,7 +15,6 @@
     ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
-    ./photoprism.nix
     ./wireguard.nix
 
     ./paste-misterio-me.nix
