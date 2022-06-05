@@ -2,6 +2,7 @@
 { lib, config, pkgs, inputs, persistence, ... }: {
   imports = [
     inputs.impermanence.nixosModules.impermanence
+    inputs.sops-nix.nixosModules.sops
   ];
 
   environment.persistence = lib.mkIf persistence {
@@ -13,6 +14,11 @@
       "/srv"
       "/dotfiles"
     ];
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/main.yml;
+    age.sshKeyPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" ];
   };
 
   i18n = {

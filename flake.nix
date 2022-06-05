@@ -2,22 +2,31 @@
   description = "My NixOS configuration";
 
   inputs = {
-    # Core
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
 
-    # Nix tooling
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # Community flakes
     nur.url = "github:nix-community/NUR";
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
     # Nixified projects
-    paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.3.0";
-    paste-misterio-me.inputs.nixpkgs.follows = "nixpkgs";
+    paste-misterio-me = {
+      url = "github:misterio77/paste.misterio.me/1.3.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -32,6 +41,8 @@
       overlays = {
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
+        deploy-rs = inputs.deploy-rs.overlay;
+        sops-nix = inputs.sops-nix.overlay;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
       };
 
@@ -68,12 +79,6 @@
           users = [ "misterio" ];
           persistence = true;
         };
-        maia = mkSystem {
-          inherit overlays;
-          hostname = "maia";
-          users = [ "layla" "misterio" ];
-          persistence = true;
-        };
       };
 
       homeConfigurations = {
@@ -108,14 +113,6 @@
           persistence = true;
           colorscheme = "nord";
         };
-        "misterio@maia" = mkHome {
-          inherit overlays;
-          username = "misterio";
-
-          desktop = "gnome";
-          persistence = true;
-          colorscheme = "ashes";
-        };
 
         # Generic lab configurations
         "misterio@lab" = mkHome {
@@ -136,15 +133,6 @@
         "misterio@galapagos" = homeConfigurations."misterio@lab";
         "misterio@macaroni" = homeConfigurations."misterio@lab-graphical";
         "misterio@rockhopper" = homeConfigurations."misterio@lab-graphical";
-
-        # GF's configuration
-        "layla@maia" = mkHome {
-          inherit overlays;
-          username = "layla";
-
-          desktop = "gnome";
-          colorscheme = "dracula";
-        };
       };
     };
 }

@@ -21,7 +21,7 @@ in
         homeConfigs = listToAttrs (forEach users (username: {
           name = username;
           # Fallback to empty set if the configuration does not exist
-          value = inputs.self.outputs.homeConfigurations."${username}@${hostname}".config or {};
+          value = inputs.self.outputs.homeConfigurations."${username}@${hostname}".config or { };
         }));
       };
       modules = attrValues (import ../modules/nixos) ++ [
@@ -79,4 +79,11 @@ in
         }
       ];
     };
+
+  mkDeploy = config: {
+    profiles.system = {
+      user = "root";
+      path = inputs.deploy-rs.lib.${config.pkgs.system}.activate.nixos config;
+    };
+  };
 }

@@ -1,0 +1,17 @@
+keys:
+  - &users
+    pgp:
+    - &misterio 7088C7421873E0DB97FF17C2245CAB70B4C225E9
+  - &hosts
+    age:
+    - &atlas age1hm5lf4qk84r4wh00atn6hpts7mpdx80adq26wht2e5qh9ewvhyaszfv82d
+  - &all
+    <<: [*users, *hosts]
+
+creation_rules:
+  - path_regex: secrets/[^/]+\.ya?ml$
+    key_groups:
+      - <<: *all
+  - path_regex: users/misterio/system/password.yaml
+    key_groups:
+      - <<: *all
