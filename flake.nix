@@ -33,7 +33,7 @@
     let
       my-lib = import ./lib { inherit inputs; };
       inherit (builtins) attrValues;
-      inherit (my-lib) mkSystem mkHome importAttrset;
+      inherit (my-lib) mkSystem mkHome mkDeploy importAttrset;
       inherit (inputs.nixpkgs.lib) genAttrs systems;
       forAllSystems = genAttrs systems.flakeExposed;
     in
@@ -78,6 +78,12 @@
           hostname = "merope";
           users = [ "misterio" ];
           persistence = true;
+        };
+      };
+
+      deploy.nodes = {
+        merope = mkDeploy nixosConfigurations.merope // {
+          hostname = "merope.local";
         };
       };
 

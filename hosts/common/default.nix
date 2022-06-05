@@ -79,7 +79,7 @@
     '';
     gc = {
       automatic = true;
-      dates = "daily";
+      dates = "weekly";
     };
   };
 
