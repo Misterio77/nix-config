@@ -9,7 +9,6 @@
     ../../common/optional/passwordless-sudo.nix
     ../../common/optional/podman.nix
     ../../common/optional/postgres.nix
-    ../../common/optional/quietboot.nix
     ../../common/optional/tailscale.nix
 
     ./deluge.nix
@@ -41,6 +40,8 @@
       }];
     };
   };
+
+  boot.loader.timeout = 5;
 
   # Enable argonone fan daemon
   hardware.argonone.enable = true;

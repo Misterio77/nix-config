@@ -11,6 +11,7 @@
     ../../common/optional/pipewire.nix
     ../../common/optional/podman.nix
     ../../common/optional/postgres.nix
+    ../../common/optional/quietboot.nix
     ../../common/optional/steam.nix
     ../../common/optional/systemd-boot.nix
     ../../common/optional/tailscale.nix
