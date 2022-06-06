@@ -1,18 +1,26 @@
 keys:
-  - &users
-    pgp:
+  # Users
+  - &users:
     - &misterio 7088C7421873E0DB97FF17C2245CAB70B4C225E9
-  - &hosts
-    age:
+  # Hosts
+  - &hosts:
     - &atlas age1hm5lf4qk84r4wh00atn6hpts7mpdx80adq26wht2e5qh9ewvhyaszfv82d
     - &merope age1709qfrwglm75v5x8lpuhryt83k6p6c90npplzzec6a5w8ct93ejscpqpc3
-  - &all
-    <<: [*users, *hosts]
+    - &pleione age1j9ld6ey62hqd33xkyd2fg9362k6xhm5gavsrpsfalwpcs8smxfdqpk84a2
 
 creation_rules:
-  - path_regex: nixos/hosts/[^/]+/secrets/[^/]+\.ya?ml$
+  - path_regex: nixos/hosts/merope/secrets/.*\.ya?ml$
     key_groups:
-      - <<: *all
-  - path_regex: nixos/common/secrets/[^/]+\.ya?ml$
+    - age:
+      - *merope
+      pgp:
+      - *misterio
+
+  - path_regex: nixos/common/secrets/.*\.ya?ml$
     key_groups:
-      - <<: *all
+    - age:
+      - *merope
+      - *atlas
+      - *pleione
+      pgp:
+      - *misterio
