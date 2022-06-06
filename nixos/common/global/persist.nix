@@ -6,15 +6,23 @@
   environment.persistence = lib.mkIf persistence {
     "/persist" = {
       directories = [
+        "/etc/ssh"
         "/var/log"
         "/var/lib/systemd"
         "/var/lib/acme"
         "/etc/NetworkManager/system-connections"
-        "/srv/torrents"
-        "/etc/ssh"
       ];
     };
   };
+
+  fileSystems."/etc/ssh" = {
+    # Fix secrets being activated before etc ssh is mounted
+    neededForBoot = true;
+    # Make sure persist is mounted
+    # https://github.com/nix-community/impermanence/issues/22
+    depends = [ "/persist" ];
+  };
+
 
   # Allows accessing mountpoints when sudoing
   programs.fuse.userAllowOther = true;

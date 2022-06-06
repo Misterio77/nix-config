@@ -13,6 +13,9 @@
   };
 
   environment.persistence = lib.mkIf persistence {
-    "/persist".directories = [ "/var/lib/deluge" ];
+    "/persist".directories = [
+      "/var/lib/deluge"
+      "/srv/torrents"
+    ];
   };
 }
