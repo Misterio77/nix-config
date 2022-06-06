@@ -10,11 +10,11 @@
     ./users.nix
   ];
 
-  system = {
-    stateVersion = "22.05";
-    # Activate home-manager config when booting
-    userActivationScripts = {
-      activate-hm.text = "/nix/var/nix/profiles/per-user/$USER/home-manager/activate";
-    };
-  };
+
+  # Activate home-manager environment, if not already
+  environment.loginShellInit = ''
+    [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
+  '';
+
+  system.stateVersion = "22.05";
 }
