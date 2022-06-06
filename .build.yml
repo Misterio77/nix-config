@@ -21,7 +21,7 @@ tasks:
     schemes=$(nix eval --raw .#generated-gtk-themes --apply 's: builtins.concatStringsSep "," (builtins.attrNames s)')
     gtk_themes=$(eval echo .#generated-gtk-themes.{${schemes/override,overrideDerivation,}})
 
-    nix build .#{clematis,comma,minicava,pass-wofi,photoprism,preferredplayer,rgbdaemon,shellcolord,swayfader}
+    nix build .#{clematis,comma,minicava,pass-wofi,preferredplayer,rgbdaemon,shellcolord,swayfader}
     nix build $gtk_themes -o result-gtk-themes
 
 - upload_cachix: |
