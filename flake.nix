@@ -80,7 +80,7 @@
 
       deploy.nodes = {
         merope = mkDeploy nixosConfigurations.merope // {
-          hostname = "merope.local";
+          hostname = "merope";
         };
       };
 

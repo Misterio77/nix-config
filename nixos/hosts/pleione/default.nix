@@ -6,30 +6,20 @@
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
-    ../common
-    ../common/modules/misterio-greetd.nix
-    ../common/modules/pipewire.nix
-    ../common/modules/podman.nix
-    ../common/modules/postgres.nix
-    ../common/modules/steam.nix
-
-    ./wireguard.nix
+    ../../common/global
+    ../../common/optional/misterio-greetd.nix
+    ../../common/optional/pipewire.nix
+    ../../common/optional/podman.nix
+    ../../common/optional/postgres.nix
+    ../../common/optional/steam.nix
+    ../../common/optional/systemd-boot.nix
+    ../../common/optional/tailscale.nix
   ];
 
 
   networking.networkmanager.enable = true;
 
-  boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
-    kernel.sysctl = {
-      # LoL fix
-      "abi.vsyscall32" = 0;
-    };
-  };
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
 
   services.dbus.packages = [ pkgs.gcr ];
 

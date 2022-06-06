@@ -1,7 +1,7 @@
 { lib, pkgs, persistence, ... }: {
   services = {
     minecraft-server = {
-      enable = true;
+      enable = false;
       package = pkgs.papermc;
       eula = true;
       jvmOpts =

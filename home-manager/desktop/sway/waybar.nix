@@ -1,19 +1,22 @@
 { config, trusted, lib, pkgs, ... }:
 
-let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }:
-  let jq = "${pkgs.jq}/bin/jq"; in
-  ''
-    ${pre}
-    ${jq} -cn \
-      --arg text "${text}" \
-      --arg tooltip "${tooltip}" \
-      --arg alt "${alt}" \
-      --arg class "${class}" \
-      --arg percentage "${percentage}" \
-      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-  ''; in
+let
+  jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }:
+    let jq = "${pkgs.jq}/bin/jq"; in
+    ''
+      ${pre}
+      ${jq} -cn \
+        --arg text "${text}" \
+        --arg tooltip "${tooltip}" \
+        --arg alt "${alt}" \
+        --arg class "${class}" \
+        --arg percentage "${percentage}" \
+        '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+    '';
+  inherit (builtins) attrValues concatStringsSep mapAttrs;
+in
 {
-  programs.waybar = {
+  programs. waybar = {
     enable = true;
     systemd = {
       enable = true;
@@ -106,15 +109,24 @@ let jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", perc
           return-type = "json";
           exec =
             let
-              ping = host: ''$(ping -q4c1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
-              pingTargets = [ "misterio.me" "merope.local" "atlas.local" "pleione.local" "maia.local" ];
+              ping = title: { icon, host }:
+                let
+                  display = if (title == null) then icon else "${icon}  ${title}:";
+                in
+                ''${display} $(ping -q4c1 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+
+              targets = {
+                web = { host = "9.9.9.9"; icon = " "; };
+                atlas = { host = "atlas"; icon = " "; };
+                merope = { host = "merope"; icon = " "; };
+                pleione = { host = "pleione"; icon = " "; };
+              };
             in
             jsonOutput {
-              text = ping "merope.local";
-              tooltip = builtins.concatStringsSep "\n"
-                (lib.forEach pingTargets (h: ''${h}: ${ping h}''));
+              text = "${ping null targets.web} / ${ping null targets.merope}";
+              tooltip = concatStringsSep "\n" (attrValues (mapAttrs ping targets));
             };
-          format = "  {}";
+          format = "{}";
         };
         "custom/menu" = {
           return-type = "json";

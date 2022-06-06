@@ -4,10 +4,13 @@
     inputs.hardware.nixosModules.raspberry-pi-4
 
     ./hardware-configuration.nix
-    ../common
-    ../common/modules/passwordless-sudo.nix
-    ../common/modules/podman.nix
-    ../common/modules/postgres.nix
+    ../../common/global
+    ../../common/optional/acme.nix
+    ../../common/optional/passwordless-sudo.nix
+    ../../common/optional/podman.nix
+    ../../common/optional/postgres.nix
+    ../../common/optional/quietboot.nix
+    ../../common/optional/tailscale.nix
 
     ./deluge.nix
     ./files-server.nix
@@ -16,7 +19,7 @@
     ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
-    ./wireguard.nix
+    ./headscale.nix
 
     ./paste-misterio-me.nix
   ];
@@ -29,7 +32,7 @@
       wakeOnLan.enable = true;
 
       ipv4.addresses = [{
-        address = "192.168.77.11";
+        address = "192.168.0.11";
         prefixLength = 24;
       }];
       ipv6.addresses = [{

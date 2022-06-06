@@ -1,7 +1,6 @@
-{ modulesPath, ... }: {
+{
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../common/modules/btrfs-optin-persistence.nix
+      ../../common/optional/btrfs-optin-persistence.nix
   ];
 
   boot = {

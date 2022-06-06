@@ -21,4 +21,7 @@
       ];
     };
   };
+
+  # Allows accessing mountpoints when sudoing
+  programs.fuse.userAllowOther = true;
 }

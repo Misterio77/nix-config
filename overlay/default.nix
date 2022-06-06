@@ -25,6 +25,31 @@ in
       });
   } // import ../pkgs/vim-plugins { pkgs = final; };
 
+  # ddclient with gandi support
+  ddclient = prev.ddclient.overrideAttrs (_oldAttrs: rec {
+    version = "3.10.0_2";
+    src = fetchFromGitHub {
+      owner = "ddclient";
+      repo = "ddclient";
+      rev = "v${version}";
+      sha256 = "sha256-oWWdJ358k2gFCoziU5y+T/e/XnmcFABhMf4YlD0qhko=";
+    };
+    buildInputs = with final.perlPackages; [ IOSocketInet6 IOSocketSSL JSONPP ];
+    postPatch = ''
+      touch Makefile.PL
+    '';
+    nativeBuildInputs = [ final.autoreconfHook ];
+    installPhase = ''
+      runHook preInstall
+
+      preConfigure
+      install -Dm755 ddclient $out/bin/ddclient
+      install -Dm644 -t $out/share/doc/ddclient COP* README.* ChangeLog.md
+
+      runHook postInstall
+    '';
+  });
+
   # Don't launch discord when using discocss
   discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];

@@ -6,15 +6,16 @@
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
-    ../common
-    ../common/modules/misterio-greetd.nix
-    ../common/modules/pipewire.nix
-    ../common/modules/podman.nix
-    ../common/modules/postgres.nix
-    ../common/modules/steam.nix
-    ../common/modules/tailscale.nix
-
-    # ./factorio.nix
+    ../../common/global
+    ../../common/optional/misterio-greetd.nix
+    ../../common/optional/pipewire.nix
+    ../../common/optional/podman.nix
+    ../../common/optional/postgres.nix
+    ../../common/optional/quietboot.nix
+    ../../common/optional/starcitizen-fixes.nix
+    ../../common/optional/steam.nix
+    ../../common/optional/systemd-boot.nix
+    ../../common/optional/tailscale.nix
   ];
 
   networking = {
@@ -25,13 +26,8 @@
 
       ipv4 = {
         addresses = [{
-          address = "192.168.77.12";
+          address = "192.168.0.12";
           prefixLength = 24;
-        }];
-        routes = [{
-          address = "10.100.0.0";
-          prefixLength = 24;
-          via = "192.168.77.11"; # Route traffic intended for the VPN through merope
         }];
       };
       ipv6 = {
@@ -39,33 +35,13 @@
           address = "2804:14d:8084:a484::2";
           prefixLength = 64;
         }];
-        routes = [{
-          address = "fdc9:281f:4d7:9ee9::";
-          prefixLength = 64;
-          via = "2804:14d:8084:a484::1"; # Route traffic intended for the VPN through merope
-        }];
       };
     };
-
-    # Block eac cdn so i can play star citizen
-    extraHosts = ''
-      127.0.0.1 modules-cdn.eac-prod.on.epicgames.com
-    '';
   };
 
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    kernel.sysctl = {
-      # Star citizen fix
-      "vm.max_map_count" = 16777216;
-      # LoL fix
-      "abi.vsyscall32" = 0;
-    };
   };
 
   programs = {
