@@ -3,7 +3,6 @@
   apgdiff-docker = pkgs.callPackage ./apgdiff/docker.nix { };
   argononed = pkgs.callPackage ./argononed { };
   clematis = pkgs.callPackage ./clematis { };
-  comma = pkgs.callPackage ./comma { };
   minicava = pkgs.callPackage ./minicava { };
   pass-wofi = pkgs.callPackage ./pass-wofi { };
   preferredplayer = pkgs.callPackage ./preferredplayer { };
