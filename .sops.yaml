@@ -10,9 +10,9 @@ keys:
     <<: [*users, *hosts]
 
 creation_rules:
-  - path_regex: secrets/[^/]+\.ya?ml$
+  - path_regex: nixos/hosts/[^/]+/secrets/[^/]+\.ya?ml$
     key_groups:
       - <<: *all
-  - path_regex: hosts/common/passwords.yaml
+  - path_regex: nixos/common/secrets/[^/]+\.ya?ml$
     key_groups:
       - <<: *all
