@@ -7,6 +7,16 @@ Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.w
 
 Looking for something simpler to start out with flakes? Try [my starter config repo](https://github.com/Misterio77/nix-starter-config).
 
+**Highlights**:
+- **Opt-in persistence** through impermanence + blank snapshotting
+- **Encrypted** single **BTRFS** partition
+- Multiple **NixOS configurations**, including **desktop**, **laptop**, **server**
+- Deployment **secrets** using **sops-nix**
+- Flexible **Home Manager** Configs through **feature flags**
+- Extensively configured **sway** and **neovim**
+- Fully **declarative** **self-hosted** stuff
+- **Mesh networked** hosts with **tailscale** and **headscale**
+
 ## Structure
 - `flake.nix`: Entrypoint for hosts and home configurations. Also exposes a
   devshell for boostrapping (`nix develop`).
