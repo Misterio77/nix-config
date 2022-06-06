@@ -29,7 +29,6 @@
     functions = {
       fish_greeting = "";
       wh = "readlink -f (which $argv)";
-      r = "avahi-resolve-host-name $argv | cut -f2";
     };
     interactiveShellInit =
       # Open command buffer in vim when alt+e is pressed
