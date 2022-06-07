@@ -73,7 +73,8 @@ in
       ];
     };
 
-  mkDeploy = config: {
+  mkDeploy = hostname: config: {
+    inherit hostname;
     profiles.system = {
       user = "root";
       path = inputs.deploy-rs.lib.${config.pkgs.system}.activate.nixos config;

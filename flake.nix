@@ -32,7 +32,7 @@
   outputs = inputs:
     let
       my-lib = import ./lib { inherit inputs; };
-      inherit (builtins) attrValues;
+      inherit (builtins) attrValues mapAttrs;
       inherit (my-lib) mkSystem mkHome mkDeploy importAttrset;
       inherit (inputs.nixpkgs.lib) genAttrs systems;
       forAllSystems = genAttrs systems.flakeExposed;
@@ -79,9 +79,7 @@
       };
 
       deploy.nodes = {
-        merope = mkDeploy nixosConfigurations.merope // {
-          hostname = "merope";
-        };
+        inherit (mapAttrs mkDeploy nixosConfigurations) atlas merope pleione;
       };
 
       homeConfigurations = {
