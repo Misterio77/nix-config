@@ -1,4 +1,8 @@
-{ persistence, inputs, lib, ... }: {
+{ persistence, inputs, lib, ... }:
+let
+  sshPath = if persistence then "/persist/etc/ssh" else "/etc/ssh";
+in
+{
   imports = [
     inputs.impermanence.nixosModules.impermanence
   ];
@@ -6,7 +10,6 @@
   environment.persistence = lib.mkIf persistence {
     "/persist" = {
       directories = [
-        "/etc/ssh"
         "/var/log"
         "/var/lib/systemd"
         "/var/lib/acme"
@@ -15,14 +18,22 @@
     };
   };
 
-  fileSystems."/etc/ssh" = {
-    # Fix secrets being activated before etc ssh is mounted
-    neededForBoot = true;
-    # Make sure persist is mounted
-    # https://github.com/nix-community/impermanence/issues/22
-    depends = [ "/persist" ];
-  };
+  services.openssh.hostKeys = [
+    {
+      bits = 4096;
+      path = "${sshPath}/ssh_host_rsa_key";
+      type =
+        "rsa";
+    }
+    {
+      path = "${sshPath}/ssh_host_ed25519_key";
+      type = "ed25519";
+    }
+  ];
 
+  sops = {
+    age.sshKeyPaths = [ "${sshPath}/ssh_host_ed25519_key" ];
+  };
 
   # Allows accessing mountpoints when sudoing
   programs.fuse.userAllowOther = true;
