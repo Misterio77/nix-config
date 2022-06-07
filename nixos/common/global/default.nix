@@ -16,5 +16,7 @@
     [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
   '';
 
+  hardware.enableRedistributableFirmware = true;
+
   system.stateVersion = "22.05";
 }

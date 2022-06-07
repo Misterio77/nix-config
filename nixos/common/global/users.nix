@@ -2,6 +2,9 @@
 let
   inherit (lib) mkIf;
   hasSway = homeConfig.wayland.windowManager.sway.enable or false;
+  hasGammastepGeoclue =
+    (homeConfig.services.gammastep.enable or false) &&
+    (homeConfig.services.gammastep.provider == "geoclue2");
 in
 {
   users.mutableUsers = false;
@@ -31,5 +34,7 @@ in
     neededForUsers = true;
   };
 
+
+  services.geoclue2.enable = lib.mkDefault hasGammastepGeoclue;
   security.pam.services.swaylock = lib.mkIf hasSway { };
 }
