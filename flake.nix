@@ -93,7 +93,8 @@
           trusted = true;
           rgb = true;
           games = true;
-          colorscheme = "dracula";
+          colorscheme = "spaceduck";
+          wallpaper = "clouds-moon-painting-purple";
         };
         "misterio@pleione" = mkHome {
           inherit overlays;
@@ -104,7 +105,8 @@
           trusted = true;
           laptop = true;
           games = true;
-          colorscheme = "ayu-mirage";
+          colorscheme = "pasque";
+          wallpaper = "plains-gold-field";
         };
         "misterio@merope" = mkHome {
           inherit overlays;
