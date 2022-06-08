@@ -7,8 +7,8 @@
       dns = {
         baseDomain = "ts.misterio.me";
         magicDns = true;
+        domains =  [ "misterio.me" "home.ts.misterio.me" ];
         nameservers = [
-          "100.100.100.100"
           "9.9.9.9"
         ];
       };
