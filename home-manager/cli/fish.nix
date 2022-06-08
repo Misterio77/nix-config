@@ -8,9 +8,18 @@
 
       jqless = "jq -C | less -r";
 
-      nrs = "nixos-rebuild switch --use-remote-sudo";
-      hms = "home-manager switch";
+      n = "nix";
       nd = "nix develop -c $SHELL";
+      ns = "nix shell";
+      nsn = "nix shell nixpkgs#";
+      nb = "nix build";
+      nbn = "nix build nixpkgs#";
+      nf = "nix flake";
+
+      nr = "nixos-rebuild --use-remote-sudo --flake .";
+      hm = "home-manager switch --flake .";
+      nrs = "nixos-rebuild --use-remote-sudo --flake . switch";
+      hms = "home-manager switch --flake . switch";
 
       v = "nvim";
       vi = "nvim";
