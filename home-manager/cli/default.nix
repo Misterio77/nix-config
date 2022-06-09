@@ -27,7 +27,7 @@
     httpie # Better curl
     jq # JSON pretty printer and manipulator
 
-    nvd # Check derivation differences
+    nvd nix-diff # Check derivation differences
     rnix-lsp # Nix LSP
     nixfmt # Nix formatter
     deadnix # Nix dead code locator

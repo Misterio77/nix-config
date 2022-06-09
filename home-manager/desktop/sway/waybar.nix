@@ -105,7 +105,7 @@ in
             Down: {bandwidthDownBits}'';
         };
         "custom/home" = {
-          interval = 10;
+          interval = 5;
           return-type = "json";
           exec =
             let
@@ -113,7 +113,7 @@ in
                 let
                   display = if (title == null) then icon else "${icon}  ${title}:";
                 in
-                ''${display} $(ping -qc10 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.1fms", $4; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+                ''${display} $(ping -qc5 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.2fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
 
               targets = {
                 web = { host = "9.9.9.9"; icon = " "; };

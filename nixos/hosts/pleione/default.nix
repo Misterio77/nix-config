@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ../../common/global
     ../../common/optional/misterio-greetd.nix
+    ../../common/optional/networkmanager.nix
     ../../common/optional/pipewire.nix
     ../../common/optional/podman.nix
     ../../common/optional/postgres.nix
@@ -17,8 +18,6 @@
     ../../common/optional/tailscale.nix
   ];
 
-
-  networking.networkmanager.enable = true;
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
 
