@@ -1,6 +1,6 @@
 { pkgs, config, lib, homeConfig, ... }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   hasSway = homeConfig.wayland.windowManager.sway.enable or false;
   hasGammastepGeoclue =
     (homeConfig.services.gammastep.enable or false) &&
@@ -16,6 +16,7 @@ in
       "video"
       "audio"
     ]
+    ++ (if config.programs.wireshark.enable then [ "wireshark" ] else [ ])
     ++ (if config.hardware.i2c.enable then [ "i2c" ] else [ ])
     ++ (if config.services.deluge.enable then [ "deluge" ] else [ ])
     ++ (if config.services.minecraft-server.enable then [ "minecraft" ] else [ ])
@@ -35,6 +36,6 @@ in
   };
 
 
-  services.geoclue2.enable = lib.mkDefault hasGammastepGeoclue;
-  security.pam.services.swaylock = lib.mkIf hasSway { };
+  services.geoclue2.enable = mkDefault hasGammastepGeoclue;
+  security.pam.services.swaylock = mkIf hasSway { };
 }
