@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 let
-  inherit (inputs.nix-colors.lib { inherit pkgs; }) gtkThemeFromScheme;
+  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) gtkThemeFromScheme;
 in rec {
   gtk = {
     enable = true;
