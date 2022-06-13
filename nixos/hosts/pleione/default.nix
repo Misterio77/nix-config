@@ -19,7 +19,7 @@
   ];
 
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   services.dbus.packages = [ pkgs.gcr ];
 

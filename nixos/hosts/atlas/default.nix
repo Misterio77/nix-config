@@ -40,7 +40,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_5_18;
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
