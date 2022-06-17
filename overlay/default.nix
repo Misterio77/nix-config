@@ -1,6 +1,6 @@
 { inputs, ... }: final: prev:
 let
-  inherit (inputs.nix-colors.lib { pkgs = final; }) gtkThemeFromScheme;
+  inherit (inputs.nix-colors.lib-contrib { pkgs = final; }) gtkThemeFromScheme;
   inherit (inputs.nix-colors) colorSchemes;
   inherit (builtins) mapAttrs;
   inherit (final) fetchFromGitHub;
