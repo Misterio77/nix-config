@@ -1,4 +1,5 @@
 # This file (and the global directory) holds config that i use on all hosts
+{ lib, ... }:
 {
   imports = [
     ./fish.nix
@@ -19,5 +20,5 @@
   hardware.enableRedistributableFirmware = true;
   # boot.initrd.systemd.enable = true;
 
-  system.stateVersion = "22.05";
+  system.stateVersion = lib.mkDefault "22.05";
 }
