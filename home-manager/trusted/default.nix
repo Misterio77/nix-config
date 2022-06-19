@@ -1,5 +1,6 @@
 {
   imports = [
+    ./afuse.nix
     ./git-sign.nix
     ./khal.nix
     ./khard.nix

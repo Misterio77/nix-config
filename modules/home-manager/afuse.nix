@@ -2,7 +2,6 @@
 
 with lib;
 let
-  inherit (lib) mkEnableOption;
   cfg = config.services.afuse;
 
   toValue = v: with builtins;
@@ -14,29 +13,16 @@ let
     else if isList   v then concatMapStringsSep ":" toValue v
     else abort "Unsupported afuse option: ${toString v}";
 
-  toArgument = f: n: v: with builtins;
+  toArgument = n: v: with builtins;
     if null       == v then ""
     else if false == v then ""
-    else if true  == v then "${f} ${v}"
+    else if true  == v then "-o ${v}"
     else if isAttrs  v then concatStringsSep " " (mapAttrsToList toArgument v)
-    else "${f} ${n}=${toValue v}";
+    else "-o ${n}=\"${toValue v}\"";
 
   afuseArguments = {
-    type = with types; let
-      valueType = attrsOf (oneOf [
-        bool
-        str int float path
-        (listOf oneOf [ str int float path])
-      ]) // {
-        description = ''
-          An attrset where each values must be:
-
-          String, path, numbers, list (values colon separated), or boolean
-        '';
-      };
-    in valueType;
-
-    generate = flag: value: concatStringsSep " " (toArgument flag null value);
+    type = with types; anything;
+    generate = toArgument;
   };
 in
 {
@@ -50,33 +36,40 @@ in
       description = "Package providing <command>afuse</command>";
     };
 
+    mountpoint = mkOption {
+      type = types.path;
+      default = "/net";
+      description = "Base mountpoint.";
+    };
+
+    debug = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether to print more verbose messages.";
+    };
+
     settings = mkOption {
+      default = { };
+      description = ''
+        Options for afuse, passed as -o arguments. See <literal>afuse
+        --help</literal> for supported options.
+      '';
+
       type = types.submodule {
         freeformType = afuseArguments.type;
-        default = { };
-        description = ''
-          Options for afuse, in key values pairs (passed as -o arguments). See
-          <literal>afuse --help</literal> for supported options.
-        '';
 
         # Important options
         options = {
-          subdir = mkOption {
-            type = types.path;
-            description = ''
-              Root that should have all mountpoints.
-            '';
-            example = "/home/you/Shares";
-          };
           mount_template = mkOption {
             type = types.str;
             description = ''
               Template for command to execute on mount.
 
-              %r and %m are expanded, respectively, into the directory for the mount
-              point, and full directory to mount onto.
+              When executed, %r and %m are expanded in templates to the root
+              directory name for the new mount point, and the actual directory
+              to mount onto respectively to mount onto.
             '';
-            example = "sshfs $r:/ %m";
+            example = "sshfs %r:/ %m";
           };
           unmount_template = mkOption {
             type = types.str;
@@ -85,8 +78,9 @@ in
 
               Must be a lazy unmount operation.
 
-              %r and %m are expanded, respectively, into the directory for the mount
-              point, and full directory to mount onto.
+              When executed, %r and %m are expanded in templates to the root
+              directory name for the new mount point, and the actual directory
+              to mount onto respectively to mount onto.
             '';
             example = "fusermount -u -z %m";
           };
@@ -115,7 +109,8 @@ in
     systemd.user.services.afuse = {
       Unit.Description = "afuse automatic FUSE mounter";
       Install.WantedBy = [ "default.target" ];
-      Service.ExecStart = "${cfg.package}/bin/afuse ${afuseArguments "-o" cfg.settings} -f";
+      Service.ExecStart = replaceStrings ["%"] ["%%"] # Extra percent to escape afuses'
+        "${cfg.package}/bin/afuse ${optionalString cfg.debug "-d"} ${cfg.mountpoint} ${afuseArguments.generate null cfg.settings} -f";
     };
   };
 }
