@@ -100,10 +100,21 @@
       config = /* vim */ ''
         let bufferline = get(g:, 'bufferline', {})
         let bufferline.animation = v:true
-        nmap <C-h> :BufferPrevious<CR>
-        nmap <C-l> :BufferNext<CR>
-        nmap <C-q> :BufferClose<CR>
-        nmap <C-a> :BufferPick<CR>
+        nmap <C-h>   :BufferPrevious<CR>
+        nmap <C-l>   :BufferNext<CR>
+        nmap <C-q>   :BufferClose<CR>
+        nmap <C-a>   :BufferPick<CR>
+        nmap <C-M-h> :BufferMovePrevious<CR>
+        nmap <C-M-l> :BufferMoveNext<CR>
+        nmap <M-1>   :BufferGoto 1<CR>
+        nmap <M-2>   :BufferGoto 2<CR>
+        nmap <M-3>   :BufferGoto 3<CR>
+        nmap <M-4>   :BufferGoto 4<CR>
+        nmap <M-5>   :BufferGoto 5<CR>
+        nmap <M-6>   :BufferGoto 6<CR>
+        nmap <M-7>   :BufferGoto 7<CR>
+        nmap <M-8>   :BufferGoto 8<CR>
+        nmap <M-9>   :BufferGoto 9<CR>
       '';
     }
 
