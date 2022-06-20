@@ -16,7 +16,7 @@ let
   toArgument = n: v: with builtins;
     if null       == v then ""
     else if false == v then ""
-    else if true  == v then "-o ${v}"
+    else if true  == v then "-o ${n}"
     else if isAttrs  v then concatStringsSep " " (mapAttrsToList toArgument v)
     else "-o ${n}=\"${toValue v}\"";
 
@@ -109,8 +109,12 @@ in
     systemd.user.services.afuse = {
       Unit.Description = "afuse automatic FUSE mounter";
       Install.WantedBy = [ "default.target" ];
-      Service.ExecStart = replaceStrings ["%"] ["%%"] # Extra percent to escape afuses'
+      Service = {
+        # Make sure mountpoint exists
+        ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${cfg.mountpoint}";
+        ExecStart = replaceStrings ["%"] ["%%"] # Extra percent for escaping
         "${cfg.package}/bin/afuse ${optionalString cfg.debug "-d"} ${cfg.mountpoint} ${afuseArguments.generate null cfg.settings} -f";
+      };
     };
   };
 }

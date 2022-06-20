@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   homeDir = config.home.homeDirectory;
 
@@ -18,6 +18,13 @@ in
       mount_template = "${sshfs} %r:${homeDir} %m";
       unmount_template = "${fusermount} -u -z %m";
       populate_root_command = listTailscaleDevices;
+
+      timeout = 300;
+      auto_unmount = true;
+      allow_root = true;
+      auto_cache = true;
+      remember = 10;
+      intr = true;
     };
   };
 }
