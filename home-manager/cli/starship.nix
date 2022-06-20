@@ -6,10 +6,11 @@ let
     IFS=":" read -ra PATHS <<< "$PATH"
 
     read -ra PROGRAMS <<< \
-      "$(printf "%s\n" "''${PATHS[@]}" | ${pkgs.gnugrep}/bin/grep "\/nix\/store" | ${pkgs.perl}/bin/perl -pe 's/^\/nix\/store\/\w{32}-((?:[^-\/]|-(?!(?:\d|unstable)))+)(?:-?([^\/]*))\/.*$/\1/' | ${pkgs.findutils}/bin/xargs)"
+      "$(printf "%s\n" "''${PATHS[@]}" | ${pkgs.gnugrep}/bin/grep "\/nix\/store" | ${pkgs.perl}/bin/perl -pe 's/^\/nix\/store\/\w{32}-(.*)\/.*$/\1/' | ${pkgs.findutils}/bin/xargs)"
 
     for to_remove in "''${EXCLUDED[@]}"; do
-        PROGRAMS=("''${PROGRAMS[@]/$to_remove}")
+        to_remove_full="$(printf "%s\n" "''${PROGRAMS[@]}" | grep "$to_remove" )"
+        PROGRAMS=("''${PROGRAMS[@]/$to_remove_full}")
     done
 
     read -ra PROGRAMS <<< "''${PROGRAMS[@]}"
@@ -56,18 +57,19 @@ in
         format = "[$path]($style)( [$read_only]($read_only_style))";
       };
       nix_shell = {
-        format = "via [$symbol$state( $name)]($style)";
+        format = "[$symbol(-> $name \\(develop\\))]($style)";
         impure_msg = "";
-        pure_msg = "λ";
+        symbol = " ";
+        style = "bold red";
       };
       custom = {
         nix_inspect = {
           disabled = false;
-          when = true;
+          when = "test -z $IN_NIX_SHELL";
           command = "${nix-inspect}/bin/nix-inspect kitty imagemagick ncurses";
-          format = "[$symbol(\\($output\\))]($style)";
+          format = "[$symbol(-> $output)]($style)";
           symbol = " ";
-          style = "bold cyan";
+          style = "bold blue";
         };
       };
 
@@ -106,7 +108,6 @@ in
       julia.symbol = " ";
       memory_usage.symbol = " ";
       nim.symbol = " ";
-      nix_shell.symbol = "";
       nodejs.symbol = " ";
       package.symbol = " ";
       perl.symbol = " ";
