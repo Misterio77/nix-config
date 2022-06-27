@@ -20,7 +20,7 @@ in
         homeConfig = inputs.self.outputs.homeConfigurations."misterio@${hostname}".config or { };
       };
       modules = attrValues (import ../modules/nixos) ++ [
-        ../nixos/hosts/${hostname}
+        ../hosts/${hostname}
         {
           networking.hostName = hostname;
           # Apply overlay and allow unfree packages
@@ -56,7 +56,7 @@ in
         inherit system persistence desktop trusted colorscheme wallpaper inputs rgb laptop games;
       };
       homeDirectory = "/home/${username}";
-      configuration = ../home-manager;
+      configuration = ../home;
       extraModules = attrValues (import ../modules/home-manager) ++ [
         # Base configuration
         {

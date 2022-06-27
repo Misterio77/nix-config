@@ -22,15 +22,14 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - `flake.nix`: Entrypoint for hosts and home configurations. Also exposes a
   devshell for boostrapping (`nix develop`).
 - `lib`: A few lib functions for making my flake cleaner
-- `nixos`: NixOS Configurations, accessible via `nixos-rebuild --flake`.
-  - `hosts`: My machines, and their specific configurations
-    - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
-    - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
-    - `merope`: Raspberry Pi 4 - 8GB RAM | Server
+- `hosts`: NixOS Configurations, accessible via `nixos-rebuild --flake`.
   - `common`: Shared configurations consumed by the machine-specific ones.
     - `global`: Configurations that are globally applied to all my machines.
     - `optional`: Opt-in configurations my machines can use.
-- `home-manager`: My Home-manager configuration, acessible via `home-manager --flake`
+  - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
+  - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
+  - `merope`: Raspberry Pi 4 - 8GB RAM | Server
+- `home`: My Home-manager configuration, acessible via `home-manager --flake`
     - Each directory here is a "feature" each hm configuration can toggle, thus
       customizing my setup for each machine (be it a server, desktop, laptop,
       anything really).

@@ -6,16 +6,16 @@
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
-    ../../common/global
-    ../../common/optional/misterio-greetd.nix
-    ../../common/optional/networkmanager.nix
-    ../../common/optional/pipewire.nix
-    ../../common/optional/podman.nix
-    ../../common/optional/postgres.nix
-    ../../common/optional/quietboot.nix
-    ../../common/optional/steam.nix
-    ../../common/optional/systemd-boot.nix
-    ../../common/optional/tailscale.nix
+    ../common/global
+    ../common/optional/misterio-greetd.nix
+    ../common/optional/networkmanager.nix
+    ../common/optional/pipewire.nix
+    ../common/optional/podman.nix
+    ../common/optional/postgres.nix
+    ../common/optional/quietboot.nix
+    ../common/optional/steam.nix
+    ../common/optional/systemd-boot.nix
+    ../common/optional/tailscale.nix
   ];
 
 

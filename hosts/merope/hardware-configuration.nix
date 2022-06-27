@@ -1,6 +1,6 @@
 {
   imports = [
-      ../../common/optional/btrfs-optin-persistence.nix
+      ../common/optional/btrfs-optin-persistence.nix
   ];
 
   boot = {
