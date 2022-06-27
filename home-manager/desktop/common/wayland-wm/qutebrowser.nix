@@ -1,14 +1,25 @@
-{ config, pkgs, lib, persistence, ... }:
+{ config, lib, persistence, ... }:
 
 let inherit (config.colorscheme) colors kind;
-in {
-  home.persistence = lib.mkIf persistence {
-    "/persist/home/misterio".directories = [
-      ".config/qutebrowser/bookmarks"
-      ".config/qutebrowser/greasemonkey"
-      ".local/share/qutebrowser"
-    ];
+in
+{
+  home = {
+    preferredApps.browser = {
+      cmd = "qutebrowser";
+    };
+    sessionVariables = {
+      BROWSER = "qutebrowser";
+    };
+    persistence = lib.mkIf persistence {
+      "/persist/home/misterio".directories = [
+        ".config/qutebrowser/bookmarks"
+        ".config/qutebrowser/greasemonkey"
+        ".local/share/qutebrowser"
+      ];
+    };
   };
+
+
 
   xdg.mimeApps.defaultApplications = {
     "text/html" = [ "org.qutebrowser.qutebrowser.desktop" ];
@@ -19,12 +30,10 @@ in {
   };
 
 
-  home.packages = [ pkgs.libsForQt5.qt5.qtwayland ];
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
     settings = {
-      qt.force_platform = "wayland";
       tabs = {
         show = "multiple";
         position = "left";

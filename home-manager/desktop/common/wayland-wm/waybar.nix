@@ -14,13 +14,17 @@ let
         '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
     '';
   inherit (builtins) attrValues concatStringsSep mapAttrs;
+  inherit (pkgs.lib) optionals;
+  hasSway = config.wayland.windowManager.sway.enable;
 in
 {
   programs. waybar = {
     enable = true;
     systemd = {
       enable = true;
-      target = "sway-session.target";
+      target =
+        if hasSway then "sway-session.target"
+        else "graphical-session.target";
     };
     settings = [{
       layer = "top";
@@ -28,8 +32,10 @@ in
       position = "top";
       modules-left = [
         "custom/menu"
+      ] ++ (optionals hasSway [
         "sway/workspaces"
         "sway/mode"
+      ]) ++ [
         "custom/preferredplayer"
         "custom/player"
       ];
@@ -175,7 +181,7 @@ in
           return-type = "json";
           exec =
             let
-              keyring = import ../../trusted/keyring.nix { inherit pkgs; };
+              keyring = import ../../../trusted/keyring.nix { inherit pkgs; };
             in
             jsonOutput {
               pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';

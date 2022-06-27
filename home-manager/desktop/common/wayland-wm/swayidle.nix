@@ -5,7 +5,6 @@ let
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";
 
-  lockTime = if laptop then 240 else 600;
   isLocked = "${pgrep} -x swaylock";
   actionLock = "${swaylock} -S --daemonize";
   actionMute = "${pactl} set-source-mute @DEFAULT_SOURCE@ yes";
@@ -14,11 +13,13 @@ let
   actionRgbOn = "systemctl --user start rgbdaemon";
   actionDisplayOff = ''swaymsg "output * dpms off"'';
   actionDisplayOn = ''swaymsg "output * dpms on"'';
+
+  # Lock after 10 (desktop) or 4 (laptop) minutes
+  lockTime = if laptop then 4*60 else 10*60;
 in
 {
-  # Lock after 10 (desktop) or 4 (laptop) minutes
   # After 10 seconds of locked, mute mic
-  # After 20 seconds of locked, disable rgb lights and turn monitors off
+  # After 20 seconds of locked, turn monitors off
   # If has PGP, lock it after lockTime/4
   # If has RGB, turn off 20 seconds after locked
   xdg.configFile."swayidle/config".text = ''

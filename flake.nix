@@ -22,7 +22,13 @@
     impermanence.url = "github:RiscadoA/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
-    # Nixified projects
+    # Nixified third-party software
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # My nixified software
     paste-misterio-me = {
       url = "github:misterio77/paste.misterio.me/1.3.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +49,7 @@
         nur = inputs.nur.overlay;
         deploy-rs = inputs.deploy-rs.overlay;
         sops-nix = inputs.sops-nix.overlay;
+        hyprland = inputs.hyprland.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
       };
 

@@ -7,10 +7,19 @@ let
   '';
 in
 {
-  home.packages = [ kitty-xterm ];
-  home.sessionVariables = {
-    TERMINAL = "kitty";
+  home = {
+    packages = [ kitty-xterm ];
+    preferredApps.terminal = {
+      cmd = "kitty";
+      # Spawn a program
+      cmd-spawn = program: "kitty $SHELL -i -c ${program}";
+    };
+    sessionVariables = {
+      TERMINAL = "kitty";
+    };
   };
+
+
   programs.kitty = {
     enable = true;
     font = {

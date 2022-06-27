@@ -6,6 +6,13 @@ in
 {
   imports = [ ./ui.nix ./lsp.nix ./syntax.nix ];
 
+  home = {
+    sessionVariables.EDITOR = "nvim";
+    preferredApps.editor = {
+      cmd = config.home.preferredApps.terminal.cmd-spawn "nvim";
+    };
+  };
+
   programs.neovim = {
     enable = true;
     extraConfig = /* vim */ ''
@@ -92,8 +99,6 @@ in
         ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
       done
     '';
-
-  home.sessionVariables.EDITOR = "nvim";
 
   xdg.desktopEntries = {
     nvim = {

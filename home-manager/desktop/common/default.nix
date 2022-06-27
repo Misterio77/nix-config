@@ -1,13 +1,20 @@
+{ pkgs, ... }:
 {
   imports = [
-    ./discord.nix
     ./deluge.nix
+    ./discord.nix
+    ./dragon.nix
     ./firefox.nix
     ./font.nix
     ./gtk.nix
     ./kdeconnect.nix
-    ./qutebrowser.nix
+    ./pavucontrol.nix
+    ./qt.nix
     ./sublime-music.nix
-    ./zathura.nix
+  ];
+
+  xdg.mimeApps.enable = true;
+  home.packages = with pkgs; [
+    xdg-utils
   ];
 }

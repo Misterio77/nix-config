@@ -17,6 +17,7 @@ in
 
   # https://github.com/nix-community/home-manager/issues/2942
   nixpkgs.config.allowUnfreePredicate = _: true;
+  home.sessionVariables.NIXPKGS_ALLOW_UNFREE = true;
 
   home.persistence = mkIf persistence {
     "/persist/home/misterio" = {

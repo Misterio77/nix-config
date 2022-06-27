@@ -28,8 +28,8 @@ in
         in
         ''
           $username$hostname( $shlvl)( $cmd_duration)
-          ($nix_shell )''${custom.nix_inspect}
           $directory( ${git})(- ${cloud})
+          ($nix_shell )''${custom.nix_inspect}
           $jobs$character
         '';
 

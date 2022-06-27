@@ -1,19 +1,27 @@
-{ pkgs, ... }: {
-  xdg.desktopEntries = {
-    neomutt = {
-      name = "Neomutt";
-      genericName = "Email Client";
-      comment = "Read and send emails";
-      exec = "neomutt %U";
-      icon = "mutt";
-      terminal = true;
-      categories = [ "Network" "Email" "ConsoleOnly" ];
-      type = "Application";
-      mimeType = [ "x-scheme-handler/mailto" ];
+{ config, pkgs, ... }: {
+  home = {
+    preferredApps.mail = {
+      cmd = config.home.preferredApps.terminal.cmd-spawn "neomutt";
     };
   };
-  xdg.mimeApps.defaultApplications = {
-    "x-scheme-handler/mailto" = "neomutt.desktop";
+
+  xdg = {
+    desktopEntries = {
+      neomutt = {
+        name = "Neomutt";
+        genericName = "Email Client";
+        comment = "Read and send emails";
+        exec = "neomutt %U";
+        icon = "mutt";
+        terminal = true;
+        categories = [ "Network" "Email" "ConsoleOnly" ];
+        type = "Application";
+        mimeType = [ "x-scheme-handler/mailto" ];
+      };
+    };
+    mimeApps.defaultApplications = {
+      "x-scheme-handler/mailto" = "neomutt.desktop";
+    };
   };
 
   programs.neomutt = {
@@ -46,43 +54,45 @@
         map = [ "index" ];
       }
     ];
-    macros = let
-      qutebrowserpipe =
-        "cat /dev/stdin > /tmp/muttmail.html && ${pkgs.qutebrowser}/bin/qutebrowser /tmp/muttmail.html";
-    in [
-      {
-        action = "<sidebar-next><sidebar-open>";
-        key = "J";
-        map = [ "index" "pager" ];
-      }
-      {
-        action = "<sidebar-prev><sidebar-open>";
-        key = "K";
-        map = [ "index" "pager" ];
-      }
-      {
-        action =
-          ":set confirmappend=no\\n<save-message>+Archive<enter>:set confirmappend=yes\\n";
-        key = "A";
-        map = [ "index" "pager" ];
-      }
-      {
-        action = "<pipe-entry>${qutebrowserpipe}<enter><exit>";
-        key = "V";
-        map = [ "attach" ];
-      }
-      {
-        action = "<pipe-message>${pkgs.urlscan}/bin/urlscan<enter><exit>";
-        key = "F";
-        map = [ "pager" ];
-      }
-      {
-        action =
-          "<view-attachments><search>html<enter><pipe-entry>${qutebrowserpipe}<enter><exit>";
-        key = "V";
-        map = [ "index" "pager" ];
-      }
-    ];
+    macros =
+      let
+        qutebrowserpipe =
+          "cat /dev/stdin > /tmp/muttmail.html && ${pkgs.qutebrowser}/bin/qutebrowser /tmp/muttmail.html";
+      in
+      [
+        {
+          action = "<sidebar-next><sidebar-open>";
+          key = "J";
+          map = [ "index" "pager" ];
+        }
+        {
+          action = "<sidebar-prev><sidebar-open>";
+          key = "K";
+          map = [ "index" "pager" ];
+        }
+        {
+          action =
+            ":set confirmappend=no\\n<save-message>+Archive<enter>:set confirmappend=yes\\n";
+          key = "A";
+          map = [ "index" "pager" ];
+        }
+        {
+          action = "<pipe-entry>${qutebrowserpipe}<enter><exit>";
+          key = "V";
+          map = [ "attach" ];
+        }
+        {
+          action = "<pipe-message>${pkgs.urlscan}/bin/urlscan<enter><exit>";
+          key = "F";
+          map = [ "pager" ];
+        }
+        {
+          action =
+            "<view-attachments><search>html<enter><pipe-entry>${qutebrowserpipe}<enter><exit>";
+          key = "V";
+          map = [ "index" "pager" ];
+        }
+      ];
     extraConfig = ''
       alternates "eu@misterio.me|gabriel.fontes@uget.express|g.fontes@usp.br"
     '' + ''
