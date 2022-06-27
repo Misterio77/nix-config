@@ -110,6 +110,7 @@ in
       Unit.Description = "afuse automatic FUSE mounter";
       Install.WantedBy = [ "default.target" ];
       Service = {
+        After = [ "network.target" ];
         # Make sure mountpoint exists
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${cfg.mountpoint}";
         ExecStart = replaceStrings ["%"] ["%%"] # Extra percent for escaping
