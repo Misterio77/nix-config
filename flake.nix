@@ -68,19 +68,21 @@
 
       nixosConfigurations = {
         atlas = mkSystem {
-          inherit overlays;
+          inherit packages;
           hostname = "atlas";
+          system = "x86_64-linux";
           persistence = true;
         };
         pleione = mkSystem {
-          inherit overlays;
+          inherit packages;
           hostname = "pleione";
+          system = "x86_64-linux";
           persistence = true;
         };
         merope = mkSystem {
-          inherit overlays;
-          system = "aarch64-linux";
+          inherit packages;
           hostname = "merope";
+          system = "aarch64-linux";
           persistence = true;
         };
       };
@@ -92,57 +94,61 @@
       homeConfigurations = {
         # Personal computers
         "misterio@atlas" = mkHome {
-          inherit overlays;
+          inherit packages;
           username = "misterio";
-
-          desktop = "sway";
-          persistence = true;
-          trusted = true;
-          rgb = true;
-          games = true;
+          hostname = "atlas";
           colorscheme = "spaceduck";
           wallpaper = "clouds-moon-painting-purple";
+          persistence = true;
+          desktop = "sway";
+          features = [
+            "trusted"
+            "rgb"
+            "games"
+          ];
         };
         "misterio@pleione" = mkHome {
-          inherit overlays;
+          inherit packages;
           username = "misterio";
-
-          desktop = "hyprland";
-          persistence = true;
-          trusted = true;
-          laptop = true;
-          games = true;
-          colorscheme = "spaceduck";
+          hostname = "pleione";
+          colorscheme = "paraiso";
           wallpaper = "plains-gold-field";
+          persistence = true;
+          desktop = "hyprland";
+          features = [
+            "trusted"
+            "laptop"
+            "games"
+          ];
         };
         "misterio@merope" = mkHome {
-          inherit overlays;
+          inherit packages;
           username = "misterio";
-          system = "aarch64-linux";
-
-          persistence = true;
+          hostname = "merope";
           colorscheme = "nord";
+          persistence = true;
         };
 
-        # Generic lab configurations
-        "misterio@lab" = mkHome {
-          inherit overlays;
+        # Generic configs
+        "misterio@generic" = mkHome {
+          inherit packages;
           username = "misterio";
-
+          system = "x86_64-linux";
           colorscheme = "dracula";
         };
-        "misterio@lab-graphical" = mkHome {
-          inherit overlays;
+        "misterio@generic-gnome" = mkHome {
+          inherit packages;
           username = "misterio";
-
-          desktop = "gnome";
+          system = "x86_64-linux";
           colorscheme = "phd";
+          features = [ "desktop/gnome" ];
         };
+
         # GELOS lab computers
-        "misterio@emperor" = homeConfigurations."misterio@lab";
-        "misterio@galapagos" = homeConfigurations."misterio@lab";
-        "misterio@macaroni" = homeConfigurations."misterio@lab-graphical";
-        "misterio@rockhopper" = homeConfigurations."misterio@lab-graphical";
+        "misterio@emperor" = homeConfigurations."misterio@generic";
+        "misterio@galapagos" = homeConfigurations."misterio@generic";
+        "misterio@macaroni" = homeConfigurations."misterio@generic-gnome";
+        "misterio@rockhopper" = homeConfigurations."misterio@generic-gnome";
       };
     };
 }

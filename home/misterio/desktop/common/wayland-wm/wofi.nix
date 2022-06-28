@@ -1,5 +1,7 @@
-{ config, lib, trusted, pkgs, ... }:
-let pass-wofi = pkgs.pass-wofi.override {
+{ config, lib, features, mylib, pkgs, ... }:
+let
+  trusted = mylib.has "trusted" features;
+  pass-wofi = pkgs.pass-wofi.override {
   pass = config.programs.password-store.package;
 };
 in

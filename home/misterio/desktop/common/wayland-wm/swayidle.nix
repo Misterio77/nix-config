@@ -1,6 +1,9 @@
-{ pkgs, rgb, laptop, ... }:
+{ pkgs, mylib, features, ... }:
 
 let
+  laptop = mylib.has "laptop" features;
+  rgb = mylib.has "rgb" features;
+
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   pactl = "${pkgs.pulseaudio}/bin/pactl";
   pgrep = "${pkgs.procps}/bin/pgrep";

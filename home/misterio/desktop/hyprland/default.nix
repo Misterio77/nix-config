@@ -31,6 +31,7 @@
       monitor=DP-2,1920x1080@60,4480x0,1
       workspace=DP-2,2
 
+      exec=dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
       exec-once=swaylock -i ${config.wallpaper}
       exec-once=waybar
       exec=swaybg -i ${config.wallpaper}

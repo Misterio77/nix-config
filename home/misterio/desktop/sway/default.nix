@@ -1,4 +1,8 @@
-{ lib, trusted, pkgs, config, ... }: {
+{ lib, pkgs, features, config, ... }:
+let
+  trusted = mylib.has "trusted" features;
+in
+{
 
   imports = [
     ../common
@@ -176,8 +180,8 @@
           "${modifier}+Control+Right" = "output DP-2 toggle";
 
           # Pass menu
-          "Scroll_Lock" = lib.mkIf trusted "exec ${menu.password-cmd}"; # fn+k
-          "XF86Calculator" = lib.mkIf trusted "exec ${menu.password-cmd}"; # fn+f12
+          "Scroll_Lock" = mkIf trusted "exec ${menu.password-cmd}"; # fn+k
+          "XF86Calculator" = mkIf trusted "exec ${menu.password-cmd}"; # fn+f12
 
           # Unlock gpg
           "Shift+Scroll_Lock" =

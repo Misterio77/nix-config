@@ -1,83 +1,61 @@
 { inputs, ... }:
 let
   inherit (builtins) mapAttrs attrValues;
-  inherit (inputs.nixpkgs.lib) nixosSystem mapAttrs' nameValuePair;
-in
-{
-  importAttrset = path: mapAttrs (_: import) (import path);
+  inherit (inputs) self home-manager nixpkgs deploy-rs;
+  inherit (inputs.nixpkgs.lib) nixosSystem;
+  inherit (inputs.home-manager.lib) homeManagerConfiguration;
+  getSystem = h: self.outputs.nixosConfigurations.${h}.pkgs.system;
+  mylib = {
+    importAttrset = path: mapAttrs (_: import) (import path);
 
-  mkSystem =
-    { hostname
-    , system ? "x86_64-linux"
-    , overlays ? { }
-    , persistence ? false
-    }:
-    nixosSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs system hostname persistence;
-        # Expose home-configurations for my user on that system
-        homeConfig = inputs.self.outputs.homeConfigurations."misterio@${hostname}".config or { };
+    mkSystem =
+      { hostname
+      , system
+      , packages
+      , persistence ? false
+      }:
+      nixosSystem {
+        inherit system;
+        pkgs = packages.${system};
+        specialArgs = {
+          inherit mylib inputs system hostname persistence;
+        };
+        modules = attrValues (import ../modules/nixos) ++ [
+          ../hosts/${hostname}
+        ];
       };
-      modules = attrValues (import ../modules/nixos) ++ [
-        ../hosts/${hostname}
-        {
-          networking.hostName = hostname;
-          # Apply overlay and allow unfree packages
-          nixpkgs = {
-            overlays = attrValues overlays;
-            config.allowUnfree = true;
-          };
-          # Add each input as a registry
-          nix.registry = mapAttrs'
-            (n: v:
-              nameValuePair n { flake = v; })
-            inputs;
-        }
-      ];
-    };
 
-  mkHome =
-    { username
-    , system ? "x86_64-linux"
-    , overlays ? { }
-    , persistence ? false
-    , desktop ? null
-    , trusted ? false
-    , laptop ? false
-    , rgb ? false
-    , games ? false
-    , colorscheme ? "nord"
-    , wallpaper ? null
-    }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit username system;
-      extraSpecialArgs = {
-        inherit system persistence desktop trusted colorscheme wallpaper inputs rgb laptop games;
+    mkHome =
+      { username
+      , hostname ? null
+      , system ? getSystem hostname
+      , packages
+      , persistence ? false
+      , colorscheme ? "nord"
+      , wallpaper ? null
+      , desktop ? null
+      , features ? [ ]
+      }:
+      homeManagerConfiguration {
+        pkgs = packages.${system};
+        extraSpecialArgs = {
+          inherit mylib inputs system username persistence colorscheme wallpaper features desktop;
+        };
+        modules = attrValues (import ../modules/home-manager) ++ [
+          ../home/${username}
+        ];
       };
-      homeDirectory = "/home/${username}";
-      configuration = ../home;
-      extraModules = attrValues (import ../modules/home-manager) ++ [
-        # Base configuration
-        {
-          nixpkgs = {
-            overlays = attrValues overlays;
-            config.allowUnfree = true;
-          };
-          programs = {
-            home-manager.enable = true;
-            git.enable = true;
-          };
-          systemd.user.startServices = "sd-switch";
-        }
-      ];
+
+    mkDeploy = hostname: config: {
+      inherit hostname;
+      profiles.system = {
+        user = "root";
+        path = deploy-rs.lib.${config.pkgs.system}.activate.nixos config;
+      };
     };
 
-  mkDeploy = hostname: config: {
-    inherit hostname;
-    profiles.system = {
-      user = "root";
-      path = inputs.deploy-rs.lib.${config.pkgs.system}.activate.nixos config;
-    };
+    # Helps checking for features
+    has = element: builtins.any (x: x == element);
   };
-}
+in
+mylib
