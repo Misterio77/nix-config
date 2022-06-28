@@ -38,6 +38,10 @@ in
     patches = (oldAttrs.patches or [ ]) ++ [ ./wofi-run-shell.patch ];
   });
 
+  waybar = prev.waybar.overrideAttrs (oldAttrs: {
+    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+  });
+
   generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;
 
 } // import ../pkgs { pkgs = prev; }

@@ -1,4 +1,4 @@
-{ config, trusted, lib, pkgs, ... }:
+{ config, trusted, lib, pkgs, desktop ? "graphical" , ... }:
 
 let
   jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }:
@@ -15,26 +15,21 @@ let
     '';
   inherit (builtins) attrValues concatStringsSep mapAttrs;
   inherit (pkgs.lib) optionals;
-  hasSway = config.wayland.windowManager.sway.enable;
 in
 {
   programs. waybar = {
     enable = true;
-    systemd = {
-      enable = true;
-      target =
-        if hasSway then "sway-session.target"
-        else "graphical-session.target";
-    };
     settings = [{
       layer = "top";
       height = 42;
       position = "top";
       modules-left = [
         "custom/menu"
-      ] ++ (optionals hasSway [
+      ] ++ (optionals (desktop == "sway") [
         "sway/workspaces"
         "sway/mode"
+      ]) ++ (optionals (desktop == "hyprland") [
+        "wlr/workspaces"
       ]) ++ [
         "custom/preferredplayer"
         "custom/player"
@@ -92,11 +87,18 @@ in
         "sway/window" = {
           max-length = 20;
         };
+        "wlr/workspaces" = {
+          format = "{icon} {name}";
+          format-icons = {
+            default = "祿";
+            active = "綠";
+          };
+        };
         "sway/workspaces" = {
           format = "{icon} {name}";
           format-icons = {
-            focused = "綠";
             default = "祿";
+            focused = "綠";
           };
         };
         network = {
@@ -152,7 +154,10 @@ in
           interval = 5;
           return-type = "json";
           exec = jsonOutput {
-            pre = let xml = "${pkgs.xmlstarlet}/bin/xml"; in
+            pre =
+              let
+                xml = "${pkgs.xmlstarlet}/bin/xml";
+              in
               ''
                 count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
                 if [ "$count" == "0" ]; then
@@ -300,12 +305,13 @@ in
         #workspaces button {
           margin: 0;
         }
-        #workspaces button.visible,
-        #workspaces button.focused {
+        #workspaces button.visible {
           background-color: #${colors.base00};
           color: #${colors.base04};
         }
-        #workspaces button.focused {
+        #workspaces button.focused,
+        #workspaces button.active {
+          background-color: #${colors.base00};
           color: #${colors.base0A};
         }
 

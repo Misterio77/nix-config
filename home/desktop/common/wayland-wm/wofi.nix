@@ -22,6 +22,7 @@ in
     columns=3
     allow_images=true
     insensitive=true
+    term=${config.home.preferredApps.terminal.cmd}
 
     run-always_parse_args=true
     run-cache_file=/dev/null

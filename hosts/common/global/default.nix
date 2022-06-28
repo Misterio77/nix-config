@@ -13,9 +13,11 @@
 
 
   # Activate home-manager environment, if not already
+  /*
   environment.loginShellInit = ''
     [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
   '';
+  */
 
   hardware.enableRedistributableFirmware = true;
   # boot.initrd.systemd.enable = true;

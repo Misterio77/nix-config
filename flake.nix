@@ -107,12 +107,12 @@
           inherit overlays;
           username = "misterio";
 
-          desktop = "sway";
+          desktop = "hyprland";
           persistence = true;
           trusted = true;
           laptop = true;
           games = true;
-          colorscheme = "pasque";
+          colorscheme = "spaceduck";
           wallpaper = "plains-gold-field";
         };
         "misterio@merope" = mkHome {

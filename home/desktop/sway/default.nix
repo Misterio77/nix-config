@@ -7,12 +7,13 @@
 
   # Required packages (hotkeys, etc)
   home.packages = with pkgs; [
-    sway-contrib.grimshot
     light
     playerctl
     preferredplayer
     primary-xwayland
     pulseaudio # pactl
+    sway # swaymsg
+    sway-contrib.grimshot
     swayidle
     swaylock-effects
     wl-mirror-pick
@@ -27,7 +28,6 @@
     in
     {
       enable = true;
-      systemdIntegration = true;
       wrapperFeatures.gtk = true;
       config = {
         inherit modifier;
@@ -127,8 +127,12 @@
           { command = "SWAYFADER_CON_INAC=0.85 ${pkgs.swayfader}/bin/swayfader"; }
           # Set biggest monitor as xwayland primary
           { command = "primary-xwayland largest"; }
+          # https://github.com/NixOS/nixpkgs/issues/119445
+          { command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
         ];
-        bars = [ ];
+        bars = [{
+          command = "waybar";
+        }];
         window = {
           border = 2;
           commands = [
@@ -182,7 +186,7 @@
 
           # Lock screen
           "XF86Launch5" = "exec swaylock -S"; # lock icon on k70
-          "XF86Launch4" = "exec swaylock -S"; # fn+q
+          "${modifier}+P" = "exec swaylock -S"; # fn+q
 
           # Volume
           "XF86AudioRaiseVolume" =
@@ -234,11 +238,6 @@
           "${modifier}+shift+f" = "fullscreen toggle global";
         };
       };
-      # https://github.com/NixOS/nixpkgs/issues/119445#issuecomment-820507505
-      extraConfig = ''
-        exec dbus-update-activation-environment WAYLAND_DISPLAY
-        exec systemctl --user import-environment WAYLAND_DISPLAY
-      '';
     };
 
   # Start automatically on tty1
