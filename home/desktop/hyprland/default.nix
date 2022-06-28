@@ -1,22 +1,4 @@
 { lib, config, pkgs, ... }:
-let
-  hyprlandbg = pkgs.writeShellApplication {
-    name = "hyprlandbg";
-    runtimeInputs = with pkgs; [ swaybg ];
-    text = /* bash */ ''
-      pidfile_dir="$XDG_RUNTIME_DIR/hyprland-bg"
-      pidfile="$pidfile_dir/pid"
-      mkdir -p "$pidfile_dir"
-
-      old_pid="$(cat "$pidfile" || echo -1)"
-
-      swaybg "$@" &
-      echo $! > "$pidfile"
-      sleep 1
-      kill -s TERM --timeout 2000 KILL -- "$old_pid" || true
-    '';
-  };
-in
 {
   imports = [
     ../common
@@ -29,6 +11,7 @@ in
     hyprland
     swayidle
     swaylock-effects
+    swaybg
   ];
 
   xdg.configFile."hypr/hyprland.conf".text =
@@ -50,7 +33,7 @@ in
 
       exec-once=swaylock -i ${config.wallpaper}
       exec-once=waybar
-      exec=${hyprlandbg}/bin/hyprlandbg -i ${config.wallpaper}
+      exec=swaybg -i ${config.wallpaper}
 
       exec-once=mako
       exec-once=swayidle -w
@@ -59,7 +42,7 @@ in
         main_mod=SUPER
         gaps_in=15
         gaps_out=20
-        border_size=2.5
+        border_size=2.7
         col.active_border=0xff${colors.base0C}
         col.inactive_border=0xff${colors.base02}
       }

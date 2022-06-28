@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, lib, ... }:
+let
+  inherit (lib) mapAttrs' nameValuePair;
+  toRegistry = mapAttrs' (n: v: nameValuePair n { flake = v; });
+in
+{
   nix = {
     settings = {
       substituters = [
@@ -22,5 +27,7 @@
       automatic = true;
       dates = "weekly";
     };
+    # Map flake inputs to system registries
+    registry = toRegistry inputs;
   };
 }
