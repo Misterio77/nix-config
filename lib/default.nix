@@ -2,9 +2,16 @@
 let
   inherit (builtins) mapAttrs attrValues;
   inherit (inputs) self home-manager nixpkgs deploy-rs;
-  inherit (inputs.nixpkgs.lib) nixosSystem;
-  inherit (inputs.home-manager.lib) homeManagerConfiguration;
-  getSystem = h: self.outputs.nixosConfigurations.${h}.pkgs.system;
+  inherit (nixpkgs.lib) nixosSystem hasSuffix removeSuffix filterAttrs mapAttrs';
+  inherit (home-manager.lib) homeManagerConfiguration;
+  # Given hostname, get system kind
+  getSystemKind = hostname: self.outputs.nixosConfigurations.${hostname}.pkgs.system;
+  # Given hostname, get home configs
+  getHomes = hostname:
+    let suffix = "@${hostname}";
+    in mapAttrs' (name: value: { name = removeSuffix suffix name; inherit value; })
+      (filterAttrs (name: _: hasSuffix suffix name) self.outputs.homeConfigurations);
+
   mylib = {
     importAttrset = path: mapAttrs (_: import) (import path);
 
@@ -19,6 +26,7 @@ let
         pkgs = packages.${system};
         specialArgs = {
           inherit mylib inputs system hostname persistence;
+          homeConfigurations = getHomes hostname;
         };
         modules = attrValues (import ../modules/nixos) ++ [
           ../hosts/${hostname}
@@ -28,7 +36,7 @@ let
     mkHome =
       { username
       , hostname ? null
-      , system ? getSystem hostname
+      , system ? getSystemKind hostname
       , packages
       , persistence ? false
       , colorscheme ? "nord"

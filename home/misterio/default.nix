@@ -15,11 +15,6 @@ in
   # Import chosen desktop
   ++ optional (desktop != null) ./desktop/${desktop};
 
-  # https://github.com/nix-community/home-manager/issues/2942
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
   systemd.user.startServices = "sd-switch";
   programs = {
     home-manager.enable = true;

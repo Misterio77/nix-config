@@ -1,5 +1,5 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ lib, ... }:
+{ lib, inputs, hostname, ... }:
 {
   imports = [
     ./fish.nix
@@ -11,6 +11,10 @@
     ./users.nix
   ];
 
+  networking.hostName = hostname;
+
+  # Add each flake input as a registry
+  nix.registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
   # Activate home-manager environment, if not already
   environment.loginShellInit = ''

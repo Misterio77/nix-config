@@ -1,6 +1,7 @@
-{ pkgs, config, lib, homeConfig, ... }:
+{ pkgs, config, lib, homeConfigurations, ... }:
 let
   inherit (lib) mkDefault optional;
+  homeConfig = homeConfigurations.misterio.config;
   hasGammastepGeoclue =
     (homeConfig.services.gammastep.enable or false) &&
     (homeConfig.services.gammastep.provider == "geoclue2");
@@ -15,6 +16,7 @@ in
       "video"
       "audio"
     ]
+    ++ (optional config.networking.networkmanager.enable "networkmanager")
     ++ (optional config.programs.wireshark.enable "wireshark")
     ++ (optional config.hardware.i2c.enable "i2c")
     ++ (optional config.services.deluge.enable "deluge")

@@ -1,5 +1,6 @@
-{ lib, pkgs, features, config, ... }:
+{ lib, pkgs, mylib, features, config, ... }:
 let
+  inherit (lib) mkIf;
   trusted = mylib.has "trusted" features;
 in
 {
@@ -16,7 +17,6 @@ in
     preferredplayer
     primary-xwayland
     pulseaudio # pactl
-    sway # swaymsg
     sway-contrib.grimshot
     swayidle
     swaylock-effects

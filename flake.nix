@@ -54,7 +54,11 @@
       };
 
       packages = forAllSystems (system:
-        import inputs.nixpkgs { inherit system; overlays = attrValues overlays; }
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = attrValues overlays;
+          config.allowUnfree = true;
+        }
       );
 
       devShells = forAllSystems (system: {
@@ -100,7 +104,7 @@
           colorscheme = "spaceduck";
           wallpaper = "clouds-moon-painting-purple";
           persistence = true;
-          desktop = "sway";
+          desktop = "hyprland";
           features = [
             "trusted"
             "rgb"

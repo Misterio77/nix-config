@@ -86,8 +86,8 @@
       bind=SUPER,d,exec,${menu.run-cmd}
 
       # Pass menu
-      exec=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
-      exec=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
+      bind=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
+      bind=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
 
       bind=,XF86Launch5,exec,swaylock -S
       bind=,XF86Launch4,exec,swaylock -S
