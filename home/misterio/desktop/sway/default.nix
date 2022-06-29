@@ -190,7 +190,7 @@ in
 
           # Lock screen
           "XF86Launch5" = "exec swaylock -S"; # lock icon on k70
-          "${modifier}+P" = "exec swaylock -S"; # fn+q
+          "XF86Launch4" = "exec swaylock -S"; # fn+q
 
           # Volume
           "XF86AudioRaiseVolume" =

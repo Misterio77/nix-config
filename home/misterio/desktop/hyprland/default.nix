@@ -6,12 +6,13 @@
   ];
 
   home.packages = with pkgs; [
-    sway-contrib.grimshot
-    mako
     hyprland
+    mako
+    primary-xwayland
+    sway-contrib.grimshot
+    swaybg
     swayidle
     swaylock-effects
-    swaybg
   ];
 
   xdg.configFile."hypr/hyprland.conf".text =
@@ -30,14 +31,6 @@
       workspace=DP-1,1
       monitor=DP-2,1920x1080@60,4480x0,1
       workspace=DP-2,2
-
-      exec=dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-      exec-once=swaylock -i ${config.wallpaper}
-      exec-once=waybar
-      exec=swaybg -i ${config.wallpaper}
-
-      exec-once=mako
-      exec-once=swayidle -w
 
       general {
         main_mod=SUPER
@@ -66,6 +59,23 @@
         animation=workspaces,1,2,default,fadein
       }
 
+      dwindle {
+        force_split=2
+        preserve_split=1
+      }
+
+      input {
+        kb_layout=br
+      }
+
+      exec=dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+      exec-once=swaylock -i ${config.wallpaper}
+      exec-once=waybar
+      exec=swaybg -i ${config.wallpaper}
+
+      exec-once=mako
+      exec-once=swayidle -w
+
       bind=SUPER,Return,exec,${terminal.cmd}
       bind=SUPER,w,exec,${notifier.dismiss-cmd}
       bind=SUPER,v,exec,${editor.cmd}
@@ -75,20 +85,39 @@
       bind=SUPER,x,exec,${menu.drun-cmd}
       bind=SUPER,d,exec,${menu.run-cmd}
 
+      # Pass menu
+      exec=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
+      exec=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
+
       bind=,XF86Launch5,exec,swaylock -S
-      bind=SUPER,p,exec,swaylock -S
+      bind=,XF86Launch4,exec,swaylock -S
 
       bind=,Print,exec,grimshot --notify copy output
       bind=SHIFT,Print,exec,grimshot --notify copy active
       bind=CONTROL,Print,exec,grimshot --notify copy screen
       bind=ALT,Print,exec,grimshot --notify copy area
+      bind=SUPERSHIFT,S,exec,grimshot --notify copy area # fn+print on pleione
       bind=SUPER,Print,exec,grimshot --notify copy window
+
+      bind=,XF86MonBrightnessUp,exec,light -A 10
+      bind=,XF86MonBrightnessDown,exec,light -U 10
 
       bind=SUPER,f,fullscreen,0
 
       bind=SUPERSHIFT,Q,killactive
 
       bind=SUPERSHIFT,E,exit
+
+      bind=SUPER,s,togglesplit
+
+      bind=SUPERALT,left,movecurrentworkspacetomonitor,l
+      bind=SUPERALT,right,movecurrentworkspacetomonitor,r
+      bind=SUPERALT,up,movecurrentworkspacetomonitor,u
+      bind=SUPERALT,down,movecurrentworkspacetomonitor,d
+      bind=SUPERALT,h,movecurrentworkspacetomonitor,l
+      bind=SUPERALT,l,movecurrentworkspacetomonitor,r
+      bind=SUPERALT,k,movecurrentworkspacetomonitor,u
+      bind=SUPERALT,j,movecurrentworkspacetomonitor,d
 
       bind=SUPER,left,movefocus,l
       bind=SUPER,right,movefocus,r
