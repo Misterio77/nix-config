@@ -14,7 +14,6 @@
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };
   pass-wofi = pkgs.callPackage ./pass-wofi { };
-  preferredplayer = pkgs.callPackage ./preferredplayer { };
   primary-xwayland = pkgs.callPackage ./primary-xwayland { };
   wl-mirror-pick = pkgs.callPackage ./wl-mirror-pick { };
 }

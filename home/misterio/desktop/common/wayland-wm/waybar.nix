@@ -1,21 +1,27 @@
-{ config, features, lib, pkgs, mylib, desktop ? "graphical", ... }:
+{ config, features, lib, pkgs, mylib, desktop, ... }:
 
 let
   trusted = mylib.has "trusted" features;
-  jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }:
-    let jq = "${pkgs.jq}/bin/jq"; in
-    ''
-      ${pre}
-      ${jq} -cn \
-        --arg text "${text}" \
-        --arg tooltip "${tooltip}" \
-        --arg alt "${alt}" \
-        --arg class "${class}" \
-        --arg percentage "${percentage}" \
-        '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-    '';
+  jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: ''
+    ${pre}
+    ${jq} -cn \
+      --arg text "${text}" \
+      --arg tooltip "${tooltip}" \
+      --arg alt "${alt}" \
+      --arg class "${class}" \
+      --arg percentage "${percentage}" \
+      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+  '';
   inherit (builtins) attrValues concatStringsSep mapAttrs;
   inherit (pkgs.lib) optionals;
+
+  # Dependencies
+  jq = "${pkgs.jq}/bin/jq";
+  wofi = "${pkgs.wofi}/bin/wofi";
+  xml = "${pkgs.xmlstarlet}/bin/xml";
+  gamemoded = "${pkgs.gamemode}/bin/gamemoded";
+  systemctl = "${pkgs.systemd}/bin/systemctl";
+  playerctl = "${pkgs.playerctl}/bin/playerctl";
 in
 {
   programs. waybar = {
@@ -32,7 +38,7 @@ in
       ]) ++ (optionals (desktop == "hyprland") [
         "wlr/workspaces"
       ]) ++ [
-        "custom/preferredplayer"
+        "custom/currentplayer"
         "custom/player"
       ];
       modules-center = [
@@ -42,11 +48,11 @@ in
         "clock"
         "pulseaudio"
         "custom/unread-mail"
+        "custom/gammastep"
         "custom/gpg-agent"
       ];
       modules-right = [
         "custom/gamemode"
-        "custom/gammastep"
         "custom/theme"
         "network"
         "custom/home"
@@ -65,7 +71,7 @@ in
       };
       memory = {
         format = "  {}%";
-        interval = 4;
+        interval = 5;
       };
       pulseaudio = {
         format = "{icon}  {volume}%";
@@ -79,7 +85,7 @@ in
       };
       battery = {
         bat = "BAT0";
-        interval = 40;
+        interval = 5;
         format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
         format = "{icon} {capacity}%";
         format-charging = " {capacity}%";
@@ -121,7 +127,7 @@ in
               let
                 display = if (title == null) then icon else "${icon}  ${title}:";
               in
-              ''${display} $(ping -qc5 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.2fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+              ''${display} $(ping -qc4 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.2fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
 
             targets = {
               web = { host = "9.9.9.9"; icon = " "; };
@@ -142,7 +148,7 @@ in
           text = "";
           tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
         };
-        on-click = "${pkgs.wofi}/bin/wofi -S drun";
+        on-click = "${wofi} -S drun";
       };
       "custom/hostname" = {
         return-type = "json";
@@ -154,23 +160,19 @@ in
         interval = 5;
         return-type = "json";
         exec = jsonOutput {
-          pre =
-            let
-              xml = "${pkgs.xmlstarlet}/bin/xml";
-            in
-            ''
-              count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
-              if [ "$count" == "0" ]; then
-                subjects="No new mail"
-                status="read"
-              else
-                subjects=$(\
-                  grep -h "Subject: " -r ~/Mail/*/INBOX/new | cut -d ':' -f2- | \
-                  perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
-                )
-                status="unread"
-              fi
-            '';
+          pre = ''
+            count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
+            if [ "$count" == "0" ]; then
+              subjects="No new mail"
+              status="read"
+            else
+              subjects=$(\
+                grep -h "Subject: " -r ~/Mail/*/INBOX/new | cut -d ':' -f2- | \
+                perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
+              )
+              status="unread"
+            fi
+          '';
           text = "$count";
           tooltip = "$subjects";
           alt = "$status";
@@ -182,7 +184,7 @@ in
         };
       };
       "custom/gpg-agent" = lib.mkIf trusted {
-        interval = 3;
+        interval = 2;
         return-type = "json";
         exec =
           let
@@ -200,17 +202,33 @@ in
         };
       };
       "custom/gamemode" = {
-        exec-if =
-          "${pkgs.gamemode}/bin/gamemoded --status | grep 'is active' -q";
-        interval = 3;
+        exec-if = "${gamemoded} --status | grep 'is active' -q";
+        interval = 2;
         return-type = "json";
         exec = jsonOutput {
           tooltip = "Gamemode is active";
         };
         format = " ";
       };
+      "custom/gammastep" = {
+        interval = 2;
+        return-type = "json";
+        exec = jsonOutput {
+          pre = "status=$(${systemctl} is-active gammastep)";
+          alt = "$status";
+          tooltip = "Gammastep is $status";
+        };
+        format = "{icon}";
+        format-icons = {
+          "active" = " ";
+          "activating" = "...";
+          "inactive" = " ";
+          "deactivating" = "...";
+        };
+        on-click = "${systemctl} is-active gammastep --quiet && ${systemctl} stop gammastep || ${systemctl} start gammastep";
+      };
       "custom/theme" = {
-        interval = 10;
+        interval = 5;
         return-type = "json";
         max-length = 20;
         exec = jsonOutput {
@@ -220,7 +238,7 @@ in
         format = "  {}";
       };
       "custom/gpu" = {
-        interval = 3;
+        interval = 5;
         return-type = "json";
         exec = jsonOutput {
           text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
@@ -228,11 +246,11 @@ in
         };
         format = "力  {}%";
       };
-      "custom/preferredplayer" = {
-        interval = 2;
+      "custom/currentplayer" = {
+        interval = 1;
         return-type = "json";
         exec = jsonOutput {
-          pre = ''player="$(${pkgs.preferredplayer}/bin/preferredplayer || echo No player set)"'';
+          pre = ''player="$(${playerctl} status -f "{{playerName}}" | cut -d '.' -f1)"'';
           alt = "$player";
           tooltip = "$player";
         };
@@ -244,30 +262,23 @@ in
           "qutebrowser" = "爵";
           "discord" = "ﭮ";
           "sublimemusic" = "";
-          "No player set" = "ﱘ";
+          "No players found" = "ﱘ";
         };
       };
-      "custom/player" =
-        let
-          playerctl = "${pkgs.playerctl}/bin/playerctl";
-          preferredplayer = "${pkgs.preferredplayer}/bin/preferredplayer";
-        in
-        {
-          exec-if = ''
-            [[ "$(player=$(${preferredplayer}) && ${playerctl} --player $player status)" != "Stopped" ]]'';
-          exec = ''
-            player=$(${preferredplayer}) && ${playerctl} --player $player metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}';
-          '';
-          return-type = "json";
-          interval = 2;
-          max-length = 30;
-          format = "{icon} {}";
-          format-icons = {
-            "Playing" = "契";
-            "Paused" = "";
-            "Stopped" = "栗";
-          };
+      "custom/player" = {
+        exec-if = ''
+          [[ "$(${playerctl} status)" != "No players found" ]]'';
+        exec = ''${playerctl} metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}' '';
+        return-type = "json";
+        interval = 1;
+        max-length = 30;
+        format = "{icon} {}";
+        format-icons = {
+          "Playing" = "契";
+          "Paused" = "";
+          "Stopped" = "栗";
         };
+      };
     }];
     # Cheatsheet:
     # x -> all sides

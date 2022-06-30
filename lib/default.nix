@@ -39,7 +39,7 @@ let
       , system ? getSystemKind hostname
       , packages
       , persistence ? false
-      , colorscheme ? "nord"
+      , colorscheme ? null
       , wallpaper ? null
       , desktop ? null
       , features ? [ ]

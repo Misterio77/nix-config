@@ -14,7 +14,6 @@ in
   home.packages = with pkgs; [
     light
     playerctl
-    preferredplayer
     primary-xwayland
     pulseaudio # pactl
     sway-contrib.grimshot
@@ -193,32 +192,21 @@ in
           "XF86Launch4" = "exec swaylock -S"; # fn+q
 
           # Volume
-          "XF86AudioRaiseVolume" =
-            "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          "XF86AudioLowerVolume" =
-            "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+          "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
+          "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "Shift+XF86AudioMute" =
-            "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-          "XF86AudioMicMute" =
-            "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "Shift+XF86AudioMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
           # Brightness
           "XF86MonBrightnessUp" = "exec light -A 10";
           "XF86MonBrightnessDown" = "exec light -U 10";
 
           # Media
-          "XF86AudioNext" =
-            "exec player=$(preferredplayer) && playerctl next --player $player";
-          "XF86AudioPrev" =
-            "exec player=$(preferredplayer) && playerctl previous --player $player";
-          "XF86AudioPlay" =
-            "exec player=$(preferredplayer) && playerctl play-pause --player $player";
-          "XF86AudioStop" =
-            "exec player=$(preferredplayer) && playerctl stop --player $player";
-          "Shift+XF86AudioPlay" =
-            "exec player=$(playerctl -l | ${menu.dmenu-cmd}) && preferredplayer $player";
-          "Shift+XF86AudioStop" = "exec preferredplayer none";
+          "XF86AudioNext" = "exec playerctl next";
+          "XF86AudioPrev" = "exec playerctl previous";
+          "XF86AudioPlay" = "exec playerctl play-pause";
+          "XF86AudioStop" = "exec playerctl stop";
 
           # Notifications
           "${modifier}+w" = "exec ${notifier.dismiss-cmd}";

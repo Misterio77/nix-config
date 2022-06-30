@@ -101,8 +101,8 @@
           inherit packages;
           username = "misterio";
           hostname = "atlas";
-          colorscheme = "spaceduck";
-          wallpaper = "clouds-moon-painting-purple";
+          wallpaper = "painting-river-snow-forest-gold";
+          colorscheme = "phd";
           persistence = true;
           desktop = "hyprland";
           features = [
@@ -144,8 +144,8 @@
           inherit packages;
           username = "misterio";
           system = "x86_64-linux";
-          colorscheme = "phd";
-          features = [ "desktop/gnome" ];
+          colorscheme = "dracula";
+          desktop = "gnome";
         };
 
         # GELOS lab computers

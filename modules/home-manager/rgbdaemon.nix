@@ -23,25 +23,11 @@ in {
       '';
     };
     daemons = {
-      swayWorkspaces = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Enable sway workspaces daemon
-        '';
-      };
       mute = mkOption {
         type = types.bool;
         default = false;
         description = ''
           Enable mute button daemon
-        '';
-      };
-      tty = mkOption {
-        type = types.bool;
-        default = false;
-        description = ''
-          Enable tty status daemon
         '';
       };
       swayLock = mkOption {
@@ -121,10 +107,8 @@ in {
         COLOR_SECONDARY=${cfg.colors.secondary}
         COLOR_TERTIARY=${cfg.colors.tertiary}
         COLOR_QUATERNARY=${cfg.colors.quaternary}
-        ENABLE_SWAY_WORKSPACES=${toString cfg.daemons.swayWorkspaces}
         ENABLE_SWAY_LOCK=${toString cfg.daemons.swayLock}
         ENABLE_MUTE=${toString cfg.daemons.mute}
-        ENABLE_TTY=${toString cfg.daemons.tty}
         ENABLE_PLAYER=${toString cfg.daemons.player}
       '';
       onChange = ''
@@ -138,7 +122,7 @@ in {
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
         Restart = "on-failure";
       };
-      Install = { WantedBy = [ "sway-session.target" ]; };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
   };
 }

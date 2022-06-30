@@ -9,6 +9,7 @@
     ./gtk.nix
     ./kdeconnect.nix
     ./pavucontrol.nix
+    ./playerctl.nix
     ./qt.nix
     ./sublime-music.nix
   ];

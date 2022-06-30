@@ -4,10 +4,8 @@ in {
   services.rgbdaemon = {
     enable = true;
     daemons = {
-      swayWorkspaces = true;
       swayLock = true;
       mute = true;
-      tty = true;
       player = true;
     };
     colors = {
@@ -19,7 +17,7 @@ in {
     };
     keyboard = {
       device = "/dev/input/ckb1/cmd";
-      highlighted = [ "h" "j" "k" "l" "w" "a" "s" "d" "m3" "g11" "profswitch" ];
+      highlighted = [ "h" "j" "k" "l" "w" "a" "s" "d" "m3" "g11" "profswitch" "lwin" "rwin" ];
     };
     mouse = {
       device = "/dev/input/ckb2/cmd";

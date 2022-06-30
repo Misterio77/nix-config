@@ -107,11 +107,12 @@ in
 
   config = mkIf cfg.enable {
     systemd.user.services.afuse = {
-      Unit.Description = "afuse automatic FUSE mounter";
+      Unit = {
+        Description = "afuse automatic FUSE mounter";
+        After = [ "network.target" ];
+      };
       Install.WantedBy = [ "default.target" ];
       Service = {
-        After = [ "network.target" ];
-        # Make sure mountpoint exists
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${cfg.mountpoint}";
         ExecStart = replaceStrings ["%"] ["%%"] # Extra percent for escaping
         "${cfg.package}/bin/afuse ${optionalString cfg.debug "-d"} ${cfg.mountpoint} ${afuseArguments.generate null cfg.settings} -f";

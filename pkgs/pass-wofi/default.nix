@@ -1,5 +1,16 @@
-{ lib, stdenv, fetchFromGitHub, makeWrapper, pass, jq, wofi, libnotify
-, qutebrowser, sway, wl-clipboard, findutils, gnused, coreutils }:
+{ lib
+, stdenv
+, fetchFromGitHub
+, makeWrapper
+, pass
+, jq
+, wofi
+, libnotify
+, wl-clipboard
+, findutils
+, gnused
+, coreutils
+}:
 
 with lib;
 
@@ -27,8 +38,6 @@ stdenv.mkDerivation {
           jq
           wofi
           libnotify
-          qutebrowser
-          sway
           wl-clipboard
           findutils
           gnused

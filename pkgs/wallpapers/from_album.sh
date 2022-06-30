@@ -17,7 +17,7 @@ function fetch_image() {
     echo "  }"
 }
 
-album="bXDPRpV"
+album="bXDPRpV" # https://imgur.com/a/bXDPRpV
 clientid="0c2b2b57cdbe5d8"
 
 result=$(https api.imgur.com/3/album/$album Authorization:"Client-ID $clientid")
