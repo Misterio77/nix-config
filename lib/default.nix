@@ -47,7 +47,7 @@ let
       homeManagerConfiguration {
         pkgs = packages.${system};
         extraSpecialArgs = {
-          inherit mylib inputs system username persistence colorscheme wallpaper features desktop;
+          inherit mylib inputs system hostname username persistence colorscheme wallpaper features desktop;
         };
         modules = attrValues (import ../modules/home-manager) ++ [
           ../home/${username}

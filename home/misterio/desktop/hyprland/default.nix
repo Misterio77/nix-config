@@ -41,6 +41,7 @@
         border_size=2.7
         col.active_border=0xff${colors.base0C}
         col.inactive_border=0xff${colors.base02}
+        cursor_inactive_timeout=4
       }
 
       decoration {
@@ -90,6 +91,9 @@
       bind=SUPER,d,exec,${menu.run-cmd}
       bind=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
       bind=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
+
+      # Toggle waybar
+      bind=,XF86Tools,exec,${pkgs.procps}/bin/pkill -USR1 waybar # profile button
 
       # Lock screen
       bind=,XF86Launch5,exec,swaylock -S
@@ -153,6 +157,32 @@
       bind=SUPERSHIFT,l,movewindow,r
       bind=SUPERSHIFT,k,movewindow,u
       bind=SUPERSHIFT,j,movewindow,d
+
+      bind=SUPERCONTROL,left,focusmonitor,l
+      bind=SUPERCONTROL,right,focusmonitor,r
+      bind=SUPERCONTROL,up,focusmonitor,u
+      bind=SUPERCONTROL,down,focusmonitor,d
+      bind=SUPERCONTROL,h,focusmonitor,l
+      bind=SUPERCONTROL,l,focusmonitor,r
+      bind=SUPERCONTROL,k,focusmonitor,u
+      bind=SUPERCONTROL,j,focusmonitor,d
+
+      bind=SUPERCONTROL,1,focusmonitor,DP-1
+      bind=SUPERCONTROL,2,focusmonitor,DP-2
+      bind=SUPERCONTROL,3,focusmonitor,DP-3
+
+      bind=SUPERCONTROLSHIFT,left,movewindow,mon:l
+      bind=SUPERCONTROLSHIFT,right,movewindow,mon:r
+      bind=SUPERCONTROLSHIFT,up,movewindow,mon:u
+      bind=SUPERCONTROLSHIFT,down,movewindow,mon:d
+      bind=SUPERCONTROLSHIFT,h,movewindow,mon:l
+      bind=SUPERCONTROLSHIFT,l,movewindow,mon:r
+      bind=SUPERCONTROLSHIFT,k,movewindow,mon:u
+      bind=SUPERCONTROLSHIFT,j,movewindow,mon:d
+
+      bind=SUPERCONTROLSHIFT,1,movewindow,mon:DP-1
+      bind=SUPERCONTROLSHIFT,2,movewindow,mon:DP-2
+      bind=SUPERCONTROLSHIFT,3,movewindow,mon:DP-3
 
       bind=SUPERALT,left,movecurrentworkspacetomonitor,l
       bind=SUPERALT,right,movecurrentworkspacetomonitor,r
