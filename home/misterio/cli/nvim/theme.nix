@@ -206,7 +206,7 @@ pkgs.writeTextDir "colors/nix-${slug}.vim" /* vim */ ''
 
   hi IndentBlankLine       guifg=#${c.base01} guibg=NONE gui=NONE guisp=NONE
 
-  hi NvimTreeNormal        guifg=#${c.base05} guibg=#${c.base01} gui=NONE guisp=NONE
+  hi NvimTreeNormal        guifg=#${c.base05} guibg=#${c.base00} gui=NONE guisp=NONE
 
   hi CmpItemAbbr            guifg=#${c.base05} guibg=NONE gui=NONE guisp=NONE
   hi CmpItemAbbrDeprecated  guifg=#${c.base03} guibg=NONE gui=NONE guisp=NONE
