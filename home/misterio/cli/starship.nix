@@ -6,7 +6,7 @@ let
     IFS=":" read -ra PATHS <<< "$PATH"
 
     read -ra PROGRAMS <<< \
-      "$(printf "%s\n" "''${PATHS[@]}" | ${pkgs.gnugrep}/bin/grep "\/nix\/store" | ${pkgs.perl}/bin/perl -pe 's/^\/nix\/store\/\w{32}-(.*)\/.*$/\1/' | ${pkgs.findutils}/bin/xargs)"
+      "$(printf "%s\n" "''${PATHS[@]}" | ${pkgs.gnugrep}/bin/grep "\/nix\/store" | ${pkgs.gnugrep}/bin/grep -v "\-man" | ${pkgs.perl}/bin/perl -pe 's/^\/nix\/store\/\w{32}-([^\/]*)\/bin$/\1/' | ${pkgs.findutils}/bin/xargs)"
 
     for to_remove in "''${EXCLUDED[@]}"; do
         to_remove_full="$(printf "%s\n" "''${PROGRAMS[@]}" | grep "$to_remove" )"

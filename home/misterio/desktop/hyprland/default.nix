@@ -29,7 +29,7 @@
 
       monitor=DP-3,1920x1080@60,0x0,1
       workspace=DP-3,3
-      monitor=DP-1,2560x1080@75,1920x65,1
+      monitor=DP-1,2560x1080@75,1920x0,1
       workspace=DP-1,1
       monitor=DP-2,1920x1080@60,4480x0,1
       workspace=DP-2,2
@@ -129,16 +129,15 @@
       bind=SUPERSHIFT,E,exit
 
       bind=SUPER,s,togglesplit
-      bind=SUPER,f,fullscreen,0
+      bind=SUPER,f,fullscreen,1
+      bind=SUPERSHIFT,f,fullscreen,0
       bind=SUPERSHIFT,space,togglefloating
 
       bind=SUPER,minus,splitratio,-0.25
-      bind=SUPERSHIFT,underscore,splitratio,-0.5
-      bind=SUPERCONTROL,minus,splitratio,-0.3333333
+      bind=SUPERSHIFT,underscore,splitratio,-0.3333333
 
       bind=SUPER,equal,splitratio,0.25
-      bind=SUPERSHIFT,plus,splitratio,0.5
-      bind=SUPERCONTROL,equal,splitratio,0.3333333
+      bind=SUPERSHIFT,plus,splitratio,0.3333333
 
       bind=SUPER,left,movefocus,l
       bind=SUPER,right,movefocus,r
