@@ -29,11 +29,14 @@ writeShellApplication {
 
   checkPhase = "";
   text = /* bash */ ''
-    set +o errexit
     set +o nounset
-    set +o pipefail
 
     base_colors() {
+      if [ ! -p "$KEYBOARD_DEVICE" ] || [ ! -p "$MOUSE_DEVICE" ]; then
+        echo "Keyboard or mouse device not found, exiting..."
+        exit 1
+      fi
+
       echo "rgb $1" > $KEYBOARD_DEVICE
       echo "rgb $1" > $MOUSE_DEVICE
       echo "rgb $KEYBOARD_HIGHLIGHTED:$2" > $KEYBOARD_DEVICE
@@ -41,6 +44,10 @@ writeShellApplication {
     }
 
     setcolor() {
+      if [ ! -p "$3" ]; then
+        echo "Device $3 not found, exiting..."
+        exit 1
+      fi
       echo "rgb $1:$2" > $3
     }
 
@@ -150,6 +157,10 @@ writeShellApplication {
 
     rgb_daemon() {
       while sleep $DAEMON_INTERVAL; do
+        # Activate devices
+        echo active > $KEYBOARD_DEVICE || exit -1
+        echo active > $MOUSE_DEVICE || exit -1
+
         [[ "$ENABLE_SWAY_LOCK" == 1 ]] && \
           daemon_lock $color_secondary $color_primary & \
         [[ "$ENABLE_MUTE" == 1 ]] && \

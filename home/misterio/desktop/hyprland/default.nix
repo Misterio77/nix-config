@@ -72,7 +72,7 @@
       }
 
       # Startup
-      exec=dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY
+      exec=dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE
       exec-once=swaylock -i ${config.wallpaper}
       exec-once=waybar
       exec=swaybg -i ${config.wallpaper}
@@ -206,16 +206,16 @@
       bind=SUPER,9,workspace,9
       bind=SUPER,0,workspace,10
 
-      bind=SUPERSHIFT,exclam,movetoworkspace,1
-      bind=SUPERSHIFT,at,movetoworkspace,2
-      bind=SUPERSHIFT,numbersign,movetoworkspace,3
-      bind=SUPERSHIFT,dollar,movetoworkspace,4
-      bind=SUPERSHIFT,percent,movetoworkspace,5
-      bind=SUPERSHIFT,asciicircum,movetoworkspace,6
-      bind=SUPERSHIFT,ampersand,movetoworkspace,7
-      bind=SUPERSHIFT,asterisk,movetoworkspace,8
-      bind=SUPERSHIFT,parenleft,movetoworkspace,9
-      bind=SUPERSHIFT,parenright,movetoworkspace,10
+      bind=SUPERSHIFT,exclam,movetoworkspacesilent,1
+      bind=SUPERSHIFT,at,movetoworkspacesilent,2
+      bind=SUPERSHIFT,numbersign,movetoworkspacesilent,3
+      bind=SUPERSHIFT,dollar,movetoworkspacesilent,4
+      bind=SUPERSHIFT,percent,movetoworkspacesilent,5
+      bind=SUPERSHIFT,asciicircum,movetoworkspacesilent,6
+      bind=SUPERSHIFT,ampersand,movetoworkspacesilent,7
+      bind=SUPERSHIFT,asterisk,movetoworkspacesilent,8
+      bind=SUPERSHIFT,parenleft,movetoworkspacesilent,9
+      bind=SUPERSHIFT,parenright,movetoworkspacesilent,10
     '';
 
   # Start automatically on tty1

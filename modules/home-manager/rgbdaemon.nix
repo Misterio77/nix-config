@@ -120,7 +120,7 @@ in {
       Service = {
         ExecStart = "${cfg.package}/bin/rgbdaemon";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-        Restart = "on-failure";
+        Restart = "always";
       };
       Install = { WantedBy = [ "graphical-session.target" ]; };
     };

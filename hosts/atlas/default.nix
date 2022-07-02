@@ -7,6 +7,7 @@
 
     ./hardware-configuration.nix
     ../common/global
+    ../common/optional/ckb-next.nix
     ../common/optional/misterio-greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/podman.nix
@@ -73,7 +74,6 @@
       extraPackages = with pkgs; [ amdvlk ];
       driSupport = true;
     };
-    ckb-next.enable = true;
     openrgb.enable = true;
     opentabletdriver.enable = true;
   };
