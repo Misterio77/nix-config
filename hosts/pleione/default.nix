@@ -40,7 +40,6 @@
 
   xdg.portal = {
     enable = true;
-    gtkUsePortal = true;
     wlr.enable = true;
   };
 

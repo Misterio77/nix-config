@@ -33,7 +33,7 @@ in
 
       secondary = {
         mode = "dock";
-        height = 30;
+        height = 32;
         width = 100;
         margin = "6";
         position = "bottom";
@@ -224,7 +224,7 @@ in
           exec = jsonOutput {
             pre = ''
               if unit_status="$(${systemctl} --user is-active gammastep)"; then
-                status="$unit_status ($(${journalctl} --user -u gammastep.service | grep 'Period: ' | cut -d ':' -f6 | head -1 | xargs))"
+                status="$unit_status ($(${journalctl} --user -u gammastep.service | grep 'Period: ' | cut -d ':' -f6 | tail -1 | xargs))"
               else
                 status="$unit_status"
               fi

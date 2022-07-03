@@ -64,7 +64,6 @@
 
   xdg.portal = {
     enable = true;
-    gtkUsePortal = true;
     wlr.enable = true;
   };
 
@@ -73,6 +72,7 @@
       enable = true;
       extraPackages = with pkgs; [ amdvlk ];
       driSupport = true;
+      driSupport32Bit = true;
     };
     openrgb.enable = true;
     opentabletdriver.enable = true;
