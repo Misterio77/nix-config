@@ -130,6 +130,7 @@
                 behavior = cmp.SelectBehavior.Insert }
               ),
               ['<C-e>'] = cmp.mapping.close(),
+              ['<C-Space>'] = cmp.mapping.complete(),
             },
             sources = {
               {

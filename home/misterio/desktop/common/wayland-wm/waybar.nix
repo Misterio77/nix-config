@@ -3,7 +3,7 @@
 let
   inherit (builtins) attrValues concatStringsSep mapAttrs;
   inherit (pkgs.lib) optionals optional;
-  inherit (config.home.preferredApps) menu;
+  inherit (config.home.preferredApps) menu terminal;
 
   trusted = mylib.has "trusted" features;
 
@@ -14,6 +14,7 @@ let
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+  lyrics = "${pkgs.lyrics}/bin/lyrics";
 
   jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-output" ''
     ${pre}
@@ -279,6 +280,7 @@ in
             "discord" = "ﭮ";
             "sublimemusic" = "";
           };
+          on-click = "${systemctl} --user restart playerctld";
         };
         "custom/player" = {
           exec-if = "${playerctl} status";
@@ -289,9 +291,11 @@ in
           format = "{icon} {}";
           format-icons = {
             "Playing" = "契";
-            "Paused" = "";
+            "Paused" = " ";
             "Stopped" = "栗";
           };
+          on-click = "${playerctl} play-pause";
+          on-click-right = terminal.cmd-spawn "${lyrics}";
         };
       };
 

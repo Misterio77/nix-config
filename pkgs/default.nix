@@ -16,4 +16,5 @@
   pass-wofi = pkgs.callPackage ./pass-wofi { };
   primary-xwayland = pkgs.callPackage ./primary-xwayland { };
   wl-mirror-pick = pkgs.callPackage ./wl-mirror-pick { };
+  lyrics = pkgs.callPackage ./lyrics { };
 }

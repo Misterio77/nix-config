@@ -33,6 +33,10 @@
       url = "github:misterio77/paste.misterio.me/1.3.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    projeto-lab-bd = {
+      url = "github:misterio77/SCC0541-Lab-BD-Projeto";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -51,6 +55,7 @@
         sops-nix = inputs.sops-nix.overlay;
         hyprland = inputs.hyprland.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
+        projeto-lab-bd = inputs.projeto-lab-bd.overlays.default;
       };
 
       packages = forAllSystems (system:

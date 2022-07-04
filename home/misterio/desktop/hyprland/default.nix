@@ -15,6 +15,7 @@
     swaybg
     swayidle
     swaylock-effects
+    lyrics
   ];
 
   xdg.configFile."hypr/hyprland.conf".text =
@@ -115,6 +116,7 @@
       bind=,XF86AudioPrev,exec,playerctl previous
       bind=,XF86AudioPlay,exec,playerctl play-pause
       bind=,XF86AudioStop,exec,playerctl stop
+      bind=SUPER,XF86AudioPlay,exec,${terminal.cmd-spawn "lyrics"}
 
       bind=,XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%
       bind=,XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -138,6 +140,9 @@
 
       bind=SUPER,equal,splitratio,0.25
       bind=SUPERSHIFT,plus,splitratio,0.3333333
+
+      bind=SUPER,g,togglegroup
+      bind=SUPERSHIFT,G,changegroupactive,f
 
       bind=SUPER,left,movefocus,l
       bind=SUPER,right,movefocus,r

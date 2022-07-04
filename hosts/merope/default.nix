@@ -21,6 +21,8 @@
     ./headscale.nix
 
     ./paste-misterio-me.nix
+
+    ./projeto-labbd.nix
   ];
 
   # Static IP address
