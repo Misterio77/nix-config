@@ -30,7 +30,7 @@
 
     # My nixified software
     paste-misterio-me = {
-      url = "github:misterio77/paste.misterio.me/1.3.0";
+      url = "github:misterio77/paste.misterio.me/1.3.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     projeto-lab-bd = {
@@ -97,7 +97,7 @@
       };
 
       deploy.nodes = {
-        inherit (mapAttrs mkDeploy nixosConfigurations) atlas merope pleione;
+        inherit (mapAttrs mkDeploy nixosConfigurations) merope;
       };
 
       homeConfigurations = {

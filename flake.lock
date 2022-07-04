@@ -215,16 +215,16 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1645029968,
-        "narHash": "sha256-Njk65PFR7f5aflW3zWUexkSbQMdDpLTbhVZR8j9UtjQ=",
+        "lastModified": 1656947991,
+        "narHash": "sha256-IIJshYORi/xlz3M6aMUCmHTCSUW/6e27kpfsvdH77Vc=",
         "owner": "misterio77",
         "repo": "paste.misterio.me",
-        "rev": "1ac565cd3e69f3e8f72c09fc81894f0cd75fc104",
+        "rev": "5898af650d579e015e381f34f2e291401e8dcdab",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
-        "ref": "1.3.0",
+        "ref": "1.3.1",
         "repo": "paste.misterio.me",
         "type": "github"
       }
@@ -237,11 +237,11 @@
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1656926481,
-        "narHash": "sha256-m45A/UHUeiOkoTgBeBaO4tMSp7cA3KAkbx6rELycvj4=",
+        "lastModified": 1656939964,
+        "narHash": "sha256-Kr9HsvPiwCV1p5/G3zA0UBbNJdFVoYvXjiWTwdjIaTA=",
         "owner": "misterio77",
         "repo": "SCC0541-Lab-BD-Projeto",
-        "rev": "c336ecf1be5e497bfdbf85d13cf2901672467d01",
+        "rev": "afcbe5b77172ed3275a64399b1fab1c80a3c09b5",
         "type": "github"
       },
       "original": {

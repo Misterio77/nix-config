@@ -22,7 +22,7 @@
 
     ./paste-misterio-me.nix
 
-    ./projeto-labbd.nix
+    ./projeto-lab-bd.nix
   ];
 
   # Static IP address
