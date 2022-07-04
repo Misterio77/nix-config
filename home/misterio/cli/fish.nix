@@ -20,8 +20,8 @@
       nrs = "nixos-rebuild --flake . switch";
       snr = "sudo nixos-rebuild --flake .";
       snrs = "sudo nixos-rebuild --flake . switch";
-      hm = "home-manager switch --flake .";
-      hms = "home-manager switch --flake . switch";
+      hm = "home-manager --flake .";
+      hms = "home-manager --flake . switch";
 
       v = "nvim";
       vi = "nvim";

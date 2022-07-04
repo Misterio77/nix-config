@@ -46,8 +46,8 @@
       }
 
       decoration {
-        active_opacity=0.96
-        inactive_opacity=0.8
+        active_opacity=0.94
+        inactive_opacity=0.75
         fullscreen_opacity=1.0
         rounding=3
         blur=1
