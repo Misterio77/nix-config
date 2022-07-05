@@ -19,7 +19,7 @@
     };
 
     nur.url = "github:nix-community/NUR";
-    impermanence.url = "github:RiscadoA/impermanence";
+    impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
     # Nixified third-party software
