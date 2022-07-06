@@ -1,11 +1,11 @@
-{ pkgs, persistence, desktop, lib, hostname, config, ... }: {
+{ pkgs, persistence, desktop, lib, config, ... }: {
   home.packages =
     if desktop != null
     then [ pkgs.pinentry-gnome ]
     else [ pkgs.pinentry-curses ];
 
   home.persistence = lib.mkIf persistence {
-    "/persist/home/misterio".directories = [ ".gnupg-${hostname}" ];
+    "/persist/home/misterio".directories = [ ".gnupg" ];
   };
 
   services.gpg-agent = {
@@ -17,7 +17,7 @@
 
   programs.gpg = {
     enable = true;
-    homedir = "${config.home.homeDirectory}/.gnupg-${hostname}";
+    homedir = "${config.home.homeDirectory}/.gnupg";
   };
 
 }

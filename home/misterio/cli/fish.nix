@@ -43,22 +43,7 @@ in
     functions = {
       fish_greeting = "";
       wh = "readlink -f (which $argv)";
-    } //
-    (listToAttrs (map
-      (h: {
-        name = "${h}-gpg";
-        value = {
-          wraps = "gpg";
-          body = ''
-            set GNUPGHOME "$HOME/.gnupg-${h}"
-            mkdir -p "$GNUPGHOME"
-            chmod 700 "$GNUPGHOME"
-            gpg $argv
-          '';
-        };
-      })
-      hostnames)
-    );
+    };
     interactiveShellInit =
       # Open command buffer in vim when alt+e is pressed
       ''
