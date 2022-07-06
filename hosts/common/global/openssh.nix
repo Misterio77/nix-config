@@ -8,6 +8,10 @@ in
     # Harden
     passwordAuthentication = false;
     permitRootLogin = "no";
+    # Automatically remove stale sockets
+    extraConfig = ''
+      StreamLocalBindUnlink yes
+    '';
   };
 
   services.openssh.hostKeys = [

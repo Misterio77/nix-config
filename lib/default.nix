@@ -2,7 +2,7 @@
 let
   inherit (builtins) mapAttrs attrValues;
   inherit (inputs) self home-manager nixpkgs deploy-rs;
-  inherit (nixpkgs.lib) nixosSystem hasSuffix removeSuffix filterAttrs mapAttrs';
+  inherit (nixpkgs.lib) nixosSystem hasSuffix removeSuffix filterAttrs mapAttrs' attrNames concatStrings;
   inherit (home-manager.lib) homeManagerConfiguration;
   # Given hostname, get system kind
   getSystemKind = hostname: self.outputs.nixosConfigurations.${hostname}.pkgs.system;
@@ -11,6 +11,8 @@ let
     let suffix = "@${hostname}";
     in mapAttrs' (name: value: { name = removeSuffix suffix name; inherit value; })
       (filterAttrs (name: _: hasSuffix suffix name) self.outputs.homeConfigurations);
+  # List of all hostnames
+  hostnames = attrNames self.outputs.nixosConfigurations;
 
   mylib = {
     importAttrset = path: mapAttrs (_: import) (import path);
@@ -25,7 +27,7 @@ let
         inherit system;
         pkgs = packages.${system};
         specialArgs = {
-          inherit mylib inputs system hostname persistence;
+          inherit mylib inputs system hostname hostnames persistence;
           homeConfigurations = getHomes hostname;
         };
         modules = attrValues (import ../modules/nixos) ++ [
@@ -47,7 +49,7 @@ let
       homeManagerConfiguration {
         pkgs = packages.${system};
         extraSpecialArgs = {
-          inherit mylib inputs system hostname username persistence colorscheme wallpaper features desktop;
+          inherit mylib inputs system hostname hostnames username persistence colorscheme wallpaper features desktop;
         };
         modules = attrValues (import ../modules/home-manager) ++ [
           ../home/${username}
