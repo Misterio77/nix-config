@@ -20,7 +20,7 @@
         lua << EOF
           local lspconfig = require('lspconfig')
           local capabilities = vim.lsp.protocol.make_client_capabilities()
-          capabilities.textDocument.completion.completionItem.snippetSupport = true
+          -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
           lspconfig.dockerls.setup{} -- Docker
           lspconfig.bashls.setup{} -- Bash
@@ -126,11 +126,17 @@
               ['<C-n>'] = cmp.mapping.select_next_item({
                 behavior = cmp.SelectBehavior.Insert }
               ),
+              ['<C-j>'] = cmp.mapping.select_next_item({
+                behavior = cmp.SelectBehavior.Insert }
+              ),
               ['<C-p>'] = cmp.mapping.select_prev_item({
                 behavior = cmp.SelectBehavior.Insert }
               ),
-              ['<C-e>'] = cmp.mapping.close(),
-              ['<C-Space>'] = cmp.mapping.complete(),
+              ['<C-k>'] = cmp.mapping.select_prev_item({
+                behavior = cmp.SelectBehavior.Insert }
+              ),
+              ['<C-h>'] = cmp.mapping.close(),
+              ['<C-l>'] = cmp.mapping.confirm(),
             },
             sources = {
               {

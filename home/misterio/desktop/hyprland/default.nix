@@ -46,13 +46,13 @@
       }
 
       decoration {
-        active_opacity=0.94
+        active_opacity=0.95
         inactive_opacity=0.75
         fullscreen_opacity=1.0
         rounding=3
         blur=1
         blur_size=5
-        blur_passes=2
+        blur_passes=3
       }
 
       animations {
@@ -142,7 +142,8 @@
       bind=SUPERSHIFT,plus,splitratio,0.3333333
 
       bind=SUPER,g,togglegroup
-      bind=SUPERSHIFT,G,changegroupactive,f
+      bind=SUPER,apostrophe,changegroupactive,f
+      bind=SUPERSHIFT,quotedbl,changegroupactive,b
 
       bind=SUPER,left,movefocus,l
       bind=SUPER,right,movefocus,r
