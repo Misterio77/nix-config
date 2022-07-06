@@ -268,15 +268,16 @@
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1657098813,
-        "narHash": "sha256-h6KNQPEzoZYaSC4mv8ajjNNhBB4TCZSTjxBHWFWjlL8=",
+        "lastModified": 1657138133,
+        "narHash": "sha256-V7Fsysr0j0B0hGyMFEdVQPs5HVJt/kYdsg3bDYrQd4Q=",
         "owner": "misterio77",
         "repo": "SCC0541-Lab-BD-Projeto",
-        "rev": "e6ab4d931d7fc0dd54a9908c2d3d0bc6d1cf56a8",
+        "rev": "e4ef1705b2eb711ab7bf51f9057242c7a943ab76",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
+        "ref": "0.1.0",
         "repo": "SCC0541-Lab-BD-Projeto",
         "type": "github"
       }
