@@ -9,10 +9,12 @@ in {
     if colorscheme != null then
       inputs.nix-colors.colorSchemes.${colorscheme}
     else
-      colorschemeFromPicture {
-        path = config.wallpaper;
-        kind = "dark";
-      };
+      if wallpaper != null then
+        colorschemeFromPicture {
+          path = config.wallpaper;
+          kind = "dark";
+        }
+      else inputs.nix-colors.colorSchemes.spaceduck;
 
   wallpaper =
     if wallpaper != null then
