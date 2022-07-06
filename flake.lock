@@ -268,11 +268,11 @@
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1657082014,
-        "narHash": "sha256-yTAUw9FqXL/BejodIjjvvnpY4OGKI1XBeUZHJpTUOA4=",
+        "lastModified": 1657098813,
+        "narHash": "sha256-h6KNQPEzoZYaSC4mv8ajjNNhBB4TCZSTjxBHWFWjlL8=",
         "owner": "misterio77",
         "repo": "SCC0541-Lab-BD-Projeto",
-        "rev": "1b7d4df85a1668c1cb0c1d662ed689de4782e0f6",
+        "rev": "e6ab4d931d7fc0dd54a9908c2d3d0bc6d1cf56a8",
         "type": "github"
       },
       "original": {
