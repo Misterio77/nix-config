@@ -10,8 +10,8 @@ in
         host = concatStringsSep " " hostnames;
         forwardAgent = true;
         remoteForwards = [{
-          bind.address = "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent";
-          host.address = "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.extra";
+          bind.address = ''/run/user/1000/gnupg/S.gpg-agent'';
+          host.address = ''/run/user/1000/gnupg/S.gpg-agent.extra'';
         }];
       };
     };

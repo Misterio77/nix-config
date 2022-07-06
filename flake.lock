@@ -149,11 +149,11 @@
         "base16-schemes": "base16-schemes"
       },
       "locked": {
-        "lastModified": 1655899409,
-        "narHash": "sha256-2ekavfmPv13jN/uvF1k79gMzv4ttSWLQ2FtgVRTZ2Vw=",
+        "lastModified": 1657130915,
+        "narHash": "sha256-RmvKqcW6QujbbwT7LCoAWFVtqlTcN25W92ytu47QiU4=",
         "owner": "misterio77",
         "repo": "nix-colors",
-        "rev": "308fe8855ee4c35347baeaf182453396abdbe8df",
+        "rev": "d97b39696794be1ece13fd58996c9a102bc9a971",
         "type": "github"
       },
       "original": {

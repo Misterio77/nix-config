@@ -107,7 +107,7 @@
           username = "misterio";
           hostname = "atlas";
           wallpaper = "painting-river-snow-forest-gold";
-          colorscheme = "phd";
+          colorscheme = "harmonic-dark";
           persistence = true;
           desktop = "hyprland";
           features = [
