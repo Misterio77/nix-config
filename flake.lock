@@ -126,6 +126,24 @@
         "type": "github"
       }
     },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1655042882,
+        "narHash": "sha256-9BX8Fuez5YJlN7cdPO63InoyBy7dm3VlJkkmTt6fS1A=",
+        "owner": "nix-community",
+        "repo": "naersk",
+        "rev": "cddffb5aa211f50c4b8750adbec0bbbdfb26bb9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
     "nix-colors": {
       "inputs": {
         "base16-schemes": "base16-schemes"
@@ -192,6 +210,18 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 0,
+        "narHash": "sha256-rlmmw6lIlkMQIiB+NsnO8wQYWTfle8TA41UREPLP5VY=",
+        "path": "/nix/store/8mik2m5inkjin29v5gv5zc2jji4lab3l-source",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1656562074,
@@ -231,17 +261,18 @@
     },
     "projeto-lab-bd": {
       "inputs": {
+        "naersk": "naersk",
         "nixpkgs": [
           "nixpkgs"
         ],
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1656939964,
-        "narHash": "sha256-Kr9HsvPiwCV1p5/G3zA0UBbNJdFVoYvXjiWTwdjIaTA=",
+        "lastModified": 1657082014,
+        "narHash": "sha256-yTAUw9FqXL/BejodIjjvvnpY4OGKI1XBeUZHJpTUOA4=",
         "owner": "misterio77",
         "repo": "SCC0541-Lab-BD-Projeto",
-        "rev": "afcbe5b77172ed3275a64399b1fab1c80a3c09b5",
+        "rev": "1b7d4df85a1668c1cb0c1d662ed689de4782e0f6",
         "type": "github"
       },
       "original": {
