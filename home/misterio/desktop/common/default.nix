@@ -16,6 +16,6 @@
 
   xdg.mimeApps.enable = true;
   home.packages = with pkgs; [
-    xdg-utils
+    xdg-utils-spawn-terminal
   ];
 }

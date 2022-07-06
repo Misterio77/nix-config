@@ -29,7 +29,7 @@ in
     patches = (oldAttrs.patches or [ ]) ++ [ ./discocss-no-launch.patch ];
   });
 
-  xdg-utils = prev.xdg-utils.overrideAttrs (oldAttrs: rec {
+  xdg-utils-spawn-terminal = prev.xdg-utils.overrideAttrs (oldAttrs: rec {
     patches = (oldAttrs.patches or [ ]) ++ [ ./xdg-open-spawn-terminal.diff ];
   });
 

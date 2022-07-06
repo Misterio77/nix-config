@@ -245,12 +245,8 @@ in
         };
         "custom/theme" = {
           interval = 4;
-          return-type = "json";
           max-length = 20;
-          exec = jsonOutput {
-            text = "${config.colorscheme.slug}";
-            tooltip = "${config.colorscheme.name} theme";
-          };
+          exec = "echo ${config.colorscheme.slug}";
           format = "  {}";
         };
         "custom/gpu" = {

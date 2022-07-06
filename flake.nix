@@ -106,7 +106,7 @@
           inherit packages;
           username = "misterio";
           hostname = "atlas";
-          colorscheme = "catpputccin";
+          colorscheme = "catppuccin";
           persistence = true;
           desktop = "hyprland";
           features = [
