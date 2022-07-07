@@ -13,6 +13,7 @@
     enableSshSupport = true;
     sshKeys = [ "149F16412997785363112F3DBD713BC91D51B831" ];
     pinentryFlavor = if desktop != null then "gnome3" else "curses";
+    enableExtraSocket = true;
   };
 
   programs.gpg = {
