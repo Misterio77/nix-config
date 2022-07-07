@@ -1,12 +1,22 @@
+{ pkgs, ... }:
+let
+  user = "misterio";
+  cage = "${pkgs.cage}/bin/cage";
+  greetd = "${pkgs.greetd.greetd}/bin/greetd";
+  gtkgreet = "${pkgs.greetd.gtkgreet}/bin/gtkgreet";
+in
 {
   services.greetd = {
     enable = true;
-    settings = rec {
-      initial_session = {
-        command = "$SHELL -l";
-        user = "misterio";
+    settings = {
+      default_session = {
+        inherit user;
+        command = "${cage} -- ${gtkgreet} -c '$SHELL -l' -l";
       };
-      default_session = initial_session;
+      initial_session = {
+        inherit user;
+        command = "$SHELL -l";
+      };
     };
   };
 }
