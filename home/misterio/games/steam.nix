@@ -1,6 +1,4 @@
-{ pkgs, persistence, lib, ... }: {
-  home.packages = with pkgs; [ steam ];
-
+{ persistence, lib, ... }: {
   home.persistence = lib.mkIf persistence {
     "/persist/games/misterio" = {
       allowOther = true;

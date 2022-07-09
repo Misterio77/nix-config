@@ -1,4 +1,4 @@
-{ lib, vimUtils, fetchFromGitea }: vimUtils.buildVimPlugin rec {
+{ vimUtils, fetchFromGitea }: vimUtils.buildVimPlugin rec {
   pname = "gemini-vim-syntax";
   version = "2021-11-15";
   dontBuild = true;

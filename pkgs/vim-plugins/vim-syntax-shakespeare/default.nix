@@ -1,4 +1,4 @@
-{ lib, vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
+{ vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
   pname = "vim-syntax-shakespeare";
   version = "2021-12-14";
   dontBuild = true;

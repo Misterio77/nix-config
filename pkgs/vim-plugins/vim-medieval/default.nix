@@ -1,4 +1,4 @@
-{ lib, vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
+{ vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
   pname = "vim-medieval";
   version = "2022-02-07";
   dontBuild = true;

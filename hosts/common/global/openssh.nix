@@ -1,4 +1,4 @@
-{ persistence, lib, ... }:
+{ persistence, ... }:
 let
   sshPath = if persistence then "/persist/etc/ssh" else "/etc/ssh";
 in

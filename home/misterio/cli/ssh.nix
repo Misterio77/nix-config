@@ -1,4 +1,4 @@
-{ hostname, hostnames, lib, ... }:
+{ hostnames, ... }:
 let
   inherit (builtins) concatStringsSep;
 in

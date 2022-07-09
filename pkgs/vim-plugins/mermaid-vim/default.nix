@@ -1,4 +1,4 @@
-{ lib, vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
+{ vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
   pname = "mermaid-vim";
   version = "2022-02-15";
   dontBuild = true;

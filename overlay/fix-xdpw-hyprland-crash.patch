@@ -1,0 +1,13 @@
+diff --git a/src/screencast/wlr_screencast.c b/src/screencast/wlr_screencast.c
+index 8d64553..ebfb5e2 100644
+--- a/src/screencast/wlr_screencast.c
++++ b/src/screencast/wlr_screencast.c
+@@ -609,7 +609,7 @@ static void linux_dmabuf_feedback_handle_main_device(void *data,
+
+ 	logprint(DEBUG, "wlroots: linux_dmabuf_feedback_handle_main_device called");
+
+-	assert(ctx->gbm == NULL);
++	if (ctx->gbm != NULL) return;
+
+ 	dev_t device;
+ 	assert(device_arr->size == sizeof(device));

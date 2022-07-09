@@ -44,14 +44,7 @@ in
 
   # Temporary fix for https://github.com/emersion/xdg-desktop-portal-wlr/issues/216
   xdg-desktop-portal-wlr = prev.xdg-desktop-portal-wlr.overrideAttrs (oldAttrs: rec {
-    pname = "xdg-desktop-portal-wlr";
-    version = "0.5.0";
-    src = prev.fetchFromGitHub {
-      owner = "emersion";
-      repo = pname;
-      rev = "v${version}";
-      sha256 = "sha256-weePlNcLmZ3R0IDQ95p0wQvsKTYp+sVlTENJtF8Z78Y";
-    };
+    patches = (oldAttrs.patches or [ ]) ++ [ ./fix-xdpw-hyprland-crash.patch ];
   });
 
   generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;

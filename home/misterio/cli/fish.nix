@@ -1,6 +1,3 @@
-{ hostnames, ... }:
-let inherit (builtins) listToAttrs map;
-in
 {
   programs.fish = {
     enable = true;

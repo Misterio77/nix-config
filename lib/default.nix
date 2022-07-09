@@ -2,7 +2,7 @@
 let
   inherit (builtins) mapAttrs attrValues;
   inherit (inputs) self home-manager nixpkgs deploy-rs;
-  inherit (nixpkgs.lib) nixosSystem hasSuffix removeSuffix filterAttrs mapAttrs' attrNames concatStrings;
+  inherit (nixpkgs.lib) nixosSystem hasSuffix removeSuffix filterAttrs mapAttrs' attrNames;
   inherit (home-manager.lib) homeManagerConfiguration;
   # Given hostname, get system kind
   getSystemKind = hostname: self.outputs.nixosConfigurations.${hostname}.pkgs.system;
