@@ -17,6 +17,10 @@ in
     enableExtraSocket = true;
   };
 
+  home.persistence = lib.mkIf persistence {
+    "/persist/home/misterio".directories = [ ".gnupg/private-keys-v1.d" ];
+  };
+
   programs.gpg = {
     enable = true;
     mutableKeys = false;
