@@ -70,13 +70,17 @@
   hardware = {
     opengl = {
       enable = true;
-      extraPackages = with pkgs; [ amdvlk ];
       driSupport = true;
       driSupport32Bit = true;
     };
     openrgb.enable = true;
     opentabletdriver.enable = true;
   };
+
+  virtualisation.libvirtd = {
+    enable = true;
+  };
+  environment.systemPackages = with pkgs; [ virt-manager ];
 
   system.stateVersion = "22.05";
 }

@@ -34,7 +34,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     projeto-lab-bd = {
-      url = "github:misterio77/SCC0541-Lab-BD-Projeto/0.1.0";
+      url = "github:misterio77/SCC0541-Lab-BD-Projeto";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

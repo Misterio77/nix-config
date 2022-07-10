@@ -1,6 +1,7 @@
-{ hostnames, ... }:
+{ outputs, ... }:
 let
-  inherit (builtins) concatStringsSep;
+  inherit (builtins) attrNames concatStringsSep;
+  hostnames = attrNames outputs.nixosConfigurations;
 in
 {
   programs.ssh = {

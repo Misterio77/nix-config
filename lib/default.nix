@@ -1,21 +1,12 @@
 { inputs, ... }:
 let
-  inherit (builtins) mapAttrs attrValues;
   inherit (inputs) self home-manager nixpkgs deploy-rs;
-  inherit (nixpkgs.lib) nixosSystem hasSuffix removeSuffix filterAttrs mapAttrs' attrNames;
-  inherit (home-manager.lib) homeManagerConfiguration;
-  # Given hostname, get system kind
-  getSystemKind = hostname: self.outputs.nixosConfigurations.${hostname}.pkgs.system;
-  # Given hostname, get home configs
-  getHomes = hostname:
-    let suffix = "@${hostname}";
-    in mapAttrs' (name: value: { name = removeSuffix suffix name; inherit value; })
-      (filterAttrs (name: _: hasSuffix suffix name) self.outputs.homeConfigurations);
-  # List of all hostnames
-  hostnames = attrNames self.outputs.nixosConfigurations;
+  inherit (self) outputs;
 
   mylib = {
-    importAttrset = path: mapAttrs (_: import) (import path);
+    has = element: builtins.any (x: x == element);
+
+    importAttrset = path: builtins.mapAttrs (_: import) (import path);
 
     mkSystem =
       { hostname
@@ -23,14 +14,13 @@ let
       , packages
       , persistence ? false
       }:
-      nixosSystem {
+      nixpkgs.lib.nixosSystem {
         inherit system;
         pkgs = packages.${system};
         specialArgs = {
-          inherit mylib inputs system hostname hostnames persistence;
-          homeConfigurations = getHomes hostname;
+          inherit mylib inputs outputs hostname persistence;
         };
-        modules = attrValues (import ../modules/nixos) ++ [
+        modules = builtins.attrValues (import ../modules/nixos) ++ [
           ../hosts/${hostname}
         ];
       };
@@ -38,7 +28,7 @@ let
     mkHome =
       { username
       , hostname ? null
-      , system ? getSystemKind hostname
+      , system ? outputs.nixosConfigurations.${hostname}.pkgs.system
       , packages
       , persistence ? false
       , colorscheme ? null
@@ -46,12 +36,12 @@ let
       , desktop ? null
       , features ? [ ]
       }:
-      homeManagerConfiguration {
+      home-manager.lib.homeManagerConfiguration {
         pkgs = packages.${system};
         extraSpecialArgs = {
-          inherit mylib inputs system hostname hostnames username persistence colorscheme wallpaper features desktop;
+          inherit mylib inputs outputs hostname username persistence colorscheme wallpaper desktop features;
         };
-        modules = attrValues (import ../modules/home-manager) ++ [
+        modules = builtins.attrValues (import ../modules/home-manager) ++ [
           ../home/${username}
         ];
       };
@@ -63,9 +53,6 @@ let
         path = deploy-rs.lib.${config.pkgs.system}.activate.nixos config;
       };
     };
-
-    # Helps checking for features
-    has = element: builtins.any (x: x == element);
   };
 in
 mylib
