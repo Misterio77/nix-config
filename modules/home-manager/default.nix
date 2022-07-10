@@ -5,4 +5,5 @@
   shellcolor = ./shellcolor.nix;
   fonts = ./fonts.nix;
   preferred-apps = ./preferred-apps.nix;
+  hyprland = ./hyprland.nix;
 }

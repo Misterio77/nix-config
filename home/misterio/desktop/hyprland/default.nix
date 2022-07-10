@@ -19,17 +19,15 @@
   ];
 
 
-  xdg.configFile."hypr/hyprland.conf" = {
-    onChange = /* sh */ ''
-      hyprctl reload
-    '';
-    text =
-      let
-        inherit (config.colorscheme) colors;
-        inherit (config.home.preferredApps)
-          menu browser editor mail notifier terminal;
-      in
-      ''
+  wayland.windowManager.hyprland =
+    let
+      inherit (config.colorscheme) colors;
+      inherit (config.home.preferredApps)
+        menu browser editor mail notifier terminal;
+    in
+    {
+      enable = true;
+      extraConfig = ''
         monitor=eDP-1,1920x1080@60,0x0,1
         workspace=eDP-1,1
 
@@ -78,13 +76,11 @@
         }
 
         # Startup
-        exec=dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE
         exec-once=swaylock -i ${config.wallpaper}
         exec-once=waybar
         exec=swaybg -i ${config.wallpaper} --mode fill
         exec-once=mako
         exec-once=swayidle -w
-        exec-once=systemctl --user start hyprland-session.target
 
         # Program bindings
         bind=SUPER,Return,exec,${terminal.cmd}
@@ -228,39 +224,5 @@
         bind=SUPERSHIFT,parenleft,movetoworkspacesilent,9
         bind=SUPERSHIFT,parenright,movetoworkspacesilent,10
       '';
-  };
-
-  # Start automatically on tty1
-  programs.zsh.loginExtra = lib.mkBefore ''
-    if [[ "$(tty)" == /dev/tty1 ]]; then
-      exec Hyprland &> hyprland.log
-    fi
-  '';
-  programs.fish.loginShellInit = lib.mkBefore ''
-    if test (tty) = /dev/tty1
-      exec Hyprland &> hyprland.log
-    end
-  '';
-  programs.bash.profileExtra = lib.mkBefore ''
-    if [[ "$(tty)" == /dev/tty1 ]]; then
-      exec Hyprland &> hyprland.log
-    fi
-  '';
-
-  systemd.user.targets.hyprland-session = {
-    Unit = {
-      Description = "hyprland compositor session";
-      Documentation = [ "man:systemd.special(7)" ];
-      BindsTo = [ "graphical-session.target" ];
-      Wants = [ "graphical-session-pre.target" ];
-      After = [ "graphical-session-pre.target" ];
     };
-  };
-
-  systemd.user.targets.tray = {
-    Unit = {
-      Description = "Home Manager System Tray";
-      Requires = [ "graphical-session-pre.target" ];
-    };
-  };
 }
