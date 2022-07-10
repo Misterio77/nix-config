@@ -47,6 +47,14 @@ in
     patches = (oldAttrs.patches or [ ]) ++ [ ./fix-xdpw-hyprland-crash.patch ];
   });
 
+  bindfs = prev.bindfs.overrideAttrs (oldAttrs: rec {
+    version = "1.15.1";
+    src = builtins.fetchurl {
+      url = "https://bindfs.org/downloads/bindfs-${version}.tar.gz";
+      sha256 = "sha256-BN01hKbN+a9DRNQDxiGFyp+rMc465aJdAQG8EJNsaKs=";
+    };
+  });
+
   generated-gtk-themes = mapAttrs (_: scheme: gtkThemeFromScheme { inherit scheme; }) colorSchemes;
 
 } // import ../pkgs { pkgs = prev; }
