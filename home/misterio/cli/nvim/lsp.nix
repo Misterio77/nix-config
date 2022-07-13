@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }:
+let
+  homeDir = config.home.homeDirectory;
+in
+{
   # Add (some) LSP packages here (others are per-project, to avoid big stuff)
   home.packages = with pkgs; [
     editorconfig-checker
@@ -33,6 +37,7 @@
           lspconfig.kotlin_language_server.setup{} -- Kotlin
           lspconfig.terraformls.setup{filetypes={"terraform","tf","hcl"}} -- Terraform
           lspconfig.solargraph.setup{} -- Ruby
+          lspconfig.jdtls.setup{cmd = {"jdt-language-server", "-data", "${homeDir}/.cache/jdtls/workspace"}} -- Java
 
           lspconfig.rust_analyzer.setup{ -- Rust
             settings = {
