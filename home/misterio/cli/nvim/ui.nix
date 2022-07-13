@@ -5,6 +5,7 @@
     {
       plugin = undotree;
       config = /* vim */ ''
+        lua require('nvim-tree').setup{ renderer = { group_empty= true } }
         let g:undotree_SetFocusWhenToggle = 1
         nmap <C-n> :UndotreeToggle<cr>
       '';
