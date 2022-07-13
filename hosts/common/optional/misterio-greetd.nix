@@ -10,6 +10,10 @@ let
   hasSteam = config.programs.steam.enable;
   hasSway = homeConfig.wayland.windowManager.sway.enable;
   hasHyprland = homeConfig.wayland.windowManager.hyprland.enable;
+
+  kioskCmd = "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''
+    exec "${gtkgreet} -l; ${pkgs.sway}/bin/swaymsg exit"
+  ''}";
 in
 {
   environment.systemPackages = [ pkgs.cage ];
@@ -19,13 +23,15 @@ in
     (lib.optionalString hasHyprland ''Hyprland
     '') +
     (lib.optionalString hasSteam ''cage -- steam -bigpicture
-    '');
+    '') +
+    ''$SHELL
+    '';
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
         inherit user;
-        command = "${cage} -- ${gtkgreet} -l";
+        command = "${kioskCmd} &> /dev/null";
       };
       initial_session = {
         inherit user;
