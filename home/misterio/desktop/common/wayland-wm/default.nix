@@ -19,7 +19,11 @@
     wf-recorder
     wl-clipboard
     wl-mirror
+    wl-mirror-pick
     ydotool
+    primary-xwayland
+    pulseaudio
+    lyrics
   ];
 
   home.sessionVariables = {

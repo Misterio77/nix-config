@@ -10,18 +10,6 @@ in
     ../common/wayland-wm
   ];
 
-  # Required packages (hotkeys, etc)
-  home.packages = with pkgs; [
-    light
-    playerctl
-    primary-xwayland
-    pulseaudio # pactl
-    sway-contrib.grimshot
-    swayidle
-    swaylock-effects
-    wl-mirror-pick
-  ];
-
   wayland.windowManager.sway =
     let
       inherit (config.colorscheme) colors;
@@ -123,13 +111,13 @@ in
         };
         startup = [
           # Initial lock
-          { command = "swaylock -i ${config.wallpaper}"; }
+          { command = "${pkgs.swaylock-effects}/bin/swaylock -i ${config.wallpaper}"; }
           # Start idle daemon
-          { command = "swayidle -w"; }
+          { command = "${pkgs.swayidle}/bin/swayidle -w"; }
           # Add transparency
           { command = "SWAYFADER_CON_INAC=0.85 ${pkgs.swayfader}/bin/swayfader"; }
           # Set biggest monitor as xwayland primary
-          { command = "primary-xwayland largest"; }
+          { command = "${pkgs.primary-xwayland}/bin/primary-xwayland largest"; }
           # https://github.com/NixOS/nixpkgs/issues/119445
           { command = "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
         ];
@@ -182,31 +170,26 @@ in
           "Scroll_Lock" = mkIf trusted "exec ${menu.password-cmd}"; # fn+k
           "XF86Calculator" = mkIf trusted "exec ${menu.password-cmd}"; # fn+f12
 
-          # Unlock gpg
-          "Shift+Scroll_Lock" =
-            let keyring = import ../../trusted/keyring.nix { inherit pkgs; };
-            in lib.mkIf trusted "exec ${keyring.unlock}";
-
           # Lock screen
           "XF86Launch5" = "exec swaylock -S"; # lock icon on k70
           "XF86Launch4" = "exec swaylock -S"; # fn+q
 
           # Volume
-          "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
-          "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "Shift+XF86AudioMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-          "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+          "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+          "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "Shift+XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
           # Brightness
-          "XF86MonBrightnessUp" = "exec light -A 10";
-          "XF86MonBrightnessDown" = "exec light -U 10";
+          "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
+          "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
 
           # Media
-          "XF86AudioNext" = "exec playerctl next";
-          "XF86AudioPrev" = "exec playerctl previous";
-          "XF86AudioPlay" = "exec playerctl play-pause";
-          "XF86AudioStop" = "exec playerctl stop";
+          "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+          "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+          "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+          "XF86AudioStop" = "exec ${pkgs.playerctl}/bin/playerctl stop";
 
           # Notifications
           "${modifier}+w" = "exec ${notifier.dismiss-cmd}";
@@ -217,11 +200,11 @@ in
           "${modifier}+b" = "exec ${browser.cmd}";
 
           # Screenshot
-          "Print" = "exec grimshot --notify copy output";
-          "Shift+Print" = "exec grimshot --notify copy active";
-          "Control+Print" = "exec grimshot --notify copy screen";
-          "Mod1+Print" = "exec grimshot --notify copy area";
-          "${modifier}+Print" = "exec grimshot --notify copy window";
+          "Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy output";
+          "Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy active";
+          "Control+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy screen";
+          "Mod1+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
+          "${modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy window";
 
           # Application menu
           "${modifier}+x" = "exec ${menu.drun-cmd}";
