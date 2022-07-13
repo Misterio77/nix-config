@@ -1,4 +1,4 @@
-{ stdenv, pandoc, texlive }: pkgs.stdenv.mkDerivation {
+{ stdenv, pandoc, texlive }: stdenv.mkDerivation {
   pname = "foo-bar";
   version = "0.1.0";
   src = ./.;

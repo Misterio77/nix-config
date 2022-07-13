@@ -2,35 +2,38 @@
   description = "Foo Bar Document";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
   };
 
-  outputs = { self, nixpkgs, utils }:
+  outputs = { self, nixpkgs }:
+    let
+      inherit (nixpkgs.lib) genAttrs systems;
+      forAllSystems = genAttrs systems.flakeExposed;
+      pkgsFor = forAllSystems (system: import nixpkgs {
+        inherit system; overlays = [ self.overlays.default ];
+      });
+    in
     {
       overlays = rec {
-        default = f: p: {
-          foo-bar = f.callPackage ./. { };
+        default = final: prev: {
+          foo-bar = prev.callPackage ./. { };
         };
       };
-    } //
-    (utils.lib.eachDefaultSystem (system:
-      let
-        inherit (builtins) attrValues;
-        pkgs = import nixpkgs { inherit system; overlays = attrValues self.overlays; };
-      in
-      rec {
-        packages = rec {
+
+      packages = forAllSystems (s:
+        let pkgs = pkgsFor.${s}; in
+        rec {
           inherit (pkgs) foo-bar;
           default = foo-bar;
-        };
+        });
 
-        devShells = rec {
+      devShells = forAllSystems (s:
+        let pkgs = pkgsFor.${s}; in
+        rec {
           foo-bar = pkgs.mkShell {
-            inputsFrom = [ packages.foo-bar ];
+            inputsFrom = [ pkgs.foo-bar ];
           };
           default = foo-bar;
-        };
-      }));
+        });
+    };
 }
-

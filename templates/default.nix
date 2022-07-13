@@ -15,10 +15,6 @@
     description = "Jekyll website";
     path = ./jekyll;
   };
-  python = {
-    description = "Python environment (poetry)";
-    path = ./python;
-  };
   rust = {
     description = "Rust environment (cargo)";
     path = ./rust;
