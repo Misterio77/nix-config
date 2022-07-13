@@ -69,6 +69,8 @@
         dwindle {
           force_split=2
           preserve_split=1
+          col.group_border_active=0xff${colors.base0B}
+          col.group_border=0xff${colors.base04}
         }
 
         input {
@@ -117,6 +119,7 @@
         bind=,XF86AudioPrev,exec,playerctl previous
         bind=,XF86AudioPlay,exec,playerctl play-pause
         bind=,XF86AudioStop,exec,playerctl stop
+        bind=ALT,XF86AudioPlay,exec,systemctl --user restart playerctld
         bind=SUPER,XF86AudioPlay,exec,${terminal.cmd-spawn "lyrics"}
 
         bind=,XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%
