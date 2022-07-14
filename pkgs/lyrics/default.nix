@@ -4,8 +4,6 @@
   runtimeInputs = [ playerctl curl less ];
 
   text = /* bash */ ''
-    set -euo pipefail
-
     # Exit the script if not playing
     playerctl -s status > /dev/null
 

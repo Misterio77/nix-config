@@ -4,7 +4,6 @@
   runtimeInputs = [ slurp wl-mirror ];
 
   text = /* bash */ ''
-    set -euo pipefail
     output=$(slurp -f "%o" -o)
     wl-mirror "$output"
   '';
