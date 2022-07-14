@@ -11,34 +11,39 @@ let
   hasSway = homeConfig.wayland.windowManager.sway.enable;
   hasHyprland = homeConfig.wayland.windowManager.hyprland.enable;
 
+  startCmd =
+    if hasSway then "sway"
+    else if hasHyprland then "Hyprland"
+    else "$SHELL -l";
+
   kioskCmd = "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''
-    exec "${gtkgreet} -l; ${pkgs.sway}/bin/swaymsg exit"
+    exec "${gtkgreet} -l &>/dev/null; ${pkgs.sway}/bin/swaymsg exit"
   ''}";
+
+  steam-bigpicture = pkgs.writeShellScriptBin "steam-bigpicture" ''
+    ${pkgs.cage}/bin/cage -- ${pkgs.steam}/bin/steam -bigpicture
+  '';
 in
 {
-  environment.systemPackages = [ pkgs.cage ];
-  environment.etc."greetd/environments".text =
-    (lib.optionalString hasSway ''sway
-    '') +
-    (lib.optionalString hasHyprland ''Hyprland
-    '') +
-    (lib.optionalString hasSteam ''cage -- steam -bigpicture
-    '') +
-    ''$SHELL
-    '';
+  environment.systemPackages = lib.mkIf hasSteam [ steam-bigpicture ];
+
+  environment.etc."greetd/environments".text = ''
+    ${startCmd}
+    $SHELL
+  '' +
+  lib.optionalString hasSteam ''steam-bigpicture
+  '';
+
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
         inherit user;
-        command = "${kioskCmd} &> /dev/null";
+        command = "${kioskCmd}";
       };
       initial_session = {
         inherit user;
-        command =
-          if hasSway then "sway"
-          else if hasHyprland then "Hyprland"
-          else "$SHELL -l";
+        command = startCmd;
       };
     };
   };
