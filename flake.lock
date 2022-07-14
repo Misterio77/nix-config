@@ -113,11 +113,11 @@
     },
     "impermanence": {
       "locked": {
-        "lastModified": 1657516301,
-        "narHash": "sha256-SvvHKaYEockUpoQsDArD6AieB8Zo3NLwXfTAehM0cWs=",
+        "lastModified": 1657768550,
+        "narHash": "sha256-9U4yL5iR/NSntuDoKxmhhftyM94YkZrjzmEB1fgqvys=",
         "owner": "misterio77",
         "repo": "impermanence",
-        "rev": "cddefcb84eb20b950a1932e50838a2ba9bbf7daa",
+        "rev": "e058964c0b184b95148b336ed0db484cc1f7987c",
         "type": "github"
       },
       "original": {
