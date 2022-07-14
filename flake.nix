@@ -18,12 +18,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     peerix = {
-      url = "github:cid-chan/peerix";
+      url = "github:misterio77/peerix"; # TODO change to upstream after #13 is merged
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nur.url = "github:nix-community/NUR";
-    impermanence.url = "github:misterio77/impermanence";
+    impermanence.url = "github:misterio77/impermanence"; # TODO change to upstream after #99 is merged
     nix-colors.url = "github:misterio77/nix-colors";
 
     # Nixified third-party software
