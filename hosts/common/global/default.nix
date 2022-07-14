@@ -32,5 +32,7 @@
   # Allows users to allow others on their binds
   programs.fuse.userAllowOther = true;
 
+  security.sudo.extraConfig = "Defaults timestamp_type=global";
+
   system.stateVersion = lib.mkDefault "22.05";
 }

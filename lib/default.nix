@@ -3,7 +3,7 @@ let
   inherit (inputs) self home-manager nixpkgs deploy-rs;
   inherit (self) outputs;
 
-  mylib = {
+  mylib = rec {
     has = element: builtins.any (x: x == element);
 
     importAttrset = path: builtins.mapAttrs (_: import) (import path);
@@ -46,13 +46,39 @@ let
         ];
       };
 
-    mkDeploy = hostname: config: {
-      inherit hostname;
-      profiles.system = {
-        user = "root";
-        path = deploy-rs.lib.${config.pkgs.system}.activate.nixos config;
+    mkDeploys = hosts: users: builtins.listToAttrs (map (mkDeployHost users) hosts);
+
+    mkDeployHost = users: hostname:
+      let
+        inherit (deploy-rs.lib.${config.pkgs.system}) activate;
+        config = outputs.nixosConfigurations.${hostname};
+      in
+      {
+        name = hostname;
+        value =
+          {
+            inherit hostname;
+            profiles = {
+              system = {
+                user = "root";
+                path = activate.nixos config;
+              };
+            } // (builtins.listToAttrs (map (mkDeployHome hostname) users));
+          };
       };
-    };
+
+    mkDeployHome = hostname: username:
+      let
+        inherit (deploy-rs.lib.${config.pkgs.system}) activate;
+        config = outputs.homeConfigurations."${username}@${hostname}";
+      in
+      {
+        name = username;
+        value = {
+          user = username;
+          path = activate.home-manager config;
+        };
+      };
   };
 in
 mylib

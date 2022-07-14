@@ -46,12 +46,14 @@
   outputs = inputs:
     let
       my-lib = import ./lib { inherit inputs; };
-      inherit (builtins) attrValues mapAttrs;
-      inherit (my-lib) mkSystem mkHome mkDeploy importAttrset;
+      inherit (builtins) attrValues;
+      inherit (my-lib) mkSystem mkHome mkDeploys importAttrset;
       inherit (inputs.nixpkgs.lib) genAttrs systems;
       forAllSystems = genAttrs systems.flakeExposed;
     in
     rec {
+      lib = my-lib;
+
       overlays = {
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
@@ -101,8 +103,10 @@
         };
       };
 
-      deploy.nodes = {
-        inherit (mapAttrs mkDeploy nixosConfigurations) merope pleione atlas;
+      deploy.nodes = mkDeploys [ "atlas" "merope" "pleione" ] [ "misterio" ] // {
+        # https://github.com/serokell/deploy-rs/issues/78
+        sshOpts = [ "-t" ];
+        magicRollback = false;
       };
 
       homeConfigurations = {
