@@ -104,9 +104,6 @@
       };
 
       deploy.nodes = mkDeploys [ "atlas" "merope" "pleione" ] [ "misterio" ] // {
-        # https://github.com/serokell/deploy-rs/issues/78
-        sshOpts = [ "-t" ];
-        magicRollback = false;
       };
 
       homeConfigurations = {

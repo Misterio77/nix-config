@@ -10,7 +10,11 @@
     user = "peerix";
     group = "peerix";
   };
-  sops.secrets.peerix-key.sopsFile = ../secrets.yaml;
+  sops.secrets.peerix-key = {
+    sopsFile = ../secrets.yaml;
+    owner = "peerix";
+    group = "peerix";
+  };
 
   users.users.peerix = {
     isSystemUser = true;

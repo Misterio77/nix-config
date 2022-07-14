@@ -9,6 +9,7 @@
     ../common/global
     ../common/optional/ckb-next.nix
     ../common/optional/misterio-greetd.nix
+    ../common/optional/passwordless-sudo.nix
     ../common/optional/pipewire.nix
     ../common/optional/podman.nix
     ../common/optional/postgres.nix
