@@ -17,6 +17,10 @@
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    peerix = {
+      url = "github:cid-chan/peerix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nur.url = "github:nix-community/NUR";
     impermanence.url = "github:misterio77/impermanence";
@@ -52,6 +56,7 @@
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
         deploy-rs = inputs.deploy-rs.overlay;
+        peerix = inputs.peerix.overlay;
         sops-nix = inputs.sops-nix.overlay;
         hyprland = inputs.hyprland.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;

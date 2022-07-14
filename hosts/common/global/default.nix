@@ -1,12 +1,13 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ lib, inputs, hostname, ... }:
+{ lib, inputs, hostname, persistence, ... }:
 {
   imports = [
+    inputs.impermanence.nixosModules.impermanence
     ./fish.nix
     ./locale.nix
     ./nix.nix
     ./openssh.nix
-    ./persist.nix
+    ./peerix.nix
     ./sops.nix
     ./users.nix
   ];
@@ -22,7 +23,14 @@
   '';
 
   hardware.enableRedistributableFirmware = true;
-  # boot.initrd.systemd.enable = true;
+
+  # Persist logs, timers, etc
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [ "/var/lib/systemd" "/var/logs" ];
+  };
+
+  # Allows users to allow others on their binds
+  programs.fuse.userAllowOther = true;
 
   system.stateVersion = lib.mkDefault "22.05";
 }
