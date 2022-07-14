@@ -102,7 +102,7 @@
       };
 
       deploy.nodes = {
-        inherit (mapAttrs mkDeploy nixosConfigurations) merope;
+        inherit (mapAttrs mkDeploy nixosConfigurations) merope pleione atlas;
       };
 
       homeConfigurations = {
