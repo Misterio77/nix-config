@@ -1,6 +1,6 @@
 {
   imports = [
-    ./afuse.nix
+    # ./afuse.nix TODO fix
     ./git-sign.nix
     ./khal.nix
     ./khard.nix
