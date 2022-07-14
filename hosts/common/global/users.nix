@@ -38,7 +38,7 @@ in
   };
 
   sops.secrets.misterio-password = {
-    sopsFile = ../secrets/passwords.yaml;
+    sopsFile = ../secrets.yaml;
     neededForUsers = true;
   };
 

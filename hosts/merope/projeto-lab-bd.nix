@@ -33,6 +33,6 @@
   sops.secrets.projeto-lab-bd = {
     owner = "labbd";
     group = "labbd";
-    sopsFile = ./secrets/keys.yaml;
+    sopsFile = ./secrets.yaml;
   };
 }

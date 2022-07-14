@@ -9,14 +9,14 @@ keys:
     - &pleione age1j9ld6ey62hqd33xkyd2fg9362k6xhm5gavsrpsfalwpcs8smxfdqpk84a2
 
 creation_rules:
-  - path_regex: hosts/merope/secrets/.*\.ya?ml$
+  - path_regex: hosts/merope/secrets.ya?ml$
     key_groups:
     - age:
       - *merope
       pgp:
       - *misterio
 
-  - path_regex: common/secrets/.*\.ya?ml$
+  - path_regex: hosts/common/secrets.ya?ml$
     key_groups:
     - age:
       - *merope
