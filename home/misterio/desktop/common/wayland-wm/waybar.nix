@@ -28,7 +28,7 @@ let
   ''}/bin/waybar-output";
 in
 {
-  programs. waybar = {
+  programs.waybar = {
     enable = true;
     settings = {
 

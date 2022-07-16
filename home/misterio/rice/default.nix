@@ -26,4 +26,6 @@ in {
         height = 1080;
         logoScale = 4.5;
       };
+
+  home.sessionVariables.SCHEME = colorscheme;
 }

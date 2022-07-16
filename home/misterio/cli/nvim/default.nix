@@ -51,6 +51,9 @@ in
       "Scroll up and down
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
+
+      "Bind make"
+      nmap <space>m <cmd>make<cr>
     '';
     plugins = with pkgs.vimPlugins; [
       plenary-nvim

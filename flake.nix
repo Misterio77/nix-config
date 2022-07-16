@@ -45,14 +45,11 @@
 
   outputs = inputs:
     let
-      my-lib = import ./lib { inherit inputs; };
-      inherit (builtins) attrValues;
-      inherit (my-lib) mkSystem mkHome mkDeploys importAttrset;
-      inherit (inputs.nixpkgs.lib) genAttrs systems;
-      forAllSystems = genAttrs systems.flakeExposed;
+      lib = import ./lib { inherit inputs; };
+      inherit (lib) mkSystem mkHome mkDeploys importAttrset forAllSystems;
     in
     rec {
-      lib = my-lib;
+      inherit lib;
 
       overlays = {
         default = import ./overlay { inherit inputs; };
@@ -65,16 +62,24 @@
         projeto-lab-bd = inputs.projeto-lab-bd.overlays.default;
       };
 
-      packages = forAllSystems (system:
+      legacyPackages = forAllSystems (system:
         import inputs.nixpkgs {
           inherit system;
-          overlays = attrValues overlays;
+          overlays = builtins.attrValues overlays;
           config.allowUnfree = true;
         }
       );
 
+      apps = forAllSystems (system: rec {
+        deploy = {
+          type = "app";
+          program = "${legacyPackages.${system}.deploy-rs.deploy-rs}/bin/deploy";
+        };
+        default = deploy;
+      });
+
       devShells = forAllSystems (system: {
-        default = import ./shell.nix { pkgs = packages.${system}; };
+        default = legacyPackages.${system}.callPackage ./shell.nix { };
       });
 
       nixosModules = importAttrset ./modules/nixos;
@@ -84,79 +89,73 @@
 
       nixosConfigurations = {
         atlas = mkSystem {
-          inherit packages;
           hostname = "atlas";
           system = "x86_64-linux";
           persistence = true;
         };
         pleione = mkSystem {
-          inherit packages;
           hostname = "pleione";
           system = "x86_64-linux";
           persistence = true;
         };
         merope = mkSystem {
-          inherit packages;
           hostname = "merope";
           system = "aarch64-linux";
           persistence = true;
         };
       };
 
-      deploy.nodes = mkDeploys [ "atlas" "merope" "pleione" ] [ "misterio" ] // {
-      };
-
       homeConfigurations = {
         # Personal computers
         "misterio@atlas" = mkHome {
-          inherit packages;
           username = "misterio";
           hostname = "atlas";
-          colorscheme = "catppuccin";
-          wallpaper = "cartoon-mountain";
           persistence = true;
-          desktop = "hyprland";
+
           features = [
             "trusted"
             "rgb"
             "games"
           ];
+          desktop = "hyprland";
+          colorscheme = "catppuccin";
+          wallpaper = "cartoon-mountain";
         };
         "misterio@pleione" = mkHome {
-          inherit packages;
           username = "misterio";
           hostname = "pleione";
-          colorscheme = "paraiso";
-          wallpaper = "plains-gold-field";
           persistence = true;
-          desktop = "hyprland";
+
           features = [
             "trusted"
             "laptop"
             "games"
           ];
+          desktop = "hyprland";
+          colorscheme = "paraiso";
+          wallpaper = "plains-gold-field";
         };
         "misterio@merope" = mkHome {
-          inherit packages;
           username = "misterio";
           hostname = "merope";
-          colorscheme = "nord";
           persistence = true;
+
+          colorscheme = "nord";
         };
 
         # Generic configs
         "misterio@generic" = mkHome {
-          inherit packages;
           username = "misterio";
           system = "x86_64-linux";
+
           colorscheme = "dracula";
         };
         "misterio@generic-gnome" = mkHome {
-          inherit packages;
           username = "misterio";
           system = "x86_64-linux";
-          colorscheme = "dracula";
+
           desktop = "gnome";
+          colorscheme = "dracula";
         };
 
         # GELOS lab computers
@@ -165,5 +164,9 @@
         "misterio@macaroni" = homeConfigurations."misterio@generic-gnome";
         "misterio@rockhopper" = homeConfigurations."misterio@generic-gnome";
       };
+
+      deploy.nodes = mkDeploys nixosConfigurations homeConfigurations;
+
+      deployChecks = { };
     };
 }

@@ -3,24 +3,37 @@ let
   inherit (inputs) self home-manager nixpkgs deploy-rs;
   inherit (self) outputs;
 
-  mylib = rec {
-    has = element: builtins.any (x: x == element);
+  inherit (builtins) elemAt match any mapAttrs attrValues attrNames listToAttrs;
+  inherit (nixpkgs.lib) nixosSystem filterAttrs genAttrs systems mapAttrs';
+  inherit (home-manager.lib) homeManagerConfiguration;
 
-    importAttrset = path: builtins.mapAttrs (_: import) (import path);
+  activate = system: deploy-rs.lib.${system}.activate;
+
+  mylib = rec {
+    # Applies a function to a attrset's names, while keeping the values
+    mapAttrNames = f: mapAttrs' (name: value: { name = f name; inherit value; });
+
+    getUsername = string: elemAt (match "(.*)@(.*)" string) 0;
+    getHostname = string: elemAt (match "(.*)@(.*)" string) 1;
+
+    has = element: any (x: x == element);
+
+    forAllSystems = genAttrs systems.flakeExposed;
+
+    importAttrset = path: mapAttrs (_: import) (import path);
 
     mkSystem =
       { hostname
       , system
-      , packages
       , persistence ? false
       }:
-      nixpkgs.lib.nixosSystem {
+      nixosSystem {
         inherit system;
-        pkgs = packages.${system};
+        pkgs = outputs.legacyPackages.${system};
         specialArgs = {
           inherit mylib inputs outputs hostname persistence;
         };
-        modules = builtins.attrValues (import ../modules/nixos) ++ [
+        modules = attrValues (import ../modules/nixos) ++ [
           ../hosts/${hostname}
         ];
       };
@@ -29,56 +42,53 @@ let
       { username
       , hostname ? null
       , system ? outputs.nixosConfigurations.${hostname}.pkgs.system
-      , packages
       , persistence ? false
       , colorscheme ? null
       , wallpaper ? null
       , desktop ? null
       , features ? [ ]
       }:
-      home-manager.lib.homeManagerConfiguration {
-        pkgs = packages.${system};
+      homeManagerConfiguration {
+        pkgs = outputs.legacyPackages.${system};
         extraSpecialArgs = {
-          inherit mylib inputs outputs hostname username persistence colorscheme wallpaper desktop features;
+          inherit mylib inputs outputs hostname username persistence
+            colorscheme wallpaper desktop features;
         };
-        modules = builtins.attrValues (import ../modules/home-manager) ++ [
+        modules = attrValues (import ../modules/home-manager) ++ [
           ../home/${username}
         ];
       };
 
-    mkDeploys = hosts: users: builtins.listToAttrs (map (mkDeployHost users) hosts);
-
-    mkDeployHost = users: hostname:
+    mkDeploys = nixosConfigs: homeConfigs:
       let
-        inherit (deploy-rs.lib.${config.pkgs.system}) activate;
-        config = outputs.nixosConfigurations.${hostname};
+        nixosProfiles = mapAttrs mkNixosDeployProfile nixosConfigs;
+        homeProfiles = mapAttrs mkHomeDeployProfile homeConfigs;
+        hostnames = attrNames nixosProfiles;
+
+        homesOn = hostname: filterAttrs (name: _: (getHostname name) == hostname) homeProfiles;
+        systemOn = hostname: { system = nixosProfiles.${hostname}; };
+        profilesOn = hostname: (systemOn hostname) // (mapAttrNames getUsername (homesOn hostname));
       in
-      {
-        name = hostname;
-        value =
-          {
+      listToAttrs (map
+        (hostname: {
+          name = hostname;
+          value = {
             inherit hostname;
-            profiles = {
-              system = {
-                user = "root";
-                path = activate.nixos config;
-              };
-            } // (builtins.listToAttrs (map (mkDeployHome hostname) users));
+            profiles = profilesOn hostname;
           };
-      };
+        })
+        hostnames);
 
-    mkDeployHome = hostname: username:
-      let
-        inherit (deploy-rs.lib.${config.pkgs.system}) activate;
-        config = outputs.homeConfigurations."${username}@${hostname}";
-      in
-      {
-        name = username;
-        value = {
-          user = username;
-          path = activate.home-manager config;
-        };
-      };
+
+    mkNixosDeployProfile = _name: config: {
+      user = "root";
+      path = (activate config.pkgs.system).nixos config;
+    };
+
+    mkHomeDeployProfile = name: config: {
+      user = getUsername name;
+      path = (activate config.pkgs.system).home-manager config;
+    };
   };
 in
 mylib

@@ -1,13 +1,13 @@
 { pkgs, ... }: {
   imports = [
-    ./nvim
     ./amfora.nix
     ./bat.nix
     ./fish.nix
     ./git.nix
     ./gpg.nix
-    ./neofetch.nix
     ./nix-index.nix
+    ./nvim
+    ./pfetch.nix
     ./ranger.nix
     ./screen.nix
     ./shellcolor.nix

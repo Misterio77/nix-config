@@ -1,7 +1,8 @@
-{ outputs, ... }:
+{ outputs, hostname, ... }:
 let
-  inherit (builtins) attrNames concatStringsSep;
-  hostnames = attrNames outputs.nixosConfigurations;
+  inherit (builtins) attrNames concatStringsSep filter;
+  notSelf = n: n != hostname;
+  hostnames = filter notSelf (attrNames outputs.nixosConfigurations);
 in
 {
   programs.ssh = {
