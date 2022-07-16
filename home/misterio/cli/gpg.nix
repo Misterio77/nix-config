@@ -23,8 +23,6 @@ in
 
   programs.gpg = {
     enable = true;
-    mutableKeys = false;
-    mutableTrust = false;
     settings = {
       trust-model = "tofu+pgp";
     };
