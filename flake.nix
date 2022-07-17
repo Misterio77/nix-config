@@ -118,8 +118,8 @@
             "games"
           ];
           desktop = "hyprland";
-          colorscheme = "catppuccin";
-          wallpaper = "cartoon-mountain";
+          wallpaper = "aenami-all-i-need";
+          colorscheme = "material-palenight";
         };
         "misterio@pleione" = mkHome {
           username = "misterio";

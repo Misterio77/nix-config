@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i bash -p jq httpie
+#!/usr/bin/env -S nix shell nixpkgs#httpie nixpkgs#jq --command bash
 
 function fetch_image() {
     image=$1
@@ -26,7 +25,7 @@ images=$(echo $result | jq -r '.data.images[] | "\(.description)|\(.type)|\(.id)
 
 echo "["
 while read -r image; do
-    fetch_image $image &
+    fetch_image $image
 done <<< "$images"
 wait
 echo "]"
