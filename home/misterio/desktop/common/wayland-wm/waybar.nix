@@ -1,11 +1,9 @@
-{ config, features, lib, pkgs, mylib, desktop, hostname, ... }:
+{ config, lib, pkgs, hostname, ... }:
 
 let
   inherit (builtins) attrValues concatStringsSep mapAttrs;
   inherit (pkgs.lib) optionals optional;
   inherit (config.home.preferredApps) menu terminal;
-
-  trusted = mylib.has "trusted" features;
 
   # Dependencies
   jq = "${pkgs.jq}/bin/jq";
@@ -38,10 +36,10 @@ in
         width = 100;
         margin = "6";
         position = "bottom";
-        modules-center = (optionals (desktop == "sway") [
+        modules-center = (optionals config.wayland.windowManager.sway.enable [
           "sway/workspaces"
           "sway/mode"
-        ]) ++ (optionals (desktop == "hyprland") [
+        ]) ++ (optionals config.wayland.windowManager.hyprland.enable [
           "wlr/workspaces"
         ]);
 
@@ -53,8 +51,8 @@ in
       primary = {
         mode = "dock";
         height = 40;
-        position = "top";
         margin = "6";
+        position = "top";
         output =
           (optional (hostname == "atlas") "DP-1") ++
           (optional (hostname == "pleione") "eDP-1");
@@ -191,7 +189,7 @@ in
             "unread" = "";
           };
         };
-        "custom/gpg-agent" = lib.mkIf trusted {
+        "custom/gpg-agent" = lib.mkIf config.programs.password-store.enable {
           interval = 2;
           return-type = "json";
           exec =

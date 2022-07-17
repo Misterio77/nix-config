@@ -78,9 +78,11 @@
         default = deploy;
       });
 
+      /*
       devShells = forAllSystems (system: {
         default = legacyPackages.${system}.callPackage ./shell.nix { };
       });
+      */
 
       nixosModules = importAttrset ./modules/nixos;
       homeManagerModules = importAttrset ./modules/home-manager;
@@ -113,11 +115,12 @@
           persistence = true;
 
           features = [
+            "desktop/hyprland"
+            "desktop/sway"
             "trusted"
             "rgb"
             "games"
           ];
-          desktop = "hyprland";
           wallpaper = "aenami-all-i-need";
           colorscheme = "material-palenight";
         };
@@ -127,11 +130,11 @@
           persistence = true;
 
           features = [
+            "desktop/hyprland"
             "trusted"
             "laptop"
             "games"
           ];
-          desktop = "hyprland";
           colorscheme = "paraiso";
           wallpaper = "plains-gold-field";
         };
@@ -150,19 +153,19 @@
 
           colorscheme = "dracula";
         };
-        "misterio@generic-gnome" = mkHome {
+        "misterio@generic-graphical" = mkHome {
           username = "misterio";
           system = "x86_64-linux";
 
-          desktop = "gnome";
+          features = [ "desktop/gnome" ];
           colorscheme = "dracula";
         };
 
         # GELOS lab computers
         "misterio@emperor" = homeConfigurations."misterio@generic";
         "misterio@galapagos" = homeConfigurations."misterio@generic";
-        "misterio@macaroni" = homeConfigurations."misterio@generic-gnome";
-        "misterio@rockhopper" = homeConfigurations."misterio@generic-gnome";
+        "misterio@macaroni" = homeConfigurations."misterio@generic-graphical";
+        "misterio@rockhopper" = homeConfigurations."misterio@generic-graphical";
       };
 
       deploy.nodes = mkDeploys nixosConfigurations homeConfigurations;

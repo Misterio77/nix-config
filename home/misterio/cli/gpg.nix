@@ -1,19 +1,25 @@
-{ pkgs, persistence, desktop, lib, ... }:
+{ pkgs, config, persistence, lib, ... }:
 let
   fetchKey = { url, sha256 ? lib.fakeSha256 }:
     builtins.fetchurl { inherit sha256 url; };
+
+  pinentry =
+    if config.gtk.enable then {
+      package = pkgs.pinentry-gnome;
+      name = "gnome3";
+    } else {
+      package = pkgs.pinentry-curses;
+      name = "curses";
+    };
 in
 {
-  home.packages =
-    if desktop != null
-    then [ pkgs.pinentry-gnome ]
-    else [ pkgs.pinentry-curses ];
+  home.packages = [ pinentry.package ];
 
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
     sshKeys = [ "149F16412997785363112F3DBD713BC91D51B831" ];
-    pinentryFlavor = if desktop != null then "gnome3" else "curses";
+    pinentryFlavor = pinentry.name;
     enableExtraSocket = true;
   };
 

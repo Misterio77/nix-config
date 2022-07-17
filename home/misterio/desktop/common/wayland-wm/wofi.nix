@@ -1,21 +1,21 @@
-{ config, lib, features, mylib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
-  trusted = mylib.has "trusted" features;
   pass-wofi = pkgs.pass-wofi.override {
-  pass = config.programs.password-store.package;
-};
+    pass = config.programs.password-store.package;
+  };
+  hasPass = config.programs.password-store.enable;
 in
 {
   home = {
     packages = with pkgs; [
       wofi
-    ] ++ (lib.optional trusted pass-wofi);
+    ] ++ (lib.optional hasPass pass-wofi);
 
     preferredApps.menu = {
       run-cmd = "wofi -S run";
       drun-cmd = "wofi -S drun -x 10 -y 10 -W 25% -H 60%";
       dmenu-cmd = "wofi -S dmenu";
-      password-cmd = lib.mkIf trusted "pass-wofi";
+      password-cmd = lib.mkIf hasPass "pass-wofi";
     };
   };
 

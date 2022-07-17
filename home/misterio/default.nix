@@ -1,4 +1,4 @@
-{ inputs, lib, username, persistence, desktop, features, ... }:
+{ inputs, lib, username, persistence, features, ... }:
 
 let
   inherit (lib) optional mkIf;
@@ -11,9 +11,7 @@ in
     inputs.impermanence.nixosModules.home-manager.impermanence
   ]
   # Import features that have modules
-  ++ filter pathExists (map (feature: ./${feature}) features)
-  # Import chosen desktop
-  ++ optional (desktop != null) ./desktop/${desktop};
+  ++ filter pathExists (map (feature: ./${feature}) features);
 
   systemd.user.startServices = "sd-switch";
   programs = {

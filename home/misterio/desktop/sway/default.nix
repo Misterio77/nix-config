@@ -1,10 +1,4 @@
-{ lib, pkgs, mylib, features, config, ... }:
-let
-  inherit (lib) mkIf;
-  trusted = mylib.has "trusted" features;
-in
-{
-
+{ lib, pkgs, config, ... }: {
   imports = [
     ../common
     ../common/wayland-wm
@@ -137,81 +131,83 @@ in
             }
           ];
         };
-        keybindings = lib.mkOptionDefault {
-          # Focus parent or child
-          "${modifier}+bracketleft" = "focus parent";
-          "${modifier}+bracketright" = "focus child";
+        keybindings = lib.mkOptionDefault
+          {
+            # Focus parent or child
+            "${modifier}+bracketleft" = "focus parent";
+            "${modifier}+bracketright" = "focus child";
 
-          # Layout types
-          "${modifier}+s" = "layout stacking";
-          "${modifier}+t" = "layout tabbed";
-          "${modifier}+e" = "layout toggle split";
+            # Layout types
+            "${modifier}+s" = "layout stacking";
+            "${modifier}+t" = "layout tabbed";
+            "${modifier}+e" = "layout toggle split";
 
-          # Splits
-          "${modifier}+minus" = "split v";
-          "${modifier}+backslash" = "split h";
+            # Splits
+            "${modifier}+minus" = "split v";
+            "${modifier}+backslash" = "split h";
 
-          # Scratchpad
-          "${modifier}+u" = "scratchpad show";
-          "${modifier}+Shift+u" = "move scratchpad";
+            # Scratchpad
+            "${modifier}+u" = "scratchpad show";
+            "${modifier}+Shift+u" = "move scratchpad";
 
-          # Move entire workspace
-          "${modifier}+Mod1+h" = "move workspace to output left";
-          "${modifier}+Mod1+Left" = "move workspace to output left";
-          "${modifier}+Mod1+l" = "move workspace to output right";
-          "${modifier}+Mod1+Right" = "move workspace to output right";
+            # Move entire workspace
+            "${modifier}+Mod1+h" = "move workspace to output left";
+            "${modifier}+Mod1+Left" = "move workspace to output left";
+            "${modifier}+Mod1+l" = "move workspace to output right";
+            "${modifier}+Mod1+Right" = "move workspace to output right";
 
-          # Toggle monitors
-          "${modifier}+Control+Left" = "output DP-3 toggle";
-          "${modifier}+Control+Down" = "output DP-1 toggle";
-          "${modifier}+Control+Right" = "output DP-2 toggle";
+            # Toggle monitors
+            "${modifier}+Control+Left" = "output DP-3 toggle";
+            "${modifier}+Control+Down" = "output DP-1 toggle";
+            "${modifier}+Control+Right" = "output DP-2 toggle";
 
-          # Pass menu
-          "Scroll_Lock" = mkIf trusted "exec ${menu.password-cmd}"; # fn+k
-          "XF86Calculator" = mkIf trusted "exec ${menu.password-cmd}"; # fn+f12
+            # Lock screen
+            "XF86Launch5" = "exec swaylock -S"; # lock icon on k70
+            "XF86Launch4" = "exec swaylock -S"; # fn+q
 
-          # Lock screen
-          "XF86Launch5" = "exec swaylock -S"; # lock icon on k70
-          "XF86Launch4" = "exec swaylock -S"; # fn+q
+            # Volume
+            "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+            "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+            "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            "Shift+XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+            "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
-          # Volume
-          "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-          "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "Shift+XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-          "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+            # Brightness
+            "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
+            "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
 
-          # Brightness
-          "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 10";
-          "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U 10";
+            # Media
+            "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+            "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+            "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+            "XF86AudioStop" = "exec ${pkgs.playerctl}/bin/playerctl stop";
 
-          # Media
-          "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
-          "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
-          "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
-          "XF86AudioStop" = "exec ${pkgs.playerctl}/bin/playerctl stop";
+            # Notifications
+            "${modifier}+w" = "exec ${notifier.dismiss-cmd}";
 
-          # Notifications
-          "${modifier}+w" = "exec ${notifier.dismiss-cmd}";
+            # Programs
+            "${modifier}+v" = "exec ${editor.cmd}";
+            "${modifier}+m" = "exec ${mail.cmd}";
+            "${modifier}+b" = "exec ${browser.cmd}";
 
-          # Programs
-          "${modifier}+v" = "exec ${editor.cmd}";
-          "${modifier}+m" = "exec ${mail.cmd}";
-          "${modifier}+b" = "exec ${browser.cmd}";
+            # Screenshot
+            "Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy output";
+            "Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy active";
+            "Control+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy screen";
+            "Mod1+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
+            "${modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy window";
 
-          # Screenshot
-          "Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy output";
-          "Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy active";
-          "Control+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy screen";
-          "Mod1+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
-          "${modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy window";
+            # Application menu
+            "${modifier}+x" = "exec ${menu.drun-cmd}";
 
-          # Application menu
-          "${modifier}+x" = "exec ${menu.drun-cmd}";
-
-          # Full screen across monitors
-          "${modifier}+shift+f" = "fullscreen toggle global";
-        };
+            # Full screen across monitors
+            "${modifier}+shift+f" = "fullscreen toggle global";
+          } // (lib.optionalAttrs config.programs.password-store.enable
+          {
+            # Pass menu
+            "Scroll_Lock" = "exec ${menu.password-cmd}"; # fn+k
+            "XF86Calculator" = "exec ${menu.password-cmd}"; # fn+f12
+          });
       };
     };
 }

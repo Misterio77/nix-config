@@ -20,7 +20,7 @@ in
     };
     package = pkgs.nixUnstable;
     extraOptions = ''
-      experimental-features = nix-command flakes repl-flake
+      experimental-features = nix-command flakes
       warn-dirty = false
     '';
     gc = {

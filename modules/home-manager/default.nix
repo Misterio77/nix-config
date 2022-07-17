@@ -6,4 +6,5 @@
   fonts = ./fonts.nix;
   preferred-apps = ./preferred-apps.nix;
   hyprland = ./hyprland.nix;
+  swaylock = ./swaylock.nix;
 }

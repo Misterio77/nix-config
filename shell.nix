@@ -1,5 +1,5 @@
 { mkShell, nix, home-manager, git, gnupg, age, deploy-rs, sops, ... }:
-pkgs.mkShell {
+mkShell {
   nativeBuildInputs = [
     nix
     home-manager
