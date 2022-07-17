@@ -75,7 +75,6 @@ in
         ];
         modules-right = [
           "custom/gamemode"
-          "custom/theme"
           "network"
           "custom/home"
           "battery"
@@ -242,12 +241,6 @@ in
             "active (Daytime)" = " ";
           };
           on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
-        };
-        "custom/theme" = {
-          interval = 4;
-          max-length = 20;
-          exec = "echo ${config.colorscheme.slug}";
-          format = "  {}";
         };
         "custom/gpu" = {
           interval = 5;
