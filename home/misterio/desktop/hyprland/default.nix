@@ -41,13 +41,13 @@
             inactive_opacity=0.75
             fullscreen_opacity=1.0
             rounding=5
-            blur=1
+            blur=true
             blur_size=5
             blur_passes=3
           }
 
           animations {
-            enabled=1
+            enabled=true
             animation=windows,1,4,default,slide
             animation=borders,1,5,default
             animation=fadein,1,7,default
@@ -56,13 +56,16 @@
 
           dwindle {
             force_split=2
-            preserve_split=1
+            preserve_split=true
             col.group_border_active=0xff${colors.base0B}
             col.group_border=0xff${colors.base04}
           }
 
           input {
             kb_layout=br
+          }
+          input:touchpad {
+            disable_while_typing=false
           }
 
           # Startup
