@@ -17,22 +17,25 @@
   # Add each flake input as a registry
   nix.registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
-  # Activate home-manager environment, if not already
-  environment.loginShellInit = ''
-    [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
-  '';
+  environment = {
+    # Activate home-manager environment, if not already
+    loginShellInit = ''
+      [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
+    '';
 
-  hardware.enableRedistributableFirmware = true;
+    # Persist logs, timers, etc
+    persistence = lib.mkIf persistence {
+      "/persist".directories = [ "/var/lib/systemd" "/var/log" ];
+    };
 
-  # Persist logs, timers, etc
-  environment.persistence = lib.mkIf persistence {
-    "/persist".directories = [ "/var/lib/systemd" "/var/log" ];
+    # Add terminfo files
+    enableAllTerminfo = true;
   };
 
   # Allows users to allow others on their binds
   programs.fuse.userAllowOther = true;
 
-  security.sudo.extraConfig = "Defaults timestamp_type=global";
+  hardware.enableRedistributableFirmware = true;
 
   system.stateVersion = lib.mkDefault "22.05";
 }
