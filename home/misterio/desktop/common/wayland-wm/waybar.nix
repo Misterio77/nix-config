@@ -236,7 +236,9 @@ in
             "deactivating" = " ";
             "inactive" = "? ";
             "active (Nighttime)" = " ";
+            "active (Transition (Night)" = " ";
             "active (Daytime)" = " ";
+            "active (Transition (Day)" = " ";
           };
           on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
         };
