@@ -27,6 +27,7 @@
     httpie # Better curl
     jq # JSON pretty printer and manipulator
 
+    deploy-rs.deploy-rs # Deployment tool
     nvd nix-diff # Check derivation differences
     rnix-lsp # Nix LSP
     nixfmt # Nix formatter
