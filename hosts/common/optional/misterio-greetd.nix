@@ -38,8 +38,8 @@ in
       initial_session = {
         inherit user;
         command =
-          if hasSway then "sway"
-          else if hasHyprland then "Hyprland"
+          if hasHyprland then "Hyprland"
+          else if  hasSway then "sway"
           else "$SHELL -l";
       };
     };
