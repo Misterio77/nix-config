@@ -26,7 +26,7 @@
 
   # Persist logs, timers, etc
   environment.persistence = lib.mkIf persistence {
-    "/persist".directories = [ "/var/lib/systemd" "/var/logs" ];
+    "/persist".directories = [ "/var/lib/systemd" "/var/log" ];
   };
 
   # Allows users to allow others on their binds
