@@ -11,12 +11,13 @@ let
   hasSway = homeConfig.wayland.windowManager.sway.enable;
   hasHyprland = homeConfig.wayland.windowManager.hyprland.enable;
 
-  kioskCmd = "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''
-    exec "${gtkgreet} -l &>/dev/null; ${pkgs.sway}/bin/swaymsg exit"
+  sway-kiosk = command: "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''
+    output * bg #000000 solid_color
+    exec "${command}; ${pkgs.sway}/bin/swaymsg exit"
   ''}";
 
   steam-bigpicture = pkgs.writeShellScriptBin "steam-bigpicture" ''
-    ${pkgs.cage}/bin/cage -- ${pkgs.steam}/bin/steam -bigpicture
+    ${sway-kiosk "${pkgs.steam}/bin/steam -bigpicture"}
   '';
 in
 {
@@ -33,7 +34,7 @@ in
     settings = {
       default_session = {
         inherit user;
-        command = kioskCmd;
+        command = sway-kiosk "${gtkgreet} -l &>/dev/null";
       };
       initial_session = {
         inherit user;
