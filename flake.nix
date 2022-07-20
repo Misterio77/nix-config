@@ -121,8 +121,8 @@
             "rgb"
             "games"
           ];
-          wallpaper = "aenami-all-i-need";
-          colorscheme = "material-palenight";
+          wallpaper = "watercolor-beach";
+          colorscheme = "tokyo-night-storm";
         };
         "misterio@pleione" = mkHome {
           username = "misterio";
