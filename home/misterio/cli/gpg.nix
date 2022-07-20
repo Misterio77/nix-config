@@ -33,7 +33,7 @@ in
   };
 
   home.persistence = lib.mkIf persistence {
-    "/persist/home/misterio".directories = [ ".gnupg/private-keys-v1.d" ];
+    "/persist/home/misterio".directories = [ ".gnupg" ];
   };
 
   programs.gpg = {

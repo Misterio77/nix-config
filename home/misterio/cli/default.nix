@@ -7,6 +7,7 @@
     ./gpg.nix
     ./nix-index.nix
     ./nvim
+    ./pass.nix
     ./pfetch.nix
     ./ranger.nix
     ./screen.nix

@@ -95,10 +95,8 @@
 
           bind=SUPER,x,exec,${menu.drun-cmd}
           bind=SUPER,d,exec,${menu.run-cmd}
-          ${lib.optionalString config.programs.password-store.enable ''
-            bind=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
-            bind=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
-          ''}
+          bind=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
+          bind=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
 
           # Toggle waybar
           bind=,XF86Tools,exec,${pkgs.procps}/bin/pkill -USR1 waybar # profile button

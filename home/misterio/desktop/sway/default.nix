@@ -205,14 +205,13 @@
             # Application menu
             "${modifier}+x" = "exec ${menu.drun-cmd}";
 
-            # Full screen across monitors
-            "${modifier}+shift+f" = "fullscreen toggle global";
-          } // (lib.optionalAttrs config.programs.password-store.enable
-          {
             # Pass menu
             "Scroll_Lock" = "exec ${menu.password-cmd}"; # fn+k
             "XF86Calculator" = "exec ${menu.password-cmd}"; # fn+f12
-          });
+
+            # Full screen across monitors
+            "${modifier}+shift+f" = "fullscreen toggle global";
+          };
       };
     };
 }
