@@ -10,6 +10,15 @@
       inherit (config.colorscheme) colors;
       inherit (config.home.preferredApps)
         menu browser editor mail notifier terminal;
+
+      grimblast = "${pkgs.hyprland-contrib.grimblast}/bin/grimblast";
+      light = "${pkgs.light}/bin/light";
+      mako = "${pkgs.mako}/bin/mako";
+      pactl = "${pkgs.pulseaudio}/bin/pactl";
+      playerctl = "${pkgs.playerctl}/bin/playerctl";
+      swaybg = "${pkgs.swaybg}/bin/swaybg";
+      swayidle = "${pkgs.swayidle}/bin/swayidle";
+      swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
     in
     {
       enable = true;
@@ -71,12 +80,11 @@
           }
 
           # Startup
-          exec-once=${pkgs.swaylock-effects}/bin/swaylock -i ${config.wallpaper}
+          exec-once=${swaylock} -i ${config.wallpaper}
           exec-once=waybar
-          exec=${pkgs.swaybg}/bin/swaybg -i ${config.wallpaper} --mode fill
-          exec-once=${pkgs.mako}/bin/mako
-          exec-once=${pkgs.swayidle}/bin/swayidle -w
-          exec-once=${pkgs.primary-xwayland}/bin/primary-xwayland largest
+          exec=${swaybg} -i ${config.wallpaper} --mode fill
+          exec-once=${mako}
+          exec-once=${swayidle} -w
 
           # Program bindings
           bind=SUPER,Return,exec,${terminal.cmd}
@@ -96,34 +104,32 @@
           bind=,XF86Tools,exec,${pkgs.procps}/bin/pkill -USR1 waybar # profile button
 
           # Lock screen
-          bind=,XF86Launch5,exec,${pkgs.swaylock-effects}/bin/swaylock -S
-          bind=,XF86Launch4,exec,${pkgs.swaylock-effects}/bin/swaylock -S
+          bind=,XF86Launch5,exec,${swaylock} -S
+          bind=,XF86Launch4,exec,${swaylock} -S
 
           # Screenshots
-          bind=,Print,exec,${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy output
-          bind=SHIFT,Print,exec,${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy active
-          bind=CONTROL,Print,exec,${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy screen
-          bind=ALT,Print,exec,${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area
-          bind=SUPERSHIFT,S,exec,g${pkgs.sway-contrib.grimshot}/bin/rimshot --notify copy area # fn+print on pleione
-          bind=SUPER,Print,exec,${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy window
+          bind=,Print,exec,${grimblast} --notify copy output
+          bind=SHIFT,Print,exec,${grimblast} --notify copy active
+          bind=CONTROL,Print,exec,${grimblast} --notify copy screen
+          bind=SUPER,Print,exec,${grimblast} --notify copy window
 
           # Keyboard controls (brightness, media, sound, etc)
-          bind=,XF86MonBrightnessUp,exec,${pkgs.light}/bin/light -A 10
-          bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
+          bind=,XF86MonBrightnessUp,exec,${light} -A 10
+          bind=,XF86MonBrightnessDown,exec,${light} -U 10
 
-          bind=,XF86AudioNext,exec,${pkgs.playerctl}/bin/playerctl next
-          bind=,XF86AudioPrev,exec,${pkgs.playerctl}/bin/playerctl previous
-          bind=,XF86AudioPlay,exec,${pkgs.playerctl}/bin/playerctl play-pause
-          bind=,XF86AudioStop,exec,${pkgs.playerctl}/bin/playerctl stop
+          bind=,XF86AudioNext,exec,${playerctl} next
+          bind=,XF86AudioPrev,exec,${playerctl} previous
+          bind=,XF86AudioPlay,exec,${playerctl} play-pause
+          bind=,XF86AudioStop,exec,${playerctl} stop
           bind=ALT,XF86AudioPlay,exec,systemctl --user restart playerctld
           bind=SUPER,XF86AudioPlay,exec,${terminal.cmd-spawn "${pkgs.lyrics}/bin/lyrics"}
 
-          bind=,XF86AudioRaiseVolume,exec,${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%
-          bind=,XF86AudioLowerVolume,exec,${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%
-          bind=,XF86AudioMute,exec,${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle
+          bind=,XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%
+          bind=,XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%
+          bind=,XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle
 
-          bind=SHIFT,XF86AudioMute,exec,${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle
-          bind=,XF86AudioMicMute,exec,${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle
+          bind=SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle
+          bind=,XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle
 
 
           # Window manager controls

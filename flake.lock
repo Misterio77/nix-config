@@ -129,16 +129,15 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1658281895,
-        "narHash": "sha256-tOpi0gjB1rhbC2su9V2KjdKoMHLueHcZ2Jfp+Q58+W0=",
+        "lastModified": 1658283284,
+        "narHash": "sha256-mf4gt+AROIEWDmNQ+SrRrG670IJu6ycXZaSqxiiJBhs=",
         "owner": "misterio77",
         "repo": "hyprland",
-        "rev": "84c528835e699546990a07d980cce61a711333bc",
+        "rev": "0516ea21948074e611a31a978fb033e615d0f469",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
-        "ref": "add-homemanager-module",
         "repo": "hyprland",
         "type": "github"
       }

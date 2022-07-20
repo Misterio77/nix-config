@@ -28,7 +28,7 @@
 
     # Nixified third-party software
     hyprland = {
-      url = "github:misterio77/hyprland/add-homemanager-module";
+      url = "github:misterio77/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

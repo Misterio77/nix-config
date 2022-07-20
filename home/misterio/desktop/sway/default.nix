@@ -191,10 +191,15 @@
             "${modifier}+b" = "exec ${browser.cmd}";
 
             # Screenshot
+            # Current monitor
             "Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy output";
+            # Current window
             "Shift+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy active";
+            # Entire screen
             "Control+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy screen";
+            # Pick area
             "Mod1+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy area";
+            # Pick window
             "${modifier}+Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot --notify copy window";
 
             # Application menu

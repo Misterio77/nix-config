@@ -16,6 +16,7 @@
     imv
     mimeo
     slurp
+    grim
     wf-recorder
     wl-clipboard
     wl-mirror
