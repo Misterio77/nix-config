@@ -1,7 +1,8 @@
-{ lib, config, pkgs, hostname, ... }: {
+{ inputs, lib, config, pkgs, hostname, ... }: {
   imports = [
     ../common
     ../common/wayland-wm
+    inputs.hyprland.homeManagerModules.default
   ];
 
   wayland.windowManager.hyprland =
@@ -12,6 +13,7 @@
     in
     {
       enable = true;
+      package = pkgs.hyprland;
       extraConfig =
         (lib.optionalString (hostname == "atlas") ''
           monitor=DP-3,1920x1080@60,0x0,1
