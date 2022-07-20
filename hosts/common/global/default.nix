@@ -18,8 +18,8 @@
   nix.registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
   environment = {
-    # Activate home-manager environment, if not already
     loginShellInit = ''
+      # Activate home-manager environment, if not already
       [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
     '';
 

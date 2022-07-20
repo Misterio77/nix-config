@@ -11,6 +11,11 @@ let
       package = pkgs.pinentry-curses;
       name = "curses";
     };
+
+  startGpgAgent = ''
+    # Start gpg-agent if it's not running or tunneled in
+    gpg-agent &> /dev/null || eval $(gpg-agent --daemon) &> /dev/null
+  '';
 in
 {
   home.packages = [ pinentry.package ];
@@ -21,6 +26,12 @@ in
     sshKeys = [ "149F16412997785363112F3DBD713BC91D51B831" ];
     pinentryFlavor = pinentry.name;
     enableExtraSocket = true;
+  };
+
+  programs = {
+    bash.profileExtra = startGpgAgent;
+    fish.loginShellInit = startGpgAgent;
+    zsh.loginExtra = startGpgAgent;
   };
 
   home.persistence = lib.mkIf persistence {
