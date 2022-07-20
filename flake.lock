@@ -129,11 +129,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1658283284,
-        "narHash": "sha256-mf4gt+AROIEWDmNQ+SrRrG670IJu6ycXZaSqxiiJBhs=",
+        "lastModified": 1658284279,
+        "narHash": "sha256-sntK3Su2hAeytzhnP+9srrkVKliberke9bm8KWmse8A=",
         "owner": "misterio77",
         "repo": "hyprland",
-        "rev": "0516ea21948074e611a31a978fb033e615d0f469",
+        "rev": "86b7055dcaabfcc0562dc8afd2a6c6350a7a0f82",
         "type": "github"
       },
       "original": {
