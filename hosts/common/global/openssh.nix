@@ -25,4 +25,7 @@ in
       type = "ed25519";
     }
   ];
+
+  # Passwordless sudo when SSH'ing with keys
+  security.pam.enableSSHAgentAuth = true;
 }

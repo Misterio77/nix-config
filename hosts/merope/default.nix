@@ -6,7 +6,6 @@
     ./hardware-configuration.nix
     ../common/global
     ../common/optional/acme.nix
-    ../common/optional/passwordless-sudo.nix
     ../common/optional/podman.nix
     ../common/optional/postgres.nix
     ../common/optional/tailscale.nix

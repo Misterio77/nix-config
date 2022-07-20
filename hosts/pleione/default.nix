@@ -9,7 +9,6 @@
     ../common/global
     ../common/optional/misterio-greetd.nix
     ../common/optional/networkmanager.nix
-    ../common/optional/passwordless-sudo.nix
     ../common/optional/pipewire.nix
     ../common/optional/podman.nix
     ../common/optional/postgres.nix
