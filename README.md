@@ -15,7 +15,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - Deployment **secrets** using **sops-nix**
 - **Mesh networked** hosts with **tailscale** and **headscale**
 - Flexible **Home Manager** Configs through **feature flags**
-- Extensively configured **sway** and **neovim**
+- Extensively configured wayland environments (**sway** and **hyprland**) and editor (**neovim**)
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
 
 ## Structure
@@ -84,7 +84,7 @@ signing, as well as for SSH'ing around.
 ## Tooling and applications I use
 
 Most relevant user apps daily drivers:
-- sway + swayidle + swaylock
+- hyprland + swayidle + swaylock
 - waybar
 - neovim
 - fish + starship
@@ -120,8 +120,9 @@ Nixy stuff:
 Let me know if you have any questions about them :)
 
 ## Unixpornish stuff
-![screenshot](https://preview.redd.it/q8z05dsvrvb81.png?width=960&crop=smart&auto=webp&s=d66264a468c0ca194cc8cbb2ab80829eea7921a7)
+![fakebusy](https://i.imgur.com/PZ4L7TR.png)
+![clean](https://i.imgur.com/T5FjqbZ.jpg)
 
-That's how my sway setups (desktop and laptop) look like (as of start of 2022).
+That's how my hyprland desktop setup look like (as of 2022 July).
 
-If you're interested in my WM configurations, they're managed by home-manager and are located at `home-mnager/desktop/sway`.
+
