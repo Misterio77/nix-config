@@ -1,4 +1,6 @@
-{ pkgs, persistence, lib, ... }: {
+{ pkgs, persistence, lib, config, ... }:
+let pass = "${config.programs.password-store.package}/bin/pass";
+in {
   home.packages = with pkgs; [ vdirsyncer ];
 
   home.persistence = lib.mkIf persistence {
@@ -25,7 +27,7 @@
     type = "carddav"
     url = "https://webmail.gandi.net/SOGo/dav"
     username = "eu@misterio.me"
-    password.fetch = ["command", "pass", "mail.gandi.net/eu@misterio.me"]
+    password.fetch = ["command", "${pass}", "mail.gandi.net/eu@misterio.me"]
 
     [pair calendars]
     a = "calendars_local"
@@ -43,7 +45,7 @@
     type = "caldav"
     url = "https://webmail.gandi.net/SOGo/dav"
     username = "eu@misterio.me"
-    password.fetch = ["command", "pass", "mail.gandi.net/eu@misterio.me"]
+    password.fetch = ["command", "${pass}", "mail.gandi.net/eu@misterio.me"]
   '';
 
   systemd.user.services.vdirsyncer = {

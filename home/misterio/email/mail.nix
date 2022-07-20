@@ -1,6 +1,7 @@
-{ pkgs, persistence, lib, ... }:
+{ pkgs, persistence, lib, config, ... }:
 
 let
+  pass = "${config.programs.password-store.package}/bin/pass";
   common = rec {
     msmtp.enable = true;
     realName = "Gabriel Fontes";
@@ -30,7 +31,7 @@ in {
         primary = true;
         address = "eu@misterio.me";
         userName = address;
-        passwordCommand = "pass mail.gandi.net/${address}";
+        passwordCommand = "${pass} mail.gandi.net/${address}";
         imap.host = "mail.gandi.net";
         smtp.host = "mail.gandi.net";
         folders = { inbox = "INBOX"; };
@@ -47,14 +48,14 @@ in {
       college = rec {
         address = "g.fontes@usp.br";
         userName = address;
-        passwordCommand = "pass smtp.gmail.com/${address}";
+        passwordCommand = "${pass} smtp.gmail.com/${address}";
         imap.host = "imap.gmail.com";
         smtp.host = "smtp.gmail.com";
       } // common;
       work = rec {
         address = "gabriel.fontes@uget.express";
         userName = address;
-        passwordCommand = "pass smtp.gmail.com/${address}";
+        passwordCommand = "${pass} smtp.gmail.com/${address}";
         imap.host = "imap.gmail.com";
         smtp.host = "smtp.gmail.com";
       } // common;
