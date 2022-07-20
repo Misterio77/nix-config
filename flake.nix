@@ -62,13 +62,14 @@
         projeto-lab-bd = inputs.projeto-lab-bd.overlays.default;
       };
 
-      legacyPackages = forAllSystems (system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues overlays;
-          config.allowUnfree = true;
-        }
-      );
+      nixosModules = importAttrset ./modules/nixos;
+      homeManagerModules = importAttrset ./modules/home-manager;
+
+      templates = import ./templates;
+
+      devShells = forAllSystems (system: {
+        default = legacyPackages.${system}.callPackage ./shell.nix { };
+      });
 
       apps = forAllSystems (system: rec {
         deploy = {
@@ -78,16 +79,13 @@
         default = deploy;
       });
 
-      /*
-      devShells = forAllSystems (system: {
-        default = legacyPackages.${system}.callPackage ./shell.nix { };
-      });
-      */
-
-      nixosModules = importAttrset ./modules/nixos;
-      homeManagerModules = importAttrset ./modules/home-manager;
-
-      templates = import ./templates;
+      legacyPackages = forAllSystems (system:
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues overlays;
+          config.allowUnfree = true;
+        }
+      );
 
       nixosConfigurations = {
         atlas = mkSystem {
@@ -108,7 +106,6 @@
       };
 
       homeConfigurations = {
-        # Personal computers
         "misterio@atlas" = mkHome {
           username = "misterio";
           hostname = "atlas";
