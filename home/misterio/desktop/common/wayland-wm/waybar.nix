@@ -12,6 +12,7 @@ let
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+  playerctld = "${pkgs.playerctl}/bin/playerctld";
   lyrics = "${pkgs.lyrics}/bin/lyrics";
 
   jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-output" ''
@@ -269,7 +270,7 @@ in
             "discord" = "ﭮ";
             "sublimemusic" = "";
           };
-          on-click = "${systemctl} --user restart playerctld";
+          on-click = "${playerctld} shift";
         };
         "custom/player" = {
           exec-if = "${playerctl} status";
