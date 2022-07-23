@@ -4,7 +4,7 @@ let
   inherit (self) outputs;
 
   inherit (builtins) elemAt match any mapAttrs attrValues attrNames listToAttrs;
-  inherit (nixpkgs.lib) nixosSystem filterAttrs genAttrs systems mapAttrs';
+  inherit (nixpkgs.lib) nixosSystem filterAttrs genAttrs mapAttrs';
   inherit (home-manager.lib) homeManagerConfiguration;
 
   activate = type: config: deploy-rs.lib.${config.pkgs.system}.activate.${type} config;
@@ -13,12 +13,19 @@ rec {
   # Applies a function to a attrset's names, while keeping the values
   mapAttrNames = f: mapAttrs' (name: value: { name = f name; inherit value; });
 
+  has = element: any (x: x == element);
+
   getUsername = string: elemAt (match "(.*)@(.*)" string) 0;
   getHostname = string: elemAt (match "(.*)@(.*)" string) 1;
 
-  has = element: any (x: x == element);
-
-  forAllSystems = genAttrs systems.flakeExposed;
+  systems = [
+    "aarch64-darwin"
+    "aarch64-linux"
+    "i686-linux"
+    "x86_64-darwin"
+    "x86_64-linux"
+  ];
+  forAllSystems = genAttrs systems;
 
   importAttrset = path: mapAttrs (_: import) (import path);
 
