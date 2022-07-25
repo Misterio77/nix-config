@@ -18,8 +18,8 @@ tasks:
     cachix use "$cachix"
 - build: |
     cd "$repo"
-    my_packages=$(nix eval --raw --file ./pkgs --apply 'f: builtins.concatStringsSep "," (builtins.attrNames (f { } ))')
-    nix build .#$my_packages
+    my_packages=".#{$(nix eval --raw --file ./pkgs --apply 'f: builtins.concatStringsSep "," (builtins.attrNames (f { } ))')}"
+    nix build $my_packages
     nix build .#deploy-rs.deploy-rs
 
 - upload_cachix: |
