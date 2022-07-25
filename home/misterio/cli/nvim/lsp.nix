@@ -86,6 +86,9 @@ in
                   null_ls.builtins.code_actions.statix,
                   null_ls.builtins.diagnostics.deadnix,
 
+                  -- Prose
+                  null_ls.builtins.diagnostics.proselint,
+
                   -- General
                   null_ls.builtins.diagnostics.editorconfig_checker.with({
                     command = "editorconfig-checker",
