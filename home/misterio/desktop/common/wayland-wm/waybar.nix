@@ -194,7 +194,7 @@ in
           interval = 2;
           return-type = "json";
           exec =
-            let keyring = import ../../../keyring.nix { inherit pkgs; };
+            let keyring = import ../../../trusted/keyring.nix { inherit pkgs; };
             in
             jsonOutput {
               pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';

@@ -114,7 +114,7 @@
           features = [
             "desktop/hyprland"
             "desktop/sway"
-            "email"
+            "trusted"
             "rgb"
             "games"
           ];
@@ -128,7 +128,7 @@
 
           features = [
             "desktop/hyprland"
-            "email"
+            "trusted"
             "laptop"
             "games"
           ];

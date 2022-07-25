@@ -50,7 +50,7 @@ in {
 
   systemd.user.services.vdirsyncer = {
     Unit = { Description = "vdirsyncer synchronization"; };
-    Service = let keyring = import ../keyring.nix { inherit pkgs; };
+    Service = let keyring = import ./keyring.nix { inherit pkgs; };
     in {
       Type = "oneshot";
       ExecCondition = ''
