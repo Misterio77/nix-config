@@ -9,9 +9,6 @@
     hash = "sha256-Mn3wasplwXsDCBEpHLqdh0G+SqYIirj7lKvM3VehPH0=";
   };
 
-  # Sane default values and crash avoidance (https://github.com/k-vernooy/trekscii/pull/1)
-  patches = [ ./trekscii.patch ];
-
   installPhase = ''
     install -Dm 0755 bin/trekscii $out/bin/trekscii
   '';
