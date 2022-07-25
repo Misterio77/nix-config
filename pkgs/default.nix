@@ -11,6 +11,7 @@
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   swayfader = pkgs.callPackage ./swayfader { };
+  trekscii = pkgs.callPackage ./trekscii { };
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };

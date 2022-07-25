@@ -27,6 +27,7 @@
     fd # Better find
     httpie # Better curl
     jq # JSON pretty printer and manipulator
+    trekscii # Cute startrek cli printer
 
     deploy-rs.deploy-rs # Deployment tool
     nvd nix-diff # Check derivation differences
