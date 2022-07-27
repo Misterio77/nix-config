@@ -33,6 +33,6 @@
   sops.secrets.paste-misterio-me-key = {
     owner = "paste";
     group = "paste";
-    sopsFile = ./secrets.yaml;
+    sopsFile = ../secrets.yaml;
   };
 }

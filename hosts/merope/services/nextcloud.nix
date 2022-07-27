@@ -22,6 +22,6 @@ in
   sops.secrets.nextcloud-password = {
     owner = "nextcloud";
     group = "nextcloud";
-    sopsFile = ./secrets.yaml;
+    sopsFile = ../secrets.yaml;
   };
 }
