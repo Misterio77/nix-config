@@ -49,13 +49,18 @@
           }
 
           decoration {
-            active_opacity=0.95
-            inactive_opacity=0.75
+            active_opacity=0.93
+            inactive_opacity=0.80
             fullscreen_opacity=1.0
             rounding=5
             blur=true
-            blur_size=5
-            blur_passes=3
+            blur_size=2
+            blur_passes=5
+            drop_shadow=true
+            shadow_range=12
+            shadow_offset=3 3
+            col.shadow=0x44000000
+            col.shadow_inactive=0x66000000
           }
 
           animations {
@@ -228,6 +233,8 @@
           bind=SUPERSHIFT,asterisk,movetoworkspacesilent,8
           bind=SUPERSHIFT,parenleft,movetoworkspacesilent,9
           bind=SUPERSHIFT,parenright,movetoworkspacesilent,10
+
+          blurls=waybar
         '';
     };
 }
