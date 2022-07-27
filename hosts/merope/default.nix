@@ -33,7 +33,7 @@
   boot.loader.timeout = 5;
 
   # Enable argonone fan daemon
-  hardware.argonone.enable = true;
+  services.hardware.argonone.enable = true;
 
   system.stateVersion = "22.05";
 }

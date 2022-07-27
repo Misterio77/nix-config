@@ -5,7 +5,6 @@
   # Packages with an actual source
   apgdiff = pkgs.callPackage ./apgdiff { };
   apgdiff-docker = pkgs.callPackage ./apgdiff/docker.nix { };
-  argononed = pkgs.callPackage ./argononed { };
   clematis = pkgs.callPackage ./clematis { };
   gtklock = pkgs.callPackage ./gtklock { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
