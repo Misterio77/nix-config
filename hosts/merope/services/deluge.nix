@@ -1,6 +1,18 @@
-{ lib, persistence, ... }: {
-  services.deluge = {
-    enable = true;
+{ lib, persistence, config, ... }: {
+  services = {
+    deluge = {
+      enable = true;
+      web = {
+        enable = true;
+      };
+    };
+    nginx.virtualHosts = {
+      "torrent.misterio.me" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://localhost:${toString config.services.deluge.web.port}";
+      };
+    };
   };
 
   networking.firewall = {
