@@ -6,6 +6,8 @@
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
+    ./services/minecraft.nix
+
     ../common/global
     ../common/optional/ckb-next.nix
     ../common/optional/misterio-greetd.nix
