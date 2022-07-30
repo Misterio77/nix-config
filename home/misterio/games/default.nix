@@ -1,3 +1,3 @@
 {
-  imports = [ ./lutris.nix ./steam.nix ./polymc.nix ./factorio.nix ];
+  imports = [ ./lutris.nix ./steam.nix ./polymc.nix ];
 }
