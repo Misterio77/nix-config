@@ -69,11 +69,10 @@ in
                   -- Latex
                   null_ls.builtins.diagnostics.chktex,
                   -- HTML & templates
-                  null_ls.builtins.formatting.prettier,
                   null_ls.builtins.diagnostics.curlylint,
                   -- Markdown
                   null_ls.builtins.diagnostics.markdownlint,
-                  null_ls.builtins.formatting.markdownlint,
+                  null_ls.builtins.formatting.mdformat,
                   -- SQL
                   null_ls.builtins.diagnostics.sqlfluff,
                   null_ls.builtins.formatting.sqlfluff,
