@@ -66,9 +66,9 @@
           animations {
             enabled=true
             animation=windows,1,4,default,slide
-            animation=borders,1,5,default
-            animation=fadein,1,7,default
-            animation=workspaces,1,2,default,fadein
+            animation=border,1,5,default
+            animation=fade,1,7,default
+            animation=workspaces,1,2,default
           }
 
           dwindle {
