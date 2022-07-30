@@ -11,7 +11,7 @@
       inherit (config.home.preferredApps)
         menu browser editor mail notifier terminal;
 
-      grimblast = "${pkgs.hyprland-contrib.grimblast}/bin/grimblast";
+      grimblast = "${pkgs.grimblast}/bin/grimblast";
       light = "${pkgs.light}/bin/light";
       mako = "${pkgs.mako}/bin/mako";
       pactl = "${pkgs.pulseaudio}/bin/pactl";

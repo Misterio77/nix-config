@@ -2,8 +2,12 @@
   description = "My NixOS configuration";
 
   inputs = {
+    # Nix ecossystem
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
+    nur.url = "github:nix-community/NUR";
+    impermanence.url = "github:misterio77/impermanence"; # TODO change to upstream after #99 is merged
+    nix-colors.url = "github:misterio77/nix-colors";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -22,23 +26,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur.url = "github:nix-community/NUR";
-    impermanence.url = "github:misterio77/impermanence"; # TODO change to upstream after #99 is merged
-    nix-colors.url = "github:misterio77/nix-colors";
-
-    # Nixified third-party software
+    # Nixified software
     hyprland = {
-      url = "github:misterio77/hyprland";
+      url = "github:hyprwm/hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprwm-contrib = {
+      url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # My nixified software
     paste-misterio-me = {
       url = "github:misterio77/paste.misterio.me/1.3.1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    projeto-lab-bd = {
-      url = "github:misterio77/SCC0541-Lab-BD-Projeto";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -58,8 +58,8 @@
         peerix = inputs.peerix.overlay;
         sops-nix = inputs.sops-nix.overlay;
         hyprland = inputs.hyprland.overlays.default;
+        hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
-        projeto-lab-bd = inputs.projeto-lab-bd.overlays.default;
       };
 
       nixosModules = importAttrset ./modules/nixos;

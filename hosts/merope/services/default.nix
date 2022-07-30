@@ -10,7 +10,5 @@
     ./headscale.nix
 
     ./paste-misterio-me.nix
-
-    ./projeto-lab-bd.nix
   ];
 }
