@@ -7,6 +7,7 @@
   apgdiff-docker = pkgs.callPackage ./apgdiff/docker.nix { };
   clematis = pkgs.callPackage ./clematis { };
   gtklock = pkgs.callPackage ./gtklock { };
+  phpactor = pkgs.callPackage ./phpactor { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   swayfader = pkgs.callPackage ./swayfader { };
