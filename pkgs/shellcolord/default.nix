@@ -8,8 +8,8 @@ stdenv.mkDerivation rec {
   src = fetchFromSourcehut {
     owner = "~misterio";
     repo = name;
-    rev = "769937036cf2778d28ac28db92157d31527e4b70";
-    sha256 = "sha256-RFxaMR7m9YZNga3UkWU8ym+iQS4AP27+u4W2kcBkiM8=";
+    rev = "4797e508c6a269ad5159fdf69b8559f4919c874f";
+    sha256 = "sha256-j+Rqz7X86/FS3WE1Hli8cV9+3DLm57GhgRkM0u78aAA=";
   };
 
   makeFlags = [ "PREFIX=$(out)" ];
