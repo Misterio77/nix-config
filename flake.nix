@@ -118,8 +118,8 @@
             "rgb"
             "games"
           ];
-          wallpaper = "aenami-lost-in-between";
-          colorscheme = "heetch";
+          wallpaper = "aurora-borealis-water-mountain";
+          colorscheme = "nebula";
         };
         "misterio@pleione" = mkHome {
           username = "misterio";
