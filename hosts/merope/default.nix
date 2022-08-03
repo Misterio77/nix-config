@@ -8,7 +8,6 @@
     ../common/optional/acme.nix
     ../common/optional/podman.nix
     ../common/optional/postgres.nix
-    ../common/optional/tailscale.nix
     ./services
   ];
 

@@ -18,7 +18,6 @@
     ../common/optional/starcitizen-fixes.nix
     ../common/optional/steam.nix
     ../common/optional/systemd-boot.nix
-    ../common/optional/tailscale.nix
   ];
 
   networking = {

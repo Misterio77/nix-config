@@ -1,9 +1,4 @@
-{ pkgs, inputs, lib, ... }:
-let
-  inherit (lib) mapAttrs' nameValuePair;
-  toRegistry = mapAttrs' (n: v: nameValuePair n { flake = v; });
-in
-{
+{ pkgs, inputs, lib, config, ... }: {
   nix = {
     settings = {
       substituters = [
@@ -28,6 +23,9 @@ in
       dates = "weekly";
     };
     # Map flake inputs to system registries
-    registry = toRegistry inputs;
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+
+    # Map registries to channels
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 }

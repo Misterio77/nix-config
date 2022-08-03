@@ -15,7 +15,6 @@
     ../common/optional/quietboot.nix
     ../common/optional/steam.nix
     ../common/optional/systemd-boot.nix
-    ../common/optional/tailscale.nix
   ];
 
 
