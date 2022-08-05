@@ -137,14 +137,14 @@ in
                 ''${display} $(ping -qc2 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.2fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
 
               targets = {
-                web = { host = "9.9.9.9"; icon = " "; };
+                electra = { host = "electra"; icon = " "; };
                 atlas = { host = "atlas"; icon = " "; };
                 merope = { host = "merope"; icon = " "; };
                 pleione = { host = "pleione"; icon = " "; };
               };
             in
             jsonOutput {
-              text = "${ping null targets.web} / ${ping null targets.merope}";
+              text = "${ping null targets.electra} / ${ping null targets.merope}";
               tooltip = concatStringsSep "\n" (attrValues (mapAttrs ping targets));
             };
           format = "{}";
