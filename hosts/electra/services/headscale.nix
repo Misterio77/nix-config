@@ -5,9 +5,9 @@
       enable = true;
       address = "0.0.0.0";
       dns = {
-        baseDomain = "ts.misterio.me";
+        baseDomain = "misterio.me";
         magicDns = true;
-        domains =  [ "misterio.me" "home.ts.misterio.me" ];
+        domains =  [ "ts.misterio.me" ];
         nameservers = [
           "9.9.9.9"
         ];
