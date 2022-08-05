@@ -14,6 +14,10 @@
       };
       port = 8085;
       serverUrl = "https://tailscale.misterio.me";
+      logLevel = "warn";
+      settings = {
+        logtail.enabled = false;
+      };
     };
 
     nginx.virtualHosts = let
