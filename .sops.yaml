@@ -7,6 +7,7 @@ keys:
     - &atlas age1hm5lf4qk84r4wh00atn6hpts7mpdx80adq26wht2e5qh9ewvhyaszfv82d
     - &merope age1709qfrwglm75v5x8lpuhryt83k6p6c90npplzzec6a5w8ct93ejscpqpc3
     - &pleione age1j9ld6ey62hqd33xkyd2fg9362k6xhm5gavsrpsfalwpcs8smxfdqpk84a2
+    - &electra age1mddne5mfm78n5td59nu35lh0fxfe28a0575kcjrmtyxl8hn9xpfsnmgvat
 
 creation_rules:
   - path_regex: hosts/merope/secrets.ya?ml$
@@ -15,10 +16,17 @@ creation_rules:
       - *merope
       pgp:
       - *misterio
+  - path_regex: hosts/electra/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *electra
+      pgp:
+      - *misterio
 
   - path_regex: hosts/common/secrets.ya?ml$
     key_groups:
     - age:
+      - *electra
       - *merope
       - *atlas
       - *pleione

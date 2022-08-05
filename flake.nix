@@ -88,19 +88,28 @@
       );
 
       nixosConfigurations = {
+        # Desktop
         atlas = mkSystem {
           hostname = "atlas";
           system = "x86_64-linux";
           persistence = true;
         };
+        # Laptop
         pleione = mkSystem {
           hostname = "pleione";
           system = "x86_64-linux";
           persistence = true;
         };
+        # Raspi 4
         merope = mkSystem {
           hostname = "merope";
           system = "aarch64-linux";
+          persistence = true;
+        };
+        # Vultr VPS
+        electra = mkSystem {
+          hostname = "electra";
+          system = "x86_64-linux";
           persistence = true;
         };
       };
@@ -141,6 +150,13 @@
           persistence = true;
 
           colorscheme = "nord";
+        };
+        "misterio@electra" = mkHome {
+          username = "misterio";
+          hostname = "electra";
+          persistence = true;
+
+          colorscheme = "solarflare";
         };
 
         # Generic configs
