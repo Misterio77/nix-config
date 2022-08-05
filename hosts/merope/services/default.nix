@@ -7,6 +7,7 @@
     ./navidrome.nix
     ./nextcloud.nix
     ./nginx.nix
+    ./headscale.nix
 
     ./paste-misterio-me.nix
   ];

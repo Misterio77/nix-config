@@ -13,6 +13,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - **Encrypted** single **BTRFS** partition
 - Fully **declarative** **self-hosted** stuff
 - Deployment **secrets** using **sops-nix**
+- **Mesh networked** hosts with **tailscale** and **headscale**
 - Flexible **Home Manager** Configs through **feature flags**
 - Extensively configured wayland environments (**sway** and **hyprland**) and editor (**neovim**)
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
@@ -92,6 +93,7 @@ Most relevant user apps daily drivers:
 - neomutt + mbsync
 - khal + khard + todoman + vdirsyncer
 - gpg + pass
+- tailscale
 - podman
 - zathura
 - wofi
@@ -105,6 +107,7 @@ Some of the services I host:
 - jitsi
 - nextcloud
 - minecraft
+- headscale
 
 Nixy stuff:
 - nix-colors
