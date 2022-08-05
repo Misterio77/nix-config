@@ -1,5 +1,5 @@
 {
   imports = [
-    ./electra.nix
+    ./headscale.nix
   ];
 }
