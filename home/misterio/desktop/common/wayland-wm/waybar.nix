@@ -14,7 +14,9 @@ let
   playerctld = "${pkgs.playerctl}/bin/playerctld";
   lyrics = "${pkgs.lyrics}/bin/lyrics";
 
+  # Function to simplify making waybar outputs
   jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-output" ''
+    set -euo pipefail
     ${pre}
     ${jq} -cn \
       --arg text "${text}" \
@@ -74,7 +76,8 @@ in
         modules-right = [
           "custom/gamemode"
           "network"
-          "custom/tailscale"
+          "custom/internet-ping"
+          "custom/tailscale-ping"
           "battery"
           "tray"
           "custom/hostname"
@@ -124,29 +127,32 @@ in
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
         };
-        "custom/tailscale" = {
-          interval = 3;
+        "custom/tailscale-ping" = {
+          interval = 1;
           return-type = "json";
           exec =
             let
-              ping = { icon, host, compact ? false }:
-                let display = if compact then icon else "${icon}  ${host}:";
-                in
-                ''${display} $(timeout 1 tailscale ping -c 1 ${host} | cut -d ' ' -f8)'';
-              pingCompact = param: ping (param // { compact = true; });
+              targets = {
+                electra = { host = "electra"; icon = " "; };
+                merope = { host = "merope"; icon = " "; };
+                atlas = { host = "atlas"; icon = " "; };
+                pleione = { host = "pleione"; icon = " "; };
+              };
+              targets' = builtins.filter (x: x.host != hostname) (builtins.attrValues targets);
 
-              targets = [
-                { host = "electra"; icon = " "; }
-                { host = "merope"; icon = " "; }
-                { host = "atlas"; icon = " "; }
-                { host = "pleione"; icon = " "; }
-              ];
-              cloud = builtins.elemAt targets 0;
-              home = builtins.elemAt targets 1;
+              showPingCompact = { host, icon }: "${icon} $ping_${host}";
+              showPingLarge = { host, icon }: "${icon} ${host}: $ping_${host}";
+              setPing = { host, ... }: ''
+                ping_${host}="$(timeout 1 tailscale ping -c 1 ${host} | cut -d ' ' -f8)" || ping_${host}="Disconnected"
+              '';
             in
             jsonOutput {
-              text = "${pingCompact cloud} / ${pingCompact home}";
-              tooltip = builtins.concatStringsSep "\n" (map ping targets);
+              pre = ''
+                set -o pipefail
+                ${builtins.concatStringsSep "\n" (map setPing targets')}
+              '';
+              text = "${showPingCompact targets.electra} / ${showPingCompact targets.merope}";
+              tooltip = builtins.concatStringsSep "\n" (map showPingLarge targets');
             };
           format = "{}";
         };
@@ -236,11 +242,14 @@ in
             "activating" = " ";
             "deactivating" = " ";
             "inactive" = "? ";
-            "active (Nighttime)" = " ";
             "active (Night)" = " ";
+            "active (Nighttime)" = " ";
             "active (Transition (Night)" = " ";
+            "active (Transition (Nighttime)" = " ";
             "active (Day)" = " ";
+            "active (Daytime)" = " ";
             "active (Transition (Day)" = " ";
+            "active (Transition (Daytime)" = " ";
           };
           on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
         };
