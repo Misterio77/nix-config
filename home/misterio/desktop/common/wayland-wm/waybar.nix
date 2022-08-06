@@ -1,7 +1,6 @@
 { config, lib, pkgs, hostname, ... }:
 
 let
-  inherit (builtins) attrValues concatStringsSep mapAttrs;
   inherit (pkgs.lib) optionals optional;
   inherit (config.home.preferredApps) menu terminal;
 
@@ -75,7 +74,7 @@ in
         modules-right = [
           "custom/gamemode"
           "network"
-          "custom/home"
+          "custom/tailscale"
           "battery"
           "tray"
           "custom/hostname"
@@ -125,27 +124,29 @@ in
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
         };
-        "custom/home" = {
-          interval = 10;
+        "custom/tailscale" = {
+          interval = 3;
           return-type = "json";
           exec =
             let
-              ping = title: { icon, host }:
-                let
-                  display = if (title == null) then icon else "${icon}  ${title}:";
+              ping = { icon, host, compact ? false }:
+                let display = if compact then icon else "${icon}  ${host}:";
                 in
-                ''${display} $(ping -qc2 ${host} 2>&1 | awk -F/ '/^rtt/ { printf "%.2fms", $5; ok = 1 } END { if (!ok) print "Disconnected" }')'';
+                ''${display} $(timeout 1 tailscale ping -c 1 ${host} | cut -d ' ' -f8)'';
+              pingCompact = param: ping (param // { compact = true; });
 
-              targets = {
-                electra = { host = "electra"; icon = " "; };
-                atlas = { host = "atlas"; icon = " "; };
-                merope = { host = "merope"; icon = " "; };
-                pleione = { host = "pleione"; icon = " "; };
-              };
+              targets = [
+                { host = "electra"; icon = " "; }
+                { host = "merope"; icon = " "; }
+                { host = "atlas"; icon = " "; }
+                { host = "pleione"; icon = " "; }
+              ];
+              cloud = builtins.elemAt targets 0;
+              home = builtins.elemAt targets 1;
             in
             jsonOutput {
-              text = "${ping null targets.electra} / ${ping null targets.merope}";
-              tooltip = concatStringsSep "\n" (attrValues (mapAttrs ping targets));
+              text = "${pingCompact cloud} / ${pingCompact home}";
+              tooltip = builtins.concatStringsSep "\n" (map ping targets);
             };
           format = "{}";
         };
