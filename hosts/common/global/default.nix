@@ -39,6 +39,11 @@
     enableAllTerminfo = true;
   };
 
+  services.resolved = {
+    enable = true;
+    domains = [ "misterio.me" ];
+  };
+
   # Allows users to allow others on their binds
   programs.fuse.userAllowOther = true;
 
