@@ -128,7 +128,7 @@ in
             Down: {bandwidthDownBits}'';
         };
         "custom/tailscale-ping" = {
-          interval = 1;
+          interval = 3;
           return-type = "json";
           exec =
             let
@@ -143,7 +143,7 @@ in
               showPingCompact = { host, icon }: "${icon} $ping_${host}";
               showPingLarge = { host, icon }: "${icon} ${host}: $ping_${host}";
               setPing = { host, ... }: ''
-                ping_${host}="$(timeout 1 tailscale ping -c 1 ${host} | cut -d ' ' -f8)" || ping_${host}="Disconnected"
+                ping_${host}="$(timeout 2 tailscale ping -c 1 ${host} | cut -d ' ' -f8)" || ping_${host}="Disconnected"
               '';
             in
             jsonOutput {
