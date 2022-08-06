@@ -272,6 +272,7 @@ in
             "sublimemusic" = "";
           };
           on-click = "${playerctld} shift";
+          on-click-right = "${playerctld} unshift";
         };
         "custom/player" = {
           exec-if = "${playerctl} status";
