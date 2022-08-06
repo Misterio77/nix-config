@@ -7,8 +7,8 @@
 
     ./hardware-configuration.nix
     ../common/global
+    ../common/optional/wireless.nix
     ../common/optional/misterio-greetd.nix
-    ../common/optional/networkmanager.nix
     ../common/optional/pipewire.nix
     ../common/optional/podman.nix
     ../common/optional/postgres.nix

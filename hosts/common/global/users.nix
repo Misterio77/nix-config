@@ -13,7 +13,6 @@ in
         "video"
         "audio"
       ]
-      ++ (lib.optional config.networking.networkmanager.enable "networkmanager")
       ++ (lib.optional config.programs.wireshark.enable "wireshark")
       ++ (lib.optional config.hardware.i2c.enable "i2c")
       ++ (lib.optional config.services.deluge.enable "deluge")
