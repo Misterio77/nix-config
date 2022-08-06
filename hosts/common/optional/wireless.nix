@@ -7,16 +7,18 @@
 
   networking.wireless = {
     enable = true;
+    fallbackToWPA2 = false;
     # Declarative
     environmentFile = config.sops.secrets.wireless.path;
     networks = {
-      /*
-        "Marcos_2.4Ghz" = {
-        psk = "@PSK_MARCOS@";
-        };
-      */
+      "Marcos_2.4Ghz" = {
+        pskRaw = "@MARCOS_24@";
+      };
+      "Marcos_5Ghz" = {
+        pskRaw = "@MARCOS_50@";
+      };
       "Misterio" = {
-        psk = "@PSK_MISTERIO@";
+        pskRaw = "@MISTERIO@";
       };
     };
 
