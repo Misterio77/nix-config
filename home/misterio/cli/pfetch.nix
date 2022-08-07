@@ -2,6 +2,7 @@
 {
   home = {
     packages = with pkgs; [ pfetch ];
-    sessionVariables.PF_INFO = "ascii title os kernel shell desktop term scheme palette";
+    sessionVariables.PF_INFO =
+      "ascii title os kernel uptime shell term desktop scheme palette";
   };
 }
