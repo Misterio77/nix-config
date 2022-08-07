@@ -1,5 +1,7 @@
-{ persistence, ... }:
+{ persistence, outputs, lib, ... }:
+
 let
+  hosts = builtins.attrNames outputs.nixosConfigurations;
   sshPath = if persistence then "/persist/etc/ssh" else "/etc/ssh";
 in
 {
@@ -12,19 +14,29 @@ in
     extraConfig = ''
       StreamLocalBindUnlink yes
     '';
+
+    hostKeys = [
+      {
+        bits = 4096;
+        path = "${sshPath}/ssh_host_rsa_key";
+        type = "rsa";
+      }
+      {
+        path = "${sshPath}/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
   };
 
-  services.openssh.hostKeys = [
-    {
-      bits = 4096;
-      path = "${sshPath}/ssh_host_rsa_key";
-      type = "rsa";
-    }
-    {
-      path = "${sshPath}/ssh_host_ed25519_key";
-      type = "ed25519";
-    }
-  ];
+  programs.ssh = {
+    # Each hosts public key
+    knownHostsFiles = lib.flatten (map
+      (host: [
+        ../../${host}/ssh_host_ed25519_key.pub
+        ../../${host}/ssh_host_rsa_key.pub
+      ])
+      hosts);
+  };
 
   # Passwordless sudo when SSH'ing with keys
   security.pam.enableSSHAgentAuth = true;
