@@ -6,4 +6,5 @@
   fonts = ./fonts.nix;
   preferred-apps = ./preferred-apps.nix;
   swaylock = ./swaylock.nix;
+  xpo = ./xpo.nix;
 }

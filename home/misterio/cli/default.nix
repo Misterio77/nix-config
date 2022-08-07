@@ -13,6 +13,7 @@
     ./shellcolor.nix
     ./ssh.nix
     ./starship.nix
+    ./xpo.nix
   ];
   home.packages = with pkgs; [
     cachix # For managing my binary cache

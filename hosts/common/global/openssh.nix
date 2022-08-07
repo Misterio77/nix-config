@@ -14,6 +14,8 @@ in
     extraConfig = ''
       StreamLocalBindUnlink yes
     '';
+    # Allow forwarding ports to everywhere
+    gatewayPorts = "clientspecified";
 
     hostKeys = [
       {
