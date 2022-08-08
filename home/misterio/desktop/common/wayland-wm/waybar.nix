@@ -143,7 +143,7 @@ in
               showPingCompact = { host, icon }: "${icon} $ping_${host}";
               showPingLarge = { host, icon }: "${icon} ${host}: $ping_${host}";
               setPing = { host, ... }: ''
-                ping_${host}="$(timeout 2 tailscale ping -c 1 ${host} | cut -d ' ' -f8)" || ping_${host}="Disconnected"
+                ping_${host}="$(timeout 2 tailscale ping -c 1 --until-direct=false ${host} | cut -d ' ' -f8)" || ping_${host}="Disconnected"
               '';
             in
             jsonOutput {
@@ -171,7 +171,7 @@ in
           };
         };
         "custom/unread-mail" = {
-          interval = 10;
+          interval = 4;
           return-type = "json";
           exec = jsonOutput {
             pre = ''
@@ -186,6 +186,9 @@ in
                 )
                 status="unread"
               fi
+              if pgrep mbsync &>/dev/null; then
+                status="syncing"
+              fi
             '';
             text = "$count";
             tooltip = "$subjects";
@@ -195,6 +198,7 @@ in
           format-icons = {
             "read" = "";
             "unread" = "";
+            "syncing" = "";
           };
         };
         "custom/gpg-agent" = {
@@ -266,7 +270,7 @@ in
           interval = 2;
           return-type = "json";
           exec = jsonOutput {
-            pre = ''player="$(${playerctl} status -f "{{playerName}}" || echo "No players found" | cut -d '.' -f1)"'';
+            pre = ''player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No players found" | cut -d '.' -f1)"'';
             alt = "$player";
             tooltip = "$player";
           };
