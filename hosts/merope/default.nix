@@ -30,8 +30,6 @@
     };
   };
 
-  boot.loader.timeout = 5;
-
   # Enable argonone fan daemon
   services.hardware.argonone.enable = true;
 

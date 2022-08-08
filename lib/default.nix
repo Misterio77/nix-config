@@ -27,42 +27,35 @@ rec {
   ];
   forAllSystems = genAttrs systems;
 
-  importAttrset = path: mapAttrs (_: import) (import path);
-
   mkSystem =
     { hostname
-    , system
+    , pkgs
     , persistence ? false
     }:
     nixosSystem {
-      inherit system;
-      pkgs = outputs.legacyPackages.${system};
+      inherit pkgs;
       specialArgs = {
         inherit inputs outputs hostname persistence;
       };
-      modules = attrValues (import ../modules/nixos) ++ [
-        ../hosts/${hostname}
-      ];
+      modules = attrValues (import ../modules/nixos) ++ [ ../hosts/${hostname} ];
     };
 
   mkHome =
     { username
     , hostname ? null
-    , system ? outputs.nixosConfigurations.${hostname}.pkgs.system
+    , pkgs ? outputs.nixosConfigurations.${hostname}.pkgs
     , persistence ? false
     , colorscheme ? null
     , wallpaper ? null
     , features ? [ ]
     }:
     homeManagerConfiguration {
-      pkgs = outputs.legacyPackages.${system};
+      inherit pkgs;
       extraSpecialArgs = {
         inherit inputs outputs hostname username persistence
           colorscheme wallpaper features;
       };
-      modules = attrValues (import ../modules/home-manager) ++ [
-        ../home/${username}
-      ];
+      modules = attrValues (import ../modules/home-manager) ++ [ ../home/${username} ];
     };
 
   mkDeploys = nixosConfigs: homeConfigs:

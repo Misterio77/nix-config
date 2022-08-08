@@ -8,7 +8,7 @@ mkShell {
     # Para deploy
     gnupg
     age
-    deploy-rs.deploy-rs
+    deploy-rs
     sops
   ];
 }

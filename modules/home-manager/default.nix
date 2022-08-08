@@ -1,10 +1,10 @@
 {
-  afuse = ./afuse.nix;
-  rgbdaemon = ./rgbdaemon.nix;
-  wallpaper = ./wallpaper.nix;
-  shellcolor = ./shellcolor.nix;
-  fonts = ./fonts.nix;
-  preferred-apps = ./preferred-apps.nix;
-  swaylock = ./swaylock.nix;
-  xpo = ./xpo.nix;
+  afuse = import ./afuse.nix;
+  rgbdaemon = import ./rgbdaemon.nix;
+  wallpaper = import ./wallpaper.nix;
+  shellcolor = import ./shellcolor.nix;
+  fonts = import ./fonts.nix;
+  preferred-apps = import ./preferred-apps.nix;
+  swaylock = import ./swaylock.nix;
+  xpo = import ./xpo.nix;
 }

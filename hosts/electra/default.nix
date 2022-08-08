@@ -8,14 +8,7 @@
     ./services
   ];
 
-  boot = {
-    loader.grub = {
-      enable = true;
-      version = 2;
-      device = "/dev/vda";
-    };
-  };
-
+  networking.useDHCP = true;
   system.stateVersion = "22.05";
 }
 

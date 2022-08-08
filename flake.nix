@@ -46,7 +46,7 @@
   outputs = inputs:
     let
       lib = import ./lib { inherit inputs; };
-      inherit (lib) mkSystem mkHome mkDeploys importAttrset forAllSystems;
+      inherit (lib) mkSystem mkHome mkDeploys forAllSystems;
     in
     rec {
       inherit lib;
@@ -54,7 +54,6 @@
       overlays = {
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
-        deploy-rs = inputs.deploy-rs.overlay;
         peerix = inputs.peerix.overlay;
         sops-nix = inputs.sops-nix.overlay;
         hyprland = inputs.hyprland.overlays.default;
@@ -62,8 +61,8 @@
         paste-misterio-me = inputs.paste-misterio-me.overlay;
       };
 
-      nixosModules = importAttrset ./modules/nixos;
-      homeManagerModules = importAttrset ./modules/home-manager;
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
 
       templates = import ./templates;
 
@@ -74,7 +73,7 @@
       apps = forAllSystems (system: rec {
         deploy = {
           type = "app";
-          program = "${legacyPackages.${system}.deploy-rs.deploy-rs}/bin/deploy";
+          program = "${legacyPackages.${system}.deploy-rs}/bin/deploy";
         };
         default = deploy;
       });
@@ -91,25 +90,25 @@
         # Desktop
         atlas = mkSystem {
           hostname = "atlas";
-          system = "x86_64-linux";
+          pkgs = legacyPackages."x86_64-linux";
           persistence = true;
         };
         # Laptop
         pleione = mkSystem {
           hostname = "pleione";
-          system = "x86_64-linux";
+          pkgs = legacyPackages."x86_64-linux";
           persistence = true;
         };
         # Raspi 4
         merope = mkSystem {
           hostname = "merope";
-          system = "aarch64-linux";
+          pkgs = legacyPackages."aarch64-linux";
           persistence = true;
         };
-        # Vultr VPS
+        # VPS
         electra = mkSystem {
           hostname = "electra";
-          system = "x86_64-linux";
+          pkgs = legacyPackages."x86_64-linux";
           persistence = true;
         };
       };
@@ -158,27 +157,6 @@
 
           colorscheme = "solarflare";
         };
-
-        # Generic configs
-        "misterio@generic" = mkHome {
-          username = "misterio";
-          system = "x86_64-linux";
-
-          colorscheme = "dracula";
-        };
-        "misterio@generic-graphical" = mkHome {
-          username = "misterio";
-          system = "x86_64-linux";
-
-          features = [ "desktop/gnome" ];
-          colorscheme = "dracula";
-        };
-
-        # GELOS lab computers
-        "misterio@emperor" = homeConfigurations."misterio@generic";
-        "misterio@galapagos" = homeConfigurations."misterio@generic";
-        "misterio@macaroni" = homeConfigurations."misterio@generic-graphical";
-        "misterio@rockhopper" = homeConfigurations."misterio@generic-graphical";
       };
 
       deploy.nodes = mkDeploys nixosConfigurations homeConfigurations;

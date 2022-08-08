@@ -29,7 +29,6 @@
     jq # JSON pretty printer and manipulator
     trekscii # Cute startrek cli printer
 
-    deploy-rs.deploy-rs # Deployment tool
     sops # Deployment secrets tool
     nvd nix-diff # Check derivation differences
     rnix-lsp # Nix LSP

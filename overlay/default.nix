@@ -1,7 +1,7 @@
 { inputs, ... }:
 let
   # Adds my custom packages
-  additions = final: prev: import ../pkgs { pkgs = prev; };
+  additions = final: _prev: import ../pkgs { pkgs = final; };
 
   # Modifies existing packages
   modifications = final: prev: {
@@ -15,14 +15,14 @@ let
       vim-nix = prev.vimPlugins.vim-nix.overrideAttrs
         (_oldAttrs: rec {
           version = "2022-02-20";
-          src = prev.fetchFromGitHub {
+          src = final.fetchFromGitHub {
             owner = "hqurve";
             repo = "vim-nix";
             rev = "26abd9cb976b5f4da6da02ee81449a959027b958";
             sha256 = "sha256-7TDW6Dgy/H7PRrIvTMpmXO5/3K5F1d4p3rLYon6h6OU=";
           };
         });
-    } // import ../pkgs/vim-plugins { pkgs = prev; };
+    } // import ../pkgs/vim-plugins { pkgs = final; };
 
     # Don't launch discord when using discocss
     discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
@@ -44,7 +44,7 @@ let
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
       version = "unstable-2021-12-10";
-      src = prev.fetchFromGitHub {
+      src = final.fetchFromGitHub {
         owner = "dylanaraps";
         repo = "pfetch";
         rev = "a906ff89680c78cec9785f3ff49ca8b272a0f96b";

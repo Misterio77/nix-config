@@ -1,12 +1,14 @@
 {
   imports = [
-      ../common/optional/btrfs-optin-persistence.nix
+    ../common/optional/btrfs-optin-persistence.nix
   ];
+
 
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" ];
     };
+    loader.timeout = 5;
   };
 
   fileSystems = {
@@ -26,6 +28,8 @@
       fsType = "ext4";
     };
   };
+
+  nixpkgs.hostPlatform.system = "aarch64-linux";
 
   powerManagement.cpuFreqGovernor = "ondemand";
 }
