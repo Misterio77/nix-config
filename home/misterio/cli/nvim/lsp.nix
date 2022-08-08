@@ -38,6 +38,7 @@ in
           lspconfig.terraformls.setup{filetypes={"terraform","tf","hcl"}} -- Terraform
           lspconfig.solargraph.setup{} -- Ruby
           lspconfig.jdtls.setup{cmd = {"jdt-language-server", "-data", "${homeDir}/.cache/jdtls/workspace"}} -- Java
+          lspconfig.phpactor.setup{} -- PHP
 
           lspconfig.rust_analyzer.setup{ -- Rust
             settings = {

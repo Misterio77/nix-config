@@ -20,6 +20,7 @@
       swaybg = "${pkgs.swaybg}/bin/swaybg";
       swayidle = "${pkgs.swayidle}/bin/swayidle";
       swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
+      systemctl = "${pkgs.systemd}/bin/systemctl";
     in
     {
       enable = true;
@@ -127,6 +128,7 @@
           bind=,XF86AudioStop,exec,${playerctl} stop
           bind=ALT,XF86AudioNext,exec,${playerctld} shift
           bind=ALT,XF86AudioPrev,exec,${playerctld} unshift
+          bind=ALT,XF86AudioPlay,exec,${systemctl} --user restart playerctld
           bind=SUPER,XF86AudioPlay,exec,${terminal.cmd-spawn "${pkgs.lyrics}/bin/lyrics"}
 
           bind=,XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%
