@@ -36,6 +36,7 @@
       mark_old = "no";
       text_flowed = "yes";
       reverse_name = "yes";
+      query_command = ''"khard email --parsable '%s'"'';
     };
     binds = [
       {
@@ -108,7 +109,7 @@
       color search        brightmagenta   default
       color status        brightyellow    black
       color indicator     brightblack     yellow
-      color tree          yellow          default                                     # arrow in threads
+      color tree          cyan            default                                     # arrow in threads
 
       # basic monocolor screen
       mono  bold          bold
@@ -127,8 +128,8 @@
       color index         brightgreen     default         "~R"                        # read messages
       color index         blue            default         "~U"                        # unread messages
       color index         blue            default         "~U~$"                      # unread, unreferenced messages
-      color index         brightyellow    default         "~v"                        # messages part of a collapsed thread
-      color index         brightyellow    default         "~P"                        # messages from me
+      color index         cyan            default         "~v"                        # messages part of a collapsed thread
+      color index         magenta         default         "~P"                        # messages from me
       color index         cyan            default         "~p!~F"                     # messages to me
       color index         cyan            default         "~N~p!~F"                   # new messages to me
       color index         cyan            default         "~U~p!~F"                   # unread messages to me

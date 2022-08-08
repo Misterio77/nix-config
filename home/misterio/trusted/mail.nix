@@ -42,7 +42,7 @@ in {
         };
         neomutt = {
           enable = true;
-          extraMailboxes = [ "Drafts" "Sent" "Trash" "Archive" ];
+          extraMailboxes = [ "Drafts" "Sent" "Trash" "Archive" "Junk" ];
         };
       } // common;
       college = rec {
