@@ -3,16 +3,16 @@
 let
   inherit (config.colorscheme) colors;
   kitty-xterm = pkgs.writeShellScriptBin "xterm" ''
-    ${config.programs.kitty.package}/bin/kitty "$@"
+    ${config.programs.kitty.package}/bin/kitty -1 "$@"
   '';
 in
 {
   home = {
     packages = [ kitty-xterm ];
     preferredApps.terminal = {
-      cmd = "kitty";
+      cmd = "kitty -1";
       # Spawn a program
-      cmd-spawn = program: "kitty $SHELL -i -c ${program}";
+      cmd-spawn = program: "kitty -1 $SHELL -i -c ${program}";
     };
     sessionVariables = {
       TERMINAL = "kitty";
