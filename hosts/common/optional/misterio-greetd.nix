@@ -26,7 +26,7 @@ in
   environment.etc."greetd/environments".text =
     lib.optionalString hasHyprland "Hyprland\n" +
     lib.optionalString hasSway "sway\n" +
-    "$SHELL\n" +
+    "$SHELL -l\n" +
     lib.optionalString hasSteam "steam-bigpicture\n";
 
   services.greetd = {
