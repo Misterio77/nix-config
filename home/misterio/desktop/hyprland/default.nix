@@ -55,8 +55,8 @@
             fullscreen_opacity=1.0
             rounding=5
             blur=true
-            blur_size=2
-            blur_passes=5
+            blur_size=3
+            blur_passes=3
             drop_shadow=true
             shadow_range=12
             shadow_offset=3 3
