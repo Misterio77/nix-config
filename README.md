@@ -20,7 +20,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 
 ## Structure
 - `flake.nix`: Entrypoint for hosts and home configurations. Also exposes a
-  devshell for boostrapping (`nix develop`).
+  devshell for boostrapping (`nix develop` or `nix-shell`).
 - `lib`: A few lib functions for making my flake cleaner
 - `hosts`: NixOS Configurations, accessible via `nixos-rebuild --flake`.
   - `common`: Shared configurations consumed by the machine-specific ones.
@@ -29,6 +29,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
   - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
   - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
   - `merope`: Raspberry Pi 4 - 8GB RAM | Server
+  - `electra`: Vultr VPS - 1GB RAM & 1 vCPU | Server
 - `home`: My Home-manager configuration, acessible via `home-manager --flake`
     - Each directory here is a "feature" each hm configuration can toggle, thus
       customizing my setup for each machine (be it a server, desktop, laptop,
@@ -54,18 +55,24 @@ activated on every boot with `loginShellInit`.
 
 ## How to bootstrap
 
-All you need is nix (2.4+), and git. Then run:
-```bash
-nix --extra-experimental-features="nix-command flakes" develop
+All you need is nix (any version). Run:
+```
+nix-shell
+```
+
+If you already have nix 2.4+, git, and have already enabled `flakes` and
+`nix-command`, you can also use the non-legacy command:
+```
+nix develop
 ```
 
 `nixos-rebuild --flake .` To build system configurations
 
-`home-manager --flake .#` To build user configurations
+`home-manager --flake .` To build user configurations
 
 `nix build` (or shell or run) To build and use packages
 
-`deploy` To quickly deploy the server (currently just `merope`)
+`deploy` To easily deploy everything, both NixOS and home-manager profiles
 
 `sops` To manage secrets
 
