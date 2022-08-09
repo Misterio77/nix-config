@@ -159,7 +159,10 @@
         };
       };
 
-      deploy.nodes = mkDeploys nixosConfigurations homeConfigurations;
+      deploy.nodes = mkDeploys nixosConfigurations homeConfigurations // {
+        magicRollback = false;
+        autoRollback = false;
+      };
 
       deployChecks = { };
     };
