@@ -26,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Nixified software
+    # Nixified software I use
     hyprland = {
       url = "github:hyprwm/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,7 +36,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # My nixified software
+    # Personal projects I deploy on my machines using nix
+    misterio-me = {
+      url = "sourcehut:~misterio/misterio.me";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     paste-misterio-me = {
       url = "github:misterio77/paste.misterio.me/1.3.1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,6 +63,7 @@
         hyprland = inputs.hyprland.overlays.default;
         hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
+        misterio-me = inputs.misterio-me.overlays.default;
       };
 
       nixosModules = import ./modules/nixos;
