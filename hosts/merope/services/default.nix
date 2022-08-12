@@ -2,7 +2,6 @@
   imports = [
     ./deluge.nix
     ./files-server.nix
-    ./jitsi.nix
     ./minecraft.nix
     ./navidrome.nix
     ./nextcloud.nix

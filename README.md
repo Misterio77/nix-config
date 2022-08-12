@@ -111,7 +111,6 @@ Most relevant user apps daily drivers:
 Some of the services I host:
 - navidrome
 - deluge
-- jitsi
 - nextcloud
 - minecraft
 - headscale
