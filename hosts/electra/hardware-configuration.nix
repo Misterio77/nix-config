@@ -1,3 +1,4 @@
+{ hostname, ... }:
 {
   imports = [
     ../common/optional/btrfs-optin-persistence.nix
@@ -14,6 +15,14 @@
         version = 2;
         device = "/dev/vda";
       };
+    };
+  };
+
+  fileSystems = {
+    "/boot" = {
+      device = "/dev/disk/by-label/${hostname}";
+      fsType = "btrfs";
+      options = [ "subvol=boot" ];
     };
   };
 
