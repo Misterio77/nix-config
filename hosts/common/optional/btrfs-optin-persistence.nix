@@ -1,25 +1,45 @@
-{ lib, hostname, ... }: {
+{ lib, hostname, config, pkgs, ... }:
+let
+  systemdPhase1 = config.boot.initrd.systemd.enable;
+  wipeScript = ''
+    mkdir -p /btrfs
+    mount -o subvol=/ /dev/disk/by-label/${hostname} /btrfs
+
+    if [ -e "/btrfs/root/dontwipe" ]; then
+      echo "Not wiping root"
+    else
+      echo "Cleaning subvolume"
+      btrfs subvolume list -o /btrfs/root | cut -f9 -d ' ' |
+      while read subvolume; do
+        btrfs subvolume delete "/btrfs/$subvolume"
+      done && btrfs subvolume delete /btrfs/root
+
+      echo "Restoring blank subvolume"
+      btrfs subvolume snapshot /btrfs/root-blank /btrfs/root
+    fi
+
+    umount /btrfs
+    rm -d /btrfs
+  '';
+in
+{
+  boot.initrd.supportedFilesystems = [ "btrfs" ];
+
   boot.initrd = {
-    postDeviceCommands = lib.mkBefore ''
-      mkdir -p /mnt
-      mount -o subvol=/ /dev/disk/by-label/${hostname} /mnt
-
-      if [ -e "/mnt/root/dontwipe" ]; then
-        echo "Not wiping root"
-      else
-        echo "Cleaning subvolume"
-        btrfs subvolume list -o /mnt/root | cut -f9 -d ' ' |
-        while read subvolume; do
-          btrfs subvolume delete "/mnt/$subvolume"
-        done && btrfs subvolume delete /mnt/root
-
-        echo "Restoring blank subvolume"
-        btrfs subvolume snapshot /mnt/root-blank /mnt/root
-      fi
-
-      umount /mnt
-    '';
-    supportedFilesystems = [ "btrfs" ];
+    systemd = lib.mkIf systemdPhase1 {
+      emergencyAccess = true;
+      initrdBin = with pkgs; [ coreutils btrfs-progs ];
+      services.initrd-btrfs-root-wipe = {
+        description = "Wipe ephemeral btrfs root";
+        after = [ "cryptsetup.target" ];
+        before = [ "sysroot.mount" ];
+        wantedBy = [ "sysroot.mount" ];
+        script = wipeScript;
+        serviceConfig.Type = "oneshot";
+      };
+    };
+    # Use postDeviceCommands if on old phase 1
+    postDeviceCommands = lib.mkBefore (lib.optionalString systemdPhase1 wipeScript);
   };
 
   fileSystems = {

@@ -45,4 +45,6 @@
   hardware.enableRedistributableFirmware = true;
 
   system.stateVersion = lib.mkDefault "22.05";
+
+  boot.initrd.systemd.enable = true;
 }
