@@ -44,5 +44,13 @@
 
   hardware.enableRedistributableFirmware = true;
 
+  # Increase open file limit for sudoers
+  security.pam.loginLimits = [{
+    domain = "@wheel";
+    item = "nofile";
+    type = "soft";
+    value = "8192";
+  }];
+
   system.stateVersion = lib.mkDefault "22.05";
 }

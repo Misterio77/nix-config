@@ -27,12 +27,15 @@ in
     };
   };
 
-  users.users.minecraft-modpack = {
-    description = "Minecraft modpack service user";
-    home = "/var/lib/minecraft-modpack";
-    createHome = true;
-    isSystemUser = true;
-    group = "minecraft-modpack";
+  users = {
+    users.minecraft-modpack = {
+      description = "Minecraft modpack service user";
+      home = "/var/lib/minecraft-modpack";
+      createHome = true;
+      isSystemUser = true;
+      group = "minecraft-modpack";
+    };
+    groups.minecraft-modpack = { };
   };
 
   # Proxy for squaremap
