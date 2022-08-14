@@ -49,7 +49,7 @@
     domain = "@wheel";
     item = "nofile";
     type = "soft";
-    value = "8192";
+    value = "16384";
   }];
 
   system.stateVersion = lib.mkDefault "22.05";
