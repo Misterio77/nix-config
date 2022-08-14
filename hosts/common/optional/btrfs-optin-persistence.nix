@@ -42,7 +42,7 @@ in
       };
     };
     # Use postDeviceCommands if on old phase 1
-    postDeviceCommands = lib.mkBefore (lib.optionalString systemdPhase1 wipeScript);
+    postDeviceCommands = lib.mkBefore (lib.optionalString (!systemdPhase1) wipeScript);
   };
 
   fileSystems = {
