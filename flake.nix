@@ -3,8 +3,7 @@
 
   inputs = {
     # Nix ecossystem
-    # TODO Change back to nixos/nixpkgs/nixos-unstable when https://nixpk.gs/pr-tracker.html?pr=179619 is in
-    nixpkgs.url = "github:misterio77/nixpkgs/a047b9a80a3075d73b47e685932d45aa51d0d781";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
     impermanence.url = "github:misterio77/impermanence"; # TODO change to upstream after #99 is merged
@@ -165,7 +164,8 @@
         };
       };
 
-      deploy.nodes = mkDeploys nixosConfigurations homeConfigurations // {
+      deploy = {
+        nodes = mkDeploys nixosConfigurations homeConfigurations;
         magicRollback = false;
         autoRollback = false;
       };
