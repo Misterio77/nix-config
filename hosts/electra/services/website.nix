@@ -32,7 +32,16 @@ in
     # Gemini
     agate = {
       enable = true;
-      contentDir = "${pkgs.website.main}/public";
+      contentDir = pkgs.linkFarm "agate-website" [
+        {
+          name = "misterio.me";
+          path = "${pkgs.website.main}/public";
+        }
+        {
+          name = "fontes.dev.br";
+          path = "${pkgs.website.main}/public";
+        }
+      ];
       hostnames = [ "misterio.me" "fontes.dev.br" ];
     };
   };
