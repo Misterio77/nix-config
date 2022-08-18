@@ -15,17 +15,17 @@ in
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          root = "${pkgs.website.main}/public";
-          extraConfig = ''
-            add_header Last-Modified "${toDateTime inputs.website.lastModified}";
-          '';
+          return = "302 https://fontes.dev.br$request_uri";
         };
       };
       "fontes.dev.br" = {
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          return = "302 https://misterio.me$request_uri";
+          root = "${pkgs.website.main}/public";
+          extraConfig = ''
+            add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+          '';
         };
       };
     };
@@ -33,7 +33,7 @@ in
     agate = {
       enable = true;
       contentDir = "${pkgs.website.main}/public";
-      hostnames = [ "misterio.me" ];
+      hostnames = [ "misterio.me" "fontes.dev.br" ];
     };
   };
   networking.firewall.allowedTCPPorts = [ 1965 ];
