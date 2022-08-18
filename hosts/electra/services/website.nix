@@ -21,6 +21,13 @@ in
           '';
         };
       };
+      "fontes.dev.br" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          return = "302 https://misterio.me$request_uri";
+        };
+      };
     };
     # Gemini
     agate = {
