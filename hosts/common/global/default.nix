@@ -12,7 +12,10 @@
     ./users.nix
   ];
 
-  networking.hostName = hostname;
+  networking = {
+    hostName = hostname;
+    domain = "fontes.dev.br";
+  };
 
   nix = {
     # Add each flake input as a registry

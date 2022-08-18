@@ -37,8 +37,8 @@
     };
 
     # Personal projects I deploy on my machines using nix
-    misterio-me = {
-      url = "sourcehut:~misterio/misterio.me";
+    website = {
+      url = "sourcehut:~misterio/website";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     paste-misterio-me = {
@@ -63,7 +63,7 @@
         hyprland = inputs.hyprland.overlays.default;
         hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
-        misterio-me = inputs.misterio-me.overlays.default;
+        website = inputs.website.overlays.default;
       };
 
       nixosModules = import ./modules/nixos;

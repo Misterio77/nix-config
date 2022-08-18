@@ -15,9 +15,9 @@ in
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          root = "${pkgs.misterio-me.website}/public";
+          root = "${pkgs.website.main}/public";
           extraConfig = ''
-            add_header Last-Modified "${toDateTime inputs.misterio-me.lastModified}";
+            add_header Last-Modified "${toDateTime inputs.website.lastModified}";
           '';
         };
       };
@@ -32,7 +32,7 @@ in
     # Gemini
     agate = {
       enable = true;
-      contentDir = "${pkgs.misterio-me.website}/public";
+      contentDir = "${pkgs.website.main}/public";
       hostnames = [ "misterio.me" ];
     };
   };

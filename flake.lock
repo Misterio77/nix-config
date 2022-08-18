@@ -193,28 +193,6 @@
         "type": "github"
       }
     },
-    "misterio-me": {
-      "inputs": {
-        "nix-colors": "nix-colors",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils_3"
-      },
-      "locked": {
-        "lastModified": 1659384842,
-        "narHash": "sha256-bDd7M52XHYMF+fycb74Y/5ucmdBnp3ZIMnqY1uUnbsU=",
-        "owner": "~misterio",
-        "repo": "misterio.me",
-        "rev": "6e170fb9f2109bb12b180b1f77c90da1b09a4e5d",
-        "type": "sourcehut"
-      },
-      "original": {
-        "owner": "~misterio",
-        "repo": "misterio.me",
-        "type": "sourcehut"
-      }
-    },
     "nix-colors": {
       "inputs": {
         "base16-schemes": "base16-schemes",
@@ -335,7 +313,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils_4"
+        "utils": "utils_3"
       },
       "locked": {
         "lastModified": 1656947991,
@@ -382,13 +360,13 @@
         "hyprland": "hyprland",
         "hyprwm-contrib": "hyprwm-contrib",
         "impermanence": "impermanence",
-        "misterio-me": "misterio-me",
-        "nix-colors": "nix-colors_2",
+        "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "paste-misterio-me": "paste-misterio-me",
         "peerix": "peerix",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "website": "website"
       }
     },
     "sops-nix": {
@@ -444,6 +422,21 @@
     },
     "utils_3": {
       "locked": {
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_4": {
+      "locked": {
         "lastModified": 1656928814,
         "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
         "owner": "numtide",
@@ -457,19 +450,26 @@
         "type": "github"
       }
     },
-    "utils_4": {
+    "website": {
+      "inputs": {
+        "nix-colors": "nix-colors_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils_4"
+      },
       "locked": {
-        "lastModified": 1644229661,
-        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
-        "type": "github"
+        "lastModified": 1660861384,
+        "narHash": "sha256-rAY2o6ea/OkMBfo/+J2uBIwo7apm1Z3D4R3JRID7HMs=",
+        "owner": "~misterio",
+        "repo": "website",
+        "rev": "8a3f97184554afbcc83bfd206f1c71d9c637acf4",
+        "type": "sourcehut"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
+        "owner": "~misterio",
+        "repo": "website",
+        "type": "sourcehut"
       }
     },
     "wlroots": {
