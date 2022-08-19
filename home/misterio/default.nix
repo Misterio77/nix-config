@@ -17,6 +17,9 @@
     inherit username;
     stateVersion = "22.05";
     homeDirectory = "/home/${username}";
+    sessionVariables = {
+      NIX_CONFIG = "experimental-features = nix-command flakes";
+    };
     persistence = lib.mkIf persistence {
       "/persist/home/misterio" = {
         directories = [

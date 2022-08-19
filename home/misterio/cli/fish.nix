@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 {
   programs.fish = {
     enable = true;
@@ -10,7 +10,7 @@
       jqless = "jq -C | less -r";
 
       n = "nix";
-      nd = "nix develop -c $SHELL";
+      nd = "nix develop";
       ns = "nix shell";
       nsn = "nix shell nixpkgs#";
       nb = "nix build";
@@ -91,5 +91,12 @@
         set -U fish_pager_color_prefix        'white' '--bold' '--underline'
         set -U fish_pager_color_progress      'brwhite' '--background=cyan'
       '';
+  };
+
+  programs.bash = {
+    enable = true;
+    initExtra = lib.mkAfter ''
+      exec ${config.programs.fish.package}/bin/fish
+    '';
   };
 }

@@ -166,6 +166,13 @@
 
           colorscheme = "solarflare";
         };
+        "nixos@nixos" = mkHome {
+          username = "nixos";
+          hostname = "nixos";
+          pkgs = legacyPackages.x86_64-linux;
+          features = [ "desktop/gnome" ];
+          persistence = false;
+        };
       };
 
       deploy = {
