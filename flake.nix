@@ -25,6 +25,10 @@
       url = "github:misterio77/peerix"; # TODO change to upstream after #13 is merged
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-mailserver = {
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Nixified software I use
     hyprland = {
