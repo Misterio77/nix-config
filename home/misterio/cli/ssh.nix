@@ -7,7 +7,7 @@ in
   programs.ssh = {
     enable = true;
     matchBlocks.home = {
-      host = builtins.concatStringsSep " " hostnames;
+      host = builtins.concatStringsSep " " (hostnames ++ [ "*.misterio.me" "*.fontes.dev.br" ]);
       forwardAgent = true;
       remoteForwards = [{
         bind.address = ''/run/user/1000/gnupg/S.gpg-agent'';

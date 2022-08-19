@@ -97,6 +97,8 @@
     enable = true;
     initExtra = lib.mkAfter ''
       exec ${config.programs.fish.package}/bin/fish
+      # Make sure GPG SSH works
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
     '';
   };
 }
