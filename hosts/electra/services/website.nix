@@ -18,6 +18,14 @@ in
           return = "302 https://fontes.dev.br$request_uri";
         };
       };
+      "www.fontes.dev.br" = {
+        default = true;
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          return = "302 https://fontes.dev.br$request_uri";
+        };
+      };
       "fontes.dev.br" = {
         forceSSL = true;
         enableACME = true;

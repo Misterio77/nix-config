@@ -507,11 +507,11 @@
     },
     "utils_5": {
       "locked": {
-        "lastModified": 1656928814,
-        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
         "type": "github"
       },
       "original": {
@@ -529,11 +529,11 @@
         "utils": "utils_5"
       },
       "locked": {
-        "lastModified": 1660861384,
-        "narHash": "sha256-rAY2o6ea/OkMBfo/+J2uBIwo7apm1Z3D4R3JRID7HMs=",
+        "lastModified": 1660973293,
+        "narHash": "sha256-sXi9dqkngiOJ5yD9gcpH/JiAKltbjgkmRTZJd+HFdW0=",
         "owner": "~misterio",
         "repo": "website",
-        "rev": "8a3f97184554afbcc83bfd206f1c71d9c637acf4",
+        "rev": "226435f4a587d40a71838ba743585f11f0d5a73e",
         "type": "sourcehut"
       },
       "original": {
