@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   imports = [
-    ./deluge.nix
     ./discord.nix
     ./dragon.nix
     ./firefox.nix
