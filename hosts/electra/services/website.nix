@@ -8,22 +8,19 @@ let
   );
 in
 {
-  services = {
+  services = let
+    redir = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/" = {
+          return = "302 https://fontes.dev.br$request_uri";
+        };
+      };
+  in {
     nginx.virtualHosts = {
-      "misterio.me" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          return = "302 https://fontes.dev.br$request_uri";
-        };
-      };
-      "www.fontes.dev.br" = {
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          return = "302 https://fontes.dev.br$request_uri";
-        };
-      };
+      "misterio.me" = redir;
+      "www.fontes.dev.br" = redir;
+      "gabriel.fontes.dev.br" = redir;
       "fontes.dev.br" = {
         default = true;
         forceSSL = true;
