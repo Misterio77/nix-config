@@ -11,7 +11,6 @@ in
   services = {
     nginx.virtualHosts = {
       "misterio.me" = {
-        default = true;
         forceSSL = true;
         enableACME = true;
         locations."/" = {
@@ -19,7 +18,6 @@ in
         };
       };
       "www.fontes.dev.br" = {
-        default = true;
         forceSSL = true;
         enableACME = true;
         locations."/" = {
@@ -27,6 +25,7 @@ in
         };
       };
       "fontes.dev.br" = {
+        default = true;
         forceSSL = true;
         enableACME = true;
         locations."/" = {
