@@ -11,6 +11,7 @@
     domains = [ "fontes.dev.br" ];
     useFsLayout = true;
     certificateScheme = 3;
+    localDnsResolver = false;
     loginAccounts = {
       "gabriel@fontes.dev.br" = {
         hashedPasswordFile = config.sops.secrets.gabriel-mail-password.path;
