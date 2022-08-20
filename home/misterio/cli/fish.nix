@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, ... }:
 {
   programs.fish = {
     enable = true;
@@ -10,7 +10,7 @@
       jqless = "jq -C | less -r";
 
       n = "nix";
-      nd = "nix develop";
+      nd = "nix develop -c $SHELL";
       ns = "nix shell";
       nsn = "nix shell nixpkgs#";
       nb = "nix build";
@@ -91,14 +91,5 @@
         set -U fish_pager_color_prefix        'white' '--bold' '--underline'
         set -U fish_pager_color_progress      'brwhite' '--background=cyan'
       '';
-  };
-
-  programs.bash = {
-    enable = true;
-    initExtra = lib.mkAfter ''
-      exec ${config.programs.fish.package}/bin/fish
-      # Make sure GPG SSH works
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-    '';
   };
 }
