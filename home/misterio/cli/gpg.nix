@@ -27,7 +27,6 @@ in
     let
       fixGpg = ''
         gpgconf --launch gpg-agent
-        export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       ''; in
     {
       # Start gpg-agent if it's not running or tunneled in
@@ -45,7 +44,7 @@ in
         publicKeys = [
           {
             source = fetchKey {
-              url = "https://misterio.me/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc";
+              url = "https://fontes.dev.br/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc";
               sha256 = "sha256:1bck1r1dfg10za5y9nj7yshr6k69g0lypqp5fjs21d5s68za1rmb";
             };
             trust = 5;

@@ -11,6 +11,7 @@ let
     };
     signature = {
       showSignature = "append";
+      # TODO update domain
       text = ''
         ${realName}
 
@@ -29,6 +30,7 @@ in {
     accounts = {
       personal = rec {
         primary = true;
+        # TODO update email
         address = "eu@misterio.me";
         userName = address;
         passwordCommand = "${pass} mail.gandi.net/${address}";

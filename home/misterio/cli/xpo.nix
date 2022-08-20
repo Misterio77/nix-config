@@ -1,6 +1,6 @@
 {
   programs.xpo = {
     enable = true;
-    defaultServer = "t.misterio.me";
+    defaultServer = "electra.fontes.dev.br";
   };
 }

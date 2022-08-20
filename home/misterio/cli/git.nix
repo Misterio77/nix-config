@@ -7,6 +7,7 @@
       graph = "log --decorate --oneline --graph";
     };
     userName = "Gabriel Fontes";
+    # TODO update email
     userEmail = "eu@misterio.me";
     extraConfig = {
       init.defaultBranch = "main";
