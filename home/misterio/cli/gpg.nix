@@ -45,7 +45,7 @@ in
           {
             source = fetchKey {
               url = "https://fontes.dev.br/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc";
-              sha256 = "sha256:1bck1r1dfg10za5y9nj7yshr6k69g0lypqp5fjs21d5s68za1rmb";
+              sha256 = "sha256:1d3qjnj27qygs9vbc61c7g5a84mfrj45ajsc8dgsjbibvml7l915";
             };
             trust = 5;
           }
