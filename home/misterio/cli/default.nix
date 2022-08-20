@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./amfora.nix
+    ./bash.nix
     ./bat.nix
     ./fish.nix
     ./git.nix
