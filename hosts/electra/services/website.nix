@@ -32,6 +32,7 @@ in
           root = "${pkgs.website.main}/public";
           extraConfig = ''
             add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+            add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
           '';
         };
       };
