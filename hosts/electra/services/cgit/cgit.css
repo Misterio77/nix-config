@@ -1,3 +1,18 @@
 td.linenos {
     width: 2em;
 }
+code span.head {
+    color: var(--highlight);
+}
+code span.hunk {
+    color: var(--text-muted);
+}
+code span.ctx {
+    color: var(--text-main);
+}
+code span.add {
+    color: var(--positive);
+}
+code span.del {
+    color: var(--negative);
+}

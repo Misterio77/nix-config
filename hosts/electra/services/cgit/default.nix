@@ -1,6 +1,12 @@
-{ pkgs, lib, persistence, ... }:
+{ inputs, pkgs, lib, persistence, ... }:
 let
   cgit = "${pkgs.semanticgit}";
+  toDateTime = timestamp: builtins.readFile (
+    pkgs.runCommandLocal "datetime" { } ''
+      dt="$(date -Ru -d @${toString timestamp})"
+      echo -n ''${dt/+0000/GMT} > $out
+    ''
+  );
 in
 {
   services = {
@@ -12,8 +18,13 @@ in
           "=/cgit.css" = {
             alias = "${./cgit.css}";
           };
+          # Get assets from main website
           "/assets" = {
-            return = "301 https://fontes.dev.br$request_uri";
+            root = "${pkgs.website.main}/public";
+            extraConfig = ''
+              add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+              add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
+            '';
           };
           "/" = {
             root = "${cgit}/cgit";

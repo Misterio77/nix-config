@@ -38,7 +38,6 @@ in
               extraConfig = ''
                 add_header Last-Modified "${toDateTime inputs.website.lastModified}";
                 add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
-                add_header Access-Control-Allow-Origin https://git.fontes.dev.br;
               '';
             };
           };
