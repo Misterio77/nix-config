@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, persistence, ... }:
+{ inputs, pkgs, ... }:
 let
   cgit = "${pkgs.semanticgit}";
   toDateTime = timestamp: builtins.readFile (
@@ -46,6 +46,7 @@ in
       cgi = "${cgit}/cgit/cgit.cgi";
     };
   };
+
   systemd.services.create-cgit-cache = {
     description = "Create cache directory for cgit";
     enable = true;
@@ -58,40 +59,34 @@ in
       chown -R nginx:nginx /run/cgit
     '';
   };
-  environment = {
-    persistence = lib.mkIf persistence {
-      "/persist".directories = [
-        "/srv/git"
-      ];
-    };
-    etc."cgitrc".text = ''
-      virtual-root=/
 
-      cache-size=1000
-      cache-root=/run/cgit
+  environment.etc."cgitrc".text = ''
+    virtual-root=/
 
-      root-title=Gabriel's Git
-      root-desc=Source code for some of my projects
-      logo-link=https://fontes.dev.br
+    cache-size=1000
+    cache-root=/run/cgit
 
-      enable-http-clone=1
-      noplainemail=1
+    root-title=My git repositories
+    root-desc=Source code for some of my projects
+    logo-link=https://fontes.dev.br
 
-      enable-git-config=1
-      remove-suffix=1
+    enable-http-clone=1
+    noplainemail=1
 
-      css=/cgit.css
-      head-include=${./head.html}
-      nav-include=${./nav.html}
+    enable-git-config=1
+    remove-suffix=1
 
-      readme=:README.md
-      readme=:README.rst
+    css=/cgit.css
+    head-include=${./head.html}
+    nav-include=${./nav.html}
 
-      source-filter=${cgit}/lib/cgit/filters/syntax-highlighting.py
-      about-filter=${cgit}/lib/cgit/filters/about-formatting.sh
+    readme=:README.md
+    readme=:README.rst
 
-      scan-path=/srv/git/
-      enable-git-config=1
-    '';
-  };
+    source-filter=${cgit}/lib/cgit/filters/syntax-highlighting.py
+    about-filter=${cgit}/lib/cgit/filters/about-formatting.sh
+
+    scan-path=/srv/git/
+    enable-git-config=1
+  '';
 }
