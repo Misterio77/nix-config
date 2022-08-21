@@ -8,47 +8,57 @@ let
   );
 in
 {
-  services = let
-    redir = {
+  services =
+    let
+      redir = {
         forceSSL = true;
         enableACME = true;
         locations."/" = {
           return = "302 https://fontes.dev.br$request_uri";
         };
       };
-  in {
-    nginx.virtualHosts = {
-      "misterio.me" = redir;
-      "www.fontes.dev.br" = redir;
-      "gabriel.fontes.dev.br" = redir;
-      "fontes.dev.br" = {
-        default = true;
-        forceSSL = true;
-        enableACME = true;
-        locations."/" = {
-          root = "${pkgs.website.main}/public";
-          extraConfig = ''
-            add_header Last-Modified "${toDateTime inputs.website.lastModified}";
-            add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
-          '';
+    in
+    {
+      nginx.virtualHosts = {
+        "misterio.me" = redir;
+        "www.fontes.dev.br" = redir;
+        "gabriel.fontes.dev.br" = redir;
+        "fontes.dev.br" = {
+          default = true;
+          forceSSL = true;
+          enableACME = true;
+          locations = {
+            "/git" = {
+              extraConfig = ''
+                rewrite ^/git(.*)$ https://git.fontes.dev.br$1 last;
+              '';
+            };
+            "/" = {
+              root = "${pkgs.website.main}/public";
+              extraConfig = ''
+                add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+                add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
+                add_header Access-Control-Allow-Origin https://git.fontes.dev.br;
+              '';
+            };
+          };
         };
       };
+      # Gemini
+      agate = {
+        enable = true;
+        contentDir = pkgs.linkFarm "agate-website" [
+          {
+            name = "misterio.me";
+            path = "${pkgs.website.main}/public";
+          }
+          {
+            name = "fontes.dev.br";
+            path = "${pkgs.website.main}/public";
+          }
+        ];
+        hostnames = [ "misterio.me" "fontes.dev.br" ];
+      };
     };
-    # Gemini
-    agate = {
-      enable = true;
-      contentDir = pkgs.linkFarm "agate-website" [
-        {
-          name = "misterio.me";
-          path = "${pkgs.website.main}/public";
-        }
-        {
-          name = "fontes.dev.br";
-          path = "${pkgs.website.main}/public";
-        }
-      ];
-      hostnames = [ "misterio.me" "fontes.dev.br" ];
-    };
-  };
   networking.firewall.allowedTCPPorts = [ 1965 ];
 }

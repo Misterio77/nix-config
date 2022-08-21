@@ -1,5 +1,6 @@
 {
   imports = [
+    ./cgit
     ./headscale.nix
     ./mail.nix
     ./nginx.nix

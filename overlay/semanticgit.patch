@@ -1,0 +1,205 @@
+diff --git a/ui-shared.c b/ui-shared.c
+index cdacf71..4f38930 100644
+--- a/ui-shared.c
++++ b/ui-shared.c
+@@ -991,22 +991,22 @@ static void print_top_header(void)
+ 	}
+ 	if (logo && *logo) {
+ 		html("<nav>");
+-	    if (ctx.cfg.nav_include) {
+-	        html_include(ctx.cfg.nav_include);
+-	    } else {
+-	        html("<a href='");
+-	        if (logo_link && *logo_link) {
+-	            html_attr(logo_link);
+-	        } else {
+-	            html_attr(cgit_rooturl());
+-	        }
+-	        html("'>");
+-	        html("<img src='");
+-	        html_attr(logo);
+-	        html("' alt='cgit logo'/>");
+-	        html("</a>");
+-	    }
+-	    html("</nav>\n");
++		if (ctx.cfg.nav_include) {
++		    html_include(ctx.cfg.nav_include);
++		} else {
++		    html("<a href='");
++		    if (logo_link && *logo_link) {
++		        html_attr(logo_link);
++		    } else {
++		        html_attr(cgit_rooturl());
++		    }
++		    html("'>");
++		    html("<img src='");
++		    html_attr(logo);
++		    html("' alt='cgit logo'/>");
++		    html("</a>");
++		}
++		html("</nav>\n");
+ 	}
+ 	html("</header>\n");
+ }
+@@ -1016,9 +1016,9 @@ static void print_header(void)
+ 	html("<header>\n");
+ 	html("<h1>");
+ 	if (ctx.repo) {
+-	    cgit_summary_link(ctx.repo->name, NULL, NULL, NULL);
++		cgit_summary_link(ctx.repo->name, NULL, NULL, NULL);
+ 	} else {
+-	    html_txt(ctx.cfg.root_title);
++		html_txt(ctx.cfg.root_title);
+ 	}
+ 	html("</h1>\n");
+
+@@ -1026,7 +1026,7 @@ static void print_header(void)
+ 	if (ctx.repo) {
+ 		html_txt(ctx.repo->desc);
+ 		html("</p>");
+-        html("<p>");
++		html("<p>");
+ 		if (ctx.repo->owner_filter) {
+ 			cgit_open_filter(ctx.repo->owner_filter);
+ 			html_txt(ctx.repo->owner);
+@@ -1041,18 +1041,18 @@ static void print_header(void)
+ 	html("</p>\n");
+
+ 	if (ctx.repo && ctx.env.authenticated) {
+-	    html("<form>\n");
+-	    cgit_add_hidden_formfields(0, 1, ctx.qry.page);
+-	    html("<select name='h' onchange='this.form.submit();'>\n");
+-	    print_this_commit_option();
+-	    html("<optgroup label='branches'>");
+-	    for_each_branch_ref(print_branch_option, ctx.qry.head);
+-	    if (ctx.repo->enable_remote_branches)
+-	        for_each_remote_ref(print_branch_option, ctx.qry.head);
+-	    html("</optgroup>");
+-	    html("</select> ");
+-	    html("<input type='submit' value='switch'/>");
+-	    html("</form>");
++		html("<form>\n");
++		cgit_add_hidden_formfields(0, 1, ctx.qry.page);
++		html("<select name='h' onchange='this.form.submit();'>\n");
++		print_this_commit_option();
++		html("<optgroup label='branches'>");
++		for_each_branch_ref(print_branch_option, ctx.qry.head);
++		if (ctx.repo->enable_remote_branches)
++		    for_each_remote_ref(print_branch_option, ctx.qry.head);
++		html("</optgroup>");
++		html("</select> ");
++		html("<input type='submit' value='switch'/>");
++		html("</form>");
+ 	}
+ 	html("</header>\n");
+ }
+@@ -1065,8 +1065,32 @@ void cgit_print_pageheader(void)
+ 	html("<main>");
+ 	print_header();
+
+-	html("<table class='tabs'><tr><td>\n");
+ 	if (ctx.env.authenticated && ctx.repo) {
++		html("<nav>\n");
++		html("<form class='right' method='get' action='");
++		if (ctx.cfg.virtual_root) {
++			char *fileurl = cgit_fileurl(ctx.qry.repo, "log",
++						   ctx.qry.vpath, NULL);
++			html_url_path(fileurl);
++			free(fileurl);
++		}
++		html("'>\n");
++		cgit_add_hidden_formfields(1, 0, "log");
++		html("<select name='qt'>\n");
++		html_option("grep", "log msg", ctx.qry.grep);
++		html_option("author", "author", ctx.qry.grep);
++		html_option("committer", "committer", ctx.qry.grep);
++		html_option("range", "range", ctx.qry.grep);
++		html("</select>\n");
++		html("<input class='txt' type='search' size='10' name='q' value='");
++		html_attr(ctx.qry.search);
++		html("'/>\n");
++		html("<input type='submit' value='search'/>\n");
++		html("</form>\n");
++		html("</nav>\n");
++
++		html("<nav>\n");
++		html("<ul>");
+ 		if (ctx.repo->readme.nr) {
+ 			reporevlink("about", "about", NULL,
+ 				    hc("about"), ctx.qry.head, NULL,
+@@ -1105,34 +1129,15 @@ void cgit_print_pageheader(void)
+ 			html_attr(ctx.repo->homepage);
+ 			html("'>homepage</a>");
+ 		}
+-		html("</td><td class='form'>");
+-		html("<form class='right' method='get' action='");
+-		if (ctx.cfg.virtual_root) {
+-			char *fileurl = cgit_fileurl(ctx.qry.repo, "log",
+-						   ctx.qry.vpath, NULL);
+-			html_url_path(fileurl);
+-			free(fileurl);
+-		}
+-		html("'>\n");
+-		cgit_add_hidden_formfields(1, 0, "log");
+-		html("<select name='qt'>\n");
+-		html_option("grep", "log msg", ctx.qry.grep);
+-		html_option("author", "author", ctx.qry.grep);
+-		html_option("committer", "committer", ctx.qry.grep);
+-		html_option("range", "range", ctx.qry.grep);
+-		html("</select>\n");
+-		html("<input class='txt' type='search' size='10' name='q' value='");
+-		html_attr(ctx.qry.search);
+-		html("'/>\n");
+-		html("<input type='submit' value='search'/>\n");
+-		html("</form>\n");
++		html("</ul>");
++		html("</nav>\n");
+ 	} else if (ctx.env.authenticated) {
+ 		char *currenturl = cgit_currenturl();
++		html("<nav>\n");
+ 		site_link(NULL, "index", NULL, hc("repolist"), NULL, NULL, 0, 1);
+ 		if (ctx.cfg.root_readme)
+ 			site_link("about", "about", NULL, hc("about"),
+ 				  NULL, NULL, 0, 1);
+-		html("</td><td class='form'>");
+ 		html("<form method='get' action='");
+ 		html_attr(currenturl);
+ 		html("'>\n");
+@@ -1141,11 +1146,11 @@ void cgit_print_pageheader(void)
+ 		html("'/>\n");
+ 		html("<input type='submit' value='search'/>\n");
+ 		html("</form>");
++		html("</nav>\n");
+ 		free(currenturl);
+ 	}
+-	html("</td></tr></table>\n");
+ 	if (ctx.env.authenticated && ctx.repo && ctx.qry.vpath) {
+-		html("<div class='path'>");
++		html("<nav role='breadcrumbs'>");
+ 		html("path: ");
+ 		cgit_print_path_crumbs(ctx.qry.vpath);
+ 		if (ctx.cfg.enable_follow_links && !strcmp(ctx.qry.page, "log")) {
+@@ -1156,7 +1161,7 @@ void cgit_print_pageheader(void)
+ 			ctx.qry.follow = !ctx.qry.follow;
+ 			html(")");
+ 		}
+-		html("</div>");
++		html("</nav>");
+ 	}
+ 	html("<article>");
+ }
+@@ -1187,10 +1192,10 @@ void cgit_compose_snapshot_prefix(struct strbuf *filename, const char *base,
+ 	 * i.e. each stripped tag can be inverted without ambiguities.
+ 	 */
+ 	if (get_oid(fmt("refs/tags/%s", ref), &oid) == 0 &&
+-	    (ref[0] == 'v' || ref[0] == 'V') && isdigit(ref[1]) &&
+-	    ((get_oid(fmt("refs/tags/%s", ref + 1), &oid) == 0) +
+-	     (get_oid(fmt("refs/tags/v%s", ref + 1), &oid) == 0) +
+-	     (get_oid(fmt("refs/tags/V%s", ref + 1), &oid) == 0) == 1))
++		(ref[0] == 'v' || ref[0] == 'V') && isdigit(ref[1]) &&
++		((get_oid(fmt("refs/tags/%s", ref + 1), &oid) == 0) +
++		 (get_oid(fmt("refs/tags/v%s", ref + 1), &oid) == 0) +
++		 (get_oid(fmt("refs/tags/V%s", ref + 1), &oid) == 0) == 1))
+ 		ref++;
+
+ 	strbuf_addf(filename, "%s-%s", base, ref);

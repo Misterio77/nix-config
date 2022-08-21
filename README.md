@@ -8,6 +8,7 @@ Here's my NixOS/home-manager config files. Requires [Nix flakes](https://nixos.w
 Looking for something simpler to start out with flakes? Try [my starter config repo](https://github.com/Misterio77/nix-starter-config).
 
 **Highlights**:
+
 - Multiple **NixOS configurations**, including **desktop**, **laptop**, **server**
 - **Opt-in persistence** through impermanence + blank snapshotting
 - **Encrypted** single **BTRFS** partition
@@ -19,6 +20,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
 
 ## Structure
+
 - `flake.nix`: Entrypoint for hosts and home configurations. Also exposes a
   devshell for boostrapping (`nix develop` or `nix-shell`).
 - `lib`: A few lib functions for making my flake cleaner
@@ -91,6 +93,7 @@ signing, as well as for SSH'ing around.
 ## Tooling and applications I use
 
 Most relevant user apps daily drivers:
+
 - hyprland + swayidle + swaylock
 - waybar
 - neovim
@@ -109,12 +112,14 @@ Most relevant user apps daily drivers:
 - sublime-music
 
 Some of the services I host:
+
 - navidrome
 - nextcloud
 - minecraft
 - headscale
 
 Nixy stuff:
+
 - nix-colors
 - sops-nix
 - impermanence
