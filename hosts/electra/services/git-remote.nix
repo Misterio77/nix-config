@@ -14,6 +14,7 @@
       isSystemUser = true;
       shell = "${pkgs.git}/bin/git-shell";
       group = "git";
+      packages = [ pkgs.git ];
       openssh.authorizedKeys.keys = config.users.users.misterio.openssh.authorizedKeys.keys;
     };
     groups.git = { };
