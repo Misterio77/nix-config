@@ -28,11 +28,6 @@ in
           forceSSL = true;
           enableACME = true;
           locations = {
-            "/git" = {
-              extraConfig = ''
-                rewrite ^/git(.*)$ https://git.fontes.dev.br$1 last;
-              '';
-            };
             "/" = {
               root = "${pkgs.website.main}/public";
               extraConfig = ''

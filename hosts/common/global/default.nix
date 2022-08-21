@@ -35,7 +35,7 @@
 
     # Persist logs, timers, etc
     persistence = lib.mkIf persistence {
-      "/persist".directories = [ "/var/lib/systemd" "/var/log" ];
+      "/persist".directories = [ "/var/lib/systemd" "/var/log" "/srv" ];
     };
 
     # Add terminfo files
