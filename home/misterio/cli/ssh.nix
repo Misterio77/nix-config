@@ -1,13 +1,17 @@
 { outputs, hostname, persistence, lib, ... }:
 let
   notSelf = n: n != hostname;
-  hostnames = builtins.filter notSelf (builtins.attrNames outputs.nixosConfigurations);
+  hosts = builtins.filter notSelf (builtins.attrNames outputs.nixosConfigurations);
+  hostnames = hosts
+    ++ (map (h: "${h}.misterio.me") hosts)
+    ++ (map (h: "${h}.fontes.dev.br") hosts)
+    ++ (map (h: "${h}.ts.fontes.dev.br") hosts);
 in
 {
   programs.ssh = {
     enable = true;
     matchBlocks.home = {
-      host = builtins.concatStringsSep " " (hostnames ++ [ "*.misterio.me" "*.fontes.dev.br" ]);
+      host = builtins.concatStringsSep " " hostnames;
       forwardAgent = true;
       remoteForwards = [{
         bind.address = ''/run/user/1000/gnupg/S.gpg-agent'';
