@@ -11,6 +11,7 @@
     ../common/users/layla.nix
 
     ./services
+    ../common/optional/pantheon.nix
     ../common/optional/quietboot.nix
     ../common/optional/tailscale.nix
   ];
@@ -40,6 +41,7 @@
     };
   };
 
+  i18n.defaultLocale = "pt_BR.UTF-8";
   hardware.nvidia.prime.offload.enable = false;
   system.stateVersion = "22.05";
   # TODO: Add graphical stuff

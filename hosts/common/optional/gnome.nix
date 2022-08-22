@@ -15,6 +15,4 @@
   # Fix broken stuff
   services.avahi.enable = false;
   networking.networkmanager.enable = false;
-
-  i18n.defaultLocale = "pt_BR.UTF-8";
 }

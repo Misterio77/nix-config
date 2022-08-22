@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, config, persistence, ... }:
 {
   users.mutableUsers = false;
   users.users.layla = {
@@ -17,4 +17,8 @@
     neededForUsers = true;
   };
 
+  # Persist entire home
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [ "/home/layla" ];
+  };
 }
