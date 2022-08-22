@@ -41,6 +41,8 @@
     };
   };
 
+  networking.networkmanager.enable = false;
+
   i18n.defaultLocale = "pt_BR.UTF-8";
   hardware.nvidia.prime.offload.enable = false;
   system.stateVersion = "22.05";
