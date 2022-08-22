@@ -15,8 +15,6 @@ in
     ++ (lib.optional config.networking.wireless.userControlled.enable config.networking.wireless.userControlled.group)
     ++ (lib.optional config.programs.wireshark.enable "wireshark")
     ++ (lib.optional config.hardware.i2c.enable "i2c")
-    ++ (lib.optional config.services.minecraft-server.enable "minecraft")
-    ++ (lib.optional (config.systemd.services.minecraft-modpack or { enable = false; }).enable "minecraft-modpack")
     ++ (lib.optional config.services.mysql.enable "mysql")
     ++ (lib.optional config.virtualisation.docker.enable "docker")
     ++ (lib.optional config.virtualisation.podman.enable "podman")

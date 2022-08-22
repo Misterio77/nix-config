@@ -48,7 +48,7 @@ in
   # Open ports
   networking.firewall = {
     # Minecraft
-    allowedTCPPorts = [ 25565 ];
+    allowedTCPPorts = [ 25565 24454 ];
     # Query and Voice chat
     allowedUDPPorts = [ 25565 24454 ];
   };

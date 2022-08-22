@@ -143,7 +143,7 @@
             "games"
           ];
           wallpaper = "aurora-borealis-water-mountain";
-          colorscheme = "nebula";
+          colorscheme = "spaceduck";
         };
         # Laptop
         "misterio@pleione" = mkHome {

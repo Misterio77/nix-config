@@ -10,12 +10,34 @@
     ../common/users/misterio.nix
     ../common/users/layla.nix
 
+    ./services
     ../common/optional/quietboot.nix
     ../common/optional/tailscale.nix
   ];
 
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  };
+
+  networking = {
+    useDHCP = false;
+    interfaces.enp2s0 = {
+      useDHCP = true;
+      wakeOnLan.enable = true;
+
+      ipv4 = {
+        addresses = [{
+          address = "192.168.0.13";
+          prefixLength = 24;
+        }];
+      };
+      ipv6 = {
+        addresses = [{
+          address = "2804:14d:8084:a484::3";
+          prefixLength = 64;
+        }];
+      };
+    };
   };
 
   hardware.nvidia.prime.offload.enable = false;
