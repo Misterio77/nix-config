@@ -28,6 +28,9 @@
       enable = true;
       group = "network";
     };
+    extraConfig = ''
+      update_config=1
+    '';
   };
 
   # Ensure group exists
