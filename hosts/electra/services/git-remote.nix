@@ -11,6 +11,7 @@
     users.git = {
       home = "/srv/git";
       createHome = true;
+      homeMode = "755";
       isSystemUser = true;
       shell = "${pkgs.git}/bin/git-shell";
       group = "git";
