@@ -1,5 +1,5 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ lib, inputs, hostname, persistence, config, ... }:
+{ lib, inputs, hostname, persistence, ... }:
 {
   imports = [
     inputs.impermanence.nixosModules.impermanence
@@ -9,22 +9,11 @@
     ./openssh.nix
     ./peerix.nix
     ./sops.nix
-    ./users.nix
   ];
 
   networking = {
     hostName = hostname;
     domain = "fontes.dev.br";
-  };
-
-  nix = {
-    # Add each flake input as a registry
-    # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-
-    # Map registries to channels
-    # Very useful when using legacy commands
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 
   environment = {
@@ -62,6 +51,4 @@
       value = "1048576";
     }
   ];
-
-  system.stateVersion = lib.mkDefault "22.05";
 }

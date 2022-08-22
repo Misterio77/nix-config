@@ -6,7 +6,10 @@
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
+
     ../common/global
+    ../common/users/misterio.nix
+
     ../common/optional/wireless.nix
     ../common/optional/misterio-greetd.nix
     ../common/optional/pipewire.nix

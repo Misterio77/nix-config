@@ -136,6 +136,7 @@ in
                 electra = { host = "electra"; icon = " "; };
                 merope = { host = "merope"; icon = " "; };
                 atlas = { host = "atlas"; icon = " "; };
+                maia = { host = "maia"; icon = " "; };
                 pleione = { host = "pleione"; icon = " "; };
               };
               targets' = builtins.filter (x: x.host != hostname) (builtins.attrValues targets);

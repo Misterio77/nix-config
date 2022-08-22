@@ -3,7 +3,7 @@ let
   java = "${pkgs.openjdk}/bin/java";
   ram = "2760M";
   pack = "https://git.sr.ht/~misterio/Modpack/blob/main/pack.toml";
-  jar = "fabric-server-mc.1.18.2-loader.0.14.8-launcher.0.11.0.jar";
+  jar = "server.jar";
 in
 {
   systemd.services.minecraft-modpack = {

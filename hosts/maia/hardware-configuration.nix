@@ -3,11 +3,10 @@
     ../common/optional/btrfs-optin-persistence.nix
     ../common/optional/encrypted-root.nix
   ];
-
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
-      kernelModules = [ "kvm-amd" ];
+      availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+      kernelModules = [ "kvm-intel" ];
     };
     loader = {
       systemd-boot = {
@@ -26,6 +25,5 @@
   };
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = true;
-  powerManagement.cpuFreqGovernor = "powersave";
+  hardware.cpu.intel.updateMicrocode = true;
 }

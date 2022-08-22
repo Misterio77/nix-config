@@ -108,6 +108,12 @@
           pkgs = legacyPackages."x86_64-linux";
           persistence = true;
         };
+        # Secondary Desktop
+        maia = mkSystem {
+          hostname = "maia";
+          pkgs = legacyPackages."x86_64-linux";
+          persistence = true;
+        };
         # Raspi 4
         merope = mkSystem {
           hostname = "merope";
@@ -123,6 +129,7 @@
       };
 
       homeConfigurations = {
+        # Desktop
         "misterio@atlas" = mkHome {
           username = "misterio";
           hostname = "atlas";
@@ -138,6 +145,7 @@
           wallpaper = "aurora-borealis-water-mountain";
           colorscheme = "nebula";
         };
+        # Laptop
         "misterio@pleione" = mkHome {
           username = "misterio";
           hostname = "pleione";
@@ -152,6 +160,15 @@
           colorscheme = "paraiso";
           wallpaper = "plains-gold-field";
         };
+        # Secondary Desktop
+        "misterio@maia" = mkHome {
+          username = "misterio";
+          hostname = "maia";
+          persistence = true;
+
+          colorscheme = "dracula";
+        };
+        # Raspi 4
         "misterio@merope" = mkHome {
           username = "misterio";
           hostname = "merope";
@@ -159,6 +176,7 @@
 
           colorscheme = "nord";
         };
+        # VPS
         "misterio@electra" = mkHome {
           username = "misterio";
           hostname = "electra";
@@ -166,6 +184,7 @@
 
           colorscheme = "solarflare";
         };
+        # For easy bootstraping from a nixos live usb
         "nixos@nixos" = mkHome {
           username = "nixos";
           hostname = "nixos";
@@ -177,8 +196,8 @@
 
       deploy = {
         nodes = mkDeploys nixosConfigurations homeConfigurations;
-        magicRollback = false;
-        autoRollback = false;
+        magicRollback = true;
+        autoRollback = true;
       };
 
       deployChecks = { };
