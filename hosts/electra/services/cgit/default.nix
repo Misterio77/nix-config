@@ -12,7 +12,7 @@ in
           "=/git/style.css" = {
             alias = "${./cgit.css}";
           };
-          "/git".return = "301 https://fontes.dev.br/git/";
+          "=/git".return = "301 https://fontes.dev.br/git/";
           "/git/" = {
             root = "${cgit}/cgit";
             extraConfig = ''
