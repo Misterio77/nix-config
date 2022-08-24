@@ -12,6 +12,7 @@
 
     ./services
     ../common/optional/pantheon.nix
+    ../common/optional/x11-no-suspend.nix
     ../common/optional/quietboot.nix
     ../common/optional/tailscale.nix
   ];
