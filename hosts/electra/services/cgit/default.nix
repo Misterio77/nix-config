@@ -12,13 +12,14 @@ in
           "=/git/style.css" = {
             alias = "${./cgit.css}";
           };
-          "~* ^/git/?(.*)" = {
+          "/git".return = "301 https://fontes.dev.br/git/";
+          "/git/" = {
             root = "${cgit}/cgit";
             extraConfig = ''
-              uwsgi_pass unix:/run/uwsgi/cgit.sock;
+              rewrite ^/git/(.*) /$1 break;
               include ${pkgs.nginx}/conf/uwsgi_params;
-              uwsgi_param PATH_INFO /$1;
               uwsgi_modifier1 9;
+              uwsgi_pass unix:/run/uwsgi/cgit.sock;
             '';
           };
         };
