@@ -35,6 +35,13 @@ in
                 add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
               '';
             };
+            "/assets" = {
+              root = "${pkgs.website.main}/public";
+              extraConfig = ''
+                add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+                add_header Cache-Control max-age="${toString (30 * 60 * 60 * 24 /*  One month */)}";
+              '';
+            };
           };
         };
       };
