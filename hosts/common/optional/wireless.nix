@@ -20,6 +20,13 @@
       "Misterio" = {
         pskRaw = "@MISTERIO@";
       };
+      "eduroam" = {
+        auth = ''
+          eap=PEAP
+          identity="10856803@usp.br"
+          password="@EDUROAM@"
+        '';
+      };
     };
 
     # Imperative
