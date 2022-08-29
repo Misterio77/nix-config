@@ -15,12 +15,13 @@ let
       text = ''
         ${realName}
 
-        https://misterio.me
+        https://gsfontes.com
         PGP: ${gpg.key}
       '';
     };
   };
-in {
+in
+{
   home.persistence = lib.mkIf persistence {
     "/persist/home/misterio".directories = [ "Mail" ];
   };
@@ -30,13 +31,14 @@ in {
     accounts = {
       personal = rec {
         primary = true;
-        # TODO update email
-        address = "eu@misterio.me";
+        address = "gabriel@gsfontes.com";
         userName = address;
-        passwordCommand = "${pass} mail.gandi.net/${address}";
-        imap.host = "mail.gandi.net";
-        smtp.host = "mail.gandi.net";
-        folders = { inbox = "INBOX"; };
+        passwordCommand = "${pass} mail1.netim.hosting/${address}";
+        imap.host = "mail1.netim.hosting";
+        smtp.host = "mail1.netim.hosting";
+        folders = {
+          inbox = "INBOX";
+        };
         mbsync = {
           enable = true;
           create = "maildir";

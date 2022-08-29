@@ -44,7 +44,7 @@ in
         publicKeys = [
           {
             source = fetchKey {
-              url = "https://fontes.dev.br/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc";
+              url = "https://gsfontes.com/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc";
               sha256 = "sha256:1d3qjnj27qygs9vbc61c7g5a84mfrj45ajsc8dgsjbibvml7l915";
             };
             trust = 5;

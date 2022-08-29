@@ -1,4 +1,4 @@
-{ config, persistence, lib, ... }: {
+{ persistence, lib, ... }: {
   home.persistence = lib.mkIf persistence {
     "/persist/games/misterio" = {
       allowOther = true;
@@ -11,7 +11,7 @@
         ".local/share/Paradox Interactive"
         ".paradoxlauncher"
         {
-          path = ".local/share/Steam";
+          directory = ".local/share/Steam";
           method = "symlink";
         }
       ];

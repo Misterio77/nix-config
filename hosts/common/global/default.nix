@@ -13,7 +13,7 @@
 
   networking = {
     hostName = hostname;
-    domain = "fontes.dev.br";
+    domain = "m7.rs";
   };
 
   environment = {

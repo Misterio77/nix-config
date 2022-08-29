@@ -6,60 +6,63 @@ let
       echo -n ''${dt/+0000/GMT} > $out
     ''
   );
+  redir = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/".return = "302 https://gsfontes.com$request_uri";
+  };
 in
 {
-  services =
-    let
-      redir = {
+  services = {
+    nginx.virtualHosts = {
+      "m7.rs" = redir;
+      "misterio.me" = redir;
+      "fontes.dev.br" = redir;
+      "gsfontes.com" = {
+        default = true;
         forceSSL = true;
         enableACME = true;
-        locations."/" = {
-          return = "302 https://fontes.dev.br$request_uri";
-        };
-      };
-    in
-    {
-      nginx.virtualHosts = {
-        "misterio.me" = redir;
-        "www.fontes.dev.br" = redir;
-        "gabriel.fontes.dev.br" = redir;
-        "fontes.dev.br" = {
-          default = true;
-          forceSSL = true;
-          enableACME = true;
-          locations = {
-            "/" = {
-              root = "${pkgs.website.main}/public";
-              extraConfig = ''
-                add_header Last-Modified "${toDateTime inputs.website.lastModified}";
-                add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
-              '';
-            };
-            "/assets" = {
-              root = "${pkgs.website.main}/public";
-              extraConfig = ''
-                add_header Last-Modified "${toDateTime inputs.website.lastModified}";
-                add_header Cache-Control max-age="${toString (30 * 60 * 60 * 24 /*  One month */)}";
-              '';
-            };
+        locations = {
+          "/" = {
+            root = "${pkgs.website.main}/public";
+            extraConfig = ''
+              add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+              add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
+            '';
+          };
+          "/assets" = {
+            root = "${pkgs.website.main}/public";
+            extraConfig = ''
+              add_header Last-Modified "${toDateTime inputs.website.lastModified}";
+              add_header Cache-Control max-age="${toString (30 * 60 * 60 * 24 /*  One month */)}";
+            '';
           };
         };
       };
-      # Gemini
-      agate = {
-        enable = true;
-        contentDir = pkgs.linkFarm "agate-website" [
-          {
-            name = "misterio.me";
-            path = "${pkgs.website.main}/public";
-          }
-          {
-            name = "fontes.dev.br";
-            path = "${pkgs.website.main}/public";
-          }
-        ];
-        hostnames = [ "misterio.me" "fontes.dev.br" ];
-      };
     };
+    # Gemini
+    agate = {
+      enable = true;
+      contentDir = pkgs.linkFarm "agate-website" [
+        {
+          name = "misterio.me";
+          path = "${pkgs.website.main}/public";
+        }
+        {
+          name = "fontes.dev.br";
+          path = "${pkgs.website.main}/public";
+        }
+        {
+          name = "m7.rs";
+          path = "${pkgs.website.main}/public";
+        }
+        {
+          name = "gsfontes.com";
+          path = "${pkgs.website.main}/public";
+        }
+      ];
+      hostnames = [ "misterio.me" "fontes.dev.br" "m7.rs" "gsfontes.com" ];
+    };
+  };
   networking.firewall.allowedTCPPorts = [ 1965 ];
 }

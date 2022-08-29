@@ -8,6 +8,7 @@ in {
       [ "Calendars" "Contacts" ".local/share/vdirsyncer" ];
   };
 
+  # TODO: migrate caldav and carddav elsewhere
   xdg.configFile."vdirsyncer/config".text = ''
     [general]
     status_path = "~/.local/share/vdirsyncer/status"
@@ -48,6 +49,7 @@ in {
     password.fetch = ["command", "${pass}", "mail.gandi.net/eu@misterio.me"]
   '';
 
+  /*
   systemd.user.services.vdirsyncer = {
     Unit = { Description = "vdirsyncer synchronization"; };
     Service = let keyring = import ./keyring.nix { inherit pkgs; };
@@ -67,4 +69,5 @@ in {
     };
     Install = { WantedBy = [ "timers.target" ]; };
   };
+  */
 }

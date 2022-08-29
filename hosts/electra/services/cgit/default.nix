@@ -4,24 +4,22 @@ let
 in
 {
   services = {
-    nginx.virtualHosts = {
-      "fontes.dev.br" = {
-        forceSSL = true;
-        enableACME = true;
-        locations = {
-          "=/git/style.css" = {
-            alias = "${./cgit.css}";
-          };
-          "=/git".return = "301 https://fontes.dev.br/git/";
-          "/git/" = {
-            root = "${cgit}/cgit";
-            extraConfig = ''
-              rewrite ^/git/(.*) /$1 break;
-              include ${pkgs.nginx}/conf/uwsgi_params;
-              uwsgi_modifier1 9;
-              uwsgi_pass unix:/run/uwsgi/cgit.sock;
-            '';
-          };
+    nginx.virtualHosts."gsfontes.com" = {
+      forceSSL = true;
+      enableACME = true;
+      locations = {
+        "=/git/style.css" = {
+          alias = "${./cgit.css}";
+        };
+        "=/git".return = "301 https://gsfontes.com/git/";
+        "/git/" = {
+          root = "${cgit}/cgit";
+          extraConfig = ''
+            rewrite ^/git/(.*) /$1 break;
+            include ${pkgs.nginx}/conf/uwsgi_params;
+            uwsgi_modifier1 9;
+            uwsgi_pass unix:/run/uwsgi/cgit.sock;
+          '';
         };
       };
     };
@@ -57,7 +55,6 @@ in
 
     root-title=My git repos
     root-desc=Source code for some of my projects
-    logo-link=https://fontes.dev.br
 
     enable-http-clone=1
     noplainemail=1

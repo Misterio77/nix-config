@@ -17,17 +17,12 @@
       }];
     };
 
-    nginx.virtualHosts =
-      let
-        location = "http://localhost:${toString config.services.paste-misterio-me.port}";
-      in
-      {
-        "paste.misterio.me" = {
-          forceSSL = true;
-          enableACME = true;
-          locations."/".proxyPass = location;
-        };
-      };
+    nginx.virtualHosts."paste.misterio.me" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/".proxyPass =
+        "http://localhost:${toString config.services.paste-misterio-me.port}";
+    };
   };
 
   sops.secrets.paste-misterio-me-key = {

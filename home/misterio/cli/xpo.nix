@@ -1,6 +1,6 @@
 {
   programs.xpo = {
     enable = true;
-    defaultServer = "electra.fontes.dev.br";
+    defaultServer = "m7.rs";
   };
 }

@@ -196,15 +196,15 @@
     },
     "impermanence": {
       "locked": {
-        "lastModified": 1657768550,
-        "narHash": "sha256-9U4yL5iR/NSntuDoKxmhhftyM94YkZrjzmEB1fgqvys=",
-        "owner": "misterio77",
+        "lastModified": 1661590580,
+        "narHash": "sha256-XoPSucNvccnT50LWme/7BiENZDwr8tArEg36OGQFFnA=",
+        "owner": "nix-community",
         "repo": "impermanence",
-        "rev": "e058964c0b184b95148b336ed0db484cc1f7987c",
+        "rev": "2237ad28093cb53ad2eb0fd1a9f870997287e0fa",
         "type": "github"
       },
       "original": {
-        "owner": "misterio77",
+        "owner": "nix-community",
         "repo": "impermanence",
         "type": "github"
       }
@@ -393,15 +393,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1657771335,
+        "lastModified": 1661429880,
         "narHash": "sha256-7/m468XZW82O7KhDtRdQ7RnPsh83+tA8N4U0FncFo1U=",
-        "owner": "misterio77",
+        "owner": "cid-chan",
         "repo": "peerix",
-        "rev": "dd421315a08f88d50cdb5fc8e1da584f9a77cf6f",
+        "rev": "32cd1b098b83c90726848bd6726f74e72c557abb",
         "type": "github"
       },
       "original": {
-        "owner": "misterio77",
+        "owner": "cid-chan",
         "repo": "peerix",
         "type": "github"
       }

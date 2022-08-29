@@ -6,16 +6,16 @@
 
   mailserver = {
     enable = true;
-    fqdn = "mail.fontes.dev.br";
-    sendingFqdn = "electra.fontes.dev.br";
-    domains = [ "fontes.dev.br" ];
+    fqdn = "mail.m7.rs";
+    sendingFqdn = "electra.m7.rs";
+    domains = [ "m7.rs" ];
     useFsLayout = true;
     certificateScheme = 3;
     localDnsResolver = false;
     loginAccounts = {
-      "gabriel@fontes.dev.br" = {
+      "hi@m7.rs" = {
         hashedPasswordFile = config.sops.secrets.gabriel-mail-password.path;
-        aliases = [ "@fontes.dev.br" ];
+        aliases = [ "@m7.rs" ];
       };
     };
   };

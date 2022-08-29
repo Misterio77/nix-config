@@ -95,7 +95,7 @@
         }
       ];
     extraConfig = ''
-      alternates "eu@misterio.me|gabriel.fontes@uget.express|g.fontes@usp.br|gabriel@fontes.dev.br"
+      alternates "gabriel@gsfontes.com|hi@m7.rs|eu@misterio.me|gabriel.fontes@uget.express|g.fontes@usp.br"
     '' + ''
       # From: https://github.com/altercation/mutt-colors-solarized/blob/master/mutt-colors-solarized-dark-16.muttrc
 

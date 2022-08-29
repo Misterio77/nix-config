@@ -6,7 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
-    impermanence.url = "github:misterio77/impermanence"; # TODO change to upstream after #99 is merged
+    impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
     home-manager = {
@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     peerix = {
-      url = "github:misterio77/peerix"; # TODO change to upstream after #13 is merged
+      url = "github:cid-chan/peerix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-mailserver = {

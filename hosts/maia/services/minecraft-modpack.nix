@@ -39,11 +39,13 @@ in
   };
 
   # Proxy for squaremap
-  services.nginx.virtualHosts."mc.misterio.me" = {
+  /*
+  services.nginx.virtualHosts."mc.m7.rs" = {
     forceSSL = true;
     enableACME = true;
     locations."/".proxyPass = "http://localhost:8123";
   };
+  */
 
   # Open ports
   networking.firewall = {
