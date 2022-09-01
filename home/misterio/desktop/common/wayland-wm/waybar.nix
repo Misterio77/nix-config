@@ -176,13 +176,13 @@ in
           return-type = "json";
           exec = jsonOutput {
             pre = ''
-              count=$(find ~/Mail/*/INBOX/new -type f | wc -l)
+              count=$(find ~/Mail/*/Inbox/new -type f | wc -l)
               if [ "$count" == "0" ]; then
                 subjects="No new mail"
                 status="read"
               else
                 subjects=$(\
-                  grep -h "Subject: " -r ~/Mail/*/INBOX/new | cut -d ':' -f2- | \
+                  grep -h "Subject: " -r ~/Mail/*/Inbox/new | cut -d ':' -f2- | \
                   perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
                 )
                 status="unread"
