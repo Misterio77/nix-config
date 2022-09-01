@@ -2,7 +2,6 @@
 
 let
   mbsync = "${config.programs.mbsync.package}/bin/mbsync";
-  gpg = "${config.programs.gnupg.package}/bin/gpg";
   pass = "${config.programs.password-store.package}/bin/pass";
 
   common = rec {
@@ -50,7 +49,6 @@ in
         };
         neomutt = {
           enable = true;
-          mailboxName = "Personal -> Inbox";
           extraMailboxes = [ "Archive" "Drafts" "Sent" "Spam" "Trash" ];
         };
         imap.host = "imap.fastmail.com";
@@ -61,26 +59,7 @@ in
       college = rec {
         address = "g.fontes@usp.br";
 
-        folders = {
-          inbox = "Inbox";
-          drafts = "[Gmail]/Drafts";
-          sent = "[Gmail]/Sent";
-          trash = "[Gmail]/Trash";
-        };
-        mbsync = {
-          enable = true;
-          create = "maildir";
-          expunge = "both";
-        };
-        msmtp = {
-          enable = true;
-        };
-        neomutt = {
-          enable = true;
-          mailboxName = "USP -> Inbox";
-          extraMailboxes = [ "[Gmail]/All Mail" "[Gmail]/Drafts" "[Gmail]/Spam" "[Gmail]/Sent Mail" "[Gmail]/Trash" ];
-        };
-        imap.host = "imap.gmail.com";
+        msmtp.enable = true;
         smtp.host = "smtp.gmail.com";
         userName = address;
         passwordCommand = "${pass} ${smtp.host}/${address}";
@@ -88,26 +67,7 @@ in
       work = rec {
         address = "gabriel.fontes@uget.express";
 
-        folders = {
-          inbox = "Inbox";
-          drafts = "[Gmail]/Drafts";
-          sent = "[Gmail]/Sent";
-          trash = "[Gmail]/Trash";
-        };
-        mbsync = {
-          enable = true;
-          create = "maildir";
-          expunge = "both";
-        };
-        msmtp = {
-          enable = true;
-        };
-        neomutt = {
-          enable = true;
-          mailboxName = "U-Get -> Inbox";
-          extraMailboxes = [ "[Gmail]/All Mail" "[Gmail]/Drafts" "[Gmail]/Spam" "[Gmail]/Sent Mail" "[Gmail]/Trash" ];
-        };
-        imap.host = "imap.gmail.com";
+        msmtp.enable = true;
         smtp.host = "smtp.gmail.com";
         userName = address;
         passwordCommand = "${pass} ${smtp.host}/${address}";
@@ -118,27 +78,25 @@ in
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
 
-  /*
-    systemd.user.services.mbsync = {
+  systemd.user.services.mbsync = {
     Unit = { Description = "mbsync synchronization"; };
     Service =
-    let keyring = import ./keyring.nix { inherit pkgs; };
-    in
-    {
-    Type = "oneshot";
-    ExecCondition = ''
-    /bin/sh -c "${keyring.isUnlocked}"
-    '';
-    ExecStart = "${mbsync} -a";
-    };
-    };
-    systemd.user.timers.mbsync = {
+      let keyring = import ./keyring.nix { inherit pkgs; };
+      in
+      {
+        Type = "oneshot";
+        ExecCondition = ''
+          /bin/sh -c "${keyring.isUnlocked}"
+        '';
+        ExecStart = "${mbsync} -a";
+      };
+  };
+  systemd.user.timers.mbsync = {
     Unit = { Description = "Automatic mbsync synchronization"; };
     Timer = {
-    OnBootSec = "30";
-    OnUnitActiveSec = "5m";
+      OnBootSec = "30";
+      OnUnitActiveSec = "5m";
     };
     Install = { WantedBy = [ "timers.target" ]; };
-    };
-  */
+  };
 }
