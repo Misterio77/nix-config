@@ -24,6 +24,6 @@ in
   };
 
   home.persistence = lib.mkIf persistence {
-    "/persist/home/misterio".files = [ ".ssh/known_hosts" ];
+    "/persist/home/misterio".directories = [ ".ssh" ];
   };
 }

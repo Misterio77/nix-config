@@ -8,7 +8,6 @@ in {
       [ "Calendars" "Contacts" ".local/share/vdirsyncer" ];
   };
 
-  # TODO: migrate caldav and carddav elsewhere
   xdg.configFile."vdirsyncer/config".text = ''
     [general]
     status_path = "~/.local/share/vdirsyncer/status"
@@ -26,9 +25,9 @@ in {
 
     [storage contacts_remote]
     type = "carddav"
-    url = "https://webmail.gandi.net/SOGo/dav"
-    username = "eu@misterio.me"
-    password.fetch = ["command", "${pass}", "mail.gandi.net/eu@misterio.me"]
+    url = "https://carddav.fastmail.com/dav"
+    username = "gabriel@gsfontes.com"
+    password.fetch = ["command", "${pass}", "carddav.fastmail.com/gabriel@gsfontes.com"]
 
     [pair calendars]
     a = "calendars_local"
@@ -44,8 +43,8 @@ in {
 
     [storage calendars_remote]
     type = "caldav"
-    url = "https://webmail.gandi.net/SOGo/dav"
-    username = "eu@misterio.me"
-    password.fetch = ["command", "${pass}", "mail.gandi.net/eu@misterio.me"]
+    url = "https://caldav.fastmail.com/dav"
+    username = "gabriel@gsfontes.com"
+    password.fetch = ["command", "${pass}", "caldav.fastmail.com/gabriel@gsfontes.com"]
   '';
 }
