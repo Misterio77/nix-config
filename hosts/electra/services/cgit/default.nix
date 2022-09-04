@@ -96,7 +96,7 @@ in
 
     source-filter=${cgit}/lib/cgit/filters/syntax-highlighting.py
     about-filter=${cgit}/lib/cgit/filters/about-formatting.sh
-    snapshots=tar.gz tar.bz2 zip
+    snapshots=tar.gz zip
 
     include=/srv/git/cgitrepos
     enable-git-config=1
