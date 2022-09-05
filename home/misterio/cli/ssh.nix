@@ -6,19 +6,12 @@ in
 {
   programs.ssh = {
     enable = true;
-    matchBlocks.home = {
-      host = builtins.concatStringsSep " " (hostnames ++ [
-        "misterio.me"
-        "*.misterio.me"
-        "*.ts.misterio.me"
-        "m7.rs"
-        "*.m7.rs"
-        "*.ts.m7.rs"
-      ]);
+    matchBlocks.net = {
+      host = builtins.concatStringsSep " " hostnames;
       forwardAgent = true;
       remoteForwards = [{
-        bind.address = ''/run/user/1000/gnupg/S.gpg-agent'';
-        host.address = ''/run/user/1000/gnupg/S.gpg-agent.extra'';
+        bind.address = ''/%d/.gnupg/sockets/S.gpg-agent'';
+        host.address = ''/%d/.gnupg/sockets/S.gpg-agent.extra'';
       }];
     };
   };
