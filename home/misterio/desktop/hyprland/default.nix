@@ -142,8 +142,8 @@
 
 
           # Window manager controls
-          bind=SUPERSHIFT,Q,killactive
-          bind=SUPERSHIFT,E,exit
+          bind=SUPERSHIFT,q,killactive
+          bind=SUPERSHIFT,e,exit
 
           bind=SUPER,s,togglesplit
           bind=SUPER,f,fullscreen,1
@@ -151,14 +151,14 @@
           bind=SUPERSHIFT,space,togglefloating
 
           bind=SUPER,minus,splitratio,-0.25
-          bind=SUPERSHIFT,underscore,splitratio,-0.3333333
+          bind=SUPERSHIFT,minus,splitratio,-0.3333333
 
           bind=SUPER,equal,splitratio,0.25
-          bind=SUPERSHIFT,plus,splitratio,0.3333333
+          bind=SUPERSHIFT,equal,splitratio,0.3333333
 
           bind=SUPER,g,togglegroup
           bind=SUPER,apostrophe,changegroupactive,f
-          bind=SUPERSHIFT,quotedbl,changegroupactive,b
+          bind=SUPERSHIFT,apostrophe,changegroupactive,b
 
           bind=SUPER,left,movefocus,l
           bind=SUPER,right,movefocus,r
@@ -227,16 +227,16 @@
           bind=SUPER,9,workspace,9
           bind=SUPER,0,workspace,10
 
-          bind=SUPERSHIFT,exclam,movetoworkspacesilent,1
-          bind=SUPERSHIFT,at,movetoworkspacesilent,2
-          bind=SUPERSHIFT,numbersign,movetoworkspacesilent,3
-          bind=SUPERSHIFT,dollar,movetoworkspacesilent,4
-          bind=SUPERSHIFT,percent,movetoworkspacesilent,5
-          bind=SUPERSHIFT,asciicircum,movetoworkspacesilent,6
-          bind=SUPERSHIFT,ampersand,movetoworkspacesilent,7
-          bind=SUPERSHIFT,asterisk,movetoworkspacesilent,8
-          bind=SUPERSHIFT,parenleft,movetoworkspacesilent,9
-          bind=SUPERSHIFT,parenright,movetoworkspacesilent,10
+          bind=SUPERSHIFT,1,movetoworkspacesilent,1
+          bind=SUPERSHIFT,2,movetoworkspacesilent,2
+          bind=SUPERSHIFT,3,movetoworkspacesilent,3
+          bind=SUPERSHIFT,4,movetoworkspacesilent,4
+          bind=SUPERSHIFT,5,movetoworkspacesilent,5
+          bind=SUPERSHIFT,6,movetoworkspacesilent,6
+          bind=SUPERSHIFT,7,movetoworkspacesilent,7
+          bind=SUPERSHIFT,8,movetoworkspacesilent,8
+          bind=SUPERSHIFT,9,movetoworkspacesilent,9
+          bind=SUPERSHIFT,0,movetoworkspacesilent,10
 
           blurls=waybar
         '';
