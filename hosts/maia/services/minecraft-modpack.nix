@@ -2,7 +2,6 @@
 let
   java = "${pkgs.openjdk}/bin/java";
   ram = "2760M";
-  pack = "https://git.sr.ht/~misterio/Modpack/blob/main/pack.toml";
   jar = "server.jar";
 in
 {
@@ -10,12 +9,6 @@ in
     description = "Modpack minecraft server";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-
-    # Update modpack
-    preStart = ''
-      ${pkgs.wget}/bin/wget -N "https://github.com/packwiz/packwiz-installer-bootstrap/releases/download/v0.0.3/packwiz-installer-bootstrap.jar"
-      ${java} -jar packwiz-installer-bootstrap.jar -g -s server "${pack}"
-    '';
 
     serviceConfig = {
       ExecStart = ''
