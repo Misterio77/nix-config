@@ -1,4 +1,4 @@
-{ lib, persistence, pkgs, ... }:
+{ pkgs, ... }:
 let update-script = pkgs.writeShellApplication {
   name = "fetch-nix-index-database";
   runtimeInputs = with pkgs; [ wget coreutils ];
@@ -13,10 +13,6 @@ let update-script = pkgs.writeShellApplication {
 in
 {
   programs.nix-index.enable = true;
-
-  home.persistence = lib.mkIf persistence {
-    "/persist/home/misterio".directories = [ ".cache/nix-index" ];
-  };
 
   systemd.user.services.nix-index-database-sync = {
     Unit = { Description = "fetch mic92/nix-index-database"; };
