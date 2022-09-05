@@ -12,6 +12,7 @@
   shellcolord = pkgs.callPackage ./shellcolord { };
   swayfader = pkgs.callPackage ./swayfader { };
   trekscii = pkgs.callPackage ./trekscii { };
+  sqlcl = pkgs.callPackage ./sqlcl { };
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };
