@@ -50,13 +50,15 @@
           }
 
           decoration {
-            active_opacity=0.93
-            inactive_opacity=0.80
+            active_opacity=0.9
+            inactive_opacity=0.65
             fullscreen_opacity=1.0
             rounding=5
             blur=true
-            blur_size=3
+            blur_size=6
             blur_passes=3
+            blur_new_optimizations=true
+            blur_ignore_opacity=true
             drop_shadow=true
             shadow_range=12
             shadow_offset=3 3
@@ -77,6 +79,10 @@
             preserve_split=true
             col.group_border_active=0xff${colors.base0B}
             col.group_border=0xff${colors.base04}
+          }
+
+          misc {
+            no_vfr=false
           }
 
           input {

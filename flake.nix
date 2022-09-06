@@ -137,13 +137,12 @@
 
           features = [
             "desktop/hyprland"
-            "desktop/sway"
             "trusted"
             "rgb"
             "games"
           ];
-          wallpaper = "aurora-borealis-water-mountain";
-          colorscheme = "spaceduck";
+          wallpaper = "aenami-stars-and-you";
+          colorscheme = "horizon-dark";
         };
         # Laptop
         "misterio@pleione" = mkHome {
