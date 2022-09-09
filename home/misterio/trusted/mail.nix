@@ -51,8 +51,8 @@ in
           enable = true;
           extraMailboxes = [ "Archive" "Drafts" "Sent" "Spam" "Trash" ];
         };
-        imap.host = "imap.fastmail.com";
-        smtp.host = "smtp.fastmail.com";
+        imap.host = "mail.m7.rs";
+        smtp.host = "mail.m7.rs";
         userName = address;
         passwordCommand = "${pass} ${smtp.host}/${address}";
       } // common;

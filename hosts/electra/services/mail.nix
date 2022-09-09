@@ -20,7 +20,22 @@
     };
   };
 
-  sops.secrets.gabriel-mail-password = {
-    sopsFile = ../secrets.yaml;
+  sops.secrets = {
+    gabriel-mail-password = {
+      sopsFile = ../secrets.yaml;
+    };
+    smtp-relay-creds = {
+      sopsFile = ../secrets.yaml;
+    };
   };
+
+  # Relay server while vultr does not unblock smtp
+  # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/148
+  services.postfix.extraConfig = ''
+    smtp_sasl_auth_enable = yes
+    smtp_sasl_password_maps = hash:${config.sops.secrets.smtp-relay-creds.path}
+    smtp_sasl_security_options = noanonymous
+    smtp_sasl_mechanism_filter = AUTH LOGIN
+    relayhost = smtp.fastmail.com:587
+  '';
 }
