@@ -151,18 +151,18 @@ pkgs.writeTextDir "colors/nix-${slug}.vim" /* vim */ ''
   hi TSAttribute           guifg=#${c.base0A} guibg=NONE gui=NONE guisp=NONE
   hi TSBoolean             guifg=#${c.base09} guibg=NONE gui=NONE guisp=NONE
   hi TSCharacter           guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE
-  hi TSComment             guifg=#${c.base03} guibg=NONE gui=italic guisp=NONE
+  hi TSComment             guifg=#${c.base03} guibg=NONE gui=NONE guisp=NONE "was italic
   hi TSConstructor         guifg=#${c.base0D} guibg=NONE gui=NONE guisp=NONE
   hi TSConditional         guifg=#${c.base0E} guibg=NONE gui=NONE guisp=NONE
   hi TSConstant            guifg=#${c.base09} guibg=NONE gui=NONE guisp=NONE
-  hi TSConstBuiltin        guifg=#${c.base09} guibg=NONE gui=italic guisp=NONE
+  hi TSConstBuiltin        guifg=#${c.base09} guibg=NONE gui=NONE guisp=NONE "was italic
   hi TSConstMacro          guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE
   hi TSError               guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE
   hi TSException           guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE
   hi TSField               guifg=#${c.base05} guibg=NONE gui=NONE guisp=NONE
   hi TSFloat               guifg=#${c.base09} guibg=NONE gui=NONE guisp=NONE
   hi TSFunction            guifg=#${c.base0D} guibg=NONE gui=NONE guisp=NONE
-  hi TSFuncBuiltin         guifg=#${c.base0D} guibg=NONE gui=italic guisp=NONE
+  hi TSFuncBuiltin         guifg=#${c.base0D} guibg=NONE gui=NONE guisp=NONE "was italic
   hi TSFuncMacro           guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE
   hi TSInclude             guifg=#${c.base0D} guibg=NONE gui=NONE guisp=NONE
   hi TSKeyword             guifg=#${c.base0E} guibg=NONE gui=NONE guisp=NONE
@@ -189,16 +189,16 @@ pkgs.writeTextDir "colors/nix-${slug}.vim" /* vim */ ''
   hi TSTagDelimiter        guifg=#${c.base0F} guibg=NONE gui=NONE guisp=NONE
   hi TSText                guifg=#${c.base05} guibg=NONE gui=NONE guisp=NONE
   hi TSStrong              guifg=NONE guibg=NONE gui=bold guisp=NONE
-  hi TSEmphasis            guifg=#${c.base09} guibg=NONE gui=italic guisp=NONE
+  hi TSEmphasis            guifg=#${c.base09} guibg=NONE gui=NONE guisp=NONE "was italic
   hi TSUnderline           guifg=#${c.base00} guibg=NONE gui=underline guisp=NONE
   hi TSStrike              guifg=#${c.base00} guibg=NONE gui=strikethrough guisp=NONE
   hi TSTitle               guifg=#${c.base0D} guibg=NONE gui=NONE guisp=NONE
   hi TSLiteral             guifg=#${c.base09} guibg=NONE gui=NONE guisp=NONE
   hi TSURI                 guifg=#${c.base09} guibg=NONE gui=underline guisp=NONE
   hi TSType                guifg=#${c.base0A} guibg=NONE gui=NONE guisp=NONE
-  hi TSTypeBuiltin         guifg=#${c.base0A} guibg=NONE gui=italic guisp=NONE
+  hi TSTypeBuiltin         guifg=#${c.base0A} guibg=NONE gui=NONE guisp=NONE "was italic
   hi TSVariable            guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE
-  hi TSVariableBuiltin     guifg=#${c.base08} guibg=NONE gui=italic guisp=NONE
+  hi TSVariableBuiltin     guifg=#${c.base08} guibg=NONE gui=NONE guisp=NONE "was italic
 
   hi TSDefinition          guifg=NONE guibg=NONE gui=underline guisp=#${c.base04}
   hi TSDefinitionUsage     guifg=NONE guibg=NONE gui=underline guisp=#${c.base04}
@@ -254,7 +254,7 @@ pkgs.writeTextDir "colors/nix-${slug}.vim" /* vim */ ''
   hi User8  guifg=#${c.base00} guibg=#${c.base02} gui=NONE guisp=NONE
   hi User9  guifg=#${c.base00} guibg=#${c.base02} gui=NONE guisp=NONE
 
-  hi TreesitterContext  guifg=NONE guibg=#${c.base01} gui=italic guisp=NONE
+  hi TreesitterContext  guifg=NONE guibg=#${c.base01} gui=NONE guisp=NONE "was italic
 
   let g:terminal_color_background = "#${c.base00}"
   let g:terminal_color_foreground = "#${c.base05}"
