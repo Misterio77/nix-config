@@ -21,6 +21,7 @@ in
       "podman"
       "git"
       "libvirtd"
+      "deluge"
     ];
 
     openssh.authorizedKeys.keys = [
