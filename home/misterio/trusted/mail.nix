@@ -31,7 +31,7 @@ in
     accounts = {
       personal = rec {
         primary = true;
-        address = "gabriel@gsfontes.com";
+        address = "hi@m7.rs";
 
         folders = {
           inbox = "Inbox";
