@@ -18,6 +18,28 @@
         aliases = [ "@m7.rs" ];
       };
     };
+    mailboxes = {
+      Archive = {
+        auto = "subscribe";
+        specialUse = "Archive";
+      };
+      Drafts = {
+        auto = "subscribe";
+        specialUse = "Drafts";
+      };
+      Sent = {
+        auto = "subscribe";
+        specialUse = "Sent";
+      };
+      Junk = {
+        auto = "subscribe";
+        specialUse = "Junk";
+      };
+      Trash = {
+        auto = "subscribe";
+        specialUse = "Trash";
+      };
+    };
   };
 
   sops.secrets = {
