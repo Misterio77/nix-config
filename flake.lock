@@ -529,11 +529,11 @@
         "utils": "utils_5"
       },
       "locked": {
-        "lastModified": 1662328431,
-        "narHash": "sha256-FgRIyeHMKbGNuapiMmHkL43syqS+PLU1Tjav9NOwNF4=",
+        "lastModified": 1662771253,
+        "narHash": "sha256-InITgIdKUyC/11Bi0wWaKGiGe/ve4pUGQYkp2mUbYic=",
         "owner": "~misterio",
         "repo": "website",
-        "rev": "f1badcda0afc66e116242923f4a7a29bac54bc26",
+        "rev": "83536545ead8ddf893d593204c0cf4b4f38c58b8",
         "type": "sourcehut"
       },
       "original": {

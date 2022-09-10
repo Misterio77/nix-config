@@ -23,6 +23,10 @@ in
         forceSSL = true;
         enableACME = true;
         locations = {
+          # My key moved to openpgp.org
+          "/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc" = {
+            return = "301 https://keys.openpgp.org/vks/v1/by-fingerprint/7088C7421873E0DB97FF17C2245CAB70B4C225E9";
+          };
           "/" = {
             root = "${pkgs.website.main}/public";
             extraConfig = ''
