@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   imports = [
     inputs.nixos-mailserver.nixosModules.mailserver
@@ -73,11 +73,13 @@
   # Webmail
   services.roundcube = rec {
     enable = true;
+    package = pkgs.roundcube.withPlugins (p: [ p.carddav p.custom_from ]);
     hostName = "mail.m7.rs";
     extraConfig = ''
       $config['smtp_server'] = "tls://${hostName}";
       $config['smtp_user'] = "%u";
       $config['smtp_user'] = "%p";
+      $config['plugins'] = [ "carddav", "custom_from" ];
     '';
   };
 }

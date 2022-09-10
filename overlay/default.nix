@@ -6,6 +6,7 @@ let
   # Modifies existing packages
   modifications = final: prev: {
     # === Scoped packages ===
+    roundcubePlugins = prev.roundcubePlugins // final.callPackage ../pkgs/roundcube-plugins { };
     vimPlugins = prev.vimPlugins // {
       vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs
         (oldAttrs: rec {

@@ -7,7 +7,7 @@ stdenv.mkDerivation {
   version = "0.1";
   src = fetchFromSourcehut {
     owner = "~misterio";
-    repo = name;
+    repo = pname;
     rev = "c761072952bba8bdc21b906fdc941b9ae5ac5432";
     sha256 = "sha256-SLMAZy9UxQOA+2YhnryJ5ZvMXOf/Bxv0E8gIbP32XfE=";
   };
