@@ -49,7 +49,7 @@ in
         };
         neomutt = {
           enable = true;
-          extraMailboxes = [ "Archive" "Drafts" "Sent" "Spam" "Trash" ];
+          extraMailboxes = [ "Archive" "Drafts" "Junk" "Sent" "Trash" ];
         };
         imap.host = "mail.m7.rs";
         smtp.host = "mail.m7.rs";
