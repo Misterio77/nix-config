@@ -64,7 +64,7 @@
   # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/148
   services.postfix.extraConfig = ''
     smtp_sasl_auth_enable = yes
-    smtp_sasl_password_maps = hash:${config.sops.secrets.smtp-relay-creds.path}
+    smtp_sasl_password_maps = texthash:${config.sops.secrets.smtp-relay-creds.path}
     smtp_sasl_security_options = noanonymous
     smtp_sasl_mechanism_filter = AUTH LOGIN
     relayhost = smtp.fastmail.com:587
