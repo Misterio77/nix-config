@@ -1,5 +1,5 @@
 { lib, stdenv, fetchurl, wallpaper }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   name = "wallpaper-${wallpaper.name}.${wallpaper.ext}";
   src = fetchurl {
     inherit (wallpaper) sha256;

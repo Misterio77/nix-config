@@ -1,9 +1,9 @@
 { lib, stdenv, fetchFromSourcehut }:
-
-with lib;
-
-stdenv.mkDerivation rec {
-  name = "shellcolord";
+let
+  pname = "shellcolord";
+in
+stdenv.mkDerivation {
+  inherit pname;
   version = "0.1";
   src = fetchFromSourcehut {
     owner = "~misterio";
@@ -14,9 +14,9 @@ stdenv.mkDerivation rec {
 
   makeFlags = [ "PREFIX=$(out)" ];
 
-  meta = {
+  meta = with lib; {
     description = "A daemon that themes your shell remotely";
-    homepage = "https://git.sr.ht/~misterio/${name}";
+    homepage = "https://git.sr.ht/~misterio/shellcolord";
     license = licenses.unlicense;
     platforms = platforms.all;
     maintainers = with maintainers; [ misterio77 ];

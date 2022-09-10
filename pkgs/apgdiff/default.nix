@@ -1,5 +1,9 @@
-{ lib, stdenv, fetchurl, makeWrapper, jre }: stdenv.mkDerivation rec {
+{ lib, stdenv, fetchurl, makeWrapper, jre }:
+let
   version = "2.7.0";
+in
+stdenv.mkDerivation {
+  inherit version;
   pname = "apgdiff";
 
   src = fetchurl {

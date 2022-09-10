@@ -1,5 +1,9 @@
-{ stdenv, fetchFromGitHub }: stdenv.mkDerivation rec {
+{ stdenv, fetchFromGitHub }:
+let
   pname = "trekscii";
+in
+stdenv.mkDerivation {
+  inherit pname;
   version = "unstable-2022-06-27";
 
   src = fetchFromGitHub {

@@ -69,4 +69,15 @@
     smtp_sasl_mechanism_filter = AUTH LOGIN
     relayhost = smtp.fastmail.com:587
   '';
+
+  # Webmail
+  services.roundcube = rec {
+    enable = true;
+    hostName = "mail.m7.rs";
+    extraConfig = ''
+      $config['smtp_server'] = "tls://${hostName}";
+      $config['smtp_user'] = "%u";
+      $config['smtp_user'] = "%p";
+    '';
+  };
 }

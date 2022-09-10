@@ -1,5 +1,9 @@
-{ vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin rec {
+{ vimUtils, fetchFromGitHub }:
+let
   pname = "vim-medieval";
+in
+vimUtils.buildVimPlugin {
+  inherit pname;
   version = "2022-02-07";
   dontBuild = true;
   src = fetchFromGitHub {

@@ -1,10 +1,11 @@
 { inputs, ... }:
 let
   # Adds my custom packages
-  additions = final: _prev: import ../pkgs { pkgs = final; };
+  additions = final: _prev: import ../pkgs/top-level { pkgs = final; };
 
   # Modifies existing packages
   modifications = final: prev: {
+    # === Scoped packages ===
     vimPlugins = prev.vimPlugins // {
       vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs
         (oldAttrs: rec {
@@ -22,7 +23,11 @@ let
             sha256 = "sha256-7TDW6Dgy/H7PRrIvTMpmXO5/3K5F1d4p3rLYon6h6OU=";
           };
         });
-    } // import ../pkgs/vim-plugins { pkgs = final; };
+    } // final.callPackage ../pkgs/vim-plugins { };
+
+    wallpapers = final.callPackage ../pkgs/wallpapers { };
+
+    # === Top level packages ===
 
     # Don't launch discord when using discocss
     discocss = prev.discocss.overrideAttrs (oldAttrs: rec {

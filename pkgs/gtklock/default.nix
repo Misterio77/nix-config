@@ -1,7 +1,9 @@
 { lib, stdenv, fetchFromGitHub, pkgconfig, gtk3, gtk-layer-shell, pam, scdoc }:
-
-stdenv.mkDerivation rec {
+let
   pname = "gtklock";
+in
+stdenv.mkDerivation {
+  inherit pname;
   version = "unstable-2022-07-17";
 
   src = fetchFromGitHub {

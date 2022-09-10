@@ -1,17 +1,18 @@
-{ lib, stdenv, makeDesktopItem, makeWrapper, requireFile, unzip, jdk }:
+{ lib, stdenv, makeWrapper, requireFile, unzip, jdk }:
 
 let
   version = "20.4.1.351.1718";
   fileVersion = "1022102-01";
+  url = "https://www.oracle.com/database/sqldeveloper/technologies/sqlcl/download/";
+  name = "V${fileVersion}.zip";
 in
   stdenv.mkDerivation {
 
   inherit version;
   pname = "sqlcl";
 
-  src = requireFile rec {
-    name = "V${fileVersion}.zip";
-    url = "https://www.oracle.com/database/sqldeveloper/technologies/sqlcl/download/";
+  src = requireFile {
+    inherit url name;
     message = ''
       This Nix expression requires that ${name} already be part of the store. To
       obtain it you need to

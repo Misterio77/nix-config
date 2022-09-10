@@ -1,6 +1,9 @@
 { buildGoModule, fetchFromGitHub, lib }:
-buildGoModule rec {
+let
   pname = "clematis";
+in
+buildGoModule {
+  inherit pname;
   version = "2022-02-08";
 
   src = fetchFromGitHub {
