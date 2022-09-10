@@ -40,6 +40,10 @@
         specialUse = "Trash";
       };
     };
+    # When setting up check that /srv is persisted!
+    mailDirectory = "/srv/mail/vmail";
+    sieveDirectory = "/srv/mail/sieve";
+    dkimKeyDirectory = "/srv/mail/dkim";
   };
 
   sops.secrets = {
