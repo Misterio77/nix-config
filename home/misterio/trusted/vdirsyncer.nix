@@ -25,9 +25,9 @@ in {
 
     [storage contacts_remote]
     type = "carddav"
-    url = "https://carddav.fastmail.com/dav"
-    username = "gabriel@gsfontes.com"
-    password.fetch = ["command", "${pass}", "carddav.fastmail.com/gabriel@gsfontes.com"]
+    url = "https://dav.m7.rs"
+    username = "hi@m7.rs"
+    password.fetch = ["command", "${pass}", "mail.m7.rs/hi@m7.rs"]
 
     [pair calendars]
     a = "calendars_local"
@@ -43,8 +43,8 @@ in {
 
     [storage calendars_remote]
     type = "caldav"
-    url = "https://caldav.fastmail.com/dav"
-    username = "gabriel@gsfontes.com"
-    password.fetch = ["command", "${pass}", "caldav.fastmail.com/gabriel@gsfontes.com"]
+    url = "https://dav.m7.rs"
+    username = "hi@m7.rs"
+    password.fetch = ["command", "${pass}", "mail.m7.rs/hi@m7.rs"]
   '';
 }

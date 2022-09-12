@@ -5,6 +5,7 @@
     ./headscale.nix
     ./mail.nix
     ./nginx.nix
+    ./radicale.nix
     ./website.nix
   ];
 }

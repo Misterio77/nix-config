@@ -110,7 +110,7 @@
           bind=SUPER,d,exec,${menu.run-cmd}
           bind=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
           bind=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
-          bind=SUPER,c,exec,${terminal.cmd-spawn "${pkgs.bc}/bin/bc"}
+          bind=SUPER,c,exec,${terminal.cmd-spawn "${pkgs.bc}/bin/bc -l"}
 
           # Toggle waybar
           bind=,XF86Tools,exec,${pkgs.procps}/bin/pkill -USR1 waybar # profile button
