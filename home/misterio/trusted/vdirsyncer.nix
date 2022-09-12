@@ -47,4 +47,26 @@ in {
     username = "hi@m7.rs"
     password.fetch = ["command", "${pass}", "mail.m7.rs/hi@m7.rs"]
   '';
+
+  systemd.user.services.vdirsyncer = {
+    Unit = { Description = "vdirsyncer synchronization"; };
+    Service =
+      let keyring = import ./keyring.nix { inherit pkgs; };
+      in
+      {
+        Type = "oneshot";
+        ExecCondition = ''
+          /bin/sh -c "${keyring.isUnlocked}"
+        '';
+        ExecStart = "${vdirsyncer} sync";
+      };
+  };
+  systemd.user.timers.vdirsyncer = {
+    Unit = { Description = "Automatic vdirsyncer synchronization"; };
+    Timer = {
+      OnBootSec = "30";
+      OnUnitActiveSec = "5m";
+    };
+    Install = { WantedBy = [ "timers.target" ]; };
+  };
 }
