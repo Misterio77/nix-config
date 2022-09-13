@@ -1,6 +1,8 @@
 { pkgs, persistence, lib, config, ... }:
-let pass = "${config.programs.password-store.package}/bin/pass";
-in {
+let
+  pass = "${config.programs.password-store.package}/bin/pass";
+in
+{
   home.packages = with pkgs; [ vdirsyncer ];
 
   home.persistence = lib.mkIf persistence {
@@ -58,7 +60,7 @@ in {
         ExecCondition = ''
           /bin/sh -c "${keyring.isUnlocked}"
         '';
-        ExecStart = "${vdirsyncer} sync";
+        ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync";
       };
   };
   systemd.user.timers.vdirsyncer = {
