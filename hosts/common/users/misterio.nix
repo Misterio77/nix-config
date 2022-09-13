@@ -13,7 +13,7 @@ in
       "video"
       "audio"
     ] ++ ifTheyExist [
-      "wireless"
+      "network"
       "wireshark"
       "i2c"
       "mysql"
