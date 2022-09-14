@@ -63,7 +63,7 @@ in
     "/persist/home/misterio".directories = [ ".gnupg" ];
   };
 
-  # Link /run/user/$UID/gnupg to ~/.gnupg/sockets
+  # Link /run/user/$UID/gnupg to ~/.gnupg-sockets
   # So that SSH config does not have to know the UID
   systemd.user.services.link-gnupg-sockets = {
     Unit = {
@@ -71,8 +71,8 @@ in
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${pkgs.coreutils}/bin/ln -Tfs /run/user/%U/gnupg %h/.gnupg/sockets";
-      ExecStop = "${pkgs.coreutils}/bin/rm $HOME/.gnupg/sockets";
+      ExecStart = "${pkgs.coreutils}/bin/ln -Tfs /run/user/%U/gnupg %h/.gnupg-sockets";
+      ExecStop = "${pkgs.coreutils}/bin/rm $HOME/.gnupg-sockets";
       RemainAfterExit = true;
     };
     Install.WantedBy = [ "default.target" ];

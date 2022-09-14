@@ -11,8 +11,8 @@ in
         host = builtins.concatStringsSep " " hostnames;
         forwardAgent = true;
         remoteForwards = [{
-          bind.address = ''/%d/.gnupg/sockets/S.gpg-agent'';
-          host.address = ''/%d/.gnupg/sockets/S.gpg-agent.extra'';
+          bind.address = ''/%d/.gnupg-sockets/S.gpg-agent'';
+          host.address = ''/%d/.gnupg-sockets/S.gpg-agent.extra'';
         }];
       };
       trusted = lib.hm.dag.entryBefore [ "net" ] {
