@@ -11,6 +11,9 @@
     # Declarative
     environmentFile = config.sops.secrets.wireless.path;
     networks = {
+      "JVGCLARO" = {
+        pskRaw = "@JVGCLARO@";
+      };
       "Marcos_2.4Ghz" = {
         pskRaw = "@MARCOS_24@";
       };
