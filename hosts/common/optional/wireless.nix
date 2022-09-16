@@ -12,7 +12,7 @@
     environmentFile = config.sops.secrets.wireless.path;
     networks = {
       "JVGCLARO" = {
-        pskRaw = "@JVGCLARO@";
+        psk = "@JVGCLARO@";
       };
       "Marcos_2.4Ghz" = {
         pskRaw = "@MARCOS_24@";
@@ -25,9 +25,13 @@
       };
       "eduroam" = {
         auth = ''
+          key_mgmt=WPA-EAP
+          pairwise=CCMP
+          auth_alg=OPEN
           eap=PEAP
           identity="10856803@usp.br"
           password="@EDUROAM@"
+          phase2="auth=MSCHAPV2"
         '';
       };
     };
