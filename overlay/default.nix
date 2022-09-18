@@ -70,14 +70,14 @@ let
       patches = (oldAttrs.patches or [ ]) ++ [ ./fix-xdpw-hyprland-crash.patch ];
     });
 
-    semanticgit = prev.cgit-pink.overrideAttrs (_oldAttrs: {
-      pname = "semanticgit";
+    scgit = prev.cgit-pink.overrideAttrs (_oldAttrs: {
+      pname = "scgit";
       version = "0.1";
       src = final.fetchFromSourcehut {
         owner = "~misterio";
         repo = "scgit";
-        rev = "09512c00f0a791125fd768d978b793ddada3faef";
-        sha256 = "sha256-MOyuKxGXQxZTp7QTlvEaGTkrCpTJY9AoW13KcmmOJxg=";
+        rev = "2d4b8c827f9b5b3422f92144154295009a642dad";
+        sha256 = "sha256-bqKWVEDglyNUsf1jM8CmArNJpEC+R7G9Ev6Zr5UP+Ok=";
       };
     });
 

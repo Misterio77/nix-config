@@ -1,6 +1,11 @@
 { pkgs, ... }:
 let
-  cgit = "${pkgs.semanticgit}";
+  cgit = "${pkgs.scgit}";
+  compileSass = file: pkgs.runCommand "sass" {
+    buildInputs = [ pkgs.sass ];
+  } ''
+    sass ${file} > $out
+  '';
 in
 {
   services = {
@@ -9,7 +14,7 @@ in
       enableACME = true;
       locations = {
         "=/git/style.css" = {
-          alias = "${./cgit.css}";
+          alias = compileSass ./cgit.scss;
         };
         "=/git".return = "301 https://gsfontes.com/git/";
         "/git/" = {

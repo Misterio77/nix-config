@@ -5,34 +5,36 @@ td.linenos {
 }
 
 /* Highlight diff */
-code span.head {
+code span {
+  &.head {
     color: var(--highlight);
-}
-code span.hunk {
+  }
+  &.hunk {
     color: var(--text-muted);
-}
-code span.ctx {
+  }
+  &.ctx {
     color: var(--text-main);
-}
-code span.add {
+  }
+  &.add {
     color: var(--positive);
-}
-code span.del {
+  }
+  &.del {
     color: var(--negative);
+  }
 }
 
 /* Light up targeted line (for linking, etc) */
 pre > code {
-    position: relative;
-}
-pre > code a {
+  position: relative;
+  a[id^='line-'] {
     height: 1.18rem;
     width: 101.96%;
     position: absolute;
     left: -1em;
     pointer-events: none;
-}
-pre > code a:target {
-    background-color: var(--highlight);
-    opacity: 0.3;
+    &:target {
+      background-color: var(--highlight);
+      opacity: 0.3;
+    }
+  }
 }
