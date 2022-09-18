@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, hostname, lib, outputs, ... }:
+let
+  systemConfig = outputs.nixosConfigurations.${hostname}.config;
+in
 {
   imports = [
     ./deluge.nix
@@ -12,7 +15,7 @@
     ./playerctl.nix
     ./qt.nix
     ./sublime-music.nix
-  ];
+  ] ++ (lib.optional systemConfig.networking.wireless.enable ./wpa-gui.nix);
 
   xdg.mimeApps.enable = true;
   home.packages = with pkgs; [
