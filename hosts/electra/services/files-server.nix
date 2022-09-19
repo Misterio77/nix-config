@@ -1,7 +1,6 @@
 {
   services.nginx.virtualHosts = {
     "files.m7.rs" = {
-      default = true;
       forceSSL = true;
       enableACME = true;
       locations."/".root = "/srv/files";
