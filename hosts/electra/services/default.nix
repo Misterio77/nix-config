@@ -1,6 +1,7 @@
 {
   imports = [
     ./cgit
+    ./files-server.nix
     ./git-remote.nix
     ./headscale.nix
     ./mail.nix

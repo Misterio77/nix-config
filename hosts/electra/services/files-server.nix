@@ -4,7 +4,7 @@
       default = true;
       forceSSL = true;
       enableACME = true;
-      locations."/".root = "/media/files";
+      locations."/".root = "/srv/files";
     };
     "f.m7.rs" = {
       forceSSL = true;
