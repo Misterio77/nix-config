@@ -15,7 +15,7 @@ let
   lyrics = "${pkgs.lyrics}/bin/lyrics";
 
   # Function to simplify making waybar outputs
-  jsonOutput = { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-output" ''
+  jsonOutput = name: { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
     set -euo pipefail
     ${pre}
     ${jq} -cn \
@@ -25,7 +25,7 @@ let
       --arg class "${class}" \
       --arg percentage "${percentage}" \
       '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-  ''}/bin/waybar-output";
+  ''}/bin/waybar-${name}";
 in
 {
   programs.waybar = {
@@ -76,7 +76,6 @@ in
         modules-right = [
           "custom/gamemode"
           "network"
-          "custom/internet-ping"
           "custom/tailscale-ping"
           "battery"
           "tray"
@@ -108,7 +107,7 @@ in
         };
         battery = {
           bat = "BAT0";
-          interval = 5;
+          interval = 10;
           format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
@@ -117,7 +116,7 @@ in
           max-length = 20;
         };
         network = {
-          interval = 5;
+          interval = 3;
           format-wifi = "   {essid}";
           format-ethernet = " Connected";
           format-disconnected = "";
@@ -128,7 +127,7 @@ in
             Down: {bandwidthDownBits}'';
         };
         "custom/tailscale-ping" = {
-          interval = 3;
+          interval = 2;
           return-type = "json";
           exec =
             let
@@ -144,10 +143,10 @@ in
               showPingCompact = { host, icon }: "${icon} $ping_${host}";
               showPingLarge = { host, icon }: "${icon} ${host}: $ping_${host}";
               setPing = { host, ... }: ''
-                ping_${host}="$(timeout 2 tailscale ping -c 1 --until-direct=false ${host} | cut -d ' ' -f8)" || ping_${host}="Disconnected"
+                ping_${host}="$(timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1)ms" || ping_${host}="Disconnected"
               '';
             in
-            jsonOutput {
+            jsonOutput "tailscale-ping" {
               pre = ''
                 set -o pipefail
                 ${builtins.concatStringsSep "\n" (map setPing targets')}
@@ -159,22 +158,19 @@ in
         };
         "custom/menu" = {
           return-type = "json";
-          exec = jsonOutput {
+          exec = jsonOutput "menu" {
             text = "";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
           on-click = menu.drun-cmd;
         };
         "custom/hostname" = {
-          return-type = "json";
-          exec = jsonOutput {
-            text = "$(echo $USER)@$(hostname)";
-          };
+          exec = "echo $USER@$(hostname)";
         };
         "custom/unread-mail" = {
-          interval = 4;
+          interval = 5;
           return-type = "json";
-          exec = jsonOutput {
+          exec = jsonOutput "unread-mail" {
             pre = ''
               count=$(find ~/Mail/*/Inbox/new -type f | wc -l)
               if [ "$count" == "0" ]; then
@@ -208,7 +204,7 @@ in
           exec =
             let keyring = import ../../../trusted/keyring.nix { inherit pkgs; };
             in
-            jsonOutput {
+            jsonOutput "gpg-agent" {
               pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';
               alt = "$status";
               tooltip = "GPG is $status";
@@ -223,23 +219,23 @@ in
           exec-if = "${gamemoded} --status | grep 'is active' -q";
           interval = 2;
           return-type = "json";
-          exec = jsonOutput {
+          exec = jsonOutput "gamemode" {
             tooltip = "Gamemode is active";
           };
           format = " ";
         };
         "custom/gammastep" = {
-          interval = 4;
+          interval = 5;
           return-type = "json";
-          exec = jsonOutput {
+          exec = jsonOutput "gammastep" {
             pre = ''
               if unit_status="$(${systemctl} --user is-active gammastep)"; then
-                status="$unit_status ($(${journalctl} --user -u gammastep.service | grep 'Period: ' | cut -d ':' -f6 | tail -1 | xargs))"
+                status="$unit_status ($(${journalctl} --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))"
               else
                 status="$unit_status"
               fi
             '';
-            alt = "$status";
+            alt = "\${status:-inactive}";
             tooltip = "Gammastep is $status";
           };
           format = "{icon}";
@@ -261,7 +257,7 @@ in
         "custom/gpu" = {
           interval = 5;
           return-type = "json";
-          exec = jsonOutput {
+          exec = jsonOutput "gpu" {
             text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
             tooltip = "GPU Usage";
           };
@@ -270,7 +266,7 @@ in
         "custom/currentplayer" = {
           interval = 2;
           return-type = "json";
-          exec = jsonOutput {
+          exec = jsonOutput "currentplayer" {
             pre = ''player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No players found" | cut -d '.' -f1)"'';
             alt = "$player";
             tooltip = "$player";
@@ -292,7 +288,7 @@ in
           exec-if = "${playerctl} status";
           exec = ''${playerctl} metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}' '';
           return-type = "json";
-          interval = 3;
+          interval = 2;
           max-length = 30;
           format = "{icon} {}";
           format-icons = {
