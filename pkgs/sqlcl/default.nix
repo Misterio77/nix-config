@@ -1,7 +1,7 @@
 { lib, stdenv, makeWrapper, requireFile, unzip, jdk }:
 
 let
-  version = "20.4.1.351.1718";
+  version = "22.2.1.201.1451";
   fileVersion = "1022102-01";
   url = "https://www.oracle.com/database/sqldeveloper/technologies/sqlcl/download/";
   name = "V${fileVersion}.zip";
