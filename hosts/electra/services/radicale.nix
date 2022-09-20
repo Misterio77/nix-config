@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, persistence, ... }:
 let
   port = "5232";
 in
@@ -11,6 +11,9 @@ in
           type = "htpasswd";
           htpasswd_filename = config.sops.secrets.radicale-htpasswd.path;
           htpasswd_encryption = "bcrypt";
+        };
+        storage = {
+          filesystem_folder = "/var/lib/radicale/collections";
         };
       };
     };
@@ -31,5 +34,9 @@ in
     sopsFile = ../secrets.yaml;
     owner = config.users.users.radicale.name;
     group = config.users.users.radicale.group;
+  };
+
+  environment.persistence = lib.mkIf persistence {
+    "/persist".directories = [ "/var/lib/radicale" ];
   };
 }
