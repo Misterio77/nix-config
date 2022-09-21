@@ -32,7 +32,7 @@
 
     # Nixified software I use
     hyprland = {
-      url = "github:hyprwm/hyprland";
+      url = "github:hyprwm/hyprland/v0.13.1beta";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprwm-contrib = {
@@ -42,7 +42,7 @@
 
     # Personal projects I deploy on my machines using nix
     website = {
-      url = "sourcehut:~misterio/website";
+      url = "github:misterio77/website";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     paste-misterio-me = {

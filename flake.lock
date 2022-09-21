@@ -161,15 +161,16 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1662325684,
-        "narHash": "sha256-T4W5fnN8E7kbCu/jshwCxiIoEioZRApkX+mshsieSoo=",
+        "lastModified": 1662670949,
+        "narHash": "sha256-VB/34YMiW9mL6sdEAnYOqi1sjOiJcu8ZmQx3R8PI2iI=",
         "owner": "hyprwm",
         "repo": "hyprland",
-        "rev": "3dd514a4529c3c22d227235af55c4d4d771dcfe0",
+        "rev": "928158bbfb906bd871738d60610d85634d1f8c7e",
         "type": "github"
       },
       "original": {
         "owner": "hyprwm",
+        "ref": "v0.13.1beta",
         "repo": "hyprland",
         "type": "github"
       }
@@ -531,15 +532,15 @@
       "locked": {
         "lastModified": 1662771253,
         "narHash": "sha256-InITgIdKUyC/11Bi0wWaKGiGe/ve4pUGQYkp2mUbYic=",
-        "owner": "~misterio",
+        "owner": "misterio77",
         "repo": "website",
         "rev": "83536545ead8ddf893d593204c0cf4b4f38c58b8",
-        "type": "sourcehut"
+        "type": "github"
       },
       "original": {
-        "owner": "~misterio",
+        "owner": "misterio77",
         "repo": "website",
-        "type": "sourcehut"
+        "type": "github"
       }
     },
     "wlroots": {
