@@ -65,11 +65,6 @@ let
       patches = (oldAttrs.patches or [ ]) ++ [ ./trekscii.patch ];
     });
 
-    # Temporary fix for https://github.com/emersion/xdg-desktop-portal-wlr/issues/216
-    xdg-desktop-portal-wlr = prev.xdg-desktop-portal-wlr.overrideAttrs (oldAttrs: rec {
-      patches = (oldAttrs.patches or [ ]) ++ [ ./fix-xdpw-hyprland-crash.patch ];
-    });
-
     scgit = prev.cgit-pink.overrideAttrs (_oldAttrs: {
       pname = "scgit";
       version = "0.1";
