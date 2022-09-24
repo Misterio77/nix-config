@@ -156,8 +156,7 @@
             "laptop"
             "games"
           ];
-          colorscheme = "paraiso";
-          wallpaper = "plains-gold-field";
+          colorscheme = "spaceduck";
         };
         # Secondary Desktop
         "misterio@maia" = mkHome {

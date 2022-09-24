@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 
-let
-  vimThemeFromScheme = import ./theme.nix { inherit pkgs; };
-in
 {
-  imports = [ ./ui.nix ./lsp.nix ./syntax.nix ];
+  imports = [ ./lsp.nix ];
 
   home = {
     sessionVariables.EDITOR = "nvim";
@@ -15,13 +12,10 @@ in
 
   programs.neovim = {
     enable = true;
+
     extraConfig = /* vim */ ''
       "Use truecolor
       set termguicolors
-
-      "Reload automatically
-      set autoread
-      au CursorHold,CursorHoldI * checktime
 
       "Set fold level to highest in file
       "so everything starts out unfolded at just the right level
@@ -29,17 +23,14 @@ in
 
       "Tabs
       set ts=4 sts=4 sw=4 "4 char-wide tab
-      autocmd FileType json,html,htmldjango,hamlet,nix,scss,typescript,php,haskell,terraform setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
       set expandtab "Use spaces
+      autocmd FileType json,html,htmldjango,hamlet,nix,scss,typescript,php,haskell,terraform setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
 
       "Set tera to use htmldjango syntax
       autocmd BufRead,BufNewFile *.tera setfiletype htmldjango
 
       "Options when composing mutt mail
       autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w
-
-      "Clipboard
-      set clipboard=unnamedplus
 
       "Fix nvim size according to terminal
       "(https://github.com/neovim/neovim/issues/11330)
@@ -55,18 +46,74 @@ in
       "Bind make"
       nmap <space>m <cmd>make<cr>
     '';
+
     plugins = with pkgs.vimPlugins; [
-      plenary-nvim
-      editorconfig-vim
-      vim-fugitive
-      vim-matchup
-      vim-surround
+      # Syntaxes
+      rust-vim
+      dart-vim-plugin
+      plantuml-syntax
+      vim-markdown
+      vim-nix
+      vim-toml
+      vim-syntax-shakespeare
+      gemini-vim-syntax
+      kotlin-vim
+      haskell-vim
+      mermaid-vim
+      pgsql-vim
+
+      # UI
+      vim-illuminate
+      vim-numbertoggle
       {
-        plugin = better-escape-nvim;
+        plugin = undotree;
         config = /* vim */ ''
-          lua require('better_escape').setup()
+          let g:undotree_SetFocusWhenToggle = 1
+          nmap <C-n> :UndotreeToggle<cr>
         '';
       }
+      {
+        plugin = which-key-nvim;
+        config = /* vim */ ''
+          lua require('which-key').setup{}
+        '';
+      }
+      {
+        plugin = range-highlight-nvim;
+        config = /* vim */ ''
+          lua require('range-highlight').setup{}
+        '';
+      }
+      {
+        plugin = indent-blankline-nvim;
+        config = /* vim */ ''
+          lua require('indent_blankline').setup{char_highlight_list={'IndentBlankLine'}}
+        '';
+      }
+      {
+        plugin = nvim-web-devicons;
+        config = /* vim */ ''
+          lua require('nvim-web-devicons').setup{}
+        '';
+      }
+      {
+        plugin = gitsigns-nvim;
+        config = /* vim */ ''
+          lua require('gitsigns').setup()
+        '';
+      }
+      {
+        plugin = nvim-colorizer-lua;
+        config = /* vim */ ''
+          set termguicolors
+          lua require('colorizer').setup()
+        '';
+      }
+
+      # Misc
+      editorconfig-vim
+      vim-surround
+      vim-fugitive
       {
         plugin = nvim-autopairs;
         config = /* vim */ ''
@@ -74,20 +121,10 @@ in
         '';
       }
       {
-        plugin = vimThemeFromScheme { scheme = config.colorscheme; };
+        plugin = pkgs.writeTextDir "colors/nix-${config.colorscheme.slug}.vim"
+          (import ./theme.nix config.colorscheme);
         config = /* vim */ ''
           colorscheme nix-${config.colorscheme.slug}
-        '';
-      }
-      {
-        plugin = vim-medieval;
-        config = let
-          psqlf = "${pkgs.writeShellScriptBin "psqlf" /* sh */ ''
-            psql -f "$@"
-          ''}/bin/psqlf";
-        in /* vim */ ''
-          nmap Z <Plug>(medieval-eval)
-          let g:medieval_langs = ['haskell=runghc', 'sql=${psqlf}', 'sh']
         '';
       }
     ];
