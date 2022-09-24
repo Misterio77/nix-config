@@ -67,6 +67,7 @@
       vim-numbertoggle
       {
         plugin = undotree;
+        type = "viml";
         config = /* vim */ ''
           let g:undotree_SetFocusWhenToggle = 1
           nmap <C-n> :UndotreeToggle<cr>
@@ -74,39 +75,44 @@
       }
       {
         plugin = which-key-nvim;
-        config = /* vim */ ''
-          lua require('which-key').setup{}
+        type = "lua";
+        config = /* lua */ ''
+          require('which-key').setup{}
         '';
       }
       {
         plugin = range-highlight-nvim;
-        config = /* vim */ ''
-          lua require('range-highlight').setup{}
+        type = "lua";
+        config = /* lua */ ''
+          require('range-highlight').setup{}
         '';
       }
       {
         plugin = indent-blankline-nvim;
-        config = /* vim */ ''
-          lua require('indent_blankline').setup{char_highlight_list={'IndentBlankLine'}}
+        type = "lua";
+        config = /* lua */ ''
+          require('indent_blankline').setup{char_highlight_list={'IndentBlankLine'}}
         '';
       }
       {
         plugin = nvim-web-devicons;
-        config = /* vim */ ''
-          lua require('nvim-web-devicons').setup{}
+        type = "lua";
+        config = /* lua */ ''
+          require('nvim-web-devicons').setup{}
         '';
       }
       {
         plugin = gitsigns-nvim;
-        config = /* vim */ ''
-          lua require('gitsigns').setup()
+        type = "lua";
+        config = /* lua */ ''
+          require('gitsigns').setup()
         '';
       }
       {
         plugin = nvim-colorizer-lua;
-        config = /* vim */ ''
-          set termguicolors
-          lua require('colorizer').setup()
+        type = "lua";
+        config = /* lua */ ''
+          require('colorizer').setup()
         '';
       }
 
@@ -116,8 +122,9 @@
       vim-fugitive
       {
         plugin = nvim-autopairs;
-        config = /* vim */ ''
-          lua require('nvim-autopairs').setup{}
+        type = "lua";
+        config = /* lua */ ''
+          require('nvim-autopairs').setup{}
         '';
       }
       {
@@ -130,7 +137,7 @@
     ];
   };
 
-  xdg.configFile."nvim/init.vim".onChange =
+  xdg.configFile."nvim/init-home-manager.vim".onChange =
     let
       nvr = "${pkgs.neovim-remote}/bin/nvr";
     in
