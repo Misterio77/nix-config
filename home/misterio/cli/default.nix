@@ -17,7 +17,6 @@
     ./xpo.nix
   ];
   home.packages = with pkgs; [
-    cachix # For managing my binary cache
     comma # Install and run programs by sticking a , before them
     distrobox # Nice escape hatch, integrates docker images with my environment
 
@@ -33,11 +32,9 @@
 
     deploy-rs # Deployment tool
     sops # Deployment secrets tool
-    nvd nix-diff # Check derivation differences
-    rnix-lsp # Nix LSP
+
     nixfmt # Nix formatter
-    deadnix # Nix dead code locator
-    statix # Nix linter
+    nvd nix-diff # Check derivation differences
     haskellPackages.nix-derivation # Inspecting .drv's
   ];
 }

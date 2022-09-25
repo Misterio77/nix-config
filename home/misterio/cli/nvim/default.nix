@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-{
+{ config, pkgs, ... }: {
   imports = [ ./lsp.nix ];
 
   home = {
@@ -22,9 +20,12 @@
       autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
       "Tabs
-      set ts=4 sts=4 sw=4 "4 char-wide tab
+      set tabstop=4 "4 char-wide tab
       set expandtab "Use spaces
-      autocmd FileType json,html,htmldjango,hamlet,nix,scss,typescript,php,haskell,terraform setlocal ts=2 sts=2 sw=2 "2 char-wide overrides
+      set softtabstop=0 "Use same length as 'tabstop'
+      set shiftwidth=0 "Use same length as 'tabstop'
+      "2 char-wide overrides
+      autocmd FileType json,html,htmldjango,hamlet,nix,scss,typescript,php,haskell,terraform setlocal tabstop=2
 
       "Set tera to use htmldjango syntax
       autocmd BufRead,BufNewFile *.tera setfiletype htmldjango
@@ -43,8 +44,15 @@
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
 
-      "Bind make"
+      "Bind make
       nmap <space>m <cmd>make<cr>
+
+      "Bind vimgrep
+      nmap <space>g :vimgrep<space>
+
+      "Bind changing buffer
+      set wildcharm=<C-Z>
+      nmap <space>b :buffers<CR> :buffer <C-Z>
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -65,14 +73,7 @@
       # UI
       vim-illuminate
       vim-numbertoggle
-      {
-        plugin = undotree;
-        type = "viml";
-        config = /* vim */ ''
-          let g:undotree_SetFocusWhenToggle = 1
-          nmap <C-n> :UndotreeToggle<cr>
-        '';
-      }
+      # vim-markology
       {
         plugin = which-key-nvim;
         type = "lua";
@@ -105,14 +106,22 @@
         plugin = gitsigns-nvim;
         type = "lua";
         config = /* lua */ ''
-          require('gitsigns').setup()
+          require('gitsigns').setup{
+            signs = {
+              add = { text = '+' },
+              change = { text = '~' },
+              delete = { text = '_' },
+              topdelete = { text = '‾' },
+              changedelete = { text = '~' },
+            },
+          }
         '';
       }
       {
         plugin = nvim-colorizer-lua;
         type = "lua";
         config = /* lua */ ''
-          require('colorizer').setup()
+          require('colorizer').setup{}
         '';
       }
 
