@@ -3,36 +3,34 @@
   home.packages = with pkgs; [ rnix-lsp ];
 
   programs.neovim = {
-    extraConfig = /* lua */ ''
-    '';
+      extraConfig.lua = /* lua */ ''
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+        vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, { desc = "Format code" })
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+
+        function add_sign(name, text)
+          vim.fn.sign_define(name, { text = text, texthl = name, numhl = name})
+        end
+
+        add_sign("DiagnosticSignError", " ")
+        add_sign("DiagnosticSignWarn", " ")
+        add_sign("DiagnosticSignHint", " ")
+        add_sign("DiagnosticSignInfo", " ")
+      '';
     plugins = with pkgs.vimPlugins; [
       # LSP
       {
         plugin = nvim-lspconfig;
         type = "lua";
         config = /* lua */ ''
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-          vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, { desc = "Format code" })
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
-
-          function add_sign(name, text)
-            vim.fn.sign_define(name, { text = text, texthl = name, numhl = name})
-          end
-
-          add_sign("DiagnosticSignError", " ")
-          add_sign("DiagnosticSignWarn", " ")
-          add_sign("DiagnosticSignHint", " ")
-          add_sign("DiagnosticSignInfo", " ")
-
           local lspconfig = require('lspconfig')
 
           function add_lsp(binary, server, options)
             if vim.fn.executable(binary) == 1 then server.setup{options} end
           end
 
-          add_lsp("docker-langserver", lspconfig.dockerls, {})
           add_lsp("docker-langserver", lspconfig.dockerls, {})
           add_lsp("bash-language-server", lspconfig.bashls, {})
           add_lsp("clangd", lspconfig.clangd, {})

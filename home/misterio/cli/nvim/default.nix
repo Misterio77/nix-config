@@ -11,9 +11,17 @@
   programs.neovim = {
     enable = true;
 
-    extraConfig = /* vim */ ''
+    extraRuntime = {
+      "colors/nix-${config.colorscheme.slug}.vim" = {
+        text = import ./theme.nix config.colorscheme;
+      };
+    };
+
+    extraConfig.viml = /* vim */ ''
       "Use truecolor
       set termguicolors
+      "Set colorscheme
+      colorscheme nix-${config.colorscheme.slug}
 
       "Set fold level to highest in file
       "so everything starts out unfolded at just the right level
@@ -140,13 +148,12 @@
         plugin = pkgs.writeTextDir "colors/nix-${config.colorscheme.slug}.vim"
           (import ./theme.nix config.colorscheme);
         config = /* vim */ ''
-          colorscheme nix-${config.colorscheme.slug}
         '';
       }
     ];
   };
 
-  xdg.configFile."nvim/init-home-manager.vim".onChange =
+  xdg.configFile."nvim/init.lua".onChange =
     let
       nvr = "${pkgs.neovim-remote}/bin/nvr";
     in
