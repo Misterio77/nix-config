@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [ ./lsp.nix ];
 
   home = {
@@ -52,15 +52,14 @@
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
 
-      "Bind make
-      nmap <space>m <cmd>make<cr>
+      nmap <space>q <cmd>cwindow<cr>
+      nmap <space>l <cmd>lwindow<cr>
 
-      "Bind vimgrep
-      nmap <space>g :vimgrep<space>
-
-      "Bind changing buffer
       set wildcharm=<C-Z>
-      nmap <space>b :buffers<CR> :buffer <C-Z>
+      nmap <space>b :buffer <C-Z>
+      nmap <C-l> :bnext<CR>
+      nmap <C-h> :bprev<CR>
+      nmap <C-q> :bdel<CR>
     '';
 
     plugins = with pkgs.vimPlugins; [
@@ -153,15 +152,11 @@
     ];
   };
 
-  xdg.configFile."nvim/init.lua".onChange =
-    let
-      nvr = "${pkgs.neovim-remote}/bin/nvr";
-    in
-      /* sh */ ''
-      ${nvr} --serverlist | while read server; do
-        ${nvr} --servername $server --nostart -c ':so $MYVIMRC' & \
-      done
-    '';
+  xdg.configFile."nvim/init.lua".onChange = ''
+    for server in $XDG_RUNTIME_DIR/nvim.*; do
+      nvim --server $server --remote-send ':source $MYVIMRC<CR>' &
+    done
+  '';
 
   xdg.desktopEntries = {
     nvim = {

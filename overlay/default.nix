@@ -20,8 +20,8 @@ let
           src = final.fetchFromGitHub {
             owner = "hqurve";
             repo = "vim-nix";
-            rev = "26abd9cb976b5f4da6da02ee81449a959027b958";
-            sha256 = "sha256-7TDW6Dgy/H7PRrIvTMpmXO5/3K5F1d4p3rLYon6h6OU=";
+            rev = "0c5ea78e5cce406835beee2423e5afdd00521fcb";
+            sha256 = "sha256-IEWC0pvuZki0OzD5+8njhHsGbFenI4dcYEAjU9sHvTM=";
           };
         });
     } // final.callPackage ../pkgs/vim-plugins { };

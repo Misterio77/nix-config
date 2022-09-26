@@ -3,24 +3,41 @@
   home.packages = with pkgs; [ rnix-lsp ];
 
   programs.neovim = {
-      extraConfig.lua = /* lua */ ''
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-        vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, { desc = "Format code" })
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+    extraConfig.lua = /* lua */ ''
+      -- LSP
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+      vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format code" })
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
-        function add_sign(name, text)
-          vim.fn.sign_define(name, { text = text, texthl = name, numhl = name})
-        end
+      -- Diagnostic
+      vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { desc = "Floating diagnostic" })
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 
-        add_sign("DiagnosticSignError", " ")
-        add_sign("DiagnosticSignWarn", " ")
-        add_sign("DiagnosticSignHint", " ")
-        add_sign("DiagnosticSignInfo", " ")
-      '';
+      function add_sign(name, text)
+        vim.fn.sign_define(name, { text = text, texthl = name, numhl = name})
+      end
+
+      add_sign("DiagnosticSignError", " ")
+      add_sign("DiagnosticSignWarn", " ")
+      add_sign("DiagnosticSignHint", " ")
+      add_sign("DiagnosticSignInfo", " ")
+    '';
     plugins = with pkgs.vimPlugins; [
       # LSP
+      {
+        plugin = diaglist-nvim;
+        type = "lua";
+        config = /* lua */ ''
+          require('diaglist').init()
+          vim.api.nvim_create_autocmd('LspAttach', {
+            callback = require('diaglist/quickfix').populate_qflist
+          })
+        '';
+      }
       {
         plugin = nvim-lspconfig;
         type = "lua";
@@ -45,26 +62,6 @@
           add_lsp("lua-language-server", lspconfig.sumneko_lua, {})
           add_lsp("jdtls", lspconfig.jdtls, {})
           add_lsp("texlab", lspconfig.texlab, {})
-        '';
-      }
-      {
-        plugin = null-ls-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          local null_ls = require("null-ls")
-          local sources = { }
-
-          function add_null_ls(binary, server)
-            if vim.fn.executable(binary) == 1 then table.insert(sources, server) end
-          end
-
-          add_null_ls("curlylint", null_ls.builtins.diagnostics.curlylint)
-          add_null_ls("sqlfluff", null_ls.builtins.diagnostics.sqlfluff)
-          add_null_ls("sqlfluff", null_ls.builtins.formatting.sqlfluff)
-          add_null_ls("jq", null_ls.builtins.formatting.jq)
-          add_null_ls("true", null_ls.builtins.completion.luasnip)
-
-          null_ls.setup({ sources = sources})
         '';
       }
       {
