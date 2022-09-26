@@ -52,14 +52,36 @@
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
 
-      nmap <space>q <cmd>cwindow<cr>
-      nmap <space>l <cmd>lwindow<cr>
-
+      "Buffers
       set wildcharm=<C-Z>
       nmap <space>b :buffer <C-Z>
       nmap <C-l> :bnext<CR>
       nmap <C-h> :bprev<CR>
       nmap <C-q> :bdel<CR>
+
+      "Loclist
+      nmap <space>l :lwindow<cr>
+      nmap [l :lprev<cr>
+      nmap ]l :lnext<cr>
+
+      nmap <space>L :lhistory<cr>
+      nmap [L :lolder<cr>
+      nmap ]L :lnewer<cr>
+
+      "Quickfix
+      nmap <space>q :cwindow<cr>
+      nmap [q :cprev<cr>
+      nmap ]q :cnext<cr>
+
+      nmap <space>Q :chistory<cr>
+      nmap [Q :colder<cr>
+      nmap ]Q :cnewer<cr>
+
+      "Use ugrep as :grep
+      if executable('ugrep')
+          set grepprg=ugrep\ -RInk\ -j\ -u\ --tabs=1\ --ignore-files
+          set grepformat=%f:%l:%c:%m,%f+%l+%c+%m,%-G%f\\\|%l\\\|%c\\\|%m
+      endif
     '';
 
     plugins = with pkgs.vimPlugins; [

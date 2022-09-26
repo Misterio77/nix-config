@@ -4,8 +4,6 @@
     enable = true;
     shellAbbrs = {
       ls = "exa";
-      cat = "bat";
-      top = "btm";
 
       jqless = "jq -C | less -r";
 
