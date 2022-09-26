@@ -7,8 +7,7 @@
       graph = "log --decorate --oneline --graph";
     };
     userName = "Gabriel Fontes";
-    # TODO update email
-    userEmail = "eu@misterio.me";
+    userEmail = "hi@m7.rs";
     extraConfig = {
       init.defaultBranch = "main";
       url."https://github.com/".insteadOf = "git://github.com/";

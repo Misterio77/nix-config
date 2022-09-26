@@ -2,7 +2,7 @@
 
 let
 
-  kdeconnect-cli = "${pkgs.kdeconnect}/bin/kdeconnect-cli";
+  kdeconnect-cli = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-cli";
   fortune = "${pkgs.fortune}/bin/fortune";
 
   script-fortune = pkgs.writeShellScriptBin "fortune" ''
@@ -32,6 +32,7 @@ in {
   services.kdeconnect = {
     enable = true;
     indicator = true;
+
   };
 
   xdg.configFile = {

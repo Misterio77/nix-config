@@ -161,7 +161,7 @@ let
     }"'';
 
 in {
-  disabledModules = [ "programs/neovim.nix" ];
+  disabledModules = [ "programs/neovim.nix" ]; # TODO remove me
   imports = [
     /* TODO
     (mkRenamedOptionModule [ "programs" "neovim" "generatedConfigViml" ]

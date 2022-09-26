@@ -30,16 +30,6 @@
     plugins = with pkgs.vimPlugins; [
       # LSP
       {
-        plugin = diaglist-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('diaglist').init()
-          vim.api.nvim_create_autocmd('LspAttach', {
-            callback = require('diaglist/quickfix').populate_qflist
-          })
-        '';
-      }
-      {
         plugin = nvim-lspconfig;
         type = "lua";
         config = /* lua */ ''

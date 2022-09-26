@@ -1,5 +1,6 @@
 {
   afuse = import ./afuse.nix;
+  kdeconnect = import ./kdeconnect.nix;
   fonts = import ./fonts.nix;
   neovim = import ./neovim.nix;
   preferred-apps = import ./preferred-apps.nix;
