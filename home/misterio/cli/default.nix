@@ -24,7 +24,7 @@
     bottom # System viewer
     ncdu # TUI disk usage
     exa # Better ls
-    ugrep # Better grep
+    ripgrep # Better grep
     fd # Better find
     httpie # Better curl
     jq # JSON pretty printer and manipulator

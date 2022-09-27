@@ -77,10 +77,11 @@
       nmap [Q :colder<cr>
       nmap ]Q :cnewer<cr>
 
-      "Use ugrep as :grep
-      if executable('ugrep')
-          set grepprg=ugrep\ -RInk\ -j\ -u\ --tabs=1\ --ignore-files
-          set grepformat=%f:%l:%c:%m,%f+%l+%c+%m,%-G%f\\\|%l\\\|%c\\\|%m
+      "Grep (replace with ripgrep)
+      nmap <space>g :silent grep<space>
+      if executable('rg')
+          set grepprg=rg\ --vimgrep
+          set grepformat=%f:%l:%c:%m
       endif
     '';
 
