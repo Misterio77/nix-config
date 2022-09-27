@@ -13,18 +13,19 @@
   ];
 
   home.packages = with pkgs; [
-    imv
-    mimeo
-    slurp
     grim
+    imv
+    lyrics
+    mimeo
+    primary-xwayland
+    pulseaudio
+    slurp
+    waypipe
     wf-recorder
     wl-clipboard
     wl-mirror
     wl-mirror-pick
     ydotool
-    primary-xwayland
-    pulseaudio
-    lyrics
   ];
 
   home.sessionVariables = {
