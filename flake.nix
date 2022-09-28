@@ -147,8 +147,8 @@
             "rgb"
             "games"
           ];
-          wallpaper = "aenami-stars-and-you";
-          colorscheme = "horizon-dark";
+          wallpaper = "planet-red-desert";
+          colorscheme = "purpledream";
         };
         # Laptop
         "misterio@pleione" = mkHome {
