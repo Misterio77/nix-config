@@ -27,5 +27,7 @@ in {
         logoScale = 4.5;
       };
 
-  home.sessionVariables.SCHEME = colorscheme;
+  home.file = {
+    ".colorscheme".text = colorscheme;
+  };
 }
