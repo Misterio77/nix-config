@@ -4,8 +4,8 @@ index d47b878..79380da 100755
 +++ b/pfetch
 @@ -1055,14 +1055,14 @@ get_wm() {
  }
-
-
+ 
+ 
 -get_de() {
 +get_desktop() {
      # This only supports Xorg related desktop environments though
@@ -17,12 +17,12 @@ index d47b878..79380da 100755
 -    log de "${XDG_CURRENT_DESKTOP:-$DESKTOP_SESSION}" >&6
 +    log desktop "${XDG_CURRENT_DESKTOP:-$DESKTOP_SESSION}" >&6
  }
-
+ 
  get_shell() {
 @@ -1078,6 +1078,19 @@ get_editor() {
      log editor "${editor##*/}" >&6
  }
-
+ 
 +get_term() {
 +    # Display the value of '$TERMINAL', if it's empty, display the
 +    # value of '$TERM'.
@@ -32,6 +32,7 @@ index d47b878..79380da 100755
 +}
 +
 +get_scheme() {
++    # Display the '$SCHEME' environment variable.
 +    log scheme "$(cat $HOME/.colorscheme)" >&6
 +}
 +
