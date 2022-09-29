@@ -7,7 +7,7 @@
       };
     };
     nginx.virtualHosts = {
-      "torrent.misterio.me" = {
+      "deluge.m7.rs" = {
         forceSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://localhost:${toString config.services.deluge.web.port}";
