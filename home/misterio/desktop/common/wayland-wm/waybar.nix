@@ -34,6 +34,7 @@ in
 
       secondary = {
         mode = "dock";
+        layer = "top";
         height = 32;
         width = 100;
         margin = "6";
@@ -52,6 +53,7 @@ in
 
       primary = {
         mode = "dock";
+        layer = "top";
         height = 40;
         margin = "6";
         position = "top";
