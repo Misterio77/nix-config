@@ -37,7 +37,7 @@
 
     # Nixified software I use
     hyprland = {
-      url = "github:hyprwm/hyprland/v0.13.1beta";
+      url = "github:hyprwm/hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprwm-contrib = {
