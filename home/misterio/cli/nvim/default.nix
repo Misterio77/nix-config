@@ -99,6 +99,7 @@
       haskell-vim
       mermaid-vim
       pgsql-vim
+      vim-terraform
 
       # UI
       vim-illuminate
