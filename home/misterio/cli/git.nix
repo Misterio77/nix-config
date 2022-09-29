@@ -9,6 +9,7 @@
     userName = "Gabriel Fontes";
     userEmail = "hi@m7.rs";
     extraConfig = {
+      feature.manyFiles = true;
       init.defaultBranch = "main";
       url."https://github.com/".insteadOf = "git://github.com/";
     };
