@@ -59,7 +59,10 @@
         plugin = rust-tools-nvim;
         type = "lua";
         config = /* lua */ ''
-          require('rust-tools').setup{ tools = { autoSetHints = true } }
+          local rust_tools = require('rust-tools')
+          if vim.fn.executable("rust-analyzer") == 1 then
+            rust_tools.setup{ tools = { autoSetHints = true } }
+          end
         '';
       }
 
