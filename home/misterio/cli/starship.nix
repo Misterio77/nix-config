@@ -27,11 +27,15 @@ in
           cloud = "$aws$gcloud$openstack";
         in
         ''
-          $username$hostname( $shlvl)( $cmd_duration)
-          $directory( ${git})(- ${cloud})
-          ($nix_shell )''${custom.nix_inspect}
+          $username$hostname($shlvl)($cmd_duration) $fill ($nix_shell)$custom
+          $directory(${git})(- ${cloud}) $fill $time
           $jobs$character
         '';
+
+      fill = {
+        symbol = " ";
+        disabled = false;
+      };
 
       # Core
       username = {
@@ -39,25 +43,26 @@ in
         show_always = true;
       };
       hostname = {
-        format = "[@$hostname]($style)";
+        format = "[@$hostname]($style) ";
         ssh_only = false;
         style = "bold green";
       };
       shlvl = {
-        format = "[$shlvl]($style)";
+        format = "[$shlvl]($style) ";
         style = "bold cyan";
         threshold = 2;
         repeat = true;
+        disabled = false;
       };
       cmd_duration = {
-        format = "took [$duration]($style)";
+        format = "took [$duration]($style) ";
       };
 
       directory = {
-        format = "[$path]($style)( [$read_only]($read_only_style))";
+        format = "[$path]($style)( [$read_only]($read_only_style)) ";
       };
       nix_shell = {
-        format = "[$symbol(-> $name \\(develop\\))]($style)";
+        format = "[($name \\(develop\\) <-)$symbol]($style) ";
         impure_msg = "";
         symbol = " ";
         style = "bold red";
@@ -67,7 +72,7 @@ in
           disabled = false;
           when = "test -z $IN_NIX_SHELL";
           command = "${nix-inspect}/bin/nix-inspect kitty imagemagick ncurses";
-          format = "[$symbol(-> $output)]($style)";
+          format = "[($output <-)$symbol]($style) ";
           symbol = " ";
           style = "bold blue";
         };
@@ -76,7 +81,15 @@ in
       character = {
         error_symbol = "[~~>](bold red)";
         success_symbol = "[->>](bold green)";
-        vicmd_symbol = "[<<-](bold yellow)";
+        vimcmd_symbol = "[<<-](bold yellow)";
+        vimcmd_visual_symbol = "[<<-](bold cyan)";
+        vimcmd_replace_symbol = "[<<-](bold purple)";
+        vimcmd_replace_one_symbol = "[<<-](bold purple)";
+      };
+
+      time = {
+        format = "\\\[[$time]($style)\\\]";
+        disabled = false;
       };
 
       # Cloud
@@ -86,11 +99,6 @@ in
       aws = {
         format = "on [$symbol$profile(\\($region\\))]($style)";
       };
-
-
-      # Toggles \/
-      shlvl.disabled = false;
-
 
       # Icon changes only \/
       aws.symbol = "  ";
