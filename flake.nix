@@ -162,7 +162,8 @@
             "laptop"
             "games"
           ];
-          colorscheme = "spaceduck";
+          wallpaper = "castle-sunset-fantasy";
+          colorscheme = "darkmoss";
         };
         # Secondary Desktop
         "misterio@maia" = mkHome {
