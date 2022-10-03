@@ -19,7 +19,7 @@ let
     fi
 
     umount /btrfs
-    rm -d /btrfs
+    rm /btrfs
   '';
 in
 {
