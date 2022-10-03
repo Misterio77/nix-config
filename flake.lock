@@ -607,11 +607,11 @@
         "utils": "utils_5"
       },
       "locked": {
-        "lastModified": 1662771253,
-        "narHash": "sha256-InITgIdKUyC/11Bi0wWaKGiGe/ve4pUGQYkp2mUbYic=",
+        "lastModified": 1664819138,
+        "narHash": "sha256-KC4nS3q6PUPBpad8myoxn5Gx+2sTapRsNOJQnwuf2ag=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "83536545ead8ddf893d593204c0cf4b4f38c58b8",
+        "rev": "d71e6d3fdfcbb5c77f59b63ed07ebdbb88dd7860",
         "type": "github"
       },
       "original": {
