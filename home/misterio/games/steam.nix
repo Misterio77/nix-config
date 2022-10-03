@@ -1,4 +1,5 @@
-{ persistence, lib, ... }: {
+{ pkgs, persistence, lib, ... }: {
+  home.packages = [ pkgs.protontricks ];
   home.persistence = lib.mkIf persistence {
     "/persist/games/misterio" = {
       allowOther = true;
