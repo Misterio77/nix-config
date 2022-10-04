@@ -495,7 +495,7 @@ in {
       groupedPlugins = lists.groupBy (p: p.type) allPlugins;
       pluginConfigs = mapAttrs (_: plugins: concatLines (getCfgs plugins)) groupedPlugins;
     in
-      zipAttrsWith (_: concatLines) [ pluginConfigs cfg.extraConfig ];
+      zipAttrsWith (_: concatLines) [ cfg.extraConfig pluginConfigs ];
 
     home.packages = [ cfg.finalPackage ];
 
