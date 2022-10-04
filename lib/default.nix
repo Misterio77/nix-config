@@ -1,13 +1,11 @@
 { inputs, ... }:
 let
-  inherit (inputs) self home-manager nixpkgs deploy-rs;
+  inherit (inputs) self home-manager nixpkgs;
   inherit (self) outputs;
 
   inherit (builtins) elemAt match any mapAttrs attrValues attrNames listToAttrs;
   inherit (nixpkgs.lib) nixosSystem filterAttrs genAttrs mapAttrs';
   inherit (home-manager.lib) homeManagerConfiguration;
-
-  activate = type: config: deploy-rs.lib.${config.pkgs.system}.activate.${type} config;
 in
 rec {
   # Applies a function to a attrset's names, while keeping the values
@@ -57,35 +55,4 @@ rec {
       };
       modules = attrValues (import ../modules/home-manager) ++ [ ../home/${username} ];
     };
-
-  mkDeploys = nixosConfigs: homeConfigs:
-    let
-      nixosProfiles = mapAttrs mkNixosDeployProfile nixosConfigs;
-      homeProfiles = mapAttrs mkHomeDeployProfile homeConfigs;
-      hostnames = attrNames nixosProfiles;
-
-      homesOn = hostname: filterAttrs (name: _: (getHostname name) == hostname) homeProfiles;
-      systemOn = hostname: { system = nixosProfiles.${hostname}; };
-      profilesOn = hostname: (systemOn hostname) // (mapAttrNames getUsername (homesOn hostname));
-    in
-    listToAttrs (map
-      (hostname: {
-        name = hostname;
-        value = {
-          inherit hostname;
-          profiles = profilesOn hostname;
-        };
-      })
-      hostnames);
-
-
-  mkNixosDeployProfile = _name: config: {
-    user = "root";
-    path = activate "nixos" config;
-  };
-
-  mkHomeDeployProfile = name: config: {
-    user = getUsername name;
-    path = activate "home-manager" config;
-  };
 }

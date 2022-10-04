@@ -73,8 +73,6 @@ nix develop
 
 `nix build` (or shell or run) To build and use packages
 
-`deploy` To easily deploy everything, both NixOS and home-manager profiles
-
 `sops` To manage secrets
 
 

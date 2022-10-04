@@ -13,10 +13,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -83,14 +79,6 @@
 
       devShells = forAllSystems (system: {
         default = legacyPackages.${system}.callPackage ./shell.nix { };
-      });
-
-      apps = forAllSystems (system: rec {
-        deploy = {
-          type = "app";
-          program = "${legacyPackages.${system}.deploy-rs}/bin/deploy";
-        };
-        default = deploy;
       });
 
       legacyPackages = forAllSystems (system:
@@ -198,13 +186,5 @@
           persistence = false;
         };
       };
-
-      deploy = {
-        nodes = mkDeploys nixosConfigurations homeConfigurations;
-        magicRollback = true;
-        autoRollback = true;
-      };
-
-      deployChecks = { };
     };
 }

@@ -30,9 +30,7 @@
     jq # JSON pretty printer and manipulator
     trekscii # Cute startrek cli printer
 
-    deploy-rs # Deployment tool
     sops # Deployment secrets tool
-
     nixfmt # Nix formatter
     nvd nix-diff # Check derivation differences
     haskellPackages.nix-derivation # Inspecting .drv's
