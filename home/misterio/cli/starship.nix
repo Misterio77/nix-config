@@ -62,7 +62,7 @@ in
         format = "[$path]($style)( [$read_only]($read_only_style)) ";
       };
       nix_shell = {
-        format = "[($name \\(develop\\) <-)$symbol]($style) ";
+        format = "[($name \\(develop\\) <- )$symbol]($style) ";
         impure_msg = "";
         symbol = " ";
         style = "bold red";
@@ -72,7 +72,7 @@ in
           disabled = false;
           when = "test -z $IN_NIX_SHELL";
           command = "${nix-inspect}/bin/nix-inspect kitty imagemagick ncurses";
-          format = "[($output <-)$symbol]($style) ";
+          format = "[($output <- )$symbol]($style) ";
           symbol = " ";
           style = "bold blue";
         };
