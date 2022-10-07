@@ -53,6 +53,7 @@
           add_lsp("lua-language-server", lspconfig.sumneko_lua, {})
           add_lsp("jdtls", lspconfig.jdtls, {})
           add_lsp("texlab", lspconfig.texlab, {})
+          add_lsp("gopls", lspconfig.gopls, {})
         '';
       }
       {
