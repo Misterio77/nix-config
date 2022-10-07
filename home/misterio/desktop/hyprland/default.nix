@@ -99,6 +99,10 @@
           exec-once=${mako}
           exec-once=${swayidle} -w
 
+          # Mouse binding
+          bindm=SUPER,mouse:272,movewindow
+          bindm=SUPER,mouse:273,resizewindow
+
           # Program bindings
           bind=SUPER,Return,exec,${terminal.cmd}
           bind=SUPER,w,exec,${notifier.dismiss-cmd}
