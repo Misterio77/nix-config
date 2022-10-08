@@ -18,7 +18,7 @@
     stateVersion = "22.05";
     homeDirectory = "/home/${username}";
     sessionVariables = {
-      NIX_CONFIG = "experimental-features = nix-command flakes";
+      NIX_CONFIG = "experimental-features = nix-command flakes repl-flakes";
     };
     persistence = lib.mkIf persistence {
       "/persist/home/misterio" = {

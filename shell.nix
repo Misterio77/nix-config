@@ -10,7 +10,7 @@
   import nixpkgs { overlays = [ ]; }
 , ...
 }: pkgs.mkShell {
-  NIX_CONFIG = "experimental-features = nix-command flakes";
+  NIX_CONFIG = "experimental-features = nix-command flakes repl-flake";
   nativeBuildInputs = with pkgs; [
     nix
     home-manager
