@@ -182,15 +182,9 @@
         };
       };
 
-      hydraJobs =
-        let hostToDrv = name: value: {
-          inherit name; type = "derivation";
-          drv = value.config.system.build.toplevel;
-        };
-        in
-        {
-          nixos = builtins.mapAttrs hostToDrv nixosConfigurations;
-          hello.x86_64-linux = legacyPackages.x86_64-linux.hello;
-        };
+      hydraJobs = {
+        nixos = builtins.mapAttrs (_: v: v.config.system.build.toplevel) nixosConfigurations;
+        hello.x86_64-linux = legacyPackages.x86_64-linux.hello;
+      };
     };
 }
