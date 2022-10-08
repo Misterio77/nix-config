@@ -17,10 +17,12 @@
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    /*
     peerix = {
       url = "github:cid-chan/peerix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    */
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -63,7 +65,7 @@
       overlays = {
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
-        peerix = inputs.peerix.overlay;
+        # peerix = inputs.peerix.overlay;
         sops-nix = inputs.sops-nix.overlay;
         hyprland = inputs.hyprland.overlays.default;
         hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
