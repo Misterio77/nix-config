@@ -9,7 +9,7 @@
         "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg="
       ];
       trusted-users = [ "root" "@wheel" ];
-      auto-optimise-store = true;
+      auto-optimise-store = lib.mkDefault true;
     };
     package = pkgs.nixUnstable;
     extraOptions = ''
