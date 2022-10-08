@@ -33,7 +33,9 @@
         systems = [ "x86_64-linux" "aarch64-linux" ];
       }
       {
-        hostName = "localhost";
+        hostName = hostname;
+        sshKey = config.sops.secrets.builder-ssh-key.path;
+        sshUser = config.users.users.builder.name;
         systems = [ "builtin" ]
           ++ [ pkgs.system ]
           ++ config.boot.binfmt.emulatedSystems;
