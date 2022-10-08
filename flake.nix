@@ -28,10 +28,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    /*
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    */
 
     # Nixified software I use
     hyprland = {
@@ -70,7 +72,7 @@
         hyprland = inputs.hyprland.overlays.default;
         hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
-        neovim-nightly-overlay = inputs.neovim-nightly-overlay.overlay;
+        # neovim-nightly-overlay = inputs.neovim-nightly-overlay.overlay;
         website = inputs.website.overlays.default;
       };
 
