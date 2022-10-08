@@ -186,5 +186,12 @@
           persistence = false;
         };
       };
+
+      hydraJobs = {
+        "electra".x86_64-linux = nixosConfigurations."electra".config.system.build.toplevel;
+        "atlas".x86_64-linux = nixosConfigurations."atlas".config.system.build.toplevel;
+        "pleione".x86_64-linux = nixosConfigurations."pleione".config.system.build.toplevel;
+        "maia".x86_64-linux = nixosConfigurations."maia".config.system.build.toplevel;
+      };
     };
 }
