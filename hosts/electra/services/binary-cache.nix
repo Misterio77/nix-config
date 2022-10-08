@@ -2,6 +2,9 @@
 {
   sops.secrets.cache-sig-key = {
     sopsFile = ../secrets.yaml;
+    owner = config.users.users.hydra.name;
+    group = config.users.users.hydra.group;
+    mode = "0440";
   };
 
   services = {
