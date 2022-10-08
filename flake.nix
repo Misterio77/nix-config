@@ -48,143 +48,138 @@
     };
   };
 
-  outputs = inputs:
-    let
-      lib = import ./lib { inherit inputs; };
-      inherit (lib) mkSystem mkHome mkDeploys forAllSystems;
-    in
-    rec {
-      inherit lib;
+  outputs = inputs: rec {
+    lib = import ./lib { inherit inputs; };
 
-      overlays = {
-        default = import ./overlay { inherit inputs; };
-        nur = inputs.nur.overlay;
-        sops-nix = inputs.sops-nix.overlay;
-        hyprland = inputs.hyprland.overlays.default;
-        hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
-        paste-misterio-me = inputs.paste-misterio-me.overlay;
-        neovim-nightly-overlay = inputs.neovim-nightly-overlay.overlay;
-        website = inputs.website.overlays.default;
+    overlays = {
+      default = import ./overlay { inherit inputs; };
+      nur = inputs.nur.overlay;
+      sops-nix = inputs.sops-nix.overlay;
+      hyprland = inputs.hyprland.overlays.default;
+      hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
+      paste-misterio-me = inputs.paste-misterio-me.overlay;
+      neovim-nightly-overlay = inputs.neovim-nightly-overlay.overlay;
+      website = inputs.website.overlays.default;
+    };
+
+    nixosModules = import ./modules/nixos;
+    homeManagerModules = import ./modules/home-manager;
+
+    templates = import ./templates;
+
+    devShells = lib.forAllSystems (system: {
+      default = legacyPackages.${system}.callPackage ./shell.nix { };
+    });
+
+    legacyPackages = lib.forAllSystems (system:
+      import inputs.nixpkgs {
+        inherit system;
+        overlays = builtins.attrValues overlays;
+        config.allowUnfree = true;
+      }
+    );
+
+    nixosConfigurations = {
+      # Desktop
+      atlas = lib.mkSystem {
+        hostname = "atlas";
+        pkgs = legacyPackages."x86_64-linux";
+        persistence = true;
       };
-
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
-
-      templates = import ./templates;
-
-      devShells = forAllSystems (system: {
-        default = legacyPackages.${system}.callPackage ./shell.nix { };
-      });
-
-      legacyPackages = forAllSystems (system:
-        import inputs.nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues overlays;
-          config.allowUnfree = true;
-        }
-      );
-
-      nixosConfigurations = {
-        # Desktop
-        atlas = mkSystem {
-          hostname = "atlas";
-          pkgs = legacyPackages."x86_64-linux";
-          persistence = true;
-        };
-        # Laptop
-        pleione = mkSystem {
-          hostname = "pleione";
-          pkgs = legacyPackages."x86_64-linux";
-          persistence = true;
-        };
-        # Secondary Desktop
-        maia = mkSystem {
-          hostname = "maia";
-          pkgs = legacyPackages."x86_64-linux";
-          persistence = true;
-        };
-        # Raspi 4
-        merope = mkSystem {
-          hostname = "merope";
-          pkgs = legacyPackages."aarch64-linux";
-          persistence = true;
-        };
-        # VPS
-        electra = mkSystem {
-          hostname = "electra";
-          pkgs = legacyPackages."x86_64-linux";
-          persistence = true;
-        };
+      # Laptop
+      pleione = lib.mkSystem {
+        hostname = "pleione";
+        pkgs = legacyPackages."x86_64-linux";
+        persistence = true;
       };
-
-      homeConfigurations = {
-        # Desktop
-        "misterio@atlas" = mkHome {
-          username = "misterio";
-          hostname = "atlas";
-          persistence = true;
-
-          features = [
-            "desktop/hyprland"
-            "trusted"
-            "rgb"
-            "games"
-          ];
-          wallpaper = "planet-red-desert";
-          colorscheme = "purpledream";
-        };
-        # Laptop
-        "misterio@pleione" = mkHome {
-          username = "misterio";
-          hostname = "pleione";
-          persistence = true;
-
-          features = [
-            "desktop/hyprland"
-            "trusted"
-            "laptop"
-            "games"
-          ];
-          wallpaper = "castle-sunset-fantasy";
-          colorscheme = "darkmoss";
-        };
-        # Secondary Desktop
-        "misterio@maia" = mkHome {
-          username = "misterio";
-          hostname = "maia";
-          persistence = true;
-
-          colorscheme = "dracula";
-        };
-        # Raspi 4
-        "misterio@merope" = mkHome {
-          username = "misterio";
-          hostname = "merope";
-          persistence = true;
-
-          colorscheme = "nord";
-        };
-        # VPS
-        "misterio@electra" = mkHome {
-          username = "misterio";
-          hostname = "electra";
-          persistence = true;
-
-          colorscheme = "solarflare";
-        };
-        # For easy bootstraping from a nixos live usb
-        "nixos@nixos" = mkHome {
-          username = "nixos";
-          hostname = "nixos";
-          pkgs = legacyPackages.x86_64-linux;
-          features = [ "desktop/gnome" ];
-          persistence = false;
-        };
+      # Secondary Desktop
+      maia = lib.mkSystem {
+        hostname = "maia";
+        pkgs = legacyPackages."x86_64-linux";
+        persistence = true;
       };
-
-      hydraJobs = {
-        nixos = builtins.mapAttrs (_: v: v.config.system.build.toplevel) nixosConfigurations;
-        hello.x86_64-linux = legacyPackages.x86_64-linux.hello;
+      # Raspi 4
+      merope = lib.mkSystem {
+        hostname = "merope";
+        pkgs = legacyPackages."aarch64-linux";
+        persistence = true;
+      };
+      # VPS
+      electra = lib.mkSystem {
+        hostname = "electra";
+        pkgs = legacyPackages."x86_64-linux";
+        persistence = true;
       };
     };
+
+    homeConfigurations = {
+      # Desktop
+      "misterio@atlas" = lib.mkHome {
+        username = "misterio";
+        hostname = "atlas";
+        persistence = true;
+
+        features = [
+          "desktop/hyprland"
+          "trusted"
+          "rgb"
+          "games"
+        ];
+        wallpaper = "planet-red-desert";
+        colorscheme = "purpledream";
+      };
+      # Laptop
+      "misterio@pleione" = lib.mkHome {
+        username = "misterio";
+        hostname = "pleione";
+        persistence = true;
+
+        features = [
+          "desktop/hyprland"
+          "trusted"
+          "laptop"
+          "games"
+        ];
+        wallpaper = "castle-sunset-fantasy";
+        colorscheme = "darkmoss";
+      };
+      # Secondary Desktop
+      "misterio@maia" = lib.mkHome {
+        username = "misterio";
+        hostname = "maia";
+        persistence = true;
+
+        colorscheme = "dracula";
+      };
+      # Raspi 4
+      "misterio@merope" = lib.mkHome {
+        username = "misterio";
+        hostname = "merope";
+        persistence = true;
+
+        colorscheme = "nord";
+      };
+      # VPS
+      "misterio@electra" = lib.mkHome {
+        username = "misterio";
+        hostname = "electra";
+        persistence = true;
+
+        colorscheme = "solarflare";
+      };
+      # For easy bootstraping from a nixos live usb
+      "nixos@nixos" = lib.mkHome {
+        username = "nixos";
+        hostname = "nixos";
+        pkgs = legacyPackages.x86_64-linux;
+        features = [ "desktop/gnome" ];
+        persistence = false;
+      };
+    };
+
+    hydraJobs = rec {
+      nixos = builtins.mapAttrs lib.mkNixosJob nixosConfigurations;
+      all = lib.mkAggregateJob { inherit nixos; };
+    };
+  };
 }

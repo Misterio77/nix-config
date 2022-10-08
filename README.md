@@ -1,4 +1,5 @@
 [![built with nix](https://img.shields.io/static/v1?logo=nixos&logoColor=white&label=&message=Built%20with%20Nix&color=41439a)](https://builtwithnix.org)
+[![hydra status](https://img.shields.io/endpoint?url=https://hydra.m7.rs/job/nix-config/build-main/all/shield)](https://hydra.m7.rs/jobset/nix-config/build-main#tabs-jobs)
 
 # My NixOS configurations
 
@@ -17,6 +18,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - Flexible **Home Manager** Configs through **feature flags**
 - Extensively configured wayland environments (**sway** and **hyprland**) and editor (**neovim**)
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
+- **Hydra CI/CD server and binary cache** that uses the **desktops as remote builders**
 
 ## Structure
 
