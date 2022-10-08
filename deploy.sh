@@ -12,5 +12,5 @@ if [ -z "$hosts" ]; then
 fi
 
 for host in ${hosts//,/ }; do
-    nixos-rebuild --flake .\#$host switch --target-host $host --use-remote-sudo $@
+    nixos-rebuild --flake .\#$host switch --target-host $host --use-remote-sudo --use-substitutes $@
 done
