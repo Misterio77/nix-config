@@ -188,12 +188,7 @@
       };
 
       hydraJobs = {
-        /*
-        electra.x86_64-linux = nixosConfigurations.electra.config.system.build.toplevel;
-        atlas.x86_64-linux = nixosConfigurations.atlas.config.system.build.toplevel;
-        pleione.aarch64-linux = nixosConfigurations.pleione.config.system.build.toplevel;
-        maia.x86_64-linux = nixosConfigurations.maia.config.system.build.toplevel;
-        */
+        nixos = builtins.mapAttrs (_: host: host.config.system.build.toplevel) nixosConfigurations;
         hello.x86_64-linux = legacyPackages.x86_64-linux.hello;
       };
     };
