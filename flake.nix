@@ -181,5 +181,10 @@
       nixos = builtins.mapAttrs lib.mkNixosJob nixosConfigurations;
       all = lib.mkAggregateJob { inherit nixos; };
     };
+
+    nixConfig = {
+      extra-substituers = [ "https://cache.m7.rs" ];
+      extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
+    };
   };
 }
