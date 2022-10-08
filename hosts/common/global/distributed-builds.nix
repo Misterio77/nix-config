@@ -33,28 +33,10 @@
         systems = [ "x86_64-linux" "aarch64-linux" ];
       }
       {
-        hostName = "pleione";
-        maxJobs = 16;
-        speedFactor = 40;
-        sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.name;
-        systems = [ "x86_64-linux" "aarch64-linux" ];
-      }
-      {
-        hostName = "merope";
-        maxJobs = 4;
-        speedFactor = 10;
-        sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.name;
-        systems = [ "aarch64-linux" ];
-      }
-      {
-        hostName = "electra";
-        maxJobs = 1;
-        speedFactor = 10;
-        sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.name;
-        systems = [ "x86_64-linux" ];
+        hostName = "localhost";
+        systems = [ "builtin" ]
+          ++ [ pkgs.system ]
+          ++ config.boot.binfmt.emulatedSystems;
       }
     ];
   };
