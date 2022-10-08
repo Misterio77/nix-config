@@ -3,11 +3,15 @@
 {
   imports = [
     inputs.impermanence.nixosModules.impermanence
+    ./acme.nix
     ./fish.nix
     ./locale.nix
+    ./tailscale.nix
     ./nix.nix
     ./openssh.nix
     ./peerix.nix
+    ./podman.nix
+    ./postgres.nix
     ./sops.nix
   ];
 

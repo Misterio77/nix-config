@@ -13,12 +13,9 @@
     ../common/optional/ckb-next.nix
     ../common/optional/misterio-greetd.nix
     ../common/optional/pipewire.nix
-    ../common/optional/podman.nix
-    ../common/optional/postgres.nix
     ../common/optional/quietboot.nix
     ../common/optional/starcitizen-fixes.nix
     ../common/optional/steam.nix
-    ../common/optional/tailscale.nix
   ];
 
   networking = {
