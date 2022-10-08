@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   imports = [
     ./services
@@ -10,6 +9,5 @@
 
   networking.useDHCP = true;
   system.stateVersion = "22.05";
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_hardened;
 }
 
