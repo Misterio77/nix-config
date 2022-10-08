@@ -11,7 +11,7 @@
       extraConfig = /* xml */ ''
         Include ${config.sops.secrets.hydra-gh-auth.path}
         <githubstatus>
-          jobs = nix-config:master:*
+          jobs = nix-config:.*
         </githubstatus>
       '';
     };
