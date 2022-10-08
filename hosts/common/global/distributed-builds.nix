@@ -1,4 +1,4 @@
-{ hostname, config, ... }:
+{ hostname, config, pkgs, ... }:
 {
   users = {
     users.builder = {
@@ -7,6 +7,7 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAz0dIbaTuAihil/si33MQSFH5yBFoupwnV5gcq2CCbO (none)"
       ];
       group = "builder";
+      shell = pkgs.bash;
     };
     groups.builder = { };
   };
@@ -36,5 +37,8 @@
 
   sops.secrets.builder-ssh-key = {
     sopsFile = ../secrets.yaml;
+    owner = config.users.users.builder.name;
+    group = config.users.users.builder.group;
+    mode = "0440";
   };
 }

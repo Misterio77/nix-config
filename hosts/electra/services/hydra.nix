@@ -24,11 +24,15 @@
       };
     };
   };
-  users.users = let
-    hydraGroup = config.users.users.hydra.group;
-  in {
-    hydra-queue-runner.extraGroups = [ hydraGroup ];
-    hydra-www.extraGroups = [ hydraGroup ];
+  users.users = {
+    hydra-queue-runner.extraGroups = [
+      config.users.users.hydra.group
+      config.users.users.builder.group
+    ];
+    hydra-www.extraGroups = [
+      config.users.users.hydra.group
+      config.users.users.builder.group
+    ];
   };
   sops.secrets = {
     hydra-gh-auth = {
