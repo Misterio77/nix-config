@@ -12,7 +12,7 @@
   };
 
   nix = {
-    settings.trusted-users = [ config.users.users.builder.user ];
+    settings.trusted-users = [ config.users.users.builder.name ];
     distributedBuilds = true;
     buildMachines = [
       {
@@ -20,7 +20,7 @@
         maxJobs = 12;
         speedFactor = 100;
         sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.user;
+        sshUser = config.users.users.builder.name;
         systems = [ "x86_64-linux" "aarch64-linux" ];
       }
       {
@@ -28,7 +28,7 @@
         maxJobs = 8;
         speedFactor = 50;
         sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.user;
+        sshUser = config.users.users.builder.name;
         systems = [ "x86_64-linux" "aarch64-linux" ];
       }
     ];

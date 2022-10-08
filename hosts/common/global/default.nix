@@ -10,7 +10,6 @@
     ./tailscale.nix
     ./nix.nix
     ./openssh.nix
-    # ./peerix.nix
     ./podman.nix
     ./postgres.nix
     ./sops.nix

@@ -1,5 +1,6 @@
 {
   imports = [
+    ./binary-cache.nix
     ./cgit
     ./files-server.nix
     ./git-remote.nix

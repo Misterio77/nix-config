@@ -17,23 +17,15 @@
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    /*
-    peerix = {
-      url = "github:cid-chan/peerix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    */
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    /*
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    */
 
     # Nixified software I use
     hyprland = {
@@ -67,12 +59,11 @@
       overlays = {
         default = import ./overlay { inherit inputs; };
         nur = inputs.nur.overlay;
-        # peerix = inputs.peerix.overlay;
         sops-nix = inputs.sops-nix.overlay;
         hyprland = inputs.hyprland.overlays.default;
         hyprwm-contrib = inputs.hyprwm-contrib.overlays.default;
         paste-misterio-me = inputs.paste-misterio-me.overlay;
-        # neovim-nightly-overlay = inputs.neovim-nightly-overlay.overlay;
+        neovim-nightly-overlay = inputs.neovim-nightly-overlay.overlay;
         website = inputs.website.overlays.default;
       };
 
@@ -191,9 +182,15 @@
         };
       };
 
-      hydraJobs = {
-        nixos = builtins.mapAttrs (_: host: host.config.system.build.toplevel) nixosConfigurations;
-        hello.x86_64-linux = legacyPackages.x86_64-linux.hello;
-      };
+      hydraJobs =
+        let hostToDrv = name: value: {
+          inherit name; type = "derivation";
+          drv = value.config.system.build.toplevel;
+        };
+        in
+        {
+          nixos = builtins.mapAttrs hostToDrv nixosConfigurations;
+          hello.x86_64-linux = legacyPackages.x86_64-linux.hello;
+        };
     };
 }
