@@ -1,5 +1,9 @@
 { config, ... }:
 {
+  # https://github.com/NixOS/nix/issues/5039
+  nix.extraOptions = ''
+    allowed-uris = https:// http://
+  '';
   services = {
     hydra = {
       enable = true;
