@@ -1,8 +1,13 @@
-{ config, inputs, ... }: {
-  imports = [ inputs.paste-misterio-me.nixosModule ];
+{ config, inputs, pkgs, ... }:
+let
+  package = inputs.paste-misterio-me.packages.${pkgs.system}.paste-misterio-me;
+  module =  inputs.paste-misterio-me.nixosModules.paste-misterio-me;
+in {
+  imports = [ module ];
 
   services = {
     paste-misterio-me = {
+      inherit package;
       enable = true;
       database = "postgresql:///paste?user=paste&host=/var/run/postgresql";
       environmentFile = config.sops.secrets.paste-misterio-me-key.path;

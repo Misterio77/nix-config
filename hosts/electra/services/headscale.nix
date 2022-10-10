@@ -1,4 +1,4 @@
-{ config, lib, persistence, ... }:
+{ config, lib, ... }:
 {
   services = {
     headscale = {
@@ -37,7 +37,7 @@
 
   environment.systemPackages = [ config.services.headscale.package ];
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [ "/var/lib/headscale" ];
   };
 }

@@ -1,4 +1,4 @@
-{ lib, pkgs, persistence, config, ... }:
+{ lib, pkgs, config, ... }:
 let
   java = "${pkgs.openjdk}/bin/java";
   ram = "2760M";
@@ -48,7 +48,7 @@ in
     allowedUDPPorts = [ 25565 24454 ];
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [ "/var/lib/minecraft-modpack" ];
   };
 }

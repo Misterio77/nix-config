@@ -60,13 +60,13 @@
   # Webmail
   services.roundcube = rec {
     enable = true;
-    package = pkgs.roundcube.withPlugins (p: [ p.carddav p.custom_from ]);
+    package = pkgs.roundcube.withPlugins (p: [ p.carddav ]);
     hostName = "mail.m7.rs";
     extraConfig = ''
       $config['smtp_server'] = "tls://${hostName}";
       $config['smtp_user'] = "%u";
       $config['smtp_user'] = "%p";
-      $config['plugins'] = [ "carddav", "custom_from" ];
+      $config['plugins'] = [ "carddav" ];
     '';
   };
 }

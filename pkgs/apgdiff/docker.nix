@@ -1,7 +1,7 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 let
-  apgdiff = pkgs.apgdiff.override { jre = pkgs.jre_minimal; };
+  apgdiff = pkgs.callPackage ./default.nix { };
 in pkgs.dockerTools.buildLayeredImage {
   name = "apgdiff";
   tag = "latest";

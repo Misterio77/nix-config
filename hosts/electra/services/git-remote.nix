@@ -1,7 +1,7 @@
-{ config, lib, persistence, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [
       "/srv/git"
     ];

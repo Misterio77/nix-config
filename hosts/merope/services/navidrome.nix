@@ -1,4 +1,4 @@
-{ lib, config, persistence, ... }: {
+{ lib, config, ... }: {
   services = {
     navidrome = {
       enable = true;
@@ -26,7 +26,7 @@
     };
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [ "/var/lib/private/navidrome" ];
   };
 }

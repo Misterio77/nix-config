@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, pkgconfig, gtk3, gtk-layer-shell, pam, scdoc }:
+{ lib, stdenv, fetchFromGitHub, pkg-config, gtk3, gtk-layer-shell, pam, scdoc }:
 let
   pname = "gtklock";
 in
@@ -15,7 +15,7 @@ stdenv.mkDerivation {
 
   makeFlags = [ "DESTDIR=$(out)" "PREFIX=" ];
 
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [ pkg-config ];
   buildInputs = [ gtk3 gtk-layer-shell pam scdoc ];
 
   meta = with lib; {

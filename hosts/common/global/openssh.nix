@@ -1,8 +1,8 @@
-{ persistence, outputs, lib, ... }:
+{ outputs, lib, config, ... }:
 
 let
   hosts = builtins.attrNames outputs.nixosConfigurations;
-  sshPath = if persistence then "/persist/etc/ssh" else "/etc/ssh";
+  prefix = "/persist";
 in
 {
   services.openssh = {
@@ -20,11 +20,11 @@ in
     hostKeys = [
       {
         bits = 4096;
-        path = "${sshPath}/ssh_host_rsa_key";
+        path = "${prefix}/etc/ssh/ssh_host_rsa_key";
         type = "rsa";
       }
       {
-        path = "${sshPath}/ssh_host_ed25519_key";
+        path = "${prefix}/etc/ssh/ssh_host_ed25519_key";
         type = "ed25519";
       }
     ];

@@ -1,4 +1,4 @@
-{ lib, persistence, ... }: {
+{ lib, ... }: {
   services.factorio = {
     enable = true;
     lan = true;
@@ -8,7 +8,7 @@
     bind = "192.168.77.11";
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [ "/var/lib/private/factorio" ];
   };
 }

@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./wpa-gui.nix
+  ];
+}

@@ -1,6 +1,6 @@
-{ inputs, persistence, ... }:
+{ inputs, lib, config, ... }:
 let
-  sshPath = if persistence then "/persist/etc/ssh" else "/etc/ssh";
+  key = builtins.elemAt (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys) 0;
 in
 {
   imports = [
@@ -8,6 +8,6 @@ in
   ];
 
   sops = {
-    age.sshKeyPaths = [ "${sshPath}/ssh_host_ed25519_key" ];
+    age.sshKeyPaths = [ key.path ];
   };
 }

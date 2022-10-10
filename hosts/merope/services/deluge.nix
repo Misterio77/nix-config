@@ -1,4 +1,4 @@
-{ lib, persistence, config, ... }: {
+{ lib, config, ... }: {
   services = {
     deluge = {
       enable = true;
@@ -24,7 +24,7 @@
     allowedUDPPortRanges = [{ from = 6880; to = 6890; }];
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [
       "/var/lib/deluge"
       "/srv/torrents"

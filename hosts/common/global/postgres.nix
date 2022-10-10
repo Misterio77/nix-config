@@ -1,7 +1,7 @@
-{ lib, persistence, ... }: {
+{ lib, ... }: {
   services.postgresql.enable = true;
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [
       "/var/lib/postgresql"
     ];

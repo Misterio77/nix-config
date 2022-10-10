@@ -16,12 +16,15 @@
     # ../common/optional/quietboot.nix
   ];
 
+  # environment.persistence.enable = true;
+
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   networking = {
+    hostName = "maia";
     useDHCP = false;
     interfaces.enp2s0 = {
       useDHCP = true;

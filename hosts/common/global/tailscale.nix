@@ -1,4 +1,4 @@
-{ lib, persistence, ... }:
+{ lib, ... }:
 {
   services.tailscale.enable = true;
   networking.firewall = {
@@ -6,7 +6,7 @@
     allowedUDPPorts = [ 41641 ]; # Facilitate firewall punching
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [ "/var/lib/tailscale" ];
   };
 }

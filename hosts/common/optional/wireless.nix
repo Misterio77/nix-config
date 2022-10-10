@@ -1,4 +1,4 @@
-{ config, persistence, lib, ... }: {
+{ config, lib, ... }: {
   # Wireless secrets stored through sops
   sops.secrets.wireless = {
     sopsFile = ../secrets.yaml;
@@ -51,7 +51,7 @@
   users.groups.network = { };
 
   # Persist imperative config
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".files = [
       "/etc/wpa_supplicant.conf"
     ];

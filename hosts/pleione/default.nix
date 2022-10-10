@@ -11,12 +11,17 @@
     ../common/users/misterio.nix
 
     ../common/optional/wireless.nix
-    ../common/optional/misterio-greetd.nix
+    ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/steam.nix
   ];
 
+  # environment.persistence.enable = true;
+
+  networking = {
+    hostName = "pleione";
+  };
 
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;

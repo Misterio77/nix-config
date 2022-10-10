@@ -7,7 +7,12 @@
     ../common/users/misterio.nix
   ];
 
-  networking.useDHCP = true;
+  # environment.persistence.enable = true;
+
+  networking = {
+    hostName = "electra";
+    useDHCP = true;
+  };
   system.stateVersion = "22.05";
   # Slows down write operations considerably
   nix.settings.auto-optimise-store = false;

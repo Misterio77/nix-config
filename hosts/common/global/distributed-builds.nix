@@ -1,4 +1,4 @@
-{ hostname, config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   users = {
     users.builder = {
@@ -15,32 +15,30 @@
   nix = {
     settings.trusted-users = [ config.users.users.builder.name ];
     distributedBuilds = true;
-    buildMachines = [
-      {
+    buildMachines =
+      (lib.optional (config.networking.hostName != "atlas") {
         hostName = "atlas";
         maxJobs = 12;
         speedFactor = 100;
         sshKey = config.sops.secrets.builder-ssh-key.path;
         sshUser = config.users.users.builder.name;
         systems = [ "x86_64-linux" "aarch64-linux" ];
-      }
-      {
+      }) ++
+      (lib.optional (config.networking.hostName != "maia") {
         hostName = "maia";
         maxJobs = 8;
         speedFactor = 80;
         sshKey = config.sops.secrets.builder-ssh-key.path;
         sshUser = config.users.users.builder.name;
         systems = [ "x86_64-linux" "aarch64-linux" ];
-      }
-      {
-        hostName = hostname;
-        sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.name;
+      }) ++
+      [{
+        hostName = "local";
+        protocol = null;
         systems = [ "builtin" ]
-          ++ [ pkgs.system ]
-          ++ config.boot.binfmt.emulatedSystems;
-      }
-    ];
+        ++ [ pkgs.system ]
+        ++ config.boot.binfmt.emulatedSystems;
+      }];
   };
 
   sops.secrets.builder-ssh-key = {

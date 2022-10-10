@@ -1,5 +1,5 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ lib, inputs, hostname, persistence, ... }:
+{ lib, inputs, outputs, ... }:
 {
   imports = [
     inputs.impermanence.nixosModules.impermanence
@@ -13,12 +13,14 @@
     ./podman.nix
     ./postgres.nix
     ./sops.nix
-  ];
+  ] ++ (builtins.attrValues outputs.nixosModules);
 
-  networking = {
-    hostName = hostname;
-    domain = "m7.rs";
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = with outputs.overlays; [ additions wallpapers modifications ];
   };
+
+  networking.domain = "m7.rs";
 
   environment = {
     loginShellInit = ''
@@ -27,7 +29,7 @@
     '';
 
     # Persist logs, timers, etc
-    persistence = lib.mkIf persistence {
+    persistence = {
       "/persist".directories = [ "/var/lib/systemd" "/var/log" "/srv" ];
     };
 

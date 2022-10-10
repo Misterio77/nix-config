@@ -10,8 +10,11 @@
     ../common/users/misterio.nix
   ];
 
+  # environment.persistence.enable = true;
+
   # Static IP address
   networking = {
+    hostName = "merope";
     useDHCP = false;
     interfaces.eth0 = {
       useDHCP = true;

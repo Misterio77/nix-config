@@ -1,7 +1,5 @@
-{ pkgs, config, lib, hostname, outputs, ... }:
-let
-  homeConfig = outputs.homeConfigurations."misterio@${hostname}".config;
-  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+{ pkgs, config, lib, outputs, ... }:
+let ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in
 {
   users.mutableUsers = false;
@@ -36,11 +34,6 @@ in
   };
 
 
-  services.geoclue2.enable = lib.mkDefault (
-    (homeConfig.services.gammastep.enable or false) &&
-    (homeConfig.services.gammastep.provider == "geoclue2")
-  );
-  security.pam.services = {
-    swaylock = lib.mkIf homeConfig.programs.swaylock.enable { };
-  };
+  services.geoclue2.enable = true;
+  security.pam.services = { swaylock = { }; };
 }

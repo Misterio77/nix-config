@@ -1,11 +1,11 @@
-{ lib, persistence, ... }: {
+{ lib, ... }: {
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
     dockerSocket.enable = true;
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [
       "/var/lib/containers"
     ];

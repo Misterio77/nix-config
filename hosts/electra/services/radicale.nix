@@ -1,4 +1,4 @@
-{ config, lib, persistence, ... }:
+{ config, lib, ... }:
 let
   port = "5232";
 in
@@ -36,7 +36,7 @@ in
     group = config.users.users.radicale.group;
   };
 
-  environment.persistence = lib.mkIf persistence {
+  environment.persistence = {
     "/persist".directories = [ "/var/lib/radicale" ];
   };
 }

@@ -11,14 +11,17 @@
     ../common/users/misterio.nix
 
     ../common/optional/ckb-next.nix
-    ../common/optional/misterio-greetd.nix
+    ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/starcitizen-fixes.nix
     ../common/optional/steam.nix
   ];
 
+  # environment.persistence.enable = true;
+
   networking = {
+    hostName = "atlas";
     useDHCP = false;
     interfaces.enp8s0 = {
       useDHCP = true;

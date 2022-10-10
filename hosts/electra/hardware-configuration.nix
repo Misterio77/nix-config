@@ -1,4 +1,3 @@
-{ hostname, ... }:
 {
   imports = [
     ../common/optional/btrfs-optin-persistence.nix
@@ -20,7 +19,7 @@
 
   fileSystems = {
     "/boot" = {
-      device = "/dev/disk/by-label/${hostname}";
+      device = "/dev/disk/by-label/electra";
       fsType = "btrfs";
       options = [ "subvol=boot" ];
     };
