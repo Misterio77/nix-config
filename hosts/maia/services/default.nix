@@ -1,3 +1,3 @@
 {
-  imports = [ ./minecraft-modpack.nix ];
+  imports = [ ];
 }
