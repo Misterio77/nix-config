@@ -27,7 +27,7 @@
     };
 
     # Nixified software I use
-    hyprland.url = "github:hyprwm/hyprland";
+    hyprland.url = "github:hyprwm/hyprland/v0.15.2beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
 
     # Personal projects I deploy on my machines using nix
