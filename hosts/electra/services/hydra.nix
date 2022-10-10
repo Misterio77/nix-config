@@ -42,4 +42,8 @@
       mode = "0440";
     };
   };
+
+  environment.persistence = {
+    "/persist".directories = [ "/var/lib/hydra" ];
+  };
 }
