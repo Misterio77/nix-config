@@ -16,6 +16,7 @@
         Include ${config.sops.secrets.hydra-gh-auth.path}
         <githubstatus>
           jobs = .*
+          useShortContext = true
         </githubstatus>
       '';
     };
