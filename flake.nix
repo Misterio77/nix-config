@@ -37,7 +37,9 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
+      inherit (self) outputs;
+      supportedSystems =  [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
       pkgsFor = forAllSystems (system:
         import nixpkgs { inherit system; config.allowUnfree = true; }
       );
@@ -65,31 +67,31 @@
         # Desktop
         atlas = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; inherit (self) outputs; };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/atlas ];
         };
         # Laptop
         pleione = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; inherit (self) outputs; };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/pleione ];
         };
         # Secondary Desktop
         maia = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; inherit (self) outputs; };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/maia ];
         };
         # Raspberry Pi 4
         merope = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          specialArgs = { inherit inputs; inherit (self) outputs; };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/merope ];
         };
         # VPS
         electra = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; inherit (self) outputs; };
+          specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/electra ];
         };
       };
@@ -98,37 +100,37 @@
         # Desktop
         "misterio@atlas" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor."x86_64-linux";
-          extraSpecialArgs = { inherit inputs; inherit (self) outputs; };
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/atlas.nix ];
         };
         # Laptop
         "misterio@pleione" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor."x86_64-linux";
-          extraSpecialArgs = { inherit inputs; inherit (self) outputs; };
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/pleione.nix ];
         };
         # Secondary Desktop
         "misterio@maia" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor."x86_64-linux";
-          extraSpecialArgs = { inherit inputs; inherit (self) outputs; };
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/maia.nix ];
         };
         # Raspi 4
         "misterio@merope" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor."x86_64-linux";
-          extraSpecialArgs = { inherit inputs; inherit (self) outputs; };
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/merope.nix ];
         };
         # VPS
         "misterio@electra" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor."x86_64-linux";
-          extraSpecialArgs = { inherit inputs; inherit (self) outputs; };
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/electra.nix ];
         };
         # For easy bootstraping from a nixos live usb
         "nixos@nixos" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsFor."x86_64-linux";
-          extraSpecialArgs = { inherit inputs; inherit (self) outputs; };
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/generic.nix ];
         };
       };
