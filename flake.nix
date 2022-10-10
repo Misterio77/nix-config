@@ -58,7 +58,7 @@
       hydraJobs = rec {
         inherit packages;
         nixos = builtins.mapAttrs (_: cfg: cfg.config.system.build.toplevel) nixosConfigurations;
-        home = builtins.mapAttrs (_: cfg: cfg.config.activationPackage) homeConfigurations;
+        home = builtins.mapAttrs (_: cfg: cfg.activationPackage) homeConfigurations;
       };
 
       nixosConfigurations = rec {
