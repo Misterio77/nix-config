@@ -1,4 +1,24 @@
 { config, pkgs, lib, ... }:
+let
+  hostname = config.networking.hostName;
+  sshKey = config.sops.secrets.builder-ssh-key.path;
+  sshUser = config.users.users.builder.name;
+
+  coreCount = {
+    atlas = 12;
+    maia = 8;
+    merope = 4;
+    pleione = 16;
+    electra = 2;
+  };
+  speedFactor = {
+    atlas = 100;
+    maia = 60;
+    pleione = 50;
+    electra = 20;
+    merope = 20;
+  };
+in
 {
   users = {
     users.builder = {
@@ -16,28 +36,30 @@
     settings.trusted-users = [ config.users.users.builder.name ];
     distributedBuilds = true;
     buildMachines =
-      (lib.optional (config.networking.hostName != "atlas") {
+      (lib.optional ( hostname != "atlas") {
         hostName = "atlas";
-        maxJobs = 12;
-        speedFactor = 100;
-        sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.name;
         systems = [ "x86_64-linux" "aarch64-linux" ];
+
+        inherit sshUser sshKey;
+        maxJobs = coreCount.atlas;
+        speedFactor = speedFactor.atlas;
       }) ++
-      (lib.optional (config.networking.hostName != "maia") {
+      (lib.optional (hostname != "maia") {
         hostName = "maia";
-        maxJobs = 8;
-        speedFactor = 80;
-        sshKey = config.sops.secrets.builder-ssh-key.path;
-        sshUser = config.users.users.builder.name;
         systems = [ "x86_64-linux" "aarch64-linux" ];
+
+        inherit sshUser sshKey;
+        maxJobs = coreCount.maia;
+        speedFactor = speedFactor.maia;
+
       }) ++
       [{
         hostName = "local";
+        systems = [ "builtin" pkgs.system ] ++ config.boot.binfmt.emulatedSystems;
+
         protocol = null;
-        systems = [ "builtin" ]
-        ++ [ pkgs.system ]
-        ++ config.boot.binfmt.emulatedSystems;
+        maxJobs = coreCount.${hostname};
+        speedFactor = speedFactor.${hostname};
       }];
   };
 
