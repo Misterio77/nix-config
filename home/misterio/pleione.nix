@@ -1,4 +1,4 @@
-{
+{ inputs, ... }: {
   imports = [
     ./global
     ./features/cli
@@ -13,4 +13,5 @@
     height = 1080;
     workspace = "1";
   }];
+  colorscheme = inputs.nix-colors.colorSchemes.paraiso;
 }

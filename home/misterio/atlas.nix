@@ -1,6 +1,5 @@
-{
-  imports = [
-    ./global
+{ inputs, ... }: {
+  imports = [ ./global
     ./features/cli
     ./features/desktop/hyprland
     ./features/trusted
@@ -41,4 +40,5 @@
       enabled = true;
     }
   ];
+  colorscheme = inputs.nix-colors.colorSchemes.spaceduck;
 }

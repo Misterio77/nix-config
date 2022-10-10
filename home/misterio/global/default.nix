@@ -15,7 +15,7 @@ in
     overlays = with outputs.overlays; [ additions wallpapers modifications ];
   };
 
-  colorscheme = lib.mkDefault inputs.nix-colors.colorSchemes.dracula;
+  colorscheme = lib.mkDefault colorSchemes.dracula;
   wallpaper = lib.mkDefault (nixWallpaperFromScheme {
     scheme = config.colorscheme;
     width = 2560;
