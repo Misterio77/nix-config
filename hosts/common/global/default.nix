@@ -4,6 +4,7 @@
   imports = [
     inputs.impermanence.nixosModules.impermanence
     ./acme.nix
+    ./distributed-builds.nix
     ./fish.nix
     ./locale.nix
     ./tailscale.nix
