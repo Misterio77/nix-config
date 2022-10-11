@@ -10,11 +10,6 @@ in
     ../features/cli
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = with outputs.overlays; [ additions wallpapers modifications ];
-  };
-
   colorscheme = lib.mkDefault colorSchemes.dracula;
   wallpaper = lib.mkDefault (nixWallpaperFromScheme {
     scheme = config.colorscheme;

@@ -38,10 +38,16 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
-      supportedSystems =  [ "x86_64-linux" "aarch64-linux" ];
+
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
       pkgsFor = forAllSystems (system:
-        import nixpkgs { inherit system; config.allowUnfree = true; }
+        import nixpkgs {
+          inherit system;
+          overlays = with outputs.overlays; [ additions wallpapers modifications ];
+          config.allowUnfree = true;
+        }
       );
     in
     rec {
@@ -66,31 +72,31 @@
       nixosConfigurations = rec {
         # Desktop
         atlas = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          pkgs = pkgsFor."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/atlas ];
         };
         # Laptop
         pleione = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          pkgs = pkgsFor."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/pleione ];
         };
         # Secondary Desktop
         maia = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          pkgs = pkgsFor."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/maia ];
         };
         # Raspberry Pi 4
         merope = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
+          pkgs = pkgsFor."aarch64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/merope ];
         };
         # VPS
         electra = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          pkgs = pkgsFor."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/electra ];
         };
@@ -117,7 +123,7 @@
         };
         # Raspi 4
         "misterio@merope" = home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsFor."x86_64-linux";
+          pkgs = pkgsFor."aarch64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/merope.nix ];
         };

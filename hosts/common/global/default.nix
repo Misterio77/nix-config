@@ -15,11 +15,6 @@
     ./sops.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = with outputs.overlays; [ additions wallpapers modifications ];
-  };
-
   networking.domain = "m7.rs";
 
   environment = {
