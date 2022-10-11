@@ -16,6 +16,10 @@
   system.stateVersion = "22.05";
   # Slows down write operations considerably
   nix.settings.auto-optimise-store = false;
+  # Increase swappiness
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 80;
+  };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }
