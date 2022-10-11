@@ -54,7 +54,7 @@ in
 
       }) ++
       [{
-        hostName = "localhost";
+        hostName = "local";
         systems = [ "builtin" pkgs.system ] ++ config.boot.binfmt.emulatedSystems;
 
         protocol = null;
