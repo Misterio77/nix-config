@@ -17,15 +17,6 @@
 
   networking.domain = "m7.rs";
 
-  documentation ={
-    enable = false;
-    doc.enable = false;
-    info.enable = false;
-    man.enable = false;
-    nixos.enable = false;
-    nixos.includeAllModules = false;
-  };
-
   environment = {
     loginShellInit = ''
       # Activate home-manager environment, if not already
