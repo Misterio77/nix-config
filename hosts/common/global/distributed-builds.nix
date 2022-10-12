@@ -13,7 +13,7 @@ let
   };
   speedFactor = {
     atlas = 100;
-    maia = 60;
+    maia = 80;
     pleione = 50;
     electra = 20;
     merope = 20;
@@ -36,7 +36,7 @@ in
     settings.trusted-users = [ config.users.users.builder.name ];
     distributedBuilds = true;
     buildMachines =
-      (lib.optional ( hostname != "atlas") {
+      (lib.optional (hostname != "atlas") {
         hostName = "atlas";
         systems = [ "x86_64-linux" "aarch64-linux" ];
 
@@ -55,12 +55,58 @@ in
       }) ++
       [{
         hostName = "local";
-        systems = [ "builtin" pkgs.system ] ++ config.boot.binfmt.emulatedSystems;
+        systems = [ "builtin" ];
 
         protocol = null;
         maxJobs = coreCount.${hostname};
-        speedFactor = speedFactor.${hostname};
+        # Give a little more priority to local builds
+        speedFactor = speedFactor.${hostname} + 40;
       }];
+  };
+
+  # Script that makes sure /etc/nix/machines are only available ones
+  systemd = {
+    timers.builder-pinger = {
+      description = "Build machine pinger timer";
+      partOf = [ "builder-pinger.service" ];
+      wantedBy = [ "multi-user.target" ];
+      timerConfig = {
+        OnBootSec = "0";
+        OnUnitActiveSec = "5s";
+      };
+    };
+    services.builder-pinger = {
+      description = "Build machine pinger";
+      enable = true;
+      wantedBy = [ "multi-user.target" "post-resume.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        Restart = "no";
+      };
+      path = [ config.nix.package config.programs.ssh.package ];
+      script = /* bash */ ''
+        #!/usr/bin/env bash
+        rm /etc/nix/machines-online -f 2> /dev/null
+        touch /etc/nix/machines-online -f 2> /dev/null
+
+        while read -r line; do
+            host="$(echo "$line" | cut -d ' ' -f1)"
+            key="$(echo "$line" | cut -d ' ' -f3)"
+
+            if [ "$key" == "-" ]; then
+                args=""
+            else
+                args="ssh-key=$key"
+            fi
+
+            if timeout 2 nix store ping  --store "$host?$args"; then
+                echo "$line" >> /etc/nix/machines-online
+            fi
+        done < "${config.environment.etc."nix/machines".source}"
+
+        mv /etc/nix/machines-online /etc/nix/machines
+      '';
+    };
   };
 
   sops.secrets.builder-ssh-key = {
