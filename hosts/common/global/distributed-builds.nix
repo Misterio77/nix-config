@@ -87,7 +87,7 @@ in
       script = /* bash */ ''
         #!/usr/bin/env bash
         rm /etc/nix/machines-online -f 2> /dev/null
-        touch /etc/nix/machines-online -f 2> /dev/null
+        touch /etc/nix/machines-online
 
         while read -r line; do
             host="$(echo "$line" | cut -d ' ' -f1)"
