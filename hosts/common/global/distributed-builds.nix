@@ -12,8 +12,8 @@ let
     electra = 2;
   };
   speedFactor = {
-    atlas = 100;
-    maia = 80;
+    atlas = 170;
+    maia = 140;
     pleione = 50;
     electra = 20;
     merope = 20;
@@ -60,7 +60,7 @@ in
         protocol = null;
         maxJobs = coreCount.${hostname};
         # Give a little more priority to local builds
-        speedFactor = speedFactor.${hostname} + 40;
+        speedFactor = speedFactor.${hostname} + 100;
       }];
   };
 
