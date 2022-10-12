@@ -86,23 +86,30 @@ in
       path = [ config.nix.package config.programs.ssh.package ];
       script = /* bash */ ''
         #!/usr/bin/env bash
+        check_host() {
+          line="$1"
+          host="$(echo "$line" | cut -d ' ' -f1)"
+          key="$(echo "$line" | cut -d ' ' -f3)"
+
+          if [ "$key" == "-" ]; then
+              args=""
+          else
+              args="ssh-key=$key"
+          fi
+
+          if timeout 2 nix store ping  --store "$host?$args"; then
+              echo "$line" >> /etc/nix/machines-online
+          fi
+        }
+
         rm /etc/nix/machines-online -f 2> /dev/null
         touch /etc/nix/machines-online
 
-        while read -r line; do
-            host="$(echo "$line" | cut -d ' ' -f1)"
-            key="$(echo "$line" | cut -d ' ' -f3)"
-
-            if [ "$key" == "-" ]; then
-                args=""
-            else
-                args="ssh-key=$key"
-            fi
-
-            if timeout 2 nix store ping  --store "$host?$args"; then
-                echo "$line" >> /etc/nix/machines-online
-            fi
+        while read -r host_line; do
+          check_host "$host_line" &
         done < "${config.environment.etc."nix/machines".source}"
+
+        wait
 
         mv /etc/nix/machines-online /etc/nix/machines
       '';
