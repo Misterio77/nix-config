@@ -63,6 +63,7 @@ in
 
     enable-http-clone=1
     noplainemail=1
+    enable-index-owner=0
 
     enable-git-config=1
 

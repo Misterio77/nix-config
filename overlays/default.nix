@@ -69,8 +69,8 @@
       src = final.fetchFromSourcehut {
         owner = "~misterio";
         repo = "scgit";
-        rev = "2d4b8c827f9b5b3422f92144154295009a642dad";
-        sha256 = "sha256-bqKWVEDglyNUsf1jM8CmArNJpEC+R7G9Ev6Zr5UP+Ok=";
+        rev = "2cd05c95827fb94740e876733dc6f7fe88340de2";
+        sha256 = "sha256-95mRJ3ZCSkLHqehFQdwM2BY0h+YDhohwpnRiF6/lZtA=";
       };
     });
 
