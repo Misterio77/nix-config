@@ -9,14 +9,14 @@ let
 in
 {
   services = {
-    nginx.virtualHosts."gsfontes.com" = {
+    nginx.virtualHosts."m7.rs" = {
       forceSSL = true;
       enableACME = true;
       locations = {
         "=/git/style.css" = {
           alias = compileSass ./cgit.scss;
         };
-        "=/git".return = "301 https://gsfontes.com/git/";
+        "=/git".return = "301 https://m7.rs/git/";
         "/git/" = {
           root = "${cgit}/cgit";
           extraConfig = ''
@@ -59,7 +59,7 @@ in
     cache-root=/run/cgit
 
     root-title=My git repos
-    root-desc=Source code for some of my projects
+    root-desc=Source code for some of my projects. Want to contribute a patch? Send me an email or open up a PR on the github mirrors.
 
     enable-http-clone=1
     noplainemail=1

@@ -10,7 +10,7 @@ let
   redir = {
     forceSSL = true;
     enableACME = true;
-    locations."/".return = "302 https://gsfontes.com$request_uri";
+    locations."/".return = "302 https://m7.rs$request_uri";
   };
 
   website = inputs.website.packages.${pkgs.system}.main;
@@ -19,10 +19,10 @@ in
 {
   services = {
     nginx.virtualHosts = {
-      "m7.rs" = redir;
+      "gsfontes.com" = redir;
       "misterio.me" = redir;
       "fontes.dev.br" = redir;
-      "gsfontes.com" = {
+      "m7.rs" = {
         default = true;
         forceSSL = true;
         enableACME = true;
