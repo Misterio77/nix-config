@@ -103,7 +103,7 @@ in
     about-filter=${cgit}/lib/cgit/filters/about-formatting.sh
     snapshots=tar.gz zip
 
-    include=/srv/git/cgitrepos
+    scan-path=/srv/git
     enable-git-config=1
   '';
 }
