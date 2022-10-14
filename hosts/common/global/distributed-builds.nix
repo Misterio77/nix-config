@@ -87,6 +87,7 @@ in
         config.nix.package
         config.programs.ssh.package
         pkgs.diffutils
+        pkgs.coreutils
       ];
       script = /* bash */ ''
         #!/usr/bin/env bash
@@ -115,7 +116,7 @@ in
 
         wait
 
-        if ! diff /etc/nix/machines-online /etc/nix/machines; then
+        if ! diff <(sort /etc/nix/machines-online) <(sort /etc/nix/machines); then
           systemctl is-active hydra-queue-runner -q && \
           systemctl restart hydra-queue-runner
         fi
