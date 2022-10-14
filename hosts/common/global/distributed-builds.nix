@@ -38,6 +38,7 @@ in
     buildMachines =
       (lib.optional (hostname != "atlas") {
         hostName = "atlas";
+        systems = [ "x86_64-linux" "aarch64-linux" ];
 
         inherit sshUser sshKey;
         maxJobs = coreCount.atlas;
