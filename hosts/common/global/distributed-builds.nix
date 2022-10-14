@@ -111,6 +111,11 @@ in
 
         wait
 
+        if ! diff /etc/nix/machines-online /etc/nix/machines; then
+          systemctl is-active hydra-queue-runner -q && \
+          systemctl restart hydra-queue-runner
+        fi
+
         mv /etc/nix/machines-online /etc/nix/machines
       '';
     };
