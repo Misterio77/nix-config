@@ -12,6 +12,7 @@
     basePath = "/srv/git";
     exportAll = true;
   };
+  networking.firewall.allowedTCPPorts = [ 9418 ];
 
   users = {
     users.git = {
