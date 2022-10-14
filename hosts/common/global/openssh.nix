@@ -1,8 +1,10 @@
 { outputs, lib, config, ... }:
 
 let
-  hosts = builtins.attrNames outputs.nixosConfigurations;
+  hosts = outputs.nixosConfigurations;
+  hostname = config.networking.hostName;
   prefix = "/persist";
+  pubKey = host: ../../${host}/ssh_host_ed25519_key.pub;
 in
 {
   services.openssh = {
@@ -17,27 +19,18 @@ in
     # Allow forwarding ports to everywhere
     gatewayPorts = "clientspecified";
 
-    hostKeys = [
-      {
-        bits = 4096;
-        path = "${prefix}/etc/ssh/ssh_host_rsa_key";
-        type = "rsa";
-      }
-      {
-        path = "${prefix}/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-    ];
+    hostKeys = [{
+      path = "${prefix}/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }];
   };
 
   programs.ssh = {
     # Each hosts public key
-    knownHostsFiles = lib.flatten (map
-      (host: [
-        ../../${host}/ssh_host_ed25519_key.pub
-        ../../${host}/ssh_host_rsa_key.pub
-      ])
-      hosts);
+    knownHosts = builtins.mapAttrs (name: _: {
+      publicKeyFile = pubKey name;
+      extraHostNames = lib.optional (name == hostname) "localhost";
+    }) hosts;
   };
 
   # Passwordless sudo when SSH'ing with keys

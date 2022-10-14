@@ -54,10 +54,10 @@ in
 
       }) ++
       [{
-        hostName = "local";
-        systems = [ "builtin" ];
+        hostName = "localhost";
+        systems = [ pkgs.system ] ++ config.boot.binfmt.emulatedSystems;
 
-        protocol = null;
+        inherit sshUser sshKey;
         maxJobs = coreCount.${hostname};
         # Give a little more priority to local builds
         speedFactor = speedFactor.${hostname} + 100;
