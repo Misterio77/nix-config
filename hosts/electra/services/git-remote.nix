@@ -7,6 +7,12 @@
     ];
   };
 
+  services.gitDaemon = {
+    enable = true;
+    basePath = "/srv/git";
+    exportAll = true;
+  };
+
   users = {
     users.git = {
       home = "/srv/git";
