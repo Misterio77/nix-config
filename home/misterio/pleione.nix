@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./global
     ./features/cli
@@ -14,4 +14,5 @@
     workspace = "1";
   }];
   colorscheme = inputs.nix-colors.colorSchemes.paraiso;
+  wallpaper = pkgs.wallpapers.aenami-lunar;
 }
