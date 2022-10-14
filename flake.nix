@@ -32,7 +32,7 @@
 
     # Personal projects I deploy on my machines using nix
     website.url = "github:misterio77/website";
-    paste-misterio-me.url = "github:misterio77/paste.misterio.me/1.3.1";
+    paste-misterio-me.url = "github:misterio77/paste.misterio.me";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
