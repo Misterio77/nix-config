@@ -4,7 +4,7 @@
 
   # My wallpapers
   wallpapers = final: prev: {
-    wallpapers = final.callPackage ./pkgs/wallpapers { };
+    wallpapers = final.callPackage ../pkgs/wallpapers { };
   };
 
   # Modifies existing packages
