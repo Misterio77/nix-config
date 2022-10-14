@@ -83,7 +83,11 @@ in
         Type = "oneshot";
         Restart = "no";
       };
-      path = [ config.nix.package config.programs.ssh.package ];
+      path = [
+        config.nix.package
+        config.programs.ssh.package
+        pkgs.diffutils
+      ];
       script = /* bash */ ''
         #!/usr/bin/env bash
         check_host() {
