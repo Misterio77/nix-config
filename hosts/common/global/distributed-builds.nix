@@ -90,7 +90,8 @@ in
         pkgs.coreutils
       ];
       script = /* bash */ ''
-        #!/usr/bin/env bash
+        set +e
+
         check_host() {
           line="$1"
           host="$(echo "$line" | cut -d ' ' -f1)"
