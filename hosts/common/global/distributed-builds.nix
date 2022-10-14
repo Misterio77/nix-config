@@ -72,7 +72,7 @@ in
       wantedBy = [ "multi-user.target" ];
       timerConfig = {
         OnBootSec = "0";
-        OnUnitActiveSec = "5s";
+        OnUnitActiveSec = "10s";
       };
     };
     services.builder-pinger = {
@@ -103,7 +103,7 @@ in
               args="ssh-key=$key"
           fi
 
-          if timeout 2 nix store ping  --store "$host?$args"; then
+          if timeout 10 nix store ping  --store "$host?$args"; then
               echo "$line" >> /etc/nix/machines-online
           fi
         }
