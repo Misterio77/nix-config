@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [ ./global
     ./features/cli
     ./features/desktop/hyprland
@@ -41,4 +41,5 @@
     }
   ];
   colorscheme = inputs.nix-colors.colorSchemes.spaceduck;
+  wallpaper = pkgs.wallpapers.blue-red-sky-clouds;
 }
