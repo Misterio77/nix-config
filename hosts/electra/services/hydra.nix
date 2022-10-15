@@ -50,14 +50,14 @@ in
       buildMachinesFiles = [
         (mkBuildMachinesFile [
           {
-            uri = "ssh-ng://nix-ssh@atlas";
+            uri = "ssh://nix-ssh@atlas";
             systems = [ "x86_64-linux" "aarch64-linux" ];
             sshKey = config.sops.secrets.nix-ssh-key.path;
             maxJobs = 12;
             speedFactor = 150;
           }
           {
-            uri = "ssh-ng://nix-ssh@maia";
+            uri = "ssh://nix-ssh@maia";
             systems = [ "x86_64-linux" "aarch64-linux" ];
             sshKey = config.sops.secrets.nix-ssh-key.path;
             maxJobs = 8;
