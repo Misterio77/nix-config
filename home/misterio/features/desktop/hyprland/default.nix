@@ -66,8 +66,8 @@
           }
 
           dwindle {
-            force_split=2
-            preserve_split=true
+            # force_split=2
+            # preserve_split=true
             col.group_border_active=0xff${colors.base0B}
             col.group_border=0xff${colors.base04}
           }
