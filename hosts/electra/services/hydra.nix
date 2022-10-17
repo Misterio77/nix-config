@@ -71,6 +71,7 @@ in
           }
         ])
       ];
+      extraEnv = { HYDRA_DISALLOW_UNFREE = "0"; };
     };
     nginx.virtualHosts = {
       "hydra.m7.rs" = {
