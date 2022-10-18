@@ -11,4 +11,8 @@
   installPhase = ''
     cp -r . $out
   '';
+
+  meta = {
+    platforms = lib.platforms.all;
+  };
 }

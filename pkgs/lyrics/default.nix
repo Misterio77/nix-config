@@ -1,5 +1,5 @@
 # Fetches current playing song lyrics from makeitpersonal.co
-{ writeShellApplication, curl, less, playerctl, gnused  }: writeShellApplication {
+{ lib, writeShellApplication, curl, less, playerctl, gnused }: (writeShellApplication {
   name = "lyrics";
   runtimeInputs = [ playerctl curl less gnused ];
 
@@ -25,4 +25,10 @@
 
     echo -e "$artist - $title\n$content" | less
   '';
+}) // {
+  meta = with lib; {
+    description = "Lyrics fetcher script";
+    license = licenses.mit;
+    platforms = platforms.all;
+  };
 }

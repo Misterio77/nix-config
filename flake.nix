@@ -37,7 +37,10 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
+      inherit (nixpkgs.lib) filterAttrs traceVal;
+      inherit (builtins) mapAttrs elem;
       inherit (self) outputs;
+      notBroken = x: !(x.meta.broken or false);
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
     in
@@ -62,10 +65,10 @@
         default = import ./shell.nix { pkgs = legacyPackages.${system}; };
       });
 
-      hydraJobs = rec {
-        inherit packages;
-        nixos = builtins.mapAttrs (_: cfg: cfg.config.system.build.toplevel) nixosConfigurations;
-        home = builtins.mapAttrs (_: cfg: cfg.activationPackage) homeConfigurations;
+      hydraJobs = {
+        packages = mapAttrs (sys: filterAttrs (_: pkg: (elem sys pkg.meta.platforms && notBroken pkg))) packages;
+        nixos = mapAttrs (_: cfg: cfg.config.system.build.toplevel) nixosConfigurations;
+        home = mapAttrs (_: cfg: cfg.activationPackage) homeConfigurations;
       };
 
       nixosConfigurations = rec {

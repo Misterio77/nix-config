@@ -13,7 +13,7 @@
 
 with lib;
 
-writeShellApplication {
+(writeShellApplication {
   name = "rgbdaemon";
   runtimeInputs = [
     findutils
@@ -175,4 +175,9 @@ writeShellApplication {
 
     startup
   '';
+}) // {
+  meta = with lib; {
+    license = licenses.mit;
+    platforms = platforms.all;
+  };
 }

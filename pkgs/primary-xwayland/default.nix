@@ -1,5 +1,5 @@
 # Sets the largest monitor as primary xwayland display, or select one with slurp
-{ writeShellApplication, xrandr, slurp  }: writeShellApplication {
+{ lib, writeShellApplication, xrandr, slurp  }: (writeShellApplication {
   name = "primary-xwayland";
   runtimeInputs = [ slurp xrandr ];
 
@@ -14,4 +14,9 @@
     echo "Setting $output"
     xrandr --output "$output" --primary
   '';
+}) // {
+  meta = with lib; {
+    license = licenses.mit;
+    platforms = platforms.all;
+  };
 }

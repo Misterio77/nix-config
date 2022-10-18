@@ -17,7 +17,8 @@ composerEnv.buildPackage {
   symlinkDependencies = false;
   noDev = true;
   composerExtraArgs = "--no-scripts";
-  meta = {
-    license = "MIT";
+  meta = with lib; {
+    license = licenses.mit;
+    platforms = platforms.all;
   };
 }

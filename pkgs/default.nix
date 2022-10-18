@@ -2,7 +2,6 @@
 
   # Packages with an actual source
   apgdiff = pkgs.callPackage ./apgdiff { };
-  apgdiff-docker = pkgs.callPackage ./apgdiff/docker.nix { };
   clematis = pkgs.callPackage ./clematis { };
   gtklock = pkgs.callPackage ./gtklock { };
   phpactor = pkgs.callPackage ./phpactor { };

@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub }:
+{ lib, stdenv, fetchFromGitHub }:
 let
   pname = "trekscii";
 in
@@ -16,4 +16,8 @@ stdenv.mkDerivation {
   installPhase = ''
     install -Dm 0755 bin/trekscii $out/bin/trekscii
   '';
+
+  meta = with lib; {
+    platforms = platforms.all;
+  };
 }
