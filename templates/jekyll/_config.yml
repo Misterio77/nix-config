@@ -1,4 +1,4 @@
-name: Foo Bar
+name: Blabla
 exclude:
   - gemset.nix
   - default.nix

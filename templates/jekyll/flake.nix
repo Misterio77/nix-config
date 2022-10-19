@@ -1,41 +1,35 @@
 {
-  description = "Foo Bar Jekyll Project";
+  description = "Foo bar";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, nix-colors }:
     let
-      inherit (nixpkgs.lib) genAttrs systems;
-      forAllSystems = genAttrs systems.flakeExposed;
-      pkgsFor = forAllSystems (system: import nixpkgs {
-        inherit system; overlays = [ self.overlays.default ];
-      });
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      pkgsFor = nixpkgs.legacyPackages;
     in
-    {
-      overlays = rec {
-        default = final: prev: {
-          foo-bar = prev.callPackage ./. { };
+    rec {
+      packages = forAllSystems (system: rec {
+        default = site;
+        site = pkgsFor.${system}.callPackage ./. { };
+        serve = pkgsFor.${system}.writeShellScriptBin "serve" ''
+          echo "Serving on http://localhost:4000"
+          ${pkgsFor.${system}.webfs}/bin/webfsd -p 4000 -F -f index.html -r ${site}
+        '';
+      });
+
+      apps = forAllSystems (system: {
+        default = {
+          type = "app";
+          program = "${packages.${system}.serve}/bin/serve";
         };
+      });
+
+      hydraJobs = {
+        x86_64-linux.site = packages.x86_64-linux.site;
       };
-
-      packages = forAllSystems (s:
-        let pkgs = pkgsFor.${s}; in
-        rec {
-          inherit (pkgs) foo-bar;
-          default = foo-bar;
-        });
-
-      devShells = forAllSystems (s:
-        let pkgs = pkgsFor.${s}; in
-        rec {
-          foo-bar = pkgs.mkShell {
-            inputsFrom = [ pkgs.foo-bar ];
-            buildInputs = with pkgs; [ bundix rubyPackages.solargraph ];
-          };
-          default = foo-bar;
-        });
     };
 }
-

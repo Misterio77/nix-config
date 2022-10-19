@@ -1,21 +1,13 @@
-{ stdenv, ruby, bundlerEnv }:
+{ stdenv, jekyll }:
 stdenv.mkDerivation rec {
   name = "foo-bar";
   src = ./.;
 
-  buildInputs = [
-    ruby
-    (bundlerEnv {
-      inherit ruby name;
-      gemdir = ./.;
-    })
-  ];
+  buildInputs = [ jekyll ];
 
   JEKYLL_ENV = "production";
 
-  buildPhase = ''
-    jekyll build
-  '';
+  buildPhase = "jekyll build";
 
   installPhase = ''
     mkdir -p $out
