@@ -151,6 +151,7 @@
           add_lsp("jdtls", lspconfig.jdtls, {})
           add_lsp("texlab", lspconfig.texlab, {})
           add_lsp("gopls", lspconfig.gopls, {})
+          add_lsp("jdt-language-server", lspconfig.jdtls, { cmd = { "jdt-language-server" }})
         '';
       }
       {
