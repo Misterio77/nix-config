@@ -1,6 +1,4 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ./lsp.nix ];
-
   home = {
     sessionVariables.EDITOR = "nvim";
     preferredApps.editor = {
@@ -17,73 +15,97 @@
       };
     };
 
-    extraConfig.viml = /* vim */ ''
-      "Use truecolor
-      set termguicolors
-      "Set colorscheme
-      colorscheme nix-${config.colorscheme.slug}
+    extraConfig = {
+      viml = /* vim */ ''
+        "Use truecolor
+        set termguicolors
+        "Set colorscheme
+        colorscheme nix-${config.colorscheme.slug}
 
-      "Set fold level to highest in file
-      "so everything starts out unfolded at just the right level
-      autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
+        "Set fold level to highest in file
+        "so everything starts out unfolded at just the right level
+        autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
 
-      "Tabs
-      set tabstop=4 "4 char-wide tab
-      set expandtab "Use spaces
-      set softtabstop=0 "Use same length as 'tabstop'
-      set shiftwidth=0 "Use same length as 'tabstop'
-      "2 char-wide overrides
-      autocmd FileType json,html,htmldjango,hamlet,nix,scss,typescript,php,haskell,terraform setlocal tabstop=2
+        "Tabs
+        set tabstop=4 "4 char-wide tab
+        set expandtab "Use spaces
+        set softtabstop=0 "Use same length as 'tabstop'
+        set shiftwidth=0 "Use same length as 'tabstop'
+        "2 char-wide overrides
+        autocmd FileType json,html,htmldjango,hamlet,nix,scss,typescript,php,haskell,terraform setlocal tabstop=2
 
-      "Set tera to use htmldjango syntax
-      autocmd BufRead,BufNewFile *.tera setfiletype htmldjango
+        "Set tera to use htmldjango syntax
+        autocmd BufRead,BufNewFile *.tera setfiletype htmldjango
 
-      "Options when composing mutt mail
-      autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w
+        "Options when composing mutt mail
+        autocmd FileType mail set noautoindent wrapmargin=0 textwidth=0 linebreak wrap formatoptions +=w
 
-      "Fix nvim size according to terminal
-      "(https://github.com/neovim/neovim/issues/11330)
-      autocmd VimEnter * silent exec "!kill -s SIGWINCH" getpid()
+        "Fix nvim size according to terminal
+        "(https://github.com/neovim/neovim/issues/11330)
+        autocmd VimEnter * silent exec "!kill -s SIGWINCH" getpid()
 
-      "Line numbers
-      set number relativenumber
+        "Line numbers
+        set number relativenumber
 
-      "Scroll up and down
-      nmap <C-j> <C-e>
-      nmap <C-k> <C-y>
+        "Scroll up and down
+        nmap <C-j> <C-e>
+        nmap <C-k> <C-y>
 
-      "Buffers
-      set wildcharm=<C-Z>
-      nmap <space>b :buffer <C-Z>
-      nmap <C-l> :bnext<CR>
-      nmap <C-h> :bprev<CR>
-      nmap <C-q> :bdel<CR>
+        "Buffers
+        nmap <C-l> :bnext<CR>
+        nmap <C-h> :bprev<CR>
+        nmap <C-q> :bdel<CR>
 
-      "Loclist
-      nmap <space>l :lwindow<cr>
-      nmap [l :lprev<cr>
-      nmap ]l :lnext<cr>
+        "Loclist
+        nmap <space>l :lwindow<cr>
+        nmap [l :lprev<cr>
+        nmap ]l :lnext<cr>
 
-      nmap <space>L :lhistory<cr>
-      nmap [L :lolder<cr>
-      nmap ]L :lnewer<cr>
+        nmap <space>L :lhistory<cr>
+        nmap [L :lolder<cr>
+        nmap ]L :lnewer<cr>
 
-      "Quickfix
-      nmap <space>q :cwindow<cr>
-      nmap [q :cprev<cr>
-      nmap ]q :cnext<cr>
+        "Quickfix
+        nmap <space>q :cwindow<cr>
+        nmap [q :cprev<cr>
+        nmap ]q :cnext<cr>
 
-      nmap <space>Q :chistory<cr>
-      nmap [Q :colder<cr>
-      nmap ]Q :cnewer<cr>
+        nmap <space>Q :chistory<cr>
+        nmap [Q :colder<cr>
+        nmap ]Q :cnewer<cr>
 
-      "Grep (replace with ripgrep)
-      nmap <space>g :silent grep<space>
-      if executable('rg')
-          set grepprg=rg\ --vimgrep
-          set grepformat=%f:%l:%c:%m
-      endif
-    '';
+        "Grep (replace with ripgrep)
+        nmap <space>g :silent grep<space>
+        if executable('rg')
+            set grepprg=rg\ --vimgrep
+            set grepformat=%f:%l:%c:%m
+        endif
+      '';
+      lua = /* lua */ ''
+        -- LSP
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+        vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format code" })
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+
+        -- Diagnostic
+        vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { desc = "Floating diagnostic" })
+        vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+        vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+        vim.keymap.set("n", "gl", vim.diagnostic.setloclist, { desc = "Diagnostics on loclist" })
+        vim.keymap.set("n", "gq", vim.diagnostic.setqflist, { desc = "Diagnostics on quickfix" })
+
+        function add_sign(name, text)
+          vim.fn.sign_define(name, { text = text, texthl = name, numhl = name})
+        end
+
+        add_sign("DiagnosticSignError", " ")
+        add_sign("DiagnosticSignWarn", " ")
+        add_sign("DiagnosticSignHint", " ")
+        add_sign("DiagnosticSignInfo", " ")
+      '';
+    };
 
     plugins = with pkgs.vimPlugins; [
       # Syntaxes
@@ -100,6 +122,97 @@
       mermaid-vim
       pgsql-vim
       vim-terraform
+      # Tree sitter
+      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+
+      # LSP
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = /* lua */ ''
+          local lspconfig = require('lspconfig')
+
+          function add_lsp(binary, server, options)
+            if vim.fn.executable(binary) == 1 then server.setup{options} end
+          end
+
+          add_lsp("docker-langserver", lspconfig.dockerls, {})
+          add_lsp("bash-language-server", lspconfig.bashls, {})
+          add_lsp("clangd", lspconfig.clangd, {})
+          add_lsp("rnix-lsp", lspconfig.rnix, {})
+          add_lsp("pylsp", lspconfig.pylsp, {})
+          add_lsp("dart", lspconfig.pylsp, {})
+          add_lsp("haskell-language-server", lspconfig.hls, {})
+          add_lsp("kotlin-language-server", lspconfig.kotlin_language_server, {})
+          add_lsp("solargraph", lspconfig.solargraph, {})
+          add_lsp("phpactor", lspconfig.phpactor, {})
+          add_lsp("terraform-ls", lspconfig.terraformls, {})
+          add_lsp("lua-language-server", lspconfig.sumneko_lua, {})
+          add_lsp("jdtls", lspconfig.jdtls, {})
+          add_lsp("texlab", lspconfig.texlab, {})
+          add_lsp("gopls", lspconfig.gopls, {})
+        '';
+      }
+      {
+        plugin = rust-tools-nvim;
+        type = "lua";
+        config = /* lua */ ''
+          local rust_tools = require('rust-tools')
+          if vim.fn.executable("rust-analyzer") == 1 then
+            rust_tools.setup{ tools = { autoSetHints = true } }
+          end
+        '';
+      }
+
+      # Completions
+      cmp-nvim-lsp
+      cmp-buffer
+      lspkind-nvim
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = /* lua */ ''
+          local cmp = require('cmp')
+
+          cmp.setup{
+            formatting = { format = require('lspkind').cmp_format() },
+            -- Same keybinds as vim's vanilla completion
+            mapping = {
+              ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+              ['<C-e>'] = cmp.mapping.close(),
+              ['<C-y>'] = cmp.mapping.confirm(),
+            },
+            sources = {
+              { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs } },
+              { name='nvim_lsp' },
+              { name='orgmode' },
+            },
+          }
+        '';
+      }
+
+      # Org mode
+      {
+        plugin = orgmode;
+        type = "lua";
+        config = /* lua */ ''
+          local orgmode = require('orgmode')
+          orgmode.setup_ts_grammar()
+          orgmode.setup{
+            org_agenda_files = '~/Org/**/*',
+            org_default_notes_file = '~/Org/notes.org',
+          }
+        '';
+      }
+      # Snippets
+      {
+        plugin = sniprun;
+        type = "lua";
+        config = /* lua */ ''
+          require('sniprun').run()
+        '';
+      }
 
       # UI
       vim-illuminate
@@ -157,7 +270,7 @@
       }
 
       # Misc
-      editorconfig-vim
+      editorconfig-nvim
       vim-surround
       vim-fugitive
       {
