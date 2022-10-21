@@ -201,8 +201,8 @@
           local orgmode = require('orgmode')
           orgmode.setup_ts_grammar()
           orgmode.setup{
-            org_agenda_files = '~/Org/**/*',
-            org_default_notes_file = '~/Org/notes.org',
+            org_agenda_files = '~/Documents/Org/**/*',
+            org_default_notes_file = '~/Documents/Org/capture.org',
           }
         '';
       }
