@@ -22,12 +22,6 @@
         "Set colorscheme
         colorscheme nix-${config.colorscheme.slug}
 
-        "Share shada files between instances
-        augroup nvimrc_aucmd
-          autocmd!
-          autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
-        augroup END
-
         "Set fold level to highest in file
         "so everything starts out unfolded at just the right level
         augroup initial_fold
