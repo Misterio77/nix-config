@@ -20,7 +20,7 @@
       createHome = true;
       homeMode = "755";
       isSystemUser = true;
-      shell = "${pkgs.git}/bin/git-shell";
+      shell = "${pkgs.bash}/bin/bash";
       group = "git";
       packages = [ pkgs.git ];
       openssh.authorizedKeys.keys = config.users.users.misterio.openssh.authorizedKeys.keys;
