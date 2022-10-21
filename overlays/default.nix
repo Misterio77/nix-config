@@ -15,18 +15,18 @@
           patches = (oldAttrs.patches or [ ])
             ++ [ ./vim-numbertoggle-command-mode.patch ];
         });
-      # Enable language fencing
-      vim-nix = prev.vimPlugins.vim-nix.overrideAttrs
-        (_oldAttrs: rec {
-          version = "2022-02-20";
-          src = final.fetchFromGitHub {
-            owner = "hqurve";
-            repo = "vim-nix";
-            rev = "0c5ea78e5cce406835beee2423e5afdd00521fcb";
-            sha256 = "sha256-IEWC0pvuZki0OzD5+8njhHsGbFenI4dcYEAjU9sHvTM=";
-          };
-        });
     } // final.callPackage ../pkgs/vim-plugins { };
+
+    tree-sitter-grammars = prev.tree-sitter-grammars // {
+      tree-sitter-nix = prev.tree-sitter-grammars.tree-sitter-nix.overrideAttrs (oldAttrs: {
+        src = final.fetchFromGitHub {
+          owner = "cstrahan";
+          repo = "tree-sitter-nix";
+          rev = "1b69cf1fa92366eefbe6863c184e5d2ece5f187d";
+          sha256 = "sha256-JaJRikijCXnKAuKA445IIDaRvPzGhLFM29KudaFsSVM=";
+        };
+      });
+    };
 
     # Don't launch discord when using discocss
     discocss = prev.discocss.overrideAttrs (oldAttrs: rec {
@@ -41,6 +41,7 @@
     wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
       patches = (oldAttrs.patches or [ ]) ++ [ ./wofi-run-shell.patch ];
     });
+
 
     waybar = prev.waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
