@@ -206,14 +206,6 @@
           }
         '';
       }
-      # Snippets
-      {
-        plugin = sniprun;
-        type = "lua";
-        config = /* lua */ ''
-          require('sniprun').run()
-        '';
-      }
 
       # UI
       vim-illuminate
