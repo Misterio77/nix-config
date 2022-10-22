@@ -237,6 +237,18 @@
           bind=SUPER,8,workspace,8
           bind=SUPER,9,workspace,9
           bind=SUPER,0,workspace,10
+          bind=SUPER,f1,workspace,11
+          bind=SUPER,f2,workspace,12
+          bind=SUPER,f3,workspace,13
+          bind=SUPER,f4,workspace,14
+          bind=SUPER,f5,workspace,15
+          bind=SUPER,f6,workspace,16
+          bind=SUPER,f7,workspace,17
+          bind=SUPER,f8,workspace,18
+          bind=SUPER,f9,workspace,19
+          bind=SUPER,f10,workspace,20
+          bind=SUPER,f11,workspace,21
+          bind=SUPER,f12,workspace,22
 
           bind=SUPERSHIFT,1,movetoworkspacesilent,1
           bind=SUPERSHIFT,2,movetoworkspacesilent,2
@@ -248,6 +260,18 @@
           bind=SUPERSHIFT,8,movetoworkspacesilent,8
           bind=SUPERSHIFT,9,movetoworkspacesilent,9
           bind=SUPERSHIFT,0,movetoworkspacesilent,10
+          bind=SUPERSHIFT,f1,movetoworkspacesilent,11
+          bind=SUPERSHIFT,f2,movetoworkspacesilent,12
+          bind=SUPERSHIFT,f3,movetoworkspacesilent,13
+          bind=SUPERSHIFT,f4,movetoworkspacesilent,14
+          bind=SUPERSHIFT,f5,movetoworkspacesilent,15
+          bind=SUPERSHIFT,f6,movetoworkspacesilent,16
+          bind=SUPERSHIFT,f7,movetoworkspacesilent,17
+          bind=SUPERSHIFT,f8,movetoworkspacesilent,18
+          bind=SUPERSHIFT,f9,movetoworkspacesilent,19
+          bind=SUPERSHIFT,f10,movetoworkspacesilent,20
+          bind=SUPERSHIFT,f11,movetoworkspacesilent,21
+          bind=SUPERSHIFT,f12,movetoworkspacesilent,22
 
           blurls=waybar
         '';
