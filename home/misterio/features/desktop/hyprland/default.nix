@@ -30,7 +30,7 @@
       terminal-spawn = cmd: "${terminal} -- $SHELL -i -c ${cmd}";
 
       nvim = lib.optionalString
-        config.programs.neovim.enable "${config.programs.neovim.package}/bin/nvim";
+        config.programs.neovim.enable "${config.programs.neovim.finalPackage}/bin/nvim";
       emacs = lib.optionalString
         config.programs.emacs.enable "${config.programs.emacs.finalPackage}/bin/emacsclient -c";
     in
