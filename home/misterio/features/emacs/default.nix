@@ -45,6 +45,7 @@ in
       (setq evil-want-keybinding nil)
       (require 'evil)
       (evil-mode 1)
+      (setq evil-jumps-across-buffers t)
 
       (require 'evil-org)
       (add-hook 'org-mode-hook 'evil-org-mode)
