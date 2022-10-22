@@ -26,8 +26,8 @@
       systemctl = "${pkgs.systemd}/bin/systemctl";
       wofi = "${pkgs.wofi}/bin/wofi";
 
-      terminal = "${pkgs.kitty}/bin/kitty -1";
-      terminal-spawn = cmd: "${terminal} -- $SHELL -i -c ${cmd}";
+      terminal = "${pkgs.wezterm}/bin/wezterm";
+      terminal-spawn = cmd: "${terminal} start $SHELL -i -c ${cmd}";
 
       nvim = lib.optionalString
         config.programs.neovim.enable "${config.programs.neovim.finalPackage}/bin/nvim";
