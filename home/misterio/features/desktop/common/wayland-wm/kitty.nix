@@ -9,11 +9,6 @@ in
 {
   home = {
     packages = [ kitty-xterm ];
-    preferredApps.terminal = {
-      cmd = "kitty -1";
-      # Spawn a program
-      cmd-spawn = program: "kitty -1 $SHELL -i -c ${program}";
-    };
     sessionVariables = {
       TERMINAL = "kitty";
     };

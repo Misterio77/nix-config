@@ -1,10 +1,4 @@
 { config, pkgs, ... }: {
-  home = {
-    preferredApps.mail = {
-      cmd = config.home.preferredApps.terminal.cmd-spawn "neomutt";
-    };
-  };
-
   xdg = {
     desktopEntries = {
       neomutt = {

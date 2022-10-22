@@ -8,20 +8,31 @@
   wayland.windowManager.hyprland =
     let
       inherit (config.colorscheme) colors;
-      inherit (config.home.preferredApps)
-        menu browser editor mail notifier terminal;
 
       grimblast = "${inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast}/bin/grimblast";
 
       light = "${pkgs.light}/bin/light";
       mako = "${pkgs.mako}/bin/mako";
+      makoctl = "${pkgs.mako}/bin/makoctl";
+      neomutt = "${pkgs.neomutt}/bin/neomutt";
       pactl = "${pkgs.pulseaudio}/bin/pactl";
+      pass-wofi = "${pkgs.pass-wofi}/bin/pass-wofi";
       playerctl = "${pkgs.playerctl}/bin/playerctl";
       playerctld = "${pkgs.playerctl}/bin/playerctld";
+      qutebrowser = "${pkgs.qutebrowser}/bin/qutebrowser";
       swaybg = "${pkgs.swaybg}/bin/swaybg";
       swayidle = "${pkgs.swayidle}/bin/swayidle";
       swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
       systemctl = "${pkgs.systemd}/bin/systemctl";
+      wofi = "${pkgs.wofi}/bin/wofi";
+
+      terminal = "${pkgs.kitty}/bin/kitty";
+      terminal-spawn = cmd: "${terminal} -c '$SHELL -i ${cmd}'";
+
+      nvim = lib.optionalString
+        config.programs.neovim.enable "${config.programs.neovim.package}/bin/nvim";
+      emacs = lib.optionalString
+        config.programs.emacs.enable "${config.programs.emacs.finalPackage}/bin/emacsclient -c";
     in
     {
       enable = true;
@@ -94,17 +105,17 @@
           bindm=SUPER,mouse:273,resizewindow
 
           # Program bindings
-          bind=SUPER,Return,exec,${terminal.cmd}
-          bind=SUPER,w,exec,${notifier.dismiss-cmd}
-          bind=SUPER,v,exec,${editor.cmd}
-          bind=SUPER,m,exec,${mail.cmd}
-          bind=SUPER,b,exec,${browser.cmd}
+          bind=SUPER,Return,exec,${terminal}
+          bind=SUPER,w,exec,${makoctl} dismiss
+          bind=SUPER,e,exec,${emacs}
+          bind=SUPER,v,exec,${terminal-spawn nvim}
+          bind=SUPER,m,exec,${terminal-spawn neomutt}
+          bind=SUPER,b,exec,${qutebrowser}
 
-          bind=SUPER,x,exec,${menu.drun-cmd}
-          bind=SUPER,d,exec,${menu.run-cmd}
-          bind=,Scroll_Lock,exec,${menu.password-cmd} # fn+k
-          bind=,XF86Calculator,exec,${menu.password-cmd} # fn+f12
-          bind=SUPER,c,exec,${terminal.cmd-spawn "${pkgs.bc}/bin/bc -l"}
+          bind=SUPER,x,exec,${wofi} -S drun -x 10 -y 10 -W 25% -H 60%
+          bind=SUPER,d,exec,${wofi} -S run
+          bind=,Scroll_Lock,exec,${pass-wofi} # fn+k
+          bind=,XF86Calculator,exec,${pass-wofi} # fn+f12
 
           # Toggle waybar
           bind=,XF86Tools,exec,${pkgs.procps}/bin/pkill -USR1 waybar # profile button
@@ -131,7 +142,7 @@
           bind=ALT,XF86AudioNext,exec,${playerctld} shift
           bind=ALT,XF86AudioPrev,exec,${playerctld} unshift
           bind=ALT,XF86AudioPlay,exec,${systemctl} --user restart playerctld
-          bind=SUPER,XF86AudioPlay,exec,${terminal.cmd-spawn "${pkgs.lyrics}/bin/lyrics"}
+          bind=SUPER,XF86AudioPlay,exec,${terminal-spawn "${pkgs.lyrics}/bin/lyrics"}
 
           bind=,XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%
           bind=,XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%

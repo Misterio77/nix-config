@@ -22,6 +22,7 @@
       hm = "home-manager --flake .";
       hms = "home-manager --flake . switch";
 
+      e = "emacsclient -t";
       v = "nvim";
       vi = "nvim";
       vim = "nvim";

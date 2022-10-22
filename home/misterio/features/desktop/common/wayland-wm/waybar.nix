@@ -2,7 +2,6 @@
 
 let
   inherit (pkgs.lib) optionals optional;
-  inherit (config.home.preferredApps) menu terminal;
 
   # Dependencies
   jq = "${pkgs.jq}/bin/jq";
@@ -161,7 +160,6 @@ in
             text = "";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
-          on-click = menu.drun-cmd;
         };
         "custom/hostname" = {
           exec = "echo $USER@$(hostname)";
@@ -296,7 +294,6 @@ in
             "Stopped" = "栗";
           };
           on-click = "${playerctl} play-pause";
-          on-click-right = terminal.cmd-spawn "${lyrics}";
         };
       };
 

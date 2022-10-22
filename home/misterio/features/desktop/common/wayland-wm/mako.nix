@@ -1,10 +1,6 @@
 { config, ... }:
 let inherit (config.colorscheme) colors kind;
 in {
-  home.preferredApps.notifier = {
-    dismiss-cmd = "makoctl dismiss";
-  };
-
   programs.mako = {
     enable = true;
     iconPath = if kind == "dark" then

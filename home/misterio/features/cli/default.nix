@@ -7,7 +7,6 @@
     ./git.nix
     ./gpg.nix
     ./nix-index.nix
-    ./nvim
     ./pfetch.nix
     ./ranger.nix
     ./screen.nix

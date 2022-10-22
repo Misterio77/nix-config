@@ -1,7 +1,6 @@
 { inputs, pkgs, ... }: {
   imports = [
     ./global
-    ./features/cli
     ./features/desktop/hyprland
     ./features/desktop/wireless
     ./features/trusted

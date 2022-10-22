@@ -4,9 +4,6 @@ let inherit (config.colorscheme) colors kind;
 in
 {
   home = {
-    preferredApps.browser = {
-      cmd = "qutebrowser";
-    };
     sessionVariables = {
       BROWSER = "qutebrowser";
     };

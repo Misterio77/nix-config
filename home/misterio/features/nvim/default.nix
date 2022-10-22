@@ -1,10 +1,5 @@
 { config, pkgs, lib, ... }: {
-  home = {
-    sessionVariables.EDITOR = "nvim";
-    preferredApps.editor = {
-      cmd = config.home.preferredApps.terminal.cmd-spawn "nvim";
-    };
-  };
+  home.sessionVariables.EDITOR = "nvim";
 
   programs.neovim = {
     enable = true;

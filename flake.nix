@@ -25,6 +25,7 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     # Nixified software I use
     hyprland.url = "github:hyprwm/hyprland/v0.15.2beta";
