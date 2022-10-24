@@ -41,6 +41,9 @@ in {
         color_scheme = "${colorscheme.slug}",
         hide_tab_bar_if_only_one_tab = true,
         window_close_confirmation = "NeverPrompt",
+        set_environment_variables = {
+          TERM = 'wezterm',
+        },
       }
     '';
   };
