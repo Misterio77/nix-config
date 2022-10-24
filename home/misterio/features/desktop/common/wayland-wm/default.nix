@@ -8,7 +8,6 @@
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
-    ./wezterm.nix
     ./wofi.nix
     ./zathura.nix
   ];
