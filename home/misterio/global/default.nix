@@ -10,6 +10,7 @@ in
     ../features/cli
     ../features/nvim
     ../features/emacs
+    ../features/helix
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   colorscheme = lib.mkDefault colorSchemes.dracula;
