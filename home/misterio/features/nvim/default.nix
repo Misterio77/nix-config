@@ -155,8 +155,7 @@
           add_lsp("solargraph", lspconfig.solargraph, {})
           add_lsp("phpactor", lspconfig.phpactor, {})
           add_lsp("terraform-ls", lspconfig.terraformls, {})
-          add_lsp("lua-language-server", lspconfig.sumneko_lua, {})
-          add_lsp("jdtls", lspconfig.jdtls, {})
+          add_lsp("lua-lsp", lspconfig.sumneko_lua, { cmd = { "lua-lsp" }})
           add_lsp("texlab", lspconfig.texlab, {})
           add_lsp("gopls", lspconfig.gopls, {})
           add_lsp("jdt-language-server", lspconfig.jdtls, { cmd = { "jdt-language-server" }})
@@ -219,6 +218,47 @@
       vim-illuminate
       vim-numbertoggle
       # vim-markology
+      {
+        plugin = alpha-nvim;
+        type = "lua";
+        config = /* lua */ ''
+          local alpha = require("alpha")
+          local dashboard = require("alpha.themes.dashboard")
+
+          dashboard.section.header.val = {
+                "                                                     ",
+                "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
+                "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
+                "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
+                "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
+                "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
+                "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
+                "                                                     ",
+          }
+          dashboard.section.header.opts.hl = "Title"
+
+          dashboard.section.buttons.val = {
+              dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
+              dashboard.button( "q", "  Quit NVIM", ":qa<CR>"),
+          }
+
+          alpha.setup(dashboard.opts)
+        '';
+      }
+      {
+        plugin = bufferline-nvim;
+        type = "lua";
+        config = /* lua */ ''
+          require('bufferline').setup{}
+        '';
+      }
+      {
+        plugin = scope-nvim;
+        type = "lua";
+        config = /* lua */ ''
+          require('scope').setup{}
+        '';
+      }
       {
         plugin = which-key-nvim;
         type = "lua";
@@ -290,7 +330,7 @@
     ];
   };
 
-  xdg.configFile."nvim/init.lua".onChange = ''
+  xdg.configFile."nvim/init.lua".onChange = /* bash */ ''
     for server in $XDG_RUNTIME_DIR/nvim.*; do
       nvim --server $server --remote-send ':source $MYVIMRC<CR>' &
     done
