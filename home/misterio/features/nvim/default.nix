@@ -301,11 +301,14 @@ in
           dashboard.section.header.opts.hl = "Title"
 
           dashboard.section.buttons.val = {
-              dashboard.button( "e", "  New file" , ":ene <BAR> startinsert <CR>"),
-              dashboard.button( "q", "  Quit NVIM", ":qa<CR>"),
+              dashboard.button( "n", "  New file" , ":ene <BAR> startinsert <CR>"),
+              dashboard.button( "o", "ﴬ  Open Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
+              dashboard.button( "c", "  Open nixcfg flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
+              dashboard.button( "q", "  Quit", ":qa<CR>"),
           }
 
           alpha.setup(dashboard.opts)
+          vim.keymap.set("n", "<space>a", ":Alpha<CR>", { desc = "Open alpha dashboard" })
         '';
       }
       {
