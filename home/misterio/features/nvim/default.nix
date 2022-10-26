@@ -1,8 +1,12 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, inputs, ... }:
+let neovim-overlay = inputs.neovim-nightly-overlay.packages.${pkgs.system};
+in
+{
   home.sessionVariables.EDITOR = "nvim";
 
   programs.neovim = {
     enable = true;
+    package = neovim-overlay.neovim;
 
     extraRuntime = {
       "colors/nix-${config.colorscheme.slug}.vim" = {
@@ -82,6 +86,9 @@
         nmap [Q :colder<cr>
         nmap ]Q :cnewer<cr>
 
+        "Make
+        nmap <space>m :make<cr>
+
         "Grep (replace with ripgrep)
         nmap <space>g :silent grep<space>
         if executable('rg')
@@ -130,8 +137,35 @@
       mermaid-vim
       pgsql-vim
       vim-terraform
+
       # Tree sitter
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      playground
+      {
+        plugin = nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars);
+        type = "lua";
+        config = /* lua */ ''
+          require('nvim-treesitter.configs').setup {
+            highlight = {
+              enable = true,
+            },
+            playground = {
+              enable = true,
+              keybindings = {
+                toggle_query_editor = 'o',
+                toggle_hl_groups = 'i',
+                toggle_injected_languages = 't',
+                toggle_anonymous_nodes = 'a',
+                toggle_language_display = 'I',
+                focus_language = 'f',
+                unfocus_language = 'F',
+                update = 'R',
+                goto_node = '<cr>',
+                show_help = '?',
+              },
+            },
+          }
+        '';
+      }
 
       # LSP
       {
@@ -141,7 +175,7 @@
           local lspconfig = require('lspconfig')
 
           function add_lsp(binary, server, options)
-            if vim.fn.executable(binary) == 1 then server.setup{options} end
+            if vim.fn.executable(binary) == 1 then server.setup(options) end
           end
 
           add_lsp("docker-langserver", lspconfig.dockerls, {})
@@ -155,10 +189,21 @@
           add_lsp("solargraph", lspconfig.solargraph, {})
           add_lsp("phpactor", lspconfig.phpactor, {})
           add_lsp("terraform-ls", lspconfig.terraformls, {})
-          add_lsp("lua-lsp", lspconfig.sumneko_lua, { cmd = { "lua-lsp" }})
           add_lsp("texlab", lspconfig.texlab, {})
           add_lsp("gopls", lspconfig.gopls, {})
-          add_lsp("jdt-language-server", lspconfig.jdtls, { cmd = { "jdt-language-server" }})
+
+          add_lsp("lua-lsp", lspconfig.sumneko_lua, {
+            cmd = { "lua-lsp" }
+          })
+          add_lsp("jdt-language-server", lspconfig.jdtls, {
+            cmd = { "jdt-language-server" }
+          })
+          add_lsp("texlab", lspconfig.texlab, {
+            chktex = {
+              onEdit = true,
+              onOpenAndSave = true
+            }
+          })
         '';
       }
       {
@@ -218,6 +263,24 @@
       vim-illuminate
       vim-numbertoggle
       # vim-markology
+      {
+        plugin = nvim-femaco;
+        type = "lua";
+        config = /* lua */ ''
+          local femaco = require('femaco')
+          local femaco_edit = require('femaco.edit')
+
+          femaco.setup{
+            prepare_buffer = function(opts)
+                vim.cmd('split')
+                local win = vim.api.nvim_get_current_win()
+                local buf = vim.api.nvim_create_buf(false, false)
+                return vim.api.nvim_win_set_buf(win, buf)
+            end,
+          }
+          vim.keymap.set("n", "<space>e", femaco_edit.edit_code_block, { desc = "Edit code block" })
+        '';
+      }
       {
         plugin = alpha-nvim;
         type = "lua";

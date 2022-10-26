@@ -1,0 +1,9 @@
+diff --git a/queries/nix/injections.scm b/queries/nix/injections.scm
+index 4bb7d675..7607702f 100644
+--- a/queries/nix/injections.scm
++++ b/queries/nix/injections.scm
+@@ -1 +1,4 @@
+ (comment) @comment
++((((comment) @injection.language) .
++  (indented_string_expression (string_fragment) @injection.content))
++  (#set! injection.combined))

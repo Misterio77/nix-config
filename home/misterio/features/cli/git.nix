@@ -1,4 +1,15 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  git-m7-init = pkgs.writeShellScriptBin "git-m7-init" ''
+    ${pkgs.openssh}/bin/ssh git@m7.rs << EOF
+      git init --bare "$1.git"
+      git -C "$1.git" branch -m main
+    EOF
+    git remote add origin git@m7.rs:"$1.git"
+  '';
+in
+{
+  home.packages = [ git-m7-init ];
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;

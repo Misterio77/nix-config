@@ -15,6 +15,11 @@
           patches = (oldAttrs.patches or [ ])
             ++ [ ./vim-numbertoggle-command-mode.patch ];
         });
+        nvim-treesitter = prev.vimPlugins.nvim-treesitter.overrideAttrs (oldAttrs: {
+          patches = (oldAttrs.patches or [ ]) ++ [
+            ./nvim-treesitter-nix-injection.patch
+          ];
+        });
     } // final.callPackage ../pkgs/vim-plugins { };
 
     tree-sitter-grammars = prev.tree-sitter-grammars // {
