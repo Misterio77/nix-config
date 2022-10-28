@@ -267,6 +267,13 @@ in
       vim-numbertoggle
       # vim-markology
       {
+        plugin = nvim-bqf;
+        type = "lua";
+        config = /* lua * */ ''
+        require('bqf').setup{}
+        '';
+      }
+      {
         plugin = nvim-femaco;
         type = "lua";
         config = /* lua */ ''
