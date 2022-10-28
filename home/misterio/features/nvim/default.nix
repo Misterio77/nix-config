@@ -301,12 +301,12 @@ in
           dashboard.section.header.opts.hl = "Title"
 
           dashboard.section.buttons.val = {
-              dashboard.button( "e", " New file" , ":enew <BAR> startinsert <CR>"),
-              dashboard.button( "E", " Browse directory", ":Explore<CR>"),
+              dashboard.button( "e", " Edit new" , ":enew <BAR> startinsert <CR>"),
+              dashboard.button( "E", " Explore", ":Explore<CR>"),
               dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
-              dashboard.button( "o", " Open Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
-              dashboard.button( "c", "  Open nixcfg flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
-              dashboard.button( "q", "  Quit", ":qa<CR>"),
+              dashboard.button( "o", " Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
+              dashboard.button( "c", "  Nix config flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
+              dashboard.button( "q", "  Quit nvim", ":qa<CR>"),
           }
 
           alpha.setup(dashboard.opts)
