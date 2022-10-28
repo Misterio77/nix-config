@@ -1,12 +1,14 @@
 { config, lib, ... }:
-let
-  port = "5232";
+let port = "5232";
 in
 {
   services = {
     radicale = {
       enable = true;
       settings = {
+        server = {
+          hosts = [ "0.0.0.0:${port}" "[::]:${port}" ];
+        };
         auth = {
           type = "htpasswd";
           htpasswd_filename = config.sops.secrets.radicale-htpasswd.path;
