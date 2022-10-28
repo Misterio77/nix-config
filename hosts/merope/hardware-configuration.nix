@@ -29,6 +29,8 @@
     };
   };
 
+  hardware.raspberry-pi."4".i2c1.enable = true;
+
   nixpkgs.hostPlatform.system = "aarch64-linux";
 
   powerManagement.cpuFreqGovernor = "ondemand";
