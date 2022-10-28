@@ -381,7 +381,13 @@ in
       # Misc
       editorconfig-nvim
       vim-surround
-      vim-fugitive
+      {
+        plugin = vim-fugitive;
+        type = "viml";
+        config = /* vim */ ''
+          nmap <space>G :Git<CR>
+        '';
+      }
       {
         plugin = nvim-autopairs;
         type = "lua";
