@@ -90,11 +90,14 @@ in
         nmap <space>m :make<cr>
 
         "Grep (replace with ripgrep)
-        nmap <space>g :silent grep<space>
+        nmap <space>g :grep<space>
         if executable('rg')
             set grepprg=rg\ --vimgrep
             set grepformat=%f:%l:%c:%m
         endif
+
+        "Close other splits
+        nmap <space>o :only<cr>
       '';
       lua = /* lua */ ''
         -- LSP
@@ -303,7 +306,8 @@ in
           dashboard.section.buttons.val = {
               dashboard.button( "e", " Edit new" , ":enew <BAR> startinsert <CR>"),
               dashboard.button( "E", " Explore", ":Explore<CR>"),
-              dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
+              dashboard.button( "g", " Grep", ":grep<space>"),
+              dashboard.button( "G", " Git summary", ":Git | :only<CR>"),
               dashboard.button( "o", " Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
               dashboard.button( "c", "  Nix config flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
               dashboard.button( "q", "  Quit nvim", ":qa<CR>"),
