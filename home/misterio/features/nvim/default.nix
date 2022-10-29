@@ -134,6 +134,7 @@ in
     plugins = with pkgs.vimPlugins; [
 
       # Misc
+      vim-table-mode
       editorconfig-nvim
       vim-surround
       {
