@@ -1,5 +1,12 @@
 { config, pkgs, lib, inputs, ... }:
-let neovim-overlay = inputs.neovim-nightly-overlay.packages.${pkgs.system};
+let
+  neovim-overlay = inputs.neovim-nightly-overlay.packages.${pkgs.system};
+
+  inherit (builtins) match elemAt filter map attrNames;
+  filterMap = filterf: mapf: xs: map mapf (filter filterf xs);
+  getGrammarName = x: elemAt (match "tree-sitter-([a-z]*)" x) 0;
+  hasGrammarName = x: null != (match "tree-sitter-([a-z]*)" x);
+  treesitterGrammars = filterMap hasGrammarName getGrammarName (attrNames pkgs.tree-sitter-grammars);
 in
 {
   home.sessionVariables.EDITOR = "nvim";
@@ -167,6 +174,18 @@ in
               },
             },
           }
+          -- Custom nix injection
+          -- Placing in a dir does not seem to work
+          vim.treesitter.query.set_query("nix", "injections", [[${builtins.concatStringsSep "\n"(
+            builtins.map (lang: /* query */ ''
+              ((((comment) @_language) .
+                (indented_string_expression (string_fragment) @lua))
+                (#match? @_language "\s*${lang}\s*"))
+
+              '')
+              treesitterGrammars
+            )}
+          ]])
         '';
       }
 
@@ -270,7 +289,7 @@ in
         plugin = nvim-bqf;
         type = "lua";
         config = /* lua * */ ''
-        require('bqf').setup{}
+          require('bqf').setup{}
         '';
       }
       {
