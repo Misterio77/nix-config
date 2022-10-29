@@ -311,10 +311,9 @@ in
           dashboard.section.header.opts.hl = "Title"
 
           dashboard.section.buttons.val = {
-              dashboard.button( "e", " Edit new" , ":enew <BAR> startinsert <CR>"),
-              dashboard.button( "E", " Explore", ":Explore<CR>"),
-              dashboard.button( "g", " Grep", ":grep<space>"),
-              dashboard.button( "G", " Git summary", ":Git | :only<CR>"),
+              dashboard.button( "n", " New file" , ":enew <BAR> startinsert <CR>"),
+              dashboard.button( "e", " Explore", ":Explore<CR>"),
+              dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
               dashboard.button( "o", " Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
               dashboard.button( "c", "  Nix config flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
               dashboard.button( "q", "  Quit nvim", ":qa<CR>"),
