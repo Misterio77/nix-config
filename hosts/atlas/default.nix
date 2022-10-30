@@ -16,6 +16,7 @@
     ../common/optional/quietboot.nix
     ../common/optional/starcitizen-fixes.nix
     ../common/optional/steam.nix
+    ../common/optional/lol-acfix.nix
   ];
 
   # environment.persistence.enable = true;
