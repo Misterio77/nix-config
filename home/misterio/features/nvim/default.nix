@@ -1,14 +1,13 @@
 { config, pkgs, lib, inputs, ... }:
-let
-  neovim-overlay = inputs.neovim-nightly-overlay.packages.${pkgs.system};
-
-  inherit (builtins) match elemAt filter map attrNames;
-  filterMap = filterf: mapf: xs: map mapf (filter filterf xs);
-  getGrammarName = x: elemAt (match "tree-sitter-([a-z]*)" x) 0;
-  hasGrammarName = x: null != (match "tree-sitter-([a-z]*)" x);
-  treesitterGrammars = filterMap hasGrammarName getGrammarName (attrNames pkgs.tree-sitter-grammars);
+let neovim-overlay = inputs.neovim-nightly-overlay.packages.${pkgs.system};
 in
 {
+  imports = [
+    ./lsp.nix
+    ./syntaxes.nix
+    ./treesitter.nix
+    ./ui.nix
+  ];
   home.sessionVariables.EDITOR = "nvim";
 
   programs.neovim = {
@@ -133,290 +132,10 @@ in
     };
 
     plugins = with pkgs.vimPlugins; [
-      # Syntaxes
-      rust-vim
-      dart-vim-plugin
-      plantuml-syntax
-      vim-markdown
-      vim-nix
-      vim-toml
-      vim-syntax-shakespeare
-      gemini-vim-syntax
-      kotlin-vim
-      haskell-vim
-      mermaid-vim
-      pgsql-vim
-      vim-terraform
-
-      # Tree sitter
-      playground
-      {
-        plugin = nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars);
-        type = "lua";
-        config = /* lua */ ''
-          require('nvim-treesitter.configs').setup {
-            highlight = {
-              enable = true,
-            },
-            playground = {
-              enable = true,
-              keybindings = {
-                toggle_query_editor = 'o',
-                toggle_hl_groups = 'i',
-                toggle_injected_languages = 't',
-                toggle_anonymous_nodes = 'a',
-                toggle_language_display = 'I',
-                focus_language = 'f',
-                unfocus_language = 'F',
-                update = 'R',
-                goto_node = '<cr>',
-                show_help = '?',
-              },
-            },
-          }
-          -- Custom nix injection
-          -- Placing in a dir does not seem to work
-          vim.treesitter.query.set_query("nix", "injections", [[${builtins.concatStringsSep "\n"(
-            builtins.map (lang: /* query */ ''
-              ((((comment) @_language) .
-                (indented_string_expression (string_fragment) @lua))
-                (#match? @_language "\s*${lang}\s*"))
-
-              '')
-              treesitterGrammars
-            )}
-          ]])
-        '';
-      }
-
-      # LSP
-      {
-        plugin = nvim-lspconfig;
-        type = "lua";
-        config = /* lua */ ''
-          local lspconfig = require('lspconfig')
-
-          function add_lsp(binary, server, options)
-            if vim.fn.executable(binary) == 1 then server.setup(options) end
-          end
-
-          add_lsp("docker-langserver", lspconfig.dockerls, {})
-          add_lsp("bash-language-server", lspconfig.bashls, {})
-          add_lsp("clangd", lspconfig.clangd, {})
-          add_lsp("rnix-lsp", lspconfig.rnix, {})
-          add_lsp("pylsp", lspconfig.pylsp, {})
-          add_lsp("dart", lspconfig.pylsp, {})
-          add_lsp("haskell-language-server", lspconfig.hls, {})
-          add_lsp("kotlin-language-server", lspconfig.kotlin_language_server, {})
-          add_lsp("solargraph", lspconfig.solargraph, {})
-          add_lsp("phpactor", lspconfig.phpactor, {})
-          add_lsp("terraform-ls", lspconfig.terraformls, {})
-          add_lsp("texlab", lspconfig.texlab, {})
-          add_lsp("gopls", lspconfig.gopls, {})
-
-          add_lsp("lua-lsp", lspconfig.sumneko_lua, {
-            cmd = { "lua-lsp" }
-          })
-          add_lsp("jdt-language-server", lspconfig.jdtls, {
-            cmd = { "jdt-language-server" }
-          })
-          add_lsp("texlab", lspconfig.texlab, {
-            chktex = {
-              onEdit = true,
-              onOpenAndSave = true
-            }
-          })
-        '';
-      }
-      {
-        plugin = rust-tools-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          local rust_tools = require('rust-tools')
-          if vim.fn.executable("rust-analyzer") == 1 then
-            rust_tools.setup{ tools = { autoSetHints = true } }
-          end
-        '';
-      }
-
-      # Completions
-      cmp-nvim-lsp
-      cmp-buffer
-      lspkind-nvim
-      {
-        plugin = nvim-cmp;
-        type = "lua";
-        config = /* lua */ ''
-          local cmp = require('cmp')
-
-          cmp.setup{
-            formatting = { format = require('lspkind').cmp_format() },
-            -- Same keybinds as vim's vanilla completion
-            mapping = {
-              ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-              ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-              ['<C-e>'] = cmp.mapping.close(),
-              ['<C-y>'] = cmp.mapping.confirm(),
-            },
-            sources = {
-              { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs } },
-              { name='nvim_lsp' },
-              { name='orgmode' },
-            },
-          }
-        '';
-      }
-
-      # Org mode
-      {
-        plugin = orgmode;
-        type = "lua";
-        config = /* lua */ ''
-          local orgmode = require('orgmode')
-          orgmode.setup_ts_grammar()
-          orgmode.setup{
-            org_agenda_files = '~/Documents/Org/**/*',
-            org_default_notes_file = '~/Documents/Org/todo/capture.org',
-          }
-        '';
-      }
-
-      # UI
-      vim-illuminate
-      vim-numbertoggle
-      # vim-markology
-      {
-        plugin = nvim-bqf;
-        type = "lua";
-        config = /* lua * */ ''
-          require('bqf').setup{}
-        '';
-      }
-      {
-        plugin = nvim-femaco;
-        type = "lua";
-        config = /* lua */ ''
-          local femaco = require('femaco')
-          local femaco_edit = require('femaco.edit')
-
-          femaco.setup{
-            prepare_buffer = function(opts)
-                vim.cmd('split')
-                local win = vim.api.nvim_get_current_win()
-                local buf = vim.api.nvim_create_buf(false, false)
-                return vim.api.nvim_win_set_buf(win, buf)
-            end,
-          }
-          vim.keymap.set("n", "<space>e", femaco_edit.edit_code_block, { desc = "Edit code block" })
-        '';
-      }
-      {
-        plugin = alpha-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          local alpha = require("alpha")
-          local dashboard = require("alpha.themes.dashboard")
-
-          dashboard.section.header.val = {
-                "                                                     ",
-                "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-                "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-                "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-                "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-                "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-                "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-                "                                                     ",
-          }
-          dashboard.section.header.opts.hl = "Title"
-
-          dashboard.section.buttons.val = {
-              dashboard.button( "n", " New file" , ":enew <BAR> startinsert <CR>"),
-              dashboard.button( "e", " Explore", ":Explore<CR>"),
-              dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
-              dashboard.button( "o", " Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
-              dashboard.button( "c", "  Nix config flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
-              dashboard.button( "q", "  Quit nvim", ":qa<CR>"),
-          }
-
-          alpha.setup(dashboard.opts)
-          vim.keymap.set("n", "<space>a", ":Alpha<CR>", { desc = "Open alpha dashboard" })
-        '';
-      }
-      {
-        plugin = bufferline-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('bufferline').setup{}
-        '';
-      }
-      {
-        plugin = scope-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('scope').setup{}
-        '';
-      }
-      {
-        plugin = which-key-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('which-key').setup{}
-        '';
-      }
-      {
-        plugin = range-highlight-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('range-highlight').setup{}
-        '';
-      }
-      {
-        plugin = indent-blankline-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('indent_blankline').setup{char_highlight_list={'IndentBlankLine'}}
-        '';
-      }
-      {
-        plugin = nvim-web-devicons;
-        type = "lua";
-        config = /* lua */ ''
-          require('nvim-web-devicons').setup{}
-        '';
-      }
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = /* lua */ ''
-          require('gitsigns').setup{
-            signs = {
-              add = { text = '+' },
-              change = { text = '~' },
-              delete = { text = '_' },
-              topdelete = { text = '‾' },
-              changedelete = { text = '~' },
-            },
-          }
-        '';
-      }
-      {
-        plugin = nvim-colorizer-lua;
-        type = "lua";
-        config = /* lua */ ''
-          require('colorizer').setup{}
-        '';
-      }
 
       # Misc
       editorconfig-nvim
       vim-surround
-      {
-        plugin = vim-fugitive;
-        type = "viml";
-        config = /* vim */ ''
-          nmap <space>G :Git<CR>
-        '';
-      }
       {
         plugin = nvim-autopairs;
         type = "lua";
@@ -424,12 +143,12 @@ in
           require('nvim-autopairs').setup{}
         '';
       }
+      /*
       {
         plugin = pkgs.writeTextDir "colors/nix-${config.colorscheme.slug}.vim"
           (import ./theme.nix config.colorscheme);
-        config = /* vim */ ''
-        '';
       }
+      */
     ];
   };
 
