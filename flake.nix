@@ -29,7 +29,7 @@
     emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     # Nixified software I use
-    hyprland.url = "github:hyprwm/hyprland/v0.15.2beta";
+    hyprland.url = "github:hyprwm/hyprland/v0.17.0beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
 
     # Personal projects I deploy on my machines using nix
