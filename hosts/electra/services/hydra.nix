@@ -42,6 +42,7 @@ in
       useSubstitutes = true;
       extraConfig = /* xml */ ''
         Include ${config.sops.secrets.hydra-gh-auth.path}
+        max_unsupported_time = 30
         <githubstatus>
           jobs = .*
           useShortContext = true
