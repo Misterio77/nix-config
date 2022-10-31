@@ -15,7 +15,6 @@
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/starcitizen-fixes.nix
-    ../common/optional/steam.nix
     ../common/optional/lol-acfix.nix
   ];
 
@@ -74,7 +73,12 @@
   };
 
   hardware = {
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [ amdvlk ];
+      driSupport = true;
+      driSupport32Bit = true;
+    };
     openrgb.enable = true;
     opentabletdriver.enable = true;
   };
