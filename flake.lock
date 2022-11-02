@@ -608,11 +608,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1667366042,
-        "narHash": "sha256-4FSkD4Exq39DNtpSe7AMm9Ab/Egpx6ragb+VZ92U7Kw=",
+        "lastModified": 1667414598,
+        "narHash": "sha256-Jka342vfygrV+X074jx7ZgNjyt9bXUOX1lZ7/1eJkpk=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "a6da4ffee473a4fa87fc9fe09e63f5f3f5b3522e",
+        "rev": "0a150d9dd36c888a856e79910a0cafecf0384de3",
         "type": "github"
       },
       "original": {
