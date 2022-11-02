@@ -143,12 +143,6 @@ in
           require('nvim-autopairs').setup{}
         '';
       }
-      /*
-      {
-        plugin = pkgs.writeTextDir "colors/nix-${config.colorscheme.slug}.vim"
-          (import ./theme.nix config.colorscheme);
-      }
-      */
     ];
   };
 
