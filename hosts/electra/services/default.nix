@@ -1,7 +1,6 @@
 {
   imports = [
     ./binary-cache.nix
-    ./cgit
     ./files-server.nix
     ./git-remote.nix
     ./headscale.nix
@@ -10,5 +9,7 @@
     ./nginx.nix
     ./radicale.nix
     ./website.nix
+
+    ./cgit
   ];
 }

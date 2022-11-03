@@ -16,22 +16,6 @@
         "type": "github"
       }
     },
-    "base16-schemes_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1654895891,
-        "narHash": "sha256-xYYmZkHnyLCUBAkqkZ7v1Lc5m39857MukQLMRtGuvdk=",
-        "owner": "base16-project",
-        "repo": "base16-schemes",
-        "rev": "7c247f734eac7f04518c6e28d098635ee8dcabf5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "base16-project",
-        "repo": "base16-schemes",
-        "type": "github"
-      }
-    },
     "blobs": {
       "flake": false,
       "locked": {
@@ -303,25 +287,6 @@
         "type": "github"
       }
     },
-    "nix-colors_2": {
-      "inputs": {
-        "base16-schemes": "base16-schemes_2",
-        "nixpkgs-lib": "nixpkgs-lib_2"
-      },
-      "locked": {
-        "lastModified": 1658761805,
-        "narHash": "sha256-yPY54xna3ufsrpgk1clhsvI5Q3nNE4WAPUzIr+uEHjQ=",
-        "owner": "misterio77",
-        "repo": "nix-colors",
-        "rev": "17d4c968ae3b202a71326b59ae89727d1c21f018",
-        "type": "github"
-      },
-      "original": {
-        "owner": "misterio77",
-        "repo": "nix-colors",
-        "type": "github"
-      }
-    },
     "nixos-mailserver": {
       "inputs": {
         "blobs": "blobs",
@@ -390,21 +355,6 @@
       }
     },
     "nixpkgs-lib": {
-      "locked": {
-        "lastModified": 1655599917,
-        "narHash": "sha256-kjZbt5WdTrnjMxL79okg9TCoRUdADG50x/TWozbyTsE=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "5fb55578aa2f1a502d636a8ac71aece57cb730bb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
-      }
-    },
-    "nixpkgs-lib_2": {
       "locked": {
         "lastModified": 1655599917,
         "narHash": "sha256-kjZbt5WdTrnjMxL79okg9TCoRUdADG50x/TWozbyTsE=",
@@ -604,15 +554,14 @@
     },
     "website": {
       "inputs": {
-        "nix-colors": "nix-colors_2",
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1667418515,
-        "narHash": "sha256-Az17cdDjMhv+T0/tGnPTTzDgBiEcH6KwaCX94cNPnVc=",
+        "lastModified": 1667444217,
+        "narHash": "sha256-t90Rr83nuv8oEtBioiEFF8QMMWStJZDrdmnG4TaHQLM=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "90ed84eb919b590f5687bfdc5224febebd65a3d6",
+        "rev": "0072fbda18ac8d299c426f4382fe3350f87111ea",
         "type": "github"
       },
       "original": {

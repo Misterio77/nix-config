@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   cgit = "${pkgs.scgit}";
   compileSass = file: pkgs.runCommand "sass" {
@@ -6,6 +6,7 @@ let
   } ''
     sass ${file} > $out
   '';
+  partials = "${inputs.website.packages.${pkgs.system}.main}/public/cgit_partials";
 in
 {
   services = {
@@ -68,8 +69,8 @@ in
     enable-git-config=1
 
     css=/git/style.css
-    head-include=${./head.html}
-    nav-include=${./nav.html}
+    head-include=${partials}/head.html
+    nav-include=${partials}/nav.html
 
     readme=:README.md
     readme=:readme.md
