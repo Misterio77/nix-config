@@ -29,10 +29,11 @@ Looking for something simpler to start out with flakes? Try [my starter config r
   - `common`: Shared configurations consumed by the machine-specific ones.
     - `global`: Configurations that are globally applied to all my machines.
     - `optional`: Opt-in configurations my machines can use.
-  - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Sway
-  - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Sway
+  - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Hyprland
+  - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Hyprland
+  - `maia`: Secondary Desktop PC - 16GB RAM, i5 6600, GTX 970 | Server
   - `merope`: Raspberry Pi 4 - 8GB RAM | Server
-  - `electra`: Vultr VPS - 1GB RAM & 1 vCPU | Server
+  - `electra`: Vultr VPS - 4GB RAM & 2 vCPUs | Server
 - `home`: My Home-manager configuration, acessible via `home-manager --flake`
     - Each directory here is a "feature" each hm configuration can toggle, thus
       customizing my setup for each machine (be it a server, desktop, laptop,
