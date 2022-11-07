@@ -5,18 +5,16 @@ let
 
   sway-kiosk = command: "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''
     output * bg #000000 solid_color
+    exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
     exec "${command}; ${pkgs.sway}/bin/swaymsg exit"
   ''}";
 in
 {
-
-  environment.etc."greetd/environments".text ="$SHELL -l";
-
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command = sway-kiosk "${gtkgreet} -l &>/dev/null";
+        command = sway-kiosk "${gtkgreet} -l &>/dev/null -c '$SHELL -l'";
       };
     };
   };

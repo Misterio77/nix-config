@@ -5,6 +5,24 @@
     inputs.hyprland.homeManagerModules.default
   ];
 
+  programs = {
+    fish.loginShellInit = ''
+      if test (tty) = "/dev/tty1"
+        exec Hyprland
+      end
+    '';
+    zsh.loginExtra = ''
+      if [ "$(tty)" = "/dev/tty1" ]; then
+        exec Hyprland
+      fi
+    '';
+    zsh.profileExtra = ''
+      if [ "$(tty)" = "/dev/tty1" ]; then
+        exec Hyprland
+      fi
+    '';
+  };
+
   wayland.windowManager.hyprland =
     let
       inherit (config.colorscheme) colors;
