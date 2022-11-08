@@ -11,7 +11,18 @@ let
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
-  lyrics = "${pkgs.lyrics}/bin/lyrics";
+  neomutt = "${pkgs.neomutt}/bin/neomutt";
+  pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
+  btm = "${pkgs.bottom}/bin/btm";
+  wofi = "${pkgs.wofi}/bin/wofi";
+  ikhal = "${pkgs.khal}/bin/ikhal";
+
+  terminal = "${pkgs.kitty}/bin/kitty";
+  terminal-spawn = cmd: "${terminal} $SHELL -i -c ${cmd}";
+
+  calendar = terminal-spawn ikhal;
+  systemMonitor = terminal-spawn btm;
+  mail = terminal-spawn neomutt;
 
   # Function to simplify making waybar outputs
   jsonOutput = name: { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
@@ -86,13 +97,26 @@ in
           tooltip-format = ''
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
+          on-click = calendar;
         };
         cpu = {
           format = "   {usage}%";
+          on-click = systemMonitor;
+        };
+        "custom/gpu" = {
+          interval = 5;
+          return-type = "json";
+          exec = jsonOutput "gpu" {
+            text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
+            tooltip = "GPU Usage";
+          };
+          format = "力  {}%";
+          on-click = systemMonitor;
         };
         memory = {
           format = "  {}%";
           interval = 5;
+          on-click = systemMonitor;
         };
         pulseaudio = {
           format = "{icon}  {volume}%";
@@ -103,6 +127,7 @@ in
             portable = "";
             default = [ "" "" "" ];
           };
+          on-click = pavucontrol;
         };
         battery = {
           bat = "BAT0";
@@ -124,6 +149,7 @@ in
             {ipaddr}/{cidr}
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
+          on-click = "";
         };
         "custom/tailscale-ping" = {
           interval = 2;
@@ -153,6 +179,7 @@ in
               tooltip = builtins.concatStringsSep "\n" (map showPingLarge (builtins.attrValues targets));
             };
           format = "{}";
+          on-click = "";
         };
         "custom/menu" = {
           return-type = "json";
@@ -160,9 +187,11 @@ in
             text = "";
             tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
           };
+          on-click = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
         };
         "custom/hostname" = {
           exec = "echo $USER@$(hostname)";
+          on-click = terminal;
         };
         "custom/unread-mail" = {
           interval = 5;
@@ -194,6 +223,7 @@ in
             "unread" = "";
             "syncing" = "";
           };
+          on-click = mail;
         };
         "custom/gpg-agent" = {
           interval = 2;
@@ -211,6 +241,7 @@ in
             "locked" = "";
             "unlocked" = "";
           };
+          on-click = "";
         };
         "custom/gamemode" = {
           exec-if = "${gamemoded} --status | grep 'is active' -q";
@@ -250,15 +281,6 @@ in
             "active (Transition (Daytime)" = " ";
           };
           on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
-        };
-        "custom/gpu" = {
-          interval = 5;
-          return-type = "json";
-          exec = jsonOutput "gpu" {
-            text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
-            tooltip = "GPU Usage";
-          };
-          format = "力  {}%";
         };
         "custom/currentplayer" = {
           interval = 2;
@@ -303,85 +325,88 @@ in
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style =
-      let inherit (config.colorscheme) colors; in
-      ''
-        * {
-          font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
-          font-size: 12pt;
-          padding: 0 8px;
-        }
+    style = let inherit (config.colorscheme) colors; in /* css */ ''
+      * {
+        font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
+        font-size: 12pt;
+        padding: 0 8px;
+      }
 
-        .modules-right {
-          margin-right: -15;
-        }
+      .modules-right {
+        margin-right: -15;
+      }
 
-        .modules-left {
-          margin-left: -15;
-        }
+      .modules-left {
+        margin-left: -15;
+      }
 
-        window#waybar.top {
-          color: #${colors.base05};
-          opacity: 0.95;
-          background-color: #${colors.base00};
-          border: 2px solid #${colors.base0C};
-          padding: 0;
-          border-radius: 10px;
-        }
-        window#waybar.bottom {
-          color: #${colors.base05};
-          background-color: #${colors.base00};
-          border: 2px solid #${colors.base0C};
-          opacity: 0.90;
-          border-radius: 10px;
-        }
+      window#waybar.top {
+        opacity: 0.95;
+        padding: 0;
+        background-color: #${colors.base00};
+        border: 2px solid #${colors.base0C};
+        border-radius: 10px;
+      }
+      window#waybar.bottom {
+        opacity: 0.90;
+        background-color: #${colors.base00};
+        border: 2px solid #${colors.base0C};
+        border-radius: 10px;
+      }
 
-        #workspaces button {
-          background-color: #${colors.base01};
-          color: #${colors.base05};
-          margin: 4px;
-        }
-        #workspaces button.hidden {
-          background-color: #${colors.base00};
-          color: #${colors.base04};
-        }
-        #workspaces button.focused,
-        #workspaces button.active {
-          background-color: #${colors.base0A};
-          color: #${colors.base00};
-        }
+      window#waybar {
+        color: #${colors.base05};
+      }
 
-        #clock {
-          background-color: #${colors.base0C};
-          color: #${colors.base00};
-          padding-left: 15px;
-          padding-right: 15px;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 10px;
-        }
+      #workspaces button {
+        background-color: #${colors.base01};
+        color: #${colors.base05};
+        margin: 4px;
+      }
+      #workspaces button.hidden {
+        background-color: #${colors.base00};
+        color: #${colors.base04};
+      }
+      #workspaces button.focused,
+      #workspaces button.active {
+        background-color: #${colors.base0A};
+        color: #${colors.base00};
+      }
 
-        #custom-menu {
-          background-color: #${colors.base0C};
-          color: #${colors.base00};
-          padding-left: 15px;
-          padding-right: 22px;
-          margin-left: 0;
-          margin-right: 10px;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 10px;
-        }
-        #custom-hostname {
-          background-color: #${colors.base0C};
-          color: #${colors.base00};
-          padding-left: 15px;
-          padding-right: 18px;
-          margin-right: 0;
-          margin-top: 0;
-          margin-bottom: 0;
-          border-radius: 10px;
-        }
-      '';
+      #clock {
+        background-color: #${colors.base0C};
+        color: #${colors.base00};
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 10px;
+      }
+
+      #custom-menu {
+        background-color: #${colors.base0C};
+        color: #${colors.base00};
+        padding-left: 15px;
+        padding-right: 22px;
+        margin-left: 0;
+        margin-right: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 10px;
+      }
+      #custom-hostname {
+        background-color: #${colors.base0C};
+        color: #${colors.base00};
+        padding-left: 15px;
+        padding-right: 18px;
+        margin-right: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 10px;
+      }
+      #tray {
+        color: #${colors.base05};
+      }
+    '';
   };
 }
