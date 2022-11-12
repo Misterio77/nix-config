@@ -39,6 +39,6 @@
       enabled = true;
     }
   ];
-  colorscheme = inputs.nix-colors.colorSchemes.spaceduck;
-  wallpaper = pkgs.wallpapers.blue-red-sky-clouds;
+  colorscheme = inputs.nix-colors.colorSchemes.equilibrium-dark;
+  wallpaper = pkgs.wallpapers.aenami-lynx;
 }
