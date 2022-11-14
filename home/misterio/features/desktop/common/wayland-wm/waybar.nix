@@ -70,6 +70,7 @@ in
         output = builtins.map (m: m.name) (builtins.filter (m: m.isSecondary == false) config.monitors);
         modules-left = [
           "custom/menu"
+          "idle_inhibitor"
           "custom/currentplayer"
           "custom/player"
         ];
@@ -128,6 +129,13 @@ in
             default = [ "" "" "" ];
           };
           on-click = pavucontrol;
+        };
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
+            activated = "零";
+            deactivated = "鈴";
+          };
         };
         battery = {
           bat = "BAT0";
