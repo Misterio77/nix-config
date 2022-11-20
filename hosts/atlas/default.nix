@@ -10,6 +10,7 @@
     ../common/global
     ../common/users/misterio.nix
 
+    ../common/optional/gamemode.nix
     ../common/optional/ckb-next.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
@@ -51,15 +52,6 @@
   };
 
   programs = {
-    gamemode = {
-      enable = true;
-      settings.gpu = {
-        apply_gpu_optimisations = "accept-responsibility";
-        gpu_device = 0;
-        amd_performance_level = "high";
-      };
-    };
-
     adb.enable = true;
     dconf.enable = true;
     kdeconnect.enable = true;

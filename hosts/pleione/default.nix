@@ -10,6 +10,7 @@
     ../common/global
     ../common/users/misterio.nix
 
+    ../common/optional/gamemode.nix
     ../common/optional/wireless.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
@@ -35,7 +36,6 @@
   powerManagement.powertop.enable = true;
   programs = {
     light.enable = true;
-    gamemode.enable = true;
     adb.enable = true;
     dconf.enable = true;
     kdeconnect.enable = true;
