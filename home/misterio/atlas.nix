@@ -6,6 +6,9 @@
     ./features/games
   ];
 
+  colorscheme = inputs.nix-colors.colorSchemes.equilibrium-dark;
+  wallpaper = pkgs.wallpapers.aenami-lynx;
+
   # My setup's layout:
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
@@ -39,6 +42,4 @@
       enabled = true;
     }
   ];
-  colorscheme = inputs.nix-colors.colorSchemes.equilibrium-dark;
-  wallpaper = pkgs.wallpapers.aenami-lynx;
 }
