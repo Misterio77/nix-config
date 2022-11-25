@@ -29,10 +29,7 @@
     jq # JSON pretty printer and manipulator
     trekscii # Cute startrek cli printer
 
-    sops # Deployment secrets tool
     rnix-lsp # Nix LSP
     nixfmt # Nix formatter
-    nvd nix-diff # Check derivation differences
-    haskellPackages.nix-derivation # Inspecting .drv's
   ];
 }
