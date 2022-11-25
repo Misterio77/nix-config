@@ -16,7 +16,7 @@
         add_lsp("clangd", lspconfig.clangd, {})
         add_lsp("rnix-lsp", lspconfig.rnix, {})
         add_lsp("pylsp", lspconfig.pylsp, {})
-        add_lsp("dart", lspconfig.pylsp, {})
+        add_lsp("dart", lspconfig.dartls, {})
         add_lsp("haskell-language-server", lspconfig.hls, {})
         add_lsp("kotlin-language-server", lspconfig.kotlin_language_server, {})
         add_lsp("solargraph", lspconfig.solargraph, {})
