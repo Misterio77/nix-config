@@ -137,8 +137,8 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/electra.nix ];
         };
-        # For easy bootstraping from a nixos live usb
-        "nixos@nixos" = home-manager.lib.homeManagerConfiguration {
+        # Portable minimum configuration
+        "misterio@generic" = home-manager.lib.homeManagerConfiguration {
           pkgs = legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/generic.nix ];
