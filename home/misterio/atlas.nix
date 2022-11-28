@@ -1,4 +1,10 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, config, ... }:
+let
+  inherit (pkgs) wallpapers;
+  inherit (inputs.nix-colors) colorSchemes;
+  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) colorschemeFromPicture nixWallpaperFromScheme;
+in
+{
   imports = [ ./global
     ./features/desktop/hyprland
     ./features/trusted
@@ -6,8 +12,8 @@
     ./features/games
   ];
 
-  colorscheme = inputs.nix-colors.colorSchemes.equilibrium-dark;
-  wallpaper = pkgs.wallpapers.aenami-lynx;
+  wallpaper = wallpapers.aenami-serenity;
+  colorscheme = colorSchemes.everforest;
 
   # My setup's layout:
   #  ------   -----   ------
