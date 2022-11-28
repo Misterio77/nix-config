@@ -55,10 +55,14 @@
     {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.default;
-      extraConfig = (builtins.concatStringsSep "\n" (lib.forEach config.monitors (m: ''
-        monitor=${m.name},${toString m.width}x${toString m.height}@${toString m.refreshRate},${toString m.x}x${toString m.y},${if m.enabled then "1" else "0"}
-        ${lib.optionalString (m.workspace != null)"workspace=${m.name},${m.workspace}"}
-      ''))) +
+      extraConfig = (builtins.concatStringsSep "\n"
+        (lib.forEach config.monitors
+          (m: ''
+            monitor=${m.name},${toString m.width}x${toString m.height}@${toString m.refreshRate},${toString m.x}x${toString m.y},${if m.enabled then "1" else "0"}
+            ${lib.optionalString (m.workspace != null)"workspace=${m.name},${m.workspace}"}
+          '')
+        )
+      ) +
       ''
         general {
           main_mod=SUPER
@@ -71,8 +75,8 @@
         }
 
         decoration {
-          active_opacity=0.9
-          inactive_opacity=0.65
+          active_opacity=0.88
+          inactive_opacity=0.68
           fullscreen_opacity=1.0
           rounding=5
           blur=true
