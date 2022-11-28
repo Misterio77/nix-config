@@ -93,10 +93,23 @@
 
         animations {
           enabled=true
-          animation=windows,1,4,default,slide
-          animation=border,1,5,default
-          animation=fade,1,7,default
-          animation=workspaces,1,2,default
+
+          bezier=easein,0.11, 0, 0.5, 0
+          bezier=easeout,0.5, 1, 0.89, 1
+          bezier=easeinout,0.45, 0, 0.55, 1
+
+          animation=windowsIn,1,3,easeout,slide
+          animation=windowsOut,1,3,easein,slide
+          animation=windowsMove,1,3,easeout
+
+          animation=fadeIn,1,3,easeout
+          animation=fadeOut,1,3,easein
+          animation=fadeSwitch,1,3,easeout
+          animation=fadeShadow,1,3,easeout
+          animation=fadeDim,1,3,easeout
+          animation=border,1,3,easeout
+
+          animation=workspaces,1,2,easeout,slide
         }
 
         dwindle {
