@@ -10,7 +10,7 @@ in
   home = {
     packages = [ kitty-xterm ];
     sessionVariables = {
-      TERMINAL = "kitty";
+      TERMINAL = "kitty -1";
     };
   };
 

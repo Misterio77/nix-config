@@ -37,16 +37,6 @@
       patches = (oldAttrs.patches or [ ]) ++ [ ./xdg-open-spawn-terminal.diff ];
     });
 
-    # Fixes https://todo.sr.ht/~scoopta/wofi/174
-    wofi = prev.wofi.overrideAttrs (oldAttrs: rec {
-      patches = (oldAttrs.patches or [ ]) ++ [ ./wofi-run-shell.patch ];
-    });
-
-
-    waybar = prev.waybar.overrideAttrs (oldAttrs: {
-      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    });
-
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
       version = "unstable-2021-12-10";
       src = final.fetchFromGitHub {

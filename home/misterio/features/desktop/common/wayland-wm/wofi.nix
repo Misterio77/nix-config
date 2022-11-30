@@ -1,14 +1,18 @@
 { config, lib, pkgs, ... }:
 let
-  pass-wofi = pkgs.pass-wofi.override {
-    pass = config.programs.password-store.package;
-  };
+  wofi = pkgs.wofi.overrideAttrs (oa: {
+    patches = (oa.patches or [ ]) ++ [
+      ./wofi-run-shell.patch # Fix for https://todo.sr.ht/~scoopta/wofi/174
+    ];
+  });
+
+  pass = config.programs.password-store.package;
+  passEnabled = config.programs.password-store.enable;
+  pass-wofi = pkgs.pass-wofi.override { inherit pass; };
 in
 {
-  home.packages = with pkgs; [
-    wofi
-    pass-wofi
-  ];
+  home.packages = [ wofi ] ++
+    (lib.optional passEnabled pass-wofi);
 
   xdg.configFile."wofi/config".text = ''
     image_size=48

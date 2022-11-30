@@ -1,0 +1,20 @@
+--- a/src/wofi.c	Mon Feb 22 23:53:57 2021 -0800
++++ b/src/wofi.c	Wed Aug 11 13:49:13 2021 -0300
+@@ -881,12 +881,15 @@
+ }
+
+ void wofi_term_run(const char* cmd) {
++    char *shell = getenv("SHELL");
++    if (!shell) shell = "sh";
++
+ 	if(terminal != NULL) {
+-		execlp(terminal, terminal, "-e", cmd, NULL);
++		execlp(terminal, terminal, "-e", shell, "-c", cmd, NULL);
+ 	}
+ 	size_t term_count = sizeof(terminals) / sizeof(char*);
+ 	for(size_t count = 0; count < term_count; ++count) {
+-		execlp(terminals[count], terminals[count], "-e", cmd, NULL);
++		execlp(terminals[count], terminals[count], "-e", shell, "-c", cmd, NULL);
+ 	}
+ 	fprintf(stderr, "No terminal emulator found please set term in config or use --term\n");
+ 	exit(1);
