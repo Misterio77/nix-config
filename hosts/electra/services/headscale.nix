@@ -14,9 +14,9 @@
       };
       port = 8085;
       serverUrl = "https://tailscale.m7.rs";
-      logLevel = "warn";
       settings = {
         logtail.enabled = false;
+        log.level = "warn";
       };
     };
 
@@ -24,8 +24,10 @@
       "tailscale.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass =
-          "http://localhost:${toString config.services.headscale.port}";
+        locations."/" = {
+          proxyPass = "http://localhost:${toString config.services.headscale.port}";
+          proxyWebsockets = true;
+        };
       };
       "tailscale.misterio.me" = {
         forceSSL = true;
