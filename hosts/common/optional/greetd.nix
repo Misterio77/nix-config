@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  user = "misterio";
   greetd = "${pkgs.greetd.greetd}/bin/greetd";
   gtkgreet = "${pkgs.greetd.gtkgreet}/bin/gtkgreet";
 
@@ -14,7 +15,12 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = sway-kiosk "${gtkgreet} -l &>/dev/null -c '$SHELL -l'";
+        command = sway-kiosk "${gtkgreet} -l -c '$SHELL -l'";
+        inherit user;
+      };
+      initial_session = {
+        command = "$SHELL -l";
+        inherit user;
       };
     };
   };
