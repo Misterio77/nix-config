@@ -1,27 +1,35 @@
 { pkgs, ... }:
 let
-  git-m7-init = pkgs.writeShellScriptBin "git-m7-init" ''
-    ${pkgs.openssh}/bin/ssh git@m7.rs << EOF
-      git init --bare "$1.git"
-      git -C "$1.git" branch -m main
+  ssh = "${pkgs.openssh}/bin/ssh";
+
+  git-m7 = pkgs.writeShellScriptBin "git-m7" ''
+    repo="$(git remote -v | head -1 | grep git@m7.rs | cut -d ':' -f2 | cut -d ' ' -f1)"
+
+    if [ "$1" == "init" ]; then
+      if [ "$2" == "" ]; then
+        echo "You must specify a name for the repo"
+      fi
+      ${ssh} -A git@m7.rs << EOF
+        git init --bare "$2.git"
+        git -C "$2.git" branch -m main
     EOF
-    git remote add origin git@m7.rs:"$1.git"
-  '';
-  git-m7-ls = pkgs.writeShellScriptBin "git-m7-ls" ''
-    ${pkgs.openssh}/bin/ssh git@m7.rs << EOF
-      ls
-    EOF
+      git remote add origin git@m7.rs:"$2.git"
+    elif [ "$1" == "ls" ]; then
+      ${ssh} -A git@m7.rs ls
+    else
+      ${ssh} -A git@m7.rs git -C "/srv/git/$repo" $@
+    fi
   '';
 in
 {
-  home.packages = [ git-m7-init git-m7-ls ];
+  home.packages = [ git-m7 ];
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
     aliases = {
       pushall = "!git remote | xargs -L1 git push --all";
       graph = "log --decorate --oneline --graph";
-      add-nowhitespace = "!git diff -U0 -w --no-color | !git apply --cached --ignore-whitespace --unidiff-zero -";
+      add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
     };
     userName = "Gabriel Fontes";
     userEmail = "hi@m7.rs";
