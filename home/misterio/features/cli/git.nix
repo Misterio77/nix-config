@@ -12,6 +12,7 @@ let
     if [ "$1" == "init" ]; then
       if [ "$2" == "" ]; then
         echo "You must specify a name for the repo"
+        exit 1
       fi
       ${ssh} -A git@m7.rs << EOF
         git init --bare "$2.git"
