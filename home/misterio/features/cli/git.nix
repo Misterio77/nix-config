@@ -3,7 +3,11 @@ let
   ssh = "${pkgs.openssh}/bin/ssh";
 
   git-m7 = pkgs.writeShellScriptBin "git-m7" ''
-    repo="$(git remote -v | head -1 | grep git@m7.rs | cut -d ':' -f2 | cut -d ' ' -f1)"
+    repo="$(git remote -v | grep git@m7.rs | head -1 | cut -d ':' -f2 | cut -d ' ' -f1)"
+    # Add a .git suffix if it's missing
+    if [[ "$repo" != *".git" ]]; then
+      repo="$repo.git"
+    fi
 
     if [ "$1" == "init" ]; then
       if [ "$2" == "" ]; then
