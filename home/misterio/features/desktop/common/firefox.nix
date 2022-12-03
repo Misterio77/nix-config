@@ -4,11 +4,13 @@ let
   addons = inputs.firefox-addons.packages.${pkgs.system};
 in
 {
+  programs.browserpass.enable = true;
   programs.firefox = {
     enable = true;
     extensions = with addons; [
       ublock-origin
       netflix-1080p
+      browserpass
     ];
     profiles.misterio = {
       bookmarks = {};
