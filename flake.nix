@@ -39,7 +39,7 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
-      inherit (nixpkgs.lib) filterAttrs traceVal;
+      inherit (nixpkgs.lib) filterAttrs;
       inherit (builtins) mapAttrs elem;
       inherit (self) outputs;
       notBroken = x: !(x.meta.broken or false);
@@ -52,19 +52,11 @@
       homeManagerModules = import ./modules/home-manager;
       overlays = import ./overlays;
 
-      legacyPackages = forAllSystems (system:
-        import nixpkgs {
-          inherit system;
-          overlays = with overlays; [ additions wallpapers modifications ];
-          config.allowUnfree = true;
-        }
-      );
-
       packages = forAllSystems (system:
-        import ./pkgs { pkgs = legacyPackages.${system}; }
+        nixpkgs.legacyPackages.${system}.callPackage ./pkgs { }
       );
       devShells = forAllSystems (system: {
-        default = import ./shell.nix { pkgs = legacyPackages.${system}; };
+        default = nixpkgs.legacyPackages.${system}.callPackage ./shell.nix { };
       });
 
       hydraJobs = {
@@ -76,31 +68,26 @@
       nixosConfigurations = rec {
         # Desktop
         atlas = nixpkgs.lib.nixosSystem {
-          pkgs = legacyPackages."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/atlas ];
         };
         # Laptop
         pleione = nixpkgs.lib.nixosSystem {
-          pkgs = legacyPackages."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/pleione ];
         };
         # Secondary Desktop
         maia = nixpkgs.lib.nixosSystem {
-          pkgs = legacyPackages."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/maia ];
         };
         # Raspberry Pi 4
         merope = nixpkgs.lib.nixosSystem {
-          pkgs = legacyPackages."aarch64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/merope ];
         };
         # VPS
         electra = nixpkgs.lib.nixosSystem {
-          pkgs = legacyPackages."x86_64-linux";
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/electra ];
         };
@@ -109,37 +96,37 @@
       homeConfigurations = {
         # Desktop
         "misterio@atlas" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages."x86_64-linux";
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/atlas.nix ];
         };
         # Laptop
         "misterio@pleione" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages."x86_64-linux";
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/pleione.nix ];
         };
         # Secondary Desktop
         "misterio@maia" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages."x86_64-linux";
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/maia.nix ];
         };
         # Raspi 4
         "misterio@merope" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages."aarch64-linux";
+          pkgs = nixpkgs.legacyPackages."aarch64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/merope.nix ];
         };
         # VPS
         "misterio@electra" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages."x86_64-linux";
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/electra.nix ];
         };
         # Portable minimum configuration
         "misterio@generic" = home-manager.lib.homeManagerConfiguration {
-          pkgs = legacyPackages."x86_64-linux";
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/generic.nix ];
         };

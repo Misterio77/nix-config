@@ -11,29 +11,27 @@ in
     ../features/nvim
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
-  colorscheme = lib.mkDefault colorSchemes.dracula;
-  wallpaper = lib.mkDefault (nixWallpaperFromScheme {
-    scheme = config.colorscheme;
-    width = 2560;
-    height = 1080;
-    logoScale = 4.5;
-  });
+  nixpkgs = {
+    overlays = builtins.attrValues outputs.overlays;
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
 
-  home.file.".colorscheme".text = config.colorscheme.slug;
+  nix = {
+    package = lib.mkDefault pkgs.nix;
+    settings = {
+      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      warn-dirty = false;
+    };
+  };
 
   systemd.user.startServices = "sd-switch";
 
   programs = {
     home-manager.enable = true;
     git.enable = true;
-  };
-
-  nix = {
-    package = pkgs.nix;
-    settings = {
-      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-      warn-dirty = false;
-    };
   };
 
   home = {
@@ -53,4 +51,13 @@ in
       };
     };
   };
+
+  colorscheme = lib.mkDefault colorSchemes.dracula;
+  wallpaper = lib.mkDefault (nixWallpaperFromScheme {
+    scheme = config.colorscheme;
+    width = 2560;
+    height = 1080;
+    logoScale = 4.5;
+  });
+  home.file.".colorscheme".text = config.colorscheme.slug;
 }
