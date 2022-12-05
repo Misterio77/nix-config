@@ -22,6 +22,8 @@ in
 
     extraConfig = {
       viml = /* vim */ ''
+        "Use system clipboard
+        set clipboard=unnamedplus
         "Use truecolor
         set termguicolors
         "Set colorscheme
