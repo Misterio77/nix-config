@@ -35,6 +35,7 @@
     # Personal projects I deploy on my machines using nix
     website.url = "github:misterio77/website";
     paste-misterio-me.url = "github:misterio77/paste.misterio.me";
+    yrmos.url = "github:misterio77/yrmos";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

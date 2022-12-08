@@ -465,6 +465,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1670372410,
+        "narHash": "sha256-BDiOUkuqgq5DP+E5xfTzIFYYyMb8DpSLYmeaOBeZ0vg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5528350186a9e826588cee1329640899ca44a0cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "paste-misterio-me": {
       "inputs": {
         "nixpkgs": "nixpkgs_6"
@@ -498,7 +514,8 @@
         "nixpkgs": "nixpkgs_5",
         "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
-        "website": "website"
+        "website": "website",
+        "yrmos": "yrmos"
       }
     },
     "sops-nix": {
@@ -586,6 +603,24 @@
         "owner": "wlroots",
         "repo": "wlroots",
         "type": "gitlab"
+      }
+    },
+    "yrmos": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1670479862,
+        "narHash": "sha256-+PpRVBTnU3I4SAs0+a7M4aPYvYhV9O+4WB5ZMEDGPBo=",
+        "owner": "misterio77",
+        "repo": "yrmos",
+        "rev": "74ac92f589f01a6e02045fa6de7a641efefa4d0a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "repo": "yrmos",
+        "type": "github"
       }
     }
   },

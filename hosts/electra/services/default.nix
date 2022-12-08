@@ -9,6 +9,7 @@
     ./nginx.nix
     ./radicale.nix
     ./website.nix
+    ./yrmos.nix
 
     ./cgit
   ];
