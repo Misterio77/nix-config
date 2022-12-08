@@ -14,6 +14,9 @@ in
     forceSSL = true;
     enableACME = true;
     locations = {
+      "=/" = {
+        return = "302 https://yrmos.m7.rs/rides";
+      };
       "/" = {
         root = "${yrmos}/public";
         extraConfig = ''
