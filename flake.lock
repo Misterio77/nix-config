@@ -610,11 +610,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1670479862,
-        "narHash": "sha256-+PpRVBTnU3I4SAs0+a7M4aPYvYhV9O+4WB5ZMEDGPBo=",
+        "lastModified": 1670516810,
+        "narHash": "sha256-hi6KDoQ+CrwjuNwy27VBDJoff04uruVYE5Pqgy9h5Xg=",
         "owner": "misterio77",
         "repo": "yrmos",
-        "rev": "74ac92f589f01a6e02045fa6de7a641efefa4d0a",
+        "rev": "36022b34c1e1d259b2f5727316fbf7d993ba8d8d",
         "type": "github"
       },
       "original": {
