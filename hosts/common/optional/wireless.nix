@@ -14,6 +14,12 @@
       "JVGCLARO" = {
         psk = "@JVGCLARO@";
       };
+      "Kartodrorealm" = {
+        psk = "@KARTODROREALM@";
+      };
+      "Kartodrorealm-5G" = {
+        psk = "@KARTODROREALM@";
+      };
       "Marcos_2.4Ghz" = {
         pskRaw = "@MARCOS_24@";
       };
