@@ -16,15 +16,13 @@ in
     locations = {
       "=/" = {
         return = "302 https://yrmos.m7.rs/rides";
-        extraConfig = ''
-          error_page 404 /404.html;
-        '';
       };
       "/" = {
         root = "${yrmos}/public";
         extraConfig = ''
           add_header Last-Modified "${yrmosLastModified}";
           add_header Cache-Control max-age="${toString (60 * 60 /*  One hour */)}";
+          error_page 404 /404.html;
         '';
       };
     };
