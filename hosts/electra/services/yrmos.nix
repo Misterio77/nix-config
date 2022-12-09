@@ -7,7 +7,7 @@ let
     ''
   );
   yrmosLastModified = toDateTime inputs.yrmos.lastModified;
-  yrmos = inputs.yrmos.packages.${pkgs.system}.site;
+  yrmos = inputs.yrmos.packages.${pkgs.system}.default;
 in
 {
   services.nginx.virtualHosts."yrmos.m7.rs" = {
@@ -16,6 +16,9 @@ in
     locations = {
       "=/" = {
         return = "302 https://yrmos.m7.rs/rides";
+        extraConfig = ''
+          error_page 404 /404.html;
+        '';
       };
       "/" = {
         root = "${yrmos}/public";

@@ -60,7 +60,7 @@ in
   ];
 
   wallpaper = wallpapers.aenami-stars-and-you;
-  colorscheme = emerald-dark;
+  colorscheme = emerald-light;
 
   # My setup's layout:
   #  ------   -----   ------
