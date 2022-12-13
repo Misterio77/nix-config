@@ -33,7 +33,7 @@
               return vim.api.nvim_win_set_buf(win, buf)
           end,
         }
-        vim.keymap.set("n", "<space>e", femaco_edit.edit_code_block, { desc = "Edit code block" })
+        vim.keymap.set("n", "<space>E", femaco_edit.edit_code_block, { desc = "Edit code block" })
       '';
     }
     {
