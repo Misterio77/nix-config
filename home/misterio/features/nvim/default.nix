@@ -114,6 +114,7 @@ in
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
         vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format code" })
         vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+        vim.keymap.set("n", "<space>c", vim.lsp.buf.code_action, { desc = "Code action" })
 
         -- Diagnostic
         vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { desc = "Floating diagnostic" })
