@@ -59,8 +59,8 @@ in
     ./features/games
   ];
 
-  wallpaper = wallpapers.aenami-stars-and-you;
-  colorscheme = emerald-light;
+  wallpaper = wallpapers.aenami-bright-planet;
+  colorscheme = emerald-dark;
 
   # My setup's layout:
   #  ------   -----   ------
