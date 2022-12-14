@@ -6,6 +6,7 @@
   services = {
     yrmos = {
       enable = true;
+      package = inputs.yrmos.packages.${pkgs.system}.default;
       database = "postgresql:///yrmos";
       port = 8083;
       user = "yrmos";
