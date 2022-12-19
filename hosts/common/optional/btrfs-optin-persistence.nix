@@ -1,7 +1,6 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 let
   hostname = config.networking.hostName;
-  systemdPhase1 = config.boot.initrd.systemd.enable;
   wipeScript = ''
     mkdir -p /btrfs
     mount -o subvol=/ /dev/disk/by-label/${hostname} /btrfs
@@ -26,25 +25,8 @@ in
 {
   boot.initrd.supportedFilesystems = [ "btrfs" ];
 
-  boot.initrd = {
-    systemd = lib.mkIf systemdPhase1 {
-      emergencyAccess = true;
-      initrdBin = with pkgs; [ coreutils btrfs-progs ];
-      services.initrd-btrfs-root-wipe = {
-        description = "Wipe ephemeral btrfs root";
-        script = wipeScript;
-        serviceConfig.Type = "oneshot";
-        unitConfig.DefaultDependencies = "no";
-
-        # TODO: cycle dependencies are broken
-        requires = [ "initrd-root-device.target" ];
-        before = [ "sysroot.mount" ];
-        wantedBy = [ "initrd-root-fs.target" ];
-      };
-    };
-    # Use postDeviceCommands if on old phase 1
-    postDeviceCommands = lib.mkBefore (lib.optionalString (!systemdPhase1) wipeScript);
-  };
+  # Use postDeviceCommands if on old phase 1
+  boot.initrd.postDeviceCommands = lib.mkBefore wipeScript;
 
   fileSystems = {
     "/" = {
