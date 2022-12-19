@@ -11,7 +11,7 @@ in {
           type = types.str;
           example = "DP-1";
         };
-        isSecondary = mkOption {
+        isPrimary = mkOption {
           type = types.bool;
           default = false;
         };

@@ -34,7 +34,7 @@ in
     neededForUsers = true;
   };
 
-  home-manager.users.misterio = import ../../../home/misterio/${config.networking.hostName}.nix;
+  home-manager.users.misterio = import home/${config.networking.hostName}.nix;
 
   services.geoclue2.enable = true;
   security.pam.services = { swaylock = { }; };

@@ -67,7 +67,7 @@ in
         height = 40;
         margin = "6";
         position = "top";
-        output = builtins.map (m: m.name) (builtins.filter (m: m.isSecondary == false) config.monitors);
+        output = builtins.map (m: m.name) (builtins.filter (m: m.isPrimary) config.monitors);
         modules-left = [
           "custom/menu"
           "idle_inhibitor"
