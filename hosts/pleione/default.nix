@@ -8,7 +8,7 @@
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/users/misterio.nix
+    ../common/users/misterio
 
     ../common/optional/gamemode.nix
     ../common/optional/wireless.nix

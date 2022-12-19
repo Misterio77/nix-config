@@ -5,7 +5,6 @@ in
 {
   home.packages = [ pkgs.swaylock-effects ];
   programs.swaylock = {
-    enable = true;
     settings = {
       effect-blur = "20x3";
       fade-in = 0.1;

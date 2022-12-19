@@ -7,8 +7,8 @@
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/users/misterio.nix
-    ../common/users/layla.nix
+    ../common/users/misterio
+    ../common/users/layla
 
     ./services
     # ../common/optional/pantheon.nix

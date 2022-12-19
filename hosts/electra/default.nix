@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/users/misterio.nix
+    ../common/users/misterio
   ];
 
   # environment.persistence.enable = true;
