@@ -1,5 +1,4 @@
 {
-  afuse = import ./afuse.nix;
   kdeconnect = import ./kdeconnect.nix;
   fonts = import ./fonts.nix;
   monitors = import ./monitors.nix;
