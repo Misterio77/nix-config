@@ -305,6 +305,7 @@ in
             "spotify" = "阮";
             "ncspot" = "阮";
             "qutebrowser" = "爵";
+            "firefox" = "";
             "discord" = "ﭮ";
             "sublimemusic" = "";
           };

@@ -79,7 +79,7 @@
   bind=SUPER,w,exec,makoctl dismiss
   bind=SUPER,v,exec,$TERMINAL $SHELL -ic nvim
   bind=SUPER,m,exec,$TERMINAL $SHELL -ic neomutt
-  bind=SUPER,b,exec,qutebrowser
+  bind=SUPER,b,exec,$BROWSER
 
   bind=SUPER,x,exec,wofi -S drun -x 10 -y 10 -W 25% -H 60%
   bind=SUPER,d,exec,wofi -S run

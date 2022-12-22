@@ -51,8 +51,8 @@
     ];
     macros =
       let
-        qutebrowserpipe =
-          "cat /dev/stdin > /tmp/muttmail.html && ${pkgs.qutebrowser}/bin/qutebrowser /tmp/muttmail.html";
+        browserpipe =
+          "cat /dev/stdin > /tmp/muttmail.html && xdg-open /tmp/muttmail.html";
       in
       [
         {
@@ -72,7 +72,7 @@
           map = [ "index" "pager" ];
         }
         {
-          action = "<pipe-entry>${qutebrowserpipe}<enter><exit>";
+          action = "<pipe-entry>${browserpipe}<enter><exit>";
           key = "V";
           map = [ "attach" ];
         }
@@ -83,7 +83,7 @@
         }
         {
           action =
-            "<view-attachments><search>html<enter><pipe-entry>${qutebrowserpipe}<enter><exit>";
+            "<view-attachments><search>html<enter><pipe-entry>${browserpipe}<enter><exit>";
           key = "V";
           map = [ "index" "pager" ];
         }
