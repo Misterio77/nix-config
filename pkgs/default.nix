@@ -6,7 +6,6 @@
   phpactor = pkgs.callPackage ./phpactor { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
-  swayfader = pkgs.callPackage ./swayfader { };
   trekscii = pkgs.callPackage ./trekscii { };
   sqlcl = pkgs.callPackage ./sqlcl { };
 
