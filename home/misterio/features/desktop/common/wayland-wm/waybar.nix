@@ -143,6 +143,7 @@ in
           format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
+          onclick = "";
         };
         "sway/window" = {
           max-length = 20;
@@ -342,11 +343,11 @@ in
       }
 
       .modules-right {
-        margin-right: -15;
+        margin-right: -15px;
       }
 
       .modules-left {
-        margin-left: -15;
+        margin-left: -15px;
       }
 
       window#waybar.top {
