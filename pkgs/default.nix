@@ -1,7 +1,6 @@
 { pkgs ? null }: {
 
   # Packages with an actual source
-  apgdiff = pkgs.callPackage ./apgdiff { };
   clematis = pkgs.callPackage ./clematis { };
   gtklock = pkgs.callPackage ./gtklock { };
   phpactor = pkgs.callPackage ./phpactor { };
