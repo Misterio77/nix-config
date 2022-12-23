@@ -7,18 +7,9 @@
     yrmos = {
       enable = true;
       package = inputs.yrmos.packages.${pkgs.system}.default;
-      database = "postgresql:///yrmos";
       port = 8083;
       user = "yrmos";
       environmentFile = config.sops.secrets.yrmos-secrets.path;
-    };
-
-    postgresql = {
-      ensureDatabases = [ "yrmos" ];
-      ensureUsers = [{
-        name = "yrmos";
-        ensurePermissions = { "DATABASE yrmos" = "ALL PRIVILEGES"; };
-      }];
     };
 
     nginx.virtualHosts."yrmos.m7.rs" = {
