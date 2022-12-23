@@ -171,21 +171,55 @@
     },
     "hyprland": {
       "inputs": {
+        "hyprland-protocols": "hyprland-protocols",
         "nixpkgs": "nixpkgs_3",
-        "wlroots": "wlroots"
+        "wlroots": "wlroots",
+        "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1667132917,
-        "narHash": "sha256-0b1kVcyDOrkluCSIkKmz3FO/cN4/Amz1uIU3EyvojPA=",
+        "lastModified": 1670857002,
+        "narHash": "sha256-Tck24Ys4PGZL2ClFp7gvB648eBYPTiycPrTX9QeEXyk=",
         "owner": "hyprwm",
         "repo": "hyprland",
-        "rev": "9f1d7f7fc709ae3360f7ec229e9fd1e32b894ace",
+        "rev": "111d209bff5448c3a55e07f344cf89715536bba4",
         "type": "github"
       },
       "original": {
         "owner": "hyprwm",
-        "ref": "v0.17.0beta",
+        "ref": "v0.19.2beta",
         "repo": "hyprland",
+        "type": "github"
+      }
+    },
+    "hyprland-protocols": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1670856551,
+        "narHash": "sha256-4KUW5SKR0Y9uaYGcYwy53YJ3B/sgiprCL4fRGO+mpOA=",
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "rev": "301733ae466b229066ba15a53e6d8b91c5dcef5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "type": "github"
+      }
+    },
+    "hyprland-protocols_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1670703428,
+        "narHash": "sha256-4KUW5SKR0Y9uaYGcYwy53YJ3B/sgiprCL4fRGO+mpOA=",
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
+        "rev": "d0d6db8cb5bef6d93ca3ad8fb2124964173396da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-protocols",
         "type": "github"
       }
     },
@@ -631,6 +665,28 @@
         "owner": "wlroots",
         "repo": "wlroots",
         "type": "gitlab"
+      }
+    },
+    "xdph": {
+      "inputs": {
+        "hyprland-protocols": "hyprland-protocols_2",
+        "nixpkgs": [
+          "hyprland",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1671300042,
+        "narHash": "sha256-8zapwbbaC+5RtaXVDcqf9X5b/yd/gNg+clF/LZdt+y4=",
+        "owner": "hyprwm",
+        "repo": "xdg-desktop-portal-hyprland",
+        "rev": "45bbf9a3b20b2c97819e2379a10fe351258e35b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
       }
     },
     "yrmos": {
