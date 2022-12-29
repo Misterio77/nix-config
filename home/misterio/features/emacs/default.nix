@@ -1,10 +1,8 @@
-{ inputs, pkgs, config, ... }:
-let emacs-overlay = inputs.emacs-overlay.packages.${pkgs.system};
-in
+{ pkgs, config, ... }:
 {
   programs.emacs = {
     enable = true;
-    package = emacs-overlay.emacsPgtkNativeComp;
+    package = pkgs.emacs-gtk;
 
     overrides = final: _prev: {
       nix-theme = final.callPackage ./theme.nix { inherit config; };

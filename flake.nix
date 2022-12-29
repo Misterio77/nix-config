@@ -22,8 +22,6 @@
     # Nixified software I use
     hyprland.url = "github:hyprwm/hyprland/v0.19.2beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
     website.url = "github:misterio77/website";

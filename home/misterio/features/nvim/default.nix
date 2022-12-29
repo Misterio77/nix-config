@@ -1,6 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
-let neovim-overlay = inputs.neovim-nightly-overlay.packages.${pkgs.system};
-in
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./lsp.nix
@@ -12,7 +10,6 @@ in
 
   programs.neovim = {
     enable = true;
-    package = neovim-overlay.neovim;
 
     extraRuntime = {
       "colors/nix-${config.colorscheme.slug}.vim" = {
