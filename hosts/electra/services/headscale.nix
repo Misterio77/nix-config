@@ -4,16 +4,18 @@
     headscale = {
       enable = true;
       address = "0.0.0.0";
-      dns = {
-        baseDomain = "m7.rs";
-        magicDns = true;
-        domains = [ "ts.m7.rs" ];
-        nameservers = [
-          "9.9.9.9"
-        ];
+      settings = {
+        dns_config = {
+          base_domain = "m7.rs";
+          magic_dns = true;
+          domains = [ "ts.m7.rs" ];
+          nameservers = [
+            "9.9.9.9"
+          ];
+        };
+        server_url = "https://tailscale.m7.rs";
       };
       port = 8085;
-      serverUrl = "https://tailscale.m7.rs";
       settings = {
         logtail.enabled = false;
         log.level = "warn";
