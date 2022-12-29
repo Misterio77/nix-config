@@ -20,11 +20,12 @@
     };
 
     # Nixified software I use
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     hyprland.url = "github:hyprwm/hyprland/v0.19.2beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+
     website.url = "github:misterio77/website";
     paste-misterio-me.url = "github:misterio77/paste.misterio.me";
     yrmos.url = "github:misterio77/yrmos";
@@ -125,8 +126,16 @@
       };
 
       nixConfig = {
-        extra-substituers = [ "https://cache.m7.rs" ];
-        extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
+        extra-substituters = [
+          "https://cache.m7.rs"
+          "https://hyprland.cachix.org"
+          "https://nix-community.cachix.org"
+        ];
+        extra-trusted-public-keys = [
+          "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg="
+          "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
     };
 }
