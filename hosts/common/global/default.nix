@@ -14,6 +14,7 @@
     ./postgres.nix
     ./sops.nix
     ./ssh-serve-store.nix
+    ./steam-hardware.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager = {

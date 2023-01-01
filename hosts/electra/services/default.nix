@@ -6,6 +6,7 @@
     ./headscale.nix
     ./hydra.nix
     ./mail.nix
+    ./minecraft.nix
     ./nginx.nix
     ./radicale.nix
     ./website.nix
