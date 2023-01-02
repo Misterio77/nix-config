@@ -26,6 +26,7 @@
   home.packages = with pkgs; [
     inputs.hyprwm-contrib.packages.${system}.grimblast
     swaybg
+    swayidle
   ];
 
   programs.waybar.package = pkgs.waybar.overrideAttrs (oa: {
