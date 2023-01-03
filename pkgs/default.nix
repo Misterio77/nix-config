@@ -7,6 +7,7 @@
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
+  speedtestpp = pkgs.callPackage ./speedtestpp { };
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };
