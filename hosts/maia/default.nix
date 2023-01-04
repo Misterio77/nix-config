@@ -10,7 +10,6 @@
     ../common/users/misterio
     ../common/users/layla
 
-    ./services
     # ../common/optional/pantheon.nix
     # ../common/optional/x11-no-suspend.nix
     # ../common/optional/quietboot.nix
