@@ -45,9 +45,14 @@
     };
   };
 
-  networking.networkmanager.enable = false;
-
   i18n.defaultLocale = "pt_BR.UTF-8";
   hardware.nvidia.prime.offload.enable = false;
+
+  boot.kernelModules = [ "coretemp" ];
+  services.thermald.enable = true;
+  environment.etc."sysconfig/lm_sensors".text = ''
+    HWMON_MODULES="coretemp"
+  '';
+
   system.stateVersion = "22.05";
 }

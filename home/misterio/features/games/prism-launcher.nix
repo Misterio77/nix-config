@@ -3,6 +3,6 @@
 
   home.persistence = {
     # TODO: Change?
-    "/persist/games/misterio".directories = [ ".local/share/polymc" ];
+    "/persist/games/misterio".directories = [ ".local/share/PrismLauncher" ];
   };
 }

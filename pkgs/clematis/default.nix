@@ -19,6 +19,6 @@ buildGoModule {
     description = "Discord rich presence for MPRIS music players.";
     homepage = "https://github.com/TorchedSammy/Clematis";
     license = licenses.mit;
-    platforms = platforms.linux;
+    platforms = platforms.all;
   };
 }

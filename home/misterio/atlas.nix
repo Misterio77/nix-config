@@ -8,7 +8,7 @@
   ];
 
   wallpaper = (import ./wallpapers).aenami-bright-planet;
-  colorscheme = inputs.nix-colors.colorschemes.silk-dark;
+  colorscheme = inputs.nix-colors.colorschemes.atlas;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
