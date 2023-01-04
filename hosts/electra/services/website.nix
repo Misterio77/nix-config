@@ -1,22 +1,11 @@
 { inputs, pkgs, ... }:
 let
-  toDateTime = timestamp: builtins.readFile (
-    pkgs.runCommandLocal "datetime" { } ''
-      dt="$(date -Ru -d @${toString timestamp})"
-      echo -n ''${dt/+0000/GMT} > $out
-    ''
-  );
-
   redir = {
     forceSSL = true;
     enableACME = true;
     locations."/".return = "302 https://m7.rs$request_uri";
   };
-
-  websiteLastModified = toDateTime inputs.website.lastModified;
   website = inputs.website.packages.${pkgs.system}.main;
-
-  themesLastModified = toDateTime inputs.nix-colors.lastModified;
   themes = pkgs.stdenv.mkDerivation {
     name = "website-themes";
     src = builtins.toFile "schemes" (builtins.toJSON inputs.nix-colors.colorSchemes);
@@ -66,48 +55,45 @@ let
   };
 in
 {
-  services.nginx.virtualHosts = {
-    "gsfontes.com" = redir;
-    "misterio.me" = redir;
-    "fontes.dev.br" = redir;
-    "m7.rs" = {
-      default = true;
-      forceSSL = true;
-      enableACME = true;
-      locations = {
-        # My key moved to openpgp.org
-        "/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc" = {
-          return = "301 https://keys.openpgp.org/vks/v1/by-fingerprint/7088C7421873E0DB97FF17C2245CAB70B4C225E9";
+  services.nginx.virtualHosts =
+    let days = n: toString (n * 60 * 60 * 24);
+    in
+    {
+      "gsfontes.com" = redir;
+      "misterio.me" = redir;
+      "fontes.dev.br" = redir;
+      "m7.rs" = {
+        default = true;
+        forceSSL = true;
+        enableACME = true;
+        locations = {
+          # My key moved to openpgp.org
+          "/7088C7421873E0DB97FF17C2245CAB70B4C225E9.asc" = {
+            return = "301 https://keys.openpgp.org/vks/v1/by-fingerprint/7088C7421873E0DB97FF17C2245CAB70B4C225E9";
+          };
+          "/" = {
+            root = "${website}/public";
+          };
+          "/assets/" = {
+            root = "${website}/public";
+            extraConfig = ''
+              add_header Cache-Control "max-age=${days 30}";
+            '';
+          };
         };
-        "/" = {
-          root = "${website}/public";
-          extraConfig = ''
-            add_header Last-Modified "${websiteLastModified}";
-            add_header Cache-Control max-age="${toString (60 * 60 * 24 /*  One day */)}";
-          '';
-        };
-        "/assets/" = {
-          root = "${website}/public";
-          extraConfig = ''
-            add_header Last-Modified "${websiteLastModified}";
-            add_header Cache-Control max-age="${toString (30 * 60 * 60 * 24 /*  One month */)}";
-          '';
+      };
+      "colors.m7.rs" = {
+        forceSSL = true;
+        enableACME = true;
+        locations = {
+          "/" = {
+            root = "${themes}";
+            extraConfig = ''
+              add_header Access-Control-Allow-Origin *;
+              add_header Cache-Control "max-age=${days 30}";
+            '';
+          };
         };
       };
     };
-    "colors.m7.rs" = {
-      forceSSL = true;
-      enableACME = true;
-      locations = {
-        "/" = {
-          root = "${themes}";
-          extraConfig = ''
-            add_header Access-Control-Allow-Origin *;
-            add_header Last-Modified "${themesLastModified}";
-            add_header Cache-Control max-age="${toString (30 * 60 * 60 * 24 /*  One month */)}";
-          '';
-        };
-      };
-    };
-  };
 }
