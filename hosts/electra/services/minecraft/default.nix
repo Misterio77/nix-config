@@ -7,7 +7,10 @@ in
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
 
-  networking.firewall.allowedTCPPorts = [ 25565 19132 ];
+  networking.firewall = {
+    allowedTCPPorts = [ 25565 ];
+    allowedUDPPorts = [ 25565 19132 ];
+  };
 
   services.minecraft-servers = {
     enable = true;
