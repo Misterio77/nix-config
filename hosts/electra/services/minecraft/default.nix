@@ -140,6 +140,19 @@ in
               secret = velocityForwardingSecret;
             };
           };
+          "bukkit.yml" = lib'.toYAMLFile {
+            settings.shutdown-message = "Servidor fechado (provavelmente reiniciando).";
+          };
+          "spigot.yml" = lib'.toYAMLFile {
+            messages = {
+              whitelist = "Você não está na whitelist!";
+              unknown-command = "Comando desconhecido.";
+              restart = "Servidor reiniciando.";
+            };
+          };
+          "plugins/ViaVersion/config.yml" = lib'.toYAMLFile {
+            checkforupdates = false;
+          };
         };
         symlinks = {
           "plugins/ViaVersion.jar" = pkgs.fetchurl rec {
