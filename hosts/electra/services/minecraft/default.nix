@@ -1,8 +1,16 @@
 { inputs, pkgs, outputs, config, lib, ... }:
 let
-  papermc = pkgs.callPackage ./pkgs/papermc.nix { };
-  velocity = pkgs.callPackage ./pkgs/velocity.nix { };
   lib' = import ./lib.nix { inherit pkgs; };
+  velocityForwardingSecret = "PI5rWuj39WTA";
+  papermc = lib'.mkMCServer rec {
+    pname = "papermc";
+    # version = "1.19.3-367";
+    # url = "https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/367/downloads/paper-1.19.3-367.jar";
+    # sha256 = "sha256-8OhbQFoLsuJJK38a1PEAdwJIZUSEw3l6jTs/5w4EHko=";
+    version = "1.19.3-R0.1";
+    url = "https://files.m7.rs/paper-bundler-${version}-SNAPSHOT-reobf.jar";
+    sha256 = "sha256-6mInBOGwmsEegSZVC4VjvWM0/kGGS2yugl2dtaW9YQ8=";
+  };
 in
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
@@ -19,7 +27,17 @@ in
 
       proxy = {
         enable = true;
-        package = velocity;
+        package =
+          let
+            ver = "3.1.2-SNAPSHOT";
+            build = "207";
+          in
+          lib'.mkMCServer {
+            pname = "velocity";
+            version = "${ver}-${build}";
+            url = "https://api.papermc.io/v2/projects/velocity/versions/${ver}/builds/${build}/downloads/velocity-${ver}-${build}.jar";
+            sha256 = "sha256-gjOTQFQTQT2uH3yDyJhR2+dDnnGcwxeToVuarZUaQxU=";
+          };
         jvmOpts = lib'.proxyFlags "512M";
         files = {
           "velocity.toml" = lib'.toTOMLFile {
@@ -27,11 +45,12 @@ in
             bind = "0.0.0.0:25565";
             motd = "Server do Misterinho";
             player-info-forwarding-mode = "modern";
-            forwarding-secret-file = config.sops.secrets.velocity-forwarding-secret.path;
+            forwarding-secret-file = builtins.toFile "secret" velocityForwardingSecret;
             online-mode = true;
             servers = {
-              survival = "localhost:25560";
-              try = [ "survival" ];
+              limbo = "localhost:25560";
+              survival = "localhost:25561";
+              try = [ "survival" "limbo" ];
             };
             forced-hosts = { };
             query = {
@@ -46,38 +65,8 @@ in
             allow-third-party-capes = true;
             auth-type = "floodgate";
           };
-          "plugins/limboapi/config.yml" = lib'.toYAMLFile {
-            prefix = "Limbo";
-            main.check-for-updates = false;
-          };
-          "plugins/limboauth/config.yml" = lib'.toYAMLFile {
-            prefix = "Auth";
-            main = {
-              auth-time = 0;
-              enable-bossbar = false;
-              online-mode-need-auth = false;
-              floodgate-need-auth = false;
-              save-premium-accounts = false;
-              enable-totp = false;
-              register-need-repeat-password = false;
-              strings = import ./cfgs/limboauth-strings.nix;
-            };
-            database.storage-type = "sqlite";
-          };
         };
         symlinks = {
-          "plugins/LimboAPI.jar" = pkgs.fetchurl rec {
-            pname = "LimboAPI";
-            version = "1.0.8";
-            url = "https://github.com/Elytrium/${pname}/releases/download/1.0.8/${pname}-plugin-${version}-jdk17.jar";
-            sha256 = "sha256-qGBBHSEGdUXLDQkCBKn5N28/9Zlazu8/fYrAIvlb0EA=";
-          };
-          "plugins/LimboAuth.jar" = pkgs.fetchurl rec {
-            pname = "LimboAuth";
-            version = "1.0.8";
-            url = "https://github.com/Elytrium/${pname}/releases/download/1.0.8/${pname}-${version}-jdk17.jar";
-            sha256 = "sha256-S1u7QHF0n6EhGq++VF7BlbaJ4Y8xpQWR2BuGQBeW+r8=";
-          };
           "plugins/Geyser.jar" = pkgs.fetchurl rec {
             pname = "Geyser";
             version = "1269";
@@ -93,12 +82,55 @@ in
         };
       };
 
+      limbo = {
+        enable = true;
+        package = lib'.mkMCServer rec {
+          pname = "nano-limbo";
+          version = "1.5";
+          url = "https://github.com/Nan1t/NanoLimbo/releases/download/v${version}/NanoLimbo-${version}-all.jar";
+          sha256 = "sha256-0zPQNfUEgK0zIdLEUjTGw2N+Nbe8byZfqrkPYBR888Q=";
+        };
+        jvmOpts = "";
+        files."settings.yml" = lib'.toYAMLFile {
+          bind.port = 25560;
+          maxPlayers = -1;
+          ping = {
+            description = "Limbo";
+            version = "1.5";
+          };
+          dimension = "THE_END";
+          playerList = {
+            enable = false;
+            username = "NanoLimbo";
+          };
+          headerAndFooter.enable = false;
+          gameMode = 0;
+          brandName.enable = false;
+          joinMessage.enable = false;
+          bossBar.enable = false;
+          title.enable = false;
+          infoForwarding = {
+            type = "MODERN";
+            secret = velocityForwardingSecret;
+          };
+          readTimeout = 30000;
+          debugLevel = 2;
+          netty = {
+            useEpoll = true;
+            threads = {
+              bossGroup = 1;
+              workerGroup = 4;
+            };
+          };
+        };
+      };
+
       survival = {
         enable = true;
         package = papermc;
         jvmOpts = lib'.aikarFlags "1G";
         serverProperties = {
-          server-port = 25560;
+          server-port = 25561;
           online-mode = false;
         };
         files = {
@@ -106,7 +138,7 @@ in
             proxies.velocity = {
               enabled = true;
               online-mode = false;
-              secret-file = config.sops.secrets.velocity-forwarding-secret.path;
+              secret = velocityForwardingSecret;
             };
           };
         };
