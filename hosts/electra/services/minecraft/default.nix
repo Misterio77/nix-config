@@ -1,16 +1,15 @@
 { inputs, pkgs, outputs, config, lib, ... }:
 let
   lib' = import ./lib.nix { inherit pkgs; };
-  velocityForwardingSecret = "PI5rWuj39WTA";
   papermc = lib'.mkMCServer rec {
     pname = "papermc";
-    # version = "1.19.3-367";
-    # url = "https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/367/downloads/paper-1.19.3-367.jar";
-    # sha256 = "sha256-8OhbQFoLsuJJK38a1PEAdwJIZUSEw3l6jTs/5w4EHko=";
-    version = "1.19.3-R0.1";
-    url = "https://files.m7.rs/paper-bundler-${version}-SNAPSHOT-reobf.jar";
-    sha256 = "sha256-6mInBOGwmsEegSZVC4VjvWM0/kGGS2yugl2dtaW9YQ8=";
+    version = "1.19.3-367";
+    url = "https://api.papermc.io/v2/projects/paper/versions/1.19.3/builds/367/downloads/paper-1.19.3-367.jar";
+    sha256 = "sha256-8OhbQFoLsuJJK38a1PEAdwJIZUSEw3l6jTs/5w4EHko=";
   };
+  # FIXME: Using sops secrets would be the way to go, but not all configs support a "file" secret
+  # Maybe some way to replace secret strings in nix-minecraft managed files?
+  velocityForwardingSecret = "PI5rWuj39WTA";
 in
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
@@ -157,14 +156,6 @@ in
           };
         };
       };
-    };
-  };
-
-  sops.secrets = {
-    velocity-forwarding-secret = {
-      owner = "minecraft";
-      group = "minecraft";
-      sopsFile = ../../secrets.yaml;
     };
   };
 }
