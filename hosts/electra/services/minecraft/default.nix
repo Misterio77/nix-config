@@ -39,6 +39,13 @@ in
               port = 25565;
             };
           };
+          "plugins/Geyser-Velocity/config.yml" = lib'.toYAMLFile {
+            server-name = "Server do Misterinho";
+            passthrough-motd = true;
+            passthrough-player-counts = true;
+            allow-third-party-capes = true;
+            auth-type = "floodgate";
+          };
           "plugins/limboapi/config.yml" = lib'.toYAMLFile {
             prefix = "Limbo";
             main.check-for-updates = false;
