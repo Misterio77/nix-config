@@ -1,4 +1,4 @@
-{ pkgs ? null }: {
+{ pkgs ? import <nixpkgs> { } }: {
 
   # Packages with an actual source
   clematis = pkgs.callPackage ./clematis { };
