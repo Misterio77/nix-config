@@ -7,6 +7,8 @@ in
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
 
+  networking.firewall.allowedTCPPorts = [ 25565 19132 ];
+
   services.minecraft-servers = {
     enable = true;
     eula = true;
@@ -16,7 +18,6 @@ in
         enable = true;
         package = velocity;
         jvmOpts = lib'.proxyFlags "512M";
-        openFirewall = true;
         files = {
           "velocity.toml" = lib'.toTOMLFile {
             config-version = "2.5";
