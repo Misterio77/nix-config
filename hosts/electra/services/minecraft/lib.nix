@@ -22,11 +22,11 @@ rec {
       installPhase = ''
         mkdir -p $out/bin $out/lib/minecraft
         cp -v $src $out/lib/minecraft/server.jar
-        cat > $out/bin/minecraft-server << EOF
+        cat > $out/bin/${pname} << EOF
         #!/bin/sh
         exec ${pkgs.jre_headless}/bin/java \$@ -jar $out/lib/minecraft/server.jar nogui
         EOF
-        chmod +x $out/bin/minecraft-server
+        chmod +x $out/bin/${pname}
       '';
     };
 
