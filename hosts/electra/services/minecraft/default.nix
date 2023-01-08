@@ -4,23 +4,17 @@ let
   minecraftPkgs = inputs.nix-minecraft.packages.${pkgs.system};
 in
 {
-  imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+  imports = [
+    inputs.nix-minecraft.nixosModules.minecraft-servers
+    ../../../common/optional/mysql.nix
+  ];
 
-  sops.secrets = {
-    # VELOCITY_FORWARDING_SECRET=...
-    # DATABASE_PASSWORD=...
-    minecraft-secrets = {
-      owner = "minecraft";
-      group = "minecraft";
-      sopsFile = ../../secrets.yaml;
-    };
-    # CREATE USER IF NOT EXISTS 'minecraft'@'localhost';
-    # ALTER USER 'minecraft'@'localhost' IDENTIFIED VIA unix_socket OR mysql_native_password USING PASSWORD(...);
-    set-minecraft-sql-password = {
-      owner = "mysql";
-      group = "mysql";
-      sopsFile = ../../secrets.yaml;
-    };
+  sops.secrets.minecraft-secrets = {
+    owner = "minecraft";
+    group = "minecraft";
+    mode = "0440";
+    # VELOCITY_FORWARDING_SECRET, DATABASE_PASSWORD
+    sopsFile = ../../secrets.yaml;
   };
 
   networking.firewall = {
@@ -29,15 +23,22 @@ in
   };
 
   services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
     ensureDatabases = [ "minecraft" ];
     ensureUsers = [{
       name = "minecraft";
       ensurePermissions = { "minecraft.*" = "ALL PRIVILEGES"; };
     }];
-    initialScript = lib.mkAfter config.sops.secrets.set-minecraft-sql-password.path;
   };
+  # Set minecrafts' password (the plugins don't play well with socket auth)
+  users.users.mysql.extraGroups = [ "minecraft" ]; # Get access to the secret
+  systemd.services.mysql.postStart = lib.mkAfter ''
+    source ${config.sops.secrets.minecraft-secrets.path}
+    ${config.services.mysql.package}/bin/mysql <<EOF
+      ALTER USER 'minecraft'@'localhost'
+        IDENTIFIED VIA unix_socket OR mysql_native_password
+        USING PASSWORD('$DATABASE_PASSWORD');
+    EOF
+  '';
 
   services.minecraft-servers = {
     enable = true;
@@ -59,7 +60,8 @@ in
             online-mode = true;
             servers = {
               survival = "localhost:25561";
-              try = [ "survival" ];
+              limbo = "localhost:25560";
+              try = [ "survival" "limbo" ];
             };
             forced-hosts = { };
             query = {
@@ -74,24 +76,7 @@ in
             allow-third-party-capes = true;
             auth-type = "floodgate";
           };
-          "plugins/limboapi/config.yml" = lib'.toYAMLFile {
-            prefix = "Limbo";
-            main.check-for-updates = false;
-          };
-          "plugins/limboauth/config.yml" = lib'.toYAMLFile {
-            prefix = "Auth";
-            main = {
-              auth-time = 0;
-              enable-bossbar = false;
-              online-mode-need-auth = false;
-              floodgate-need-auth = false;
-              save-premium-accounts = false;
-              enable-totp = false;
-              register-need-repeat-password = false;
-              strings = import ./cfgs/limboauth-strings.nix;
-            };
-            database.storage-type = "sqlite";
-          };
+          # TODO: configure husk-chat
           "plugins/luckperms/config.yml" = lib'.toYAMLFile {
             server = "proxy";
             storage-method = "mysql";
@@ -103,6 +88,43 @@ in
               table-prefix = "luckperms_";
             };
             messaging-service = "sql";
+          };
+          "plugins/librepremium/config.conf" = lib'.toJSONFile {
+            allowed-commands-while-unauthorized = [
+              "login"
+              "register"
+              "2fa"
+              "2faconfirm"
+            ];
+            auto-register = true;
+            database = {
+              database = "minecraft";
+              host = "localhost";
+              max-life-time = 600000;
+              password = "@DATABASE_PASSWORD@";
+              port = 3306;
+              user = "minecraft";
+            };
+            debug = false;
+            default-crypto-provider = "BCrypt-2A";
+            fallback = true;
+            kick-on-wrong-password = false;
+            limbo = [ "limbo" ];
+            migration = { };
+            milliseconds-to-refresh-notification = 10000;
+            minimum-password-length = -1;
+            new-uuid-creator = "MOJANG";
+            pass-through.root = [ "survival" ];
+            ping-servers = true;
+            remember-last-server = false;
+            revision = 3;
+            seconds-to-authorize = -1;
+            session-timeout = 604800;
+            totp = {
+              enabled = true;
+              label = "Misterinho";
+            };
+            use-titles = false;
           };
         };
         symlinks = {
@@ -118,23 +140,17 @@ in
             url = "https://ci.opencollab.dev/job/GeyserMC/job/${pname}/job/master/${version}/artifact/velocity/build/libs/${lib.toLower pname}-velocity.jar";
             sha256 = "sha256-yFVVtyqhtSRt/r+i0uSu9HleDmAp+xwAAdWmV4W8umU=";
           };
-          "plugins/LimboAPI.jar" = pkgs.fetchurl rec {
-            pname = "LimboAPI";
-            version = "1.0.8";
-            url = "https://github.com/Elytrium/${pname}/releases/download/${version}/${pname}-plugin-${version}-jdk17.jar";
-            sha256 = "sha256-qGBBHSEGdUXLDQkCBKn5N28/9Zlazu8/fYrAIvlb0EA=";
-          };
-          "plugins/LimboAuth.jar" = pkgs.fetchurl rec {
-            pname = "LimboAuth";
-            version = "1.0.8";
-            url = "https://github.com/Elytrium/${pname}/releases/download/${version}/${pname}-${version}-jdk17.jar";
-            sha256 = "sha256-S1u7QHF0n6EhGq++VF7BlbaJ4Y8xpQWR2BuGQBeW+r8=";
-          };
           "plugins/HuskChat.jar" = pkgs.fetchurl rec {
             pname = "HuskChat";
             version = "2.3";
             url = "https://github.com/WiIIiam278/${pname}/releases/download/${version}/${pname}-${version}.jar";
             sha256 = "sha256-gNgL1rYxpDGJmmBURwYe8t3rTzOOiII3kmmZHd8mFHY=";
+          };
+          "plugins/LibrePremium.jar" = pkgs.fetchurl rec {
+            pname = "LibrePremium";
+            version = "0.12.3";
+            url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
+            sha256 = "sha256-OBAsgZip+oj7D6bkEud4+X4WwD8BUN9UuPzNvwrp9Z4=";
           };
           "plugins/LuckPerms.jar" = pkgs.fetchurl rec {
             pname = "LuckPerms";
@@ -154,6 +170,27 @@ in
               default.nodes = [ ];
             };
           });
+        };
+      };
+
+      limbo = {
+        enable = true;
+        package = lib'.mkMCServer rec {
+          pname = "Limbo";
+          version = "0.7.1-ALPHA";
+          url = "https://ci.loohpjames.com/job/${pname}/30/artifact/target/${pname}-${version}-1.19.3.jar";
+          sha256 = "sha256-pUJRrytd51dqfcQU+Q5wNUsXhs6vPfK8aPDwp/ei0B4=";
+        };
+        jvmOpts = "";
+        serverProperties = {
+          server-port = 25560;
+          velocity-modern = true;
+          forwarding-secrets = "@VELOCITY_FORWARDING_SECRET@";
+          level-name = "world;spawn.schem";
+          level-dimension = "minecraft:overworld";
+          allow-flight = true;
+          allow-chat = true;
+          world-spawn = "world;0;128;0;-90;0";
         };
       };
 
