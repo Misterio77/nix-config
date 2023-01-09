@@ -7,6 +7,12 @@ rec {
   toTOMLFile = expr: pkgs.runCommand "expr.toml" { } ''
     ${lib.getExe pkgs.remarshal} -i ${toJSONFile expr} -o $out -if json -of toml
   '';
+  toPropsFile = expr: pkgs.writeText "expr.properties" (
+    lib.concatStringsSep "\n" (lib.mapAttrsToList
+      (n: v: "${n}=${if builtins.isBool v then lib.boolToString v else toString v}")
+      expr
+    )
+  );
   gzipFile = file: pkgs.runCommand "file.gz" { } ''
     ${lib.getExe pkgs.gzip} ${file} -c > $out
   '';

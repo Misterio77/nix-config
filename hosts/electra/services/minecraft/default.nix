@@ -69,6 +69,7 @@ in
               port = 25565;
             };
           };
+          "lang/messages.properties" = lib'.toPropsFile (import ./cfgs/velocity-messages.nix);
           "plugins/Geyser-Velocity/config.yml" = lib'.toYAMLFile {
             server-name = "Server do Misterinho";
             passthrough-motd = true;
@@ -107,7 +108,7 @@ in
             };
             debug = false;
             default-crypto-provider = "BCrypt-2A";
-            fallback = true;
+            fallback = false; # TODO
             kick-on-wrong-password = false;
             limbo = [ "limbo" ];
             migration = { };
@@ -126,6 +127,7 @@ in
             };
             use-titles = false;
           };
+          "plugins/librepremium/messages.conf" = lib'.toJSONFile (import ./cfgs/librepremium-messages.nix);
         };
         symlinks = {
           "plugins/Geyser.jar" = pkgs.fetchurl rec {
@@ -148,9 +150,12 @@ in
           };
           "plugins/LibrePremium.jar" = pkgs.fetchurl rec {
             pname = "LibrePremium";
-            version = "0.12.3";
-            url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
-            sha256 = "sha256-OBAsgZip+oj7D6bkEud4+X4WwD8BUN9UuPzNvwrp9Z4=";
+            # version = "0.12.3";
+            # url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
+            # sha256 = "sha256-OBAsgZip+oj7D6bkEud4+X4WwD8BUN9UuPzNvwrp9Z4=";
+            version = "unstable 2023-01-08";
+            url = "https://files.m7.rs/LibrePremium.jar";
+            sha256 = "sha256-XSw4ieuf9k6ec80VB51I4O2S8WNi3CdW1sX3ffwmMTk=";
           };
           "plugins/LuckPerms.jar" = pkgs.fetchurl rec {
             pname = "LuckPerms";
@@ -162,11 +167,18 @@ in
           # Import with /lpv import initial.json.gz
           "plugins/luckperms/initial.json.gz" = lib'.gzipFile (lib'.toJSONFile {
             groups = {
-              admin.nodes = [{
-                type = "prefix";
-                key = "prefix.0.ADM";
-                value = true;
-              }];
+              admin.nodes = [
+                {
+                  type = "permission";
+                  key = "librepremium.user.*";
+                  value = true;
+                }
+                {
+                  type = "permission";
+                  key = "velocity.command.*";
+                  value = true;
+                }
+              ];
               default.nodes = [ ];
             };
           });
@@ -176,21 +188,43 @@ in
       limbo = {
         enable = true;
         package = lib'.mkMCServer rec {
-          pname = "Limbo";
-          version = "0.7.1-ALPHA";
-          url = "https://ci.loohpjames.com/job/${pname}/30/artifact/target/${pname}-${version}-1.19.3.jar";
-          sha256 = "sha256-pUJRrytd51dqfcQU+Q5wNUsXhs6vPfK8aPDwp/ei0B4=";
+          pname = "nano-limbo";
+          version = "1.5";
+          url = "https://github.com/Nan1t/NanoLimbo/releases/download/v${version}/NanoLimbo-${version}-all.jar";
+          sha256 = "sha256-0zPQNfUEgK0zIdLEUjTGw2N+Nbe8byZfqrkPYBR888Q=";
         };
         jvmOpts = "";
-        serverProperties = {
-          server-port = 25560;
-          velocity-modern = true;
-          forwarding-secrets = "@VELOCITY_FORWARDING_SECRET@";
-          level-name = "world;spawn.schem";
-          level-dimension = "minecraft:overworld";
-          allow-flight = true;
-          allow-chat = true;
-          world-spawn = "world;0;128;0;-90;0";
+        files."settings.yml" = lib'.toYAMLFile {
+          bind.port = 25560;
+          maxPlayers = -1;
+          ping = {
+            description = "Limbo";
+            version = "1.5";
+          };
+          dimension = "THE_END";
+          playerList = {
+            enable = false;
+            username = "NanoLimbo";
+          };
+          headerAndFooter.enable = false;
+          gameMode = 0;
+          brandName.enable = false;
+          joinMessage.enable = false;
+          bossBar.enable = false;
+          title.enable = false;
+          infoForwarding = {
+            type = "MODERN";
+            secret = "@VELOCITY_FORWARDING_SECRET@";
+          };
+          readTimeout = 30000;
+          debugLevel = 2;
+          netty = {
+            useEpoll = true;
+            threads = {
+              bossGroup = 1;
+              workerGroup = 4;
+            };
+          };
         };
       };
 
@@ -259,6 +293,12 @@ in
             version = "5.4.58";
             url = "https://download.luckperms.net/1467/bukkit/loader/${pname}-Bukkit-${version}.jar";
             sha256 = "sha256-roi16xTu+04ofFccuSLwFl/UqfvG0flHDq0R9/20oIM=";
+          };
+          "plugins/HidePLayerJoinQuit.jar" = pkgs.fetchurl rec {
+            pname = "HidePLayerJoinQuit";
+            version = "1.0";
+            url = "https://github.com/OskarZyg/${pname}/releases/download/v${version}-full-version/${pname}-${version}-Final.jar";
+            sha256 = "sha256-UjLlZb+lF0Mh3SaijNdwPM7ZdU37CHPBlERLR3LoxSU=";
           };
         };
       };
