@@ -1,6 +1,5 @@
 { colorscheme, wallpaper }: ''
   general {
-    main_mod=SUPER
     gaps_in=15
     gaps_out=20
     border_size=2.7

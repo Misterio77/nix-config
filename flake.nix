@@ -25,7 +25,7 @@
     };
 
     # Nixified software I use
-    hyprland.url = "github:hyprwm/hyprland/v0.19.2beta";
+    hyprland.url = "github:hyprwm/hyprland/v0.20.1beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
