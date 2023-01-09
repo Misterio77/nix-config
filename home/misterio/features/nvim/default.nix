@@ -103,6 +103,9 @@
 
         "Close other splits
         nmap <space>o :only<cr>
+
+        "Sudo save
+        cmap w!! w !sudo tee > /dev/null %
       '';
       lua = /* lua */ ''
         -- LSP
