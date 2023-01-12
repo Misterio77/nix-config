@@ -39,11 +39,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1673203746,
-        "narHash": "sha256-Zs55ZA7X+r1DNcdkVQsCzTcbuyqy8WhFER7/hi3l9mk=",
+        "lastModified": 1673496183,
+        "narHash": "sha256-1tjm0ZQv1m9/NS4GwQF7eTacE87Vk+dMF39BxjNUzDs=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "cf38cafc6c63adab469410eae269b7e9de83d860",
+        "rev": "450aafec1146c756162c3583f45ff0e76456e8c9",
         "type": "gitlab"
       },
       "original": {
@@ -101,11 +101,11 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1672644464,
-        "narHash": "sha256-RYlvRMcQNT7FDoDkViijQBHg9g+blsB+U6AvL/gAsPI=",
+        "lastModified": 1673440569,
+        "narHash": "sha256-FQ5o0yI+MH9MgfseeGDsVIIpIqv3BCgq+0NzncuZ9Zo=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "ca29e25c39b8e117d4d76a81f1e229824a9b3a26",
+        "rev": "88016c96c3c338aa801695cdd9f186820bcfe4d6",
         "type": "github"
       },
       "original": {
@@ -122,11 +122,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1673265621,
-        "narHash": "sha256-4F5fbx2HvIWqYhEFfiI4WOMs79Ah9jH4PohI66vhOBY=",
+        "lastModified": 1673343300,
+        "narHash": "sha256-5Xdj6kpXYMie0MlnGwqK5FaMdsedxvyuakWtyKB3zaQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "69806e937881c75269e058daecf49d9c39bd034e",
+        "rev": "176e455371a8371586e8a3ff0d56ee9f3ca2324e",
         "type": "github"
       },
       "original": {
@@ -249,11 +249,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1673225919,
-        "narHash": "sha256-t7ZGS+6Sx36olzMQ27dL4ekOwzpLwH+AnO9ubpFMGF8=",
+        "lastModified": 1673398801,
+        "narHash": "sha256-8uq6oD/5rOO8HoktMgEUqw9uTgT+I8svPIBuP4TK7Jo=",
         "owner": "misterio77",
         "repo": "nix-minecraft",
-        "rev": "64d1823ae67fcfb487e4f922668d1f1660aed8dd",
+        "rev": "6f965948b4080506ad16dd3c540a09e9033bd55a",
         "type": "github"
       },
       "original": {
@@ -382,11 +382,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1673134516,
-        "narHash": "sha256-mAZQKqkNQbBmJnmUU0blOfkKlgMSSVyPHdeWeuKad8U=",
+        "lastModified": 1673450908,
+        "narHash": "sha256-b8em+kwrNtnB7gR8SyVf6WuTyQ+6tHS6dzt9D9wgKF0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f6f44561884c3470e2b783683d5dbac42dfc833b",
+        "rev": "6c8644fc37b6e141cbfa6c7dc8d98846c4ff0c2e",
         "type": "github"
       },
       "original": {
@@ -465,11 +465,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1667933607,
-        "narHash": "sha256-GNcRuxbCCnfVC8uWoSbBd4RLFr9vsi89YkJFUtil7QY=",
+        "lastModified": 1673484516,
+        "narHash": "sha256-AXtoNp8UFO3vqZKRMIo2IlcFJGvHzgefAqCPWWnRpmg=",
         "owner": "misterio77",
         "repo": "paste.misterio.me",
-        "rev": "64ae4e4d92056ef2ae844b3776c2ad7ffe6f7ba7",
+        "rev": "34d86abaf509c898760ba1da0f00150017565bdd",
         "type": "github"
       },
       "original": {
@@ -502,11 +502,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1673147300,
-        "narHash": "sha256-gR9OEfTzWfL6vG0qkbn1TlBAOlg4LuW8xK/u0V41Ihc=",
+        "lastModified": 1673481602,
+        "narHash": "sha256-P80X38fOM2MtoYdgkyuksGOQPDhIhNJW2W2jMeMIZzE=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "2253120d2a6147e57bafb5c689e086221df8032f",
+        "rev": "32187b33ac6ec9b628dcd08dd941a715e6241dda",
         "type": "github"
       },
       "original": {
@@ -550,11 +550,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1673481315,
-        "narHash": "sha256-t/zh5F51YreSgvueEs62Jkv7Mt0B1S4qH/a1J79SdAM=",
+        "lastModified": 1673485513,
+        "narHash": "sha256-5B7XO3DSAkE6l37z1X/BrO512LUI+sXqvN+ewK15h4A=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "fa7372218d718b04eb3bf047142b1e14c35d4949",
+        "rev": "af037ef20e01027c266b2d454845c3e47f8de031",
         "type": "github"
       },
       "original": {
