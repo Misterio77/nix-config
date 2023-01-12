@@ -8,7 +8,7 @@
       enable = true;
       package = inputs.paste-misterio-me.packages.${pkgs.system}.server;
       database = "postgresql:///paste?user=paste&host=/var/run/postgresql";
-      environmentFile = config.sops.secrets.paste-misterio-me-key.path;
+      environmentFile = config.sops.secrets.paste-misterio-me-secrets.path;
       port = 8082;
     };
 
@@ -28,7 +28,7 @@
     };
   };
 
-  sops.secrets.paste-misterio-me-key = {
+  sops.secrets.paste-misterio-me-secrets = {
     owner = "paste";
     group = "paste";
     sopsFile = ../secrets.yaml;

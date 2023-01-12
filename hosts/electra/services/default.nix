@@ -7,6 +7,7 @@
     ./hydra.nix
     ./mail.nix
     ./nginx.nix
+    ./paste-misterio-me.nix
     ./radicale.nix
     ./website.nix
     ./yrmos.nix
