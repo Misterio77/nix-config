@@ -3,6 +3,7 @@
     ./bash.nix
     ./bat.nix
     ./fish.nix
+    ./gh.nix
     ./git.nix
     ./gpg.nix
     ./nix-index.nix
