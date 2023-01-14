@@ -8,6 +8,8 @@
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
   speedtestpp = pkgs.callPackage ./speedtestpp { };
+  # TODO: remove when https://github.com/NixOS/nixpkgs/pull/210717 is merged
+  gh-markdown-preview = pkgs.callPackage ./gh-markdown-preview { };
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };
