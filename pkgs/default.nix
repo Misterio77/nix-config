@@ -1,8 +1,6 @@
 { pkgs ? import <nixpkgs> { } }: {
 
   # Packages with an actual source
-  clematis = pkgs.callPackage ./clematis { };
-  gtklock = pkgs.callPackage ./gtklock { };
   phpactor = pkgs.callPackage ./phpactor { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
