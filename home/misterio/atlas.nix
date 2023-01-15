@@ -8,7 +8,7 @@
   ];
 
   wallpaper = (import ./wallpapers).aenami-bright-planet;
-  colorscheme = inputs.nix-colors.colorschemes.atlas;
+  colorscheme = inputs.nix-colors.colorschemes.atelier-cave-light;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
