@@ -31,5 +31,7 @@
 
     nil # Nix LSP
     nixfmt # Nix formatter
+
+    ltex-ls # Spell checking LSP
   ];
 }
