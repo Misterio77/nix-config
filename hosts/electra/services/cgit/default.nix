@@ -59,8 +59,8 @@ in
     cache-size=1000
     cache-root=/run/cgit
 
-    root-title=My git repos
-    root-desc=Source code for some of my projects. Want to contribute a patch? Send me an email or open up a PR on the github mirrors.
+    root-title=Git
+    root-desc=This is a cgit mirror for some of my projects. You might want to check them out on github (github.com/misterio77) instead.
 
     enable-http-clone=1
     noplainemail=1
