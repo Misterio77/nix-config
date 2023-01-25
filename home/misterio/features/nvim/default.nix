@@ -3,7 +3,6 @@
   imports = [
     ./lsp.nix
     ./syntaxes.nix
-    ./treesitter.nix
     ./ui.nix
   ];
   home.sessionVariables.EDITOR = "nvim";
