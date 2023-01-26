@@ -3,6 +3,6 @@
   xdg.configFile."khard/khard.conf".text = ''
     [addressbooks]
     [[contacts]]
-    path = ~/Contacts/personal
+    path = ~/Contacts/Main
   '';
 }
