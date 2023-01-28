@@ -11,8 +11,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "Misterio77";
     repo = "minicava";
-    rev = "cabb143e0f83706022f653c1566f3a8c3ce133bb";
-    sha256 = "sha256-yJctepZrtxszfq+U5mrsTlzIW0R5ZAdjkCgQxukfUeo=";
+    rev = "c24681fe7c91548e0fb4f55a1882b0145c48d097";
+    sha256 = "sha256-t+NHZP2I7clDHrnCDdYMaLcua7inVKm2t3aYZ3uBAlk=";
   };
 
   dontBuild = true;
