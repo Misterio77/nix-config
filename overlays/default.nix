@@ -1,4 +1,29 @@
 {
+  # TODO https://github.com/NixOS/nixpkgs/issues/205014
+  fix205014 = final: prev: {
+    khal = prev.khal.overrideAttrs (oa: {
+      disabledTests = oa.disabledTests ++ [
+        "event_test"
+        "vtimezone_test"
+        "test_split_ics"
+        "test_get"
+        "test_construct_event_format_de"
+        "test__construct_event_format_us"
+        "test__construct_event_format_de_complexer"
+        "test_leap_year"
+        "test_description"
+        "test_repeat_floating"
+        "test_repeat_localized"
+        "test_alarm"
+        "test_description_and_location_and_categories"
+      ];
+    });
+    todoman = prev.todoman.overrideAttrs (oa: {
+      disabledTests = oa.disabledTests ++ [
+        "test_datetime_serialization"
+      ];
+    });
+  };
   # Adds my custom packages
   additions = final: _prev: import ../pkgs { pkgs = final; };
 
@@ -42,15 +67,6 @@
         rev = "2cd05c95827fb94740e876733dc6f7fe88340de2";
         sha256 = "sha256-95mRJ3ZCSkLHqehFQdwM2BY0h+YDhohwpnRiF6/lZtA=";
       };
-    });
-
-    # Fix failing builds
-    # TODO: https://github.com/NixOS/nixpkgs/issues/205014
-    khal = prev.khal.overrideAttrs (oa: {
-      disabledTests = oa.disabledTests ++ [
-        "event_test"
-        "vtimezone_test"
-      ];
     });
   };
 }
