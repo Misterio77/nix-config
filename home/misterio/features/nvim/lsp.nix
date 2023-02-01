@@ -25,6 +25,7 @@
         add_lsp("terraform-ls", lspconfig.terraformls, {})
         add_lsp("texlab", lspconfig.texlab, {})
         add_lsp("gopls", lspconfig.gopls, {})
+        add_lsp("tsserver", lspconfig.tsserver, {})
 
         add_lsp("lua-lsp", lspconfig.sumneko_lua, {
           cmd = { "lua-lsp" }
