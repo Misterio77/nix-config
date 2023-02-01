@@ -15,7 +15,6 @@
         add_lsp("bash-language-server", lspconfig.bashls, {})
         add_lsp("clangd", lspconfig.clangd, {})
         add_lsp("nil", lspconfig.nil_ls, {})
-        add_lsp("ltex-ls", lspconfig.ltex, {})
         add_lsp("pylsp", lspconfig.pylsp, {})
         add_lsp("dart", lspconfig.dartls, {})
         add_lsp("haskell-language-server", lspconfig.hls, {})
@@ -39,6 +38,7 @@
             onOpenAndSave = true
           }
         })
+        add_lsp("ltex-ls", lspconfig.ltex, {})
       '';
     }
     {
