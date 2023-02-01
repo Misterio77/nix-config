@@ -332,6 +332,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1674941607,
+        "narHash": "sha256-z44KWUWTnMD9J4MWjrMtpkKq0exnFoai+NoE2KxNf9s=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3d32d7adcd08b8486447bdc861382cd486a57c19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1674352297,
@@ -490,6 +506,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-master": "nixpkgs-master",
         "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
         "website": "website",

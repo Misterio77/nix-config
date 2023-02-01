@@ -1,3 +1,4 @@
+{ outputs, inputs }:
 {
   # TODO https://github.com/NixOS/nixpkgs/issues/205014
   fix205014 = final: prev: {
@@ -24,6 +25,12 @@
       ];
     });
   };
+
+  # Master nixpkgs
+  master = final: prev: {
+    master = inputs.nixpkgs-master.legacyPackages.${final.system};
+  };
+
   # Adds my custom packages
   additions = final: _prev: import ../pkgs { pkgs = final; };
 
