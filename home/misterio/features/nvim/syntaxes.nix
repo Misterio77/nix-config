@@ -13,6 +13,8 @@
     mermaid-vim
     pgsql-vim
     vim-terraform
+    vim-jsx-typescript
+
     {
       plugin = vimtex;
       config = let
