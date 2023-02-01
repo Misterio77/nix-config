@@ -5,6 +5,7 @@
     ./features/rgb
     ./features/trusted
     ./features/games
+    ./features/music
   ];
 
   wallpaper = (import ./wallpapers).aenami-bright-planet;
