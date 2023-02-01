@@ -9,13 +9,13 @@ in
 {
   services.openssh = {
     enable = true;
-    # Harden
-    passwordAuthentication = false;
-    permitRootLogin = "no";
+    settings = {
+      # Harden
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
     # Automatically remove stale sockets
-    extraConfig = ''
-      StreamLocalBindUnlink yes
-    '';
+      StreamLocalBindUnlink = "yes";
+    };
     # Allow forwarding ports to everywhere
     gatewayPorts = "clientspecified";
 
