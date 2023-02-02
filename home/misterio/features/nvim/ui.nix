@@ -19,24 +19,6 @@
       '';
     }
     {
-      plugin = nvim-femaco;
-      type = "lua";
-      config = /* lua */ ''
-        local femaco = require('femaco')
-        local femaco_edit = require('femaco.edit')
-
-        femaco.setup{
-          prepare_buffer = function(opts)
-              vim.cmd('split')
-              local win = vim.api.nvim_get_current_win()
-              local buf = vim.api.nvim_create_buf(false, false)
-              return vim.api.nvim_win_set_buf(win, buf)
-          end,
-        }
-        vim.keymap.set("n", "<space>E", femaco_edit.edit_code_block, { desc = "Edit code block" })
-      '';
-    }
-    {
       plugin = alpha-nvim;
       type = "lua";
       config = /* lua */ ''
