@@ -9,6 +9,7 @@ keys:
     - &pleione age1j9ld6ey62hqd33xkyd2fg9362k6xhm5gavsrpsfalwpcs8smxfdqpk84a2
     - &electra age1mddne5mfm78n5td59nu35lh0fxfe28a0575kcjrmtyxl8hn9xpfsnmgvat
     - &maia age1dn7pkareh83k8el2yt4dmdfdzn7f45fuc785cnnxgzf3h4r5gqhqd4l93h
+    - &alcyone age1uxvuygmvwpfjrd9d3ulg6ln8dgvaw4l2c90mw0tr72qg3n8vd9ns3dm000
 
 creation_rules:
   - path_regex: hosts/merope/secrets.ya?ml$
@@ -32,5 +33,6 @@ creation_rules:
       - *pleione
       - *electra
       - *maia
+      - *alcyone
       pgp:
       - *misterio
