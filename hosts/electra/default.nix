@@ -7,8 +7,6 @@
     ../common/users/misterio
   ];
 
-  # environment.persistence.enable = true;
-
   networking = {
     hostName = "electra";
     useDHCP = true;

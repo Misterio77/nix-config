@@ -77,7 +77,14 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/merope ];
         };
-        # VPS
+        # Smaller VPS
+        # Used for more critical stuff (headscale, mail, prometheus, etc)
+        alcyone = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/alcyone ];
+        };
+        # Larger VPS
+        # Used for hydra, game servers, etc
         electra = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/electra ];
