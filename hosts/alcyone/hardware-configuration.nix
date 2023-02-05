@@ -15,7 +15,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/electra";
+    device = "/dev/disk/by-label/alcyone";
     fsType = "btrfs";
     options = [ "subvol=boot" ];
   };
