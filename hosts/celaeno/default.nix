@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./services
 
     ../common/global
     ../common/users/misterio
