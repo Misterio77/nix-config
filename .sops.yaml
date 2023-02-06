@@ -16,7 +16,7 @@ creation_rules:
   - path_regex: hosts/celaeno/secrets.ya?ml$
     key_groups:
     - age:
-      - *alcyone
+      - *celaeno
       pgp:
       - *misterio
   - path_regex: hosts/alcyone/secrets.ya?ml$
