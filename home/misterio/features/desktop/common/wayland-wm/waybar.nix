@@ -163,6 +163,7 @@ in
           exec =
             let
               targets = {
+                alcyone = { host = "alcyone"; icon = " "; };
                 electra = { host = "electra"; icon = " "; };
                 merope = { host = "merope"; icon = " "; };
                 atlas = { host = "atlas"; icon = " "; };
@@ -181,7 +182,7 @@ in
                 set -o pipefail
                 ${builtins.concatStringsSep "\n" (map setPing (builtins.attrValues targets))}
               '';
-              text = "${showPingCompact targets.electra} / ${showPingCompact targets.merope}";
+              text = "${showPingCompact targets.alcyone} / ${showPingCompact targets.merope}";
               tooltip = builtins.concatStringsSep "\n" (map showPingLarge (builtins.attrValues targets));
             };
           format = "{}";
