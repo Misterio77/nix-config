@@ -7,7 +7,7 @@
       "metrics.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:${config.services.prometheus.port}";
+        locations."/".proxyPass = "http://localhost:${toString config.services.prometheus.port}";
       };
     };
   };
