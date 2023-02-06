@@ -1,9 +1,14 @@
-{
-  services.prometheus = {
-    enable = true;
-    alertmanager = {
+{ config, ... }: {
+  services = {
+    prometheus = {
       enable = true;
-      port = 9093;
+    };
+    nginx.virtualHosts = {
+      "metrics.m7.rs" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".proxyPass = "http://localhost:${config.services.prometheus.port}";
+      };
     };
   };
 }
