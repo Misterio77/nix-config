@@ -54,23 +54,23 @@ in
         (mkBuildMachinesFile [
           {
             uri = "ssh://nix-ssh@atlas";
-            systems = [ "x86_64-linux" "aarch64-linux" ];
+            systems = [ "x86_64-linux" ];
             sshKey = config.sops.secrets.nix-ssh-key.path;
             maxJobs = 12;
             speedFactor = 150;
           }
           {
             uri = "ssh://nix-ssh@maia";
-            systems = [ "x86_64-linux" "aarch64-linux" ];
+            systems = [ "x86_64-linux" ];
             sshKey = config.sops.secrets.nix-ssh-key.path;
             maxJobs = 8;
             speedFactor = 100;
           }
           {
             uri = "localhost";
-            systems = [ "x86_64-linux" "aarch64-linux" ];
-            maxJobs = 2;
-            speedFactor = 50;
+            systems = [ "aarch64-linux" "x86_64-linux" ];
+            maxJobs = 4;
+            speedFactor = 70;
           }
         ])
       ];
