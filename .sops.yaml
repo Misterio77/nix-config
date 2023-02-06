@@ -12,6 +12,12 @@ keys:
     - &alcyone age1uxvuygmvwpfjrd9d3ulg6ln8dgvaw4l2c90mw0tr72qg3n8vd9ns3dm000
 
 creation_rules:
+  - path_regex: hosts/alcyone/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *alcyone
+      pgp:
+      - *misterio
   - path_regex: hosts/merope/secrets.ya?ml$
     key_groups:
     - age:
