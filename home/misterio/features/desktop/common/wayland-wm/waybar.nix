@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ outputs, config, lib, pkgs, ... }:
 
 let
   # Dependencies
@@ -162,28 +162,23 @@ in
           return-type = "json";
           exec =
             let
-              targets = {
-                alcyone = { host = "alcyone"; icon = " "; };
-                electra = { host = "electra"; icon = " "; };
-                merope = { host = "merope"; icon = " "; };
-                atlas = { host = "atlas"; icon = " "; };
-                maia = { host = "maia"; icon = " "; };
-                pleione = { host = "pleione"; icon = " "; };
-              };
-
-              showPingCompact = { host, icon }: "${icon} $ping_${host}";
-              showPingLarge = { host, icon }: "${icon} ${host}: $ping_${host}";
-              setPing = { host, ... }: ''
-                ping_${host}="$(timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1)ms" || ping_${host}="Disconnected"
-              '';
+              inherit (builtins) concatStringsSep attrNames;
+              hosts = attrNames outputs.nixosConfigurations;
+              homeMachine = "merope";
+              remoteMachine = "alcyone";
             in
             jsonOutput "tailscale-ping" {
+              # Build variables for each host
               pre = ''
                 set -o pipefail
-                ${builtins.concatStringsSep "\n" (map setPing (builtins.attrValues targets))}
+                ${concatStringsSep "\n" (map (host: ''
+                  ping_${host}="$(timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1)ms" || ping_${host}="Disconnected"
+                '') hosts)}
               '';
-              text = "${showPingCompact targets.alcyone} / ${showPingCompact targets.merope}";
-              tooltip = builtins.concatStringsSep "\n" (map showPingLarge (builtins.attrValues targets));
+              # Access a remote machine's and a home machine's ping
+              text = "  $ping_${remoteMachine} /  $ping_${homeMachine}";
+              # Show pings from all machines
+              tooltip = concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
             };
           format = "{}";
           on-click = "";
