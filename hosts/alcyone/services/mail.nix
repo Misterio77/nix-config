@@ -7,7 +7,7 @@
   mailserver = rec {
     enable = true;
     fqdn = "mail.m7.rs";
-    sendingFqdn = "electra.m7.rs";
+    sendingFqdn = "alcyone.m7.rs";
     domains = [
       "m7.rs"
       "fontes.dev.br"
