@@ -20,6 +20,11 @@
     options = [ "subvol=boot" ];
   };
 
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 12288;
+  }];
+
   hardware.cpu.intel.updateMicrocode = true;
 
   virtualisation.hypervGuest.enable = true;

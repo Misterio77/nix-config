@@ -25,6 +25,11 @@
     };
   };
 
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 8196;
+  }];
+
   nixpkgs.hostPlatform.system = "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "powersave";
