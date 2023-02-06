@@ -54,7 +54,7 @@
   # Prefer ipv4 and use main ipv6 to avoid reverse DNS issues
   # CHANGEME when switching hosts
   services.postfix.extraConfig = ''
-    smtp_bind_address6 = 2001:19f0:b800:1d54:5400:04ff:fe2a:c074
+    smtp_bind_address6 = 2001:19f0:b800:1bf8:5400:4ff:fe4b:9006
     smtp_address_preference = ipv4
   '';
 
