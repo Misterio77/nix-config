@@ -35,7 +35,6 @@ Looking for something simpler to start out with flakes? Try [my starter config r
   - `merope`: Raspberry Pi 4 - 8GB RAM | Server
   - `celaeno`: Oracle Could VPS (Ampere) - 24GB RAM & 4vCPUs | Server
   - `alcyone`: Vultr VPS - 1GB RAM & 1 vCPU | Server
-  - `electra`: Vultr VPS - 4GB RAM & 2 vCPUs | Server (To be retired)
 - `home`: My Home-manager configuration, acessible via `home-manager --flake`
     - Each directory here is a "feature" each hm configuration can toggle, thus
       customizing my setup for each machine (be it a server, desktop, laptop,
