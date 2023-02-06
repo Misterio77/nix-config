@@ -83,8 +83,13 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/alcyone ];
         };
-        # Larger VPS
+        # Larger VPS (free aarch64 from oracle)
         # Used for hydra, game servers, etc
+        celaeno = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/celaeno ];
+        };
+        # Older VPS I'm phasing out
         electra = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/electra ];
@@ -117,10 +122,22 @@
           modules = [ ./home/misterio/merope.nix ];
         };
         # VPS
+        "misterio@alcyone" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home/misterio/alcyone.nix ];
+        };
+        # VPS
+        "misterio@celaeno" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."aarch64-linux";
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home/misterio/celaeno.nix ];
+        };
+        # VPS
         "misterio@electra" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/electra.nix ];
+          modules = [ ./home/misterio/alcyone.nix ];
         };
         # Portable minimum configuration
         "misterio@generic" = home-manager.lib.homeManagerConfiguration {
