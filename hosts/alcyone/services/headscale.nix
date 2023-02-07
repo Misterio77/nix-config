@@ -3,9 +3,9 @@
   services = {
     headscale = {
       enable = true;
-      address = "0.0.0.0";
       settings = {
         dns_config = {
+          override_local_dns = true;
           base_domain = "m7.rs";
           magic_dns = true;
           domains = [ "ts.m7.rs" ];
@@ -14,12 +14,18 @@
           ];
         };
         server_url = "https://tailscale.m7.rs";
+        logtail = {
+          enabled = false;
+        };
+        log = {
+          level = "warn";
+        };
+        ip_prefixes = [
+          "100.64.0.0/10"
+          "fdef:6567:bd7a::/48"
+        ];
       };
       port = 8085;
-      settings = {
-        logtail.enabled = false;
-        log.level = "warn";
-      };
     };
 
     nginx.virtualHosts = {
