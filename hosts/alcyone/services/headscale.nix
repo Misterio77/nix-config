@@ -3,6 +3,8 @@
   services = {
     headscale = {
       enable = true;
+      port = 8085;
+      address = "127.0.0.1";
       settings = {
         dns_config = {
           override_local_dns = true;
@@ -14,6 +16,7 @@
           ];
         };
         server_url = "https://tailscale.m7.rs";
+        metrics_listen_addr = "127.0.0.1:8095";
         logtail = {
           enabled = false;
         };
@@ -25,16 +28,20 @@
           "fdef:6567:bd7a::/48"
         ];
       };
-      port = 8085;
     };
 
     nginx.virtualHosts = {
       "tailscale.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/" = {
-          proxyPass = "http://localhost:${toString config.services.headscale.port}";
-          proxyWebsockets = true;
+        locations = {
+          "/" = {
+            proxyPass = "http://localhost:${toString config.services.headscale.port}";
+            proxyWebsockets = true;
+          };
+          "/metrics" = {
+            proxyPass = "http://${config.services.headscale.settings.metrics_listen_addr}/metrics";
+          };
         };
       };
       "tailscale.misterio.me" = {
