@@ -7,7 +7,7 @@ in
       enable = true;
       settings = {
         server = {
-          hosts = [ "0.0.0.0:${port}" "[::]:${port}" ];
+          hosts = [ "127.0.0.1:${port}" "::1:${port}" ];
         };
         auth = {
           type = "htpasswd";
