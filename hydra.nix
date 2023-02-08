@@ -7,6 +7,6 @@ let
   filterValidPkgs = sys: pkgs: filterAttrs (_: pkg: hasPlatform sys pkg && notBroken pkg) pkgs;
   getCfg = _: cfg: cfg.config.system.build.toplevel;
 in {
-  packages = mapAttrs filterValidPkgs outputs.packages;
-  nixos = mapAttrs getCfg outputs.nixosConfigurations;
+  pkgs = mapAttrs filterValidPkgs outputs.packages;
+  hosts = mapAttrs getCfg outputs.nixosConfigurations;
 }
