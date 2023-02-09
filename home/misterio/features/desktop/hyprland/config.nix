@@ -9,12 +9,12 @@
   }
 
   decoration {
-    active_opacity=0.96
-    inactive_opacity=0.86
+    active_opacity=0.94
+    inactive_opacity=0.84
     fullscreen_opacity=1.0
     rounding=5
     blur=true
-    blur_size=9
+    blur_size=5
     blur_passes=3
     blur_new_optimizations=true
     blur_ignore_opacity=true
