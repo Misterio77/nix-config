@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 let
   ssh = "${pkgs.openssh}/bin/ssh";
 
@@ -41,13 +41,11 @@ in
     extraConfig = {
       feature.manyFiles = true;
       init.defaultBranch = "main";
-      url."https://github.com/".insteadOf = "git://github.com/";
+      user.signing.key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
+      commit.gpgSign = true;
+      gpg.program = "${config.programs.gpg.package}/bin/gpg2";
     };
-    lfs = { enable = true; };
+    lfs.enable = true;
     ignores = [ ".direnv" "result" ];
-    signing = {
-      signByDefault = true;
-      key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
-    };
   };
 }
