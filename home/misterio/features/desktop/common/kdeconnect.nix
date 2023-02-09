@@ -9,7 +9,8 @@ let
     ${kdeconnect-cli} -d $(${kdeconnect-cli} --list-available --id-only) --ping-msg "$(${fortune})"
   '';
 
-in {
+in
+{
   # Hide all .desktop, except for org.kde.kdeconnect.settings
   xdg.desktopEntries = {
     "org.kde.kdeconnect.sms" = {

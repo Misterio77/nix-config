@@ -45,22 +45,24 @@ in {
         '';
       };
     };
-    colors = let
-      mkColorOption = name: {
-        inherit name;
-        value = mkOption {
-          type = types.strMatching "[a-fA-F0-9]{6}";
-          description = "${name} color.";
-          default = "ffffff";
+    colors =
+      let
+        mkColorOption = name: {
+          inherit name;
+          value = mkOption {
+            type = types.strMatching "[a-fA-F0-9]{6}";
+            description = "${name} color.";
+            default = "ffffff";
+          };
         };
-      };
-    in listToAttrs (map mkColorOption [
-      "background"
-      "foreground"
-      "secondary"
-      "tertiary"
-      "quaternary"
-    ]);
+      in
+      listToAttrs (map mkColorOption [
+        "background"
+        "foreground"
+        "secondary"
+        "tertiary"
+        "quaternary"
+      ]);
     mouse = {
       device = mkOption {
         type = types.path;

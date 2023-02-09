@@ -39,27 +39,29 @@ in {
 
   config = mkIf cfg.enable {
 
-    systemd.services.satisfactory-server = let
-      steamcmd = "${cfg.steamcmdPackage}/bin/steamcmd";
-      steam-run = "${pkgs.steam-run}/bin/steam-run";
-    in {
-      description = "Satisfactory Dedicated Server";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
+    systemd.services.satisfactory-server =
+      let
+        steamcmd = "${cfg.steamcmdPackage}/bin/steamcmd";
+        steam-run = "${pkgs.steam-run}/bin/steam-run";
+      in
+      {
+        description = "Satisfactory Dedicated Server";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
 
-      serviceConfig = {
-        TimeoutSec = "15min";
-        ExecStart =
-          "${steam-run} ${cfg.dataDir}/FactoryServer.sh ${cfg.launchOptions}";
-        Restart = "always";
-        User = "satisfactory";
-        WorkingDirectory = cfg.dataDir;
+        serviceConfig = {
+          TimeoutSec = "15min";
+          ExecStart =
+            "${steam-run} ${cfg.dataDir}/FactoryServer.sh ${cfg.launchOptions}";
+          Restart = "always";
+          User = "satisfactory";
+          WorkingDirectory = cfg.dataDir;
+        };
+
+        preStart = ''
+          ${steamcmd} +force_install_dir "${cfg.dataDir}" +login anonymous +app_update 1690800 validate +quit
+        '';
       };
-
-      preStart = ''
-        ${steamcmd} +force_install_dir "${cfg.dataDir}" +login anonymous +app_update 1690800 validate +quit
-      '';
-    };
 
     users.users.satisfactory = {
       description = "Satisfactory server service user";

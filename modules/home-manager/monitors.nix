@@ -3,7 +3,8 @@
 let
   inherit (lib) mkOption types;
   cfg = config.monitors;
-in {
+in
+{
   options.monitors = mkOption {
     type = types.listOf (types.submodule {
       options = {

@@ -1,4 +1,3 @@
-
 { roundcubePlugins, fetchFromGitHub }:
 
 roundcubePlugins.roundcubePlugin rec {

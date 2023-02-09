@@ -17,7 +17,7 @@
       plugins = [ "cgi" ];
       instance = {
         type = "emperor";
-        vassals = lib.mkBefore {};
+        vassals = lib.mkBefore { };
       };
     };
   };

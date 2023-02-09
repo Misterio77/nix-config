@@ -1,5 +1,5 @@
 # Sets the largest monitor as primary xwayland display, or select one with slurp
-{ lib, writeShellApplication, xrandr, slurp  }: (writeShellApplication {
+{ lib, writeShellApplication, xrandr, slurp }: (writeShellApplication {
   name = "primary-xwayland";
   runtimeInputs = [ slurp xrandr ];
 

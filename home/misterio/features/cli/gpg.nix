@@ -27,7 +27,8 @@ in
     let
       fixGpg = ''
         gpgconf --launch gpg-agent
-      ''; in
+      '';
+    in
     {
       # Start gpg-agent if it's not running or tunneled in
       # SSH does not start it automatically, so this is needed to avoid having to use a gpg command at startup

@@ -1,9 +1,10 @@
 { pkgs, inputs, ... }:
 let
   cgit = "${pkgs.scgit}";
-  compileSass = file: pkgs.runCommand "sass" {
-    buildInputs = [ pkgs.sass ];
-  } ''
+  compileSass = file: pkgs.runCommand "sass"
+    {
+      buildInputs = [ pkgs.sass ];
+    } ''
     sass ${file} > $out
   '';
   partials = "${inputs.website.packages.${pkgs.system}.main}/public/cgit_partials";

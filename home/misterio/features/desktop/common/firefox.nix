@@ -13,7 +13,7 @@ in
         netflix-1080p
         browserpass
       ];
-      bookmarks = {};
+      bookmarks = { };
       settings = {
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;

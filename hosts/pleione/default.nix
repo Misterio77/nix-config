@@ -42,7 +42,7 @@
   };
 
   # Lid settings
-  services.logind ={
+  services.logind = {
     lidSwitch = "suspend";
     lidSwitchExternalPower = "lock";
   };

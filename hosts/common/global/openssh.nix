@@ -13,7 +13,7 @@ in
       # Harden
       PasswordAuthentication = false;
       PermitRootLogin = "no";
-    # Automatically remove stale sockets
+      # Automatically remove stale sockets
       StreamLocalBindUnlink = "yes";
     };
     # Allow forwarding ports to everywhere
@@ -27,10 +27,12 @@ in
 
   programs.ssh = {
     # Each hosts public key
-    knownHosts = builtins.mapAttrs (name: _: {
-      publicKeyFile = pubKey name;
-      extraHostNames = lib.optional (name == hostname) "localhost";
-    }) hosts;
+    knownHosts = builtins.mapAttrs
+      (name: _: {
+        publicKeyFile = pubKey name;
+        extraHostNames = lib.optional (name == hostname) "localhost";
+      })
+      hosts;
   };
 
   # Passwordless sudo when SSH'ing with keys

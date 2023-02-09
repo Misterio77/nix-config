@@ -1,6 +1,9 @@
-{ lib, stdenv
-, fetchFromGitHub, makeWrapper
-, cava, gnused
+{ lib
+, stdenv
+, fetchFromGitHub
+, makeWrapper
+, cava
+, gnused
 }:
 
 with lib;

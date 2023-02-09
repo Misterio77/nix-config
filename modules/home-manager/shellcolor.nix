@@ -10,7 +10,8 @@ let
   renderSettings = settings:
     lib.concatStrings (lib.mapAttrsToList renderSetting settings);
 
-in {
+in
+{
   options.programs.shellcolor = {
     enable = lib.mkEnableOption "shellcolor";
 

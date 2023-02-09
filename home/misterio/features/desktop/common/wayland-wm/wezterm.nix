@@ -3,7 +3,8 @@
 let
   inherit (config) colorscheme;
   inherit (colorscheme) colors;
-in {
+in
+{
   programs.wezterm = {
     enable = true;
     colorSchemes = {
