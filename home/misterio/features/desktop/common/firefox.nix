@@ -14,6 +14,12 @@ in
         browserpass
       ];
       bookmarks = { };
+      extensions = with addons; [
+        ublock-origin
+        netflix-1080p
+        browserpass
+      ];
+      bookmarks = {};
       settings = {
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;
