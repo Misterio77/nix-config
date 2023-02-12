@@ -7,12 +7,12 @@ in
   programs.browserpass.enable = true;
   programs.firefox = {
     enable = true;
-    extensions = with addons; [
-      ublock-origin
-      netflix-1080p
-      browserpass
-    ];
     profiles.misterio = {
+      extensions = with addons; [
+        ublock-origin
+        netflix-1080p
+        browserpass
+      ];
       bookmarks = {};
       settings = {
         "browser.disableResetPrompt" = true;
