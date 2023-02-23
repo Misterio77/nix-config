@@ -8,11 +8,6 @@ in
   programs.firefox = {
     enable = true;
     profiles.misterio = {
-      extensions = with addons; [
-        ublock-origin
-        netflix-1080p
-        browserpass
-      ];
       bookmarks = { };
       extensions = with addons; [
         ublock-origin
