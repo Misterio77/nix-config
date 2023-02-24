@@ -6,8 +6,8 @@
     ./prometheus.nix
     ./nginx.nix
     ./radicale.nix
-    ./website.nix
 
     ./cgit
+    ./website
   ];
 }
