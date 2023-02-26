@@ -25,6 +25,12 @@ creation_rules:
       - *alcyone
       pgp:
       - *misterio
+  - path_regex: hosts/merope/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *merope
+      pgp:
+      - *misterio
 
   - path_regex: hosts/common/secrets.ya?ml$
     key_groups:
