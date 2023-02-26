@@ -77,7 +77,6 @@ in
             allow-third-party-capes = true;
             auth-type = "floodgate";
           };
-          # TODO: configure husk-chat
           "plugins/luckperms/config.yml" = lib'.toYAMLFile {
             server = "proxy";
             storage-method = "mysql";
@@ -90,7 +89,7 @@ in
             };
             messaging-service = "sql";
           };
-          "plugins/librepremium/config.conf" = lib'.toJSONFile {
+          "plugins/librelogin/config.conf" = lib'.toJSONFile {
             allowed-commands-while-unauthorized = [
               "login"
               "register"
@@ -127,7 +126,7 @@ in
             };
             use-titles = false;
           };
-          "plugins/librepremium/messages.conf" = lib'.toJSONFile (import ./cfgs/librepremium-messages.nix);
+          "plugins/librelogin/messages.conf" = lib'.toJSONFile (import ./cfgs/librepremium-messages.nix);
         };
         symlinks = {
           "plugins/Geyser.jar" = pkgs.fetchurl rec {
@@ -142,20 +141,17 @@ in
             url = "https://ci.opencollab.dev/job/GeyserMC/job/${pname}/job/master/${version}/artifact/velocity/build/libs/${lib.toLower pname}-velocity.jar";
             sha256 = "sha256-yFVVtyqhtSRt/r+i0uSu9HleDmAp+xwAAdWmV4W8umU=";
           };
-          "plugins/HuskChat.jar" = pkgs.fetchurl rec {
-            pname = "HuskChat";
-            version = "2.3";
-            url = "https://github.com/WiIIiam278/${pname}/releases/download/${version}/${pname}-${version}.jar";
-            sha256 = "sha256-gNgL1rYxpDGJmmBURwYe8t3rTzOOiII3kmmZHd8mFHY=";
+          "plugins/CopyChat.jar" = pkgs.fetchurl rec {
+            pname = "CopyChat";
+            version = "1.0.0";
+            url = "https://github.com/voruti/${pname}/releases/download/${version}/CopyChat-${version}.jar";
+            sha256 = "sha256-Dk7sG4h/2kN12nzLl++MFDJPXit4CAur8n9VlvNb4yA=";
           };
-          "plugins/LibrePremium.jar" = pkgs.fetchurl rec {
-            pname = "LibrePremium";
-            # version = "0.12.3";
-            # url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
-            # sha256 = "sha256-OBAsgZip+oj7D6bkEud4+X4WwD8BUN9UuPzNvwrp9Z4=";
-            version = "unstable 2023-01-08";
-            url = "https://files.m7.rs/LibrePremium.jar";
-            sha256 = "sha256-XSw4ieuf9k6ec80VB51I4O2S8WNi3CdW1sX3ffwmMTk=";
+          "plugins/LibreLogin.jar" = pkgs.fetchurl rec {
+            pname = "LibreLogin";
+            version = "0.13.4";
+            url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
+            sha256 = "sha256-UGlKpX6o1x5FscTYNFjez9CqeUjEeLgSzR9XoYYbh98=";
           };
           "plugins/LuckPerms.jar" = pkgs.fetchurl rec {
             pname = "LuckPerms";
@@ -170,7 +166,7 @@ in
               admin.nodes = [
                 {
                   type = "permission";
-                  key = "librepremium.user.*";
+                  key = "librelogin.user.*";
                   value = true;
                 }
                 {
