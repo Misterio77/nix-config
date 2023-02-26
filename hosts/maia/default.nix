@@ -11,7 +11,6 @@
     ../common/users/layla
 
     ../common/optional/pantheon.nix
-    ../common/optional/x11-no-suspend.nix
     ../common/optional/quietboot.nix
   ];
 
@@ -52,6 +51,14 @@
   environment.etc."sysconfig/lm_sensors".text = ''
     HWMON_MODULES="coretemp"
   '';
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
 
   system.stateVersion = "22.05";
 }
