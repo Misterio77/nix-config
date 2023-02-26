@@ -1,5 +1,7 @@
 { pkgs, lib, config, ... }:
 {
+  imports = [ ./packages.nix ];
+
   users.mutableUsers = false;
   users.users.layla = {
     isNormalUser = true;
