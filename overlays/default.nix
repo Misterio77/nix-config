@@ -75,5 +75,9 @@
         sha256 = "sha256-95mRJ3ZCSkLHqehFQdwM2BY0h+YDhohwpnRiF6/lZtA=";
       };
     });
+
+    prismlauncher = prev.prismlauncher.overrideAttrs (oa: {
+      patches = (oa.patches or [ ]) ++ [ ./offline-mode-prism-launcher.diff ];
+    });
   };
 }
