@@ -26,7 +26,7 @@
       name = "DP-1";
       width = 2560;
       height = 1080;
-      isPrimary = true;
+      hasBar = true;
       refreshRate = 75;
       x = 1920;
       workspace = "1";
@@ -35,7 +35,7 @@
       name = "DP-2";
       width = 1920;
       height = 1080;
-      x = 4480;
+      x = 3840;
       workspace = "2";
     }
   ];

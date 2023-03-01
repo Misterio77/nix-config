@@ -24,4 +24,7 @@
     DefaultTimeoutStopSec=10s
     DefaultTimeoutStartSec=10s
   '';
+
+  services.avahi.enable = false;
+  networking.networkmanager.enable = false;
 }

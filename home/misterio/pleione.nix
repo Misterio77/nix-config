@@ -14,7 +14,7 @@
     name = "eDP-1";
     width = 1920;
     height = 1080;
-    isPrimary = true;
+    hasBar = true;
     workspace = "1";
   }];
 }

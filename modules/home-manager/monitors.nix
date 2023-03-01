@@ -12,7 +12,7 @@ in
           type = types.str;
           example = "DP-1";
         };
-        isPrimary = mkOption {
+        hasBar = mkOption {
           type = types.bool;
           default = false;
         };

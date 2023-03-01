@@ -2,7 +2,8 @@
 { pkgs, inputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-intel
-    inputs.hardware.nixosModules.common-gpu-nvidia
+    # inputs.hardware.nixosModules.common-gpu-nvidia
+    inputs.hardware.nixosModules.common-gpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
@@ -14,11 +15,6 @@
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
   ];
-
-  # environment.persistence.enable = true;
-
-  # TODO: theme "greeter" user GTK instead of using misterio to login
-  services.greetd.settings.default_session.user = "misterio";
 
   networking = {
     hostName = "electra";
@@ -49,11 +45,15 @@
     wlr.enable = true;
   };
   hardware = {
+    /*
     nvidia = {
-      prime.offload.enable = false;
-    modesetting.enable = true;
-    open = true;
+      prime = {
+        offload.enable = true;
+        nvidiaBusId = "PCI:1:0:0";
+        intelBusId = "PCI:0:2:0";
+      };
     };
+    */
     opengl = {
       enable = true;
       driSupport = true;
