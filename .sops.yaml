@@ -10,6 +10,7 @@ keys:
     - &maia age1dn7pkareh83k8el2yt4dmdfdzn7f45fuc785cnnxgzf3h4r5gqhqd4l93h
     - &alcyone age1uxvuygmvwpfjrd9d3ulg6ln8dgvaw4l2c90mw0tr72qg3n8vd9ns3dm000
     - &celaeno age1gxhy9eq38xfplay0kvkeyvsg96g0c4p6rkhajkrj8nc9dswdzqhssgvns0
+    - &electra age1n06f4dcslh8xq686z2fa9ddr3yg5yzj87p727896xsm8xvusdv6qan0grl
 
 creation_rules:
   - path_regex: hosts/celaeno/secrets.ya?ml$
@@ -34,5 +35,6 @@ creation_rules:
       - *maia
       - *alcyone
       - *celaeno
+      - *electra
       pgp:
       - *misterio

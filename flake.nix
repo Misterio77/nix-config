@@ -68,6 +68,10 @@
           specialArgs = { inherit inputs outputs; };
           modules = [ ./hosts/pleione ];
         };
+        electra = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/electra ];
+        };
         # Secondary Desktop
         maia = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
@@ -104,6 +108,11 @@
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/misterio/pleione.nix ];
+        };
+        "misterio@electra" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home/misterio/electra.nix ];
         };
         # Secondary Desktop
         "misterio@maia" = home-manager.lib.homeManagerConfiguration {
