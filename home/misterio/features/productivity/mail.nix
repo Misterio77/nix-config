@@ -81,12 +81,12 @@ in
   systemd.user.services.mbsync = {
     Unit = { Description = "mbsync synchronization"; };
     Service =
-      let keyring = import ./keyring.nix { inherit pkgs; };
+      let gpgCmds = import ../cli/gpg-commands.nix { inherit pkgs; };
       in
       {
         Type = "oneshot";
         ExecCondition = ''
-          /bin/sh -c "${keyring.isUnlocked}"
+          /bin/sh -c "${gpgCmds.isUnlocked}"
         '';
         ExecStart = "${mbsync} -a";
       };

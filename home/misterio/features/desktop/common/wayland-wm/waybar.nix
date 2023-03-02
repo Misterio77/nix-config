@@ -231,10 +231,10 @@ in
           interval = 2;
           return-type = "json";
           exec =
-            let keyring = import ../../../trusted/keyring.nix { inherit pkgs; };
+            let gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs; };
             in
             jsonOutput "gpg-agent" {
-              pre = ''status=$(${keyring.isUnlocked} && echo "unlocked" || echo "locked")'';
+              pre = ''status=$(${gpgCmds.isUnlocked} && echo "unlocked" || echo "locked")'';
               alt = "$status";
               tooltip = "GPG is $status";
             };

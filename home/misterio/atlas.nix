@@ -3,7 +3,8 @@
     ./global
     ./features/desktop/hyprland
     ./features/rgb
-    ./features/trusted
+    ./features/productivity
+    ./features/pass
     ./features/games
     ./features/music
   ];

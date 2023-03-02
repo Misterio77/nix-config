@@ -53,12 +53,12 @@ in
   systemd.user.services.vdirsyncer = {
     Unit = { Description = "vdirsyncer synchronization"; };
     Service =
-      let keyring = import ./keyring.nix { inherit pkgs; };
+      let gpgCmds = import ../cli/gpg-commands.nix { inherit pkgs; };
       in
       {
         Type = "oneshot";
         ExecCondition = ''
-          /bin/sh -c "${keyring.isUnlocked}"
+          /bin/sh -c "${gpgCmds.isUnlocked}"
         '';
         ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync";
       };

@@ -18,11 +18,6 @@
     ../common/optional/lol-acfix.nix
   ];
 
-  # environment.persistence.enable = true;
-
-  # TODO: theme "greeter" user GTK instead of using misterio to login
-  services.greetd.settings.default_session.user = "misterio";
-
   networking = {
     hostName = "pleione";
   };

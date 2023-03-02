@@ -2,11 +2,13 @@
   imports = [
     ./khal.nix
     ./khard.nix
-    ./mail.nix
-    ./neomutt.nix
-    ./pass.nix
-    ./senpai.nix
     ./todoman.nix
     ./vdirsyncer.nix
+
+    ./mail.nix
+    ./neomutt.nix
+
+    # Pass feature is required
+    ../pass
   ];
 }

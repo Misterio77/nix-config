@@ -3,7 +3,8 @@
     ./global
     ./features/desktop/hyprland
     ./features/desktop/wireless
-    ./features/trusted
+    ./features/productivity
+    ./features/pass
     ./features/games
   ];
 

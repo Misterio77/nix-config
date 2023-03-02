@@ -3,11 +3,11 @@
     ./global
     ./features/desktop/wireless
     ./features/desktop/hyprland
-    ./features/trusted
+    ./features/pass
   ];
 
-  wallpaper = (import ./wallpapers).aenami-lunar;
-  colorscheme = inputs.nix-colors.colorschemes.paraiso;
+  wallpaper = (import ./wallpapers).forest-deer-landscape;
+  colorscheme = inputs.nix-colors.colorschemes.silk-dark;
 
   monitors = [
     {
@@ -31,6 +31,7 @@
       width = 1920;
       height = 1080;
       workspace = "3";
+      x = 3840;
     }
   ];
 }
