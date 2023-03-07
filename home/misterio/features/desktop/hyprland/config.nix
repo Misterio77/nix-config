@@ -57,7 +57,7 @@
   }
 
   input {
-    kb_layout=br
+    kb_layout=br,us
     touchpad {
       disable_while_typing=false
     }
@@ -91,6 +91,7 @@
   # Lock screen
   bind=,XF86Launch5,exec,swaylock -S
   bind=,XF86Launch4,exec,swaylock -S
+  bind=SUPER,backspace,exec,swaylock -S
 
   # Screenshots
   bind=,Print,exec,grimblast --notify copy output

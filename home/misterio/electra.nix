@@ -6,32 +6,17 @@
     ./features/pass
   ];
 
-  wallpaper = (import ./wallpapers).forest-deer-landscape;
-  colorscheme = inputs.nix-colors.colorschemes.silk-dark;
+  wallpaper = (import ./wallpapers).aenami-7pm;
+  colorscheme = inputs.nix-colors.colorschemes.pasque;
 
-  monitors = [
-    {
-      name = "eDP-1";
-      width = 1920;
-      height = 1080;
-      hasBar = true;
-      workspace = "1";
-      x = 0;
-    }
-    {
-      name = "HDMI-A-1";
-      width = 1920;
-      height = 1080;
-      hasBar = true;
-      workspace = "2";
-      x = 1920;
-    }
-    {
-      name = "DP-2";
-      width = 1920;
-      height = 1080;
-      workspace = "3";
-      x = 3840;
-    }
-  ];
+  monitors = [{
+    name = "eDP-1";
+    width = 1920;
+    height = 1080;
+    hasBar = true;
+    workspace = "1";
+    x = 0;
+  }];
+
+  # programs.git.userEmail = "gabriel@zoocha.com";
 }

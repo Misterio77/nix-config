@@ -24,6 +24,12 @@
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   };
 
+  # Compliance
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+  };
+
   services.dbus.packages = [ pkgs.gcr ];
 
   powerManagement.powertop.enable = true;
