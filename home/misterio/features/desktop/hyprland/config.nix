@@ -63,6 +63,13 @@
     }
   }
 
+  # Passthrough mode (e.g. for VNC)
+  bind=SUPER,P,submap,passthrough
+  submap=passthrough
+  bind=SUPER,P,submap,reset
+  submap=reset
+
+
   # Startup
   exec-once=waybar
   exec=swaybg -i ${wallpaper} --mode fill
