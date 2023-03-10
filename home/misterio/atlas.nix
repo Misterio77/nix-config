@@ -36,7 +36,7 @@
       name = "DP-2";
       width = 1920;
       height = 1080;
-      x = 3840;
+      x = 4480;
       workspace = "2";
     }
   ];
