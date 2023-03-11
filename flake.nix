@@ -24,6 +24,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft = {
+      # Waiting on https://github.com/Infinidoge/nix-minecraft/pull/18
       # url = "github:infinidoge/nix-minecraft";
       url = "github:misterio77/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";

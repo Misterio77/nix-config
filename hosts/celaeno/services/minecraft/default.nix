@@ -1,6 +1,6 @@
 { inputs, pkgs, outputs, config, lib, ... }:
 let
-  lib' = pkgs.callPackage ./lib.nix { };
+  lib' = import ./lib.nix { inherit pkgs lib; };
   minecraftPkgs = inputs.nix-minecraft.packages.${pkgs.system};
 in
 {
