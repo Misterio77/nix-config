@@ -48,7 +48,8 @@ let
     '';
   };
   days = n: toString (n * 60 * 60 * 24);
-in {
+in
+{
   services.nginx.virtualHosts = {
     "colors.m7.rs" = {
       forceSSL = true;

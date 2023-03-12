@@ -8,7 +8,8 @@ let
     locations."/".return = "302 https://m7.rs$request_uri";
   };
   days = n: toString (n * 60 * 60 * 24);
-in {
+in
+{
   imports = [ ./themes.nix ];
 
   services.nginx.virtualHosts = {

@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }: let
+{ pkgs, lib, ... }:
+let
   proxyFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
-in {
+in
+{
   services.minecraft-servers.servers.proxy = {
     enable = true;
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
@@ -17,9 +19,9 @@ in {
         servers = {
           survival = "localhost:25561";
           limbo = "localhost:25560";
-          try = ["survival" "limbo"];
+          try = [ "survival" "limbo" ];
         };
-        forced-hosts = {};
+        forced-hosts = { };
         query = {
           enabled = true;
           port = 25565;
@@ -66,12 +68,12 @@ in {
         default-crypto-provider = "BCrypt-2A";
         fallback = false;
         kick-on-wrong-password = false;
-        limbo = ["limbo"];
-        migration = {};
+        limbo = [ "limbo" ];
+        migration = { };
         milliseconds-to-refresh-notification = 10000;
         minimum-password-length = -1;
         new-uuid-creator = "MOJANG";
-        pass-through.root = ["survival"];
+        pass-through.root = [ "survival" ];
         ping-servers = true;
         remember-last-server = false;
         revision = 3;
@@ -104,7 +106,7 @@ in {
               value = true;
             }
           ];
-          default.nodes = [];
+          default.nodes = [ ];
         };
       };
 

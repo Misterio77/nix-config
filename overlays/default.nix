@@ -4,7 +4,7 @@
   # 'inputs.${flake}.legacyPackages.${pkgs.system}' or
   flake-inputs = final: _: {
     inputs = builtins.mapAttrs
-      (_: flake: (flake.packages or flake.legacyPackages or {}).${final.system} or {})
+      (_: flake: (flake.packages or flake.legacyPackages or { }).${final.system} or { })
       inputs;
   };
 
@@ -18,7 +18,7 @@
   modifications = final: prev: {
     vimPlugins = prev.vimPlugins // {
       vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs (oa: {
-        patches = (oa.patches or []) ++ [./vim-numbertoggle-command-mode.patch];
+        patches = (oa.patches or [ ]) ++ [ ./vim-numbertoggle-command-mode.patch ];
       });
     };
 
@@ -58,7 +58,7 @@
       patches = (oa.patches or [ ]) ++ [ ./offline-mode-prism-launcher.diff ];
     });
 
-  # TODO https://github.com/NixOS/nixpkgs/issues/205014
+    # TODO https://github.com/NixOS/nixpkgs/issues/205014
     khal = prev.khal.overrideAttrs (oa: {
       disabledTests = oa.disabledTests ++ [
         "event_test"
