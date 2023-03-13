@@ -11,25 +11,41 @@
 
 mkYarnPackage rec {
   pname = "lando";
-  version = "3.11.0";
+  version = "3.14.0";
 
   src = fetchFromGitHub {
     owner = "lando";
     repo = "cli";
     rev = "v${version}";
-    sha256 = "sha256-Bd75QTIzBEegBjkS0sZLda6kU3jTWNm05356arZI2yI=";
+    sha256 = "sha256-BFqCmkAnIxeVgzeMvTXFS/mgU1z1KOe74px03qnOvhM=";
   };
 
+  packageJSON = "${src}/package.json";
+  yarnLock = "${src}/yarn.lock";
   offlineCache = fetchYarnDeps {
-    yarnLock = "${src}/yarn.lock";
-    sha256 = "sha256-yZesQMkfviqbi9azor1WGzqYlhsHY4+/NVoawMBMWyo=";
+    inherit yarnLock;
+    sha256 = "sha256-/I0ipli5u897LsG78PviztaidZjkGpZDlL+v/sVlCtk=";
   };
 
   nodejs = nodejs-16_x;
+  dontStrip = true;
+  nativeBuildInputs = [ makeWrapper ];
 
-  postInstall = ''
-    rm $out/libexec/@lando/cli/deps/@lando/cli/node_modules
-    ln -sf $out/libexec/@lando/cli/node_modules $out/libexec/@lando/cli/deps/@lando/cli/node_modules
+  postInstall =
+    let
+      pname = (lib.importJSON packageJSON).name;
+    in
+    ''
+      rm $out/libexec/${pname}/deps/${pname}/node_modules
+      ln -sf $out/libexec/${pname}/node_modules $out/libexec/${pname}/deps/${pname}/node_modules
+    '';
+
+  postFixup = ''
+    wrapProgram $out/bin/lando --set PATH \
+      "${lib.makeBinPath [
+        docker
+        docker-compose_1
+      ]}"
   '';
 
   meta = with lib; {
