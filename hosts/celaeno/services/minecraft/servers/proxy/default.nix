@@ -1,5 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
+  servers = config.services.minecraft-servers.servers;
   proxyFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
 in
 {
@@ -17,9 +18,9 @@ in
         forwarding-secret = "@VELOCITY_FORWARDING_SECRET@";
         online-mode = true;
         servers = {
-          survival = "localhost:25561";
-          limbo = "localhost:25560";
-          try = [ "survival" "limbo" ];
+          survival = "localhost:${toString servers.survival.serverProperties.server-port}";
+          limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
+          try = [ "survival" ];
         };
         forced-hosts = { };
         query = {
@@ -55,7 +56,7 @@ in
           "2fa"
           "2faconfirm"
         ];
-        auto-register = true;
+        auto-register = false;
         database = {
           database = "minecraft";
           host = "localhost";
@@ -73,7 +74,8 @@ in
         milliseconds-to-refresh-notification = 10000;
         minimum-password-length = -1;
         new-uuid-creator = "MOJANG";
-        pass-through.root = [ "survival" ];
+        # Use the same config as velocity's "try"
+        pass-through.root = servers.proxy.files."velocity.toml".value.servers.try;
         ping-servers = true;
         remember-last-server = false;
         revision = 3;
@@ -112,15 +114,15 @@ in
 
       "plugins/Geyser.jar" = pkgs.fetchurl rec {
         pname = "Geyser";
-        version = "1269";
+        version = "1321";
         url = "https://ci.opencollab.dev/job/GeyserMC/job/${pname}/job/master/${version}/artifact/bootstrap/velocity/build/libs/${pname}-Velocity.jar";
-        sha256 = "sha256-SKXX/8D9XKKrLZCNfiB31FoPmwbB/cpthz3Lu6yr7FU=";
+        sha256 = "sha256-+5IhCqir+fb7STaBqjCbGelH4fnrKLchFAXU2eYORnE=";
       };
       "plugins/Floodgate.jar" = pkgs.fetchurl rec {
         pname = "Floodgate";
-        version = "74";
+        version = "77";
         url = "https://ci.opencollab.dev/job/GeyserMC/job/${pname}/job/master/${version}/artifact/velocity/build/libs/${lib.toLower pname}-velocity.jar";
-        sha256 = "sha256-yFVVtyqhtSRt/r+i0uSu9HleDmAp+xwAAdWmV4W8umU=";
+        sha256 = "sha256-i5NH115qGu8ubRbPZvMIETtKkS1CfSq6mibdSB8lKA8=";
       };
       "plugins/CopyChat.jar" = pkgs.fetchurl rec {
         pname = "CopyChat";
@@ -130,15 +132,15 @@ in
       };
       "plugins/LibreLogin.jar" = pkgs.fetchurl rec {
         pname = "LibreLogin";
-        version = "0.13.4";
+        version = "0.13.5";
         url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
-        sha256 = "sha256-UGlKpX6o1x5FscTYNFjez9CqeUjEeLgSzR9XoYYbh98=";
+        sha256 = "sha256-ZzaryJXHQ6Xx5hzqJgzSFixjXDkq20PAg+JXa1cFBLs=";
       };
-      "plugins/LuckPerms.jar" = pkgs.fetchurl rec {
+      "plugins/LuckPerms.jar" = let build = "1475"; in pkgs.fetchurl rec {
         pname = "LuckPerms";
-        version = "5.4.58";
-        url = "https://download.luckperms.net/1467/velocity/${pname}-Velocity-${version}.jar";
-        sha256 = "sha256-6sOnzQWjxRHbhewiMaPfGzq+eZabcX5/btj0XF/1oMY=";
+        version = "5.4.64";
+        url = "https://download.luckperms.net/${build}/velocity/${pname}-Velocity-${version}.jar";
+        sha256 = "sha256-8w9lt7Tuq8sPdLzCoSzE/d56bQjTIv1r/iWyMA4MtLk=";
       };
     };
   };

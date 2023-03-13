@@ -1,15 +1,15 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, ... }:
 let
-  aikarFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1";
+  name = "survival";
 in
 {
-  services.minecraft-servers.servers.survival = {
+  services.minecraft-servers.servers.${name} = {
     enable = true;
     # Latest 1.19.3 build
     package = pkgs.inputs.nix-minecraft.paperServers.paper-1_19_3;
-    jvmOpts = aikarFlags "1G";
+    jvmOpts = (import ../../aikar-flags.nix) "2G";
     serverProperties = {
-      server-port = 25561;
+      server-port = 25571;
       online-mode = false;
     };
     files = {
@@ -41,7 +41,7 @@ in
         checkforupdates = false;
       };
       "plugins/LuckPerms/config.yml".value = {
-        server = "survival";
+        server = name;
         storage-method = "mysql";
         data = {
           address = "127.0.0.1";
@@ -54,8 +54,6 @@ in
       };
     };
     symlinks = {
-      "plugins/LuckPerms/initial.json.gz" =
-        config.services.minecraft-servers.proxy.symlinks."plugins/luckperms/initial.json.gz";
       "plugins/ViaVersion.jar" = pkgs.fetchurl rec {
         pname = "ViaVersion";
         version = "4.5.1";
@@ -68,11 +66,11 @@ in
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
         sha256 = "sha256-wugRc0J2+oche6pI0n97+SabTOmGGDvamBItbl1neuU=";
       };
-      "plugins/LuckPerms.jar" = pkgs.fetchurl rec {
+      "plugins/LuckPerms.jar" = let build = "1475"; in pkgs.fetchurl rec {
         pname = "LuckPerms";
-        version = "5.4.58";
-        url = "https://download.luckperms.net/1467/bukkit/loader/${pname}-Bukkit-${version}.jar";
-        sha256 = "sha256-roi16xTu+04ofFccuSLwFl/UqfvG0flHDq0R9/20oIM=";
+        version = "5.4.64";
+        url = "https://download.luckperms.net/${build}/bukkit/loader/${pname}-Bukkit-${version}.jar";
+        sha256 = "sha256-t7ZUaZ1jmaLD2X8ZOihdLKAPMR59EZF4KvTZVW0fYMo=";
       };
       "plugins/HidePLayerJoinQuit.jar" = pkgs.fetchurl rec {
         pname = "HidePLayerJoinQuit";

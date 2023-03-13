@@ -38,7 +38,7 @@
   info-logged-in = "&aBem-vindo!";
   info-logging-in = "Fazendo login...";
   info-premium-logged-in = "&2Conta original autenticada automaticamente.";
-  info-registered = "&aSeja bem-vindo!";
+  info-registered = "&aSucesso! Caso sua conta seja original, você pode ativar login automático usando: /premium";
   info-registering = "Registrando...";
   info-reloaded = "&aRecarregado!";
   info-reloading = "Recarregando...";
