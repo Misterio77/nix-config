@@ -6,6 +6,7 @@
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
   speedtestpp = pkgs.callPackage ./speedtestpp { };
+  lando = pkgs.callPackage ./lando { };
   # TODO: remove when https://github.com/NixOS/nixpkgs/pull/210717 is merged
   gh-markdown-preview = pkgs.callPackage ./gh-markdown-preview { };
 
