@@ -5,12 +5,12 @@
     inputs.impermanence.nixosModules.impermanence
     inputs.home-manager.nixosModules.home-manager
     ./acme.nix
+    ./docker.nix
     ./fish.nix
     ./locale.nix
     ./tailscale.nix
     ./nix.nix
     ./openssh.nix
-    ./podman.nix
     ./postgres.nix
     ./sops.nix
     ./ssh-serve-store.nix

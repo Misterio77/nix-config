@@ -1,0 +1,5 @@
+{
+  virtualisation.docker = {
+    enable = true;
+  };
+}
