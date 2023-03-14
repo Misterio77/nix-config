@@ -38,6 +38,7 @@ in
     username = lib.mkDefault "misterio";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "22.05";
+    sessionPath = [ "$HOME/.local/bin" ];
 
     persistence = {
       "/persist/home/misterio" = {
@@ -46,6 +47,7 @@ in
           "Downloads"
           "Pictures"
           "Videos"
+          ".local/bin"
         ];
         allowOther = true;
       };
