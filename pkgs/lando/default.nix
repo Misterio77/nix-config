@@ -1,15 +1,17 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, mkYarnPackage
-, fetchYarnDeps
+, buildNpmPackage
 , makeWrapper
 , nodejs-16_x
 , docker-compose_1
 , docker
 }:
-
-mkYarnPackage rec {
+let
+  nodejs = nodejs-16_x;
+  docker-compose = docker-compose_1;
+in
+buildNpmPackage.override { inherit nodejs; } rec {
   pname = "lando";
   version = "3.14.0";
 
@@ -20,32 +22,14 @@ mkYarnPackage rec {
     sha256 = "sha256-BFqCmkAnIxeVgzeMvTXFS/mgU1z1KOe74px03qnOvhM=";
   };
 
-  packageJSON = "${src}/package.json";
-  yarnLock = "${src}/yarn.lock";
-  offlineCache = fetchYarnDeps {
-    inherit yarnLock;
-    sha256 = "sha256-/I0ipli5u897LsG78PviztaidZjkGpZDlL+v/sVlCtk=";
-  };
+  npmDepsHash = "sha256-G54gtJ3wClcHrTqMDQbnaDZ2yr8D3Hv8q3Bg1UeC0Tk=";
 
-  nodejs = nodejs-16_x;
-  dontStrip = true;
-  nativeBuildInputs = [ makeWrapper ];
+  makeCacheWritable = true;
+  npmFlags = [ "--legacy-peer-deps" ];
+  dontNpmBuild = true;
 
-  postInstall =
-    let
-      pname = (lib.importJSON packageJSON).name;
-    in
-    ''
-      rm $out/libexec/${pname}/deps/${pname}/node_modules
-      ln -sf $out/libexec/${pname}/node_modules $out/libexec/${pname}/deps/${pname}/node_modules
-    '';
-
-  postFixup = ''
-    wrapProgram $out/bin/lando --set PATH \
-      "${lib.makeBinPath [
-        docker
-        docker-compose_1
-      ]}"
+  postPatch = ''
+    cp ${./package-lock.json} package-lock.json
   '';
 
   meta = with lib; {
