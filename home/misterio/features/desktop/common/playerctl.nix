@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [ playerctl lyrics ];
+  home.packages = with pkgs; [ playerctl ];
   services.playerctld = {
     enable = true;
   };

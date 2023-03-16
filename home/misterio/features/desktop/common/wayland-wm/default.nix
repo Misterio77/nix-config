@@ -14,7 +14,6 @@
   home.packages = with pkgs; [
     grim
     imv
-    lyrics
     mimeo
     primary-xwayland
     pulseaudio

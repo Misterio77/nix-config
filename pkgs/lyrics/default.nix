@@ -30,5 +30,8 @@
     description = "Lyrics fetcher script";
     license = licenses.mit;
     platforms = platforms.all;
+    # The makeitpersonal API stopped working :(
+    # TODO: look for alternatives
+    broken = true;
   };
 }

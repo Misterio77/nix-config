@@ -118,7 +118,6 @@
   bind=ALT,XF86AudioNext,exec,playerctld shift
   bind=ALT,XF86AudioPrev,exec,playerctld unshift
   bind=ALT,XF86AudioPlay,exec,systemctl --user restart playerctld
-  bind=SUPER,XF86AudioPlay,exec,$TERMINAL $SHELL -ic lyrics
 
   bind=,XF86AudioRaiseVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ +5%
   bind=,XF86AudioLowerVolume,exec,pactl set-sink-volume @DEFAULT_SINK@ -5%
