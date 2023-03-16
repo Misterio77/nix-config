@@ -11,7 +11,6 @@ in
       bookmarks = { };
       extensions = with addons; [
         ublock-origin
-        netflix-1080p
         browserpass
       ];
       bookmarks = { };
