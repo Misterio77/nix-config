@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, lib, config, outputs, ... }:
 let
   hydraUser = config.users.users.hydra.name;
   hydraGroup = config.users.users.hydra.group;
@@ -26,6 +26,43 @@ let
       map (mkBuildMachine) x
     )
   );
+
+  release-host-branch = pkgs.writeShellApplication {
+    name = "release-host-branch";
+    runtimeInputs = with pkgs; [ jq git ];
+    text = ''
+      job="$(jq -r '.job' < "$HYDRA_JSON")"
+      outpath="$(jq -r '.outputs[] | select(.name == "out") | .path' < "$HYDRA_JSON")"
+      echo "Running for $job, built $outpath"
+
+      if [[ "$job" != "hosts."* ]]; then
+          echo "Not a NixOS Host job, skipping."
+          exit 0
+      fi
+
+      host="''${job##*.}"
+      commit="$(jq -r '.flakes[] | select(.from.id == "self") | .to.rev' "''${outpath}/etc/nix/registry.json")"
+      echo "System is $host at $commit"
+
+      # Start ssh-agent if nescessary
+      ssh-add || eval "$(ssh-agent)"
+      ssh-add ${config.sops.secrets.nix-ssh-key.path}
+      export GIT_SSH_COMMAND="ssh -A" # Forward agent
+
+      repo="/tmp/hydra/nix-config"
+
+      # Check if repo already exists
+      if git -C "$repo" rev-parse --git-dir &> /dev/null; then
+        git -C "$repo" fetch origin
+      else
+        mkdir -p "$repo"
+        git clone --bare git@m7.rs:nix-config "$repo"
+      fi
+
+      git -C "$repo" branch -f "release-$host" "$commit"
+      git -C "$repo" push -f origin "release-$host"
+    '';
+  };
 in
 {
   # https://github.com/NixOS/nix/issues/5039
@@ -49,6 +86,10 @@ in
           jobs = .*
           useShortContext = true
         </githubstatus>
+        <runcommand>
+          job = nix-config:main:*
+          command = ${release-host-branch}/bin/release-host-branch &> /tmp/hydra-release-log
+        </runcommand>
       '';
       buildMachinesFiles = [
         (mkBuildMachinesFile [
