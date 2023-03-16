@@ -24,7 +24,11 @@
       group = "git";
       packages = [ pkgs.git ];
       openssh.authorizedKeys.keys =
-        config.users.users.misterio.openssh.authorizedKeys.keys;
+        # My key
+        config.users.users.misterio.openssh.authorizedKeys.keys ++
+        # The key hydra uses to access other hosts
+        # This is used to push CI-gated branches to my nix-config
+        config.nix.sshServe.keys;
     };
     groups.git = { };
   };
