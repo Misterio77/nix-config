@@ -60,7 +60,7 @@ let
       fi
 
       git -C "$repo" branch -f "release-$host" "$commit"
-      git -C "$repo" push -f origin "release-$host"
+      git -C "$repo" push -f origin "release-$host" -o "release-$host"
     '';
   };
 in
