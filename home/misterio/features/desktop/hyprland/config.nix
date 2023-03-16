@@ -5,6 +5,8 @@
     border_size=2.7
     col.active_border=0xff${colorscheme.colors.base0C}
     col.inactive_border=0xff${colorscheme.colors.base02}
+    col.group_border_active=0xff${colorscheme.colors.base0B}
+    col.group_border=0xff${colorscheme.colors.base04}
     cursor_inactive_timeout=4
   }
 
@@ -47,13 +49,11 @@
   }
 
   dwindle {
-    col.group_border_active=0xff${colorscheme.colors.base0B}
-    col.group_border=0xff${colorscheme.colors.base04}
     split_width_multiplier=1.35
   }
 
   misc {
-    no_vfr=false
+    vfr=on
   }
 
   input {
