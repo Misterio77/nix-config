@@ -28,6 +28,7 @@
       vim = "nvim";
       m = "neomutt";
       mutt = "neomutt";
+      vrg = "nvimrg";
     };
     shellAliases = {
       # Get ip
@@ -40,6 +41,7 @@
     functions = {
       fish_greeting = "";
       wh = "readlink -f (which $argv)";
+      nvimrg = "nvim -q (rg --vimgrep $argv | psub)"; # Grep using ripgrep and pass to nvim
     };
     interactiveShellInit =
       # Open command buffer in vim when alt+e is pressed
