@@ -38,5 +38,6 @@ buildNpmPackage.override { inherit nodejs; } rec {
     license = licenses.gpl3;
     maintainers = with maintainers; [ misterio77 ];
     platforms = platforms.linux;
+    broken = true; # Not working 100%
   };
 }
