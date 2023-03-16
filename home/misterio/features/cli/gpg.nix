@@ -1,9 +1,9 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, ... }:
 let
   pinentry =
     if config.gtk.enable then {
-      package = pkgs.pinentry-gnome;
-      name = "gnome3";
+      package = pkgs.pinentry-gtk2;
+      name = "gtk2";
     } else {
       package = pkgs.pinentry-curses;
       name = "curses";

@@ -26,8 +26,6 @@
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   };
 
-  services.dbus.packages = [ pkgs.gcr ];
-
   powerManagement.powertop.enable = true;
   programs = {
     light.enable = true;

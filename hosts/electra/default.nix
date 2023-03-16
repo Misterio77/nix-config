@@ -30,8 +30,6 @@
     updater.enable = true;
   };
 
-  services.dbus.packages = [ pkgs.gcr ];
-
   powerManagement.powertop.enable = true;
   programs = {
     light.enable = true;
