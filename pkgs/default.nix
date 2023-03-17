@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, inputs ? {} }: {
+{ pkgs ? import <nixpkgs> { } }: {
 
   # Packages with an actual source
   phpactor = pkgs.callPackage ./phpactor { };
@@ -9,10 +9,6 @@
   lando = pkgs.callPackage ./lando { };
   # TODO: remove when https://github.com/NixOS/nixpkgs/pull/210717 is merged
   gh-markdown-preview = pkgs.callPackage ./gh-markdown-preview { };
-  hyprbars = pkgs.callPackage ./hyprland-plugins/hyprbars {
-    inherit (inputs.hyprland.packages.${pkgs.system}) hyprland wlroots-hyprland;
-    inherit (inputs.hyprland.inputs.hyprland-protocols.packages.${pkgs.system}) hyprland-protocols;
-  };
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava { };
