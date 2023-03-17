@@ -5,7 +5,7 @@ in
 {
   system.autoUpgrade = {
     enable = true;
-    dates = "04:00";
+    dates = "hourly";
     flake = "github:misterio77/nix-config/release-${hostName}";
   };
 }
