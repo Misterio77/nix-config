@@ -12,7 +12,7 @@ in
       "velocity.toml".value = {
         config-version = "2.5";
         bind = "0.0.0.0:25565";
-        motd = "Server do Misterinho";
+        motd = "Server do Gabs";
         player-info-forwarding-mode = "modern";
         forwarding-secret-file = "";
         forwarding-secret = "@VELOCITY_FORWARDING_SECRET@";
@@ -30,7 +30,7 @@ in
       };
       "lang/messages.properties".value = import ./velocity-messages.nix;
       "plugins/Geyser-Velocity/config.yml".value = {
-        server-name = "Server do Misterinho";
+        server-name = "Server do Gabs";
         passthrough-motd = true;
         passthrough-player-counts = true;
         allow-third-party-capes = true;
@@ -81,10 +81,7 @@ in
         revision = 3;
         seconds-to-authorize = -1;
         session-timeout = 604800;
-        totp = {
-          enabled = true;
-          label = "Misterinho";
-        };
+        totp.enabled = true;
         use-titles = false;
       };
       "plugins/librelogin/messages.conf".format = pkgs.formats.json { };
