@@ -26,8 +26,8 @@
         add_lsp("gopls", lspconfig.gopls, {})
         add_lsp("tsserver", lspconfig.tsserver, {})
 
-        add_lsp("lua-lsp", lspconfig.sumneko_lua, {
-          cmd = { "lua-lsp" }
+        add_lsp("lua-lsp", lspconfig.lua_ls, {
+          cmd = { "lua-language-server" }
         })
         add_lsp("jdt-language-server", lspconfig.jdtls, {
           cmd = { "jdt-language-server" }
