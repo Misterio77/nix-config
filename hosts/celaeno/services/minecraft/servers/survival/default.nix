@@ -56,15 +56,15 @@ in
     symlinks = {
       "plugins/ViaVersion.jar" = pkgs.fetchurl rec {
         pname = "ViaVersion";
-        version = "4.5.1";
+        version = "4.6.0";
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
-        sha256 = "sha256-hMxl5QyMxNL/vx58Jz0tJ8E/SlJ3w7sIvm8Dc70GBXQ=";
+        sha256 = "sha256-QgGMRrsRTSpgU1bmdv4BZB/aXaknz35V5knzD4382ls=";
       };
       "plugins/ViaBackwards.jar" = pkgs.fetchurl rec {
         pname = "ViaBackwards";
-        version = "4.5.1";
+        version = "4.6.0";
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
-        sha256 = "sha256-wugRc0J2+oche6pI0n97+SabTOmGGDvamBItbl1neuU=";
+        sha256 = "sha256-u8dFq4CAXpNF/JjONVg45HR3qbZ5eQmnAq2PvIZ7g4Q=";
       };
       "plugins/LuckPerms.jar" = let build = "1475"; in pkgs.fetchurl rec {
         pname = "LuckPerms";

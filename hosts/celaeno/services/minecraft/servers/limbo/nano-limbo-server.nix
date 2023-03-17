@@ -1,10 +1,10 @@
 { stdenv, fetchurl, jre_headless }:
 stdenv.mkDerivation rec {
   pname = "nano-limbo";
-  version = "1.5";
+  version = "1.5.1";
   src = fetchurl {
     url = "https://github.com/Nan1t/NanoLimbo/releases/download/v${version}/NanoLimbo-${version}-all.jar";
-    sha256 = "sha256-0zPQNfUEgK0zIdLEUjTGw2N+Nbe8byZfqrkPYBR888Q=";
+    sha256 = "sha256-0wesecEtBtaK0/DiQxk9bil4XeqTlLat+yag3ym5U1c=";
   };
   preferLocalBuild = true;
   dontUnpack = true;
