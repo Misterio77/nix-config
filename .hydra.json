@@ -9,6 +9,6 @@
         "schedulingshares": 10,
         "enableemail": false,
         "emailoverride": "",
-        "keepnr": 1
+        "keepnr": 2
     }
 }
