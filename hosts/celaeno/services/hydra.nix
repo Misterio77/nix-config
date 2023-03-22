@@ -99,6 +99,7 @@ in
             sshKey = config.sops.secrets.nix-ssh-key.path;
             maxJobs = 12;
             speedFactor = 150;
+            supportedFeatures = [ "kvm" "big-parallel" ];
           }
           {
             uri = "ssh://nix-ssh@maia";
@@ -106,12 +107,14 @@ in
             sshKey = config.sops.secrets.nix-ssh-key.path;
             maxJobs = 8;
             speedFactor = 100;
+            supportedFeatures = [ "kvm" ];
           }
           {
             uri = "localhost";
             systems = [ "aarch64-linux" "x86_64-linux" "i686-linux" ];
             maxJobs = 4;
             speedFactor = 70;
+            supportedFeatures = [ "kvm" "big-parallel" ];
           }
         ])
       ];
