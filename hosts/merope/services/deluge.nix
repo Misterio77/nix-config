@@ -10,6 +10,9 @@
       download_location = "/srv/torrents/downloading";
       move_completed_path = "/srv/torrents/completed";
       dont_count_slow_torrents = true;
+      max_active_seeding = -1;
+      max_active_limit = -1;
+      max_active_downloading = 8;
       # Daemon on 58846
       allow_remote = true;
       daemon_port = 58846;
