@@ -52,7 +52,19 @@
       overlays = import ./overlays { inherit inputs outputs; };
       hydraJobs = import ./hydra.nix { inherit inputs outputs; };
 
-      packages = forEachPkgs (pkgs: import ./pkgs { inherit pkgs; });
+      packages = forEachPkgs (pkgs: (import ./pkgs { inherit pkgs; }) // {
+        neovim = let
+          homeCfg = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            extraSpecialArgs = { inherit inputs outputs; };
+            modules = [ ./home/misterio/generic.nix ];
+          };
+          pkg = homeCfg.config.programs.neovim.finalPackage;
+          init = homeCfg.config.xdg.configFile."nvim/init.lua".source;
+        in pkgs.writeShellScriptBin "nvim" ''
+          ${pkg}/bin/nvim -u ${init} "$@"
+        '';
+      });
       devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
       formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
 

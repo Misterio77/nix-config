@@ -1,4 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
+let
+  color = pkgs.writeText "color.vim" (import ./theme.nix config.colorscheme);
+in
 {
   imports = [
     ./lsp.nix
@@ -10,19 +13,11 @@
   programs.neovim = {
     enable = true;
 
-    extraRuntime = {
-      "colors/nix-${config.colorscheme.slug}.vim" = {
-        text = import ./theme.nix config.colorscheme;
-      };
-    };
-
     extraConfig = /* vim */ ''
       "Use system clipboard
       set clipboard=unnamedplus
-      "Use truecolor
-      set termguicolors
-      "Set colorscheme
-      colorscheme nix-${config.colorscheme.slug}
+      "Source colorscheme
+      source ${color}
 
       "Set fold level to highest in file
       "so everything starts out unfolded at just the right level
