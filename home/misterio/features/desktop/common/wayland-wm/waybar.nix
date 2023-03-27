@@ -65,7 +65,7 @@ in
         height = 40;
         margin = "6";
         position = "top";
-        output = builtins.map (m: m.name) (builtins.filter (m: m.hasBar) config.monitors);
+        output = builtins.map (m: m.name) (builtins.filter (m: ! m.noBar) config.monitors);
         modules-left = [
           "custom/menu"
           "custom/currentplayer"
