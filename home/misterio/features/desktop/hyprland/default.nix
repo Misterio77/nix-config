@@ -1,5 +1,6 @@
 { inputs, lib, config, pkgs, ... }: {
   imports = [
+    ./vnc.nix
     ../common
     ../common/wayland-wm
     inputs.hyprland.homeManagerModules.default

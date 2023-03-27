@@ -24,8 +24,6 @@
     wl-mirror
     wl-mirror-pick
     ydotool
-    wayvnc
-    tigervnc
   ];
 
   home.sessionVariables = {
