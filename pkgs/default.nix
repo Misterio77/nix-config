@@ -7,6 +7,7 @@
   trekscii = pkgs.callPackage ./trekscii { };
   speedtestpp = pkgs.callPackage ./speedtestpp { };
   lando = pkgs.callPackage ./lando { };
+  tidal-dl = pkgs.python3Packages.callPackage ./tidal-dl { };
   # TODO: remove when https://github.com/NixOS/nixpkgs/pull/210717 is merged
   gh-markdown-preview = pkgs.callPackage ./gh-markdown-preview { };
 
