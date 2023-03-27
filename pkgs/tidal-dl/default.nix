@@ -31,5 +31,6 @@ buildPythonApplication rec {
     description = "An application that lets you download videos and tracks from Tidal";
     license = licenses.asl20;
     maintainers = with maintainers; [ misterio77 ];
+    platforms = platforms.all;
   };
 }
