@@ -7,7 +7,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.perl536Packages.HashSharedMem.aarch64-linux
+    nixpkgs.url = "github:nixos/nixpkgs/7f5639fa3b68054ca0b062866dc62b22c3f11505";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     hardware.url = "github:nixos/nixos-hardware";
