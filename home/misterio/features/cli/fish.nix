@@ -33,8 +33,6 @@
     shellAliases = {
       # Get ip
       getip = "curl ifconfig.me";
-      # SSH with kitty terminfo
-      kssh = "kitty +kitten ssh";
       # Clear screen and scrollback
       clear = "printf '\\033[2J\\033[3J\\033[1;1H'";
     };
