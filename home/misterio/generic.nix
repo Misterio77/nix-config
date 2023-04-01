@@ -1,10 +1,6 @@
-{ lib, username ? "misterio", ... }:
+{ lib, ... }:
 {
   imports = [ ./global ];
-  home = {
-    # Overridable username
-    inherit username;
-    # Disable impermanence
-    persistence = lib.mkForce {};
-  };
+  # Disable impermanence
+  home.persistence = lib.mkForce {};
 }
