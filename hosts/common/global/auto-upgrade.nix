@@ -7,6 +7,6 @@ in
     enable = true;
     dates = "hourly";
     flags = [ "--refresh" ];
-    flake = "github:misterio77/nix-config/release-${hostName}";
+    flake = "git://m7.rs/nix-config?ref=release-${hostName}";
   };
 }
