@@ -9,15 +9,10 @@ in
     enable = true;
     colorSchemes = {
       "${colorscheme.slug}" = {
+        foreground = "#${colors.base05}";
+        background = "#${colors.base00}";
+
         ansi = [
-          "#${colors.base00}"
-          "#${colors.base01}"
-          "#${colors.base02}"
-          "#${colors.base03}"
-          "#${colors.base04}"
-          "#${colors.base05}"
-          "#${colors.base06}"
-          "#${colors.base07}"
           "#${colors.base08}"
           "#${colors.base09}"
           "#${colors.base0A}"
@@ -27,8 +22,16 @@ in
           "#${colors.base0E}"
           "#${colors.base0F}"
         ];
-        foreground = "#${colors.base05}";
-        background = "#${colors.base00}";
+        brights = [
+          "#${colors.base00}"
+          "#${colors.base01}"
+          "#${colors.base02}"
+          "#${colors.base03}"
+          "#${colors.base04}"
+          "#${colors.base05}"
+          "#${colors.base06}"
+          "#${colors.base07}"
+        ];
         cursor_fg = "#${colors.base00}";
         cursor_bg = "#${colors.base05}";
         selection_fg = "#${colors.base00}";
