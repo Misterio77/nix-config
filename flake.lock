@@ -32,6 +32,62 @@
         "type": "gitlab"
       }
     },
+    "composer2nix-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1646178110,
+        "narHash": "sha256-P3acfGwHYjjZQcviPiOT7T7qzzP/drc2mibzrsrNP18=",
+        "owner": "svanderburg",
+        "repo": "composer2nix",
+        "rev": "299caca4aac42d7639a42eb4dde951c010f6e91c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "svanderburg",
+        "ref": "v0.0.6",
+        "repo": "composer2nix",
+        "type": "github"
+      }
+    },
+    "firefly": {
+      "inputs": {
+        "composer2nix-src": "composer2nix-src",
+        "firefly-iii-src": "firefly-iii-src",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1679223537,
+        "narHash": "sha256-UmyZrcjxbDywEnwBo0l8VPQXUZYsI5Q1GW10jH6Dmbk=",
+        "owner": "timhae",
+        "repo": "firefly",
+        "rev": "1fd4b460a3c0e0aead882ed24cf0d11fdababec5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "timhae",
+        "repo": "firefly",
+        "type": "github"
+      }
+    },
+    "firefly-iii-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1679147345,
+        "narHash": "sha256-ozxnuwyhcVunk/DKflAgEWCGmhEIrHkmNhmBT1RTKLI=",
+        "owner": "firefly-iii",
+        "repo": "firefly-iii",
+        "rev": "bd556f19347fa88c2a15d7386bce430f33246588",
+        "type": "github"
+      },
+      "original": {
+        "owner": "firefly-iii",
+        "ref": "v6.0.5",
+        "repo": "firefly-iii",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -485,6 +541,7 @@
     },
     "root": {
       "inputs": {
+        "firefly": "firefly",
         "firefox-addons": "firefox-addons",
         "hardware": "hardware",
         "home-manager": "home-manager",
