@@ -1,7 +1,8 @@
 { home, colorscheme, wallpaper }:
 let
   inherit (home.sessionVariables) TERMINAL BROWSER EDITOR;
-in ''
+in
+''
   general {
     gaps_in=15
     gaps_out=20

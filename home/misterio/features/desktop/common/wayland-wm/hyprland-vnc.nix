@@ -25,7 +25,8 @@ let
 
     wait
   '';
-in {
+in
+{
   home.packages = with pkgs; [
     vncsh
     wayvnc

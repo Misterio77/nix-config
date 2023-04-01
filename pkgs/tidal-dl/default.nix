@@ -1,6 +1,13 @@
-{
-  lib, buildPythonPackage, buildPythonApplication, fetchPypi,
-  mutagen, requests, colorama, prettytable, pycrypto, pydub
+{ lib
+, buildPythonPackage
+, buildPythonApplication
+, fetchPypi
+, mutagen
+, requests
+, colorama
+, prettytable
+, pycrypto
+, pydub
 }:
 let
   aigpy = buildPythonPackage rec {

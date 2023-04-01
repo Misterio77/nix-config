@@ -2,5 +2,5 @@
 {
   imports = [ ./global ];
   # Disable impermanence
-  home.persistence = lib.mkForce {};
+  home.persistence = lib.mkForce { };
 }
