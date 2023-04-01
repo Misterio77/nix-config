@@ -1,4 +1,4 @@
 .direnv
 result*
 *.qcow2
-
+.nixie
