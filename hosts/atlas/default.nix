@@ -1,4 +1,3 @@
-# System configuration for my main desktop PC
 { pkgs, inputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-amd
@@ -18,8 +17,6 @@
     ../common/optional/starcitizen-fixes.nix
     ../common/optional/lol-acfix.nix
   ];
-
-  # environment.persistence.enable = true;
 
   # TODO: theme "greeter" user GTK instead of using misterio to login
   services.greetd.settings.default_session.user = "misterio";

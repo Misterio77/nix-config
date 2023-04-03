@@ -25,7 +25,6 @@ in
 {
   boot.initrd.supportedFilesystems = [ "btrfs" ];
 
-  # Use postDeviceCommands if on old phase 1
   boot.initrd.postDeviceCommands = lib.mkBefore wipeScript;
 
   fileSystems = {

@@ -1,4 +1,3 @@
-# System configuration for my Raspberry Pi 4
 { inputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.raspberry-pi-4
@@ -9,8 +8,6 @@
     ../common/global
     ../common/users/misterio
   ];
-
-  # environment.persistence.enable = true;
 
   # Static IP address
   networking = {

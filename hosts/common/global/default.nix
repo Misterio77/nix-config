@@ -1,8 +1,6 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ lib, inputs, outputs, ... }:
-{
+{ lib, inputs, outputs, ... }: {
   imports = [
-    inputs.impermanence.nixosModules.impermanence
     inputs.home-manager.nixosModules.home-manager
     ./acme.nix
     ./auto-upgrade.nix
@@ -12,6 +10,7 @@
     ./tailscale.nix
     ./nix.nix
     ./openssh.nix
+    ./optin-persistence.nix
     ./postgres.nix
     ./sops.nix
     ./ssh-serve-store.nix
@@ -30,24 +29,8 @@
     };
   };
 
-  environment = {
-    persistence = {
-      "/persist" = {
-        files = [
-          "/etc/machine-id"
-        ];
-        directories = [
-          "/var/lib/systemd"
-          "/var/lib/nixos"
-          "/var/log"
-          "/srv"
-        ];
-      };
-    };
-    enableAllTerminfo = true;
-  };
+  environment.enableAllTerminfo = true;
 
-  programs.fuse.userAllowOther = true;
   hardware.enableRedistributableFirmware = true;
   networking.domain = "m7.rs";
 

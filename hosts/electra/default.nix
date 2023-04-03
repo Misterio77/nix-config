@@ -1,4 +1,3 @@
-# System configuration for my laptop
 { pkgs, inputs, ... }: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-intel

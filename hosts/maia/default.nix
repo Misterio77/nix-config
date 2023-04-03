@@ -14,8 +14,6 @@
     ../common/optional/quietboot.nix
   ];
 
-  # environment.persistence.enable = true;
-
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     binfmt.emulatedSystems = [ "aarch64-linux" "i686-linux" ];
