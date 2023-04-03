@@ -1,6 +1,8 @@
 { inputs, lib, config, ... }:
 let
-  key = builtins.elemAt (builtins.filter (k: k.type == "ed25519") config.services.openssh.hostKeys) 0;
+  isEd25519 = k: k.type == "ed25519";
+  getKeyPath = k: k.path;
+  keys = builtins.filter isEd25519 config.services.openssh.hostKeys;
 in
 {
   imports = [
@@ -8,6 +10,6 @@ in
   ];
 
   sops = {
-    age.sshKeyPaths = [ key.path ];
+    age.sshKeyPaths = map getKeyPath keys;
   };
 }
