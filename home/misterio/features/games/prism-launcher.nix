@@ -2,7 +2,6 @@
   home.packages = [ pkgs.prismlauncher ];
 
   home.persistence = {
-    # TODO: Change?
-    "/persist/games/misterio".directories = [ ".local/share/PrismLauncher" ];
+    "/persist/home/misterio".directories = [ ".local/share/PrismLauncher" ];
   };
 }

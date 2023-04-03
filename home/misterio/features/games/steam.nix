@@ -22,7 +22,7 @@ in
     protontricks
   ];
   home.persistence = {
-    "/persist/games/misterio" = {
+    "/persist/home/misterio" = {
       allowOther = true;
       directories = [
         ".factorio"
