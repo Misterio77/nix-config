@@ -42,7 +42,6 @@
   };
 
   i18n.defaultLocale = "pt_BR.UTF-8";
-  hardware.nvidia.prime.offload.enable = false;
 
   boot.kernelModules = [ "coretemp" ];
   services.thermald.enable = true;
@@ -51,6 +50,10 @@
   '';
 
   hardware = {
+    nvidia = {
+      prime.offload.enable = false;
+      modesetting.enable = true;
+    };
     opengl = {
       enable = true;
       driSupport = true;
