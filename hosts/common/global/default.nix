@@ -13,6 +13,7 @@
     ./optin-persistence.nix
     ./postgres.nix
     ./sops.nix
+    ./systemd-initrd.nix
     ./ssh-serve-store.nix
     ./steam-hardware.nix
   ] ++ (builtins.attrValues outputs.nixosModules);

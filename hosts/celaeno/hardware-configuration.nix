@@ -1,7 +1,7 @@
 { modulesPath, ... }:
 {
   imports = [
-    ../common/optional/btrfs-optin-persistence.nix
+    ../common/optional/ephemeral-btrfs.nix
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
