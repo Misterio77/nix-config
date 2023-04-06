@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 let
   dark-mode = inputs.dark-mode.value;
-  inherit (inputs.nix-colors.colorSchemes) atelier-cave atelier-cave-light;
+  inherit (inputs.nix-colors.colorSchemes) rose-pine-moon rose-pine-dawn;
 in
 {
   imports = [
@@ -14,8 +14,8 @@ in
     ./features/music
   ];
 
-  wallpaper = (import ./wallpapers).aenami-bright-planet;
-  colorscheme = if dark-mode then atelier-cave else atelier-cave-light;
+  wallpaper = (import ./wallpapers).towers-ice;
+  colorscheme = if dark-mode then rose-pine-moon else rose-pine-dawn;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

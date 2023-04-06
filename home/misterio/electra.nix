@@ -11,7 +11,7 @@ in
     ./features/pass
   ];
 
-  wallpaper = (import ./wallpapers).aenami-7pm;
+  wallpaper = (import ./wallpapers).aenami-wait;
   colorscheme = if dark-mode then silk-dark else silk-light;
 
   monitors = [{
