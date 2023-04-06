@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+let
+  dark-mode = inputs.dark-mode.value;
+  inherit (inputs.nix-colors.colorSchemes) atelier-cave atelier-cave-light;
+in
+{
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -10,7 +15,7 @@
   ];
 
   wallpaper = (import ./wallpapers).aenami-bright-planet;
-  colorscheme = inputs.nix-colors.colorschemes.material-palenight;
+  colorscheme = if dark-mode then atelier-cave else atelier-cave-light;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

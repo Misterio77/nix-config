@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+let
+  dark-mode = inputs.dark-mode.value;
+  inherit (inputs.nix-colors.colorSchemes) silk-dark silk-light;
+in
+{
   imports = [
     ./global
     ./features/desktop/wireless
@@ -7,7 +12,7 @@
   ];
 
   wallpaper = (import ./wallpapers).aenami-7pm;
-  colorscheme = inputs.nix-colors.colorschemes.pasque;
+  colorscheme = if dark-mode then silk-dark else silk-light;
 
   monitors = [{
     name = "eDP-1";

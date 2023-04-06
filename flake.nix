@@ -6,7 +6,7 @@
     extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
   };
 
-  inputs = {
+  inputs = rec {
     # https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.perl536Packages.HashSharedMem.aarch64-linux
     nixpkgs.url = "github:nixos/nixpkgs/7f5639fa3b68054ca0b062866dc62b22c3f11505";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -42,6 +42,15 @@
     website.url = "github:misterio77/website";
     paste-misterio-me.url = "github:misterio77/paste.misterio.me";
     yrmos.url = "github:misterio77/yrmos";
+
+    # Overridable (--override-inputs) "parameters"
+    # https://github.com/NixOS/nix/issues/5663
+    # https://mat.services/posts/command-line-flake-arguments
+    # Cursed stuff, but hey it works.
+    true.url = "github:boolean-option/true";
+    false.url = "github:boolean-option/false";
+
+    dark-mode = true;
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -49,6 +58,15 @@
       inherit (self) outputs;
       forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
       forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
+
+      mkNixos = modules: nixpkgs.lib.nixosSystem {
+        inherit modules;
+        specialArgs = { inherit inputs outputs; };
+      };
+      mkHome = modules: pkgs: home-manager.lib.homeManagerConfiguration {
+        inherit modules pkgs;
+        extraSpecialArgs = { inherit inputs outputs; };
+      };
     in
     {
       nixosModules = import ./modules/nixos;
@@ -59,110 +77,44 @@
       hydraJobs = import ./hydra.nix { inherit inputs outputs; };
 
       packages = forEachPkgs (pkgs: (import ./pkgs { inherit pkgs; }) // {
-        neovim =
-          let
-            homeCfg = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              extraSpecialArgs = { inherit inputs outputs; };
-              modules = [ ./home/misterio/generic.nix ];
-            };
-            pkg = homeCfg.config.programs.neovim.finalPackage;
-            init = homeCfg.config.xdg.configFile."nvim/init.lua".source;
-          in
-          pkgs.writeShellScriptBin "nvim" ''
-            ${pkg}/bin/nvim -u ${init} "$@"
-          '';
+        neovim = let
+          homeCfg = mkHome [ ./home/misterio/generic.nix ] pkgs;
+        in pkgs.writeShellScriptBin "nvim" ''
+          ${homeCfg.config.programs.neovim.finalPackage}/bin/nvim \
+          -u ${homeCfg.config.xdg.configFile."nvim/init.lua".source} \
+          "$@"
+        '';
       });
       devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
       formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
 
       nixosConfigurations = {
-        # Desktop
-        atlas = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/atlas ];
-        };
-        # Laptop
-        pleione = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/pleione ];
-        };
-        electra = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/electra ];
-        };
-        # Secondary Desktop
-        maia = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/maia ];
-        };
-        # Raspberry Pi 4
-        merope = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/merope ];
-        };
-        # Vultr VPS
-        # Used for critical stuff (headscale, email, prometheus, etc)
-        alcyone = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/alcyone ];
-        };
-        # Oracle Ampere VPS (free!)
-        # Used for hydra, game servers, etc
-        celaeno = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/celaeno ];
-        };
+        # Desktops
+        atlas = mkNixos [ ./hosts/atlas ];
+        maia = mkNixos [ ./hosts/maia ];
+        # Laptops
+        pleione = mkNixos [ ./hosts/pleione ];
+        electra = mkNixos [ ./hosts/electra ];
+        # Servers
+        alcyone = mkNixos [ ./hosts/alcyone ]; # Vultr VM (critical stuff)
+        merope = mkNixos [ ./hosts/merope ]; # Raspberry Pi (media)
+        celaeno = mkNixos [ ./hosts/celaeno ]; # Free Oracle VM (builds)
       };
 
       homeConfigurations = {
-        # Desktop
-        "misterio@atlas" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/atlas.nix ];
-        };
-        # Laptop
-        "misterio@pleione" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/pleione.nix ];
-        };
-        "misterio@electra" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/electra.nix ];
-        };
-        # Secondary Desktop
-        "misterio@maia" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/maia.nix ];
-        };
-        # Raspi 4
-        "misterio@merope" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."aarch64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/merope.nix ];
-        };
-        # Vultr VPS
-        "misterio@alcyone" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/alcyone.nix ];
-        };
-        # Oracle Ampere VPS
-        "misterio@celaeno" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."aarch64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/celaeno.nix ];
-        };
+        # Desktops
+        "misterio@atlas" = mkHome [ ./home/misterio/atlas.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "misterio@maia" = mkHome [ ./home/misterio/maia.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        # Laptops
+        "misterio@pleione" = mkHome [ ./home/misterio/pleione.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "misterio@electra" = mkHome [ ./home/misterio/electra.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        # Servers
+        "misterio@alcyone" = mkHome [ ./home/misterio/alcyone.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "misterio@merope" = mkHome [ ./home/misterio/merope.nix ] nixpkgs.legacyPackages."aarch64-linux";
+        "misterio@celaeno" = mkHome [ ./home/misterio/celaeno.nix ] nixpkgs.legacyPackages."aarch64-linux";
+
         # Portable minimum configuration
-        "misterio@generic" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/misterio/generic.nix ];
-        };
+        "misterio@generic" = mkHome [ ./home/misterio/generic.nix ] nixpkgs.legacyPackages."x86_64-linux";
       };
     };
 }

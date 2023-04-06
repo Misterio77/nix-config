@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }:
+let
+  dark-mode = inputs.dark-mode.value;
+  inherit (inputs.nix-colors.colorSchemes) atelier-heath atelier-heath-light;
+in
+{
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -9,7 +14,7 @@
   ];
 
   wallpaper = (import ./wallpapers).aenami-lunar;
-  colorscheme = inputs.nix-colors.colorschemes.paraiso;
+  colorscheme = if dark-mode then atelier-heath else atelier-heath-light;
 
   monitors = [{
     name = "eDP-1";
