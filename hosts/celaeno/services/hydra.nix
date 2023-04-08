@@ -1,4 +1,4 @@
-{ pkgs, lib, config, outputs, ... }:
+{ pkgs, lib, config, outputs, inputs, ... }:
 let
   hydraUser = config.users.users.hydra.name;
   hydraGroup = config.users.users.hydra.group;
@@ -65,6 +65,8 @@ let
   };
 in
 {
+  imports = [ inputs.hydra.nixosModules.hydra ];
+
   # https://github.com/NixOS/nix/issues/5039
   nix.extraOptions = ''
     allowed-uris = https:// http://

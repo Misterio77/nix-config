@@ -7,10 +7,7 @@
   };
 
   inputs = rec {
-    # https://hydra.nixos.org/job/nixos/trunk-combined/nixpkgs.perl536Packages.HashSharedMem.aarch64-linux
-    nixpkgs.url = "github:nixos/nixpkgs/7f5639fa3b68054ca0b062866dc62b22c3f11505";
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
@@ -34,7 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Nixified software I use
+    hydra.url = "github:nixos/hydra";
     hyprland.url = "github:hyprwm/hyprland/v0.23.0beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -44,8 +41,6 @@
     yrmos.url = "github:misterio77/yrmos";
 
     # Overridable (--override-inputs) "parameters"
-    # https://github.com/NixOS/nix/issues/5663
-    # https://mat.services/posts/command-line-flake-arguments
     # Cursed stuff, but hey it works.
     true.url = "github:boolean-option/true";
     false.url = "github:boolean-option/false";
