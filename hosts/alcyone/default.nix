@@ -5,6 +5,7 @@
 
     ../common/global
     ../common/users/misterio
+    ../common/optional/fail2ban.nix
   ];
 
   networking = {
