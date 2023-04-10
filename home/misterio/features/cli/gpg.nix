@@ -45,9 +45,6 @@ in
         }];
       };
     };
-  home.persistence = {
-    "/persist/home/misterio".directories = [ ".gnupg" ];
-  };
 
   systemd.user.services = {
     # Link /run/user/$UID/gnupg to ~/.gnupg-sockets
