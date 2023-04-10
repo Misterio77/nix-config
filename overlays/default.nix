@@ -54,10 +54,6 @@
       };
     });
 
-    prismlauncher = prev.prismlauncher.overrideAttrs (oa: {
-      patches = (oa.patches or [ ]) ++ [ ./offline-mode-prism-launcher.diff ];
-    });
-
     # TODO https://github.com/NixOS/nixpkgs/issues/205014
     khal = prev.khal.overrideAttrs (oa: {
       disabledTests = oa.disabledTests ++ [
