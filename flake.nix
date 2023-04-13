@@ -32,7 +32,7 @@
     };
 
     hydra.url = "github:nixos/hydra";
-    hyprland.url = "github:hyprwm/hyprland/v0.24.1";
+    hyprland.url = "github:hyprwm/hyprland/v0.23.0beta";
     hyprwm-contrib.url = "github:hyprwm/contrib";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
