@@ -25,6 +25,9 @@ in {
       vim-numbertoggle = addPatches prev.vimPlugins.vim-numbertoggle [ ./vim-numbertoggle-command-mode.patch ];
     };
 
+    # https://gitlab.com/CalcProgrammer1/OpenRGB/-/issues/2918
+    openrgb  = addPatches prev.openrgb [ ./openrgb-all-devices.diff ];
+
     xdg-utils-spawn-terminal = addPatches prev.xdg-utils [ ./xdg-open-spawn-terminal.diff ];
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
