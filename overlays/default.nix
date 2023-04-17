@@ -1,4 +1,9 @@
-{ outputs, inputs }: {
+{ outputs, inputs }:
+let
+  addPatches = pkg: patches: pkg.overrideAttrs (oldAttrs: {
+    patches = (oldAttrs.patches or [ ]) ++ patches;
+  });
+in {
   # For every flake input, aliases 'pkgs.inputs.${flake}' to
   # 'inputs.${flake}.packages.${pkgs.system}' or
   # 'inputs.${flake}.legacyPackages.${pkgs.system}' or
@@ -17,14 +22,10 @@
   # Modifies existing packages
   modifications = final: prev: {
     vimPlugins = prev.vimPlugins // {
-      vim-numbertoggle = prev.vimPlugins.vim-numbertoggle.overrideAttrs (oa: {
-        patches = (oa.patches or [ ]) ++ [ ./vim-numbertoggle-command-mode.patch ];
-      });
+      vim-numbertoggle = addPatches prev.vimPlugins.vim-numbertoggle [ ./vim-numbertoggle-command-mode.patch ];
     };
 
-    xdg-utils-spawn-terminal = prev.xdg-utils.overrideAttrs (oldAttrs: {
-      patches = (oldAttrs.patches or [ ]) ++ [ ./xdg-open-spawn-terminal.diff ];
-    });
+    xdg-utils-spawn-terminal = addPatches prev.xdg-utils [ ./xdg-open-spawn-terminal.diff ];
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
       version = "unstable-2021-12-10";
@@ -39,9 +40,7 @@
     });
 
     # Sane default values and crash avoidance (https://github.com/k-vernooy/trekscii/pull/1)
-    trekscii = prev.trekscii.overrideAttrs (oldAttrs: {
-      patches = (oldAttrs.patches or [ ]) ++ [ ./trekscii.patch ];
-    });
+    trekscii = addPatches prev.trekscii [ ./trekscii.patch ];
 
     scgit = prev.cgit-pink.overrideAttrs (_: {
       pname = "scgit";
