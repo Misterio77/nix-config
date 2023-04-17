@@ -33,6 +33,7 @@ in
         ".local/share/Paradox Interactive"
         ".paradoxlauncher"
         {
+          # A couple of games don't play well with bindfs
           directory = ".local/share/Steam";
           method = "symlink";
         }

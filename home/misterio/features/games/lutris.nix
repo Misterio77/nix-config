@@ -4,7 +4,15 @@
   home.persistence = {
     "/persist/home/misterio" = {
       allowOther = true;
-      directories = [ "Games/Lutris" ".config/lutris" ".local/share/lutris" ];
+      directories = [
+        {
+          # Use symlink, as games may be IO-heavy
+          directory = "Games/Lutris";
+          method = "symlink";
+        }
+        ".config/lutris"
+        ".local/share/lutris"
+      ];
     };
   };
 }
