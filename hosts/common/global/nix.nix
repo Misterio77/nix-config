@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, config, ... }:
+{ pkgs, inputs, lib, ... }:
 {
   nix = {
     settings = {
@@ -27,8 +27,8 @@
     # To make nix3 commands consistent with the flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
-    # Map registries to channels
-    # Very useful when using legacy commands
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    # Add nixpkgs input to NIX_PATH
+    # This lets nix2 commands still use <nixpkgs>
+    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
   };
 }
