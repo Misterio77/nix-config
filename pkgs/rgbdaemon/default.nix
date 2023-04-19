@@ -142,7 +142,7 @@ with lib;
       bindings
 
       base_colors $color_primary $color_secondary & \
-      openrgb --client --color $color_primary --mode static & \
+      openrgb --client --color $color_primary --mode direct & \
       rgb_daemon & rgb_pid=$!
 
       wait
@@ -151,7 +151,7 @@ with lib;
     off() {
       echo "rgb 000000" > $MOUSE_DEVICE & \
       echo "rgb 000000" > $KEYBOARD_DEVICE
-      openrgb --client --color "000000" --mode static
+      openrgb --client --color "000000" --mode direct
       exit
     }
 
