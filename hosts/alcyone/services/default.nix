@@ -1,6 +1,7 @@
 {
   imports = [
     ./firefly.nix
+    ./firefly-bot.nix
     ./files-server.nix
     ./git-remote.nix
     ./headscale.nix
