@@ -70,10 +70,5 @@
     opentabletdriver.enable = true;
   };
 
-  virtualisation.libvirtd = {
-    enable = true;
-  };
-  environment.systemPackages = with pkgs; [ virt-manager ];
-
   system.stateVersion = "22.05";
 }
