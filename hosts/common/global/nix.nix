@@ -14,8 +14,6 @@
       warn-dirty = false;
       system-features = [ "kvm" "big-parallel" ];
     };
-    # TODO: temporary fix for NixOS/nix#7704
-    package = pkgs.nixVersions.nix_2_12;
     gc = {
       automatic = true;
       dates = "weekly";
