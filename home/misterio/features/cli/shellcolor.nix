@@ -3,8 +3,6 @@ let inherit (config.colorscheme) colors;
 in {
   programs.shellcolor = {
     enable = true;
-    enableFishSshFunction = true;
-    enableBashSshFunction = true;
     settings = {
       base00 = "${colors.base00}";
       base01 = "${colors.base01}";
