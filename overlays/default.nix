@@ -25,6 +25,10 @@ in {
       vim-numbertoggle = addPatches prev.vimPlugins.vim-numbertoggle [ ./vim-numbertoggle-command-mode.patch ];
     };
 
+    passExtensions = prev.passExtensions // {
+      # https://github.com/tadfisher/pass-otp/pull/173
+      pass-otp = addPatches prev.passExtensions.pass-otp [ ./pass-otp-fix-completion.patch ];
+    };
     # https://gitlab.com/CalcProgrammer1/OpenRGB/-/issues/2918
     openrgb  = addPatches prev.openrgb [ ./openrgb-all-devices.diff ];
 
