@@ -80,7 +80,7 @@ in {
 
         while read -r host_line; do
           check_host "$host_line" &
-        done < "/nix/store/1ffl3dcw4jxbmv92nv53ab6xxzcsbxrf-machines"
+        done < "${buildMachinesFile}"
 
         wait
 
