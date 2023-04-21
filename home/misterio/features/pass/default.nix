@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   programs.password-store = {
     enable = true;
     settings = { PASSWORD_STORE_DIR = "$HOME/.password-store"; };
@@ -7,9 +7,8 @@
 
   services.pass-secret-service = {
     enable = true;
-    storePath = null;
-    # Use default ($HOME/.password-store)
-    # Passing $HOME is buggy because systemd moment
+    storePath = "${config.home.homeDirectory}/.password-store";
+    extraArgs = [ "-e${config.programs.password-store.package}/bin/pass" ];
   };
 
   home.persistence = {
