@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ inputs, lib, ... }:
 {
   nix = {
     settings = {
@@ -18,7 +18,7 @@
       automatic = true;
       dates = "weekly";
       # Delete older generations too
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 2d";
     };
 
     # Add each flake input as a registry
