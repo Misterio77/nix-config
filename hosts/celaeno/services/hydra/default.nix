@@ -38,7 +38,7 @@ in
         </githubstatus>
         <runcommand>
           job = nix-config:main:*
-          command = ${lib.getExe release-host-branch} >> /tmp/hydra/release.log
+          command = ${lib.getExe release-host-branch} >> /tmp/hydra/release.log 2>&1
         </runcommand>
       '';
       extraEnv = { HYDRA_DISALLOW_UNFREE = "0"; };
