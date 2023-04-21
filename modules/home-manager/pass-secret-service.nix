@@ -35,7 +35,7 @@ in {
         platforms.linux)
     ];
 
-    pass-secret-service.extraArgs = optional (cfg.storePath != null) "--path ${cfg.storePath}";
+    services.pass-secret-service.extraArgs = optional (cfg.storePath != null) "--path ${cfg.storePath}";
 
     systemd.user.services.pass-secret-service = {
       Unit = {
