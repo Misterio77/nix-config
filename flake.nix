@@ -36,7 +36,9 @@
     };
 
     hydra.url = "github:nixos/hydra";
-    hyprland.url = "github:hyprwm/hyprland/v0.23.0beta";
+    # Using latest commit because it has updated nixpkgs, avoiding glib error
+    # Change to release tag when a new one is released.
+    hyprland.url = "github:hyprwm/hyprland";
     hyprwm-contrib.url = "github:hyprwm/contrib";
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
