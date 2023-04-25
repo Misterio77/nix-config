@@ -3,8 +3,9 @@
 let inherit (config.colorscheme) colors;
 in
 {
-  home.packages = [ pkgs.swaylock-effects ];
   programs.swaylock = {
+    enable = true;
+    package = pkgs.swaylock-effects;
     settings = {
       effect-blur = "20x3";
       fade-in = 0.1;

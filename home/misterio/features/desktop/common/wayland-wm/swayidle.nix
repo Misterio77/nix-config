@@ -1,11 +1,11 @@
 { pkgs, lib, config, ... }:
 
 let
-  swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-  pactl = "${pkgs.pulseaudio}/bin/pactl";
-  pgrep = "${pkgs.procps}/bin/pgrep";
-  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  swaymsg = "${pkgs.sway}/bin/swaymsg";
+  swaylock = lib.getExe config.programs.swaylock.package;
+  pactl = lib.getExe pkgs.pulseaudio;
+  pgrep = lib.getExe pkgs.procps;
+  hyprctl = lib.getExe pkgs.hyprland;
+  swaymsg = lib.getExe pkgs.sway;
 
   isLocked = "${pgrep} -x swaylock";
   actionLock = "${swaylock} -S --daemonize";
