@@ -9,7 +9,7 @@ in {
   # 'inputs.${flake}.legacyPackages.${pkgs.system}' or
   flake-inputs = final: _: {
     inputs = builtins.mapAttrs
-      (_: flake: (flake.packages or flake.legacyPackages or { }).${final.system} or { })
+      (_: flake: (flake.legacyPackages or flake.packages or { }).${final.system} or { })
       inputs;
   };
 
