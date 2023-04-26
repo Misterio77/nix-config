@@ -22,7 +22,7 @@ in
       "deluge"
     ];
 
-    openssh.authorizedKeys.keyFiles = [ ../../../../home/misterio/pgp.asc ];
+    openssh.authorizedKeys.keyFiles = [ ../../../../home/misterio/ssh.pub ];
     passwordFile = config.sops.secrets.misterio-password.path;
     packages = [ pkgs.home-manager ];
   };
