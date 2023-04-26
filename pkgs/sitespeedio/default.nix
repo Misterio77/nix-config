@@ -3,32 +3,22 @@
 , buildNpmPackage
 , makeWrapper
 
-, python3
-, python3Packages
-, nodejs-18_x
-, nodejs ? nodejs-18_x
-
+, coreutils
 , ffmpeg-full
 , imagemagick
+, procps
+, python3
 , xorg
-, chromium
-, chromedriver
 
 , withChromium ? true
+, chromedriver
+, chromium
+
+, withFirefox ? true
+, geckodriver
+, firefox
 }:
-let
-  # https://github.com/NixOS/nixpkgs/pull/227681
-  pyssim = python3Packages.pyssim.overrideAttrs (_: rec {
-    version = "0.6";
-    src = fetchFromGitHub {
-      owner = "jterrace";
-      repo = "pyssim";
-      rev = "v${version}";
-      sha256 = "sha256-VvxQTvDTDms6Ccyclbf9P0HEQksl5atPPzHuH8yXTmc";
-    };
-  });
-in
-buildNpmPackage.override { inherit nodejs; } rec {
+buildNpmPackage rec {
   pname = "sitespeedio";
   version = "27.3.0";
 
@@ -39,26 +29,53 @@ buildNpmPackage.override { inherit nodejs; } rec {
     sha256 = "sha256-7CnoKmyoNIO+ovPsChbuZiyD7n2llMSZAgjMSb867H8=";
   };
 
-  npmDepsHash = "sha256-tMgHDDlF6182OnBrwQYZLQXRZfVAEX05MGGKrXOYosk=";
-
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [ python3 makeWrapper ];
 
   postPatch = ''
-    cp ${./package-lock.json} package-lock.json
-    mkdir -p $out
+    ln -s npm-shrinkwrap.json package-lock.json
   '';
 
-  postFixup = ''
-    wrapProgram $out/bin/sitespeedio \
-      --set PATH ${lib.makeBinPath ([
-        (python3.withPackages (p: [p.numpy p.opencv4 pyssim]))
+  # Don't try to download the browser drivers
+  CHROMEDRIVER_SKIP_DOWNLOAD = true;
+  GECKODRIVER_SKIP_DOWNLOAD = true;
+  EDGEDRIVER_SKIP_DOWNLOAD = true;
+
+  dontNpmBuild = true;
+  npmInstallFlags = [ "--omit=dev" ];
+  npmDepsHash = "sha256-QYVMyPR1iJYyCmZE/qK7CgvL1Obb7TrHxgUrh2n2+6Q=";
+
+  postInstall = ''
+    mv $out/bin/sitespeed{.,}io
+    mv $out/bin/sitespeed{.,}io-wpr
+  '';
+
+  postFixup =
+  let
+    firefoxArgs =
+      "--chrome.chromedriverPath ${lib.getExe chromedriver} --chrome.binaryPath ${lib.getExe chromium}";
+    chromiumArgs =
+      "--browsertime.firefox.geckodriverPath ${lib.getExe geckodriver} --browsertime.firefox.binaryPath ${lib.getExe firefox}";
+  in ''
+    wrapProgram $out/bin/sitespeedio --set PATH ${
+      lib.makeBinPath ([
+        (python3.withPackages (p: [p.numpy p.opencv4 p.pyssim]))
         ffmpeg-full
         imagemagick
         xorg.xorgserver
+        procps
+        coreutils
       ] ++ lib.optionals withChromium [
-        chromium
         chromedriver
-      ])}
+        chromium
+      ] ++ lib.optionals withFirefox [
+        geckodriver
+        firefox
+      ])
+    } ${
+      lib.optionalString withChromium "--add-flags '${firefoxArgs}'"
+    } ${
+      lib.optionalString withFirefox "--add-flags '${chromiumArgs}'"
+    }
   '';
 
   meta = with lib; {
@@ -67,6 +84,5 @@ buildNpmPackage.override { inherit nodejs; } rec {
     license = licenses.mit;
     maintainers = with maintainers; [ misterio77 ];
     platforms = platforms.linux;
-    broken = true;
   };
 }
