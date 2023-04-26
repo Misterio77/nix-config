@@ -1,13 +1,11 @@
 { pkgs, lib, config, ... }:
 
 let
-  swaylock = lib.getExe config.programs.swaylock.package;
-  pactl = lib.getExe pkgs.pulseaudio;
-  pgrep = lib.getExe pkgs.procps;
-  hyprctl = lib.getExe pkgs.hyprland;
-  swaymsg = lib.getExe pkgs.sway;
+  swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+  pactl = "${pkgs.pulseaudio}/bin/pactl";
+  pgrep = "${pkgs.procps}/bin/pgrep";
 
-  isLocked = "${pgrep} -x swaylock";
+  isLocked = "${pgrep} -x ${swaylock}";
   actionLock = "${swaylock} -S --daemonize";
 
   lockTime = 4 * 60; # TODO: configurable desktop (10 min)/laptop (4 min)
@@ -28,8 +26,10 @@ in
     (mkEvent 20 "systemctl --user stop rgbdaemon" "systemctl --user start rgbdaemon") +
   # Hyprland - Turn off screen (DPMS)
   lib.optionalString config.wayland.windowManager.hyprland.enable
-    (mkEvent 40 "${hyprctl} dispatch dpms off" "${hyprctl} dispatch dpms on") +
+    (let hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+    in mkEvent 40 "${hyprctl} dispatch dpms off" "${hyprctl} dispatch dpms on") +
   # Sway - Turn off screen (DPMS)
-  lib.optionalString config.wayland.windowManager.hyprland.enable
-    (mkEvent 40 "${swaymsg} 'output * dpms off'" "${swaymsg} 'output * dpms on'");
+  lib.optionalString config.wayland.windowManager.sway.enable
+    (let swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
+    in mkEvent 40 "${swaymsg} 'output * dpms off'" "${swaymsg} 'output * dpms on'");
 }
