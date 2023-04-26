@@ -60,7 +60,7 @@ in
       ssh = mkIf hasShellColor ''
         ${shellcolor} disable $fish_pid
         # Check if kitty is available
-        if type -q -f kitty
+        if set -q KITTY_PID && set -q KITTY_WINDOW_ID && type -q -f kitty
           kitty +kitten ssh $argv
         else
           command ssh $argv
