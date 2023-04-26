@@ -1,4 +1,5 @@
 { lib
+, stdenv
 , fetchFromGitHub
 , buildNpmPackage
 , makeWrapper
@@ -10,11 +11,11 @@
 , python3
 , xorg
 
-, withChromium ? true
+, withChromium ? (lib.elem stdenv.hostPlatform.system chromedriver.meta.platforms)
 , chromedriver
 , chromium
 
-, withFirefox ? true
+, withFirefox ? (lib.elem stdenv.hostPlatform.system geckodriver.meta.platforms)
 , geckodriver
 , firefox
 }:
@@ -51,31 +52,27 @@ buildNpmPackage rec {
 
   postFixup =
   let
-    firefoxArgs =
-      "--chrome.chromedriverPath ${lib.getExe chromedriver} --chrome.binaryPath ${lib.getExe chromium}";
-    chromiumArgs =
-      "--browsertime.firefox.geckodriverPath ${lib.getExe geckodriver} --browsertime.firefox.binaryPath ${lib.getExe firefox}";
+    chromiumArgs = lib.concatStringsSep " " [
+      "--browsertime.chrome.chromedriverPath=${lib.getExe chromedriver}"
+      "--browsertime.chrome.binaryPath=${lib.getExe chromium}"
+    ];
+    firefoxArgs = lib.concatStringsSep " " [
+      "--browsertime.firefox.geckodriverPath=${lib.getExe geckodriver}"
+      "--browsertime.firefox.binaryPath=${lib.getExe firefox}"
+      "--browsertime.firefox.profileTemplate=$(mktemp -d)"
+    ];
   in ''
-    wrapProgram $out/bin/sitespeedio --set PATH ${
-      lib.makeBinPath ([
+    wrapProgram $out/bin/sitespeedio \
+      --set PATH ${lib.makeBinPath ([
         (python3.withPackages (p: [p.numpy p.opencv4 p.pyssim]))
         ffmpeg-full
         imagemagick
         xorg.xorgserver
         procps
         coreutils
-      ] ++ lib.optionals withChromium [
-        chromedriver
-        chromium
-      ] ++ lib.optionals withFirefox [
-        geckodriver
-        firefox
-      ])
-    } ${
-      lib.optionalString withChromium "--add-flags '${firefoxArgs}'"
-    } ${
-      lib.optionalString withFirefox "--add-flags '${chromiumArgs}'"
-    }
+      ])} \
+      ${lib.optionalString withChromium "--add-flags '${chromiumArgs}'"} \
+      ${lib.optionalString withFirefox "--add-flags '${firefoxArgs}'"}
   '';
 
   meta = with lib; {
@@ -83,6 +80,6 @@ buildNpmPackage rec {
     homepage = "https://sitespeed.io";
     license = licenses.mit;
     maintainers = with maintainers; [ misterio77 ];
-    platforms = platforms.linux;
+    platforms = lib.unique (geckodriver.meta.platforms ++ chromedriver.meta.platforms);
   };
 }
