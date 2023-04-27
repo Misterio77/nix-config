@@ -97,7 +97,10 @@ in
       };
       preStart = "chmod u+w -R ${cfg.dataDir}"; # Make sure things are writable
       script = ''
-        ${cfg.package}/bin/sitespeedio --config ${format.generate "sitespeed.json" cfg.settings} ${lib.escapeShellArgs cfg.extraArgs} ${builtins.toFile "urls.txt" (lib.concatLines cfg.urls)}
+        ${cfg.package}/bin/sitespeedio \
+          --config ${format.generate "sitespeed.json" cfg.settings} \
+          ${lib.escapeShellArgs cfg.extraArgs} \
+          ${builtins.toFile "urls.txt" (lib.concatLines cfg.urls)}
       '';
     };
 

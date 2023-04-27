@@ -16,7 +16,39 @@
       };
     };
 
-    prometheus.exporters.graphite.enable = true;
+    prometheus.exporters.graphite = {
+      enable = true;
+      mappingSettings.mappings = [
+        # Page summaries
+        {
+          match = ''sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)\.(.*)'';
+          match_type = "regex";
+          name = "sitespeedio_$7";
+          labels = {
+            profile = "$1";
+            job = "$2";
+            domain = "$3";
+            page = "$4";
+            browser = "$5";
+            platform = "$6";
+          };
+        }
+        # Site summaries
+        {
+          match = ''sitespeed_io\.([^.]+)\.([^.]+)\.summary\.([^.]+)\.([^.]+)\.([^.]+)\.(.*)'';
+          match_type = "regex";
+          name = "sitespeedio_$6";
+          labels = {
+            profile = "$1";
+            job = "$2";
+            domain = "$3";
+            page = "_all";
+            browser = "$4";
+            platform = "$5";
+          };
+        }
+      ];
+    };
 
     nginx.virtualHosts."sitespeed.m7.rs" = {
       forceSSL = true;
