@@ -16,7 +16,7 @@ in
         forceSSL = true;
         enableACME = true;
         locations."/metrics" = {
-          proxyPass = "http://localhost:${config.services.prometheus.exporters.nginxlog.port}";
+          proxyPass = "http://localhost:${toString config.services.prometheus.exporters.nginxlog.port}";
         };
       };
     };
