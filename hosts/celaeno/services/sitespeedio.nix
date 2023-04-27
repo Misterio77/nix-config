@@ -2,15 +2,17 @@
   services = {
     sitespeedio = {
       enable = true;
+      period = "hourly";
       urls = [
         "https://m7.rs"
         "https://m7.rs/blog"
         "https://m7.rs/cv"
       ];
-      period = "hourly";
-      graphite = {
-        enable = true;
-        port = config.services.prometheus.exporters.graphite.graphitePort;
+      settings = {
+        graphite = {
+          host = "localhost";
+          port = config.services.prometheus.exporters.graphite.graphitePort;
+        };
       };
     };
 
@@ -21,7 +23,7 @@
       enableACME = true;
       locations = {
         "=/metrics".proxyPass = "http://localhost:${toString config.services.prometheus.exporters.graphite.port}";
-        "/".root = config.services.sitespeedio.outputDir;
+        "/".root = config.services.sitespeedio.settings.outputFolder;
       };
     };
   };

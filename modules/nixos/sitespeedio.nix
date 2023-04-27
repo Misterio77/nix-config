@@ -1,6 +1,7 @@
 { lib, config, pkgs, ... }:
 let
   cfg = config.services.sitespeedio;
+  format = pkgs.formats.json { };
 in
 {
   options.services.sitespeedio = {
@@ -19,7 +20,7 @@ in
       description = lib.mdDoc "Sitespeed.io package to use.";
     };
 
-    outputDir = lib.mkOption {
+    dataDir = lib.mkOption {
       default = "/var/lib/sitespeedio";
       type = lib.types.str;
       description = lib.mdDoc "The directory where sitespeed saves its outputs.";
@@ -41,31 +42,43 @@ in
       '';
     };
 
+    settings = lib.mkOption {
+      type = lib.types.submodule {
+        freeformType = format.type;
+        options = {
+          browser = lib.mkOption {
+            type = lib.types.str;
+            default = "firefox";
+            example = "chrome";
+          };
+          outputFolder = lib.mkOption {
+            type = lib.types.str;
+            default = cfg.dataDir;
+            defaultText = "cfg.dataDir";
+          };
+          browsertime = {
+            headless = lib.mkOption {
+              type = lib.types.bool;
+              default = true;
+            };
+          };
+        };
+      };
+      default = { };
+      description = lib.mdDoc ''
+        Configuration for sitespeedio, see
+        <https://www.sitespeed.io/documentation/sitespeed.io/configuration/>
+        for available options. The value here will be directly transformed to
+        JSON and passed as `--config` to the program.
+      '';
+    };
+
     extraArgs = lib.mkOption {
       type = with lib.types; listOf str;
       default = [];
       description = lib.mdDoc ''
         Extra command line arguments to pass to the program.
       '';
-    };
-
-    graphite = {
-      enable = lib.mkEnableOption "Export metrics to graphite";
-      host = lib.mkOption {
-        type = lib.types.str;
-        default = "localhost";
-        example = "192.168.0.10";
-        description = lib.mdDoc ''
-          Hostname or address where to find the graphite service.
-        '';
-      };
-      port = lib.mkOption {
-        type = lib.types.port;
-        default = 9108;
-        description = lib.mdDoc ''
-          The port graphite is reachable on.
-        '';
-      };
     };
   };
 
@@ -78,19 +91,13 @@ in
     systemd.services.sitespeedio = {
       description = "Check website status";
       startAt = cfg.period;
-      serviceConfig.User = cfg.user;
-      preStart = "chmod u+w -R ${cfg.outputDir}"; # Make sure things are writable
-      script = let
-        args = [
-          "-b=firefox"
-          "--browsertime.firefox.args='-headless'"
-          "--outputFolder=${cfg.outputDir}"
-        ] ++ (lib.optionals cfg.graphite.enable [
-          "--graphite.host=${cfg.graphite.host}"
-          "--graphite.port=${toString cfg.graphite.port}"
-        ]) ++ cfg.urls ++ cfg.extraArgs;
-      in ''
-        ${cfg.package}/bin/sitespeedio ${lib.escapeShellArgs args}
+      serviceConfig = {
+        WorkingDirectory = cfg.dataDir;
+        User = cfg.user;
+      };
+      preStart = "chmod u+w -R ${cfg.dataDir}"; # Make sure things are writable
+      script = ''
+        ${cfg.package}/bin/sitespeedio --config ${format.generate "sitespeed.json" cfg.settings} ${lib.escapeShellArgs cfg.extraArgs} ${builtins.toFile "urls.txt" (lib.concatLines cfg.urls)}
       '';
     };
 
@@ -98,7 +105,7 @@ in
       extraUsers.${cfg.user} = {
         isSystemUser = true;
         group = cfg.user;
-        home = cfg.outputDir;
+        home = cfg.dataDir;
         createHome = true;
         homeMode = "755";
       };
