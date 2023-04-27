@@ -79,6 +79,7 @@ in
       description = "Check website status";
       startAt = cfg.period;
       serviceConfig.User = cfg.user;
+      preStart = "chmod u+w -R ${cfg.outputDir}"; # Make sure things are writable
       script = let
         args = [
           "-b=firefox"
