@@ -1,4 +1,6 @@
-{ lib, ... }:
+{ lib, config, ... }: let
+  inherit (config.networking) hostName;
+in
 {
   services = {
     nginx = {
@@ -8,7 +10,18 @@
       recommendedGzipSettings = true;
       recommendedOptimisation = true;
       clientMaxBodySize = "300m";
+
+      virtualHosts."${hostName}.m7.rs" = {
+        default = true;
+        forceSSL = true;
+        enableACME = true;
+        locations."/metrics" = {
+          proxyPass = "http://localhost:${config.services.prometheus.exporters.nginxlog.port}";
+        };
+      };
     };
+
+    prometheus.exporters.nginxlog.enable = true;
 
     uwsgi = {
       enable = true;

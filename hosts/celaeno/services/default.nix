@@ -1,7 +1,8 @@
 {
   imports = [
+    ../../common/optional/nginx.nix
+
     ./binary-cache.nix
-    ./nginx.nix
     ./paste-misterio-me.nix
     ./sitespeedio.nix
 

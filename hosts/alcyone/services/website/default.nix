@@ -15,7 +15,6 @@ in
 
   services.nginx.virtualHosts = {
     "m7.rs" = {
-      default = true;
       forceSSL = true;
       enableACME = true;
       locations = {
