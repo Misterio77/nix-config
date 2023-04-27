@@ -8,6 +8,8 @@
 
   inputs = rec {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # https://github.com/NixOS/nixpkgs/pull/228542
+    nixpkgs-228542.url = "github:misterio77/nixpkgs/add-prometheus-graphite-exporter";
 
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";

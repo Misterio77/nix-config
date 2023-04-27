@@ -474,6 +474,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-228542": {
+      "locked": {
+        "lastModified": 1682609834,
+        "narHash": "sha256-KAgvwNWkibCNjNX+WTCD04C7ttrfUleyp6AOvMyQCIA=",
+        "owner": "misterio77",
+        "repo": "nixpkgs",
+        "rev": "d8fd239020905682b47e16ce98b9a81d9f7b35bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "ref": "add-prometheus-graphite-exporter",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-22_11": {
       "locked": {
         "lastModified": 1669558522,
@@ -721,6 +737,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs_5",
+        "nixpkgs-228542": "nixpkgs-228542",
         "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
         "true": "true",
