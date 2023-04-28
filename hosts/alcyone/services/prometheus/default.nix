@@ -1,9 +1,9 @@
 { config, ... }:
 let
-  mkSimple = domain: {
-    job_name = domain;
+  mkStatic = job_name: targets: {
+    inherit job_name;
     scheme = "https";
-    static_configs = [{ targets = [ domain ]; }];
+    static_configs = [{ inherit targets; }];
     metrics_path = "/metrics";
   };
 in {
@@ -11,11 +11,9 @@ in {
     prometheus = {
       enable = true;
       scrapeConfigs = [
-        (mkSimple "hydra.m7.rs")
-        (mkSimple "sitespeed.m7.rs")
-        (mkSimple "alcyone.m7.rs")
-        (mkSimple "celaeno.m7.rs")
-        (mkSimple "merope.m7.rs")
+        (mkStatic "hydra" ["hydra.m7.rs"])
+        (mkStatic "sitespeed" ["sitespeed.m7.rs"])
+        (mkStatic "nginx" ["alcyone.m7.rs" "celaeno.m7.rs" "merope.m7.rs"])
       ];
       extraFlags = let
         prometheus = config.services.prometheus.package;
