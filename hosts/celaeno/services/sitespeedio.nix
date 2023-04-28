@@ -2,7 +2,7 @@
   services = {
     sitespeedio = {
       enable = true;
-      period = "hourly";
+      period = "*:0/10"; # Every ten minutes
       urls = [
         "https://m7.rs"
         "https://m7.rs/blog"
@@ -18,7 +18,12 @@
 
     prometheus.exporters.graphite = {
       enable = true;
-      extraFlags = [ "--graphite.mapping-strict-match" ]; # Drop non-matched metrics
+      extraFlags = [
+         # Drop non-matched metrics
+        "--graphite.mapping-strict-match"
+        # Keep samples for an hour
+        "--graphite.sample-expiry=1h"
+      ];
       mappingSettings.mappings = [
         # Page summaries
         {
