@@ -18,33 +18,22 @@
 
     prometheus.exporters.graphite = {
       enable = true;
+      extraFlags = [ "--graphite.mapping-strict-match" ]; # Drop non-matched metrics
       mappingSettings.mappings = [
         # Page summaries
         {
-          match = ''sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)\.(.*)'';
+          match = ''^sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)\.(.+?)(?:\.(mean|max|median|min|p90|p99|p10|rsd|mdev|stddev|total|values))?$'';
           match_type = "regex";
           name = "sitespeedio_$7";
           labels = {
-            sitespeed_profile = "$1";
-            sitespeed_job = "$2";
+            profile = "$1";
+            site = "$2";
             domain = "$3";
             page = "$4";
             browser = "$5";
             platform = "$6";
-          };
-        }
-        # Site summaries
-        {
-          match = ''sitespeed_io\.([^.]+)\.([^.]+)\.summary\.([^.]+)\.([^.]+)\.([^.]+)\.(.*)'';
-          match_type = "regex";
-          name = "sitespeedio_$6";
-          labels = {
-            sitespeed_profile = "$1";
-            sitespeed_job = "$2";
-            domain = "$3";
-            page = "*";
-            browser = "$4";
-            platform = "$5";
+            # We save this so that we can drop specific aggregate metrics
+            aggr_kind = "$8";
           };
         }
       ];

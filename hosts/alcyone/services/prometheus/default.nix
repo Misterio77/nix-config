@@ -1,22 +1,46 @@
 { config, ... }:
-let
-  mkStatic = job_name: targets: {
-    inherit job_name;
-    scheme = "https";
-    static_configs = [{ inherit targets; }];
-    metrics_path = "/metrics";
-  };
-in {
+{
   services = {
     prometheus = {
       enable = true;
+      globalConfig = {
+        # Scrape a bit more frequently
+        scrape_interval = "30s";
+      };
       scrapeConfigs = [
-        (mkStatic "hydra" ["hydra.m7.rs"])
-        (mkStatic "sitespeed" ["sitespeed.m7.rs"])
-        (mkStatic "nginx" ["alcyone.m7.rs" "celaeno.m7.rs" "merope.m7.rs"])
+        {
+          job_name = "hydra";
+          static_configs = [{
+            targets = [ "hydra.m7.rs" ];
+          }];
+        }
+        {
+          job_name = "nginx";
+          static_configs =[{
+            targets = [ "alcyone.m7.rs" "celaeno.m7.rs" "merope.m7.rs" ];
+          }];
+        }
+        {
+          job_name = "sitespeed";
+          static_configs = [{
+            targets = [ "sitespeed.m7.rs" ];
+          }];
+          metric_relabel_configs = [
+            # Only keep metrics that are not aggregations or are medians
+            {
+              source_labels = [ "aggr_kind" ];
+              regex = "(median|)";
+              action = "keep";
+            }
+            # Then remove the aggregation label
+            {
+              regex = "aggr_kind";
+              action = "labeldrop";
+            }
+          ];
+        }
       ];
-      extraFlags = let
-        prometheus = config.services.prometheus.package;
+      extraFlags = let prometheus = config.services.prometheus.package;
       in [
         # Custom consoles
         "--web.console.templates=${prometheus}/etc/prometheus/consoles"
@@ -27,7 +51,8 @@ in {
       "metrics.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:${toString config.services.prometheus.port}";
+        locations."/".proxyPass =
+          "http://localhost:${toString config.services.prometheus.port}";
       };
     };
   };
