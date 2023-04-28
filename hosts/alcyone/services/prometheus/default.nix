@@ -37,6 +37,19 @@
               regex = "aggr_kind";
               action = "labeldrop";
             }
+
+            # Drop {content,header,transfer}Size that don't have a content_type
+            {
+              source_labels = [ "__name__" "content_type" ];
+              regex = "sitespeedio_pagexray_(content|header|transfer)Size;";
+              action = "drop";
+            }
+            # Drop {content,header,transfer}Size that don't have a content_origin
+            {
+              source_labels = [ "__name__" "content_origin" ];
+              regex = "sitespeedio_pagexray_(content|header|transfer)Size;";
+              action = "drop";
+            }
           ];
         }
       ];
