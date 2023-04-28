@@ -27,9 +27,9 @@
       mappingSettings.mappings = [
         # Page summaries
         {
-          match = ''^sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)\.(.+?)(?:\.(mean|max|median|min|p90|p99|p10|rsd|mdev|stddev|total|values))?$'';
+          match = ''^sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)(\..+?)??(?:\.(firstParty|thirdParty))?(\..+?)??(?:\.(css|font|html|image|javascript|svg))?(\..+?)??(?:\.(mean|max|median|min|p90|p99|p10|rsd|mdev|stddev|total|values))?$'';
           match_type = "regex";
-          name = "sitespeedio_$7";
+          name = "sitespeedio$7$9$11";
           labels = {
             profile = "$1";
             site = "$2";
@@ -37,8 +37,9 @@
             page = "$4";
             browser = "$5";
             platform = "$6";
-            # We save this so that we can drop specific aggregate metrics
-            aggr_kind = "$8";
+            content_origin = "$8";
+            content_type = "$10";
+            aggr_kind = "$12";
           };
         }
       ];
