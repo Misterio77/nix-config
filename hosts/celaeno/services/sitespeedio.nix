@@ -25,8 +25,8 @@
           match_type = "regex";
           name = "sitespeedio_$7";
           labels = {
-            profile = "$1";
-            job = "$2";
+            sitespeed_profile = "$1";
+            sitespeed_job = "$2";
             domain = "$3";
             page = "$4";
             browser = "$5";
@@ -39,10 +39,10 @@
           match_type = "regex";
           name = "sitespeedio_$6";
           labels = {
-            profile = "$1";
-            job = "$2";
+            sitespeed_profile = "$1";
+            sitespeed_job = "$2";
             domain = "$3";
-            page = "_all";
+            page = "*";
             browser = "$4";
             platform = "$5";
           };
