@@ -24,4 +24,8 @@
     group = "nginx";
     sopsFile = ../secrets.yaml;
   };
+
+  environment.persistence = {
+    "/persist".directories = [ "/var/lib/firefly-iii" ];
+  };
 }

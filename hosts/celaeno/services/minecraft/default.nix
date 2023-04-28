@@ -1,8 +1,6 @@
 { inputs, pkgs, config, lib, ... }: {
   imports = [
     inputs.nix-minecraft.nixosModules.minecraft-servers
-    ../../../common/optional/mysql.nix
-
     ./servers/proxy
     ./servers/limbo
     ./servers/survival

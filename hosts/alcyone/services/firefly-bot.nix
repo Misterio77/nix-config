@@ -14,4 +14,8 @@
     group = "firefly-bot";
     sopsFile = ../secrets.yaml;
   };
+
+  environment.persistence = {
+    "/persist".directories = [ "/var/lib/firefly-bot" ];
+  };
 }

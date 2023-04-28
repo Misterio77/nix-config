@@ -1,5 +1,5 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ lib, inputs, outputs, ... }: {
+{ inputs, outputs, ... }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./acme.nix
@@ -7,15 +7,16 @@
     ./docker.nix
     ./fish.nix
     ./locale.nix
-    ./tailscale.nix
+    ./mysql.nix
     ./nix.nix
     ./openssh.nix
     ./optin-persistence.nix
     ./postgres.nix
     ./sops.nix
-    ./systemd-initrd.nix
     ./ssh-serve-store.nix
     ./steam-hardware.nix
+    ./systemd-initrd.nix
+    ./tailscale.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager = {
