@@ -5,10 +5,14 @@
       period = "*:0/10"; # Every ten minutes
       urls = [
         "https://m7.rs"
-        "https://m7.rs/blog"
-        "https://m7.rs/cv"
+        "https://paste.misterio.me"
+        "https://paste.misterio.me/u/misterio"
       ];
       settings = {
+        crawler = {
+          depth = 4;
+          maxPages = 40;
+        };
         graphite = {
           host = "localhost";
           port = config.services.prometheus.exporters.graphite.graphitePort;
