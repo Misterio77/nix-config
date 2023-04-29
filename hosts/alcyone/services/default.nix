@@ -8,10 +8,10 @@
     ./git-remote.nix
     ./headscale.nix
     ./mail.nix
+    ./prometheus.nix
     ./radicale.nix
 
     ./cgit
-    ./prometheus
     ./website
   ];
 }
