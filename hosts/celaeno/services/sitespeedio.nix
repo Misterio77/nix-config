@@ -9,6 +9,9 @@
         "https://paste.misterio.me/u/misterio"
       ];
       settings = {
+        plugins.add = [
+          "crawler"
+        ];
         crawler = {
           depth = 4;
           maxPages = 40;

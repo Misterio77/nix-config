@@ -21,13 +21,13 @@
 }:
 buildNpmPackage rec {
   pname = "sitespeedio";
-  version = "27.3.0";
+  version = "27.3.1";
 
   src = fetchFromGitHub {
     owner = pname;
     repo = "sitespeed.io";
     rev = "v${version}";
-    sha256 = "sha256-7CnoKmyoNIO+ovPsChbuZiyD7n2llMSZAgjMSb867H8=";
+    hash = "sha256-Z4U4ZIw5Du/VSHIsGKdgu7wRv/6XVh/nMFDs8aYwkOQ=";
   };
 
   nativeBuildInputs = [ python3 makeWrapper ];
@@ -43,7 +43,7 @@ buildNpmPackage rec {
 
   dontNpmBuild = true;
   npmInstallFlags = [ "--omit=dev" ];
-  npmDepsHash = "sha256-QYVMyPR1iJYyCmZE/qK7CgvL1Obb7TrHxgUrh2n2+6Q=";
+  npmDepsHash = "sha256-Z9SSIPF/QPDsv4DexiqJAAXhY/QvnWqnauih6DT7I8o=";
 
   postInstall = ''
     mv $out/bin/sitespeed{.,}io
