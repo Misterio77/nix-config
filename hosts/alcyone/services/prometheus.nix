@@ -16,6 +16,13 @@
           }];
         }
         {
+          job_name = "headscale";
+          scheme = "https";
+          static_configs = [{
+            targets = [ "tailscale.m7.rs" ];
+          }];
+        }
+        {
           job_name = "nginx";
           scheme = "https";
           static_configs = [{
