@@ -23,7 +23,7 @@ in
     dataDir = lib.mkOption {
       default = "/var/lib/sitespeedio";
       type = lib.types.str;
-      description = lib.mdDoc "The directory where sitespeed saves its outputs.";
+      description = lib.mdDoc "The base sitespeedio data directory.";
     };
 
     period = lib.mkOption {
@@ -34,59 +34,56 @@ in
       '';
     };
 
-    urls = lib.mkOption {
-      type = with lib.types; listOf str;
-      default = [];
-      description = lib.mdDoc ''
-        URLs the service should monitor.
-      '';
-    };
-
-    settings = lib.mkOption {
-      type = lib.types.submodule {
-        freeformType = format.type;
+    runs = lib.mkOption {
+      default = [ ];
+      description = lib.mdDoc "A list of run configurations.";
+      type = lib.types.listOf (lib.types.submodule {
         options = {
-          browser = lib.mkOption {
-            type = lib.types.str;
-            default = "firefox";
-            example = "chrome";
+          urls = lib.mkOption {
+            type = with lib.types; listOf str;
+            default = [];
+            description = lib.mdDoc ''
+              URLs the service should monitor.
+            '';
           };
-          outputFolder = lib.mkOption {
-            type = lib.types.str;
-            default = cfg.dataDir;
-            defaultText = "cfg.dataDir";
-          };
-          browsertime = {
-            headless = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
+
+          settings = lib.mkOption {
+            type = lib.types.submodule {
+              freeformType = format.type;
+              options = { };
             };
+            default = { };
+            description = lib.mdDoc ''
+              Configuration for sitespeedio, see
+              <https://www.sitespeed.io/documentation/sitespeed.io/configuration/>
+              for available options. The value here will be directly transformed to
+              JSON and passed as `--config` to the program.
+            '';
+          };
+
+          extraArgs = lib.mkOption {
+            type = with lib.types; listOf str;
+            default = [];
+            description = lib.mdDoc ''
+              Extra command line arguments to pass to the program.
+            '';
           };
         };
-      };
-      default = { };
-      description = lib.mdDoc ''
-        Configuration for sitespeedio, see
-        <https://www.sitespeed.io/documentation/sitespeed.io/configuration/>
-        for available options. The value here will be directly transformed to
-        JSON and passed as `--config` to the program.
-      '';
-    };
-
-    extraArgs = lib.mkOption {
-      type = with lib.types; listOf str;
-      default = [];
-      description = lib.mdDoc ''
-        Extra command line arguments to pass to the program.
-      '';
+      });
     };
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [{
-      assertion = cfg.urls != [];
-      message = "At least one URL must be configured.";
-    }];
+    assertions = [
+    {
+      assertion = cfg.runs != [];
+      message = "At least one run must be configured.";
+    }
+    {
+      assertion = lib.all (run: run.urls != []) cfg.runs;
+      message = "All runs must have at least one url configured.";
+    }
+  ];
 
     systemd.services.sitespeedio = {
       description = "Check website status";
@@ -96,11 +93,14 @@ in
         User = cfg.user;
       };
       preStart = "chmod u+w -R ${cfg.dataDir}"; # Make sure things are writable
-      script = ''
-        ${cfg.package}/bin/sitespeedio \
-          --config ${format.generate "sitespeed.json" cfg.settings} \
-          ${lib.escapeShellArgs cfg.extraArgs} \
-          ${builtins.toFile "urls.txt" (lib.concatLines cfg.urls)}
+      script = (lib.concatMapStrings (run: ''
+        ${lib.getExe cfg.package} \
+          --config ${format.generate "sitespeed.json" run.settings} \
+          ${lib.escapeShellArgs run.extraArgs} \
+          ${builtins.toFile "urls.txt" (lib.concatLines run.urls)} &
+      '') cfg.runs) +
+      ''
+        wait
       '';
     };
 
