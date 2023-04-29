@@ -40,7 +40,7 @@
       ];
       mappingSettings.mappings = [
         {
-          match = ''^sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)(\..+?)?(?:\.(firstParty|thirdParty))?(?:\.contentTypes\.(css|font|html|image|javascript|svg))?(\..+?)?(?:\.(mean|max|median|min|p90|p99|p10|rsd|mdev|stddev|total|values))?$'';
+          match = ''^sitespeed_io\.([^.]+)\.([^.]+)\.pageSummary\.([^.]+)\.([^.]+)\.([^.]+)\.([^.]+)(\..+?)?(?:\.(firstParty|thirdParty))?(?:\.contentTypes\.(json|css|font|html|image|javascript|svg))?(\..+?)?(?:\.(mean|max|median|min|p90|p99|p10|rsd|mdev|stddev|total|values))?$'';
           match_type = "regex";
           name = "sitespeedio$7$10";
           labels = {
