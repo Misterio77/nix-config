@@ -7,7 +7,7 @@ let
       sshKey = config.sops.secrets.nix-ssh-key.path;
       maxJobs = 12;
       speedFactor = 150;
-      supportedFeatures = [ "kvm" "big-parallel" ];
+      supportedFeatures = [ "kvm" "big-parallel" "nixos-test" ];
     }
     {
       uri = "ssh://nix-ssh@maia";
@@ -15,14 +15,14 @@ let
       sshKey = config.sops.secrets.nix-ssh-key.path;
       maxJobs = 8;
       speedFactor = 100;
-      supportedFeatures = [ "kvm" ];
+      supportedFeatures = [ "kvm" "big-parallel" "nixos-test" ];
     }
     {
       uri = "localhost";
       systems = [ "aarch64-linux" "x86_64-linux" "i686-linux" ];
       maxJobs = 4;
       speedFactor = 70;
-      supportedFeatures = [ "kvm" "big-parallel" ];
+      supportedFeatures = [ "kvm" "big-parallel" "nixos-test" ];
     }
   ];
 in {
