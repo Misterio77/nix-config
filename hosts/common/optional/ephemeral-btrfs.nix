@@ -32,7 +32,7 @@ in
     systemd.services.restore-root = lib.mkIf phase1Systemd {
       description = "Rollback btrfs rootfs";
       wantedBy = [ "initrd.target" ];
-      after = [ "systemd-cryptsetup@${hostname}.service" ];
+      after = [ "basic.target" "systemd-cryptsetup@${hostname}.service" ];
       before = [ "sysroot.mount" ];
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
