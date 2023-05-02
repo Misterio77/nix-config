@@ -1,7 +1,6 @@
 { pkgs ? import <nixpkgs> { } }: {
 
   # Packages with an actual source
-  phpactor = pkgs.callPackage ./phpactor { };
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
