@@ -19,10 +19,7 @@
     ./tailscale.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
 
-  home-manager = {
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs outputs; };
-  };
+  home-manager.extraSpecialArgs = { inherit inputs outputs; };
 
   nixpkgs = {
     overlays = builtins.attrValues outputs.overlays;
