@@ -17,7 +17,7 @@
       };
     in {
       enable = true;
-      period = "*:0/20"; # Every twenty minutes
+      period = "hourly";
       runs = [
         {
           inherit settings;
