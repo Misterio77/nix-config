@@ -75,7 +75,6 @@
           sources = {
             { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs } },
             { name='nvim_lsp' },
-            { name='orgmode' },
           },
         }
       '';

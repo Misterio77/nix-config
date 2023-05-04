@@ -41,7 +41,6 @@
             dashboard.button( "n", " New file" , ":enew <BAR> startinsert <CR>"),
             dashboard.button( "e", " Explore", ":Explore<CR>"),
             dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
-            dashboard.button( "o", " Org capture" , ":cd ~/Documents/Org | :e Capture.org<CR>"),
             dashboard.button( "c", "  Nix config flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
             dashboard.button( "q", "  Quit nvim", ":qa<CR>"),
         }
