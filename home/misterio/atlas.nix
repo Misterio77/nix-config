@@ -1,7 +1,7 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 let
   dark-mode = inputs.dark-mode.value;
-  inherit (inputs.nix-colors.colorSchemes) rose-pine-moon rose-pine-dawn;
+  inherit (inputs.nix-colors.colorSchemes) tokyo-city-terminal-dark tokyo-city-terminal-light;
 in
 {
   imports = [
@@ -15,7 +15,7 @@ in
   ];
 
   wallpaper = (import ./wallpapers).towers-ice;
-  colorscheme = if dark-mode then rose-pine-moon else rose-pine-dawn;
+  colorscheme = if dark-mode then tokyo-city-terminal-dark else tokyo-city-terminal-light;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
