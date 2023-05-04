@@ -26,5 +26,19 @@
           let g:vimtex_view_method = '${method}'
         '';
     }
+
+    # Tree sitter
+    {
+      plugin = nvim-treesitter.withAllGrammars;
+      type = "lua";
+      config = /* lua */ ''
+        require('nvim-treesitter.configs').setup{
+          highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+          },
+        }
+      '';
+    }
   ];
 }
