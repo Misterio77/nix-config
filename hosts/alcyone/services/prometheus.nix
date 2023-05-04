@@ -51,13 +51,8 @@
             # Drop {content,header,transfer}Size that don't have a content_type and/or content_origin
             # They're just totals, we can obtain them by summing the individual parts
             {
-              source_labels = [ "__name__" "content_type" ];
-              regex = "sitespeedio_pagexray_(content|header|transfer)Size;";
-              action = "drop";
-            }
-            {
-              source_labels = [ "__name__" "content_origin" ];
-              regex = "sitespeedio_pagexray_(content|header|transfer)Size;";
+              source_labels = [ "__name__" "content_origin" "content_type" ];
+              regex = "sitespeedio_pagexray_((content|header|transfer)Size|cookies|requests)(;;|;[^;]*;|;;[^;]*)";
               action = "drop";
             }
           ];
