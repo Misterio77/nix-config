@@ -20,7 +20,9 @@
       config =
         let
           method =
-            if config.programs.zathura.enable then "zathura" else "general";
+            if config.programs.zathura.enable
+            then "zathura"
+            else "general";
         in
         ''
           let g:vimtex_view_method = '${method}'
