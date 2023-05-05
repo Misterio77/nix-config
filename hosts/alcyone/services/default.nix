@@ -1,6 +1,8 @@
 {
   imports = [
     ../../common/optional/nginx.nix
+    ../../common/optional/mysql.nix
+    ../../common/optional/postgres.nix
 
     ./firefly.nix
     ./firefly-bot.nix

@@ -7,11 +7,9 @@
     ./docker.nix
     ./fish.nix
     ./locale.nix
-    ./mysql.nix
     ./nix.nix
     ./openssh.nix
     ./optin-persistence.nix
-    ./postgres.nix
     ./sops.nix
     ./ssh-serve-store.nix
     ./steam-hardware.nix
