@@ -4,7 +4,6 @@
     inputs.home-manager.nixosModules.home-manager
     ./acme.nix
     ./auto-upgrade.nix
-    ./docker.nix
     ./fish.nix
     ./locale.nix
     ./nix.nix
