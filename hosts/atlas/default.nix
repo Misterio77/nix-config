@@ -15,6 +15,7 @@
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/lol-acfix.nix
+    ../common/optional/starcitizen-fixes.nix
   ];
 
   # TODO: theme "greeter" user GTK instead of using misterio to login
