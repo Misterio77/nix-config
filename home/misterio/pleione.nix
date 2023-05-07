@@ -1,8 +1,4 @@
-{ inputs, pkgs, ... }:
-let
-  dark-mode = inputs.dark-mode.value;
-  inherit (inputs.nix-colors.colorSchemes) atelier-heath atelier-heath-light;
-in
+{ inputs, ... }:
 {
   imports = [
     ./global
@@ -14,7 +10,7 @@ in
   ];
 
   wallpaper = (import ./wallpapers).aenami-lunar;
-  colorscheme = if dark-mode then atelier-heath else atelier-heath-light;
+  colorscheme = inputs.nix-colors.colorSchemes.atelier-heath;
 
   monitors = [{
     name = "eDP-1";

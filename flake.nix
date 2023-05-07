@@ -6,7 +6,7 @@
     extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
   };
 
-  inputs = rec {
+  inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # https://github.com/NixOS/nixpkgs/pull/228542
     nixpkgs-228542.url = "github:misterio77/nixpkgs/add-prometheus-graphite-exporter";
@@ -47,13 +47,6 @@
     website.url = "github:misterio77/website";
     paste-misterio-me.url = "github:misterio77/paste.misterio.me";
     yrmos.url = "github:misterio77/yrmos";
-
-    # Overridable (--override-inputs) "parameters"
-    # Cursed stuff, but hey it works.
-    true.url = "github:boolean-option/true";
-    false.url = "github:boolean-option/false";
-
-    dark-mode = true;
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

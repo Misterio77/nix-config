@@ -1,8 +1,4 @@
 { inputs, ... }:
-let
-  dark-mode = inputs.dark-mode.value;
-  inherit (inputs.nix-colors.colorSchemes) tokyo-city-terminal-dark tokyo-city-terminal-light;
-in
 {
   imports = [
     ./global
@@ -15,7 +11,7 @@ in
   ];
 
   wallpaper = (import ./wallpapers).towers-ice;
-  colorscheme = if dark-mode then tokyo-city-terminal-dark else tokyo-city-terminal-light;
+  colorscheme = inputs.nix-colors.colorSchemes.tokyo-city-terminal-dark;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

@@ -1,8 +1,4 @@
-{ inputs, pkgs, ... }:
-let
-  dark-mode = inputs.dark-mode.value;
-  inherit (inputs.nix-colors.colorSchemes) silk-dark silk-light;
-in
+{ inputs, ... }:
 {
   imports = [
     ./global
@@ -12,7 +8,7 @@ in
   ];
 
   wallpaper = (import ./wallpapers).aenami-wait;
-  colorscheme = if dark-mode then silk-dark else silk-light;
+  colorscheme = inputs.nix-colors.colorSchemes.silk-dark;
 
   monitors = [
     {
