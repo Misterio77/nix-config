@@ -19,6 +19,7 @@ in
         online-mode = true;
         servers = {
           survival = "localhost:${toString servers.survival.serverProperties.server-port}";
+          modpack = "localhost:${toString servers.modpack.serverProperties.server-port}";
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
           try = [ "survival" ];
         };

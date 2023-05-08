@@ -1,9 +1,10 @@
-{ inputs, pkgs, config, lib, ... }: {
+{ inputs, config, lib, ... }: {
   imports = [
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./servers/proxy
     ./servers/limbo
     ./servers/survival
+    ./servers/modpack
   ];
 
   sops.secrets.minecraft-secrets = {

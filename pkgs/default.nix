@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { } }: {
+{ pkgs ? import <nixpkgs> { } }: rec {
 
   # Packages with an actual source
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
@@ -19,4 +19,7 @@
 
   # My slightly customized plymouth theme, just makes the blue outline white
   plymouth-spinner-monochrome = pkgs.callPackage ./plymouth-spinner-monochrome { };
+
+  addFiles = pkgs.callPackage ./add-files { };
+  fetchPackwizPack = pkgs.callPackage ./fetch-packwiz-pack { };
 }
