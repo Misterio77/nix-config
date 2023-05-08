@@ -158,14 +158,14 @@ in
   bind=SUPER,k,movefocus,u
   bind=SUPER,j,movefocus,d
 
-  bind=SUPERSHIFT,left,movewindow,l
-  bind=SUPERSHIFT,right,movewindow,r
-  bind=SUPERSHIFT,up,movewindow,u
-  bind=SUPERSHIFT,down,movewindow,d
-  bind=SUPERSHIFT,h,movewindow,l
-  bind=SUPERSHIFT,l,movewindow,r
-  bind=SUPERSHIFT,k,movewindow,u
-  bind=SUPERSHIFT,j,movewindow,d
+  bind=SUPERSHIFT,left,swapwindow,l
+  bind=SUPERSHIFT,right,swapwindow,r
+  bind=SUPERSHIFT,up,swapwindow,u
+  bind=SUPERSHIFT,down,swapwindow,d
+  bind=SUPERSHIFT,h,swapwindow,l
+  bind=SUPERSHIFT,l,swapwindow,r
+  bind=SUPERSHIFT,k,swapwindow,u
+  bind=SUPERSHIFT,j,swapwindow,d
 
   bind=SUPERCONTROL,left,focusmonitor,l
   bind=SUPERCONTROL,right,focusmonitor,r
@@ -188,10 +188,6 @@ in
   bind=SUPERCONTROLSHIFT,l,movewindow,mon:r
   bind=SUPERCONTROLSHIFT,k,movewindow,mon:u
   bind=SUPERCONTROLSHIFT,j,movewindow,mon:d
-
-  bind=SUPERCONTROLSHIFT,1,movewindow,mon:DP-1
-  bind=SUPERCONTROLSHIFT,2,movewindow,mon:DP-2
-  bind=SUPERCONTROLSHIFT,3,movewindow,mon:DP-3
 
   bind=SUPERALT,left,movecurrentworkspacetomonitor,l
   bind=SUPERALT,right,movecurrentworkspacetomonitor,r
