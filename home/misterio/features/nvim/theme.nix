@@ -81,9 +81,13 @@ in /* vim */ ''
   hi String        guifg=#${c.base0B} guibg=NONE gui=NONE guisp=NONE
   hi Structure     guifg=#${c.base0E} guibg=NONE gui=NONE guisp=NONE
   hi Tag           guifg=#${c.base0A} guibg=NONE gui=NONE guisp=NONE
-  hi Todo          guifg=#${c.base0A} guibg=#${c.base01} gui=NONE guisp=NONE
   hi Type          guifg=#${c.base0A} guibg=NONE gui=NONE guisp=NONE
   hi Typedef       guifg=#${c.base0A} guibg=NONE gui=NONE guisp=NONE
+
+  hi Todo          guifg=#${c.base01} guibg=#${c.base0A} gui=NONE guisp=NONE
+  hi Done          guifg=#${c.base01} guibg=#${c.base0B} gui=NONE guisp=NONE
+  hi Start         guifg=#${c.base01} guibg=#${c.base0D} gui=NONE guisp=NONE
+  hi End           guifg=#${c.base01} guibg=#${c.base0E} gui=NONE guisp=NONE
 
   hi DiffAdd      guifg=#${c.base0B} guibg=#${c.base00} gui=NONE guisp=NONE
   hi DiffChange   guifg=#${c.base03} guibg=#${c.base00} gui=NONE guisp=NONE
