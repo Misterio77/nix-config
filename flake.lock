@@ -49,36 +49,6 @@
         "type": "github"
       }
     },
-    "dark-mode": {
-      "locked": {
-        "lastModified": 1657739253,
-        "narHash": "sha256-L9eyTL7njtPBUYmZRYFKCzQFDgua9U9oE7UwCzjZfl8=",
-        "owner": "boolean-option",
-        "repo": "true",
-        "rev": "6ecb49143ca31b140a5273f1575746ba93c3f698",
-        "type": "github"
-      },
-      "original": {
-        "owner": "boolean-option",
-        "repo": "true",
-        "type": "github"
-      }
-    },
-    "false": {
-      "locked": {
-        "lastModified": 1657739266,
-        "narHash": "sha256-vLy8GQr0noEcoA+jX24FgUVBA/poV36zDWAUChN3hIY=",
-        "owner": "boolean-option",
-        "repo": "false",
-        "rev": "d06b4794a134686c70a1325df88a6e6768c6b212",
-        "type": "github"
-      },
-      "original": {
-        "owner": "boolean-option",
-        "repo": "false",
-        "type": "github"
-      }
-    },
     "firefly": {
       "inputs": {
         "composer2nix-src": "composer2nix-src",
@@ -722,8 +692,6 @@
     },
     "root": {
       "inputs": {
-        "dark-mode": "dark-mode",
-        "false": "false",
         "firefly": "firefly",
         "firefly-bot": "firefly-bot",
         "firefox-addons": "firefox-addons",
@@ -740,7 +708,6 @@
         "nixpkgs-228542": "nixpkgs-228542",
         "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
-        "true": "true",
         "website": "website",
         "yrmos": "yrmos"
       }
@@ -776,21 +743,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "true": {
-      "locked": {
-        "lastModified": 1657739253,
-        "narHash": "sha256-L9eyTL7njtPBUYmZRYFKCzQFDgua9U9oE7UwCzjZfl8=",
-        "owner": "boolean-option",
-        "repo": "true",
-        "rev": "6ecb49143ca31b140a5273f1575746ba93c3f698",
-        "type": "github"
-      },
-      "original": {
-        "owner": "boolean-option",
-        "repo": "true",
         "type": "github"
       }
     },
