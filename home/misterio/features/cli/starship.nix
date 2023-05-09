@@ -2,6 +2,7 @@
 let
   nix-inspect = pkgs.writeShellScriptBin "nix-inspect" ''
     read -ra EXCLUDED <<< "$@"
+    EXCLUDED+=(''${NIX_INSPECT_EXCLUDE[@]:-})
 
     IFS=":" read -ra PATHS <<< "$PATH"
 
