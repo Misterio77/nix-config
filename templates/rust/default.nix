@@ -1,10 +1,9 @@
-{ lib, system, naersk }:
+{ rustPlatform }:
 
-let
-  manifest = (lib.importTOML ./Cargo.toml).package;
-in
-naersk.lib."${system}".buildPackage {
-  inherit (manifest) version;
-  pname = manifest.name;
-  root = lib.cleanSource ./.;
+rustPlatform.buildRustPackage {
+  pname = "foo-bar";
+  version = "0.1.0";
+
+  src = ./.;
+  cargoLock.lockFile = ./Cargo.lock;
 }

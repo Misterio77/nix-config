@@ -1,0 +1,19 @@
+{
+  "name": "foo-bar",
+  "version": "0.1.0",
+  "description": "Foo-bar node program",
+  "bin": {
+    "foo-bar": "build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node build/index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.1.2",
+    "typescript": "^5.0.4",
+    "typescript-language-server": "^3.3.2"
+  }
+}

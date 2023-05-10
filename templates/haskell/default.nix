@@ -1,1 +1,3 @@
-{ haskellPackages }: haskellPackages.callCabal2nix "foo-bar" ./. { }
+{ haskellPackages }:
+
+haskellPackages.callCabal2nix "foo-bar" ./. { }

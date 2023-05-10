@@ -20,23 +20,23 @@ $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 
 # c source
 $(BUILD_DIR)/%.c.o: %.c
-	$(MKDIR_P) $(dir $@)
+	mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
-	$(MKDIR_P) $(dir $@)
+	mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+.PHONY: clean install run
+
 clean:
-	$(RM) -r $(BUILD_DIR)
+	rm -r $(BUILD_DIR)
 
 install: $(BUILD_DIR)/$(TARGET_EXEC)
-	install -d $(BIN_DIR)
-	install -t $(BIN_DIR) $<
+	install -Dt $(BIN_DIR) $<
 
 run: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$<
 
 -include $(DEPS)
-
-MKDIR_P ?= mkdir -p

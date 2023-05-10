@@ -1,5 +1,0 @@
-name: Blabla
-exclude:
-  - default.nix
-  - flake.nix
-  - flake.lock

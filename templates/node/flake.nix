@@ -1,5 +1,5 @@
 {
-  description = "Foo Bar C/C++ Project";
+  description = "Foo Bar NodeJS Project";
 
   nixConfig = {
     extra-substituters = [ "https://cache.m7.rs" ];

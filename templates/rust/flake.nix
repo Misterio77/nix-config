@@ -1,43 +1,30 @@
 {
   description = "Foo Bar Rust Project";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
-    naersk.url = "github:nix-community/naersk";
-    naersk.inputs.nixpkgs.follows = "nixpkgs";
+  nixConfig = {
+    extra-substituters = [ "https://cache.m7.rs" ];
+    extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
   };
 
-  outputs = { self, nixpkgs, naersk }:
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+  };
+
+  outputs = { self, nixpkgs }:
     let
-      inherit (nixpkgs.lib) genAttrs systems;
-      forAllSystems = genAttrs systems.flakeExposed;
-      pkgsFor = forAllSystems (system: import nixpkgs {
-        inherit system; overlays = [ self.overlays.default ];
-      });
+      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
+      pkgsFor = nixpkgs.legacyPackages;
     in
-    {
-      overlays = rec {
-        default = final: prev: {
-          foo-bar = prev.callPackage ./. { inherit naersk; };
-        };
-      };
+    rec {
+      packages = forAllSystems (system: {
+        default = pkgsFor.${system}.callPackage ./default.nix { };
+      });
 
-      packages = forAllSystems (s:
-        let pkgs = pkgsFor.${s}; in
-        rec {
-          inherit (pkgs) foo-bar;
-          default = foo-bar;
-        });
+      devShells = forAllSystems (system: {
+        default = pkgsFor.${system}.callPackage ./shell.nix { };
+      });
 
-      devShells = forAllSystems (s:
-        let pkgs = pkgsFor.${s}; in
-        rec {
-          foo-bar = pkgs.mkShell {
-            inputsFrom = [ pkgs.foo-bar ];
-            buildInputs = with pkgs; [ rustc rust-analyzer cargo rustfmt clippy ];
-          };
-          default = foo-bar;
-        });
+      hydraJobs = packages;
     };
 }
 
