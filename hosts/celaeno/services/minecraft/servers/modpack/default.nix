@@ -1,12 +1,11 @@
 { pkgs, lib, ... }:
 let
   name = "modpack";
-  version = "0.2.9";
-  url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
 
-  modpack = (pkgs.fetchPackwizPack {
-    inherit version url;
+  modpack = (pkgs.fetchPackwizPack rec {
     pname = "modpack";
+    version = "0.2.9";
+    url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
     packHash = "sha256-L5RiSktqtSQBDecVfGj1iDaXV+E90zrNEcf4jtsg+wk=";
     manifestHash = "sha256:0cblpbqwb7ikqr2lwc355mq9kymrm5dl8bxkha81r8iqdyw65w5s";
   }).addFiles {
