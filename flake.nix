@@ -84,6 +84,8 @@
       devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
       formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
 
+      wallpapers = import ./home/misterio/wallpapers;
+
       nixosConfigurations = {
         # Desktops
         atlas = mkNixos [ ./hosts/atlas ];

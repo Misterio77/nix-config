@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, outputs, ... }:
 {
   imports = [
     ./global
@@ -10,7 +10,7 @@
     ./features/music
   ];
 
-  wallpaper = (import ./wallpapers).towers-ice;
+  wallpaper = outputs.wallpapers.cthulhu;
   colorscheme = inputs.nix-colors.colorSchemes.tokyo-city-terminal-dark;
 
   #  ------   -----   ------

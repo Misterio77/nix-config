@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, outputs, ... }:
 {
   imports = [
     ./global
@@ -7,7 +7,7 @@
     ./features/pass
   ];
 
-  wallpaper = (import ./wallpapers).aenami-wait;
+  wallpaper = outputs.wallpaper.aenami-wait;
   colorscheme = inputs.nix-colors.colorSchemes.silk-dark;
 
   monitors = [
