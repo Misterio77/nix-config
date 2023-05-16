@@ -7,7 +7,7 @@
     ./features/pass
   ];
 
-  wallpaper = outputs.wallpaper.aenami-wait;
+  wallpaper = outputs.wallpapers.aenami-wait;
   colorscheme = inputs.nix-colors.colorSchemes.silk-dark;
 
   monitors = [
