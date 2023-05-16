@@ -1,19 +1,21 @@
-{ lib, stdenvNoCC, fetchurl, jre, jq, moreutils, curl, runCommand }:
+{ lib, stdenvNoCC, fetchurl, jre_headless, jq, moreutils, curl, cacert }:
 
 let
   fetchPackwizPack =
     { pname ? "packwiz-pack"
     , version ? ""
     , url
-    , packHash ? lib.fakeHash
+    , packHash ? ""
+      # Either 'server' or 'both' (to get client mods as well)
     , side ? "server"
-    , manifestHash ? lib.fakeHash
-    , manifest ? if manifestHash == null then null
-      else
-        builtins.fetchurl {
-          inherit url;
-          sha256 = manifestHash;
-        }
+
+      # The derivation passes through a 'manifest' expression, that includes
+      # useful metadata (such as MC version).
+      # By default, if you access it, IFD will be used. If you want to use
+      # 'manifest' without IFD, you can alternatively pass a manifestHash, that
+      # allows us to fetch it with builtins.fetchurl (does not output a
+      # derivation).
+    , manifestHash ? null
     , ...
     }@args:
 
@@ -36,9 +38,10 @@ let
 
       dontUnpack = true;
 
-      buildInputs = [ jre jq moreutils curl ];
+      buildInputs = [ jre_headless jq moreutils curl cacert ];
 
       buildPhase = ''
+        curl -L "${url}" > pack.toml
         java -jar "$packwizInstallerBootstrap" \
           --bootstrap-main-jar "$packwizInstaller" --bootstrap-no-update --no-gui \
           --side "${side}" "${url}"
@@ -57,37 +60,51 @@ let
         runHook postInstall
       '';
 
-      passthru = {
-        manifest =
-          if manifest == null then null
-          else builtins.fromTOML (builtins.readFile manifest);
+      passthru =
+        let
+          drv = fetchPackwizPack args;
+        in
+        {
+          # Pack manifest as a nix expression
+          # If manifestHash is not null, then we can do this without IFD.
+          # Otherwise, fallback to IFD.
+          manifest = lib.importTOML (
+            if manifestHash != null then
+              builtins.fetchurl
+                {
+                  inherit url;
+                  sha256 = manifestHash;
+                }
+            else
+              "${drv}/pack.toml"
+          );
 
-        addFiles = files:
-          let
-            drv = fetchPackwizPack args;
-          in
-          stdenvNoCC.mkDerivation {
-            inherit (drv) pname version;
-            src = null;
-            dontUnpack = true;
-            dontConfig = true;
-            dontBuild = true;
-            dontFixup = true;
+          # Adds an attribute set of files to the derivation.
+          # Useful to add server-specific mods not part of the pack.
+          addFiles = files:
+            stdenvNoCC.mkDerivation {
+              inherit (drv) pname version;
+              src = null;
+              dontUnpack = true;
+              dontConfig = true;
+              dontBuild = true;
+              dontFixup = true;
 
-            installPhase = ''
-              cp -as "${drv}" $out
-              chmod u+w -R $out
-            '' + lib.concatLines (lib.mapAttrsToList
-              (name: file: ''
-                mkdir -p "$out/$(dirname "${name}")"
-                cp "${file}" "$out/${name}"
-              '')
-              files
-            );
+              installPhase = ''
+                cp -as "${drv}" $out
+                chmod u+w -R $out
+              '' + lib.concatLines (lib.mapAttrsToList
+                (name: file: ''
+                  mkdir -p "$out/$(dirname "${name}")"
+                  cp "${file}" "$out/${name}"
+                '')
+                files
+              );
 
-            passthru = { inherit (drv) manifest; };
-          };
-      };
+              passthru = { inherit (drv) manifest; };
+              meta = drv.meta or { };
+            };
+        };
 
       dontFixup = true;
 
