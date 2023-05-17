@@ -1,9 +1,6 @@
 { pkgs, ... }:
-let
-  name = "survival";
-in
 {
-  services.minecraft-servers.servers.${name} = {
+  services.minecraft-servers.servers.survival = {
     enable = true;
     # Latest 1.19.3 build
     package = pkgs.inputs.nix-minecraft.paperServers.paper-1_19_3;
@@ -41,7 +38,7 @@ in
         checkforupdates = false;
       };
       "plugins/LuckPerms/config.yml".value = {
-        server = name;
+        server = "survival";
         storage-method = "mysql";
         data = {
           address = "127.0.0.1";

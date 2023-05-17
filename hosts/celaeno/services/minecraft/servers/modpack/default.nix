@@ -1,9 +1,6 @@
 { pkgs, lib, ... }:
 let
-  name = "modpack";
-
   modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    pname = "modpack";
     version = "0.2.9";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
     packHash = "sha256-L5RiSktqtSQBDecVfGj1iDaXV+E90zrNEcf4jtsg+wk=";
@@ -22,7 +19,7 @@ let
   serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}-${fabricVersion}";
 in
 {
-  services.minecraft-servers.servers.${name} = {
+  services.minecraft-servers.servers.modpack = {
     enable = true;
     package = pkgs.inputs.nix-minecraft.fabricServers.${lib.traceVal serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "4G";
@@ -40,7 +37,7 @@ in
       ];
       "config/luckperms/luckperms.conf".format = pkgs.formats.yaml { };
       "config/luckperms/luckperms.conf".value = {
-        server = name;
+        server = "modpack";
         storage-method = "mysql";
         data = {
           address = "127.0.0.1";
