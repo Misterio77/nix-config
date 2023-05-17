@@ -2,7 +2,7 @@
 let
   name = "modpack";
 
-  modpack = (pkgs.fetchPackwizPack rec {
+  modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
     pname = "modpack";
     version = "0.2.9";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
@@ -24,7 +24,7 @@ in
 {
   services.minecraft-servers.servers.${name} = {
     enable = true;
-    package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
+    package = pkgs.inputs.nix-minecraft.fabricServers.${lib.traceVal serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "4G";
     serverProperties = {
       server-port = 25572;

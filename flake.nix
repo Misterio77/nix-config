@@ -25,7 +25,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft = {
-      url = "github:misterio77/nix-minecraft";
+      url = "github:misterio77/nix-minecraft/packwiz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     firefly = {
