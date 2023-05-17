@@ -6,6 +6,7 @@
     ../common/global
     ../common/users/misterio
     ../common/optional/fail2ban.nix
+    ../common/optional/tailscale-exit-node.nix
   ];
 
   networking = {
