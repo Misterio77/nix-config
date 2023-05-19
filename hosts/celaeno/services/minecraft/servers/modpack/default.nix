@@ -3,7 +3,7 @@ let
   modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
     version = "0.2.9";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-L5RiSktqtSQBDecVfGj1iDaXV+E90zrNEcf4jtsg+wk=";
+    packHash = "sha256-7ZiGTMjLi60jE94lNIlAGpAMPOOuPdO5H+VhvE0LEU4=";
     manifestHash = "sha256:0cblpbqwb7ikqr2lwc355mq9kymrm5dl8bxkha81r8iqdyw65w5s";
   }).addFiles {
     "mods/FabricProxy-Lite.jar" = pkgs.fetchurl rec {
@@ -21,7 +21,7 @@ in
 {
   services.minecraft-servers.servers.modpack = {
     enable = true;
-    package = pkgs.inputs.nix-minecraft.fabricServers.${lib.traceVal serverVersion};
+    package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "4G";
     serverProperties = {
       server-port = 25572;
