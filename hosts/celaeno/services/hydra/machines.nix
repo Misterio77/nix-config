@@ -87,8 +87,8 @@ in {
         touch "$final_file"
         if ! diff <(sort "$temp_file") <(sort "$final_file"); then
           mv "$temp_file" "$final_file"
-          systemctl is-active hydra-queue-runner -q && systemctl restart hydra-queue-runner
           chmod 755 "$final_file"
+          touch "$final_file" # So that hydra-queue-runner refreshes
         fi
       '';
     };
