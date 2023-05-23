@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   xdg = {
     desktopEntries = {
       neomutt = {
@@ -88,8 +88,11 @@
           map = [ "index" "pager" ];
         }
       ];
-    extraConfig = ''
-      alternates "hi@m7.rs|gabriel@gsfontes.com|eu@misterio.me|gabriel.fontes@uget.express|g.fontes@usp.br"
+    extraConfig = let
+      # Collect all addresses and aliases
+      addresses = lib.flatten (lib.mapAttrsToList (n: v: [ v.address ] ++ v.aliases) config.accounts.email.accounts);
+    in ''
+      alternates "${lib.concatStringsSep "|" addresses}"
     '' + ''
       # From: https://github.com/altercation/mutt-colors-solarized/blob/master/mutt-colors-solarized-dark-16.muttrc
 
