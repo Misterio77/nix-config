@@ -25,6 +25,7 @@
       pgsql-vim
       vim-terraform
       vim-jsx-typescript
+      vim-caddyfile
 
       {
         plugin = vimtex;
