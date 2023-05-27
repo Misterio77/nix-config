@@ -21,7 +21,7 @@
 
   networking = {
     hostName = "maia";
-    useDHCP = false;
+    useDHCP = true;
     interfaces.enp2s0 = {
       useDHCP = true;
       wakeOnLan.enable = true;

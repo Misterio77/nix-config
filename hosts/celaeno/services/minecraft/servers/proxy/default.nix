@@ -23,7 +23,10 @@ in
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
           try = [ "survival" ];
         };
-        forced-hosts = { };
+        forced-hosts = {
+          "modpack.m7.rs" = [ "modpack" ];
+          "survival.m7.rs" = [ "survival" ];
+        };
         query = {
           enabled = true;
           port = 25565;

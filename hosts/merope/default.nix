@@ -12,7 +12,7 @@
   # Static IP address
   networking = {
     hostName = "merope";
-    useDHCP = false;
+    useDHCP = true;
     interfaces.eth0 = {
       useDHCP = true;
       wakeOnLan.enable = true;

@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 let
   modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.12";
+    version = "0.2.13";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-9ly4P3UwLWfsw1DpYf1NUcjTDBEHBAsSi7zTEu8APb0=";
-    manifestHash = "sha256:15j7ya9igly2bwvxqaa93q11zqirv84ws65hqwbzmsxl182yvxwd";
+    packHash = "sha256-d5BeK9BrFALJQmnIZKwZf+WfAh8nzwTMa8F3r5rJG50=";
+    # manifestHash = "sha256:15j7ya9igly2bwvxqaa93q11zqirv84ws65hqwbzmsxl182yvxwd";
   }).addFiles {
     "mods/FabricProxy-Lite.jar" = pkgs.fetchurl rec {
       pname = "FabricProxy-Lite";
@@ -49,15 +49,22 @@ in
         messaging-service = "sql";
       };
       "config/FabricProxy-Lite.toml".value = {
-        hackEarlySend = true; # Needed for luckperms
-        hackOnlineMode = true;
+        hackEarlySend = false; # Needed for luckperms
+        hackOnlineMode = false;
         secret = "@VELOCITY_FORWARDING_SECRET@";
       };
-      "config/yosbr" = "${modpack}/config/yosbr";
+      "config/origins_server.toml".value = {
+        performVersionCheck = false;
+      };
+      "config/bclib/main.json" = "${modpack}/config/yosbr/config/bclib/main.json";
+      "config/bclib/server.json" = "${modpack}/config/yosbr/config/bclib/server.json";
+      "config/charm.toml" = "${modpack}/config/yosbr/config/charm.toml";
+      "config/mostructures-config-v5.json5" = "${modpack}/config/yosbr/config/mostructures-config-v5.json5";
     };
     symlinks = {
       "mods" = "${modpack}/mods";
-      "global_packs" = "${modpack}/global_packs";
+      "global_packs/required_data" = "${modpack}/global_packs/required_data";
+      "config/yosbr" = "${modpack}/config/yosbr";
     };
   };
 }
