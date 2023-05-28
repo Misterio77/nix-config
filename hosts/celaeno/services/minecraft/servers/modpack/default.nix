@@ -1,16 +1,22 @@
 { pkgs, lib, ... }:
 let
   modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.13";
+    version = "0.2.14";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-d5BeK9BrFALJQmnIZKwZf+WfAh8nzwTMa8F3r5rJG50=";
-    # manifestHash = "sha256:15j7ya9igly2bwvxqaa93q11zqirv84ws65hqwbzmsxl182yvxwd";
+    packHash = "sha256-n4fgyO7KbX385wTnmlMQbFCrk1qi68GHRix02AvrwXU=";
+    manifestHash = "sha256:16mx87s75prr274zm8zk0f98j73rawh5r8wx6mfll4iag7442w6q";
   }).addFiles {
     "mods/FabricProxy-Lite.jar" = pkgs.fetchurl rec {
       pname = "FabricProxy-Lite";
       version = "1.1.6";
       url = "https://cdn.modrinth.com/data/8dI2tmqs/versions/v${version}/${pname}-${version}.jar";
       hash = "sha256-U+nXvILXlYdx0vgomVDkKxj0dGCtw60qW22EK4FhAJk=";
+    };
+    "mods/CrossStitch.jar" = pkgs.fetchurl rec {
+      pname = "crossstitch";
+      version = "0.1.4";
+      url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/${version}/${pname}-${version}.jar";
+      hash = "sha256-36Ir0fT/1XEq63vpAY1Fvg+G9cYdLk4ZKe4YTIEpdGg=";
     };
   };
 
