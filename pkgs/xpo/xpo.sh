@@ -23,17 +23,6 @@ ssh -fTN "$ssh_opts" -MS "$socket" "$user@$server"
 
 echo "Forwarding :$l_port" >&2
 
-# Try to detect what is being forwarded, for clickable link
-if [ "$l_port" -ge "8080" ] && [ "$l_port" -le "8089" ]; then
-  proto="http://"
-elif [ "$l_port" -eq "8443" ]; then
-  proto="https://"
-elif [ "$l_port" -eq "1965" ]; then
-  proto="gemini://"
-else
-  proto=""
-fi
-
 # If port was supplied
 if [ -n "${3:-}" ]; then
     r_port="$3"
@@ -43,7 +32,7 @@ else
     r_port="$(ssh -S "$socket" -O forward -R "*:0:localhost:$l_port" xpo)"
 fi
 
-echo "$proto$server:$r_port"
+echo "$server:$r_port"
 
 # Open it through iptables
 echo -n "Opening $r_port on firewall... " >&2
