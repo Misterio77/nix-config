@@ -18,6 +18,12 @@ let
       url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/${version}/${pname}-${version}.jar";
       hash = "sha256-36Ir0fT/1XEq63vpAY1Fvg+G9cYdLk4ZKe4YTIEpdGg=";
     };
+    "mods/JoinLeaveMessages-Fabric.jar" = pkgs.fetchurl rec {
+      pname = "joinleavemessages";
+      version = "1.2.1";
+      url = "https://github.com/Phelms215/${pname}-fabric/releases/download/${version}/${pname}-${version}.jar";
+      hash = "sha256-x2k090WCMAfpXLBRE6Mz/NyISalzoz+a48809ThPsCQ=";
+    };
   };
 
   mcVersion = "${modpack.manifest.versions.minecraft}";
@@ -29,7 +35,7 @@ in
     enable = true;
     onChange = "reload";
     package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
-    jvmOpts = (import ../../aikar-flags.nix) "4G";
+    jvmOpts = (import ../../aikar-flags.nix) "6G";
     serverProperties = {
       server-port = 25572;
       online-mode = false;
