@@ -28,7 +28,9 @@
         channel_log_format = "[CHAT] [%channel%] %sender%: ";
         channel_command_aliases = [ "/channel" "/c" ];
 
-        channels = let disabled.permissions.send = "disabled"; in {
+        channels = let
+          disabled.permissions = { send = "disabled"; receive = "disabled"; };
+        in {
           default = {
             format = "&7[%servername%] %fullname%&r: ";
             broadcast_scope = "GLOBAL";
