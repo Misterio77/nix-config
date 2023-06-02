@@ -15,6 +15,7 @@ in
   ];
   services.minecraft-servers.servers.proxy = {
     enable = true;
+    onChange = "reload";
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
     jvmOpts = proxyFlags "512M";
 

@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   services.minecraft-servers.servers.limbo = {
     enable = true;
+    onChange = "restart";
     package = pkgs.callPackage ./nano-limbo-server.nix { };
     jvmOpts = "";
     files."settings.yml".value = {

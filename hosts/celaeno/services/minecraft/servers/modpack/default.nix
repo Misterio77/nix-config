@@ -27,6 +27,7 @@ in
 {
   services.minecraft-servers.servers.modpack = {
     enable = true;
+    onChange = "reload";
     package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "4G";
     serverProperties = {

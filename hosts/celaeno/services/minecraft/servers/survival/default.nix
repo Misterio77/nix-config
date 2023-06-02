@@ -2,6 +2,7 @@
 {
   services.minecraft-servers.servers.survival = {
     enable = true;
+    onChange = "reload";
     # Latest 1.19.3 build
     package = pkgs.inputs.nix-minecraft.paperServers.paper-1_19_3;
     jvmOpts = ((import ../../aikar-flags.nix) "2G") + "-Dpaper.disableChannelLimit=true";
