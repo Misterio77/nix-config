@@ -1,4 +1,6 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: let
+  inherit (lib) mapAttrs' replaceStrings nameValuePair;
+in {
   services.minecraft-servers.servers.proxy = {
     symlinks."plugins/LibreLogin.jar" = pkgs.fetchurl rec {
       pname = "LibreLogin";
@@ -33,10 +35,18 @@
         milliseconds-to-refresh-notification = 10000;
         minimum-password-length = -1;
         new-uuid-creator = "MOJANG";
-        # Use the same config as velocity's "try"
-        pass-through.root = config.services.minecraft-servers.servers.proxy.files."velocity.toml".value.servers.try;
+        # Use the same config as velocity's "try" and "forced-hosts
+        pass-through = let
+          velocityCfg = config.services.minecraft-servers.servers.proxy.files."velocity.toml".value;
+        in {
+          root = velocityCfg.servers.try;
+        } // (
+          mapAttrs'
+          (n: nameValuePair (replaceStrings [ "." ] [ "§" ] n))
+          velocityCfg.forced-hosts
+        );
         ping-servers = true;
-        remember-last-server = false;
+        remember-last-server = true;
         revision = 3;
         seconds-to-authorize = -1;
         session-timeout = 604800;
