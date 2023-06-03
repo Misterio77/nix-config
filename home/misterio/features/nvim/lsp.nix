@@ -8,7 +8,7 @@
         local lspconfig = require('lspconfig')
 
         function add_lsp(binary, server, options)
-          options["cmd"] = binary
+          options["cmd"] = { binary }
           if vim.fn.executable(binary) == 1 then server.setup(options) end
         end
 
