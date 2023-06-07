@@ -45,5 +45,13 @@ in
       };
       "lang/messages.properties" = ./messages.properties;
     };
+    symlinks = {
+      "plugins/OwoVelocityPlugin.jar" = pkgs.fetchurl rec {
+        pname = "OwoVelocityPlugin";
+        version = "0.1.2";
+        url = "https://github.com/wisp-forest/owo-velocity-plugin/releases/download/${version}/${pname}.jar";
+        hash = "sha256-aiAlYdJV2tCxaCMWv9S0Opn29aMGHVyPiJ00ePe1CDw=";
+      };
+    };
   };
 }

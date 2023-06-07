@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 let
   modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.16";
+    version = "0.2.17";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-av8JtUweZkcqIQ/o100L1VAOeNNYNbtJi8Pg5YqVdO4=";
-    manifestHash = "sha256:0qqr84pn93yr8pxbk50zr79hldxpgvrxdk3q17cnc9rhkkxpsvhi";
+    packHash = "sha256-v/2lrvjmA1/mw7eHYYcFdeIVuRH9+FX+ykwi9SrPE5Q=";
+    manifestHash = "sha256:0l3v6yzn7n671g91rhwm8bikw7v7vv3ijh73xyfn7zngb7kp4k41";
   }).addFiles {
     "mods/FabricProxy-Lite.jar" = pkgs.fetchurl rec {
       pname = "FabricProxy-Lite";
@@ -69,10 +69,11 @@ in
       "config/origins_server.toml".value = {
         performVersionCheck = false;
       };
-      "config/bclib/main.json" = "${modpack}/config/yosbr/config/bclib/main.json";
-      "config/bclib/server.json" = "${modpack}/config/yosbr/config/bclib/server.json";
-      "config/charm.toml" = "${modpack}/config/yosbr/config/charm.toml";
-      "config/mostructures-config-v5.json5" = "${modpack}/config/yosbr/config/mostructures-config-v5.json5";
+      "config/appliedenergistics2/common.json" = "${modpack}/config/appliedenergistics2/common.json";
+      "config/bclib/main.json" = "${modpack}/config/bclib/main.json";
+      "config/bclib/server.json" = "${modpack}/config/bclib/server.json";
+      "config/charm.toml" = "${modpack}/config/charm.toml";
+      "config/mostructures-config-v5.json5" = "${modpack}/config/mostructures-config-v5.json5";
     };
     symlinks = {
       "mods" = "${modpack}/mods";
