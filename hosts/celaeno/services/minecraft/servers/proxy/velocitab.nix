@@ -1,5 +1,8 @@
 { pkgs, ... }: {
   services.minecraft-servers.servers.proxy = {
+    extraReload = ''
+      mcrun velocitab reload
+    '';
     symlinks = {
       "plugins/Velocitab.jar" = pkgs.fetchurl rec {
         pname = "Velocitab";
@@ -25,7 +28,7 @@
         enable_miniplaceholders_hook = true;
         sort_players = true;
         sort_players_by = [ "ROLE_WEIGHT" "ROLE_NAME" ];
-        update_rate = 0;
+        update_rate = 1000;
       };
     };
   };

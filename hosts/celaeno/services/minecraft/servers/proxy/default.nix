@@ -15,7 +15,19 @@ in
   ];
   services.minecraft-servers.servers.proxy = {
     enable = true;
-    onChange = "reload";
+
+    enableReload = true;
+    stopCommand = "end";
+    extraPreStop = ''
+      mcrun alert "&cServidor reiniciando em &e10&c segundos..."
+      sleep 7
+      mcrun alert "&c3"
+      sleep 1
+      mcrun alert "&c2"
+      sleep 1
+      mcrun alert "&c1"
+    '';
+
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
     jvmOpts = proxyFlags "512M";
 

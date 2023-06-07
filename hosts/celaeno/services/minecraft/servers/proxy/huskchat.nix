@@ -1,5 +1,8 @@
 { pkgs, ... }: {
   services.minecraft-servers.servers.proxy = {
+    extraReload = ''
+      mcrun huskchat reload
+    '';
     symlinks = {
       "plugins/HuskChat.jar" = pkgs.fetchurl rec {
         pname = "HuskChat";

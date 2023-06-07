@@ -33,7 +33,8 @@ in
 {
   services.minecraft-servers.servers.modpack = {
     enable = true;
-    onChange = "reload";
+    enableReload = true;
+
     package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "6G";
     serverProperties = {

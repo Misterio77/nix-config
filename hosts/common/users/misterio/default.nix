@@ -11,6 +11,7 @@ in
       "video"
       "audio"
     ] ++ ifTheyExist [
+      "minecraft"
       "network"
       "wireshark"
       "i2c"
