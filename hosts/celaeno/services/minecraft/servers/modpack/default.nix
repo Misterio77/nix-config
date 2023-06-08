@@ -42,13 +42,6 @@ in
       online-mode = false;
     };
     files = {
-      "ops.json".value = [
-        {
-          uuid = "3fc76c64-b1b2-4a95-b3cf-0d7d94db2d75";
-          name = "Misterio7x";
-          level = 4;
-        }
-      ];
       "config/luckperms/luckperms.conf".format = pkgs.formats.yaml { };
       "config/luckperms/luckperms.conf".value = {
         server = "modpack";

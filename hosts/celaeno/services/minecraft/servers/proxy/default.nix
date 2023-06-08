@@ -18,14 +18,14 @@ in
 
     enableReload = true;
     stopCommand = "end";
+    extraReload = ''
+      mcrun velocity reload
+    '';
     extraPreStop = ''
       mcrun alert "&cServidor reiniciando em &e10&c segundos..."
-      sleep 7
-      mcrun alert "&c3"
-      sleep 1
-      mcrun alert "&c2"
-      sleep 1
-      mcrun alert "&c1"
+      sleep 7 && mcrun alert "&c3"
+      sleep 1 && mcrun alert "&c2"
+      sleep 1 && mcrun alert "&c1"
     '';
 
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
@@ -41,14 +41,15 @@ in
         forwarding-secret = "@VELOCITY_FORWARDING_SECRET@";
         online-mode = true;
         servers = {
+          lobby = "localhost:${toString servers.lobby.serverProperties.server-port}";
           survival = "localhost:${toString servers.survival.serverProperties.server-port}";
           modpack = "localhost:${toString servers.modpack.serverProperties.server-port}";
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
-          try = [ "survival" ];
+          try = [ "lobby" ];
         };
         forced-hosts = {
-          "modpack.m7.rs" = [ "modpack" ];
-          "survival.m7.rs" = [ "survival" ];
+          "modpack.m7.rs" = [ "modpack" "lobby" ];
+          "survival.m7.rs" = [ "survival" "lobby" ];
         };
         query = {
           enabled = true;

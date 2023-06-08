@@ -3,6 +3,7 @@
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./servers/proxy
     ./servers/limbo
+    ./servers/lobby
     ./servers/survival
     ./servers/modpack
   ];

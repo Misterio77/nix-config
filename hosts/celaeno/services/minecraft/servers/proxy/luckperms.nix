@@ -1,5 +1,10 @@
-{ pkgs, ... }: {
-  services.minecraft-servers.servers.proxy = {
+{ pkgs, lib, ... }: {
+  services.minecraft-servers.servers.proxy = rec {
+    extraPostStart = ''
+      mcrun lpv import initial.json.gz
+    '';
+    extraReload = extraPostStart;
+
     symlinks = {
       "plugins/LuckPerms.jar" = let build = "1475"; in pkgs.fetchurl rec {
         pname = "LuckPerms";
@@ -7,25 +12,40 @@
         url = "https://download.luckperms.net/${build}/velocity/${pname}-Velocity-${version}.jar";
         hash = "sha256-8w9lt7Tuq8sPdLzCoSzE/d56bQjTIv1r/iWyMA4MtLk=";
       };
-
-      # Declaratively configure initial permission schema
-      # Import with /lpv import initial.json.gz
       "plugins/luckperms/initial.json.gz".format = pkgs.formats.gzipJson { };
-      "plugins/luckperms/initial.json.gz".value = {
+      "plugins/luckperms/initial.json.gz".value = let
+        mkPermissions = lib.mapAttrsToList (key: value: { inherit key value; });
+      in {
         groups = {
-          admin.nodes = [
-            {
-              type = "permission";
-              key = "librelogin.user.*";
-              value = true;
-            }
-            {
-              type = "permission";
-              key = "velocity.command.*";
-              value = true;
-            }
-          ];
-          default.nodes = [ ];
+          owner.nodes = mkPermissions {
+            "group.admin" = true;
+            "prefix.1000.&5" = true;
+            "weight.1000" = true;
+
+            "librelogin.*" = true;
+            "luckperms.*" = true;
+            "velocity.command.*" = true;
+          };
+          admin.nodes = mkPermissions {
+            "group.default" = true;
+            "prefix.900.&6" = true;
+            "weight.900" = true;
+
+            "huskchat.command.broadcast" = true;
+          };
+          default.nodes = mkPermissions {
+            "huskchat.command.channel" = true;
+            "huskchat.command.msg" = true;
+            "huskchat.command.msg.reply" = true;
+          };
+        };
+        users = {
+          "3fc76c64-b1b2-4a95-b3cf-0d7d94db2d75" = {
+            username = "misterio7x";
+            nodes = mkPermissions {
+              "group.owner" = true;
+            };
+          };
         };
       };
     };

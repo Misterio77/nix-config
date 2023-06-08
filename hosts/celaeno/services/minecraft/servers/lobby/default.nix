@@ -1,14 +1,27 @@
 { pkgs, ... }: {
-  services.minecraft-servers.servers.survival = {
+  services.minecraft-servers.servers.lobby = {
     enable = true;
     enableReload = true;
     package = pkgs.inputs.nix-minecraft.paperServers.paper-1_19_3;
     jvmOpts = ((import ../../aikar-flags.nix) "2G") + "-Dpaper.disableChannelLimit=true";
     serverProperties = {
-      server-port = 25571;
+      server-port = 25574;
       online-mode = false;
+      allow-nether = false;
+      level-type = "flat";
+      gamemode = "adventure";
+      force-gamemode = true;
+      generator-settings = builtins.toJSON {
+        layers = [{ block = "air"; height = "1"; }];
+        biome = "the_void";
+      };
     };
     files = {
+      "ops.json".value = [{
+        uuid = "3fc76c64-b1b2-4a95-b3cf-0d7d94db2d75";
+        name = "Misterio7x";
+        level = 4;
+      }];
       "config/paper-global.yml".value = {
         proxies.velocity = {
           enabled = true;
@@ -17,7 +30,10 @@
         };
       };
       "bukkit.yml".value = {
-        settings.shutdown-message = "Servidor fechado (provavelmente reiniciando).";
+        settings = {
+          shutdown-message = "Servidor fechado (provavelmente reiniciando).";
+          allow-end = false;
+        };
       };
       "spigot.yml".value = {
         messages = {
@@ -30,7 +46,7 @@
         checkforupdates = false;
       };
       "plugins/LuckPerms/config.yml".value = {
-        server = "survival";
+        server = "lobby";
         storage-method = "mysql";
         data = {
           address = "127.0.0.1";
