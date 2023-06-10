@@ -46,6 +46,12 @@
               "group.owner" = true;
             };
           };
+          "10ffa557-322a-4b6c-9b3e-cdc2792163ae" = {
+            username = "kirao";
+            nodes = mkPermissions {
+              "group.admin" = true;
+            };
+          };
         };
       };
     };

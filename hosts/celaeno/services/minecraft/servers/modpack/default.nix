@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 let
   modpack = (pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.17";
+    version = "0.2.18";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-v/2lrvjmA1/mw7eHYYcFdeIVuRH9+FX+ykwi9SrPE5Q=";
-    manifestHash = "sha256:0l3v6yzn7n671g91rhwm8bikw7v7vv3ijh73xyfn7zngb7kp4k41";
+    packHash = "sha256-eafCRPx6bjEOKNmm4FxhAeTKZRgZNnjKxm5U4DEejjc=";
+    manifestHash = "sha256:0rrqzamcf7g6pvjqj6ldyn2px3qr3ywg6slnmq7dxfv0kwnxq69i";
   }).addFiles {
     "mods/FabricProxy-Lite.jar" = pkgs.fetchurl rec {
       pname = "FabricProxy-Lite";
