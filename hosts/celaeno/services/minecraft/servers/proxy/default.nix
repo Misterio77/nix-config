@@ -19,13 +19,9 @@ in
     enableReload = true;
     stopCommand = "end";
     extraReload = ''
-      mcrun velocity reload
+      echo 'velocity reload' > /run/minecraft-server/proxy.stdin
     '';
     extraPreStop = ''
-      mcrun alert "&cServidor reiniciando em &e10&c segundos..."
-      sleep 7 && mcrun alert "&c3"
-      sleep 1 && mcrun alert "&c2"
-      sleep 1 && mcrun alert "&c1"
     '';
 
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
