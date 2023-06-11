@@ -7,6 +7,7 @@
     ./binary-cache.nix
     ./paste-misterio-me.nix
     ./sitespeedio.nix
+    ./disconic.nix
 
     ./hydra
     ./minecraft
