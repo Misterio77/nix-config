@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
   services.minecraft-servers.servers.proxy = rec {
     extraPostStart = ''
-      mcrun lpv import initial.json.gz
+      echo 'lpv import initial.json.gz' > /run/minecraft-server/proxy.stdin
     '';
     extraReload = extraPostStart;
 

@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   services.minecraft-servers.servers.proxy = {
     extraReload = ''
-      mcrun velocitab reload
+      echo 'velocitab reload' > /run/minecraft-server/proxy.stdin
     '';
     symlinks = {
       "plugins/Velocitab.jar" = pkgs.fetchurl rec {

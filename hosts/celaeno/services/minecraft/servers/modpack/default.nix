@@ -1,10 +1,9 @@
 { pkgs, lib, ... }:
 let
   modpack = pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.18";
+    version = "0.2.19";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-eafCRPx6bjEOKNmm4FxhAeTKZRgZNnjKxm5U4DEejjc=";
-    manifestHash = "sha256:0rrqzamcf7g6pvjqj6ldyn2px3qr3ywg6slnmq7dxfv0kwnxq69i";
+    packHash = "sha256-nScMisbK0HlOILSOXBUy/Qn/uWLr0f3s9CZ/lStZ+LU=";
   };
 
   # Get a given path's (usually a modpack) files at a specific subdirectory
@@ -26,6 +25,9 @@ in
   services.minecraft-servers.servers.modpack = {
     enable = true;
     enableReload = true;
+    extraPostStop = ''
+      rm mods global_packs config -rf
+    '';
 
     package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "6G";

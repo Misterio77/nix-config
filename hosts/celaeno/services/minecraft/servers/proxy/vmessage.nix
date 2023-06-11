@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   services.minecraft-servers.servers.proxy = {
     extraReload = ''
-      mcrun vmessage reload
+      echo 'vmessage reload' > /run/minecraft-server/proxy.stdin
     '';
     symlinks = {
       "plugins/Vmessage.jar" = pkgs.fetchurl rec {
