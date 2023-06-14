@@ -1,8 +1,4 @@
-{ inputs, config, pkgs, ... }:
-let
-  inherit (inputs.nix-colors.lib.contrib { inherit pkgs; })
-    nixWallpaperFromScheme;
-in {
+{ inputs, ... }: {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -13,12 +9,6 @@ in {
     ./features/music
   ];
 
-  wallpaper = nixWallpaperFromScheme {
-    width = 2560;
-    height = 1080;
-    logoScale = 5.0;
-    scheme = config.colorscheme;
-  };
   colorscheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
 
   #  ------   -----   ------
