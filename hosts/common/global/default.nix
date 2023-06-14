@@ -46,4 +46,9 @@
       value = "1048576";
     }
   ];
+
+  # FIXME
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1u"
+  ];
 }

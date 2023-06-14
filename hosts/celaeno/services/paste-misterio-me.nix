@@ -7,17 +7,9 @@
     paste-misterio-me = {
       enable = true;
       package = inputs.paste-misterio-me.packages.${pkgs.system}.server;
-      database = "postgresql:///paste?user=paste&host=/var/run/postgresql";
+      database.createLocally = true;
       environmentFile = config.sops.secrets.paste-misterio-me-secrets.path;
       port = 8082;
-    };
-
-    postgresql = {
-      ensureDatabases = [ "paste" ];
-      ensureUsers = [{
-        name = "paste";
-        ensurePermissions = { "DATABASE paste" = "ALL PRIVILEGES"; };
-      }];
     };
 
     nginx.virtualHosts."paste.misterio.me" = {

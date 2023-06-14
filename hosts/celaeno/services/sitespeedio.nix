@@ -67,11 +67,4 @@
       };
     };
   };
-
-  # ====================================
-  # Apply nixpkgs#228542 patch
-  disabledModules = ["services/monitoring/prometheus/exporters.nix"];
-  imports = ["${inputs.nixpkgs-228542}/nixos/modules/services/monitoring/prometheus/exporters.nix"];
-  nixpkgs.overlays = [(final: prev: {prometheus-graphite-exporter = pkgs.inputs.nixpkgs-228542.prometheus-graphite-exporter;})];
-  # ====================================
 }
