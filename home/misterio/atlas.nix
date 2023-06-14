@@ -1,5 +1,8 @@
-{ inputs, outputs, ... }:
-{
+{ inputs, config, pkgs, ... }:
+let
+  inherit (inputs.nix-colors.lib.contrib { inherit pkgs; })
+    nixWallpaperFromScheme;
+in {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -10,8 +13,13 @@
     ./features/music
   ];
 
-  wallpaper = outputs.wallpapers.cthulhu;
-  colorscheme = inputs.nix-colors.colorSchemes.tokyo-city-terminal-dark;
+  wallpaper = nixWallpaperFromScheme {
+    width = 2560;
+    height = 1080;
+    logoScale = 5.0;
+    scheme = config.colorscheme;
+  };
+  colorscheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
