@@ -30,10 +30,6 @@
       url = "github:timhae/firefly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    firefly-bot = {
-      url = "github:misterio77/firefly-bot";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     hydra.url = "github:nixos/hydra";
     hyprland.url = "github:hyprwm/hyprland/v0.25.0";

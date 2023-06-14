@@ -23,6 +23,10 @@
     overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
+      # FIXME
+      permittedInsecurePackages = [
+        "openssl-1.1.1u"
+      ];
     };
   };
 
@@ -45,10 +49,5 @@
       type = "hard";
       value = "1048576";
     }
-  ];
-
-  # FIXME
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1u"
   ];
 }
