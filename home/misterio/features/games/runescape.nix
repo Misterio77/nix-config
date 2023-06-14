@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   # Add PULSE_LATENCY_MSEC to .desktop file
-  pulse_latency = 60;
+  pulse_latency = 100;
   runescape = pkgs.runescape.overrideAttrs (oa: {
     nativeBuildInputs = (oa.nativeBuildInputs or []) ++ [
       pkgs.makeWrapper
