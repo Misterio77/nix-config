@@ -108,11 +108,11 @@ in
             text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
             tooltip = "GPU Usage";
           };
-          format = "力  {}%";
+          format = "󰒋  {}%";
           on-click = systemMonitor;
         };
         memory = {
-          format = "  {}%";
+          format = "󰍛  {}%";
           interval = 5;
           on-click = systemMonitor;
         };
@@ -120,8 +120,8 @@ in
           format = "{icon}  {volume}%";
           format-muted = "   0%";
           format-icons = {
-            headphone = "";
-            headset = "";
+            headphone = "󰋋";
+            headset = "󰋎";
             portable = "";
             default = [ "" "" "" ];
           };
@@ -130,16 +130,16 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "零";
-            deactivated = "鈴";
+            activated = "󰒳";
+            deactivated = "󰒲";
           };
         };
         battery = {
           bat = "BAT0";
           interval = 10;
-          format-icons = [ "" "" "" "" "" "" "" "" "" "" ];
+          format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
           format = "{icon} {capacity}%";
-          format-charging = " {capacity}%";
+          format-charging = "󰂄 {capacity}%";
           onclick = "";
         };
         "sway/window" = {
@@ -148,7 +148,7 @@ in
         network = {
           interval = 3;
           format-wifi = "   {essid}";
-          format-ethernet = " Connected";
+          format-ethernet = "󰈁 Connected";
           format-disconnected = "";
           tooltip-format = ''
             {ifname}
@@ -221,9 +221,9 @@ in
           };
           format = "{icon}  ({})";
           format-icons = {
-            "read" = "";
-            "unread" = "";
-            "syncing" = "";
+            "read" = "󰇯";
+            "unread" = "󰇮";
+            "syncing" = "󰁪";
           };
           on-click = mail;
         };
@@ -270,8 +270,8 @@ in
           };
           format = "{icon}";
           format-icons = {
-            "activating" = " ";
-            "deactivating" = " ";
+            "activating" = "󰁪 ";
+            "deactivating" = "󰁪 ";
             "inactive" = "? ";
             "active (Night)" = " ";
             "active (Nighttime)" = " ";
@@ -304,14 +304,14 @@ in
           format = "{icon}{}";
           format-icons = {
             "No player active" = " ";
-            "Celluloid" = " ";
-            "spotify" = " 阮";
-            "ncspot" = " 阮";
-            "qutebrowser" = "爵";
+            "Celluloid" = "󰎁 ";
+            "spotify" = " 󰓇";
+            "ncspot" = " 󰓇";
+            "qutebrowser" = "󰖟";
             "firefox" = " ";
-            "discord" = " ﭮ ";
+            "discord" = " 󰙯 ";
             "sublimemusic" = " ";
-            "kdeconnect" = " ";
+            "kdeconnect" = "󰄡 ";
           };
           on-click = "${playerctld} shift";
           on-click-right = "${playerctld} unshift";
@@ -324,9 +324,9 @@ in
           max-length = 30;
           format = "{icon} {}";
           format-icons = {
-            "Playing" = "契";
-            "Paused" = " ";
-            "Stopped" = "栗";
+            "Playing" = "󰐊";
+            "Paused" = "󰏤 ";
+            "Stopped" = "󰓛";
           };
           on-click = "${playerctl} play-pause";
         };

@@ -119,9 +119,9 @@ in
         vim.fn.sign_define(name, { text = text, texthl = name, numhl = name})
       end
 
-      add_sign("DiagnosticSignError", " ")
+      add_sign("DiagnosticSignError", "󰅚 ")
       add_sign("DiagnosticSignWarn", " ")
-      add_sign("DiagnosticSignHint", " ")
+      add_sign("DiagnosticSignHint", "󰌶 ")
       add_sign("DiagnosticSignInfo", " ")
     '';
 

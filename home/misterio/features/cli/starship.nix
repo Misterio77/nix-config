@@ -105,7 +105,7 @@ in
       aws.symbol = "  ";
       conda.symbol = " ";
       dart.symbol = " ";
-      directory.read_only = " ";
+      directory.read_only = " ";
       docker_context.symbol = " ";
       elixir.symbol = " ";
       elm.symbol = " ";
@@ -115,10 +115,10 @@ in
       hg_branch.symbol = " ";
       java.symbol = " ";
       julia.symbol = " ";
-      memory_usage.symbol = " ";
-      nim.symbol = " ";
+      memory_usage.symbol = "󰍛 ";
+      nim.symbol = "󰆥 ";
       nodejs.symbol = " ";
-      package.symbol = " ";
+      package.symbol = "󰏗 ";
       perl.symbol = " ";
       php.symbol = " ";
       python.symbol = " ";
@@ -126,8 +126,8 @@ in
       rust.symbol = " ";
       scala.symbol = " ";
       shlvl.symbol = "";
-      swift.symbol = "ﯣ ";
-      terraform.symbol = "行";
+      swift.symbol = "󰛥 ";
+      terraform.symbol = "󱁢";
     };
   };
 }

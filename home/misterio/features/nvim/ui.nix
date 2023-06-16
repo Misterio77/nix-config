@@ -38,11 +38,11 @@
         dashboard.section.header.opts.hl = "Title"
 
         dashboard.section.buttons.val = {
-            dashboard.button( "n", " New file" , ":enew<CR>"),
+            dashboard.button( "n", "󰈔 New file" , ":enew<CR>"),
             dashboard.button( "e", " Explore", ":Explore<CR>"),
             dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
             dashboard.button( "c", "  Nix config flake" , ":cd ~/Documents/NixConfig | :e flake.nix<CR>"),
-            dashboard.button( "q", "  Quit nvim", ":qa<CR>"),
+            dashboard.button( "q", "󰅙  Quit nvim", ":qa<CR>"),
         }
 
         alpha.setup(dashboard.opts)
