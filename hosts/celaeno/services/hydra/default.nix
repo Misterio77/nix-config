@@ -9,7 +9,6 @@ let
 in
 {
   imports = [
-    inputs.hydra.nixosModules.hydra
     ./machines.nix
   ];
 
@@ -23,7 +22,6 @@ in
   services = {
     hydra = {
       enable = true;
-      package = pkgs.inputs.hydra.hydra;
       hydraURL = "https://hydra.m7.rs";
       notificationSender = "hydra@m7.rs";
       listenHost = "localhost";
