@@ -34,7 +34,8 @@ in
   home = {
     sessionVariables.BROWSER = "firefox";
     persistence = {
-      "/persist/home/misterio".directories = [ ".mozilla/firefox" ];
+      # Not persisting is safer
+      # "/persist/home/misterio".directories = [ ".mozilla/firefox" ];
     };
   };
 
