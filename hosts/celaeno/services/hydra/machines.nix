@@ -21,7 +21,11 @@ let
       uri = "localhost";
       systems = [ "aarch64-linux" "x86_64-linux" "i686-linux" ];
       maxJobs = 4;
-      speedFactor = 70;
+      # This is the only builder marked as aarch64, so these builds will always
+      # run here (regardless of speedFactor).
+      # As for x86_64, this machine's factor is much lower than the others, so
+      # these builds will only be picked up if the others are offline.
+      speedFactor = 1;
       supportedFeatures = [ "kvm" "big-parallel" "nixos-test" ];
     }
   ];
