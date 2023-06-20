@@ -9,6 +9,7 @@ in
     ./librelogin.nix
     ./luckperms.nix
 
+    ./fallbackserver.nix
     ./huskchat.nix
     ./velocitab.nix
     ./vmessage.nix
