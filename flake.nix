@@ -53,19 +53,13 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
-      forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
-      forEachPkgs = f: forEachSystem (sys: f nixpkgs.legacyPackages.${sys});
-
-      mkNixos = modules: nixpkgs.lib.nixosSystem {
-        inherit modules;
-        specialArgs = { inherit inputs outputs; };
-      };
-      mkHome = modules: pkgs: home-manager.lib.homeManagerConfiguration {
-        inherit modules pkgs;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
+      lib = nixpkgs.lib // home-manager.lib;
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      forEachSystem = f: lib.genAttrs systems (sys: f pkgsFor.${sys});
+      pkgsFor = nixpkgs.legacyPackages;
     in
     {
+      inherit lib;
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
       templates = import ./templates;
@@ -73,47 +67,92 @@
       overlays = import ./overlays { inherit inputs outputs; };
       hydraJobs = import ./hydra.nix { inherit inputs outputs; };
 
-      packages = forEachPkgs (pkgs: (import ./pkgs { inherit pkgs; }) // {
-        neovim = let
-          homeCfg = mkHome [ ./home/misterio/generic.nix ] pkgs;
-        in pkgs.writeShellScriptBin "nvim" ''
-          ${homeCfg.config.programs.neovim.finalPackage}/bin/nvim \
-          -u ${homeCfg.config.xdg.configFile."nvim/init.lua".source} \
-          "$@"
-        '';
-      });
-      devShells = forEachPkgs (pkgs: import ./shell.nix { inherit pkgs; });
-      formatter = forEachPkgs (pkgs: pkgs.nixpkgs-fmt);
+      packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
+      devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
+      formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
       wallpapers = import ./home/misterio/wallpapers;
 
       nixosConfigurations = {
-        # Desktops
-        atlas = mkNixos [ ./hosts/atlas ];
-        maia = mkNixos [ ./hosts/maia ];
-        # Laptops
-        pleione = mkNixos [ ./hosts/pleione ];
-        electra = mkNixos [ ./hosts/electra ];
-        # Servers
-        alcyone = mkNixos [ ./hosts/alcyone ]; # Vultr VM (critical stuff)
-        merope = mkNixos [ ./hosts/merope ]; # Raspberry Pi (media)
-        celaeno = mkNixos [ ./hosts/celaeno ]; # Free Oracle VM (builds)
+        # Main desktop
+        atlas =  lib.nixosSystem {
+          modules = [ ./hosts/atlas ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Secondary desktop
+        maia = lib.nixosSystem {
+          modules = [ ./hosts/atlas ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Personal laptop
+        pleione = lib.nixosSystem {
+          modules = [ ./hosts/pleione ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Work laptop
+        electra = lib.nixosSystem {
+          modules = [ ./hosts/electra ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Core server (Vultr)
+        alcyone = lib.nixosSystem {
+          modules = [ ./hosts/alcyone ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Build and game server (Oracle)
+        celaeno = lib.nixosSystem {
+          modules = [ ./hosts/celaeno ];
+          specialArgs = { inherit inputs outputs; };
+        };
+        # Media server (RPi)
+        merope = lib.nixosSystem {
+          modules = [ ./hosts/merope ];
+          specialArgs = { inherit inputs outputs; };
+        };
       };
 
       homeConfigurations = {
         # Desktops
-        "misterio@atlas" = mkHome [ ./home/misterio/atlas.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        "misterio@maia" = mkHome [ ./home/misterio/maia.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        # Laptops
-        "misterio@pleione" = mkHome [ ./home/misterio/pleione.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        "misterio@electra" = mkHome [ ./home/misterio/electra.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        # Servers
-        "misterio@alcyone" = mkHome [ ./home/misterio/alcyone.nix ] nixpkgs.legacyPackages."x86_64-linux";
-        "misterio@merope" = mkHome [ ./home/misterio/merope.nix ] nixpkgs.legacyPackages."aarch64-linux";
-        "misterio@celaeno" = mkHome [ ./home/misterio/celaeno.nix ] nixpkgs.legacyPackages."aarch64-linux";
-
-        # Portable minimum configuration
-        "misterio@generic" = mkHome [ ./home/misterio/generic.nix ] nixpkgs.legacyPackages."x86_64-linux";
+        "misterio@atlas" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/atlas.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@maia" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/maia.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@pleione" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/pleione.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@electra" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/electra.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@alcyone" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/alcyone.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@merope" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/merope.nix ];
+          pkgs = pkgsFor.aarch64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@celaeno" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/celaeno.nix ];
+          pkgs = pkgsFor.aarch64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+        "misterio@generic" = lib.homeManagerConfiguration {
+          modules = [ ./home/misterio/generic.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
       };
     };
 }
