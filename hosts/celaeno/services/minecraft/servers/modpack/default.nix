@@ -31,6 +31,7 @@ in
 
     package = pkgs.inputs.nix-minecraft.fabricServers.${serverVersion};
     jvmOpts = (import ../../aikar-flags.nix) "6G";
+    whitelist = import ../../whitelist.nix;
     serverProperties = {
       server-port = 25572;
       online-mode = false;
