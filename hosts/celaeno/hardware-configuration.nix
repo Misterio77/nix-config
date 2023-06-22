@@ -16,6 +16,8 @@
       };
       efi.canTouchEfiVariables = true;
     };
+    # Enable nested virtualization
+    extraModprobeConfig = "options kvm nested=1";
   };
 
   fileSystems = {
