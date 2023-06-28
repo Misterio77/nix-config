@@ -37,9 +37,6 @@ fi
 
 echo "GPG configured" >&2
 
-GPG_TTY="$(tty)"
-export GPG_TTY
-
 gpgconf --kill gpg-agent
 gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye
