@@ -94,6 +94,7 @@ in
   bind=SUPER,d,exec,wofi -S run
   bind=,Scroll_Lock,exec,pass-wofi # fn+k
   bind=,XF86Calculator,exec,pass-wofi # fn+f12
+  bind=SUPER,semicolon,exec,pass-wofi
 
   # Toggle waybar
   bind=,XF86Tools,exec,pkill -USR1 waybar # profile button
