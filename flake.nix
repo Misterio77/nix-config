@@ -83,7 +83,7 @@
         };
         # Secondary desktop
         maia = lib.nixosSystem {
-          modules = [ ./hosts/atlas ];
+          modules = [ ./hosts/maia ];
           specialArgs = { inherit inputs outputs; };
         };
         # Personal laptop
