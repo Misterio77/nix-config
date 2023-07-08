@@ -13,6 +13,7 @@
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
       warn-dirty = false;
       system-features = [ "kvm" "big-parallel" "nixos-test" ];
+      flake-registry = ""; # Disable global flake registry
     };
     gc = {
       automatic = true;
