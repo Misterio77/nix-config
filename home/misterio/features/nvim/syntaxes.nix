@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }: {
   programs.neovim = {
     extraConfig = /* vim */ lib.mkAfter ''
-      function SetCustomKeywords()
+      function! SetCustomKeywords()
         syn match Todo  /TODO/
         syn match Done  /DONE/
         syn match Start /START/
