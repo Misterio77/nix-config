@@ -32,23 +32,6 @@
         "type": "gitlab"
       }
     },
-    "composer2nix-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1646178110,
-        "narHash": "sha256-P3acfGwHYjjZQcviPiOT7T7qzzP/drc2mibzrsrNP18=",
-        "owner": "svanderburg",
-        "repo": "composer2nix",
-        "rev": "299caca4aac42d7639a42eb4dde951c010f6e91c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "svanderburg",
-        "ref": "v0.0.6",
-        "repo": "composer2nix",
-        "type": "github"
-      }
-    },
     "disconic": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -65,45 +48,6 @@
       "original": {
         "owner": "misterio77",
         "repo": "disconic",
-        "type": "github"
-      }
-    },
-    "firefly": {
-      "inputs": {
-        "composer2nix-src": "composer2nix-src",
-        "firefly-iii-src": "firefly-iii-src",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1685900414,
-        "narHash": "sha256-liZ0Z4+ifPJxzxCxlcIDIbPuWm1XQmvEuKAPArC9nSI=",
-        "owner": "timhae",
-        "repo": "firefly",
-        "rev": "22e669ad5c23af974117855a3fe6386c3f3148cb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "timhae",
-        "repo": "firefly",
-        "type": "github"
-      }
-    },
-    "firefly-iii-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1681548383,
-        "narHash": "sha256-ymWotU5wM6nQhsfnyAt+unewJ5D0tJpNK+UedSyfITU=",
-        "owner": "firefly-iii",
-        "repo": "firefly-iii",
-        "rev": "f878af0d3bbfe7b1a51bef758d4e2e9a66118316",
-        "type": "github"
-      },
-      "original": {
-        "owner": "firefly-iii",
-        "ref": "v6.0.8",
-        "repo": "firefly-iii",
         "type": "github"
       }
     },
@@ -556,7 +500,6 @@
     "root": {
       "inputs": {
         "disconic": "disconic",
-        "firefly": "firefly",
         "firefox-addons": "firefox-addons",
         "hardware": "hardware",
         "home-manager": "home-manager",

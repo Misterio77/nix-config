@@ -28,10 +28,6 @@
       url = "github:misterio77/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    firefly = {
-      url = "github:timhae/firefly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     hyprland = {
       url = "github:hyprwm/hyprland/v0.25.0";
