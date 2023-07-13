@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ inputs, outputs, ... }: {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -9,7 +9,8 @@
     ./features/music
   ];
 
-  colorscheme = inputs.nix-colors.colorSchemes.catppuccin-macchiato;
+  colorscheme = inputs.nix-colors.colorschemes.atelier-sulphurpool;
+  wallpaper = outputs.wallpapers.aenami-northwind;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

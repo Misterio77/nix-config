@@ -1,23 +1,4 @@
-{ pkgs, ... }:
-let
-  nix-inspect = pkgs.writeShellScriptBin "nix-inspect" ''
-    read -ra EXCLUDED <<< "$@"
-    EXCLUDED+=(''${NIX_INSPECT_EXCLUDE[@]:-})
-
-    IFS=":" read -ra PATHS <<< "$PATH"
-
-    read -ra PROGRAMS <<< \
-      "$(printf "%s\n" "''${PATHS[@]}" | ${pkgs.gnugrep}/bin/grep "\/nix\/store" | ${pkgs.gnugrep}/bin/grep -v "\-man" | ${pkgs.perl}/bin/perl -pe 's/^\/nix\/store\/\w{32}-([^\/]*)\/bin$/\1/' | ${pkgs.findutils}/bin/xargs)"
-
-    for to_remove in "''${EXCLUDED[@]}"; do
-        to_remove_full="$(printf "%s\n" "''${PROGRAMS[@]}" | grep "$to_remove" )"
-        PROGRAMS=("''${PROGRAMS[@]/$to_remove_full}")
-    done
-
-    read -ra PROGRAMS <<< "''${PROGRAMS[@]}"
-    echo "''${PROGRAMS[@]}"
-  '';
-in
+{ pkgs, lib, ... }:
 {
   programs.starship = {
     enable = true;
@@ -69,10 +50,14 @@ in
         style = "bold red";
       };
       custom = {
-        nix_inspect = {
+        nix_inspect = let
+          excluded = [
+            "kitty" "imagemagick" "ncurses" "user-environment"
+          ];
+        in {
           disabled = false;
           when = "test -z $IN_NIX_SHELL";
-          command = "${nix-inspect}/bin/nix-inspect kitty imagemagick ncurses user-environment";
+          command = (lib.getExe pkgs.nix-inspect) + (lib.concatStringsSep " " excluded);
           format = "[($output <- )$symbol]($style) ";
           symbol = " ";
           style = "bold blue";

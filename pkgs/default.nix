@@ -10,6 +10,7 @@
   sitespeedio = pkgs.callPackage ./sitespeedio { };
 
   # Personal scripts
+  nix-inspect = pkgs.callPackage ./nix-inspect { };
   minicava = pkgs.callPackage ./minicava { };
   pass-wofi = pkgs.callPackage ./pass-wofi { };
   primary-xwayland = pkgs.callPackage ./primary-xwayland { };
