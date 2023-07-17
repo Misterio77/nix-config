@@ -32,7 +32,11 @@ in
   };
 
   home = {
-    sessionVariables.BROWSER = "firefox";
+    sessionVariables = {
+      BROWSER = "firefox";
+      # https://github.com/NixOS/nixpkgs/issues/238025
+      TZ = "/etc/localtime";
+    };
     persistence = {
       # Not persisting is safer
       # "/persist/home/misterio".directories = [ ".mozilla/firefox" ];
