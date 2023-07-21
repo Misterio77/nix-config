@@ -7,9 +7,7 @@
   };
 
   inputs = {
-    # Go back to nixos-unstable after PR 238700 is merged
-    # https://nixpk.gs/pr-tracker.html?pr=238700
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
