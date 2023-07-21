@@ -2,7 +2,6 @@
   imports = [
     ../common
     ../common/wayland-wm
-    inputs.hyprland.homeManagerModules.default
   ];
 
   programs = {
@@ -27,8 +26,6 @@
     inputs.hyprwm-contrib.packages.${system}.grimblast
     swaybg
     swayidle
-    # TODO
-    # inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
   ];
 
   programs.waybar.package = pkgs.waybar.overrideAttrs (oa: {
@@ -37,7 +34,6 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.default;
     extraConfig =
       (import ./monitors.nix {
         inherit lib;
