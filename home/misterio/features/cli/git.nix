@@ -39,7 +39,6 @@ in
     userName = "Gabriel Fontes";
     userEmail = "hi@m7.rs";
     extraConfig = {
-      feature.manyFiles = true;
       init.defaultBranch = "main";
       user.signing.key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
       commit.gpgSign = true;
