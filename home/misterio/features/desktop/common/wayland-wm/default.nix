@@ -5,6 +5,7 @@
     ./gammastep.nix
     ./kitty.nix
     ./mako.nix
+    ./qutebrowser.nix
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
