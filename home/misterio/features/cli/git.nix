@@ -35,6 +35,7 @@ in
       pushall = "!git remote | xargs -L1 git push --all";
       graph = "log --decorate --oneline --graph";
       add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
+      fast-forward = "merge --ff-only";
     };
     userName = "Gabriel Fontes";
     userEmail = "hi@m7.rs";
