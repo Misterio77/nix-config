@@ -9,7 +9,6 @@ in
     inputs.nix-colors.homeManagerModule
     ../features/cli
     ../features/nvim
-    ../features/helix
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   nixpkgs = {
