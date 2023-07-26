@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   qt = {
     enable = true;
     platformTheme = "gtk";
     style = {
       name = "gtk2";
-      package = pkgs.libsForQt5.qtstyleplugins;
+      package = pkgs.qt6gtk2;
     };
   };
 }
