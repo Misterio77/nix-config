@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, pkgs, ... }:
 
 let inherit (config.colorscheme) colors kind;
 in
@@ -29,6 +29,7 @@ in
 
   programs.qutebrowser = {
     enable = true;
+    package = pkgs.qutebrowser-qt6;
     loadAutoconfig = true;
     settings = {
       tabs = {
