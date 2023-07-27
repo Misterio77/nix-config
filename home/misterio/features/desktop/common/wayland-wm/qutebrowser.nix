@@ -35,6 +35,7 @@ in
       tabs = {
         show = "multiple";
         position = "left";
+        tree_tabs = true;
       };
       fonts = {
         default_family = config.fontProfiles.regular.family;
@@ -151,7 +152,6 @@ in
           url.warn.fg = "#${colors.base0E}";
         };
         tabs = {
-          tree_tabs = true;
           bar.bg = "#${colors.base00}";
           even.bg = "#${colors.base00}";
           even.fg = "#${colors.base05}";
