@@ -151,6 +151,7 @@ in
           url.warn.fg = "#${colors.base0E}";
         };
         tabs = {
+          tree_tabs = true;
           bar.bg = "#${colors.base00}";
           even.bg = "#${colors.base00}";
           even.fg = "#${colors.base05}";
