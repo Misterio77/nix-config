@@ -7,7 +7,7 @@ index 50e31e6..6f698dc 100644
          done
          [ $replaced -eq 1 ] || set -- "$@" "$target"
 -        env "$command" "$@"
-+         if [ x"$(get_key "${file}" "Terminal")" = x"true" ]; then
++        if [ x"$(get_key "${file}" "Terminal")" = x"true" ] && ( [ ! -t 0 ] || [ ! -t 1 ] ); then
 +             if [ -z "$TERMINAL" ]; then
 +                 TERMINAL="xterm -e"
 +             fi
@@ -15,6 +15,6 @@ index 50e31e6..6f698dc 100644
 +         else
 +             env "$command" "$@"
 +         fi
- 
+
          if [ $? -eq 0 ]; then
              exit_success
