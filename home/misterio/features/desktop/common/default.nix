@@ -1,4 +1,3 @@
-{ pkgs, lib, outputs, ... }:
 {
   imports = [
     ./deluge.nix
@@ -12,10 +11,5 @@
     ./playerctl.nix
     ./qt.nix
     ./sublime-music.nix
-  ];
-
-  xdg.mimeApps.enable = true;
-  home.packages = with pkgs; [
-    xdg-utils-spawn-terminal
   ];
 }

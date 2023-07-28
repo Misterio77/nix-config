@@ -13,8 +13,10 @@
     ./zathura.nix
   ];
 
+  xdg.mimeApps.enable = true;
   home.packages = with pkgs; [
     grim
+    gtk3 # For gtk-launch
     imv
     mimeo
     primary-xwayland
@@ -25,6 +27,7 @@
     wl-clipboard
     wl-mirror
     wl-mirror-pick
+    xdg-utils-spawn-terminal # Patched to open terminal
     ydotool
   ];
 

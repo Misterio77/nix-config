@@ -3,17 +3,12 @@
 let inherit (config.colorscheme) colors kind;
 in
 {
-  home = {
-    sessionVariables = {
-      BROWSER = "qutebrowser";
-    };
-    persistence = {
-      "/persist/home/misterio".directories = [
-        ".config/qutebrowser/bookmarks"
-        ".config/qutebrowser/greasemonkey"
-        ".local/share/qutebrowser"
-      ];
-    };
+  home.persistence = {
+    "/persist/home/misterio".directories = [
+      ".config/qutebrowser/bookmarks"
+      ".config/qutebrowser/greasemonkey"
+      ".local/share/qutebrowser"
+    ];
   };
 
 
@@ -32,6 +27,7 @@ in
     package = pkgs.qutebrowser-qt6;
     loadAutoconfig = true;
     settings = {
+      editor.command = [ "xdg-open" "{file}" ];
       tabs = {
         show = "multiple";
         position = "left";

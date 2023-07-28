@@ -33,8 +33,6 @@ in
 
   home = {
     sessionVariables = {
-      # Low priority, so that other browsers override it
-      BROWSER = lib.mkDefault "firefox";
       # https://github.com/NixOS/nixpkgs/issues/238025
       TZ = "/etc/localtime";
     };
