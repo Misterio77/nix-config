@@ -1,27 +1,44 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 let
-  user = "misterio";
-  greetd = "${pkgs.greetd.greetd}/bin/greetd";
-  gtkgreet = "${pkgs.greetd.gtkgreet}/bin/gtkgreet";
+  homeCfgs = config.home-manager.users;
+  extraDataPaths = lib.concatStringsSep ":" (lib.mapAttrsToList
+    (n: _: "/nix/var/nix/profiles/per-user/${n}/${n}/home-path/share")
+    homeCfgs);
+  vars = ''XDG_DATA_DIRS="$XDG_DATA_DIRS:${extraDataPaths}"'';
 
   sway-kiosk = command: "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''
     output * bg #000000 solid_color
-    exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-    exec "${command}; ${pkgs.sway}/bin/swaymsg exit"
+    exec "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"
+    xwayland disable
+    input "type:touchpad" {
+      tap enabled
+    }
+    exec '${vars} ${command} -l debug; ${pkgs.sway}/bin/swaymsg exit'
   ''}";
+
+  misterioCfg = homeCfgs.misterio;
 in
 {
-  services.greetd = {
+  users.extraUsers.greeter.packages = [
+    misterioCfg.gtk.theme.package
+    misterioCfg.gtk.iconTheme.package
+  ];
+
+  programs.regreet = {
     enable = true;
     settings = {
-      default_session = {
-        command = sway-kiosk "${gtkgreet} -l -c '$SHELL -l'";
-        inherit user;
+      GTK = {
+        icon_theme_name = "ePapirus";
+        theme_name = misterioCfg.gtk.theme.name;
       };
-      initial_session = {
-        command = "$SHELL -l";
-        inherit user;
+      background = {
+        path = misterioCfg.wallpaper;
+        fit = "Cover";
       };
     };
+  };
+  services.greetd = {
+    enable = true;
+    settings.default_session.command = sway-kiosk (lib.getExe config.programs.regreet.package);
   };
 }
