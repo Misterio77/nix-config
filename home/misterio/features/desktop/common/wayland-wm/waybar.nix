@@ -2,6 +2,19 @@
 
 let
   # Dependencies
+  cat = "${pkgs.coreutils}/bin/cat";
+  cut = "${pkgs.coreutils}/bin/cut";
+  find = "${pkgs.findutils}/bin/find";
+  grep = "${pkgs.gnugrep}/bin/grep";
+  perl = "${pkgs.perl}/bin/perl";
+  pgrep = "${pkgs.procps}/bin/pgrep";
+  sed = "${pkgs.gnused}/bin/sed";
+  tail = "${pkgs.coreutils}/bin/tail";
+  wc = "${pkgs.coreutils}/bin/wc";
+  xargs = "${pkgs.findutils}/bin/xargs";
+  timeout = "${pkgs.coreutils}/bin/timeout";
+  ping = "${pkgs.iputils}/bin/ping";
+
   jq = "${pkgs.jq}/bin/jq";
   xml = "${pkgs.xmlstarlet}/bin/xml";
   gamemoded = "${pkgs.gamemode}/bin/gamemoded";
@@ -9,18 +22,8 @@ let
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   playerctld = "${pkgs.playerctl}/bin/playerctld";
-  neomutt = "${pkgs.neomutt}/bin/neomutt";
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
-  btm = "${pkgs.bottom}/bin/btm";
   wofi = "${pkgs.wofi}/bin/wofi";
-  ikhal = "${pkgs.khal}/bin/ikhal";
-
-  terminal = "${pkgs.kitty}/bin/kitty";
-  terminal-spawn = cmd: "${terminal} $SHELL -i -c ${cmd}";
-
-  calendar = terminal-spawn ikhal;
-  systemMonitor = terminal-spawn btm;
-  mail = terminal-spawn neomutt;
 
   # Function to simplify making waybar outputs
   jsonOutput = name: { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
@@ -99,26 +102,22 @@ in
           tooltip-format = ''
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
-          on-click = calendar;
         };
         cpu = {
           format = "   {usage}%";
-          on-click = systemMonitor;
         };
         "custom/gpu" = {
           interval = 5;
           return-type = "json";
           exec = jsonOutput "gpu" {
-            text = "$(cat /sys/class/drm/card0/device/gpu_busy_percent)";
+            text = "$(${cat} /sys/class/drm/card0/device/gpu_busy_percent)";
             tooltip = "GPU Usage";
           };
           format = "󰒋  {}%";
-          on-click = systemMonitor;
         };
         memory = {
           format = "󰍛  {}%";
           interval = 5;
-          on-click = systemMonitor;
         };
         pulseaudio = {
           format = "{icon}  {volume}%";
@@ -176,7 +175,7 @@ in
               pre = ''
                 set -o pipefail
                 ${concatStringsSep "\n" (map (host: ''
-                  ping_${host}="$(timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1)ms" || ping_${host}="Disconnected"
+                  ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
                 '') hosts)}
               '';
               # Access a remote machine's and a home machine's ping
@@ -191,31 +190,30 @@ in
           return-type = "json";
           exec = jsonOutput "menu" {
             text = "";
-            tooltip = ''$(cat /etc/os-release | grep PRETTY_NAME | cut -d '"' -f2)'';
+            tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
           };
           on-click = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
         };
         "custom/hostname" = {
-          exec = "echo $USER@$(hostname)";
-          on-click = terminal;
+          exec = "echo $USER@$HOSTNAME";
         };
         "custom/unread-mail" = {
           interval = 5;
           return-type = "json";
           exec = jsonOutput "unread-mail" {
             pre = ''
-              count=$(find ~/Mail/*/Inbox/new -type f | wc -l)
+              count=$(${find} ~/Mail/*/Inbox/new -type f | ${wc} -l)
               if [ "$count" == "0" ]; then
                 subjects="No new mail"
                 status="read"
               else
                 subjects=$(\
-                  grep -h "Subject: " -r ~/Mail/*/Inbox/new | cut -d ':' -f2- | \
-                  perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | sed -e 's/^/\-/'\
+                  ${grep} -h "Subject: " -r ~/Mail/*/Inbox/new | ${cut} -d ':' -f2- | \
+                  ${perl} -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | ${sed} -e 's/^/\-/'\
                 )
                 status="unread"
               fi
-              if pgrep mbsync &>/dev/null; then
+              if ${pgrep} mbsync &>/dev/null; then
                 status="syncing"
               fi
             '';
@@ -229,7 +227,6 @@ in
             "unread" = "󰇮";
             "syncing" = "󰁪";
           };
-          on-click = mail;
         };
         "custom/gpg-agent" = {
           interval = 2;
@@ -250,7 +247,7 @@ in
           on-click = "";
         };
         "custom/gamemode" = {
-          exec-if = "${gamemoded} --status | grep 'is active' -q";
+          exec-if = "${gamemoded} --status | ${grep} 'is active' -q";
           interval = 2;
           return-type = "json";
           exec = jsonOutput "gamemode" {
@@ -264,7 +261,7 @@ in
           exec = jsonOutput "gammastep" {
             pre = ''
               if unit_status="$(${systemctl} --user is-active gammastep)"; then
-                status="$unit_status ($(${journalctl} --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs))"
+                status="$unit_status ($(${journalctl} --user -u gammastep.service -g 'Period: ' | ${tail} -1 | ${cut} -d ':' -f6 | ${xargs}))"
               else
                 status="$unit_status"
               fi
@@ -293,8 +290,8 @@ in
           return-type = "json";
           exec = jsonOutput "currentplayer" {
             pre = ''
-              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active" | cut -d '.' -f1)"
-              count="$(${playerctl} -l | wc -l)"
+              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active" | ${cut} -d '.' -f1)"
+              count="$(${playerctl} -l | ${wc} -l)"
               if ((count > 1)); then
                 more=" +$((count - 1))"
               else

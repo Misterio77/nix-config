@@ -5,6 +5,7 @@
 
     ./tty-init.nix
     ./basic-binds.nix
+    ./systemd-fixes.nix
   ];
 
   home.packages = with pkgs; [
