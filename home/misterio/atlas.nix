@@ -32,6 +32,7 @@
       refreshRate = 75;
       x = 1920;
       workspace = "1";
+      primary = true;
     }
     {
       name = "DP-2";

@@ -17,6 +17,7 @@
       height = 1080;
       workspace = "3";
       x = 0;
+      primary = true;
     }
   ];
 

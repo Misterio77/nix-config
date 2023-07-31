@@ -1,9 +1,8 @@
 { pkgs, lib, config, ... }:
 let
   homeCfgs = config.home-manager.users;
-  extraDataPaths = lib.concatStringsSep ":" (lib.mapAttrsToList
-    (n: _: "/nix/var/nix/profiles/per-user/${n}/${n}/home-path/share")
-    homeCfgs);
+  homePaths = lib.mapAttrsToList (n: v: "${v.home.path}/share") homeCfgs;
+  extraDataPaths = lib.concatStringsSep ":" homePaths;
   vars = ''XDG_DATA_DIRS="$XDG_DATA_DIRS:${extraDataPaths}"'';
 
   sway-kiosk = command: "${pkgs.sway}/bin/sway --config ${pkgs.writeText "kiosk.config" ''

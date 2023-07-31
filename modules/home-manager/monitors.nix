@@ -12,6 +12,10 @@ in
           type = types.str;
           example = "DP-1";
         };
+        primary = mkOption {
+          type = types.bool;
+          default = false;
+        };
         noBar = mkOption {
           type = types.bool;
           default = false;
@@ -46,5 +50,11 @@ in
         };
       };
     });
+  };
+  config = {
+    assertions = [{
+      assertion = (lib.length (lib.filter (m: m.primary) config.monitors)) == 1;
+      message = "Exactly one monitor must be set to primary.";
+    }];
   };
 }
