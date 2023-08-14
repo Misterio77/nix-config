@@ -18,6 +18,7 @@
   wl-mirror-pick = pkgs.callPackage ./wl-mirror-pick { };
   lyrics = pkgs.callPackage ./lyrics { };
   xpo = pkgs.callPackage ./xpo { };
+  tly = pkgs.callPackage ./tly { };
   hyprslurp = pkgs.callPackage ./hyprslurp { };
 
   # My slightly customized plymouth theme, just makes the blue outline white

@@ -89,6 +89,9 @@
 
         grimblast = "${pkgs.inputs.hyprwm-contrib.grimblast}/bin/grimblast";
         pactl = "${pkgs.pulseaudio}/bin/pactl";
+        tly = "${pkgs.tly}/bin/tly";
+        gtk-play = "${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play";
+        notify-send = "${pkgs.libnotify}/bin/notify-send";
 
         gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
         xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
@@ -118,6 +121,10 @@
         "CONTROL,Print,exec,${grimblast} --notify copy screen"
         "SUPER,Print,exec,${grimblast} --notify copy window"
         "ALT,Print,exec,${grimblast} --notify copy area"
+        # Tally counter
+        "SUPER,z,exec,${tly} add && ${gtk-play} -i dialog-information" # Add new entry
+        "SUPERCONTROL,z,exec,${tly} undo && ${gtk-play} -i dialog-warning" # Undo last entry
+        "SUPERSHIFT,z,exec,${notify-send} -t 1000 $(${tly} time)" # Show current time
       ] ++
 
       (lib.optionals config.services.playerctld.enable [
