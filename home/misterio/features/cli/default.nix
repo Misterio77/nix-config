@@ -38,5 +38,7 @@
     nix-inspect # See which pkgs are in your PATH
 
     ltex-ls # Spell checking LSP
+
+    tly # Tally counter
   ];
 }

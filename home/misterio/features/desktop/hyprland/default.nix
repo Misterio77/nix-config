@@ -122,8 +122,9 @@
         "SUPER,Print,exec,${grimblast} --notify copy window"
         "ALT,Print,exec,${grimblast} --notify copy area"
         # Tally counter
-        "SUPER,z,exec,${tly} add && ${gtk-play} -i dialog-information" # Add new entry
-        "SUPERCONTROL,z,exec,${tly} undo && ${gtk-play} -i dialog-warning" # Undo last entry
+        "SUPER,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} add && ${gtk-play} -i dialog-information" # Add new entry
+        "SUPERCONTROL,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} undo && ${gtk-play} -i dialog-warning" # Undo last entry
+        "SUPERCONTROLSHIFT,z,exec,${tly} reset && ${gtk-play} -i complete" # Reset
         "SUPERSHIFT,z,exec,${notify-send} -t 1000 $(${tly} time)" # Show current time
       ] ++
 
