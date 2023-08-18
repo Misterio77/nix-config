@@ -9,7 +9,7 @@ in
 
     defaultServer = lib.mkOption {
       default = null;
-      type = with lib.types; nullOr string;
+      type = with lib.types; nullOr str;
       description = ''
         Default SSH server/endpoint to use when tunneling.
       '';
