@@ -43,6 +43,9 @@ in
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "22.05";
     sessionPath = [ "$HOME/.local/bin" ];
+    sessionVariables = {
+      FLAKE = "$HOME/Documents/NixConfig";
+    };
 
     persistence = {
       "/persist/home/misterio" = {

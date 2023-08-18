@@ -9,7 +9,7 @@
     ./features/music
   ];
 
-  colorscheme = inputs.nix-colors.colorschemes.atelier-sulphurpool;
+  colorscheme = inputs.nix-colors.colorschemes.atelier-sulphurpool-light;
   wallpaper = outputs.wallpapers.aenami-northwind;
 
   #  ------   -----   ------

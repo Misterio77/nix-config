@@ -40,5 +40,7 @@
     ltex-ls # Spell checking LSP
 
     tly # Tally counter
+
+    inputs.nh.default # nixos-rebuild and home-manager CLI wrapper
   ];
 }
