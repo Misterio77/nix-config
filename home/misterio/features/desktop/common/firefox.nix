@@ -1,15 +1,12 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, ... }:
 
-let
-  addons = inputs.firefox-addons.packages.${pkgs.system};
-in
 {
   programs.browserpass.enable = true;
   programs.firefox = {
     enable = true;
     profiles.misterio = {
       bookmarks = { };
-      extensions = with addons; [
+      extensions = with pkgs.inputs.firefox-addons; [
         ublock-origin
         browserpass
       ];

@@ -6,7 +6,7 @@
   services = {
     paste-misterio-me = {
       enable = true;
-      package = inputs.paste-misterio-me.packages.${pkgs.system}.server;
+      package = pkgs.inputs.paste-misterio-me.server;
       database.createLocally = true;
       environmentFile = config.sops.secrets.paste-misterio-me-secrets.path;
       port = 8082;
