@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   # Add PULSE_LATENCY_MSEC to .desktop file
   pulse_latency = 100;
@@ -12,8 +12,13 @@ let
         --run 'echo $PULSE_LATENCY_MSEC'
     '';
   });
+  openssl = lib.head (lib.filter (p: p.pname == "openssl") runescape.fhsenv.targetPaths);
 in {
   home.packages = [ runescape ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    openssl.name
+  ];
 
   home.persistence = {
     "/persist/home/misterio" = {
