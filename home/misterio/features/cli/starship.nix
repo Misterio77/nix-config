@@ -52,7 +52,7 @@
       custom = {
         nix_inspect = let
           excluded = [
-            "kitty" "imagemagick" "ncurses" "user-environment"
+            "kitty" "imagemagick" "ncurses" "user-environment" "pciutils" "binutils-wrapper"
           ];
         in {
           disabled = false;
