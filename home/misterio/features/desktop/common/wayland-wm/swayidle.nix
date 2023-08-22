@@ -24,7 +24,7 @@ in
       # Lock screen
       [{
         timeout = lockTime;
-        command = "${swaylock} -S --daemonize";
+        command = "${swaylock} -i ${config.wallpaper} --daemonize";
       }] ++
       # Mute mic
       (afterLockTimeout {
