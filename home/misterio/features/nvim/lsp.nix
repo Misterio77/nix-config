@@ -8,7 +8,7 @@
         local lspconfig = require('lspconfig')
 
         function add_lsp(binary, server, options)
-          options["cmd"] = { binary }
+          if not options["cmd"] then options["cmd"] = { binary, table.unpack(options["cmd_args"]) } end
           if vim.fn.executable(binary) == 1 then server.setup(options) end
         end
 
@@ -18,7 +18,9 @@
         add_lsp("nil", lspconfig.nil_ls, {})
         add_lsp("pylsp", lspconfig.pylsp, {})
         add_lsp("dart", lspconfig.dartls, {})
-        add_lsp("haskell-language-server", lspconfig.hls, {})
+        add_lsp("haskell-language-server", lspconfig.hls, {
+          cmd_args = { "--lsp" }
+        })
         add_lsp("kotlin-language-server", lspconfig.kotlin_language_server, {})
         add_lsp("solargraph", lspconfig.solargraph, {})
         add_lsp("phpactor", lspconfig.phpactor, {})
