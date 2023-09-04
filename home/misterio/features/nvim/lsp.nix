@@ -8,7 +8,7 @@
         local lspconfig = require('lspconfig')
 
         function add_lsp(binary, server, options)
-          if not options["cmd"] then options["cmd"] = { binary, table.unpack(options["cmd_args"]) } end
+          if not options["cmd"] then options["cmd"] = { binary, unpack(options["cmd_args"] or {}) } end
           if vim.fn.executable(binary) == 1 then server.setup(options) end
         end
 
@@ -24,7 +24,9 @@
         add_lsp("kotlin-language-server", lspconfig.kotlin_language_server, {})
         add_lsp("solargraph", lspconfig.solargraph, {})
         add_lsp("phpactor", lspconfig.phpactor, {})
-        add_lsp("terraform-ls", lspconfig.terraformls, {})
+        add_lsp("terraform-ls", lspconfig.terraformls, {
+          cmd_args = { "serve" }
+        })
         add_lsp("texlab", lspconfig.texlab, {})
         add_lsp("gopls", lspconfig.gopls, {})
         add_lsp("tsserver", lspconfig.tsserver, {})
