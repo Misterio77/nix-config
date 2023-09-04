@@ -24,7 +24,6 @@ in
 
   programs.qutebrowser = {
     enable = true;
-    package = pkgs.qutebrowser-qt6;
     loadAutoconfig = true;
     settings = {
       editor.command = [ "xdg-open" "{file}" ];

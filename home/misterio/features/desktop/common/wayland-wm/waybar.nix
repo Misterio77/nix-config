@@ -58,10 +58,10 @@ in
           "sway/workspaces"
           "sway/mode"
         ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
-          "wlr/workspaces"
+          "hyprland/workspaces"
         ]);
 
-        "wlr/workspaces" = {
+        "hyprland/workspaces" = {
           on-click = "activate";
         };
       };

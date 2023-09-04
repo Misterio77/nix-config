@@ -1,338 +1,8 @@
-diff --git a/doc/help/commands.asciidoc b/doc/help/commands.asciidoc
-index 7f0abc71d..43df2a768 100644
---- a/doc/help/commands.asciidoc
-+++ b/doc/help/commands.asciidoc
-@@ -130,6 +130,12 @@ possible to run or bind multiple commands by separating them with `;;`.
- |<<tab-prev,tab-prev>>|Switch to the previous tab, or switch [count] tabs back.
- |<<tab-select,tab-select>>|Select tab by index or url/title best match.
- |<<tab-take,tab-take>>|Take a tab from another window.
-+|<<tree-tab-create-group,tree-tab-create-group>>|Wrapper around :open qute://treegroup/name. Correctly escapes names.
-+|<<tree-tab-cycle-hide,tree-tab-cycle-hide>>|Hides levels of descendents: children, grandchildren, and so on.
-+|<<tree-tab-demote,tree-tab-demote>>|Demote a tab making it children of its previous adjacent sibling.
-+|<<tree-tab-promote,tree-tab-promote>>|Promote a tab so it becomes next sibling of its parent.
-+|<<tree-tab-suspend-children,tree-tab-suspend-children>>|Suspends all descendent of a tab to reduce memory usage.
-+|<<tree-tab-toggle-hide,tree-tab-toggle-hide>>|If the current tab's children are shown hide them, and vice-versa.
- |<<unbind,unbind>>|Unbind a keychain.
- |<<undo,undo>>|Re-open the last closed tab(s) or window.
- |<<version,version>>|Show version information.
-@@ -930,7 +936,7 @@ Do nothing.
-
- [[open]]
- === open
--Syntax: +:open [*--related*] [*--bg*] [*--tab*] [*--window*] [*--secure*] [*--private*] ['url']+
-+Syntax: +:open [*--related*] [*--sibling*] [*--bg*] [*--tab*] [*--window*] [*--secure*] [*--private*] ['url']+
-
- Open a URL in the current/[count]th tab.
-
-@@ -942,6 +948,8 @@ If the URL contains newlines, each line gets opened in its own tab.
- ==== optional arguments
- * +*-r*+, +*--related*+: If opening a new tab, position the tab as related to the current one (like clicking on a link).
-
-+* +*-S*+, +*--sibling*+: If opening a new tab, position the as a sibling of the current one.
-+
- * +*-b*+, +*--bg*+: Open in a new background tab.
- * +*-t*+, +*--tab*+: Open in a new tab.
- * +*-w*+, +*--window*+: Open in a new window.
-@@ -1394,7 +1402,7 @@ Duplicate the current tab.
-
- [[tab-close]]
- === tab-close
--Syntax: +:tab-close [*--prev*] [*--next*] [*--opposite*] [*--force*]+
-+Syntax: +:tab-close [*--prev*] [*--next*] [*--opposite*] [*--force*] [*--recursive*]+
-
- Close the current/[count]th tab.
-
-@@ -1404,6 +1412,7 @@ Close the current/[count]th tab.
- * +*-o*+, +*--opposite*+: Force selecting the tab in the opposite direction of what's configured in 'tabs.select_on_remove'.
-
- * +*-f*+, +*--force*+: Avoid confirmation for pinned tabs.
-+* +*-r*+, +*--recursive*+: Close all descendents (tree-tabs) as well as current tab
-
- ==== count
- The tab index to close
-@@ -1417,10 +1426,14 @@ Select the tab given as argument/[count].
- If neither count nor index are given, it behaves like tab-next. If both are given, use count.
-
- ==== positional arguments
--* +'index'+: The tab index to focus, starting with 1. The special value `last` focuses the last focused tab (regardless of count),
-- and `stack-prev`/`stack-next` traverse a stack of visited
-- tabs. Negative indices count from the end, such that -1 is
-- the last tab.
-+* +'index'+: The tab index to focus, starting with 1. Negative indices count from the end, such that -1 is the last tab. Special
-+ values are:
-+ - `last` focuses the last focused tab (regardless of
-+ count).
-+ - `parent` focuses the parent tab in the tree hierarchy,
-+ if `tabs.tree_tabs` is enabled.
-+ - `stack-prev`/`stack-next` traverse a stack of visited
-+ tabs.
-
-
- ==== optional arguments
-@@ -1431,7 +1444,7 @@ The tab index to focus, starting with 1.
-
- [[tab-give]]
- === tab-give
--Syntax: +:tab-give [*--keep*] [*--private*] ['win-id']+
-+Syntax: +:tab-give [*--keep*] [*--private*] [*--recursive*] ['win-id']+
-
- Give the current tab to a new or existing window if win_id given.
-
-@@ -1443,6 +1456,7 @@ If no win_id is given, the tab will get detached into a new window.
- ==== optional arguments
- * +*-k*+, +*--keep*+: If given, keep the old tab around.
- * +*-p*+, +*--private*+: If the tab should be detached into a private instance.
-+* +*-r*+, +*--recursive*+: Whether to move the entire subtree starting at the tab.
-
- ==== count
- Overrides win_id (index starts at 1 for win_id=0).
-@@ -1475,8 +1489,13 @@ The tab index to mute or unmute
-
- [[tab-next]]
- === tab-next
-+Syntax: +:tab-next [*--sibling*]+
-+
- Switch to the next tab, or switch [count] tabs forward.
-
-+==== optional arguments
-+* +*-s*+, +*--sibling*+: Whether to focus the next tree sibling.
-+
- ==== count
- How many tabs to switch forward.
-
-@@ -1504,8 +1523,13 @@ The tab index to pin or unpin
-
- [[tab-prev]]
- === tab-prev
-+Syntax: +:tab-prev [*--sibling*]+
-+
- Switch to the previous tab, or switch [count] tabs back.
-
-+==== optional arguments
-+* +*-s*+, +*--sibling*+: Whether to focus the previous tree sibling.
-+
- ==== count
- How many tabs to switch back.
-
-@@ -1543,6 +1567,59 @@ Take a tab from another window.
- ==== note
- * This command does not split arguments after the last argument and handles quotes literally.
-
-+[[tree-tab-create-group]]
-+=== tree-tab-create-group
-+Syntax: +:tree-tab-create-group [*--related*] [*--background*] 'name' ['name' ...]+
-+
-+Wrapper around :open qute://treegroup/name. Correctly escapes names.
-+
-+Example: `:tree-tab-create-group Foo Bar` calls `:open qute://treegroup/Foo%20Bar`
-+
-+==== positional arguments
-+* +'name'+: Name of the group to create
-+
-+==== optional arguments
-+* +*-r*+, +*--related*+: whether to open as a child of current tab or under root
-+* +*-b*+, +*--background*+: whether to open in a background tab
-+
-+[[tree-tab-cycle-hide]]
-+=== tree-tab-cycle-hide
-+Hides levels of descendents: children, grandchildren, and so on.
-+
-+==== count
-+How many levels to hide.
-+
-+[[tree-tab-demote]]
-+=== tree-tab-demote
-+Demote a tab making it children of its previous adjacent sibling.
-+
-+Observes tabs.new_position.tree.demote in positioning the tab among new siblings.
-+
-+[[tree-tab-promote]]
-+=== tree-tab-promote
-+Promote a tab so it becomes next sibling of its parent.
-+
-+Observes tabs.new_position.tree.promote in positioning the tab among new siblings.
-+
-+==== count
-+How many levels the tabs should be promoted to
-+
-+[[tree-tab-suspend-children]]
-+=== tree-tab-suspend-children
-+Suspends all descendent of a tab to reduce memory usage.
-+
-+==== count
-+Target tab.
-+
-+[[tree-tab-toggle-hide]]
-+=== tree-tab-toggle-hide
-+If the current tab's children are shown hide them, and vice-versa.
-+
-+This toggles the current tab's node's `collapsed` attribute.
-+
-+==== count
-+Which tab to collapse
-+
- [[unbind]]
- === unbind
- Syntax: +:unbind [*--mode* 'mode'] 'key'+
-diff --git a/doc/help/settings.asciidoc b/doc/help/settings.asciidoc
-index 7767f1eea..9547cf24c 100644
---- a/doc/help/settings.asciidoc
-+++ b/doc/help/settings.asciidoc
-@@ -333,6 +333,11 @@
- |<<tabs.mousewheel_switching,tabs.mousewheel_switching>>|Switch between tabs using the mouse wheel.
- |<<tabs.new_position.related,tabs.new_position.related>>|Position of new tabs opened from another tab.
- |<<tabs.new_position.stacking,tabs.new_position.stacking>>|Stack related tabs on top of each other when opened consecutively.
-+|<<tabs.new_position.tree.demote,tabs.new_position.tree.demote>>|Position at which a tab is placed among its new siblings after being demoted with `:tree-tab-demote`
-+|<<tabs.new_position.tree.new_child,tabs.new_position.tree.new_child>>|Position of new children among siblings, e.g. after calling `:open --relative ...` or following a link.
-+|<<tabs.new_position.tree.new_sibling,tabs.new_position.tree.new_sibling>>|Position of siblings, e.g. after calling `:open --sibling ...`.
-+|<<tabs.new_position.tree.new_toplevel,tabs.new_position.tree.new_toplevel>>|Position of new top-level tabs related to the topmost ancestor of current tab, e.g. when calling `:open ...` without `--relative` or `--sibling`.
-+|<<tabs.new_position.tree.promote,tabs.new_position.tree.promote>>|Position at which a tab is placed among its new siblings after being promoted with `:tree-tab-promote`
- |<<tabs.new_position.unrelated,tabs.new_position.unrelated>>|Position of new tabs which are not opened from another tab.
- |<<tabs.padding,tabs.padding>>|Padding (in pixels) around text for tabs.
- |<<tabs.pinned.frozen,tabs.pinned.frozen>>|Force pinned tabs to stay at fixed URL.
-@@ -749,6 +754,17 @@ Default:
- * +pass:[yp]+: +pass:[yank pretty-url]+
- * +pass:[yt]+: +pass:[yank title]+
- * +pass:[yy]+: +pass:[yank]+
-+* +pass:[zG]+: +pass:[set-cmd-text -s :tree-tab-create-group]+
-+* +pass:[zH]+: +pass:[tree-tab-promote]+
-+* +pass:[zJ]+: +pass:[tab-next -s]+
-+* +pass:[zK]+: +pass:[tab-prev -s]+
-+* +pass:[zL]+: +pass:[tree-tab-demote]+
-+* +pass:[zO]+: +pass:[set-cmd-text --space :open -tS]+
-+* +pass:[za]+: +pass:[tree-tab-toggle-hide]+
-+* +pass:[zd]+: +pass:[tab-close -r]+
-+* +pass:[zg]+: +pass:[set-cmd-text -s :tree-tab-create-group -r]+
-+* +pass:[zo]+: +pass:[set-cmd-text --space :open -tr]+
-+* +pass:[zp]+: +pass:[tab-focus parent]+
- * +pass:[{{]+: +pass:[navigate prev -t]+
- * +pass:[}}]+: +pass:[navigate next -t]+
- - +pass:[passthrough]+:
-@@ -4405,6 +4421,77 @@ Type: <<types,Bool>>
-
- Default: +pass:[true]+
-
-+[[tabs.new_position.tree.demote]]
-+=== tabs.new_position.tree.demote
-+Position at which a tab is placed among its new siblings after being demoted with `:tree-tab-demote`
-+
-+Type: <<types,NewChildPosition>>
-+
-+Valid values:
-+
-+ * +first+: At the beginning.
-+ * +last+: At the end.
-+
-+Default: +pass:[last]+
-+
-+[[tabs.new_position.tree.new_child]]
-+=== tabs.new_position.tree.new_child
-+Position of new children among siblings, e.g. after calling `:open --relative ...` or following a link.
-+
-+Type: <<types,NewChildPosition>>
-+
-+Valid values:
-+
-+ * +first+: At the beginning.
-+ * +last+: At the end.
-+
-+Default: +pass:[first]+
-+
-+[[tabs.new_position.tree.new_sibling]]
-+=== tabs.new_position.tree.new_sibling
-+Position of siblings, e.g. after calling `:open --sibling ...`.
-+
-+Type: <<types,NewTabPosition>>
-+
-+Valid values:
-+
-+ * +prev+: Before the current tab.
-+ * +next+: After the current tab.
-+ * +first+: At the beginning.
-+ * +last+: At the end.
-+
-+Default: +pass:[first]+
-+
-+[[tabs.new_position.tree.new_toplevel]]
-+=== tabs.new_position.tree.new_toplevel
-+Position of new top-level tabs related to the topmost ancestor of current tab, e.g. when calling `:open ...` without `--relative` or `--sibling`.
-+
-+Type: <<types,NewTabPosition>>
-+
-+Valid values:
-+
-+ * +prev+: Before the current tab.
-+ * +next+: After the current tab.
-+ * +first+: At the beginning.
-+ * +last+: At the end.
-+
-+Default: +pass:[last]+
-+
-+[[tabs.new_position.tree.promote]]
-+=== tabs.new_position.tree.promote
-+Position at which a tab is placed among its new siblings after being promoted with `:tree-tab-promote`
-+
-+Type: <<types,NewTabPosition>>
-+
-+Valid values:
-+
-+ * +prev+: Before the current tab.
-+ * +next+: After the current tab.
-+ * +first+: At the beginning.
-+ * +last+: At the end.
-+
-+Default: +pass:[next]+
-+
- [[tabs.new_position.unrelated]]
- === tabs.new_position.unrelated
- Position of new tabs which are not opened from another tab.
-@@ -4545,6 +4632,8 @@ Format to use for the tab title.
- The following placeholders are defined:
-
- * `{perc}`: Percentage as a string like `[10%]`.
-+* `{collapsed}`: If children tabs are hidden, the string `[...]`, empty otherwise
-+* `{tree}`: The ASCII tree prefix of current tab.
- * `{perc_raw}`: Raw percentage, e.g. `10`.
- * `{current_title}`: Title of the current web page.
- * `{title_sep}`: The string `" - "` if a title is set, empty otherwise.
-@@ -4564,7 +4653,7 @@ The following placeholders are defined:
-
- Type: <<types,FormatString>>
-
--Default: +pass:[{audio}{index}: {current_title}]+
-+Default: +pass:[{tree}{collapsed}{audio}{index}: {current_title}]+
-
- [[tabs.title.format_pinned]]
- === tabs.title.format_pinned
-@@ -4583,6 +4672,15 @@ Type: <<types,Bool>>
-
- Default: +pass:[true]+
-
-+[[tabs.tree_tabs]]
-+=== tabs.tree_tabs
-+Enable tree-tabs mode.
-+This setting requires a restart.
-+
-+Type: <<types,Bool>>
-+
-+Default: +pass:[false]+
-+
- [[tabs.undo_stack_size]]
- === tabs.undo_stack_size
- Number of closed tabs (per window) and closed windows to remember for :undo (-1 for no maximum).
-@@ -4842,6 +4940,7 @@ Lists with duplicate flags are invalid. Each item is checked against the valid v
- When setting from a string, pass a json-like list, e.g. `["one", "two"]`.
- |ListOrValue|A list of values, or a single value.
- |LogLevel|A logging level.
-+|NewChildPosition|How new children are positioned.
- |NewTabPosition|How new tabs are positioned.
- |Padding|Setting for paddings around elements.
- |Perc|A percentage.
 diff --git a/qutebrowser/browser/browsertab.py b/qutebrowser/browser/browsertab.py
-index b6cc303cf..78548d08b 100644
+index 47cba592288..5630dc8cf18 100644
 --- a/qutebrowser/browser/browsertab.py
 +++ b/qutebrowser/browser/browsertab.py
-@@ -39,6 +39,8 @@ if TYPE_CHECKING:
+@@ -52,6 +52,8 @@
      from qutebrowser.browser import webelem
      from qutebrowser.browser.inspector import AbstractWebInspector
 
@@ -341,7 +11,7 @@ index b6cc303cf..78548d08b 100644
 
  tab_id_gen = itertools.count(0)
  _WidgetType = Union["QWebView", "QWebEngineView"]
-@@ -1051,6 +1053,11 @@ class AbstractTab(QWidget):
+@@ -1058,6 +1060,11 @@ def __init__(self, *, win_id: int,
              self, parent=self)
          self.backend: Optional[usertypes.Backend] = None
 
@@ -354,10 +24,10 @@ index b6cc303cf..78548d08b 100644
          self.pending_removal = False
          self.shutting_down.connect(functools.partial(
 diff --git a/qutebrowser/browser/commands.py b/qutebrowser/browser/commands.py
-index 7efb69511..6e1b99059 100644
+index 3b38c44c05b..d1a1cf6be69 100644
 --- a/qutebrowser/browser/commands.py
 +++ b/qutebrowser/browser/commands.py
-@@ -7,6 +7,7 @@
+@@ -20,6 +20,7 @@
  import os.path
  import shlex
  import functools
@@ -365,7 +35,7 @@ index 7efb69511..6e1b99059 100644
  from typing import cast, Callable, Dict, Union, Optional
 
  from qutebrowser.qt.widgets import QApplication, QTabBar
-@@ -21,7 +22,7 @@ from qutebrowser.keyinput import modeman, keyutils
+@@ -34,7 +35,7 @@
  from qutebrowser.utils import (message, usertypes, log, qtutils, urlutils,
                                 objreg, utils, standarddir, debug)
  from qutebrowser.utils.usertypes import KeyMode
@@ -374,7 +44,7 @@ index 7efb69511..6e1b99059 100644
  from qutebrowser.completion.models import urlmodel, miscmodels
  from qutebrowser.mainwindow import mainwindow, windowundo
 
-@@ -99,6 +100,7 @@ class CommandDispatcher:
+@@ -112,6 +113,7 @@ def _open(
          background: bool = False,
          window: bool = False,
          related: bool = False,
@@ -382,7 +52,7 @@ index 7efb69511..6e1b99059 100644
          private: Optional[bool] = None,
      ) -> None:
          """Helper function to open a page.
-@@ -110,6 +112,7 @@ class CommandDispatcher:
+@@ -123,6 +125,7 @@ def _open(
              window: Whether to open in a new window
              private: If opening a new window, open it in private browsing mode.
                       If not given, inherit the current window's mode.
@@ -390,7 +60,7 @@ index 7efb69511..6e1b99059 100644
          """
          urlutils.raise_cmdexc_if_invalid(url)
          tabbed_browser = self._tabbed_browser
-@@ -122,10 +125,16 @@ class CommandDispatcher:
+@@ -135,10 +138,16 @@ def _open(
              tabbed_browser = self._new_tabbed_browser(private)
              tabbed_browser.tabopen(url)
              tabbed_browser.window().show()
@@ -411,7 +81,7 @@ index 7efb69511..6e1b99059 100644
          else:
              widget = self._current_widget()
              widget.load_url(url)
-@@ -207,7 +216,8 @@ class CommandDispatcher:
+@@ -220,7 +229,8 @@ def _get_selection_override(self, prev, next_, opposite):
                                   "{!r}!".format(conf_selection))
          return None
 
@@ -421,7 +91,7 @@ index 7efb69511..6e1b99059 100644
          """Helper function for tab_close be able to handle message.async.
 
          Args:
-@@ -223,17 +233,17 @@ class CommandDispatcher:
+@@ -236,17 +246,17 @@ def _tab_close(self, tab, prev=False, next_=False, opposite=False):
                                                            opposite)
 
          if selection_override is None:
@@ -442,7 +112,7 @@ index 7efb69511..6e1b99059 100644
          """Close the current/[count]th tab.
 
          Args:
-@@ -242,15 +252,37 @@ class CommandDispatcher:
+@@ -255,15 +265,37 @@ def tab_close(self, prev=False, next_=False, opposite=False,
              opposite: Force selecting the tab in the opposite direction of
                        what's configured in 'tabs.select_on_remove'.
              force: Avoid confirmation for pinned tabs.
@@ -484,7 +154,7 @@ index 7efb69511..6e1b99059 100644
 
      @cmdutils.register(instance='command-dispatcher', scope='window',
                         name='tab-pin')
-@@ -275,8 +307,9 @@ class CommandDispatcher:
+@@ -288,8 +320,9 @@ def tab_pin(self, count=None):
      @cmdutils.register(instance='command-dispatcher', name='open',
                         maxsplit=0, scope='window')
      @cmdutils.argument('url', completion=urlmodel.url)
@@ -495,7 +165,7 @@ index 7efb69511..6e1b99059 100644
                  bg=False, tab=False, window=False, count=None, secure=False,
                  private=False):
          """Open a URL in the current/[count]th tab.
-@@ -290,6 +323,8 @@ class CommandDispatcher:
+@@ -303,6 +336,8 @@ def openurl(self, url=None, related=False,
              window: Open in a new window.
              related: If opening a new tab, position the tab as related to the
                       current one (like clicking on a link).
@@ -504,7 +174,7 @@ index 7efb69511..6e1b99059 100644
              count: The tab index to open the URL in, or None.
              secure: Force HTTPS.
              private: Open a new window in private browsing mode.
-@@ -308,8 +343,8 @@ class CommandDispatcher:
+@@ -321,8 +356,8 @@ def openurl(self, url=None, related=False,
                  bg = True
 
              if tab or bg or window or private:
@@ -515,7 +185,7 @@ index 7efb69511..6e1b99059 100644
              else:
                  curtab = self._cntwidget(count)
                  if curtab is None:
-@@ -448,11 +483,40 @@ class CommandDispatcher:
+@@ -461,11 +496,40 @@ def tab_take(self, index, keep=False):
          if not keep:
              tabbed_browser.close_tab(tab, add_undo=False, transfer=True)
 
@@ -557,7 +227,7 @@ index 7efb69511..6e1b99059 100644
          """Give the current tab to a new or existing window if win_id given.
 
          If no win_id is given, the tab will get detached into a new window.
-@@ -461,6 +525,7 @@ class CommandDispatcher:
+@@ -474,6 +538,7 @@ def tab_give(self, win_id: int = None, keep: bool = False,
              win_id: The window ID of the window to give the current tab to.
              keep: If given, keep the old tab around.
              count: Overrides win_id (index starts at 1 for win_id=0).
@@ -565,7 +235,7 @@ index 7efb69511..6e1b99059 100644
              private: If the tab should be detached into a private instance.
          """
          if config.val.tabs.tabs_are_windows:
-@@ -492,13 +557,15 @@ class CommandDispatcher:
+@@ -505,13 +570,15 @@ def tab_give(self, win_id: int = None, keep: bool = False,
                  raise cmdutils.CommandError(
                      "The window with id {} is not private".format(win_id))
 
@@ -588,7 +258,7 @@ index 7efb69511..6e1b99059 100644
 
      def _back_forward(
          self, *,
-@@ -876,43 +943,79 @@ class CommandDispatcher:
+@@ -889,43 +956,79 @@ def undo(self, window: bool = False,
 
      @cmdutils.register(instance='command-dispatcher', scope='window')
      @cmdutils.argument('count', value=cmdutils.Value.count)
@@ -682,7 +352,7 @@ index 7efb69511..6e1b99059 100644
 
      def _resolve_tab_index(self, index):
          """Resolve a tab index to the tabbedbrowser and tab.
-@@ -992,7 +1095,8 @@ class CommandDispatcher:
+@@ -1005,7 +1108,8 @@ def tab_select(self, index=None, count=None):
          tabbed_browser.widget.setCurrentWidget(tab)
 
      @cmdutils.register(instance='command-dispatcher', scope='window')
@@ -692,7 +362,7 @@ index 7efb69511..6e1b99059 100644
                         completion=miscmodels.tab_focus)
      @cmdutils.argument('count', value=cmdutils.Value.count)
      def tab_focus(self, index: Union[str, int] = None,
-@@ -1003,11 +1107,15 @@ class CommandDispatcher:
+@@ -1016,11 +1120,15 @@ def tab_focus(self, index: Union[str, int] = None,
          If both are given, use count.
 
          Args:
@@ -713,7 +383,7 @@ index 7efb69511..6e1b99059 100644
              count: The tab index to focus, starting with 1.
              no_last: Whether to avoid focusing last tab if already focused.
          """
-@@ -1017,6 +1125,22 @@ class CommandDispatcher:
+@@ -1030,6 +1138,22 @@ def tab_focus(self, index: Union[str, int] = None,
              assert isinstance(index, str)
              self._tab_focus_stack(index)
              return
@@ -736,7 +406,7 @@ index 7efb69511..6e1b99059 100644
          elif index is None:
              message.warning(
                  "Using :tab-focus without count is deprecated, "
-@@ -1056,17 +1180,31 @@ class CommandDispatcher:
+@@ -1069,17 +1193,31 @@ def tab_move(self, index: Union[str, int] = None, count: int = None) -> None:
                     If moving absolutely: New position (default: 0). This
                     overrides the index argument, if given.
          """
@@ -774,7 +444,7 @@ index 7efb69511..6e1b99059 100644
          else:
              # pylint: disable=else-if-used
              # absolute moving
-@@ -1089,7 +1227,34 @@ class CommandDispatcher:
+@@ -1102,7 +1240,34 @@ def tab_move(self, index: Union[str, int] = None, count: int = None) -> None:
          cur_idx = self._current_index()
          cmdutils.check_overflow(cur_idx, 'int')
          cmdutils.check_overflow(new_idx, 'int')
@@ -810,7 +480,7 @@ index 7efb69511..6e1b99059 100644
 
      @cmdutils.register(instance='command-dispatcher', scope='window',
                         maxsplit=0, no_replace_variables=True)
-@@ -1885,3 +2050,123 @@ class CommandDispatcher:
+@@ -1899,3 +2064,123 @@ def fullscreen(self, leave=False, enter=False):
 
          log.misc.debug('state before fullscreen: {}'.format(
              debug.qflags_key(Qt, window.state_before_fullscreen)))
@@ -935,10 +605,10 @@ index 7efb69511..6e1b99059 100644
 +                        "qute://back/#" + cur_tab.title())
 +                    cur_tab.load_url(new_url)
 diff --git a/qutebrowser/browser/qutescheme.py b/qutebrowser/browser/qutescheme.py
-index dae862b8b..ff8394899 100644
+index 25834670b11..15e4bc769e4 100644
 --- a/qutebrowser/browser/qutescheme.py
 +++ b/qutebrowser/browser/qutescheme.py
-@@ -582,6 +582,18 @@ def qute_warning(url: QUrl) -> _HandlerRet:
+@@ -588,6 +588,18 @@ def qute_warning(url: QUrl) -> _HandlerRet:
      return 'text/html', src
 
 
@@ -958,10 +628,10 @@ index dae862b8b..ff8394899 100644
  def qute_resource(url: QUrl) -> _HandlerRet:
      """Handler for qute://resource."""
 diff --git a/qutebrowser/commands/command.py b/qutebrowser/commands/command.py
-index 5e4281474..79f875541 100644
+index 655a5a336ad..76a44934e97 100644
 --- a/qutebrowser/commands/command.py
 +++ b/qutebrowser/commands/command.py
-@@ -52,6 +52,7 @@ class Command:
+@@ -65,6 +65,7 @@ class Command:
                   both)
          no_replace_variables: Don't replace variables like {url}
          modes: The modes the command can be executed in.
@@ -969,7 +639,7 @@ index 5e4281474..79f875541 100644
          _qute_args: The saved data from @cmdutils.argument
          _count: The count set for the command.
          _instance: The object to bind 'self' to.
-@@ -65,7 +66,7 @@ class Command:
+@@ -78,7 +79,7 @@ class Command:
      def __init__(self, *, handler, name, instance=None, maxsplit=None,
                   modes=None, not_modes=None, debug=False, deprecated=False,
                   no_cmd_split=False, star_args_optional=False, scope='global',
@@ -978,7 +648,7 @@ index 5e4281474..79f875541 100644
          if modes is not None and not_modes is not None:
              raise ValueError("Only modes or not_modes can be given!")
          if modes is not None:
-@@ -94,6 +95,7 @@ class Command:
+@@ -107,6 +108,7 @@ def __init__(self, *, handler, name, instance=None, maxsplit=None,
          self.handler = handler
          self.no_cmd_split = no_cmd_split
          self.backend = backend
@@ -987,10 +657,10 @@ index 5e4281474..79f875541 100644
 
          self.docparser = docutils.DocstringParser(handler)
 diff --git a/qutebrowser/completion/models/util.py b/qutebrowser/completion/models/util.py
-index 492e1b2e5..4957dc6c9 100644
+index 69a192f686e..16452d7b571 100644
 --- a/qutebrowser/completion/models/util.py
 +++ b/qutebrowser/completion/models/util.py
-@@ -8,6 +8,7 @@ from typing import Callable, Sequence
+@@ -21,6 +21,7 @@
 
  from qutebrowser.utils import usertypes
  from qutebrowser.misc import objects
@@ -998,7 +668,7 @@ index 492e1b2e5..4957dc6c9 100644
 
 
  DeleteFuncType = Callable[[Sequence[str]], None]
-@@ -31,8 +32,9 @@ def get_cmd_completions(info, include_hidden, include_aliases, prefix=''):
+@@ -44,8 +45,9 @@ def get_cmd_completions(info, include_hidden, include_aliases, prefix=''):
          hide_debug = obj.debug and not objects.args.debug
          hide_mode = (usertypes.KeyMode.normal not in obj.modes and
                       not include_hidden)
@@ -1010,7 +680,7 @@ index 492e1b2e5..4957dc6c9 100644
              cmdlist.append((prefix + obj.name, obj.desc, bindings))
 
 diff --git a/qutebrowser/config/configdata.yml b/qutebrowser/config/configdata.yml
-index 0b9d669dc..05526260e 100644
+index 0b9d669dceb..05526260e02 100644
 --- a/qutebrowser/config/configdata.yml
 +++ b/qutebrowser/config/configdata.yml
 @@ -2224,6 +2224,40 @@ tabs.new_position.stacking:
@@ -1121,10 +791,10 @@ index 0b9d669dc..05526260e 100644
        <Ctrl-E>: edit-text
        <Shift-Ins>: insert-text -- {primary}
 diff --git a/qutebrowser/config/configtypes.py b/qutebrowser/config/configtypes.py
-index e789437d3..41f139e14 100644
+index b451744c338..a10f4aa3bb5 100644
 --- a/qutebrowser/config/configtypes.py
 +++ b/qutebrowser/config/configtypes.py
-@@ -1942,6 +1942,21 @@ class NewTabPosition(String):
+@@ -1955,6 +1955,21 @@ def __init__(
              ('last', "At the end."))
 
 
@@ -1148,7 +818,7 @@ index e789437d3..41f139e14 100644
      """A logging level."""
 diff --git a/qutebrowser/html/tree_group.html b/qutebrowser/html/tree_group.html
 new file mode 100644
-index 000000000..b3717e52b
+index 00000000000..b3717e52b6e
 --- /dev/null
 +++ b/qutebrowser/html/tree_group.html
 @@ -0,0 +1,65 @@
@@ -1218,10 +888,10 @@ index 000000000..b3717e52b
 +</pre>
 +{% endblock %}
 diff --git a/qutebrowser/mainwindow/mainwindow.py b/qutebrowser/mainwindow/mainwindow.py
-index da951da1b..a6cd570e8 100644
+index 5e34a6649fe..405e9fd285b 100644
 --- a/qutebrowser/mainwindow/mainwindow.py
 +++ b/qutebrowser/mainwindow/mainwindow.py
-@@ -8,7 +8,7 @@ import binascii
+@@ -21,7 +21,7 @@
  import base64
  import itertools
  import functools
@@ -1230,7 +900,7 @@ index da951da1b..a6cd570e8 100644
 
  from qutebrowser.qt import machinery
  from qutebrowser.qt.core import (pyqtBoundSignal, pyqtSlot, QRect, QPoint, QTimer, Qt,
-@@ -195,7 +195,7 @@ class MainWindow(QWidget):
+@@ -208,7 +208,7 @@ def __init__(self, *,
          super().__init__(parent)
          # Late import to avoid a circular dependency
          # - browsertab -> hints -> webelem -> mainwindow -> bar -> browsertab
@@ -1239,7 +909,7 @@ index da951da1b..a6cd570e8 100644
          from qutebrowser.mainwindow.statusbar import bar
 
          self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
-@@ -224,8 +224,14 @@ class MainWindow(QWidget):
+@@ -237,8 +237,14 @@ def __init__(self, *,
 
          self.is_private = config.val.content.private_browsing or private
 
@@ -1256,7 +926,7 @@ index da951da1b..a6cd570e8 100644
          objreg.register('tabbed-browser', self.tabbed_browser, scope='window',
                          window=self.win_id)
          self._init_command_dispatcher()
-@@ -497,8 +503,10 @@ class MainWindow(QWidget):
+@@ -510,8 +516,10 @@ def _connect_signals(self):
          mode_manager.keystring_updated.connect(
              self.status.keystring.on_keystring_updated)
          self.status.cmd.got_cmd[str].connect(self._commandrunner.run_safely)
@@ -1270,10 +940,10 @@ index da951da1b..a6cd570e8 100644
 
          # key hint popup
 diff --git a/qutebrowser/mainwindow/tabbedbrowser.py b/qutebrowser/mainwindow/tabbedbrowser.py
-index 85f683133..17c4732f9 100644
+index da3392a7e81..61f75c2b5a1 100644
 --- a/qutebrowser/mainwindow/tabbedbrowser.py
 +++ b/qutebrowser/mainwindow/tabbedbrowser.py
-@@ -9,8 +9,8 @@ import functools
+@@ -22,8 +22,8 @@
  import weakref
  import datetime
  import dataclasses
@@ -1284,7 +954,7 @@ index 85f683133..17c4732f9 100644
 
  from qutebrowser.qt.widgets import QSizePolicy, QWidget, QApplication
  from qutebrowser.qt.core import pyqtSignal, pyqtSlot, QTimer, QUrl, QPoint
-@@ -194,6 +194,7 @@ class TabbedBrowser(QWidget):
+@@ -207,6 +207,7 @@ class TabbedBrowser(QWidget):
      resized = pyqtSignal('QRect')
      current_tab_changed = pyqtSignal(browsertab.AbstractTab)
      new_tab = pyqtSignal(browsertab.AbstractTab, int)
@@ -1292,7 +962,7 @@ index 85f683133..17c4732f9 100644
      shutting_down = pyqtSignal()
 
      def __init__(self, *, win_id, private, parent=None):
-@@ -481,6 +482,7 @@ class TabbedBrowser(QWidget):
+@@ -485,6 +486,7 @@ def _remove_tab(self, tab, *, add_undo=True, new_undo=True, crashed=False):
              crashed: Whether we're closing a tab with crashed renderer process.
          """
          idx = self.widget.indexOf(tab)
@@ -1300,7 +970,7 @@ index 85f683133..17c4732f9 100644
          if idx == -1:
              if crashed:
                  return
-@@ -549,17 +551,26 @@ class TabbedBrowser(QWidget):
+@@ -553,17 +555,26 @@ def undo(self, depth=1):
          entries = self.undo_stack[-depth]
          del self.undo_stack[-depth]
 
@@ -1328,7 +998,7 @@ index 85f683133..17c4732f9 100644
 
      @pyqtSlot('QUrl', bool)
      def load_url(self, url, newtab):
-@@ -647,7 +658,7 @@ class TabbedBrowser(QWidget):
+@@ -651,7 +662,7 @@ def tabopen(
 
          if idx is None:
              idx = self._get_new_tab_idx(related)
@@ -1338,10 +1008,10 @@ index 85f683133..17c4732f9 100644
          if url is not None:
              tab.load_url(url)
 diff --git a/qutebrowser/mainwindow/tabwidget.py b/qutebrowser/mainwindow/tabwidget.py
-index 2e90c46c4..a7e92daa4 100644
+index fe9ce1e0676..f2cb1765828 100644
 --- a/qutebrowser/mainwindow/tabwidget.py
 +++ b/qutebrowser/mainwindow/tabwidget.py
-@@ -13,7 +13,7 @@ from qutebrowser.qt.core import (pyqtSignal, pyqtSlot, Qt, QSize, QRect, QPoint,
+@@ -26,7 +26,7 @@
                            QTimer, QUrl)
  from qutebrowser.qt.widgets import (QTabWidget, QTabBar, QSizePolicy, QProxyStyle,
                               QStyle, QStylePainter, QStyleOptionTab,
@@ -1350,7 +1020,7 @@ index 2e90c46c4..a7e92daa4 100644
  from qutebrowser.qt.gui import QIcon, QPalette, QColor
 
  from qutebrowser.utils import qtutils, objreg, utils, usertypes, log
-@@ -23,7 +23,6 @@ from qutebrowser.browser import browsertab
+@@ -36,7 +36,6 @@
 
 
  class TabWidget(QTabWidget):
@@ -1358,7 +1028,7 @@ index 2e90c46c4..a7e92daa4 100644
      """The tab widget used for TabbedBrowser.
 
      Signals:
-@@ -46,14 +45,14 @@ class TabWidget(QTabWidget):
+@@ -59,14 +58,14 @@ def __init__(self, win_id, parent=None):
          self.setStyle(TabBarStyle())
          self.setTabBar(bar)
          bar.tabCloseRequested.connect(self.tabCloseRequested)
@@ -1375,7 +1045,7 @@ index 2e90c46c4..a7e92daa4 100644
          self._init_config()
          config.instance.changed.connect(self._init_config)
 
-@@ -79,8 +78,9 @@ class TabWidget(QTabWidget):
+@@ -92,8 +91,9 @@ def tab_bar(self) -> "TabBar":
          assert isinstance(bar, TabBar), bar
          return bar
 
@@ -1386,7 +1056,7 @@ index 2e90c46c4..a7e92daa4 100644
          tab = self.widget(idx)
          if tab is not None:
              assert isinstance(tab, browsertab.AbstractTab), tab
-@@ -176,6 +176,9 @@ class TabWidget(QTabWidget):
+@@ -189,6 +189,9 @@ def get_tab_fields(self, idx):
          fields['perc_raw'] = tab.progress()
          fields['backend'] = objects.backend.name
          fields['private'] = ' [Private Mode] ' if tab.is_private else ''
@@ -1396,7 +1066,7 @@ index 2e90c46c4..a7e92daa4 100644
          try:
              if tab.audio.is_muted():
                  fields['audio'] = TabWidget.MUTE_STRING
-@@ -334,7 +337,7 @@ class TabWidget(QTabWidget):
+@@ -347,7 +350,7 @@ def tab_url(self, idx):
          qtutils.ensure_valid(url)
          return url
 
@@ -1407,7 +1077,7 @@ index 2e90c46c4..a7e92daa4 100644
 
 diff --git a/qutebrowser/mainwindow/treetabbedbrowser.py b/qutebrowser/mainwindow/treetabbedbrowser.py
 new file mode 100644
-index 000000000..c7e10ab18
+index 00000000000..c7e10ab180d
 --- /dev/null
 +++ b/qutebrowser/mainwindow/treetabbedbrowser.py
 @@ -0,0 +1,350 @@
@@ -1763,7 +1433,7 @@ index 000000000..c7e10ab18
 +                n.collapsed = True
 diff --git a/qutebrowser/mainwindow/treetabwidget.py b/qutebrowser/mainwindow/treetabwidget.py
 new file mode 100644
-index 000000000..12de178c2
+index 00000000000..12de178c2ec
 --- /dev/null
 +++ b/qutebrowser/mainwindow/treetabwidget.py
 @@ -0,0 +1,105 @@
@@ -1874,7 +1544,7 @@ index 000000000..12de178c2
 +        self.update_tab_titles()
 diff --git a/qutebrowser/misc/notree.py b/qutebrowser/misc/notree.py
 new file mode 100644
-index 000000000..9d180ad4c
+index 00000000000..9d180ad4ce7
 --- /dev/null
 +++ b/qutebrowser/misc/notree.py
 @@ -0,0 +1,354 @@
@@ -2233,10 +1903,10 @@ index 000000000..9d180ad4c
 +        # return "<Node '%s'>" % self.value
 +        return str(self.value)
 diff --git a/qutebrowser/misc/sessions.py b/qutebrowser/misc/sessions.py
-index da447c747..33ffb6806 100644
+index 3608568766c..c8445e4ad4d 100644
 --- a/qutebrowser/misc/sessions.py
 +++ b/qutebrowser/misc/sessions.py
-@@ -230,6 +230,9 @@ class SessionManager(QObject):
+@@ -243,6 +243,9 @@ def _save_tab(self, tab, active, with_history=True):
              active: Whether the tab is currently active.
              with_history: Include the tab's history.
          """
@@ -2246,7 +1916,7 @@ index da447c747..33ffb6806 100644
          data: _JsonType = {'history': []}
          if active:
              data['active'] = True
-@@ -274,13 +277,29 @@ class SessionManager(QObject):
+@@ -287,13 +290,29 @@ def _save_all(self, *, only_window=None, with_private=False, with_history=True):
              if getattr(active_window, 'win_id', None) == win_id:
                  win_data['active'] = True
              win_data['geometry'] = bytes(main_window.saveGeometry())
@@ -2281,7 +1951,7 @@ index da447c747..33ffb6806 100644
              data['windows'].append(win_data)
          return data
 
-@@ -448,6 +467,45 @@ class SessionManager(QObject):
+@@ -461,6 +480,45 @@ def _load_tab(self, new_tab, data):  # noqa: C901
          except ValueError as e:
              raise SessionError(e)
 
@@ -2327,7 +1997,7 @@ index da447c747..33ffb6806 100644
      def _load_window(self, win):
          """Turn yaml data into windows."""
          window = mainwindow.MainWindow(geometry=win['geometry'],
-@@ -455,13 +513,29 @@ class SessionManager(QObject):
+@@ -468,13 +526,29 @@ def _load_window(self, win):
          tabbed_browser = objreg.get('tabbed-browser', scope='window',
                                      window=window.win_id)
          tab_to_focus = None
@@ -2365,10 +2035,10 @@ index da447c747..33ffb6806 100644
              tabbed_browser.widget.setCurrentIndex(tab_to_focus)
 
 diff --git a/tests/end2end/features/conftest.py b/tests/end2end/features/conftest.py
-index 9dd497c0b..71546d7be 100644
+index 8ce8ba699a1..75bddfa0f8f 100644
 --- a/tests/end2end/features/conftest.py
 +++ b/tests/end2end/features/conftest.py
-@@ -201,12 +201,15 @@ def open_path(quteproc, server, path):
+@@ -214,12 +214,15 @@ def open_path(quteproc, server, path):
      path = path.replace('(port)', str(server.port))
 
      new_tab = False
@@ -2384,7 +2054,7 @@ index 9dd497c0b..71546d7be 100644
      new_tab_suffix = ' in a new tab'
      new_bg_tab_suffix = ' in a new background tab'
      new_window_suffix = ' in a new window'
-@@ -218,6 +221,14 @@ def open_path(quteproc, server, path):
+@@ -231,6 +234,14 @@ def open_path(quteproc, server, path):
          if path.endswith(new_tab_suffix):
              path = path[:-len(new_tab_suffix)]
              new_tab = True
@@ -2399,7 +2069,7 @@ index 9dd497c0b..71546d7be 100644
          elif path.endswith(new_bg_tab_suffix):
              path = path[:-len(new_bg_tab_suffix)]
              new_bg_tab = True
-@@ -236,9 +247,9 @@ def open_path(quteproc, server, path):
+@@ -249,9 +260,9 @@ def open_path(quteproc, server, path):
          else:
              break
 
@@ -2413,10 +2083,10 @@ index 9dd497c0b..71546d7be 100644
 
  @bdd.when(bdd.parsers.parse("I set {opt} to {value}"))
 diff --git a/tests/end2end/fixtures/quteprocess.py b/tests/end2end/fixtures/quteprocess.py
-index 37989ecb5..6dc1c63d0 100644
+index c3194b8397e..a59a05ec222 100644
 --- a/tests/end2end/fixtures/quteprocess.py
 +++ b/tests/end2end/fixtures/quteprocess.py
-@@ -638,16 +638,17 @@ class QuteProc(testprocess.Process):
+@@ -651,16 +651,17 @@ def temp_setting(self, opt, value):
          self.set_setting(opt, old_value)
 
      def open_path(self, path, *, new_tab=False, new_bg_tab=False,
@@ -2439,7 +2109,7 @@ index 37989ecb5..6dc1c63d0 100644
          """Open the given url in qutebrowser."""
          if sum(1 for opt in [new_tab, new_bg_tab, new_window, private, as_url]
                 if opt) > 1:
-@@ -657,9 +658,15 @@ class QuteProc(testprocess.Process):
+@@ -670,9 +671,15 @@ def open_url(self, url, *, new_tab=False, new_bg_tab=False,
              self.send_cmd(url, invalid=True)
              line = None
          elif new_tab:
@@ -2458,10 +2128,10 @@ index 37989ecb5..6dc1c63d0 100644
              line = self.send_cmd(':open -w ' + url)
          elif private:
 diff --git a/tests/helpers/stubs.py b/tests/helpers/stubs.py
-index 658b027cb..a4a54e7bc 100644
+index 341d1de2a61..2dfb15916e9 100644
 --- a/tests/helpers/stubs.py
 +++ b/tests/helpers/stubs.py
-@@ -324,6 +324,7 @@ class FakeCommand:
+@@ -337,6 +337,7 @@ class FakeCommand:
      hide: bool = False
      debug: bool = False
      deprecated: bool = False
@@ -2471,7 +2141,7 @@ index 658b027cb..a4a54e7bc 100644
      takes_count: Callable[[], bool] = lambda: False
 diff --git a/tests/unit/misc/test_notree.py b/tests/unit/misc/test_notree.py
 new file mode 100644
-index 000000000..95f92f1a6
+index 00000000000..95f92f1a68f
 --- /dev/null
 +++ b/tests/unit/misc/test_notree.py
 @@ -0,0 +1,308 @@

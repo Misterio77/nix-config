@@ -42,9 +42,6 @@ in
     # https://github.com/NixOS/nix/issues/5567#issuecomment-1193259926
     # nix = addPatches prev.nix [ ./nix-make-installables-expr-context.patch ];
 
-    # https://gitlab.com/CalcProgrammer1/OpenRGB/-/issues/2918
-    openrgb = addPatches prev.openrgb [ ./openrgb-all-devices.diff ];
-
     xdg-utils-spawn-terminal = addPatches prev.xdg-utils [ ./xdg-open-spawn-terminal.diff ];
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
@@ -62,14 +59,7 @@ in
     # Sane default values and crash avoidance (https://github.com/k-vernooy/trekscii/pull/1)
     trekscii = addPatches prev.trekscii [ ./trekscii.patch ];
 
-    qutebrowser-qt6 = prev.qutebrowser-qt6.overrideAttrs (oldAttrs: {
-      version = "unstable-2023-07-25";
-      src = final.fetchFromGitHub {
-        owner = "qutebrowser";
-        repo = "qutebrowser";
-        rev = "6d84462d68ec1ce4cde459297e0c52ad3c2bf29f";
-        hash = "sha256-oAjhzTeZ7TNBR6lxBpNdDGJHnTdnWU16lZtlrvZhfE0=";
-      };
+    qutebrowser = prev.qutebrowser.overrideAttrs (oldAttrs: {
       patches = (oldAttrs.patches or [ ]) ++ [ ./qutebrowser-tree-tabs.diff ];
     });
 
