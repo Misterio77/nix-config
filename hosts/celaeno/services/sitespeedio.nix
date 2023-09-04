@@ -2,7 +2,7 @@
 
 {
   services = {
-    sitespeedio = let
+    sitespeed-io = let
       settings = {
         browsertime = {
           iterations = 2;
