@@ -63,7 +63,6 @@ in
           "custom/currentplayer"
           "custom/player"
           "pulseaudio"
-          "clock"
           "custom/unread-mail"
           # TODO: currently broken for some reason
           # "custom/gammastep"
@@ -78,7 +77,7 @@ in
           "custom/tailscale-ping"
           "battery"
           "tray"
-          "custom/hostname"
+          "clock"
         ];
 
         clock = {
