@@ -8,7 +8,9 @@ let
     enableACME = true;
     locations."/".return = "302 https://m7.rs$request_uri";
   };
-  days = n: toString (n * 60 * 60 * 24);
+  days = n: (hours n) * 24;
+  hours = n: (minutes n) * 60;
+  minutes = n: n * 60;
 in
 {
   imports = [ ./themes.nix ];
@@ -20,11 +22,14 @@ in
       locations = {
         "/" = {
           root = "${website}/public";
+          extraConfig = ''
+            add_header Cache-Control "max-age=${toString (minutes 15)}";
+          '';
         };
         "/assets/" = {
           root = "${website}/public";
           extraConfig = ''
-            add_header Cache-Control "max-age=${days 30}";
+            add_header Cache-Control "max-age=${toString (days 30)}";
           '';
         };
 
