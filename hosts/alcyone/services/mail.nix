@@ -15,7 +15,7 @@
       "gsfontes.com"
     ];
     useFsLayout = true;
-    certificateScheme = 3;
+    certificateScheme = "acme-nginx";
     localDnsResolver = false;
     loginAccounts = {
       "hi@m7.rs" = {
