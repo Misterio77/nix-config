@@ -7,7 +7,7 @@ let
     } ''
     sass ${file} > $out
   '';
-  partials = "${pkgs.inputs.website.main}/public/cgit_partials";
+  partials = "${pkgs.inputs.website.default}/public/cgit_partials";
 in
 {
   services = {

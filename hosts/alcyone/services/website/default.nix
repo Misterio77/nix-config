@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  website = pkgs.inputs.website.main;
+  website = pkgs.inputs.website.default;
   pgpKey = ../../../../home/misterio/pgp.asc;
   sshKey = ../../../../home/misterio/ssh.pub;
   redir = {
