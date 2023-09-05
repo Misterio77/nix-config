@@ -57,50 +57,37 @@ in
         ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
           "hyprland/workspaces"
           "hyprland/submap"
-        ]);
-
-        modules-center = [
+        ]) ++ [
           "custom/currentplayer"
           "custom/player"
+        ];
+
+        modules-center = [
           "pulseaudio"
+          "battery"
+          "clock"
           "custom/unread-mail"
-          # TODO: currently broken for some reason
-          # "custom/gammastep"
           "custom/gpg-agent"
         ];
+
         modules-right = [
-          "cpu"
-          "custom/gpu"
-          "memory"
-          "custom/gamemode"
           "network"
           "custom/tailscale-ping"
-          "battery"
+          "custom/gamemode"
+          # TODO: currently broken for some reason
+          # "custom/gammastep"
           "tray"
-          "clock"
+          "custom/hostname"
         ];
 
         clock = {
-          format = "{:%d/%m %H:%M}";
+          interval = 1;
+          format = "{:%d/%m %H:%M:%S}";
+          format-alt = "{:%Y-%m-%d %H:%M:%S %z}";
+          on-click-left = "mode";
           tooltip-format = ''
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
-        };
-        cpu = {
-          format = "   {usage}%";
-        };
-        "custom/gpu" = {
-          interval = 5;
-          return-type = "json";
-          exec = jsonOutput "gpu" {
-            text = "$(${cat} /sys/class/drm/card0/device/gpu_busy_percent)";
-            tooltip = "GPU Usage";
-          };
-          format = "󰒋  {}%";
-        };
-        memory = {
-          format = "󰍛  {}%";
-          interval = 5;
         };
         pulseaudio = {
           format = "{icon}  {volume}%";
@@ -283,20 +270,21 @@ in
           format-icons = {
             "No player active" = " ";
             "Celluloid" = "󰎁 ";
-            "spotify" = " 󰓇";
-            "ncspot" = " 󰓇";
-            "qutebrowser" = "󰖟";
+            "spotify" = "󰓇 ";
+            "ncspot" = "󰓇 ";
+            "qutebrowser" = "󰖟 ";
             "firefox" = " ";
             "discord" = " 󰙯 ";
             "sublimemusic" = " ";
             "kdeconnect" = "󰄡 ";
+            "chromium" = " ";
           };
           on-click = "${playerctld} shift";
           on-click-right = "${playerctld} unshift";
         };
         "custom/player" = {
           exec-if = "${playerctl} status";
-          exec = ''${playerctl} metadata --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{title}} ({{artist}} - {{album}})"}' '';
+          exec = ''${playerctl} metadata --format '{"text": "{{title}} - {{artist}}", "alt": "{{status}}", "tooltip": "{{title}} - {{artist}} ({{album}})"}' '';
           return-type = "json";
           interval = 2;
           max-length = 30;
@@ -392,6 +380,9 @@ in
         margin-top: 0;
         margin-bottom: 0;
         border-radius: 10px;
+      }
+      #custom-currentplayer {
+        padding-right: 0;
       }
       #tray {
         color: #${colors.base05};
