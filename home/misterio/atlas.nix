@@ -20,7 +20,6 @@
       name = "DP-3";
       width = 1920;
       height = 1080;
-      noBar = true;
       x = 0;
       workspace = "3";
       enabled = false;
@@ -38,7 +37,6 @@
       name = "DP-2";
       width = 1920;
       height = 1080;
-      noBar = true;
       x = 4480;
       workspace = "2";
     }

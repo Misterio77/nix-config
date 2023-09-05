@@ -16,10 +16,6 @@ in
           type = types.bool;
           default = false;
         };
-        noBar = mkOption {
-          type = types.bool;
-          default = false;
-        };
         width = mkOption {
           type = types.int;
           example = 1920;

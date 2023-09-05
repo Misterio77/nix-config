@@ -6,9 +6,7 @@ let
   cut = "${pkgs.coreutils}/bin/cut";
   find = "${pkgs.findutils}/bin/find";
   grep = "${pkgs.gnugrep}/bin/grep";
-  perl = "${pkgs.perl}/bin/perl";
   pgrep = "${pkgs.procps}/bin/pgrep";
-  sed = "${pkgs.gnused}/bin/sed";
   tail = "${pkgs.coreutils}/bin/tail";
   wc = "${pkgs.coreutils}/bin/wc";
   xargs = "${pkgs.findutils}/bin/xargs";
@@ -16,7 +14,6 @@ let
   ping = "${pkgs.iputils}/bin/ping";
 
   jq = "${pkgs.jq}/bin/jq";
-  xml = "${pkgs.xmlstarlet}/bin/xml";
   gamemoded = "${pkgs.gamemode}/bin/gamemoded";
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
@@ -46,49 +43,36 @@ in
     });
     systemd.enable = true;
     settings = {
-
-      secondary = {
-        mode = "dock";
-        layer = "top";
-        height = 32;
-        width = 100;
-        margin = "6";
-        position = "bottom";
-        modules-center = (lib.optionals config.wayland.windowManager.sway.enable [
-          "sway/workspaces"
-          "sway/mode"
-        ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
-          "hyprland/workspaces"
-        ]);
-
-        "hyprland/workspaces" = {
-          on-click = "activate";
-        };
-      };
-
       primary = {
         mode = "dock";
         layer = "top";
         height = 40;
         margin = "6";
         position = "top";
-        output = builtins.map (m: m.name) (builtins.filter (m: ! m.noBar) config.monitors);
         modules-left = [
           "custom/menu"
+        ] ++ (lib.optionals config.wayland.windowManager.sway.enable [
+          "sway/workspaces"
+          "sway/mode"
+        ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
+          "hyprland/workspaces"
+          "hyprland/submap"
+        ]);
+
+        modules-center = [
           "custom/currentplayer"
           "custom/player"
-        ];
-        modules-center = [
-          "cpu"
-          "custom/gpu"
-          "memory"
-          "clock"
           "pulseaudio"
+          "clock"
           "custom/unread-mail"
-          "custom/gammastep"
+          # TODO: currently broken for some reason
+          # "custom/gammastep"
           "custom/gpg-agent"
         ];
         modules-right = [
+          "cpu"
+          "custom/gpu"
+          "memory"
           "custom/gamemode"
           "network"
           "custom/tailscale-ping"
@@ -161,7 +145,7 @@ in
           on-click = "";
         };
         "custom/tailscale-ping" = {
-          interval = 2;
+          interval = 10;
           return-type = "json";
           exec =
             let
@@ -203,22 +187,16 @@ in
           exec = jsonOutput "unread-mail" {
             pre = ''
               count=$(${find} ~/Mail/*/Inbox/new -type f | ${wc} -l)
-              if [ "$count" == "0" ]; then
-                subjects="No new mail"
-                status="read"
-              else
-                subjects=$(\
-                  ${grep} -h "Subject: " -r ~/Mail/*/Inbox/new | ${cut} -d ':' -f2- | \
-                  ${perl} -CS -MEncode -ne 'print decode("MIME-Header", $_)' | ${xml} esc | ${sed} -e 's/^/\-/'\
-                )
-                status="unread"
-              fi
               if ${pgrep} mbsync &>/dev/null; then
                 status="syncing"
+              else if [ "$count" == "0" ]; then
+                status="read"
+              else
+                status="unread"
+              fi
               fi
             '';
             text = "$count";
-            tooltip = "$subjects";
             alt = "$status";
           };
           format = "{icon}  ({})";
@@ -375,7 +353,8 @@ in
       #workspaces button {
         background-color: #${colors.base01};
         color: #${colors.base05};
-        margin: 4px;
+        padding: 5px 1px;
+        margin: 3px 0;
       }
       #workspaces button.hidden {
         background-color: #${colors.base00};
@@ -402,10 +381,7 @@ in
         color: #${colors.base00};
         padding-left: 15px;
         padding-right: 22px;
-        margin-left: 0;
-        margin-right: 10px;
-        margin-top: 0;
-        margin-bottom: 0;
+        margin: 0;
         border-radius: 10px;
       }
       #custom-hostname {
