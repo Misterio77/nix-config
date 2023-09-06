@@ -47,7 +47,9 @@
         local ltex_extra = require('ltex_extra')
         add_lsp("ltex-ls", lspconfig.ltex, {
           on_attach = function(client, bufnr)
-            ltex_extra.setup{}
+            ltex_extra.setup{
+              path = vim.fn.expand("~") .. "/.local/state/ltex"
+            }
           end
         })
       '';
