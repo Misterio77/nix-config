@@ -53,17 +53,17 @@ in {
     (lib.mapAttrsToList (key: direction:
       "SUPERSHIFT,${key},swapwindow,${direction}"
     ) directions) ++
+    # Move windows
+    (lib.mapAttrsToList (key: direction:
+      "SUPERCONTROL,${key},movewindow,${direction}"
+    ) directions) ++
     # Move monitor focus
     (lib.mapAttrsToList (key: direction:
-      "SUPERCONTROL,${key},focusmonitor,${direction}"
-    ) directions) ++
-    # Move window to other monitor
-    (lib.mapAttrsToList (key: direction:
-      "SUPERCONTROLSHIFT,${key},movewindow,mon:${direction}"
+      "SUPERALT,${key},focusmonitor,${direction}"
     ) directions) ++
     # Move workspace to other monitor
     (lib.mapAttrsToList (key: direction:
-      "SUPERALT,${key},movecurrentworkspacetomonitor,${direction}"
+      "SUPERALTSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
     ) directions);
   };
 }
