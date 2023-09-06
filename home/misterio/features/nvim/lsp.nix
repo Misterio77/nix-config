@@ -38,7 +38,18 @@
             onOpenAndSave = true
           }
         })
-        add_lsp("ltex-ls", lspconfig.ltex, {})
+      '';
+    }
+    {
+      plugin = ltex_extra-nvim;
+      type = "lua";
+      config = /* lua */ ''
+        local ltex_extra = require('ltex_extra')
+        add_lsp("ltex-ls", lspconfig.ltex, {
+          on_attach = function(client, bufnr)
+            ltex_extra.setup{}
+          end
+        })
       '';
     }
     {
@@ -46,9 +57,9 @@
       type = "lua";
       config = /* lua */ ''
         local rust_tools = require('rust-tools')
-        if vim.fn.executable("rust-analyzer") == 1 then
-          rust_tools.setup{ tools = { autoSetHints = true } }
-        end
+        add_lsp("rust-analyzer", rust_tools, {
+          tools = { autoSetHints = true }
+        })
         vim.api.nvim_set_hl(0, '@lsp.type.comment.rust', {})
       '';
     }
