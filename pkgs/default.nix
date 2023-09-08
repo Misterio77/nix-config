@@ -8,6 +8,7 @@
   lando = pkgs.callPackage ./lando { };
   tidal-dl = pkgs.python3Packages.callPackage ./tidal-dl { };
   qt6gtk2 = pkgs.qt6Packages.callPackage ./qt6gtk2 { };
+  hdos = pkgs.callPackage ./hdos { };
 
   # Personal scripts
   nix-inspect = pkgs.callPackage ./nix-inspect { };

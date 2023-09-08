@@ -14,7 +14,11 @@ let
   });
   openssl = lib.head (lib.filter (p: p.pname == "openssl") runescape.fhsenv.targetPaths);
 in {
-  home.packages = [ runescape ];
+  home.packages = [
+    runescape
+    pkgs.hdos
+    pkgs.runelite
+  ];
 
   nixpkgs.config.permittedInsecurePackages = [
     openssl.name
