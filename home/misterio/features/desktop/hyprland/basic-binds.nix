@@ -31,6 +31,7 @@ in {
       "SUPERSHIFT,equal,splitratio,0.3333333"
 
       "SUPER,g,togglegroup"
+      "SUPER,t,lockactivegroup,toggle"
       "SUPER,apostrophe,changegroupactive,f"
       "SUPERSHIFT,apostrophe,changegroupactive,b"
 
@@ -55,7 +56,7 @@ in {
     ) directions) ++
     # Move windows
     (lib.mapAttrsToList (key: direction:
-      "SUPERCONTROL,${key},movewindow,${direction}"
+      "SUPERCONTROL,${key},movewindoworgroup,${direction}"
     ) directions) ++
     # Move monitor focus
     (lib.mapAttrsToList (key: direction:
