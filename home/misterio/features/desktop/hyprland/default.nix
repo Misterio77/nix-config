@@ -11,6 +11,7 @@
   home.packages = with pkgs; [
     inputs.hyprwm-contrib.grimblast
     hyprslurp
+    hyprpicker
   ];
 
   wayland.windowManager.hyprland = {
@@ -119,11 +120,11 @@
         "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
         ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
         # Screenshotting
-        ",Print,exec,${grimblast} --notify copy output"
-        "SHIFT,Print,exec,${grimblast} --notify copy active"
-        "CONTROL,Print,exec,${grimblast} --notify copy screen"
-        "SUPER,Print,exec,${grimblast} --notify copy window"
-        "ALT,Print,exec,${grimblast} --notify copy area"
+        ",Print,exec,${grimblast} --notify --freeze copy output"
+        "SHIFT,Print,exec,${grimblast} --notify --freeze copy active"
+        "CONTROL,Print,exec,${grimblast} --notify --freeze copy screen"
+        "SUPER,Print,exec,${grimblast} --notify --freeze copy area"
+        "ALT,Print,exec,${grimblast} --notify --freeze copy area"
         # Tally counter
         "SUPER,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} add && ${gtk-play} -i dialog-information" # Add new entry
         "SUPERCONTROL,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} undo && ${gtk-play} -i dialog-warning" # Undo last entry
