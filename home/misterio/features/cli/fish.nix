@@ -3,7 +3,7 @@ let
   inherit (lib) mkIf;
   hasPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
   hasRipgrep = hasPackage "ripgrep";
-  hasExa = hasPackage "exa";
+  hasExa = hasPackage "eza";
   hasNeovim = config.programs.neovim.enable;
   hasEmacs = config.programs.emacs.enable;
   hasNeomutt = config.programs.neomutt.enable;
@@ -32,7 +32,8 @@ in
       hm = "home-manager --flake .";
       hms = "home-manager --flake . switch";
 
-      ls = mkIf hasExa "exa";
+      ls = mkIf hasExa "eza";
+      exa = mkIf hasExa "eza";
 
       e = mkIf hasEmacs "emacsclient -t";
 

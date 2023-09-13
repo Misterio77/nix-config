@@ -24,7 +24,7 @@
     bc # Calculator
     bottom # System viewer
     ncdu # TUI disk usage
-    exa # Better ls
+    eza # Better ls
     ripgrep # Better grep
     fd # Better find
     httpie # Better curl
