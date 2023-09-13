@@ -12,8 +12,12 @@
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
-    sops-nix.url = "github:mic92/sops-nix";
 
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,6 +29,8 @@
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-22_11.follows = "nixpkgs";
+      inputs.nixpkgs-23_05.follows = "nixpkgs";
     };
     nix-minecraft = {
       url = "github:misterio77/nix-minecraft";
