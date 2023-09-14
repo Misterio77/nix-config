@@ -37,8 +37,8 @@
       misc.vfr = "on";
 
       decoration = {
-        active_opacity = 0.94;
-        inactive_opacity = 0.84;
+        active_opacity = 0.92;
+        inactive_opacity = 0.75;
         fullscreen_opacity = 1.0;
         rounding = 5;
         blur = {
