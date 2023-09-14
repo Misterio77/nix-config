@@ -9,8 +9,8 @@
     ./features/music
   ];
 
-  colorscheme = inputs.nix-colors.colorschemes.atelier-sulphurpool-light;
-  wallpaper = outputs.wallpapers.aenami-northwind;
+  colorscheme = inputs.nix-colors.colorschemes.tokyo-night-storm;
+  wallpaper = outputs.wallpapers.watercolor-beach;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
