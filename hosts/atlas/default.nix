@@ -56,6 +56,7 @@
     wlr.enable = true;
   };
 
+  services.hardware.openrgb.enable = true;
   hardware = {
     opengl = {
       enable = true;
@@ -63,7 +64,6 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-    openrgb.enable = true;
     opentabletdriver.enable = true;
   };
 
