@@ -5,7 +5,6 @@
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
   speedtestpp = pkgs.callPackage ./speedtestpp { };
-  qt6gtk2 = pkgs.qt6Packages.callPackage ./qt6gtk2 { };
   hdos = pkgs.callPackage ./hdos { };
 
   # Personal scripts
