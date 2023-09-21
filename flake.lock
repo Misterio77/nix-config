@@ -735,11 +735,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1693872258,
-        "narHash": "sha256-Dtgt/B0K1jUCtUSKbf2UZNDxPBTpvYKnAJNVcEuHMN8=",
+        "lastModified": 1695261431,
+        "narHash": "sha256-zRM3fp97Kmf7O6qC4u+3hnNn1uCLzZO+EaZ684VELpg=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "37a8d2a48e633b7fd2a420a6afa164e1782c46c2",
+        "rev": "5fe6cf710c2525739d08c3d0a0892d77bf72be5f",
         "type": "github"
       },
       "original": {
