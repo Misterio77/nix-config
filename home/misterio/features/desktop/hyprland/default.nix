@@ -34,7 +34,7 @@
         touchpad.disable_while_typing = false;
       };
       dwindle.split_width_multiplier = 1.35;
-      misc.vfr = "on";
+      misc.vfr = true;
 
       decoration = {
         active_opacity = 0.92;
