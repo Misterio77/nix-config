@@ -32,8 +32,6 @@
     QT_PLUGIN_PATH = [ "/lib/qt-6/plugins" ];
   };
 
-  environment.enableAllTerminfo = true;
-
   hardware.enableRedistributableFirmware = true;
   networking.domain = "m7.rs";
 
