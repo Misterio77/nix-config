@@ -6,11 +6,11 @@
     extraReload = extraPostStart;
 
     symlinks = {
-      "plugins/LuckPerms.jar" = let build = "1475"; in pkgs.fetchurl rec {
+      "plugins/LuckPerms.jar" = let build = "1515"; in pkgs.fetchurl rec {
         pname = "LuckPerms";
-        version = "5.4.64";
+        version = "5.4.102";
         url = "https://download.luckperms.net/${build}/velocity/${pname}-Velocity-${version}.jar";
-        hash = "sha256-8w9lt7Tuq8sPdLzCoSzE/d56bQjTIv1r/iWyMA4MtLk=";
+        hash = "sha256-hNxaR2BImIMFiX835DiG8FS/iWrkIv5bU4jQARp43Bw=";
       };
       "plugins/luckperms/initial.json.gz".format = pkgs.formats.gzipJson { };
       "plugins/luckperms/initial.json.gz".value = let

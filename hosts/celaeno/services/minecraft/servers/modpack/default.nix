@@ -56,6 +56,12 @@ in
         url = "https://github.com/Phelms215/${pname}-fabric/releases/download/${version}/${pname}-${version}.jar";
         hash = "sha256-x2k090WCMAfpXLBRE6Mz/NyISalzoz+a48809ThPsCQ=";
       };
+      "mods/LuckPerms.jar" = let build = "1515"; in pkgs.fetchurl rec {
+        pname = "LuckPerms";
+        version = "5.4.102";
+        url = "https://download.luckperms.net/${build}/fabric/${pname}-Fabric-${version}.jar";
+        hash = "sha256-rZ9rNFkiS12Id0JjvVZCFfcITB91A9FeC7LFSq/EFYI=";
+      };
     };
 
     files = collectFilesAt modpack "config" // {

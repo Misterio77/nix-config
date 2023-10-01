@@ -45,21 +45,21 @@
     symlinks = {
       "plugins/ViaVersion.jar" = pkgs.fetchurl rec {
         pname = "ViaVersion";
-        version = "4.6.0";
+        version = "4.8.0";
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
-        hash = "sha256-QgGMRrsRTSpgU1bmdv4BZB/aXaknz35V5knzD4382ls=";
+        hash = "sha256-VHvFMbiA8clgrlpfCNzqlzs/QSVN60Yt6h63KI3w6ns=";
       };
       "plugins/ViaBackwards.jar" = pkgs.fetchurl rec {
         pname = "ViaBackwards";
-        version = "4.6.0";
+        version = "4.8.0";
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
-        hash = "sha256-u8dFq4CAXpNF/JjONVg45HR3qbZ5eQmnAq2PvIZ7g4Q=";
+        hash = "sha256-JSE71YbivWCqUzNwPVFNgqlhhFkMoIstrn+L/F3qdFM=";
       };
-      "plugins/LuckPerms.jar" = let build = "1475"; in pkgs.fetchurl rec {
+      "plugins/LuckPerms.jar" = let build = "1515"; in pkgs.fetchurl rec {
         pname = "LuckPerms";
-        version = "5.4.64";
+        version = "5.4.102";
         url = "https://download.luckperms.net/${build}/bukkit/loader/${pname}-Bukkit-${version}.jar";
-        hash = "sha256-t7ZUaZ1jmaLD2X8ZOihdLKAPMR59EZF4KvTZVW0fYMo=";
+        hash = "sha256-rShKJtW6FzPba4yATlsS2JHFtBZrQhZeRrPfv/4w1ZY=";
       };
       "plugins/HidePLayerJoinQuit.jar" = pkgs.fetchurl rec {
         pname = "HidePLayerJoinQuit";
