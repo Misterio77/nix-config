@@ -9,7 +9,6 @@
     ../common/global
     ../common/users/misterio
 
-    ../common/optional/gamemode.nix
     ../common/optional/ckb-next.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix

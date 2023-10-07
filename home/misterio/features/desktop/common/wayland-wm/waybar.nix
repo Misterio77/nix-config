@@ -14,7 +14,6 @@ let
   ping = "${pkgs.iputils}/bin/ping";
 
   jq = "${pkgs.jq}/bin/jq";
-  gamemoded = "${pkgs.gamemode}/bin/gamemoded";
   systemctl = "${pkgs.systemd}/bin/systemctl";
   journalctl = "${pkgs.systemd}/bin/journalctl";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -73,7 +72,6 @@ in
         modules-right = [
           "network"
           "custom/tailscale-ping"
-          "custom/gamemode"
           # TODO: currently broken for some reason
           # "custom/gammastep"
           "tray"
@@ -209,15 +207,6 @@ in
             "unlocked" = "";
           };
           on-click = "";
-        };
-        "custom/gamemode" = {
-          exec-if = "${gamemoded} --status | ${grep} 'is active' -q";
-          interval = 2;
-          return-type = "json";
-          exec = jsonOutput "gamemode" {
-            tooltip = "Gamemode is active";
-          };
-          format = " ";
         };
         "custom/gammastep" = {
           interval = 5;
