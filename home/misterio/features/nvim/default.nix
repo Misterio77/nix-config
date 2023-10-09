@@ -7,6 +7,7 @@ in
     ./lsp.nix
     ./syntaxes.nix
     ./ui.nix
+    ./copilot.nix
   ];
   home.sessionVariables.EDITOR = "nvim";
 

@@ -79,6 +79,9 @@
         cmp.setup{
           formatting = {
             format = require('lspkind').cmp_format({
+              symbol_map = {
+                Copilot = "",
+              },
             })
           },
           -- Same keybinds as vim's vanilla completion
@@ -87,6 +90,7 @@
           sources = {
             { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs } },
             { name='nvim_lsp' },
+            { name = 'copilot' },
           },
         }
       '';
