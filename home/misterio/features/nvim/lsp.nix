@@ -4,39 +4,40 @@
     {
       plugin = nvim-lspconfig;
       type = "lua";
-      config = /* lua */ ''
+      config = ''
         local lspconfig = require('lspconfig')
-
-        function add_lsp(binary, server, options)
-          if not options["cmd"] then options["cmd"] = { binary, unpack(options["cmd_args"] or {}) } end
-          if vim.fn.executable(binary) == 1 then server.setup(options) end
+        function add_lsp(server, options)
+          if options["cmd"] ~= nil then
+            binary = options["cmd"][1]
+          else
+            binary = server["document_config"]["default_config"]["cmd"][1]
+          end
+          if vim.fn.executable(binary) == 1 then
+            server.setup(options)
+          end
         end
 
-        add_lsp("docker-langserver", lspconfig.dockerls, {})
-        add_lsp("bash-language-server", lspconfig.bashls, {})
-        add_lsp("clangd", lspconfig.clangd, {})
-        add_lsp("nil", lspconfig.nil_ls, {})
-        add_lsp("pylsp", lspconfig.pylsp, {})
-        add_lsp("dart", lspconfig.dartls, {})
-        add_lsp("haskell-language-server", lspconfig.hls, {
-          cmd_args = { "--lsp" }
+        add_lsp(lspconfig.dockerls, {})
+        add_lsp(lspconfig.bashls, {})
+        add_lsp(lspconfig.clangd, {})
+        add_lsp(lspconfig.nil_ls, {})
+        add_lsp(lspconfig.pylsp, {})
+        add_lsp(lspconfig.dartls, {})
+        add_lsp(lspconfig.hls, {})
+        add_lsp(lspconfig.kotlin_language_server, {})
+        add_lsp(lspconfig.solargraph, {})
+        add_lsp(lspconfig.phpactor, {})
+        add_lsp(lspconfig.terraformls, {})
+        add_lsp(lspconfig.gopls, {})
+        add_lsp(lspconfig.lua_ls, {})
+        add_lsp(lspconfig.jdtls, {
+          cmd = { "jdt-language-server" }
         })
-        add_lsp("kotlin-language-server", lspconfig.kotlin_language_server, {})
-        add_lsp("solargraph", lspconfig.solargraph, {})
-        add_lsp("phpactor", lspconfig.phpactor, {})
-        add_lsp("terraform-ls", lspconfig.terraformls, {
-          cmd_args = { "serve" }
+        add_lsp(lspconfig.tsserver, {
+          cmd = { "tsserver", "--stdio" }
         })
-        add_lsp("texlab", lspconfig.texlab, {})
-        add_lsp("gopls", lspconfig.gopls, {})
-        add_lsp("tsserver", lspconfig.tsserver, {})
-        add_lsp("lua-lsp", lspconfig.lua_ls, {})
-        add_lsp("jdt-language-server", lspconfig.jdtls, {})
-        add_lsp("texlab", lspconfig.texlab, {
-          chktex = {
-            onEdit = true,
-            onOpenAndSave = true
-          }
+        add_lsp(lspconfig.texlab, {
+          chktex = { onEdit = true, onOpenAndSave = true }
         })
       '';
     }
@@ -45,7 +46,7 @@
       type = "lua";
       config = /* lua */ ''
         local ltex_extra = require('ltex_extra')
-        add_lsp("ltex-ls", lspconfig.ltex, {
+        add_lsp(lspconfig.ltex, {
           on_attach = function(client, bufnr)
             ltex_extra.setup{
               path = vim.fn.expand("~") .. "/.local/state/ltex"
@@ -59,7 +60,8 @@
       type = "lua";
       config = /* lua */ ''
         local rust_tools = require('rust-tools')
-        add_lsp("rust-analyzer", rust_tools, {
+        add_lsp(rust_tools, {
+          cmd = { "rust-analyzer" },
           tools = { autoSetHints = true }
         })
         vim.api.nvim_set_hl(0, '@lsp.type.comment.rust', {})
