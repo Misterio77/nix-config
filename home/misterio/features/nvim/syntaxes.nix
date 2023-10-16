@@ -39,16 +39,9 @@ in {
 
       {
         plugin = vimtex;
-        config =
-          let
-            method =
-              if config.programs.zathura.enable
-              then "zathura"
-              else "general";
-          in
-          ''
-            let g:vimtex_view_method = '${method}'
-          '';
+        config = /* vim */ ''
+          let g:vimtex_view_method = '${if config.programs.zathura.enable then "zathura" else "general"}'
+        '';
       }
 
       # Tree sitter

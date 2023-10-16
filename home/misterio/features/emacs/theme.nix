@@ -5,7 +5,7 @@ let
 in
 emacsPackages.trivialBuild {
   pname = "theme";
-  src = writeText "nix-${scheme.slug}.el" ''
+  src = writeText "nix-${scheme.slug}.el" /* commonlisp */ ''
     (require 'base16-theme)
 
     (defvar base16-${scheme.slug}-theme-colors

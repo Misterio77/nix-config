@@ -140,7 +140,7 @@ in
     ];
   };
 
-  xdg.configFile."nvim/init.lua".onChange = ''
+  xdg.configFile."nvim/init.lua".onChange = /* bash */ ''
     XDG_RUNTIME_DIR=''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
     for server in $XDG_RUNTIME_DIR/nvim.*; do
       nvim --server $server --remote-send ':source $MYVIMRC<CR>' &

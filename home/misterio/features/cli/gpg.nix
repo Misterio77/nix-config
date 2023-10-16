@@ -22,7 +22,7 @@ in
 
   programs =
     let
-      fixGpg = ''
+      fixGpg = /* bash */ ''
         gpgconf --launch gpg-agent
       '';
     in

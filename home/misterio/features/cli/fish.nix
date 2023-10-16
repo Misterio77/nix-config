@@ -58,7 +58,7 @@ in
       # Grep using ripgrep and pass to nvim
       nvimrg = mkIf (hasNeomutt && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
       # Integrate ssh with shellcolord
-      ssh = mkIf hasShellColor ''
+      ssh = mkIf hasShellColor /* fish */ ''
         ${shellcolor} disable $fish_pid
         # Check if kitty is available
         if set -q KITTY_PID && set -q KITTY_WINDOW_ID && type -q -f kitty
@@ -70,28 +70,24 @@ in
         ${shellcolor} apply $fish_pid
       '';
     };
-    interactiveShellInit =
-      # Open command buffer in vim when alt+e is pressed
-      ''
+    interactiveShellInit = /* fish */ ''
+        # Open command buffer in vim when alt+e is pressed
         bind \ee edit_command_buffer
-      '' +
-      # kitty integration
-      ''
+
+        # kitty integration
         set --global KITTY_INSTALLATION_DIR "${pkgs.kitty}/lib/kitty"
         set --global KITTY_SHELL_INTEGRATION enabled
         source "$KITTY_INSTALLATION_DIR/shell-integration/fish/vendor_conf.d/kitty-shell-integration.fish"
         set --prepend fish_complete_path "$KITTY_INSTALLATION_DIR/shell-integration/fish/vendor_completions.d"
-      '' +
-      # Use vim bindings and cursors
-      ''
+
+        # Use vim bindings and cursors
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink
         set fish_cursor_replace_one underscore blink
         set fish_cursor_visual      block
-      '' +
-      # Use terminal colors
-      ''
+
+        # Use terminal colors
         set -U fish_color_autosuggestion      brblack
         set -U fish_color_cancel              -r
         set -U fish_color_command             brgreen

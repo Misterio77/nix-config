@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = [ pkgs.lyrics ];
-  xdg.configFile."lyrics-in-terminal/lyrics.cfg".text = ''
+  xdg.configFile."lyrics-in-terminal/lyrics.cfg".text = /* ini */ ''
     [OPTIONS]
     alignment=left
     source=google

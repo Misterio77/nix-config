@@ -10,7 +10,7 @@ in
       [ "Calendars" "Contacts" ".local/share/vdirsyncer" ];
   };
 
-  xdg.configFile."vdirsyncer/config".text = ''
+  xdg.configFile."vdirsyncer/config".text = /* ini */ ''
     [general]
     status_path = "~/.local/share/vdirsyncer/status"
 

@@ -4,7 +4,7 @@
     {
       plugin = nvim-lspconfig;
       type = "lua";
-      config = ''
+      config = /* lua */ ''
         local lspconfig = require('lspconfig')
         function add_lsp(server, options)
           if options["cmd"] ~= nil then

@@ -14,7 +14,7 @@
     {
       plugin = nvim-bqf;
       type = "lua";
-      config = /* lua * */ ''
+      config = /* lua */ ''
         require('bqf').setup{}
       '';
     }
