@@ -146,9 +146,9 @@
       ]) ++
       # Screen lock
       (lib.optionals config.programs.swaylock.enable [
-        ",XF86Launch5,exec,${swaylock} -i ${config.wallpaper}"
-        ",XF86Launch4,exec,${swaylock} -i ${config.wallpaper}"
-        "SUPER,backspace,exec,${swaylock} -i ${config.wallpaper}"
+        ",XF86Launch5,exec,${swaylock} -S"
+        ",XF86Launch4,exec,${swaylock} -S"
+        "SUPER,backspace,exec,${swaylock} -S"
       ]) ++
       # Notification manager
       (lib.optionals config.services.mako.enable [
