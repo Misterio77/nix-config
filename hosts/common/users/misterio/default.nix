@@ -24,7 +24,7 @@ in
     ];
 
     openssh.authorizedKeys.keys = [ (builtins.readFile ../../../../home/misterio/ssh.pub) ];
-    passwordFile = config.sops.secrets.misterio-password.path;
+    hashedPasswordFile = config.sops.secrets.misterio-password.path;
     packages = [ pkgs.home-manager ];
   };
 
