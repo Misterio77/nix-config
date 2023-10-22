@@ -32,6 +32,7 @@ in
     enable = true;
     package = pkgs.gitAndTools.gitFull;
     aliases = {
+      ff = "merge --ff-only";
       pushall = "!git remote | xargs -L1 git push --all";
       graph = "log --decorate --oneline --graph";
       add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
