@@ -6,6 +6,7 @@
     ./hardware-configuration.nix
 
     ../common/global
+    ../common/optional/wireless
     ../common/users/misterio
   ];
 
