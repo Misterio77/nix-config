@@ -28,7 +28,7 @@
       name = "DP-1";
       width = 2560;
       height = 1080;
-      refreshRate = 75;
+      refreshRate = 60;
       x = 1920;
       workspace = "1";
       primary = true;
