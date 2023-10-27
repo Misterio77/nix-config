@@ -1,7 +1,8 @@
 {
   imports = [
     ./khal.nix
-    ./khard.nix
+    # TODO https://github.com/NixOS/nixpkgs/issues/263504
+    # ./khard.nix
     ./todoman.nix
     ./vdirsyncer.nix
 
