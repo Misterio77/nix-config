@@ -20,23 +20,6 @@
   networking = {
     hostName = "atlas";
     useDHCP = true;
-    interfaces.enp8s0 = {
-      useDHCP = true;
-      wakeOnLan.enable = true;
-
-      ipv4 = {
-        addresses = [{
-          address = "192.168.0.12";
-          prefixLength = 24;
-        }];
-      };
-      ipv6 = {
-        addresses = [{
-          address = "2804:14d:8084:a484::2";
-          prefixLength = 64;
-        }];
-      };
-    };
   };
 
   boot = {
