@@ -33,6 +33,11 @@ let
       --arg percentage "${percentage}" \
       '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
   ''}/bin/waybar-${name}";
+
+  hasSway = config.wayland.windowManager.sway.enable;
+  sway = config.wayland.windowManager.sway.package;
+  hasHyprland = config.wayland.windowManager.hyprland.enable;
+  hyprland = config.wayland.windowManager.hyprland.package;
 in
 {
   programs.waybar = {
@@ -50,10 +55,10 @@ in
         position = "top";
         modules-left = [
           "custom/menu"
-        ] ++ (lib.optionals config.wayland.windowManager.sway.enable [
+        ] ++ (lib.optionals hasSway [
           "sway/workspaces"
           "sway/mode"
-        ]) ++ (lib.optionals config.wayland.windowManager.hyprland.enable [
+        ]) ++ (lib.optionals hasHyprland [
           "hyprland/workspaces"
           "hyprland/submap"
         ]) ++ [
