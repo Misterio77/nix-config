@@ -9,7 +9,7 @@
     ./features/music
   ];
 
-  colorscheme = inputs.nix-colors.colorschemes.tokyo-night-storm;
+  colorscheme = inputs.nix-colors.colorschemes.atelier-sulphurpool;
   wallpaper = outputs.wallpapers.watercolor-beach;
 
   #  ------   -----   ------
