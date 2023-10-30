@@ -165,7 +165,12 @@ in
             text = "";
             tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
           };
-          on-click = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
+          on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
+          on-click-right = lib.concatStringsSep ";" (
+            (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace") ++
+            (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
+          );
+
         };
         "custom/hostname" = {
           exec = "echo $USER@$HOSTNAME";
