@@ -38,6 +38,7 @@
       };
       dwindle.split_width_multiplier = 1.35;
       misc.vfr = true;
+      layerrule = [ "blur,waybar" ];
 
       decoration = {
         active_opacity = 0.92;
