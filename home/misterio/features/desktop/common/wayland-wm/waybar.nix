@@ -164,6 +164,7 @@ in
         };
         "custom/hostname" = {
           exec = "echo $USER@$HOSTNAME";
+          on-click = "${systemctl} --user restart waybar";
         };
         "custom/unread-mail" = {
           interval = 5;
