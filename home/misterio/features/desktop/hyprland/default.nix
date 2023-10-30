@@ -6,6 +6,7 @@
     ./tty-init.nix
     ./basic-binds.nix
     ./systemd-fixes.nix
+    ./hyprbars.nix
   ];
 
   home.packages = with pkgs; [

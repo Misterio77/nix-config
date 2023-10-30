@@ -277,16 +277,36 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1698407117,
-        "narHash": "sha256-3X8R+N43YscAEbx+IrhaGNfM3yK+uxjTGuLv9VB82NY=",
+        "lastModified": 1698618926,
+        "narHash": "sha256-zmUNAYVzP2oyNGBiVzKyaUuMKgfnNd9SV/WxGntr7fk=",
         "owner": "hyprwm",
         "repo": "hyprland",
-        "rev": "4a4e13f8acedd2dc44236deed13fd47096cbe508",
+        "rev": "59d6a12a7e06a579a364ea93eca957a70be74081",
         "type": "github"
       },
       "original": {
         "owner": "hyprwm",
         "repo": "hyprland",
+        "type": "github"
+      }
+    },
+    "hyprland-plugins": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ]
+      },
+      "locked": {
+        "lastModified": 1698618794,
+        "narHash": "sha256-vcvR3kyLZ8Wx+11V7/81qkYiM/SszatvBiDsnSHxSfQ=",
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "rev": "f46771dd4fe6d0092a592b3b21c55e22550f731f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
         "type": "github"
       }
     },
@@ -596,6 +616,7 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "hyprland-plugins": "hyprland-plugins",
         "hyprwm-contrib": "hyprwm-contrib",
         "impermanence": "impermanence",
         "nh": "nh",
