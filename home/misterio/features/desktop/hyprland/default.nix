@@ -31,13 +31,21 @@
       group = {
         "col.border_active" = "0xff${config.colorscheme.colors.base0B}";
         "col.border_inactive" = "0xff${config.colorscheme.colors.base04}";
+        groupbar = {
+          font_size = 11;
+        };
       };
       input = {
         kb_layout = "br,us";
         touchpad.disable_while_typing = false;
       };
       dwindle.split_width_multiplier = 1.35;
-      misc.vfr = true;
+      misc = {
+        vfr = true;
+        close_special_on_empty = true;
+        # Unfullscreen when opening something
+        new_window_takes_over_fullscreen = 2;
+      };
       layerrule = [ "blur,waybar" ];
 
       decoration = {

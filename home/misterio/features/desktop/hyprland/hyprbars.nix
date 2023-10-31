@@ -13,18 +13,18 @@ in {
     plugins = [ hyprbars ];
     settings = {
       "plugin:hyprbars" = {
-        bar_height = 24;
+        bar_height = 25;
         bar_color = "0xee${config.colorscheme.colors.base01}";
         "col.text" = "0xee${config.colorscheme.colors.base05}";
         bar_text_font = config.fontProfiles.regular.family;
         bar_text_size = 12;
         hyprbars-button = [
           # Red close button
-          "rgb(${config.colorscheme.colors.base08}),13,󰖭,hyprctl dispatch killactive"
+          "rgb(${config.colorscheme.colors.base08}),15,󰖭,hyprctl dispatch killactive"
           # Green "maximize" (fullscreen) button
-          "rgb(${config.colorscheme.colors.base0B}),13,󰖯,hyprctl dispatch fullscreen 1"
+          "rgb(${config.colorscheme.colors.base0B}),15,󰖯,hyprctl dispatch fullscreen 1"
           # Yellow "minimize" (send to special workspace) button
-          "rgb(${config.colorscheme.colors.base0A}),13,󰖰,hyprctl dispatch movetoworkspacesilent special"
+          "rgb(${config.colorscheme.colors.base0A}),15,󰖰,hyprctl dispatch movetoworkspacesilent special"
         ];
       };
       bind = let
