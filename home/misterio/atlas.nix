@@ -9,8 +9,8 @@
     ./features/music
   ];
 
-  colorscheme = inputs.nix-colors.colorschemes.atelier-sulphurpool;
-  wallpaper = outputs.wallpapers.watercolor-beach;
+  colorscheme = inputs.nix-colors.colorschemes.paraiso;
+  wallpaper = outputs.wallpapers.cyberpunk-city-red;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
