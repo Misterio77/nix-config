@@ -10,17 +10,5 @@
         "enableemail": false,
         "emailoverride": "",
         "keepnr": 2
-    },
-   "next": {
-        "enabled": 1,
-        "type": 1,
-        "hidden": false,
-        "description": "Build next branch",
-        "flake": "github:misterio77/nix-config/next",
-        "checkinterval": 60,
-        "schedulingshares": 5,
-        "enableemail": false,
-        "emailoverride": "",
-        "keepnr": 1
     }
 }
