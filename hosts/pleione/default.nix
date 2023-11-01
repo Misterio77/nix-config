@@ -42,14 +42,7 @@
     enable = true;
     wlr.enable = true;
   };
-  hardware = {
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [ amdvlk ];
-      driSupport = true;
-      driSupport32Bit = true;
-    };
-  };
+  hardware.opengl.enable = true;
 
   system.stateVersion = "22.05";
 }
