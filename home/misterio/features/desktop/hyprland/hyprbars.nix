@@ -21,10 +21,10 @@ in {
         hyprbars-button = [
           # Red close button
           "rgb(${config.colorscheme.colors.base08}),12,,hyprctl dispatch killactive"
-          # Green "maximize" (fullscreen) button
-          "rgb(${config.colorscheme.colors.base0B}),12,,hyprctl dispatch fullscreen 1"
           # Yellow "minimize" (send to special workspace) button
           "rgb(${config.colorscheme.colors.base0A}),12,,hyprctl dispatch movetoworkspacesilent special"
+          # Green "maximize" (fullscreen) button
+          "rgb(${config.colorscheme.colors.base0B}),12,,hyprctl dispatch fullscreen 1"
         ];
       };
       bind = let
