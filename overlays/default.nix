@@ -59,9 +59,9 @@ in
     # Sane default values and crash avoidance (https://github.com/k-vernooy/trekscii/pull/1)
     trekscii = addPatches prev.trekscii [ ./trekscii.patch ];
 
-    qutebrowser = prev.qutebrowser.overrideAttrs (oldAttrs: {
+    qutebrowser = (prev.qutebrowser.overrideAttrs (oldAttrs: {
       patches = (oldAttrs.patches or [ ]) ++ [ ./qutebrowser-tree-tabs.diff ];
-    });
+    })).override { enableVulkan = false; };
 
     scgit = prev.cgit-pink.overrideAttrs (_: {
       pname = "scgit";
