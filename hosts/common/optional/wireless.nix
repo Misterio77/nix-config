@@ -41,8 +41,8 @@
           pairwise=CCMP
           group=CCMP TKIP
           eap=TTLS
-          domain_suffix_match=semfio.usp.br
-          ca_path=${pkgs.cacert}/etc/ssl/certs
+          domain_suffix_match="semfio.usp.br"
+          ca_path="${pkgs.cacert}/etc/ssl/certs"
           identity="10856803@usp.br"
           password="@EDUROAM@"
           phase2="auth=MSCHAPV2"
