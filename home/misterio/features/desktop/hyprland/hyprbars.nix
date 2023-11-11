@@ -18,13 +18,22 @@ in {
         "col.text" = "0xee${config.colorscheme.colors.base05}";
         bar_text_font = config.fontProfiles.regular.family;
         bar_text_size = 12;
-        hyprbars-button = [
+        hyprbars-button = let
+          closeAction = "hyprctl dispatch killactive";
+
+          isOnSpecial = ''hyprctl activewindow -j | jq -re 'select(.workspace.name == "special")' >/dev/null'';
+          moveToSpecial = "hyprctl dispatch movetoworkspacesilent special";
+          moveToActive = "hyprctl dispatch movetoworkspacesilent name:$(hyprctl -j activeworkspace | jq -re '.name')";
+          minimizeAction = "${isOnSpecial} && ${moveToActive} || ${moveToSpecial}";
+
+          maximizeAction = "hyprctl dispatch fullscreen 1";
+        in [
           # Red close button
-          "rgb(${config.colorscheme.colors.base08}),12,,hyprctl dispatch killactive"
+          "rgb(${config.colorscheme.colors.base08}),12,,${closeAction}"
           # Yellow "minimize" (send to special workspace) button
-          "rgb(${config.colorscheme.colors.base0A}),12,,hyprctl dispatch movetoworkspacesilent special"
+          "rgb(${config.colorscheme.colors.base0A}),12,,${minimizeAction}"
           # Green "maximize" (fullscreen) button
-          "rgb(${config.colorscheme.colors.base0B}),12,,hyprctl dispatch fullscreen 1"
+          "rgb(${config.colorscheme.colors.base0B}),12,,${maximizeAction}"
         ];
       };
       bind = let

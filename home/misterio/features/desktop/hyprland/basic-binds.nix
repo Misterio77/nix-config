@@ -36,7 +36,7 @@ in {
       "SUPERSHIFT,apostrophe,changegroupactive,b"
 
       "SUPER,u,togglespecialworkspace"
-      "SUPERSHIFT,u,movetoworkspace,special"
+      "SUPERSHIFT,u,movetoworkspacesilent,special"
     ] ++
     # Change workspace
     (map (n:
