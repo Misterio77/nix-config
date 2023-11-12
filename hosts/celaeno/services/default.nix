@@ -22,5 +22,9 @@
         "DATABASE projeto_cloud" = "ALL PRIVILEGES";
       };
     }];
+    authentication = ''
+      host projeto_cloud projeto_cloud 0.0.0.0/0 md5
+      host projeto_cloud projeto_cloud ::/0 md5
+    '';
   };
 }
