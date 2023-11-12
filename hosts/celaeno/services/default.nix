@@ -11,4 +11,9 @@
     ./hydra
     ./minecraft
   ];
+
+  networking.firewall.allowedTCPPorts = [ 5432 ];
+  services.postgresql = {
+    enableTCPIP = true;
+  };
 }
