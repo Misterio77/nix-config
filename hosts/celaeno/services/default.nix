@@ -22,8 +22,5 @@
         "DATABASE projeto_cloud" = "ALL PRIVILEGES";
       };
     }];
-    authentication = ''
-    host all projeto_cloud 0.0.0
-    '';
   };
 }
