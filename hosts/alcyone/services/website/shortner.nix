@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  service.nginx.virtualHosts."m7.rs" = {
+  services.nginx.virtualHosts."m7.rs" = {
     forceSSL = true;
     enableACME = true;
     locations = lib.mapAttrs' (n: v:
