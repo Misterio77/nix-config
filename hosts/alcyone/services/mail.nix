@@ -10,7 +10,6 @@
     sendingFqdn = "alcyone.m7.rs";
     domains = [
       "m7.rs"
-      "fontes.dev.br"
       "misterio.me"
       "gsfontes.com"
     ];

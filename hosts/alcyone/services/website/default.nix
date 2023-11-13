@@ -51,6 +51,5 @@ in
     };
     "gsfontes.com" = redir;
     "misterio.me" = redir;
-    "fontes.dev.br" = redir;
   };
 }
