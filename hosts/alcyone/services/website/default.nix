@@ -13,7 +13,7 @@ let
   minutes = n: n * 60;
 in
 {
-  imports = [ ./themes.nix ];
+  imports = [ ./themes.nix ./shortner.nix ];
 
   services.nginx.virtualHosts = {
     "m7.rs" = {
