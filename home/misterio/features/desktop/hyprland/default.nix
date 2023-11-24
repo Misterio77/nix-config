@@ -7,6 +7,7 @@
     ./basic-binds.nix
     ./systemd-fixes.nix
     ./hyprbars.nix
+    ./bg-cava.nix
   ];
 
   home.packages = with pkgs; [

@@ -50,7 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
+      url = "github:misterio77/hyprland-plugins/flake-winwrap";
       inputs.hyprland.follows = "hyprland";
     };
 
