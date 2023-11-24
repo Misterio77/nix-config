@@ -4,7 +4,7 @@
   home.persistence = {
     "/persist/home/misterio" = {
       allowOther = true;
-      directories = [ "Games/Yuzu" ".config/yuzu" ".local/share/yuzu" ];
+      directories = [ ".config/yuzu" ".local/share/yuzu" ];
     };
   };
 }

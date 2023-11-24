@@ -36,6 +36,10 @@
       url = "github:timhae/firefly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland = {
       url = "github:hyprwm/hyprland";
