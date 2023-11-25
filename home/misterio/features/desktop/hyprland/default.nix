@@ -5,7 +5,6 @@
 
     ./tty-init.nix
     ./basic-binds.nix
-    ./systemd-fixes.nix
     ./hyprbars.nix
     ./bg-cava.nix
   ];
@@ -19,6 +18,13 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.inputs.hyprland.hyprland;
+    systemd = {
+      enable = true;
+      extraCommands = lib.mkBefore [
+        # Make sure graphical-session is deactivated before activating hyprland-session
+        "systemctl --user stop graphical-session.target"
+      ];
+    };
 
     settings = {
       general = {
