@@ -3,7 +3,6 @@
     ../common
     ../common/wayland-wm
 
-    ./tty-init.nix
     ./basic-binds.nix
     ./hyprbars.nix
     ./bg-cava.nix
