@@ -5,7 +5,6 @@
 
     ./basic-binds.nix
     ./hyprbars.nix
-    ./bg-cava.nix
   ];
 
   home.packages = with pkgs; [
