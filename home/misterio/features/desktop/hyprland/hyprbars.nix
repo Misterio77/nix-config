@@ -26,13 +26,13 @@ in {
           moveToActive = "hyprctl dispatch movetoworkspacesilent name:$(hyprctl -j activeworkspace | jq -re '.name')";
           minimizeAction = "${isOnSpecial} && ${moveToActive} || ${moveToSpecial}";
 
-          maximizeAction = "hyprctl dispatch fullscreen 1";
+          maximizeAction = "hyprctl dispatch togglefloating";
         in [
           # Red close button
           "rgb(${config.colorscheme.colors.base08}),12,,${closeAction}"
           # Yellow "minimize" (send to special workspace) button
           "rgb(${config.colorscheme.colors.base0A}),12,,${minimizeAction}"
-          # Green "maximize" (fullscreen) button
+          # Green "maximize" (togglefloating) button
           "rgb(${config.colorscheme.colors.base0B}),12,,${maximizeAction}"
         ];
       };
