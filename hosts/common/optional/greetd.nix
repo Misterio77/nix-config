@@ -9,7 +9,7 @@ let
   misterioCfg = homeCfgs.misterio;
   mainMonitor = lib.head (lib.filter (x: x.primary) misterioCfg.monitors);
   gtkTheme = misterioCfg.gtk.theme;
-  iconTheme = misterioCfg.gtk.iconTheme.package;
+  iconTheme = misterioCfg.gtk.iconTheme;
   wallpaper = misterioCfg.wallpaper;
 
   wlr-randr = lib.getExe pkgs.wlr-randr;
