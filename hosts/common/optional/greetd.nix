@@ -22,14 +22,19 @@ let
       echo "Turning off $output" >> /tmp/greetd-cage.log
       ${wlr-randr} --output $output --off
     done
-    ${vars} exec ${command}
+    ${vars} exec ${command} &>> /tmp/cage-kiosk.log
   ''}";
 in
 {
-  users.extraUsers.greeter.packages = [
-    gtkTheme.package
-    iconTheme.package
-  ];
+  users.extraUsers.greeter = {
+    packages = [
+      gtkTheme.package
+      iconTheme.package
+    ];
+    # For caching and such
+    home = "/tmp/greeter-home";
+    createHome = true;
+  };
 
   programs.regreet = {
     enable = true;
