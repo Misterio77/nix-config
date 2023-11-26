@@ -14,18 +14,20 @@
   networking = {
     hostName = "merope";
     useDHCP = true;
-    interfaces.eth0 = {
-      useDHCP = true;
-      wakeOnLan.enable = true;
-
-      ipv4.addresses = [{
-        address = "192.168.0.11";
-        prefixLength = 24;
-      }];
-      ipv6.addresses = [{
-        address = "2804:14d:8082:8859::1";
-        prefixLength = 64;
-      }];
+    interfaces = rec {
+      eth0 = {
+        useDHCP = true;
+        wakeOnLan.enable = true;
+        ipv4.addresses = [{
+          address = "192.168.0.11";
+          prefixLength = 24;
+        }];
+        ipv6.addresses = [{
+          address = "2804:14d:8082:8859::1";
+          prefixLength = 64;
+        }];
+      };
+      wla0 = eth0;
     };
   };
 
