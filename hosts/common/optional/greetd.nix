@@ -11,12 +11,11 @@ let
 
   sway-kiosk = command: "${lib.getExe pkgs.sway} --config ${pkgs.writeText "kiosk.config" ''
     output * bg #000000 solid_color
-    exec "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"
     xwayland disable
     input "type:touchpad" {
       tap enabled
     }
-    exec '${vars} ${command}; ${pkgs.sway}/bin/swaymsg exit'
+    exec 'GTK_USE_PORTAL=0 ${vars} ${command}; ${pkgs.sway}/bin/swaymsg exit'
   ''}";
 in
 {
