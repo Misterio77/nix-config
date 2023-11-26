@@ -22,7 +22,7 @@ let
       echo "Turning off $output" >> /tmp/greetd-cage.log
       ${wlr-randr} --output $output --off
     done
-    exec ${vars} ${command}
+    ${vars} exec ${command}
   ''}";
 in
 {
