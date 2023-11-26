@@ -18,9 +18,10 @@
     package = pkgs.inputs.hyprland.hyprland;
     systemd = {
       enable = true;
+      # Same as default, but stop graphical-session too
       extraCommands = lib.mkBefore [
-        # Make sure graphical-session is deactivated before activating hyprland-session
         "systemctl --user stop graphical-session.target"
+        "systemctl --user start hyprland-session.target"
       ];
     };
 
