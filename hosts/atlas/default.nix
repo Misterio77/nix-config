@@ -33,11 +33,6 @@
     kdeconnect.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-  };
-
   services.hardware.openrgb.enable = true;
   hardware = {
     opengl.enable = true;

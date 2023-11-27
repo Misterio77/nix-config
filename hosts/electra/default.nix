@@ -44,10 +44,6 @@
     lidSwitchExternalPower = "lock";
   };
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-  };
   hardware = {
     /*
       nvidia = {

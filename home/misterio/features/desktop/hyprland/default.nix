@@ -7,6 +7,11 @@
     ./hyprbars.nix
   ];
 
+  xdg.portal = {
+    extraPortals = [ pkgs.inputs.hyprland.xdg-desktop-portal-hyprland ];
+    configPackages = [ pkgs.inputs.hyprland.hyprland ];
+  };
+
   home.packages = with pkgs; [
     inputs.hyprwm-contrib.grimblast
     hyprslurp

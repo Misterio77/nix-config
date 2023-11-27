@@ -38,10 +38,6 @@
     lidSwitchExternalPower = "lock";
   };
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-  };
   hardware.opengl.enable = true;
 
   system.stateVersion = "22.05";
