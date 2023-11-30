@@ -529,16 +529,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1682669017,
-        "narHash": "sha256-Vi+p4y3wnl0/4gcwTdmCO398kKlDaUrNROtf3GOD2NY=",
+        "lastModified": 1701263465,
+        "narHash": "sha256-lNXUIlkfyDyp9Ox21hr+wsEf/IBklLvb6bYcyeXbdRc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7449971a3ecf857b4a554cf79b1d9dcc1a4647d8",
+        "rev": "50aa30a13c4ab5e7ba282da460a3e3d44e9d0eb3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.11",
+        "ref": "nixos-23.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -580,11 +580,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1691861177,
-        "narHash": "sha256-vSzWw0NDjHYpLlchBaPBfPQr7t3yxL7/UnrCh+pJxXg=",
+        "lastModified": 1701369269,
+        "narHash": "sha256-dXtwxF+duu+Ducu0JiQ7VxjcOFUumqjBLSZNL/cItSw=",
         "owner": "misterio77",
         "repo": "paste.misterio.me",
-        "rev": "49886097a56794b260926f9a3a8c4d30127deb40",
+        "rev": "638b5746a971bb01c574f2c0678ce7114dec8208",
         "type": "github"
       },
       "original": {
