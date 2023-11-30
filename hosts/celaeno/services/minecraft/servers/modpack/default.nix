@@ -56,16 +56,16 @@ in
         url = "https://github.com/Phelms215/${pname}-fabric/releases/download/${version}/${pname}-${version}.jar";
         hash = "sha256-x2k090WCMAfpXLBRE6Mz/NyISalzoz+a48809ThPsCQ=";
       };
-      "mods/LuckPerms.jar" = let build = "1515"; in pkgs.fetchurl rec {
+      "mods/LuckPerms.jar" = pkgs.fetchurl rec {
         pname = "LuckPerms";
-        version = "5.4.102";
-        url = "https://download.luckperms.net/${build}/fabric/${pname}-Fabric-${version}.jar";
-        hash = "sha256-rZ9rNFkiS12Id0JjvVZCFfcITB91A9FeC7LFSq/EFYI=";
+        version = "5.4.25";
+        url = "https://mediafilez.forgecdn.net/files/3807/225/${pname}-Fabric-${version}.jar";
+        hash = "sha256-hXlzmXcMTkhuAj1UmQMI+JasDv5o/tJbVqzZ9ylQRsU=";
       };
     };
 
     files = collectFilesAt modpack "config" // {
-      "config/luckperms/luckperms.conf".format = pkgs.formats.yaml { };
+      "config/luckperms/luckperms.conf".format = pkgs.formats.json { };
       "config/luckperms/luckperms.conf".value = {
         server = "modpack";
         storage-method = "mysql";
@@ -79,7 +79,7 @@ in
         messaging-service = "sql";
       };
       "config/FabricProxy-Lite.toml".value = {
-        hackEarlySend = false; # Needed for luckperms
+        hackEarlySend = true; # Needed for luckperms
         hackOnlineMode = false;
         secret = "@VELOCITY_FORWARDING_SECRET@";
       };
