@@ -57,10 +57,16 @@
         # Unfullscreen when opening something
         new_window_takes_over_fullscreen = 2;
       };
-      layerrule = [ "blur,waybar" ];
+      layerrule = [
+        "blur,waybar"
+        "ignorezero,waybar"
+      ];
+      blurls = [
+        "waybar"
+      ];
 
       decoration = {
-        active_opacity = 0.92;
+        active_opacity = 0.94;
         inactive_opacity = 0.75;
         fullscreen_opacity = 1.0;
         rounding = 5;

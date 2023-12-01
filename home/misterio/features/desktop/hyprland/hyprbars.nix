@@ -18,6 +18,7 @@ in {
         "col.text" = "0xee${config.colorscheme.colors.base05}";
         bar_text_font = config.fontProfiles.regular.family;
         bar_text_size = 12;
+        bar_part_of_window = true;
         hyprbars-button = let
           closeAction = "hyprctl dispatch killactive";
 

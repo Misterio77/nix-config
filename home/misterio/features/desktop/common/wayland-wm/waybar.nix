@@ -323,21 +323,12 @@ in
         margin-left: -15px;
       }
 
-      window#waybar.top {
-        opacity: 0.95;
-        padding: 0;
-        background-color: #${colors.base00};
-        border: 2px solid #${colors.base0C};
-        border-radius: 10px;
-      }
-      window#waybar.bottom {
-        opacity: 0.90;
-        background-color: #${colors.base00};
-        border: 2px solid #${colors.base0C};
-        border-radius: 10px;
-      }
-
       window#waybar {
+        opacity: 0.85;
+        padding: 0;
+        background-color: #${colors.base01};
+        border: 2px solid #${colors.base0C};
+        border-radius: 10px;
         color: #${colors.base05};
       }
 
@@ -348,18 +339,18 @@ in
         margin: 3px 0;
       }
       #workspaces button.hidden {
-        background-color: #${colors.base00};
+        background-color: #${colors.base01};
         color: #${colors.base04};
       }
       #workspaces button.focused,
       #workspaces button.active {
         background-color: #${colors.base0A};
-        color: #${colors.base00};
+        color: #${colors.base01};
       }
 
       #clock {
         background-color: #${colors.base0C};
-        color: #${colors.base00};
+        color: #${colors.base01};
         padding-left: 15px;
         padding-right: 15px;
         margin-top: 0;
