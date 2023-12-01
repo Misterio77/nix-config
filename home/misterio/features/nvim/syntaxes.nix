@@ -1,14 +1,4 @@
-{ pkgs, config, lib, ... }: let
-  nvim-treesitter = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.overrideAttrs (oldAttrs: {
-    postPatch = "";
-    src = pkgs.fetchFromGitHub {
-      owner = "nvim-treesitter";
-      repo = "nvim-treesitter";
-      rev = "49e71322db582147ce8f4df1853d9dab08da0826";
-      hash =  "sha256-i7/YKin/AuUgzKvGgAzNTEGXlrejtucJacFXh8t/uFs=";
-    };
-  });
-in {
+{ pkgs, config, lib, ... }: {
   programs.neovim = {
     extraConfig = lib.mkAfter /* vim */ ''
       function! SetCustomKeywords()
