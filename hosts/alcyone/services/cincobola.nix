@@ -29,6 +29,7 @@ in {
     locations = {
       "/" = {
         root = cincobola;
+        tryFiles = "$uri $uri.html $uri/ =404";
         extraConfig = ''
           add_header Cache-Control "max-age=${toString (minutes 15)}";
         '';
