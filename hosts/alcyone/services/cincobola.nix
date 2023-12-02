@@ -31,7 +31,7 @@ in {
         root = cincobola;
         tryFiles = "$uri $uri.html $uri/ =404";
         extraConfig = ''
-          error_page 404 /404.html
+          error_page 404 /404.html;
           add_header Cache-Control "max-age=${toString (minutes 15)}";
         '';
       };
