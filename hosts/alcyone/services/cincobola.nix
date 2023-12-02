@@ -8,6 +8,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "misterio77";
       repo = "BSI-SCC0560";
+      rev = "bd1dcc3";
+      hash = "sha256-npPYxuZkqZWS0nRGc9IpTNviWzF5sFNUeVTdS6486lg=";
     };
     buildInputs = [ pkgs.jekyll ];
     buildPhase = ''
