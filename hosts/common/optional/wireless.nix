@@ -36,13 +36,13 @@
         pskRaw = "@ZOOCHA@";
       };
       "eduroam" = {
+        authProtocols = [ "WPA-EAP" ];
         auth = ''
-          key_mgmt=WPA-EAP
           pairwise=CCMP
           group=CCMP TKIP
           eap=TTLS
           domain_suffix_match="semfio.usp.br"
-          ca_path="${pkgs.cacert}/etc/ssl/certs"
+          ca_cert="${./eduroam-cert.pem}"
           identity="10856803@usp.br"
           password="@EDUROAM@"
           phase2="auth=MSCHAPV2"
