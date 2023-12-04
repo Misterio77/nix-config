@@ -4,7 +4,6 @@
     ./steam.nix
     ./prism-launcher.nix
     ./runescape.nix
-    ./star-citizen.nix
   ];
   home = {
     packages = with pkgs; [ gamescope ];
