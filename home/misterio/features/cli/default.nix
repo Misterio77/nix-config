@@ -37,6 +37,7 @@
     nil # Nix LSP
     nixfmt # Nix formatter
     nix-inspect # See which pkgs are in your PATH
+    inputs.nh.default # Nice wrapper for NixOS and HM
 
     ltex-ls # Spell checking LSP
 
