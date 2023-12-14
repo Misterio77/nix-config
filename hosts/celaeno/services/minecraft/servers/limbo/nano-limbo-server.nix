@@ -17,4 +17,6 @@ stdenv.mkDerivation rec {
     EOF
     chmod +x $out/bin/${pname}
   '';
+
+  meta.mainProgram = pname;
 }
