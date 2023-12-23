@@ -1,7 +1,8 @@
 { pkgs, lib, config, ... }:
 let
   inherit (lib) mkIf;
-  hasPackage = pname: lib.any (p: p ? pname && p.pname == pname) config.home.packages;
+  packageNames = map (p: p.pname or p.name or null) config.home.packages;
+  hasPackage = name: lib.any (x: x == name) packageNames;
   hasRipgrep = hasPackage "ripgrep";
   hasExa = hasPackage "eza";
   hasNeovim = config.programs.neovim.enable;
