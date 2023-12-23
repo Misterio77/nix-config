@@ -1,4 +1,4 @@
 { inputs, ... }: {
   imports = [ ./global ];
-  colorscheme = inputs.nix-colors.colorSchemes.dracula;
+  colorscheme = inputs.nix-colors.colorSchemes.unikitty-dark;
 }

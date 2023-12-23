@@ -1,5 +1,6 @@
-{ inputs, outputs, ... }:
-{
+{ inputs, outputs, lib, ... }: let
+  inherit (inputs.nix-colors) colorSchemes;
+in {
   imports = [
     ./global
     ./features/desktop/wireless
@@ -7,8 +8,10 @@
     ./features/pass
   ];
 
-  wallpaper = outputs.wallpapers.aenami-wait;
-  colorscheme = inputs.nix-colors.colorSchemes.silk-dark;
+  colorscheme = lib.mkDefault colorSchemes.silk-dark;
+  specialisation = {
+    light.configuration.colorscheme = colorSchemes.silk-light;
+  };
 
   monitors = [
     {

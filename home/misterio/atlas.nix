@@ -1,4 +1,6 @@
-{ inputs, outputs, ... }: {
+{ inputs, outputs, lib, ... }: let
+  inherit (inputs.nix-colors) colorSchemes;
+in {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -10,8 +12,10 @@
     ./features/music
   ];
 
-  colorscheme = inputs.nix-colors.colorschemes.paraiso;
-  wallpaper = outputs.wallpapers.cyberpunk-city-red;
+  colorscheme = lib.mkDefault colorSchemes.tokyo-city-terminal-dark;
+  specialisation = {
+    light.configuration.colorscheme = colorSchemes.tokyo-city-terminal-light;
+  };
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

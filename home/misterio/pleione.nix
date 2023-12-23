@@ -10,8 +10,6 @@ in {
     ./features/games
   ];
 
-  wallpaper = outputs.wallpapers.aenami-lunar;
-
   colorscheme = lib.mkDefault colorSchemes.atelier-heath;
   specialisation = {
     light.configuration.colorscheme = colorSchemes.atelier-heath-light;
