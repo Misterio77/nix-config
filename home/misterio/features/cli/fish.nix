@@ -5,6 +5,7 @@ let
   hasPackage = name: lib.any (x: x == name) packageNames;
   hasRipgrep = hasPackage "ripgrep";
   hasExa = hasPackage "eza";
+  hasSpecialisationCli = hasPackage "specialisation";
   hasNeovim = config.programs.neovim.enable;
   hasEmacs = config.programs.emacs.enable;
   hasNeomutt = config.programs.neomutt.enable;
@@ -32,6 +33,8 @@ in
       snrs = "sudo nixos-rebuild --flake . switch";
       hm = "home-manager --flake .";
       hms = "home-manager --flake . switch";
+
+      s = mkIf hasSpecialisationCli "specialisation";
 
       ls = mkIf hasExa "eza";
       exa = mkIf hasExa "eza";
