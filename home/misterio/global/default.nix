@@ -1,7 +1,7 @@
 { inputs, lib, pkgs, config, outputs, ... }:
 let
   inherit (inputs.nix-colors) colorSchemes;
-  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) colorschemeFromPicture nixWallpaperFromScheme;
+  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) nixWallpaperFromScheme;
 in
 {
   imports = [
@@ -58,7 +58,11 @@ in
     };
   };
 
-  colorscheme = lib.mkDefault colorSchemes.dracula;
+  colorscheme = lib.mkOverride 1501 colorSchemes.dracula;
+  specialisation = {
+    dark.configuration.colorscheme = lib.mkOverride 1500 config.colorscheme;
+    light.configuration.colorscheme = lib.mkOverride 1500 config.colorscheme;
+  };
   home.file = {
     ".colorscheme".text = config.colorscheme.slug;
     ".colorscheme.json".text = builtins.toJSON config.colorscheme;
