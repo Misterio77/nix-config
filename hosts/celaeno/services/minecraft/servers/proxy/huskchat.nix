@@ -6,9 +6,9 @@
     symlinks = {
       "plugins/HuskChat.jar" = pkgs.fetchurl rec {
         pname = "HuskChat";
-        version = "2.4.1";
+        version = "2.7.1";
         url = "https://github.com/WiIIiam278/${pname}/releases/download/${version}/${pname}-${version}.jar";
-        hash = "sha256-Zr/OxZH+EfLG86b+0rYLUw3FBcKYiKgZ21Nstf48670=";
+        hash = "sha256-Vg0xu2Z7WeeabK1r5qOw9STcK9kxA5ApshljyXDUy7M=";
       };
       "plugins/UnSignedVelocity.jar" = pkgs.fetchurl rec {
         pname = "UnSignedVelocity";
@@ -81,6 +81,17 @@
         };
         message_replacers.emoji_replacer.enabled = false;
         discord.enabled = false;
+        join_and_quit_messages = {
+          join = {
+            enable = true;
+            format = "&f%name%&e entrou no servidor";
+          };
+          quit = {
+            enable = true;
+            format = "&f%name%&e saiu do servidor";
+          };
+          broadcast_scope = "GLOBAL";
+        };
       };
       "plugins/huskchat/messages-pt-br.yml".value = {
         error_no_permission = "[Erro:](#ff3300) [Você não tem permissão para usar esse comando.](#ff7e5e)";

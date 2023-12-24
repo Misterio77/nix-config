@@ -12,7 +12,6 @@ in
     ./fallbackserver.nix
     ./huskchat.nix
     ./velocitab.nix
-    ./vmessage.nix
   ];
   services.minecraft-servers.servers.proxy = {
     enable = true;
