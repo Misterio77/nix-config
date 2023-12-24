@@ -71,18 +71,20 @@ in
         ];
 
         modules-center = [
+          "cpu"
+          "custom/gpu"
+          "memory"
+          "clock"
           "pulseaudio"
           "battery"
-          "clock"
           "custom/unread-mail"
           "custom/gpg-agent"
         ];
 
         modules-right = [
-          "network"
+          # "custom/gammastep" TODO: currently broken for some reason
           "custom/tailscale-ping"
-          # TODO: currently broken for some reason
-          # "custom/gammastep"
+          "network"
           "tray"
           "custom/hostname"
         ];
@@ -96,6 +98,20 @@ in
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
         };
+
+        cpu = {
+          format = "  {usage}%";
+        };
+        "custom/gpu" = {
+          interval = 5;
+          exec = "${cat} /sys/class/drm/card0/device/gpu_busy_percent";
+          format = "󰒋  {}%";
+        };
+        memory = {
+          format = "  {}%";
+          interval = 5;
+        };
+
         pulseaudio = {
           format = "{icon}  {volume}%";
           format-muted = "   0%";
@@ -312,75 +328,76 @@ in
       * {
         font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
         font-size: 12pt;
-        padding: 0 8px;
-      }
-
-      .modules-right {
-        margin-right: -15px;
-      }
-
-      .modules-left {
-        margin-left: -15px;
+        padding: 0;
+        margin: 0 0.4em;
       }
 
       window#waybar {
-        opacity: 0.85;
+        opacity: 0.65;
         padding: 0;
-        background-color: #${colors.base01};
+        background-color: #${colors.base00};
         border: 2px solid #${colors.base0C};
-        border-radius: 10px;
+        border-radius: 0.5em;
         color: #${colors.base05};
+      }
+      .modules-left {
+        margin-left: -0.65em;
+      }
+      .modules-right {
+        margin-right: -0.65em;
       }
 
       #workspaces button {
-        background-color: #${colors.base01};
+        background-color: #${colors.base00};
         color: #${colors.base05};
-        padding: 5px 1px;
-        margin: 3px 0;
+        padding-left: 0.4em;
+        padding-right: 0.4em;
+        margin-top: 0.15em;
+        margin-bottom: 0.15em;
       }
       #workspaces button.hidden {
-        background-color: #${colors.base01};
+        background-color: #${colors.base00};
         color: #${colors.base04};
       }
       #workspaces button.focused,
       #workspaces button.active {
         background-color: #${colors.base0A};
-        color: #${colors.base01};
+        color: #${colors.base00};
       }
 
       #clock {
         background-color: #${colors.base0C};
-        color: #${colors.base01};
-        padding-left: 15px;
-        padding-right: 15px;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-radius: 10px;
+        color: #${colors.base00};
+        padding-right: 1em;
+        padding-left: 1em;
+        border-radius: 0.5em;
       }
 
       #custom-menu {
         background-color: #${colors.base0C};
         color: #${colors.base00};
-        padding-left: 15px;
-        padding-right: 22px;
-        margin: 0;
-        border-radius: 10px;
+        padding-right: 1.5em;
+        padding-left: 1em;
+        margin-right: 0;
+        border-radius: 0.5em;
       }
       #custom-hostname {
         background-color: #${colors.base0C};
         color: #${colors.base00};
-        padding-left: 15px;
-        padding-right: 18px;
-        margin-right: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-radius: 10px;
+        padding-right: 1em;
+        padding-left: 1em;
+        margin-left: 0;
+        border-radius: 0.5em;
       }
       #custom-currentplayer {
         padding-right: 0;
       }
       #tray {
         color: #${colors.base05};
+      }
+      #custom-gpu, #cpu, #memory {
+        margin-left: 0.05em;
+        margin-right: 0.55em;
       }
     '';
   };
