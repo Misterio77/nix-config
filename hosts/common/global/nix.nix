@@ -1,6 +1,10 @@
-{ inputs, lib, ... }:
+{ inputs, lib, pkgs, ... }:
 {
   nix = {
+    # TODO: switch back to stable after https://github.com/NixOS/nix/pull/9547
+    # hits it.
+    package = pkgs.inputs.nix.nix;
+
     settings = {
       substituters = [
         "https://cache.m7.rs"
