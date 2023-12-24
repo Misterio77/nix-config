@@ -83,11 +83,11 @@
         discord.enabled = false;
         join_and_quit_messages = {
           join = {
-            enable = true;
+            enabled = true;
             format = "&f%name%&e entrou no servidor";
           };
           quit = {
-            enable = true;
+            enabled = true;
             format = "&f%name%&e saiu do servidor";
           };
           broadcast_scope = "GLOBAL";
