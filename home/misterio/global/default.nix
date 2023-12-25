@@ -58,10 +58,10 @@ in
     };
   };
 
-  colorscheme = lib.mkOverride 1501 colorSchemes.dracula;
+  colorscheme = lib.mkOverride 1499 colorSchemes.dracula;
   specialisation = {
-    dark.configuration.colorscheme = lib.mkOverride 1500 config.colorscheme;
-    light.configuration.colorscheme = lib.mkOverride 1500 config.colorscheme;
+    dark.configuration.colorscheme = lib.mkOverride 1498 config.colorscheme;
+    light.configuration.colorscheme = lib.mkOverride 1498 config.colorscheme;
   };
   home.file = {
     ".colorscheme".text = config.colorscheme.slug;
