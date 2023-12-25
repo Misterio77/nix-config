@@ -39,12 +39,12 @@ in
         servers = {
           lobby = "localhost:${toString servers.lobby.serverProperties.server-port}";
           survival = "localhost:${toString servers.survival.serverProperties.server-port}";
-          modpack = "localhost:${toString servers.modpack.serverProperties.server-port}";
+          # modpack = "localhost:${toString servers.modpack.serverProperties.server-port}";
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
           try = [ "lobby" ];
         };
         forced-hosts = {
-          "modpack.m7.rs" = [ "modpack" "lobby" ];
+          # "modpack.m7.rs" = [ "modpack" "lobby" ];
           "survival.m7.rs" = [ "survival" "lobby" ];
         };
         query = {

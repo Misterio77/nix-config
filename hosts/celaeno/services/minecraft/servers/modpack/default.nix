@@ -50,12 +50,6 @@ in
         url = "https://cdn.modrinth.com/data/YkOyn1Pn/versions/${version}/${pname}-${version}.jar";
         hash = "sha256-36Ir0fT/1XEq63vpAY1Fvg+G9cYdLk4ZKe4YTIEpdGg=";
       };
-      "mods/JoinLeaveMessages-Fabric.jar" = pkgs.fetchurl rec {
-        pname = "joinleavemessages";
-        version = "1.2.1";
-        url = "https://github.com/Phelms215/${pname}-fabric/releases/download/${version}/${pname}-${version}.jar";
-        hash = "sha256-x2k090WCMAfpXLBRE6Mz/NyISalzoz+a48809ThPsCQ=";
-      };
       "mods/LuckPerms.jar" = pkgs.fetchurl rec {
         pname = "LuckPerms";
         version = "5.4.25";

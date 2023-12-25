@@ -5,7 +5,8 @@
     ./servers/limbo
     ./servers/lobby
     ./servers/survival
-    ./servers/modpack
+    # Disabled for now, while I work out some issues with the mods
+    # ./servers/modpack
   ];
 
   sops.secrets.minecraft-secrets = {
