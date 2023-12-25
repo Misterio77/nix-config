@@ -1,9 +1,9 @@
 { pkgs, lib, ... }:
 let
   modpack = pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.19";
+    version = "0.2.20";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-nScMisbK0HlOILSOXBUy/Qn/uWLr0f3s9CZ/lStZ+LU=";
+    packHash = "sha256-pQdb6eGGl4MZVXdh7hVBQPfw70cSZQFe0qNCnnTmE4I=";
   };
 
   # Get a given path's (usually a modpack) files at a specific subdirectory
