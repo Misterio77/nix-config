@@ -1,9 +1,9 @@
 { pkgs, lib, ... }:
 let
   modpack = pkgs.inputs.nix-minecraft.fetchPackwizModpack rec {
-    version = "0.2.20";
+    version = "5864ae6";
     url = "https://github.com/Misterio77/Modpack/raw/${version}/pack.toml";
-    packHash = "sha256-pQdb6eGGl4MZVXdh7hVBQPfw70cSZQFe0qNCnnTmE4I=";
+    packHash = "sha256-7sC/hPAMxA8vn5pwh6lQ5lS4YACZkb7+DjdR0xAqr+4=";
   };
 
   # Get a given path's (usually a modpack) files at a specific subdirectory
@@ -17,8 +17,8 @@ let
     (x: builtins.unsafeDiscardStringContext (lib.removePrefix "${path}/" x))
     (lib.id) (lib.filesystem.listFilesRecursive "${path}/${prefix}");
 
-  mcVersion = "${modpack.manifest.versions.minecraft}";
-  fabricVersion = "${modpack.manifest.versions.fabric}";
+  mcVersion = modpack.manifest.versions.minecraft;
+  fabricVersion = modpack.manifest.versions.fabric;
   serverVersion = lib.replaceStrings [ "." ] [ "_" ] "fabric-${mcVersion}-${fabricVersion}";
 in
 {
