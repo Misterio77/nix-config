@@ -22,7 +22,7 @@
 
   swapDevices = [{
     device = "/swap/swapfile";
-    size = 2048;
+    size = 3072;
   }];
 
   hardware.cpu.intel.updateMicrocode = true;
