@@ -61,9 +61,6 @@
         "blur,waybar"
         "ignorezero,waybar"
       ];
-      blurls = [
-        "waybar"
-      ];
 
       decoration = {
         active_opacity = 0.94;

@@ -333,7 +333,6 @@ in
       }
 
       window#waybar {
-        opacity: 0.65;
         padding: 0;
         background-color: #${colors.base00};
         border: 2px solid #${colors.base0C};
