@@ -1,9 +1,10 @@
 { inputs, lib, pkgs, ... }:
 {
   nix = {
-    # TODO: switch back to stable after https://github.com/NixOS/nix/pull/9547
-    # hits it.
-    package = pkgs.inputs.nix.nix;
+    # TODO
+    # https://github.com/NixOS/nix/issues/9579
+    # https://github.com/NixOS/nix/pull/9547
+    package = pkgs.nixVersions.nix_2_18;
 
     settings = {
       substituters = [
