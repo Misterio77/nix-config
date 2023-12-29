@@ -334,9 +334,9 @@ in
 
       window#waybar {
         padding: 0;
-        background-color: #${colors.base00};
-        border: 2px solid #${colors.base0C};
+        opacity: 0.75;
         border-radius: 0.5em;
+        background-color: #${colors.base00};
         color: #${colors.base05};
       }
       .modules-left {
@@ -365,24 +365,21 @@ in
       }
 
       #clock {
-        background-color: #${colors.base0C};
-        color: #${colors.base00};
+        background-color: #${colors.base01};
         padding-right: 1em;
         padding-left: 1em;
         border-radius: 0.5em;
       }
 
       #custom-menu {
-        background-color: #${colors.base0C};
-        color: #${colors.base00};
+        background-color: #${colors.base01};
         padding-right: 1.5em;
         padding-left: 1em;
         margin-right: 0;
         border-radius: 0.5em;
       }
       #custom-hostname {
-        background-color: #${colors.base0C};
-        color: #${colors.base00};
+        background-color: #${colors.base01};
         padding-right: 1em;
         padding-left: 1em;
         margin-left: 0;
