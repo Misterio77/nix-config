@@ -12,6 +12,7 @@ in {
     ./features/music
   ];
 
+  wallpaper = outputs.wallpapers.aurora-borealis-water-mountain;
   colorscheme = lib.mkDefault colorSchemes.tokyo-city-terminal-dark;
   specialisation = {
     light.configuration.colorscheme = colorSchemes.tokyo-city-terminal-light;
