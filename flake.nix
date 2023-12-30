@@ -98,8 +98,6 @@
       devShells = forEachSystem (pkgs: import ./shell.nix { inherit pkgs; });
       formatter = forEachSystem (pkgs: pkgs.nixpkgs-fmt);
 
-      wallpapers = import ./home/misterio/wallpapers;
-
       nixosConfigurations = {
         # Main desktop
         atlas =  lib.nixosSystem {

@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, ... }: let
+{ inputs, lib, pkgs, ... }: let
   inherit (inputs.nix-colors) colorSchemes;
 in {
   imports = [
@@ -12,7 +12,7 @@ in {
     ./features/music
   ];
 
-  wallpaper = outputs.wallpapers.aurora-borealis-water-mountain;
+  wallpaper = pkgs.wallpapers.aurora-borealis-water-mountain;
   colorscheme = lib.mkDefault colorSchemes.tokyo-city-terminal-dark;
   specialisation = {
     light.configuration.colorscheme = colorSchemes.tokyo-city-terminal-light;

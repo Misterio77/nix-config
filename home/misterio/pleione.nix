@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, ... }: let
+{ inputs, lib, pkgs, ... }: let
   inherit (inputs.nix-colors) colorSchemes;
 in {
   imports = [
@@ -10,7 +10,7 @@ in {
     ./features/games
   ];
 
-  wallpaper = outputs.wallpapers.aenami-dawn;
+  wallpaper = pkgs.wallpapers.aenami-dawn;
   colorscheme = lib.mkDefault colorSchemes.atelier-heath;
   specialisation = {
     light.configuration.colorscheme = colorSchemes.atelier-heath-light;
