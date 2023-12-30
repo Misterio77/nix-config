@@ -45,6 +45,9 @@ in
     # https://github.com/NixOS/nix/issues/5567#issuecomment-1193259926
     # nix = addPatches prev.nix [ ./nix-make-installables-expr-context.patch ];
 
+    # https://github.com/NixOS/nix/issues/7098
+    hydra_unstable = addPatches prev.hydra_unstable [ ./hydra-restrict-eval.diff ];
+
     xdg-utils-spawn-terminal = addPatches prev.xdg-utils [ ./xdg-open-spawn-terminal.diff ];
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {

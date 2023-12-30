@@ -12,18 +12,12 @@ in
     ./machines.nix
   ];
 
-  # https://github.com/NixOS/nix/issues/5039
-  # https://github.com/NixOS/nix/issues/7098
-  nix.extraOptions = ''
-    allowed-uris = https: ssh: git: github: gitlab: sourcehut:
-  '';
   # https://github.com/NixOS/nix/issues/4178#issuecomment-738886808
   systemd.services.hydra-evaluator.environment.GC_DONT_GC = "true";
 
   services = {
     hydra = {
       enable = true;
-      package = pkgs.hydra_unstable.override { nix = config.nix.package; };
       hydraURL = "https://hydra.m7.rs";
       notificationSender = "hydra@m7.rs";
       listenHost = "localhost";
