@@ -34,6 +34,11 @@
   networking.firewall = {
     # Remote control port
     allowedTCPPorts = [ 58846 ];
+    # Listen
+    allowedTCPPortRanges = [{
+      from = 6880;
+      to = 6890;
+    }];
   };
 
   environment.persistence = {

@@ -14,8 +14,9 @@
   networking = {
     hostName = "merope";
     useDHCP = true;
-    interfaces = rec {
-      eth0 = {
+    interfaces = {
+      # TODO change to eth0
+      wlan0 = {
         useDHCP = true;
         wakeOnLan.enable = true;
         ipv4.addresses = [{
@@ -27,7 +28,6 @@
           prefixLength = 64;
         }];
       };
-      wla0 = eth0;
     };
   };
 
