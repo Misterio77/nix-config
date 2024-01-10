@@ -51,9 +51,7 @@
       };
       custom = {
         nix_inspect = let
-          excluded = [
-            "kitty" "imagemagick" "ncurses" "user-environment" "pciutils" "binutils-wrapper"
-          ];
+          excluded = [ "kitty" "imagemagick" "ncurses" "user-environment" ];
         in {
           disabled = false;
           when = "test -z $IN_NIX_SHELL";
