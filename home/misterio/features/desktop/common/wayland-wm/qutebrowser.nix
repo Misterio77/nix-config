@@ -30,7 +30,6 @@ in
       tabs = {
         show = "multiple";
         position = "left";
-        tree_tabs = true;
       };
       fonts = {
         default_family = config.fontProfiles.regular.family;
