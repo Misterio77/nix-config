@@ -42,9 +42,6 @@ in
     # https://github.com/mdellweg/pass_secret_service/pull/37
     pass-secret-service = addPatches prev.pass-secret-service [ ./pass-secret-service-native.diff ];
 
-    # https://github.com/NixOS/nix/issues/5567#issuecomment-1193259926
-    # nix = addPatches prev.nix [ ./nix-make-installables-expr-context.patch ];
-
     # https://github.com/NixOS/nix/issues/7098
     hydra_unstable = addPatches prev.hydra_unstable [ ./hydra-restrict-eval.diff ];
 
