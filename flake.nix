@@ -13,11 +13,6 @@
     impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
 
-    nix = {
-      url = "github:nixos/nix/2.19-maintenance";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-regression.follows = "nixpkgs";
-    };
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
