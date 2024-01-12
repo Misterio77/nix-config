@@ -4,12 +4,11 @@
   src = ./src;
 
   buildPhase = lib.optionalString (logo != null) ''
-    cp $src . -r
-    ln -s ${logo} ./share/plymouth/themes/spinner-monochrome/watermark.png
+    ln -s ${logo} watermark.png
   '';
-
   installPhase = ''
-    cp -r . $out
+    mkdir -p $out/share/plymouth/themes
+    cp -rT . $out/share/plymouth/themes/spinner-monochrome
   '';
 
   meta = {
