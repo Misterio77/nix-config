@@ -4,7 +4,6 @@
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
-  hdos = pkgs.callPackage ./hdos { };
 
   # Personal scripts
   nix-inspect = pkgs.callPackage ./nix-inspect { };
