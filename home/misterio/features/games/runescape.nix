@@ -16,7 +16,6 @@ let
 in {
   home.packages = [
     runescape
-    pkgs.hdos
     pkgs.runelite
   ];
 
