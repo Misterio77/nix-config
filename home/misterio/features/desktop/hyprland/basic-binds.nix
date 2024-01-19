@@ -32,8 +32,10 @@
 
       "SUPER,g,togglegroup"
       "SUPER,t,lockactivegroup,toggle"
-      "SUPER,apostrophe,changegroupactive,f"
-      "SUPERSHIFT,apostrophe,changegroupactive,b"
+      "SUPER,tab,changegroupactive,f"
+      "SUPERSHIFT,tab,changegroupactive,b"
+
+      "SUPER,apostrophe,workspace,previous"
 
       "SUPER,u,togglespecialworkspace"
       "SUPERSHIFT,u,movetoworkspacesilent,special"

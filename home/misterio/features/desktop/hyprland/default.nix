@@ -54,6 +54,7 @@
       misc = {
         vfr = true;
         close_special_on_empty = true;
+        focus_on_activate = true;
         # Unfullscreen when opening something
         new_window_takes_over_fullscreen = 2;
       };
