@@ -58,6 +58,10 @@
         # Unfullscreen when opening something
         new_window_takes_over_fullscreen = 2;
       };
+      windowrulev2 = [
+        "stayfocused, title:^()$,class:^(steam)$"
+        "minsize 1 1, title:^()$,class:^(steam)$"
+      ];
       layerrule = [
         "blur,waybar"
         "ignorezero,waybar"
