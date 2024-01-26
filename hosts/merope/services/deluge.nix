@@ -29,6 +29,7 @@
     sopsFile = ../secrets.yaml;
     owner = config.users.users.deluge.name;
     group = config.users.users.deluge.group;
+    mode = "0600";
   };
 
   networking.firewall = {
