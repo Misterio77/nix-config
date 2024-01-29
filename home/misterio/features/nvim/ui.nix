@@ -43,7 +43,6 @@
             dashboard.button( "g", " Git summary", ":Git | :only<CR>"),
             dashboard.button( "s", " Notes", ":e ~/Documents/Notes<CR>"),
             dashboard.button( "c", "  Nix config flake" , ":e ~/Documents/NixConfig/flake.nix<CR>"),
-            dashboard.button( "q", "󰅙  Quit nvim", ":qa<CR>"),
         }
 
         alpha.setup(dashboard.opts)
