@@ -20,6 +20,9 @@ in
       "Source colorscheme
       source ${color}
 
+      "Lets us easily trigger completion from binds
+      set wildcharm=<tab>
+
       "Set fold level to highest in file
       "so everything starts out unfolded at just the right level
       augroup initial_fold
@@ -71,14 +74,22 @@ in
       let g:netrw_banner = 0
       "Keep cursor location
       let g:netrw_fastbrowse = 2
+
       "Scroll up and down
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
 
       "Buffers
+      nmap <space>b :buffers<CR>
       nmap <C-l> :bnext<CR>
       nmap <C-h> :bprev<CR>
       nmap <C-q> :bdel<CR>
+
+      "Navigate
+      nmap <space>e :Explore .<cr>
+      "CD to current dir
+      nmap <space>c :cd<space>
+      nmap <space>C :cd %:h<tab>
 
       "Loclist
       nmap <space>l :lwindow<cr>
