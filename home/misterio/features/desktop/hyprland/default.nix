@@ -30,21 +30,22 @@
       ];
     };
 
-    settings = {
+    settings = let
+      active = "0xaa${config.colorscheme.colors.base0C}";
+      inactive = "0xaa${config.colorscheme.colors.base02}";
+    in {
       general = {
+        cursor_inactive_timeout = 4;
         gaps_in = 15;
         gaps_out = 20;
-        border_size = 2.7;
-        cursor_inactive_timeout = 4;
-        "col.active_border" = "0xff${config.colorscheme.colors.base0C}";
-        "col.inactive_border" = "0xff${config.colorscheme.colors.base02}";
+        border_size = 2;
+        "col.active_border" = active;
+        "col.inactive_border" = inactive;
       };
       group = {
-        "col.border_active" = "0xff${config.colorscheme.colors.base0B}";
-        "col.border_inactive" = "0xff${config.colorscheme.colors.base04}";
-        groupbar = {
-          font_size = 11;
-        };
+        "col.border_active" = active;
+        "col.border_inactive" = inactive;
+        groupbar.font_size = 11;
       };
       binds = {
         movefocus_cycles_fullscreen = false;
@@ -53,7 +54,10 @@
         kb_layout = "br,us";
         touchpad.disable_while_typing = false;
       };
-      dwindle.split_width_multiplier = 1.35;
+      dwindle = {
+        split_width_multiplier = 1.35;
+        pseudotile = true;
+      };
       misc = {
         vfr = true;
         close_special_on_empty = true;

@@ -39,6 +39,7 @@
 
       "SUPER,u,togglespecialworkspace"
       "SUPERSHIFT,u,movetoworkspacesilent,special"
+      "SUPER,i,pseudo"
     ] ++
     # Change workspace
     (map (n:
