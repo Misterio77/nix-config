@@ -58,6 +58,19 @@ in
       "Line numbers
       set number relativenumber
 
+      "Netrw fixes
+      "Make sure it is listed
+      let g:netrw_bufsettings = 'buflisted'
+      "Unbind C-l
+      augroup netrw_tweaks
+        autocmd!
+        autocmd filetype netrw setlocal bufhidden=delete
+        autocmd filetype netrw silent! nunmap <buffer> <C-l>
+      augroup END
+      "Hide banner
+      let g:netrw_banner = 0
+      "Keep cursor location
+      let g:netrw_fastbrowse = 2
       "Scroll up and down
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
