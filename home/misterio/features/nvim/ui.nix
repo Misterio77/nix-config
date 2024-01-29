@@ -46,7 +46,7 @@
         }
 
         alpha.setup(dashboard.opts)
-        vim.keymap.set("n", "<space>a", ":Alpha<CR>", { desc = "Open alpha dashboard" })
+        vim.keymap.set("n", "<space>h", ":Alpha<CR>", { desc = "Open home dashboard" })
       '';
     }
     {

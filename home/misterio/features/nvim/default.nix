@@ -107,10 +107,10 @@ in
       vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
       vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format code" })
       vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
-      vim.keymap.set("n", "<space>c", vim.lsp.buf.code_action, { desc = "Code action" })
+      vim.keymap.set("n", "<space>a", vim.lsp.buf.code_action, { desc = "Code action" })
 
       -- Diagnostic
-      vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, { desc = "Floating diagnostic" })
+      vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, { desc = "Floating diagnostic" })
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
       vim.keymap.set("n", "gl", vim.diagnostic.setloclist, { desc = "Diagnostics on loclist" })
@@ -143,7 +143,7 @@ in
   xdg.configFile."nvim/init.lua".onChange = /* bash */ ''
     XDG_RUNTIME_DIR=''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
     for server in $XDG_RUNTIME_DIR/nvim.*; do
-      nvim --server $server --remote-send ':source $MYVIMRC<CR>' &
+      nvim --server $server --remote-send '<Esc>:source $MYVIMRC<CR>' &
     done
   '';
 
