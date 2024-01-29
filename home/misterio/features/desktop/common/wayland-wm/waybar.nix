@@ -179,11 +179,17 @@ in
           format = "{}";
           on-click = "";
         };
-        "custom/menu" = {
+        "custom/menu" = let
+          isFullScreen =
+            if hasHyprland then "${hyprland}/bin/hyprctl activewindow -j | ${jq} -e '.fullscreen' &>/dev/null"
+            else "false";
+        in {
+          interval = 1;
           return-type = "json";
           exec = jsonOutput "menu" {
             text = "";
             tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
+            class = "$(if ${isFullScreen}; then echo fullscreen; fi)";
           };
           on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
           on-click-right = lib.concatStringsSep ";" (
@@ -377,6 +383,10 @@ in
         padding-left: 1em;
         margin-right: 0;
         border-radius: 0.5em;
+      }
+      #custom-menu.fullscreen {
+        background-color: #${colors.base0C};
+        color: #${colors.base00};
       }
       #custom-hostname {
         background-color: #${colors.base01};
