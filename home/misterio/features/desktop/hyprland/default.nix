@@ -46,6 +46,9 @@
           font_size = 11;
         };
       };
+      binds = {
+        movefocus_cycles_fullscreen = false;
+      };
       input = {
         kb_layout = "br,us";
         touchpad.disable_while_typing = false;
