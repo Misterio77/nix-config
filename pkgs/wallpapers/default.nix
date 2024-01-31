@@ -3,7 +3,8 @@ lib.listToAttrs (map
   (wallpaper: {
     inherit (wallpaper) name;
     value = fetchurl {
-      inherit (wallpaper) name sha256;
+      inherit (wallpaper) sha256;
+      name = "${wallpaper.name}.${wallpaper.ext}";
       url = "https://i.imgur.com/${wallpaper.id}.${wallpaper.ext}";
     };
   })
