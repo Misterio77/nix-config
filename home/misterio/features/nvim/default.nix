@@ -61,20 +61,6 @@ in
       "Line numbers
       set number relativenumber
 
-      "Netrw fixes
-      "Make sure it is listed
-      let g:netrw_bufsettings = 'buflisted'
-      "Unbind C-l
-      augroup netrw_tweaks
-        autocmd!
-        autocmd filetype netrw setlocal bufhidden=delete
-        autocmd filetype netrw silent! nunmap <buffer> <C-l>
-      augroup END
-      "Hide banner
-      let g:netrw_banner = 0
-      "Keep cursor location
-      let g:netrw_fastbrowse = 2
-
       "Scroll up and down
       nmap <C-j> <C-e>
       nmap <C-k> <C-y>
@@ -86,7 +72,8 @@ in
       nmap <C-q> :bdel<CR>
 
       "Navigate
-      nmap <space>e :Explore .<cr>
+      nmap <space>e :e<space>
+      nmap <space>e :e %:h<tab>
       "CD to current dir
       nmap <space>c :cd<space>
       nmap <space>C :cd %:h<tab>
@@ -159,6 +146,33 @@ in
         type = "lua";
         config = /* lua */ ''
           require('nvim-autopairs').setup{}
+        '';
+      }
+      {
+        plugin = oil-nvim;
+        type = "lua";
+        config = /* lua */ ''
+        require('oil').setup{
+          buf_options = {
+            buflisted = true,
+            bufhidden = "delete",
+          },
+          cleanup_delay_ms = false,
+          use_default_keymaps = false,
+          keymaps = {
+            ["<CR>"] = "actions.select",
+            ["-"] = "actions.parent",
+            ["_"] = "actions.open_cwd",
+            ["`"] = "actions.cd",
+            ["~"] = "actions.tcd",
+            ["gc"] = "actions.close",
+            ["gr"] = "actions.refresh",
+            ["gs"] = "actions.change_sort",
+            ["gx"] = "actions.open_external",
+            ["g."] = "actions.toggle_hidden",
+            ["g\\"] = "actions.toggle_trash",
+          },
+        }
         '';
       }
     ];
