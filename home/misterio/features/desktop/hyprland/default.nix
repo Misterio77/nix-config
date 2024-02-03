@@ -66,7 +66,7 @@
         new_window_takes_over_fullscreen = 2;
       };
       windowrulev2 = let
-        sweethome3d-tooltips = "title:^(win1)$,class:^(com-eteks-sweethome3d-SweetHome3DBootstrap)$";
+        sweethome3d-tooltips = "title:^(win[0-9])$,class:^(com-eteks-sweethome3d-SweetHome3DBootstrap)$";
         steam = "title:^()$,class:^(steam)$";
       in [
         "nofocus, ${sweethome3d-tooltips}"
