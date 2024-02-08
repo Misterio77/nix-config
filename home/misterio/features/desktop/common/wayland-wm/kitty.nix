@@ -3,7 +3,7 @@
 let
   inherit (config.colorscheme) colors;
   kitty-xterm = pkgs.writeShellScriptBin "xterm" ''
-    ${config.programs.kitty.package}/bin/kitty -1 "$@"
+    ${config.programs.kitty.package}/bin/kitty "$@"
   '';
 in
 {
