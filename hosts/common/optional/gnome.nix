@@ -9,7 +9,6 @@
         autoSuspend = false;
       };
     };
-    geoclue2.enable = true;
     gnome.games.enable = true;
   };
   # Fix broken stuff

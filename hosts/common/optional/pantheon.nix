@@ -13,7 +13,6 @@
     pantheon = {
       apps.enable = true;
     };
-    geoclue2.enable = true;
   };
   programs = {
     pantheon-tweaks.enable = true;
