@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   services.minecraft-servers.servers.proxy = {
     extraReload = ''
-      echo 'fs reload' > /run/minecraft-server/proxy.stdin
+      echo 'fsv reload' > /run/minecraft-server/proxy.stdin
     '';
     symlinks."plugins/FallBackServer.jar" = pkgs.fetchurl rec {
       pname = "FallBackServer";

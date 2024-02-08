@@ -6,29 +6,30 @@
     symlinks = {
       "plugins/Velocitab.jar" = pkgs.fetchurl rec {
         pname = "Velocitab";
-        version = "1.4";
+        version = "1.6.2";
         url = "https://github.com/WiIIiam278/${pname}/releases/download/${version}/${pname}-${version}.jar";
-        hash = "sha256-nMp1VX3DNQq8dEzl6syJvCkQpt1jcoxQD9u4S3UfVyI=";
+        hash = "sha256-BHJqF7781Lys/LAwlW89UKStPx3hlOy9vV9Tyo2teFs=";
       };
     };
     files = {
       "plugins/velocitab/config.yml".value = {
-        headers.default = [ "&7FierceLands" ];
-        footers.default = [];
-        formats.default = "&7[%server%] &r%prefix%%username%";
-
-        server_groups.default = [ ];
         fallback_enabled = true;
         fallback_group = "default";
         only_list_players_in_same_group = false;
-        server_display_names = { };
-
-        formatting_type = "MINEDOWN";
-        enable_papi_hook = true;
-        enable_miniplaceholders_hook = true;
-        sort_players = true;
-        sort_players_by = [ "ROLE_WEIGHT" "ROLE_NAME" ];
-        update_rate = 1000;
+        remove_spectator_effect = true;
+        sort_players = false;
+        server_display_names = {};
+      };
+      "plugins/velocitab/tab_groups.yml".value = {
+        groups = [{
+          name = "default";
+          headers = [ "&7FierceLands" ];
+          footers = [];
+          format = "&7[%server%] &r%prefix%%username%";
+          servers = [];
+          header_footer_update_rate = 1000;
+          placeholder_update_rate = 1000;
+        }];
       };
     };
   };

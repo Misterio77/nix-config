@@ -4,9 +4,9 @@ in {
   services.minecraft-servers.servers.proxy = {
     symlinks."plugins/LibreLogin.jar" = pkgs.fetchurl rec {
       pname = "LibreLogin";
-      version = "0.18.1";
+      version = "0.18.3";
       url = "https://github.com/kyngs/${pname}/releases/download/${version}/${pname}.jar";
-      hash = "sha256-kZGwbzDi8pg7gkWy1Gyzy3n0B/4nJWud5XUGIyVoouk=";
+      hash = "sha256-n4np9Q4Ej3UMk314ozVc0idgaGzFBuLaZ0kRx7BfqxI=";
     };
     files = {
       "plugins/librelogin/config.conf".format = pkgs.formats.json { };

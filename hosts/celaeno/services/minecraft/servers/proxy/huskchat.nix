@@ -25,15 +25,13 @@
     };
     files = {
       "plugins/huskchat/config.yml".value = {
-        config-version = 1;
-        language = "pt-br";
+        config-version = 2;
+        check_for_updates = false;
         default_channel = "default";
         channel_log_format = "[CHAT] [%channel%] %sender%: ";
         channel_command_aliases = [ "/channel" "/c" ];
 
-        channels = let
-          disabled.permissions = { send = "disabled"; receive = "disabled"; };
-        in {
+        channels =  {
           default = {
             format = "&7[%servername%] %fullname%&r: ";
             broadcast_scope = "GLOBAL";
@@ -45,10 +43,6 @@
             broadcast_scope = "PASSTHROUGH";
             shortcut_commands = [ "/i" "/internal" ];
           };
-          global = disabled;
-          local = disabled;
-          helpop = disabled;
-          localspy = disabled;
         };
         broadcast_command = {
           enabled = true;
@@ -93,7 +87,7 @@
           broadcast_scope = "GLOBAL";
         };
       };
-      "plugins/huskchat/messages-pt-br.yml".value = {
+      "plugins/huskchat/messages-en-gb.yml".value = {
         error_no_permission = "[Erro:](#ff3300) [Você não tem permissão para usar esse comando.](#ff7e5e)";
         error_invalid_syntax = "[Erro:](#ff3300) [Sintaxe inválida. Usagem: %1%](#ff7e5e)";
         channel_switched = "[Você agora está no canal](#00fb9a) [%1%](#eecc55 bold) [!](#00fb9a)";
@@ -131,7 +125,9 @@
         error_no_messages_opt_out = "[Erro:](#ff3300) [Você ainda não enviou ou recebeu mensagens em grupo.](#ff7e5e)";
         removed_from_group_message = "[Você saiu do chat em grupo com:](#00fb9a) %1%";
         list_conjunction = "e";
-        passthrough_shortcut_command_error = "[Erro:](#ff3300) [Enviar mensagens para canais de passthrough usando atalhos não é possível. Troque para o canal usando o comando /channel](#ff7e5e)";
+        error_passthrough_shortcut_command_error = "[Erro:](#ff3300) [Enviar mensagens para canais de passthrough usando atalhos não é possível. Troque para o canal usando o comando /channel](#ff7e5e)";
+        up_to_date = "HuskChat: Você está na última versão (v%1%).";
+        update_available = "HuskChat: Uma nova versão (v%1%) está disponível (atual: v%2%).";
       };
     };
   };
