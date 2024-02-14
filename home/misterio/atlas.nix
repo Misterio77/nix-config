@@ -14,9 +14,9 @@ in {
   ];
 
   wallpaper = pkgs.wallpapers.aurora-borealis-water-mountain;
-  colorscheme = lib.mkDefault colorSchemes.tokyo-city-terminal-dark;
+  colorscheme = lib.mkDefault colorSchemes.rose-pine-moon;
   specialisation = {
-    light.configuration.colorscheme = colorSchemes.tokyo-city-terminal-light;
+    light.configuration.colorscheme = colorSchemes.rose-pine-dawn;
   };
 
   #  ------   -----   ------
