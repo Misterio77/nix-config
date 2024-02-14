@@ -42,7 +42,7 @@ in
     # https://github.com/mdellweg/pass_secret_service/pull/37
     pass-secret-service = addPatches prev.pass-secret-service [ ./pass-secret-service-native.diff ];
 
-    xdg-utils-spawn-terminal = addPatches prev.xdg-utils [ ./xdg-open-spawn-terminal.diff ];
+    xdg-utils-spawn-terminal = final.callPackage ../pkgs/xdg-utils { };
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
       version = "unstable-2021-12-10";
