@@ -134,6 +134,8 @@
         }}/bin/pass-wofi";
 
         grimblast = "${pkgs.inputs.hyprwm-contrib.grimblast}/bin/grimblast";
+        tesseract = "${pkgs.tesseract}/bin/tesseract";
+
         pactl = "${pkgs.pulseaudio}/bin/pactl";
         tly = "${pkgs.tly}/bin/tly";
         gtk-play = "${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play";
@@ -163,10 +165,9 @@
         ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
         # Screenshotting
         ",Print,exec,${grimblast} --notify --freeze copy output"
-        "SHIFT,Print,exec,${grimblast} --notify --freeze copy active"
-        "CONTROL,Print,exec,${grimblast} --notify --freeze copy screen"
         "SUPER,Print,exec,${grimblast} --notify --freeze copy area"
-        "ALT,Print,exec,${grimblast} --notify --freeze copy area"
+        # To OCR
+        "ALT,Print,exec,${grimblast} --freeze save area - | ${tesseract} - - | wl-copy && ${notify-send} -t 3000 'OCR result copied to buffer'"
         # Tally counter
         "SUPER,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} add && ${gtk-play} -i dialog-information" # Add new entry
         "SUPERCONTROL,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} undo && ${gtk-play} -i dialog-warning" # Undo last entry
