@@ -16,6 +16,9 @@ in {
       --text-default: #${c.base05};
       --header-primary: #${c.base05};
       --header-secondary: #${c.base04};
+      --channeltextarea-background: #${c.base02};
+      --interactive-normal: #${c.base04};
+      --interactive-active: #${c.base05};
 
       --dracula-primary: #${c.base00};
       --dracula-secondary: #${c.base01};
