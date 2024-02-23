@@ -53,6 +53,8 @@ in
       commit.verbose = true;
       diff.algorithm = "histogram";
       log.date = "iso";
+      column.ui = "auto";
+      branch.sort = "committerdate";
       # Automatically track remote branch
       push.autoSetupRemote = true;
       # Reuse merge conflict fixes when rebasing
