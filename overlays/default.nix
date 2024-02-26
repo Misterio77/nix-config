@@ -62,6 +62,9 @@ in
     # Sane default values and crash avoidance (https://github.com/k-vernooy/trekscii/pull/1)
     trekscii = addPatches prev.trekscii [ ./trekscii.patch ];
 
+    # Reduce mode indicator width
+    atuin = addPatches prev.atuin [ ./atuin-smaller-mode-indicator.diff ];
+
     scgit = prev.cgit-pink.overrideAttrs (_: {
       pname = "scgit";
       version = "0.1";

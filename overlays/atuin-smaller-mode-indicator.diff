@@ -1,0 +1,92 @@
+diff --git a/atuin-client/src/settings.rs b/atuin-client/src/settings.rs
+index ad2e45ec..8d1a0e60 100644
+--- a/atuin-client/src/settings.rs
++++ b/atuin-client/src/settings.rs
+@@ -343,6 +343,8 @@ pub struct Settings {
+     pub scroll_context_lines: usize,
+     pub history_format: String,
+     pub prefers_reduced_motion: bool,
++    pub show_tabs: bool,
++    pub mode_width: usize,
+ 
+     #[serde(with = "serde_regex", default = "RegexSet::empty")]
+     pub history_filter: RegexSet,
+@@ -607,6 +609,8 @@ impl Settings {
+                     .map(|_| config::Value::new(None, config::ValueKind::Boolean(true)))
+                     .unwrap_or_else(|| config::Value::new(None, config::ValueKind::Boolean(false))),
+             )?
++            .set_default("show_tabs", true)?
++            .set_default("mode_width", 14)?
+             .add_source(
+                 Environment::with_prefix("atuin")
+                     .prefix_separator("_")
+diff --git a/atuin/src/command/client/search/interactive.rs b/atuin/src/command/client/search/interactive.rs
+index 1f3a2cff..cca3dd8b 100644
+--- a/atuin/src/command/client/search/interactive.rs
++++ b/atuin/src/command/client/search/interactive.rs
+@@ -78,6 +78,7 @@ struct StyleState {
+     compact: bool,
+     invert: bool,
+     inner_width: usize,
++    mode_width: usize,
+ }
+ 
+ impl State {
+@@ -507,19 +508,19 @@ impl State {
+             .constraints(
+                 if invert {
+                     [
+-                        Constraint::Length(1 + border_size),               // input
+-                        Constraint::Min(1),                                // results list
+-                        Constraint::Length(preview_height),                // preview
+-                        Constraint::Length(1),                             // tabs
+-                        Constraint::Length(if show_help { 1 } else { 0 }), // header (sic)
++                        Constraint::Length(1 + border_size),           // input
++                        Constraint::Min(1),                            // results list
++                        Constraint::Length(preview_height),            // preview
++                        Constraint::Length(settings.show_tabs as u16), // tabs
++                        Constraint::Length(show_help as u16),          // header (sic)
+                     ]
+                 } else {
+                     [
+-                        Constraint::Length(if show_help { 1 } else { 0 }), // header
+-                        Constraint::Length(1),                             // tabs
+-                        Constraint::Min(1),                                // results list
+-                        Constraint::Length(1 + border_size),               // input
+-                        Constraint::Length(preview_height),                // preview
++                        Constraint::Length(show_help as u16),          // header
++                        Constraint::Length(settings.show_tabs as u16), // tabs
++                        Constraint::Min(1),                            // results list
++                        Constraint::Length(1 + border_size),           // input
++                        Constraint::Length(preview_height),            // preview
+                     ]
+                 }
+                 .as_ref(),
+@@ -549,6 +550,7 @@ impl State {
+             compact,
+             invert,
+             inner_width: input_chunk.width.into(),
++            mode_width: settings.mode_width,
+         };
+ 
+         let header_chunks = Layout::default()
+@@ -709,17 +711,13 @@ impl State {
+     }
+ 
+     fn build_input(&mut self, style: StyleState) -> Paragraph {
+-        /// Max width of the UI box showing current mode
+-        const MAX_WIDTH: usize = 14;
+         let (pref, mode) = if self.switched_search_mode {
+             (" SRCH:", self.search_mode.as_str())
+         } else {
+             ("", self.search.filter_mode.as_str())
+         };
+-        let mode_width = MAX_WIDTH - pref.len();
+-        // sanity check to ensure we don't exceed the layout limits
+-        debug_assert!(mode_width >= mode.len(), "mode name '{mode}' is too long!");
+-        let input = format!("[{pref}{mode:^mode_width$}] {}", self.search.input.as_str(),);
++        let width = style.mode_width;
++        let input = format!( "[{pref}{mode:^width$.width$}] {}", self.search.input.as_str());
+         let input = Paragraph::new(input);
+         if style.compact {
+             input

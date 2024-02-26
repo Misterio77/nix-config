@@ -51,6 +51,9 @@ in
 
       cik = mkIf hasKitty "clone-in-kitty --type os-window";
       ck = cik;
+
+      aws-switch = ''eval "export AWS_PROFILE=$(aws configure list-profiles | fzf --height=6)"'';
+      awssw = aws-switch;
     };
     shellAliases = {
       # Clear screen and scrollback

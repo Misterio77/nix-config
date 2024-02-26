@@ -10,7 +10,7 @@
         in
         ''
           $username$hostname($shlvl)($cmd_duration) $fill ($nix_shell)$custom
-          $directory(${git})(- ${cloud}) $fill $time
+          $directory(${git})(${cloud}) $fill $time
           $jobs$character
         '';
 
@@ -85,13 +85,13 @@
       };
 
       # Icon changes only \/
-      aws.symbol = "  ";
+      aws.symbol = " ";
       conda.symbol = " ";
       dart.symbol = " ";
       directory.read_only = " ";
       docker_context.symbol = " ";
-      elixir.symbol = " ";
       elm.symbol = " ";
+      elixir.symbol = "";
       gcloud.symbol = " ";
       git_branch.symbol = " ";
       golang.symbol = " ";

@@ -67,7 +67,7 @@
         }
         {
           action =
-            ":set confirmappend=no\\n<save-message>+Archive<enter>:set confirmappend=yes\\n";
+            "<save-message>+Archive<enter>";
           key = "A";
           map = [ "index" "pager" ];
         }
