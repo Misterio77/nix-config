@@ -64,6 +64,26 @@ in
       fish_greeting = "";
       # Grep using ripgrep and pass to nvim
       nvimrg = mkIf (hasNeomutt && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
+      # Merge history upon doing up-or-search
+      # This lets multiple fish instances share history
+      up-or-search = /* fish */ ''
+        if commandline --search-mode
+          commandline -f history-search-backward
+          return
+        end
+        if commandline --paging-mode
+          commandline -f up-line
+          return
+        end
+        set -l lineno (commandline -L)
+        switch $lineno
+          case 1
+            commandline -f history-search-backward
+            history merge
+          case '*'
+            commandline -f up-line
+        end
+      '';
       # Integrate ssh with shellcolord
       ssh = mkIf hasShellColor /* fish */ ''
         ${shellcolor} disable $fish_pid
@@ -89,9 +109,6 @@ in
 
         # Use vim bindings and cursors
         fish_vi_key_bindings
-        ${lib.optionalString config.programs.atuin.enable ''
-        bind k _atuin_bind_up
-        ''}
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink
         set fish_cursor_replace_one underscore blink
