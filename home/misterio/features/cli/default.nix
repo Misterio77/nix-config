@@ -17,6 +17,7 @@
     ./ssh.nix
     ./starship.nix
     ./xpo.nix
+    ./fzf.nix
   ];
   home.packages = with pkgs; [
     comma # Install and run programs by sticking a , before them
@@ -33,7 +34,6 @@
     jq # JSON pretty printer and manipulator
     trekscii # Cute startrek cli printer
     timer # To help with my ADHD paralysis
-    fzf
 
     nil # Nix LSP
     nixfmt # Nix formatter
