@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, ... }: let
+{ inputs, outputs, lib, pkgs, ... }: let
   inherit (inputs.nix-colors) colorSchemes;
 in {
   imports = [
@@ -32,4 +32,10 @@ in {
   ];
 
   # programs.git.userEmail = "gabriel@zoocha.com";
+
+  home.packages = [
+    pkgs.drush
+    pkgs.inputs.awscli-console.default
+  ];
+  programs.awscli.enable = true;
 }

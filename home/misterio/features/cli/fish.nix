@@ -11,6 +11,7 @@ let
   hasNeomutt = config.programs.neomutt.enable;
   hasShellColor = config.programs.shellcolor.enable;
   hasKitty = config.programs.kitty.enable;
+  hasAwsCli = config.programs.awscli.enable;
   shellcolor = "${pkgs.shellcolord}/bin/shellcolor";
 in
 {
@@ -52,7 +53,7 @@ in
       cik = mkIf hasKitty "clone-in-kitty --type os-window";
       ck = cik;
 
-      aws-switch = ''eval "export AWS_PROFILE=$(aws configure list-profiles | fzf --height=6)"'';
+      aws-switch = mkIf hasAwsCli "export AWS_PROFILE=(aws configure list-profiles | fzf)";
       awssw = aws-switch;
     };
     shellAliases = {
