@@ -9,7 +9,7 @@ let
   iconTheme = misterioCfg.gtk.iconTheme;
   wallpaper = misterioCfg.wallpaper;
 
-  sway-kiosk = command: "${lib.getExe pkgs.sway} --config ${pkgs.writeText "kiosk.config" ''
+  sway-kiosk = command: "${lib.getExe pkgs.sway} --unsupported-gpu --config ${pkgs.writeText "kiosk.config" ''
     output * bg #000000 solid_color
     xwayland disable
     input "type:touchpad" {
