@@ -18,10 +18,26 @@ let
   };
 
   monitor = lib.head (lib.filter (m: m.primary) config.monitors);
-  steam-session = pkgs.writeTextDir "share/wayland-sessions/steam-sesson.desktop" /* ini */ ''
+  steam-session = let
+    gamescope = lib.concatStringsSep " " [
+      (lib.getExe pkgs.gamescope)
+      "--output-width ${toString monitor.width}"
+      "--output-height ${toString monitor.height}"
+      "--framerate-limit ${toString monitor.refreshRate}"
+      "--prefer-output ${monitor.name}"
+      "--adaptive-sync"
+      "--expose-wayland"
+      "--hdr-enabled"
+      "--steam"
+    ];
+    steam = lib.concatStringsSep " " [
+      "steam"
+      "steam://open/bigpicture"
+    ];
+  in pkgs.writeTextDir "share/wayland-sessions/steam-sesson.desktop" /* ini */ ''
     [Desktop Entry]
     Name=Steam Session
-    Exec=${pkgs.gamescope}/bin/gamescope -W ${toString monitor.width} -H ${toString monitor.height} -O ${monitor.name} -e -- steam -gamepadui
+    Exec=${gamescope} -- ${steam}
     Type=Application
   '';
 in
