@@ -9,6 +9,7 @@
     ../common/global
     ../common/users/misterio
 
+    ../common/optional/tlp.nix
     ../common/optional/wireless.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
