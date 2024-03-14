@@ -20,6 +20,9 @@
       "Kartodrorealm-5G" = {
         psk = "@KARTODROREALM@";
       };
+      "CAT_HOUSE" = {
+        psk = "@CAT_HOUSE@";
+      };
       "Marcos_2.4Ghz" = {
         pskRaw = "@MARCOS_24@";
       };
