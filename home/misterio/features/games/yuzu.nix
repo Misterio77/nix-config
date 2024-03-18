@@ -1,5 +1,6 @@
 { pkgs, lib, ... }: {
-  home.packages = [ pkgs.yuzu-mainline ];
+  # Temporarily disabled while I wait for nixpkgs to package a fork (e.g. suyu)
+  # home.packages = [ pkgs.yuzu-mainline ];
 
   home.persistence = {
     "/persist/home/misterio" = {

@@ -16,7 +16,8 @@ let
 in {
   home.packages = [
     runescape
-    pkgs.runelite
+    # TODO: Broken
+    # pkgs.runelite
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
