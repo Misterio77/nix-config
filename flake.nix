@@ -19,7 +19,7 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:misterio77/home-manager/xdg-portal-update";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-mailserver = {

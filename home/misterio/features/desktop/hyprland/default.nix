@@ -9,7 +9,7 @@
 
   xdg.portal = {
     extraPortals = [ pkgs.inputs.hyprland.xdg-desktop-portal-hyprland ];
-    configPackages = [ pkgs.inputs.hyprland.hyprland ];
+    configPackages = [ config.wayland.windowManager.hyprland.package ];
   };
 
   home.packages = with pkgs; [

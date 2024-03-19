@@ -9,7 +9,7 @@ in {
     "/persist/home/misterio".directories = [ ".config/vesktop" ];
   };
 
-  xdg.configFile."vesktop/themes/base16.css".text = ''
+  xdg.configFile."vesktop/themes/base16.css".text = /* css */ ''
     @import url("https://slowstab.github.io/dracula/BetterDiscord/source.css");
     @import url("https://mulverinex.github.io/legacy-settings-icons/dist-native.css");
     .theme-dark, .theme-light, :root {
@@ -33,6 +33,10 @@ in {
       --dracula-accent-alpha-alt2: #${c.base09}aa;
       --dracula-accent-dark: #${c.base0E};
       --dracula-accent-light: #${c.base08};
+    }
+
+    html.theme-light #app-mount::after {
+      content: none;
     }
   '';
 }

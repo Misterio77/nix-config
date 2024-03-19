@@ -272,15 +272,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1710714957,
-        "narHash": "sha256-eZCxuF58YWgaJMMRrn8oRkwRhxooe5kBS/s2wRVr9PA=",
-        "owner": "nix-community",
+        "lastModified": 1710818065,
+        "narHash": "sha256-MESf5DgNcIT7DLTLTjAMyCE232MbwF6USm2544V7+Ws=",
+        "owner": "misterio77",
         "repo": "home-manager",
-        "rev": "7b3fca5adcf6c709874a8f2e0c364fe9c58db989",
+        "rev": "2aec82454e7fbc03e987b7514976eb16c9a1ec18",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "misterio77",
+        "ref": "xdg-portal-update",
         "repo": "home-manager",
         "type": "github"
       }
