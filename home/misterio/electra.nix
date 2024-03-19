@@ -34,7 +34,6 @@ in {
   # programs.git.userEmail = "gabriel@zoocha.com";
 
   home.packages = [
-    pkgs.drush
     pkgs.inputs.awscli-console.default
   ];
   programs.awscli.enable = true;
