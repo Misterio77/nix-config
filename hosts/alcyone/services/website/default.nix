@@ -23,13 +23,13 @@ in
         "/" = {
           root = "${website}/public";
           extraConfig = ''
-            add_header Cache-Control "max-age=${toString (minutes 15)}";
+            add_header Cache-Control "max-age=${toString (minutes 5)}, stale-while-revalidate=${toString (minutes 15)}";
           '';
         };
         "/assets/" = {
           root = "${website}/public";
           extraConfig = ''
-            add_header Cache-Control "max-age=${toString (days 30)}";
+            add_header Cache-Control "max-age=${toString (hours 1)}, stale-while-revalidate=${toString (days 30)}";
           '';
         };
 

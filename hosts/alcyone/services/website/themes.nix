@@ -59,7 +59,7 @@ in
           root = themes;
           extraConfig = ''
             add_header Access-Control-Allow-Origin *;
-            add_header Cache-Control "max-age=${days 30}";
+            add_header Cache-Control "max-age=${days 1}, stale-while-revalidate=${days 30}";
           '';
         };
       };
