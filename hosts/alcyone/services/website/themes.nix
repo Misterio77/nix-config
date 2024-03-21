@@ -51,18 +51,23 @@ let
 in
 {
   services.nginx.virtualHosts = {
-    "colors.m7.rs" = {
+    "m7.rs" = {
       forceSSL = true;
       enableACME = true;
       locations = {
-        "/" = {
+        "/colors" = {
           root = themes;
           extraConfig = ''
             add_header Access-Control-Allow-Origin *;
-            add_header Cache-Control "max-age=${days 1}, stale-while-revalidate=${days 30}";
+            add_header Cache-Control "max-age=${days 1}, stale-while-revalidate=${days 365}";
           '';
         };
       };
+    };
+    "colors.m7.rs" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/".return = "301 https://m7.rs/colors$request_uri";
     };
   };
 }
