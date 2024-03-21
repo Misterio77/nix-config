@@ -899,11 +899,11 @@
         "systems": "systems_7"
       },
       "locked": {
-        "lastModified": 1710866007,
-        "narHash": "sha256-Oq3YRvK2SC3hhTlB6It3xCWpZk6bNRLq4tiOJrDKSaU=",
+        "lastModified": 1711032533,
+        "narHash": "sha256-pBOHOss92XcfxXFzc8bbfe+s5I6fDqWLp0yYahDuAMA=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "2ef9a2924f18a929d2b6d9caae5a8f368b25e7bc",
+        "rev": "9f4722dce26e7e60f575ce0dae52b328060fed35",
         "type": "github"
       },
       "original": {
