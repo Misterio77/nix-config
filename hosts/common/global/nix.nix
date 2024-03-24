@@ -7,7 +7,7 @@
     package = pkgs.nixVersions.nix_2_18;
 
     settings = {
-      substituters = [
+      substituters = lib.mkAfter [
         "https://cache.m7.rs"
       ];
       trusted-public-keys = [
