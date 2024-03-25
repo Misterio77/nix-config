@@ -7,12 +7,14 @@
       config = /* lua */ ''
         local lspconfig = require('lspconfig')
         function add_lsp(server, options)
-          if options["cmd"] ~= nil then
-            binary = options["cmd"][1]
-          else
-            binary = server["document_config"]["default_config"]["cmd"][1]
+          if not options["cmd"] then
+            options["cmd"] = server["document_config"]["default_config"]["cmd"]
           end
-          if vim.fn.executable(binary) == 1 then
+          if not options["capabilities"] then
+            options["capabilities"] = require("cmp_nvim_lsp").default_capabilities()
+          end
+
+          if vim.fn.executable(options["cmd"][1]) == 1 then
             server.setup(options)
           end
         end
