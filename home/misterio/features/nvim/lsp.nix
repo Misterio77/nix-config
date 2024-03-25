@@ -1,5 +1,8 @@
 { pkgs, ... }: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
+    # LSP and completions for injected langs
+    otter-nvim
+
     # LSP
     {
       plugin = nvim-lspconfig;
@@ -106,6 +109,7 @@
           mapping = cmp.mapping.preset.insert({
           }),
           sources = {
+            { name='otter' },
             { name='nvim_lsp' },
             { name='luasnip' },
             { name='git' },
