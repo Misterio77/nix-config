@@ -66,9 +66,23 @@
       '';
     }
 
+    # Snippets
+    luasnip
+
     # Completions
     cmp-nvim-lsp
+    cmp_luasnip
+
     cmp-buffer
+    cmp-path
+    {
+      plugin = cmp-git;
+      type = "lua";
+      config = /* lua */ ''
+        require("cmp_git").setup({})
+      '';
+    }
+
     lspkind-nvim
     {
       plugin = nvim-cmp;
@@ -76,23 +90,29 @@
       config = /* lua */ ''
         local cmp = require('cmp')
 
-        cmp.setup{
+        cmp.setup({
           formatting = {
             format = require('lspkind').cmp_format({
-              symbol_map = {
-                Copilot = "",
-              },
-            })
+              before = function (entry, vim_item)
+                return vim_item
+              end,
+            }),
           },
-          -- Same keybinds as vim's vanilla completion
+          snippet = {
+            expand = function(args)
+              require("luasnip").lsp_expand(args.body)
+            end,
+          },
           mapping = cmp.mapping.preset.insert({
           }),
           sources = {
-            { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs } },
             { name='nvim_lsp' },
-            { name = 'copilot' },
+            { name='luasnip' },
+            { name='git' },
+            { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs }},
+            { name='path' },
           },
-        }
+        })
       '';
     }
   ];
