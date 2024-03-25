@@ -30,12 +30,8 @@
         add_lsp(lspconfig.terraformls, {})
         add_lsp(lspconfig.gopls, {})
         add_lsp(lspconfig.lua_ls, {})
-        add_lsp(lspconfig.jdtls, {
-          cmd = { "jdt-language-server" }
-        })
-        add_lsp(lspconfig.tsserver, {
-          cmd = { "tsserver", "--stdio" }
-        })
+        add_lsp(lspconfig.jdtls, {})
+        add_lsp(lspconfig.tsserver, {})
         add_lsp(lspconfig.texlab, {
           chktex = { onEdit = true, onOpenAndSave = true }
         })
