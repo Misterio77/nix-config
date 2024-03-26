@@ -1,17 +1,18 @@
 diff --git a/scripts/xdg-open.in b/scripts/xdg-open.in
-index 698933d..58063ae 100755
+index feacc1f..32b79b2 100755
 --- a/scripts/xdg-open.in
 +++ b/scripts/xdg-open.in
-@@ -378,7 +378,14 @@ search_desktop_file()
+@@ -378,7 +378,15 @@ search_desktop_file()
                  args=$(( args - 1 ))
              done
              [ $replaced -eq 1 ] || set -- "$@" "${target:-$target_uri}"
 -            env "$command" "$@"
 +            if [ x"$(get_key "${file}" "Terminal")" = x"true" ] && ( [ ! -t 0 ] || [ ! -t 1 ] ); then
-+                if [ -z "$TERMINAL" ]; then
-+                    TERMINAL="xterm -e"
++                if command -v xdg-terminal-exec &> /dev/null; then
++                    env xdg-terminal-exec env "$command" "$@"
++                else
++                    env xterm -e env "$command" "$@"
 +                fi
-+                "$TERMINAL" env "$command" "$@"
 +            else
 +                env "$command" "$@"
 +            fi

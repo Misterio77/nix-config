@@ -42,7 +42,7 @@ in
     # https://github.com/NixOS/nix/issues/7098
     hydra_unstable = addPatches prev.hydra_unstable [ ./hydra-restrict-eval.diff ];
 
-    xdg-utils-spawn-terminal = final.callPackage ../pkgs/xdg-utils { };
+    xdg-utils-spawn-terminal = addPatches prev.xdg-utils [ ./xdg-open-spawn-terminal.diff ];
 
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
       version = "unstable-2021-12-10";
