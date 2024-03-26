@@ -21,8 +21,8 @@ in
 
   # Adds my custom packages
   additions = final: prev: import ../pkgs { pkgs = final; } // {
-    formats = prev.formats // import ../pkgs/formats { pkgs = final; };
-    vimPlugins = prev.vimPlugins // final.callPackage ../pkgs/vim-plugins { };
+    formats = (prev.formats or {}) // import ../pkgs/formats { pkgs = final; };
+    vimPlugins = (prev.vimPlugins or {}) // import ../pkgs/vim-plugins { pkgs = final; };
   };
 
   # Modifies existing packages
