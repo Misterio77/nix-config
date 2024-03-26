@@ -27,7 +27,7 @@
     wl-clipboard
     wl-mirror
     wl-mirror-pick
-    xdg-utils-spawn-terminal # Patched to open terminal
+    xdg-utils
     ydotool
   ];
 
