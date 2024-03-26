@@ -9,5 +9,6 @@
   meta = with lib; {
     licenses = licenses.mit;
     platforms = platforms.all;
+    mainProgram = "tly";
   };
 }

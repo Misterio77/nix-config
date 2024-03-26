@@ -47,6 +47,7 @@ stdenv.mkDerivation {
     description = "A wofi graphical menu for pass";
     license = licenses.mit;
     platforms = platforms.all;
+    mainProgram = "pass-wofi";
   };
 }
 

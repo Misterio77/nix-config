@@ -124,28 +124,15 @@
       ];
 
       bind = let
-        swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-        playerctl = "${config.services.playerctld.package}/bin/playerctl";
-        playerctld = "${config.services.playerctld.package}/bin/playerctld";
-        makoctl = "${config.services.mako.package}/bin/makoctl";
-        wofi = "${config.programs.wofi.package}/bin/wofi";
-        pass-wofi = "${pkgs.pass-wofi.override {
-          pass = config.programs.password-store.package;
-        }}/bin/pass-wofi";
-
-        grimblast = "${pkgs.inputs.hyprwm-contrib.grimblast}/bin/grimblast";
-        tesseract = "${pkgs.tesseract}/bin/tesseract";
-
-        pactl = "${pkgs.pulseaudio}/bin/pactl";
-        tly = "${pkgs.tly}/bin/tly";
-        gtk-play = "${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play";
-        notify-send = "${pkgs.libnotify}/bin/notify-send";
-
-        gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
-        xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
-        defaultApp = type: "${gtk-launch} $(${xdg-mime} query default ${type})";
+        grimblast = lib.getExe pkgs.inputs.hyprwm-contrib.grimblast;
+        tesseract = lib.getExe pkgs.tesseract;
+        pactl = lib.getExe' pkgs.pulseaudio "pactl";
+        tly = lib.getExe pkgs.tly;
+        gtk-play = lib.getExe' pkgs.libcanberra-gtk3 "canberra-gtk-play";
+        notify-send = lib.getExe' pkgs.libnotify "notify-send";
 
         terminal = config.home.sessionVariables.TERMINAL;
+        defaultApp = type: "${lib.getExe' pkgs.gtk3 "gtk-launch"} $(${lib.getExe' pkgs.xdg-utils "xdg-mime"} query default ${type})";
         browser = defaultApp "x-scheme-handler/https";
         editor = defaultApp "text/plain";
       in [
@@ -175,7 +162,10 @@
         "SUPERSHIFT,z,exec,${notify-send} -t 1000 $(${tly} time)" # Show current time
       ] ++
 
-      (lib.optionals config.services.playerctld.enable [
+      (let
+        playerctl = lib.getExe' config.services.playerctld.package "playerctl";
+        playerctld = lib.getExe' config.services.playerctld.package "playerctld";
+      in lib.optionals config.services.playerctld.enable [
         # Media control
         ",XF86AudioNext,exec,${playerctl} next"
         ",XF86AudioPrev,exec,${playerctl} previous"
@@ -186,21 +176,29 @@
         "ALT,XF86AudioPlay,exec,systemctl --user restart playerctld"
       ]) ++
       # Screen lock
-      (lib.optionals config.programs.swaylock.enable [
+      (let
+        swaylock = lib.getExe config.programs.swaylock.package;
+      in lib.optionals config.programs.swaylock.enable [
         ",XF86Launch5,exec,${swaylock} -S --grace 2"
         ",XF86Launch4,exec,${swaylock} -S --grace 2"
         "SUPER,backspace,exec,${swaylock} -S --grace 2"
       ]) ++
       # Notification manager
-      (lib.optionals config.services.mako.enable [
+      (let
+        makoctl = lib.getExe config.services.mako.package;
+      in lib.optionals config.services.mako.enable [
         "SUPER,w,exec,${makoctl} dismiss"
       ]) ++
 
       # Launcher
-      (lib.optionals config.programs.wofi.enable [
+      (let
+        wofi = lib.getExe config.programs.wofi.package;
+      in lib.optionals config.programs.wofi.enable [
         "SUPER,x,exec,${wofi} -S drun -x 10 -y 10 -W 25% -H 60%"
         "SUPER,d,exec,${wofi} -S run"
-      ] ++ (lib.optionals config.programs.password-store.enable [
+      ] ++ (let
+        pass-wofi = lib.getExe (pkgs.pass-wofi.override { pass = config.programs.password-store.package; });
+      in lib.optionals config.programs.password-store.enable [
         ",Scroll_Lock,exec,${pass-wofi}" # fn+k
         ",XF86Calculator,exec,${pass-wofi}" # fn+f12
         "SUPER,semicolon,exec,pass-wofi"
