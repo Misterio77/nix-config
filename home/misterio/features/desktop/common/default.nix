@@ -11,7 +11,7 @@
     ./playerctl.nix
     ./qt.nix
     ./slack.nix
-    ./sublime-music.nix
+    # ./sublime-music.nix
   ];
 
   # Also sets org.freedesktop.appearance color-scheme
