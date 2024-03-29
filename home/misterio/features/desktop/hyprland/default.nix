@@ -76,6 +76,15 @@
       layerrule = [
         "blur,waybar"
         "ignorezero,waybar"
+        "animation slide,waybar"
+
+        "blur,notifications"
+        "ignorezero,notifications"
+        "animation slide,notifications"
+
+        "blur,wofi"
+        "ignorezero,wofi"
+        "animation slide,wofi"
       ];
 
       decoration = {
@@ -89,6 +98,7 @@
           passes = 3;
           new_optimizations = true;
           ignore_opacity = true;
+          popups = true;
         };
         drop_shadow = true;
         shadow_range = 12;
