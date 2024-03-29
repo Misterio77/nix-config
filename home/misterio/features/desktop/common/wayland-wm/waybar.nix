@@ -1,4 +1,4 @@
-{ outputs, config, lib, pkgs, ... }:
+{ outputs, config, lib, pkgs, inputs, ... }:
 
 let
   # Dependencies
@@ -330,7 +330,11 @@ in
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style = let inherit (config.colorscheme) colors; in /* css */ ''
+    style = let
+      inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
+      inherit (config.colorscheme) colors;
+      toRGBA = color: opacity: "rgba(${hexToRGBString "," color},${opacity})";
+    in /* css */ ''
       * {
         font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
         font-size: 12pt;
@@ -340,9 +344,8 @@ in
 
       window#waybar {
         padding: 0;
-        opacity: 0.75;
         border-radius: 0.5em;
-        background-color: #${colors.base00};
+        background-color: ${toRGBA colors.base00 "0.7"};
         color: #${colors.base05};
       }
       .modules-left {
@@ -371,7 +374,6 @@ in
       }
 
       #clock {
-        background-color: #${colors.base01};
         padding-right: 1em;
         padding-left: 1em;
         border-radius: 0.5em;
@@ -389,7 +391,6 @@ in
         color: #${colors.base00};
       }
       #custom-hostname {
-        background-color: #${colors.base01};
         padding-right: 1em;
         padding-left: 1em;
         margin-left: 0;
