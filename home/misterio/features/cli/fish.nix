@@ -6,12 +6,12 @@ let
   hasRipgrep = hasPackage "ripgrep";
   hasExa = hasPackage "eza";
   hasSpecialisationCli = hasPackage "specialisation";
+  hasAwsCli = hasPackage "awscli2";
   hasNeovim = config.programs.neovim.enable;
   hasEmacs = config.programs.emacs.enable;
   hasNeomutt = config.programs.neomutt.enable;
   hasShellColor = config.programs.shellcolor.enable;
   hasKitty = config.programs.kitty.enable;
-  hasAwsCli = config.programs.awscli.enable;
   shellcolor = "${pkgs.shellcolord}/bin/shellcolor";
 in
 {
@@ -42,7 +42,6 @@ in
 
       e = mkIf hasEmacs "emacsclient -t";
 
-      vrg = mkIf (hasNeomutt && hasRipgrep) "nvimrg";
       vim = mkIf hasNeovim "nvim";
       vi = vim;
       v = vim;
@@ -64,7 +63,7 @@ in
       # Disable greeting
       fish_greeting = "";
       # Grep using ripgrep and pass to nvim
-      nvimrg = mkIf (hasNeomutt && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
+      nvimrg = mkIf (hasNeovim && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
       # Merge history upon doing up-or-search
       # This lets multiple fish instances share history
       up-or-search = /* fish */ ''

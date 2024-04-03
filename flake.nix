@@ -52,13 +52,16 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    awscli-console = {
+      url = "github:zoocha/awscli-console";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-gaming.url = "github:fufexan/nix-gaming";
     disconic.url = "github:misterio77/disconic";
     website.url = "github:misterio77/website";
     paste-misterio-me.url = "github:misterio77/paste.misterio.me";
     yrmos.url = "github:misterio77/yrmos";
-    awscli-console.url = "github:misterio77/awscli-console";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

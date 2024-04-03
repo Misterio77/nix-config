@@ -44,5 +44,8 @@
     ltex-ls # Spell checking LSP
 
     tly # Tally counter
+
+    awscli2
+    inputs.awscli-console.default
   ];
 }
