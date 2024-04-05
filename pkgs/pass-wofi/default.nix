@@ -28,7 +28,7 @@ stdenv.mkDerivation {
 
   installPhase = ''
     install -Dm 0755 $src $out/bin/pass-wofi
-    wrapProgram $out/bin/pass-wofi --set PATH \
+    wrapProgram $out/bin/pass-wofi --prefix PATH \
       "${
         makeBinPath [
           pass
