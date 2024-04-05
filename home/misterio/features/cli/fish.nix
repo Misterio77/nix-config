@@ -17,6 +17,33 @@ in
 {
   programs.fish = {
     enable = true;
+    plugins = [{
+      name = "aws";
+      src = pkgs.applyPatches {
+        src = pkgs.fetchFromGitHub {
+          owner = "oh-my-fish";
+          repo = "plugin-aws";
+          rev = "e53a1de3f826916cb83f6ebd34a7356af8f754d1";
+          hash = "sha256-l17v/aJ4PkjYM8kJDA0zUo87UTsfFqq+Prei/Qq0DRA=";
+        };
+        patches = [(builtins.toFile "fix-complete.diff" /* diff */ ''
+          diff --git a/completions/aws.fish b/completions/aws.fish
+          index fc75188..1e8d931 100644
+          --- a/completions/aws.fish
+          +++ b/completions/aws.fish
+          @@ -1,7 +1,7 @@
+           function __aws_complete
+             if set -q aws_completer_path
+               set -lx COMP_SHELL fish
+          -    set -lx COMP_LINE (commandline -opc)
+          +    set -lx COMP_LINE (commandline -pc)
+
+               if string match -q -- "-*" (commandline -opt)
+                 set COMP_LINE $COMP_LINE -
+        '')];
+      };
+    }];
+
     shellAbbrs = rec {
       jqless = "jq -C | less -r";
 
@@ -141,9 +168,6 @@ in
         set -U fish_pager_color_description   yellow
         set -U fish_pager_color_prefix        'white' '--bold' '--underline'
         set -U fish_pager_color_progress      'brwhite' '--background=cyan'
-
-        # AWS CLI completions (https://github.com/aws/aws-cli/issues/1079)
-        complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
       '';
   };
 }
