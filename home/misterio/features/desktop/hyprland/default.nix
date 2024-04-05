@@ -1,4 +1,7 @@
-{ lib, config, pkgs, ... }: {
+{ lib, config, pkgs, ... }: let
+  hyprland = pkgs.inputs.hyprland.hyprland.override { wrapRuntimeDeps = false; };
+  xdph = pkgs.inputs.hyprland.xdg-desktop-portal-hyprland.override { inherit hyprland; };
+in {
   imports = [
     ../common
     ../common/wayland-wm
@@ -8,8 +11,8 @@
   ];
 
   xdg.portal = {
-    extraPortals = [ pkgs.inputs.hyprland.xdg-desktop-portal-hyprland ];
-    configPackages = [ config.wayland.windowManager.hyprland.package ];
+    extraPortals = [ xdph ];
+    configPackages = [ hyprland ];
   };
 
   home.packages = with pkgs; [
@@ -20,7 +23,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.inputs.hyprland.hyprland.override { wrapRuntimeDeps = false; };
+    package = hyprland;
     systemd = {
       enable = true;
       # Same as default, but stop graphical-session too
