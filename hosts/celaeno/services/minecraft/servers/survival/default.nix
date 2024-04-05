@@ -8,8 +8,8 @@
       server-port = 25571;
       online-mode = false;
       enable-rcon = true;
-      rcon.password = "@RCON_PASSWORD@";
-      rcon.port = 24471;
+      "rcon.password" = "@RCON_PASSWORD@";
+      "rcon.port" = 24471;
     };
     files = {
       "config/paper-global.yml".value = {

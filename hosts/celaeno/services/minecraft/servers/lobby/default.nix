@@ -16,8 +16,8 @@
         biome = "the_void";
       };
       enable-rcon = true;
-      rcon.password = "@RCON_PASSWORD@";
-      rcon.port = 24474;
+      "rcon.password" = "@RCON_PASSWORD@";
+      "rcon.port" = 24474;
     };
     files = {
       "ops.json".value = [{

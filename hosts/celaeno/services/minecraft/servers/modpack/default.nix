@@ -36,8 +36,8 @@ in
       server-port = 25572;
       online-mode = false;
       enable-rcon = true;
-      rcon.password = "@RCON_PASSWORD@";
-      rcon.port = 24472;
+      "rcon.password" = "@RCON_PASSWORD@";
+      "rcon.port" = 24472;
     };
 
     symlinks = collectFilesAt modpack "mods" // collectFilesAt modpack "global_packs" // {
