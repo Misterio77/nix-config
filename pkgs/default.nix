@@ -4,6 +4,7 @@
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };
   shellcolord = pkgs.callPackage ./shellcolord { };
   trekscii = pkgs.callPackage ./trekscii { };
+  frcon = pkgs.callPackage ./frcon { };
 
   # Personal scripts
   nix-inspect = pkgs.callPackage ./nix-inspect { };
