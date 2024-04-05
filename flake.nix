@@ -57,11 +57,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-gaming.url = "github:fufexan/nix-gaming";
-    disconic.url = "github:misterio77/disconic";
-    website.url = "github:misterio77/website";
-    paste-misterio-me.url = "github:misterio77/paste.misterio.me";
-    yrmos.url = "github:misterio77/yrmos";
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disconic = {
+      url = "github:misterio77/disconic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    website = {
+      url = "github:misterio77/website";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    paste-misterio-me = {
+      url = "github:misterio77/paste.misterio.me";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
