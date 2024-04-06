@@ -82,7 +82,7 @@ in
         pkgs.diffutils
         pkgs.coreutils
       ];
-      script = # bash
+      script =
         ''
           set -euo pipefail
 

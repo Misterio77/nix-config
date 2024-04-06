@@ -12,7 +12,7 @@
     xrandr
   ];
 
-  text = # bash
+  text =
     ''
       if [ "$#" -ge 1 ] && [ "$1" == "largest" ]; then
         output=$(xrandr --listmonitors | tail -n +2 | awk '{printf "%s %s\n", $3, $4}' | sort | tail -1 | cut -d ' ' -f2)

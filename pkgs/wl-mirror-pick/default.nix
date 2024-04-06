@@ -12,7 +12,7 @@
     wl-mirror
   ];
 
-  text = # bash
+  text =
     ''
       output=$(slurp -f "%o" -o)
       wl-mirror "$output"

@@ -104,7 +104,7 @@ in
       nvimrg = mkIf (hasNeovim && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
       # Merge history upon doing up-or-search
       # This lets multiple fish instances share history
-      up-or-search = # fish
+      up-or-search = /* fish */
         ''
           if commandline --search-mode
             commandline -f history-search-backward
@@ -138,7 +138,7 @@ in
             ${shellcolor} apply $fish_pid
           '';
     };
-    interactiveShellInit = # fish
+    interactiveShellInit = /* fish */
       ''
         # Open command buffer in vim when alt+e is pressed
         bind \ee edit_command_buffer

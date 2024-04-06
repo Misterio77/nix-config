@@ -29,7 +29,7 @@ with lib;
   ];
 
   checkPhase = "";
-  text = # bash
+  text =
     ''
       set +o nounset
 

@@ -8,7 +8,7 @@
     {
       plugin = nvim-lspconfig;
       type = "lua";
-      config = # lua
+      config = /* lua */
         ''
           local lspconfig = require('lspconfig')
           function add_lsp(server, options)
@@ -47,7 +47,7 @@
     {
       plugin = ltex_extra-nvim;
       type = "lua";
-      config = # lua
+      config = /* lua */
         ''
           local ltex_extra = require('ltex_extra')
           add_lsp(lspconfig.ltex, {
@@ -62,7 +62,7 @@
     {
       plugin = rust-tools-nvim;
       type = "lua";
-      config = # lua
+      config = /* lua */
         ''
           local rust_tools = require('rust-tools')
           add_lsp(rust_tools, {
@@ -85,7 +85,7 @@
     {
       plugin = cmp-git;
       type = "lua";
-      config = # lua
+      config = /* lua */
         ''
           require("cmp_git").setup({})
         '';
@@ -95,7 +95,7 @@
     {
       plugin = nvim-cmp;
       type = "lua";
-      config = # lua
+      config = /* lua */
         ''
           local cmp = require('cmp')
 

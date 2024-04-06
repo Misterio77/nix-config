@@ -28,7 +28,7 @@ in
       listenHost = "localhost";
       smtpHost = "localhost";
       useSubstitutes = true;
-      extraConfig = # xml
+      extraConfig = /* xml */
         ''
           Include ${config.sops.secrets.hydra-gh-auth.path}
           max_unsupported_time = 30

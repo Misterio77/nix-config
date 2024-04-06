@@ -18,7 +18,7 @@ in
     ];
   };
 
-  xdg.configFile."vdirsyncer/config".text = # ini
+  xdg.configFile."vdirsyncer/config".text = /* ini */
     ''
       [general]
       status_path = "~/.local/share/vdirsyncer/status"

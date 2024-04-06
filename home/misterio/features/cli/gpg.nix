@@ -17,7 +17,7 @@
 
   programs =
     let
-      fixGpg = # bash
+      fixGpg = /* bash */
         ''
           gpgconf --launch gpg-agent
         '';
