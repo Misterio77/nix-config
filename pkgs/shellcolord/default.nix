@@ -1,4 +1,8 @@
-{ lib, stdenv, fetchFromSourcehut }:
+{
+  lib,
+  stdenv,
+  fetchFromSourcehut,
+}:
 let
   pname = "shellcolord";
 in

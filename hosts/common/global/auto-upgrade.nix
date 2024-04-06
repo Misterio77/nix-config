@@ -1,4 +1,10 @@
-{ config, inputs, pkgs, lib, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 let
   inherit (config.networking) hostName;
   # Only enable auto upgrade if current config came from a clean tree
@@ -9,9 +15,7 @@ in
   system.autoUpgrade = {
     enable = isClean;
     dates = "hourly";
-    flags = [
-      "--refresh"
-    ];
+    flags = [ "--refresh" ];
     flake = "git://m7.rs/nix-config?ref=release-${hostName}";
   };
 

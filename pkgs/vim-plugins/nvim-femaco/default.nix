@@ -1,4 +1,5 @@
-{ vimUtils, fetchFromGitHub }: vimUtils.buildVimPlugin {
+{ vimUtils, fetchFromGitHub }:
+vimUtils.buildVimPlugin {
   pname = "nvim-femaco";
   version = "2022-10-10";
   dontBuild = true;

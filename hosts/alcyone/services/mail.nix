@@ -1,8 +1,11 @@
-{ config, pkgs, inputs, ... }:
 {
-  imports = [
-    inputs.nixos-mailserver.nixosModules.mailserver
-  ];
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [ inputs.nixos-mailserver.nixosModules.mailserver ];
 
   # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275
   services.dovecot2.sieve.extensions = [ "fileinto" ];

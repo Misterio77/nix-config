@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./lutris.nix
     ./steam.nix
@@ -10,11 +11,13 @@
     persistence = {
       "/persist/home/misterio" = {
         allowOther = true;
-        directories = [{
-          # Use symlink, as games may be IO-heavy
-          directory = "Games";
-          method = "symlink";
-        }];
+        directories = [
+          {
+            # Use symlink, as games may be IO-heavy
+            directory = "Games";
+            method = "symlink";
+          }
+        ];
       };
     };
   };

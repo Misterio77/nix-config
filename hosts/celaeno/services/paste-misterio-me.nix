@@ -1,7 +1,11 @@
-{ config, inputs, pkgs, ... }: {
-  imports = [
-    inputs.paste-misterio-me.nixosModules.server
-  ];
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
+  imports = [ inputs.paste-misterio-me.nixosModules.server ];
 
   services = {
     paste-misterio-me = {
@@ -15,8 +19,7 @@
     nginx.virtualHosts."paste.misterio.me" = {
       forceSSL = true;
       enableACME = true;
-      locations."/".proxyPass =
-        "http://localhost:${toString config.services.paste-misterio-me.port}";
+      locations."/".proxyPass = "http://localhost:${toString config.services.paste-misterio-me.port}";
     };
   };
 

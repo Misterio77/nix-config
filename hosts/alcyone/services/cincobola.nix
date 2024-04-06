@@ -1,7 +1,8 @@
 # Something I did for a UI/UX class I took
 # Decided to keep around to help out freshmen
 
-{ pkgs, ... }: let
+{ pkgs, ... }:
+let
   cincobola = pkgs.stdenv.mkDerivation {
     name = "cincobola";
     JEKYLL_ENV = "production";
@@ -22,7 +23,8 @@
   days = n: (hours n) * 24;
   hours = n: (minutes n) * 60;
   minutes = n: n * 60;
-in {
+in
+{
   services.nginx.virtualHosts."cincobola.misterio.me" = {
     forceSSL = true;
     enableACME = true;

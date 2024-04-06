@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.programs.shellcolor;
@@ -7,9 +12,7 @@ let
   renderSetting = key: value: ''
     ${key}=${value}
   '';
-  renderSettings = settings:
-    lib.concatStrings (lib.mapAttrsToList renderSetting settings);
-
+  renderSettings = settings: lib.concatStrings (lib.mapAttrsToList renderSetting settings);
 in
 {
   options.programs.shellcolor = {
@@ -78,27 +81,31 @@ in
       '';
     };
 
-    programs.bash.initExtra = lib.mkIf cfg.enableBashIntegration
-      (lib.mkBefore ''
+    programs.bash.initExtra = lib.mkIf cfg.enableBashIntegration (
+      lib.mkBefore ''
         ${package}/bin/shellcolord $$ & disown
         ${lib.optionalString cfg.enableBashSshFunction ''
-        ssh() {
-          ${package}/bin/shellcolor disable $$
-          command ssh "$@"
-          ${package}/bin/shellcolor enable $$
-          ${package}/bin/shellcolor apply $$
-        }
+          ssh() {
+            ${package}/bin/shellcolor disable $$
+            command ssh "$@"
+            ${package}/bin/shellcolor enable $$
+            ${package}/bin/shellcolor apply $$
+          }
         ''}
-      '');
+      ''
+    );
 
-    programs.zsh.initExtra = lib.mkIf cfg.enableZshIntegration (lib.mkBefore ''
-      ${package}/bin/shellcolord $$ & disown
-    '');
+    programs.zsh.initExtra = lib.mkIf cfg.enableZshIntegration (
+      lib.mkBefore ''
+        ${package}/bin/shellcolord $$ & disown
+      ''
+    );
 
-    programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration
-      (lib.mkBefore ''
+    programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration (
+      lib.mkBefore ''
         ${package}/bin/shellcolord $fish_pid & disown
-      '');
+      ''
+    );
 
     programs.fish.functions.ssh = lib.mkIf cfg.enableFishSshFunction ''
       ${package}/bin/shellcolor disable $fish_pid

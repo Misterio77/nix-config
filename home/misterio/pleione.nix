@@ -1,6 +1,13 @@
-{ inputs, lib, pkgs, ... }: let
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+let
   inherit (inputs.nix-colors) colorSchemes;
-in {
+in
+{
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -16,11 +23,13 @@ in {
     light.configuration.colorscheme = colorSchemes.atelier-heath-light;
   };
 
-  monitors = [{
-    name = "eDP-1";
-    width = 1920;
-    height = 1080;
-    workspace = "1";
-    primary = true;
-  }];
+  monitors = [
+    {
+      name = "eDP-1";
+      width = 1920;
+      height = 1080;
+      workspace = "1";
+      primary = true;
+    }
+  ];
 }

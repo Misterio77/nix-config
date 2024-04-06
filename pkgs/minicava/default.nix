@@ -1,9 +1,10 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, makeWrapper
-, cava
-, gnused
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  makeWrapper,
+  cava,
+  gnused,
 }:
 
 with lib;
@@ -26,10 +27,12 @@ stdenv.mkDerivation {
   installPhase = ''
     install -Dm 0755 minicava.sh $out/bin/minicava
     wrapProgram $out/bin/minicava --set PATH \
-      "${makeBinPath [
-        cava
-        gnused
-      ]}"
+      "${
+        makeBinPath [
+          cava
+          gnused
+        ]
+      }"
   '';
 
   meta = {

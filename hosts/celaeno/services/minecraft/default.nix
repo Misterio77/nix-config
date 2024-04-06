@@ -1,4 +1,10 @@
-{ inputs, config, lib, ... }: {
+{
+  inputs,
+  config,
+  lib,
+  ...
+}:
+{
   imports = [
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./servers/proxy
@@ -25,15 +31,22 @@
 
   networking.firewall = {
     allowedTCPPorts = [ 25565 ];
-    allowedUDPPorts = [ 25565 19132 ];
+    allowedUDPPorts = [
+      25565
+      19132
+    ];
   };
 
   services.mysql = {
     ensureDatabases = [ "minecraft" ];
-    ensureUsers = [{
-      name = "minecraft";
-      ensurePermissions = { "minecraft.*" = "ALL PRIVILEGES"; };
-    }];
+    ensureUsers = [
+      {
+        name = "minecraft";
+        ensurePermissions = {
+          "minecraft.*" = "ALL PRIVILEGES";
+        };
+      }
+    ];
   };
   # Set minecrafts' password (the plugins don't play well with socket auth)
   users.users.mysql.extraGroups = [ "minecraft" ]; # Get access to the secret

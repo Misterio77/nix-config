@@ -1,6 +1,14 @@
-{ inputs, outputs, lib, pkgs, ... }: let
+{
+  inputs,
+  outputs,
+  lib,
+  pkgs,
+  ...
+}:
+let
   inherit (inputs.nix-colors) colorSchemes;
-in {
+in
+{
   imports = [
     ./global
     ./features/desktop/wireless

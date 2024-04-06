@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.minecraft-servers.servers.survival = {
     enable = true;
     enableReload = true;
@@ -58,12 +59,16 @@
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
         hash = "sha256-JSE71YbivWCqUzNwPVFNgqlhhFkMoIstrn+L/F3qdFM=";
       };
-      "plugins/LuckPerms.jar" = let build = "1515"; in pkgs.fetchurl rec {
-        pname = "LuckPerms";
-        version = "5.4.102";
-        url = "https://download.luckperms.net/${build}/bukkit/loader/${pname}-Bukkit-${version}.jar";
-        hash = "sha256-rShKJtW6FzPba4yATlsS2JHFtBZrQhZeRrPfv/4w1ZY=";
-      };
+      "plugins/LuckPerms.jar" =
+        let
+          build = "1515";
+        in
+        pkgs.fetchurl rec {
+          pname = "LuckPerms";
+          version = "5.4.102";
+          url = "https://download.luckperms.net/${build}/bukkit/loader/${pname}-Bukkit-${version}.jar";
+          hash = "sha256-rShKJtW6FzPba4yATlsS2JHFtBZrQhZeRrPfv/4w1ZY=";
+        };
       "plugins/HidePLayerJoinQuit.jar" = pkgs.fetchurl rec {
         pname = "HidePLayerJoinQuit";
         version = "1.0";

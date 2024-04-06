@@ -1,4 +1,9 @@
-{ callPackage, rust-analyzer, rustfmt, clippy }:
+{
+  callPackage,
+  rust-analyzer,
+  rustfmt,
+  clippy,
+}:
 
 let
   mainPkg = callPackage ./default.nix { };

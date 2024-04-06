@@ -1,4 +1,5 @@
-{ lib, config, ... }: {
+{ lib, config, ... }:
+{
   services = {
     navidrome = {
       enable = true;
@@ -16,8 +17,7 @@
       "music.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass =
-          "http://localhost:${toString config.services.navidrome.settings.Port}";
+        locations."/".proxyPass = "http://localhost:${toString config.services.navidrome.settings.Port}";
       };
       "music.misterio.me" = {
         forceSSL = true;

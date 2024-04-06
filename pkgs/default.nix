@@ -1,4 +1,7 @@
-{ pkgs ? import <nixpkgs> { } }: rec {
+{
+  pkgs ? import <nixpkgs> { },
+}:
+rec {
 
   # Packages with an actual source
   rgbdaemon = pkgs.callPackage ./rgbdaemon { };

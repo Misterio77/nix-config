@@ -6,7 +6,13 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usb_storage"
+        "sd_mod"
+      ];
       kernelModules = [ "kvm-amd" ];
     };
     loader = {
@@ -25,10 +31,12 @@
     };
   };
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 8196;
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 8196;
+    }
+  ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = true;

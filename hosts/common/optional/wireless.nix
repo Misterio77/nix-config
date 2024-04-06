@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   # Wireless secrets stored through sops
   sops.secrets.wireless = {
     sopsFile = ../secrets.yaml;

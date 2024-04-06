@@ -1,6 +1,8 @@
 { config, ... }:
-let inherit (config.colorscheme) colors;
-in {
+let
+  inherit (config.colorscheme) colors;
+in
+{
   programs.zathura = {
     enable = true;
     options = {

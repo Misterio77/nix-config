@@ -1,5 +1,1 @@
-{
-  imports = [
-    ./wpa-gui.nix
-  ];
-}
+{ imports = [ ./wpa-gui.nix ]; }

@@ -1,8 +1,5 @@
 {
-  imports = [
-    ../common/optional/ephemeral-btrfs.nix
-  ];
-
+  imports = [ ../common/optional/ephemeral-btrfs.nix ];
 
   boot = {
     initrd = {
@@ -29,10 +26,12 @@
     };
   };
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 8196;
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 8196;
+    }
+  ];
 
   hardware.raspberry-pi."4".i2c1.enable = true;
 

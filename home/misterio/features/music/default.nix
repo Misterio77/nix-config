@@ -4,8 +4,6 @@
   services.fluidsynth = {
     enable = true;
     soundService = "pipewire-pulse";
-    extraOptions = [
-      "-g 2"
-    ];
+    extraOptions = [ "-g 2" ];
   };
 }

@@ -1,4 +1,10 @@
-{ stdenv, logo ? null, lib, ... }: stdenv.mkDerivation {
+{
+  stdenv,
+  logo ? null,
+  lib,
+  ...
+}:
+stdenv.mkDerivation {
   pname = "plymouth-spinner-monochrome";
   version = "1.0";
   src = ./src;

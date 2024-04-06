@@ -1,7 +1,9 @@
 { pkgs, config, ... }:
 let
   servers = config.services.minecraft-servers.servers;
-  proxyFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
+  proxyFlags =
+    memory:
+    "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
 in
 {
   imports = [
@@ -21,8 +23,7 @@ in
     extraReload = ''
       echo 'velocity reload' > /run/minecraft-server/proxy.stdin
     '';
-    extraPreStop = ''
-    '';
+    extraPreStop = '''';
 
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
     jvmOpts = proxyFlags "512M";
@@ -45,7 +46,10 @@ in
         };
         forced-hosts = {
           # "modpack.m7.rs" = [ "modpack" "lobby" ];
-          "survival.m7.rs" = [ "survival" "lobby" ];
+          "survival.m7.rs" = [
+            "survival"
+            "lobby"
+          ];
         };
         query = {
           enabled = true;

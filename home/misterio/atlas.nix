@@ -1,6 +1,13 @@
-{ inputs, lib, pkgs, ... }: let
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+let
   inherit (inputs.nix-colors) colorSchemes;
-in {
+in
+{
   imports = [
     ./global
     ./features/desktop/hyprland

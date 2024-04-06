@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.minecraft-servers.servers.limbo = {
     enable = true;
     package = pkgs.callPackage ./nano-limbo-server.nix { };

@@ -1,7 +1,11 @@
-{ config, inputs, pkgs, ... }: {
-  imports = [
-    inputs.disconic.nixosModules.default
-  ];
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
+  imports = [ inputs.disconic.nixosModules.default ];
 
   services.disconic = {
     enable = true;

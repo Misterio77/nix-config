@@ -1,8 +1,6 @@
 { inputs, config, ... }:
 {
-  imports = [
-    inputs.firefly.nixosModules.firefly-iii
-  ];
+  imports = [ inputs.firefly.nixosModules.firefly-iii ];
 
   nixpkgs.overlays = [ inputs.firefly.overlays.default ];
 

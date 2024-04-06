@@ -10,9 +10,13 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     let
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       pkgsFor = nixpkgs.legacyPackages;
     in
     rec {
@@ -27,4 +31,3 @@
       hydraJobs = packages;
     };
 }
-

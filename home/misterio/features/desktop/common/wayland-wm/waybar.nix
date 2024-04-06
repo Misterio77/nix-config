@@ -1,4 +1,11 @@
-{ outputs, config, lib, pkgs, inputs, ... }:
+{
+  outputs,
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   # Dependencies
@@ -22,17 +29,27 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
 
   # Function to simplify making waybar outputs
-  jsonOutput = name: { pre ? "", text ? "", tooltip ? "", alt ? "", class ? "", percentage ? "" }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
-    set -euo pipefail
-    ${pre}
-    ${jq} -cn \
-      --arg text "${text}" \
-      --arg tooltip "${tooltip}" \
-      --arg alt "${alt}" \
-      --arg class "${class}" \
-      --arg percentage "${percentage}" \
-      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-  ''}/bin/waybar-${name}";
+  jsonOutput =
+    name:
+    {
+      pre ? "",
+      text ? "",
+      tooltip ? "",
+      alt ? "",
+      class ? "",
+      percentage ? "",
+    }:
+    "${pkgs.writeShellScriptBin "waybar-${name}" ''
+      set -euo pipefail
+      ${pre}
+      ${jq} -cn \
+        --arg text "${text}" \
+        --arg tooltip "${tooltip}" \
+        --arg alt "${alt}" \
+        --arg class "${class}" \
+        --arg percentage "${percentage}" \
+        '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+    ''}/bin/waybar-${name}";
 
   hasSway = config.wayland.windowManager.sway.enable;
   sway = config.wayland.windowManager.sway.package;
@@ -47,7 +64,7 @@ in
   programs.waybar = {
     enable = true;
     package = pkgs.waybar.overrideAttrs (oa: {
-      mesonFlags = (oa.mesonFlags or  [ ]) ++ [ "-Dexperimental=true" ];
+      mesonFlags = (oa.mesonFlags or [ ]) ++ [ "-Dexperimental=true" ];
     });
     systemd.enable = true;
     settings = {
@@ -57,18 +74,20 @@ in
         height = 40;
         margin = "6";
         position = "top";
-        modules-left = [
-          "custom/menu"
-        ] ++ (lib.optionals hasSway [
-          "sway/workspaces"
-          "sway/mode"
-        ]) ++ (lib.optionals hasHyprland [
-          "hyprland/workspaces"
-          "hyprland/submap"
-        ]) ++ [
-          "custom/currentplayer"
-          "custom/player"
-        ];
+        modules-left =
+          [ "custom/menu" ]
+          ++ (lib.optionals hasSway [
+            "sway/workspaces"
+            "sway/mode"
+          ])
+          ++ (lib.optionals hasHyprland [
+            "hyprland/workspaces"
+            "hyprland/submap"
+          ])
+          ++ [
+            "custom/currentplayer"
+            "custom/player"
+          ];
 
         modules-center = [
           "cpu"
@@ -119,7 +138,11 @@ in
             headphone = "󰋋";
             headset = "󰋎";
             portable = "";
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           on-click = pavucontrol;
         };
@@ -133,7 +156,18 @@ in
         battery = {
           bat = "BAT0";
           interval = 10;
-          format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          format-icons = [
+            "󰁺"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂀"
+            "󰂁"
+            "󰂂"
+            "󰁹"
+          ];
           format = "{icon} {capacity}%";
           format-charging = "󰂄 {capacity}%";
           onclick = "";
@@ -167,9 +201,11 @@ in
               # Build variables for each host
               pre = ''
                 set -o pipefail
-                ${concatStringsSep "\n" (map (host: ''
-                  ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
-                '') hosts)}
+                ${concatStringsSep "\n" (
+                  map (host: ''
+                    ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
+                  '') hosts
+                )}
               '';
               # Access a remote machine's and a home machine's ping
               text = "  $ping_${remoteMachine} /  $ping_${homeMachine}";
@@ -179,25 +215,28 @@ in
           format = "{}";
           on-click = "";
         };
-        "custom/menu" = let
-          isFullScreen =
-            if hasHyprland then "${hyprland}/bin/hyprctl activewindow -j | ${jq} -e '.fullscreen' &>/dev/null"
-            else "false";
-        in {
-          interval = 1;
-          return-type = "json";
-          exec = jsonOutput "menu" {
-            text = "";
-            tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
-            class = "$(if ${isFullScreen}; then echo fullscreen; fi)";
+        "custom/menu" =
+          let
+            isFullScreen =
+              if hasHyprland then
+                "${hyprland}/bin/hyprctl activewindow -j | ${jq} -e '.fullscreen' &>/dev/null"
+              else
+                "false";
+          in
+          {
+            interval = 1;
+            return-type = "json";
+            exec = jsonOutput "menu" {
+              text = "";
+              tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
+              class = "$(if ${isFullScreen}; then echo fullscreen; fi)";
+            };
+            on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
+            on-click-right = lib.concatStringsSep ";" (
+              (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace")
+              ++ (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
+            );
           };
-          on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
-          on-click-right = lib.concatStringsSep ";" (
-            (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace") ++
-            (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
-          );
-
-        };
         "custom/hostname" = {
           exec = "echo $USER@$HOSTNAME";
           on-click = "${systemctl} --user restart waybar";
@@ -231,7 +270,8 @@ in
           interval = 2;
           return-type = "json";
           exec =
-            let gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs; };
+            let
+              gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs; };
             in
             jsonOutput "gpg-agent" {
               pre = ''status=$(${gpgCmds.isUnlocked} && echo "unlocked" || echo "locked")'';
@@ -323,89 +363,91 @@ in
           on-click = "${playerctl} play-pause";
         };
       };
-
     };
     # Cheatsheet:
     # x -> all sides
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style = let
-      inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
-      inherit (config.colorscheme) colors;
-      toRGBA = color: opacity: "rgba(${hexToRGBString "," color},${opacity})";
-    in /* css */ ''
-      * {
-        font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
-        font-size: 12pt;
-        padding: 0;
-        margin: 0 0.4em;
-      }
+    style =
+      let
+        inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
+        inherit (config.colorscheme) colors;
+        toRGBA = color: opacity: "rgba(${hexToRGBString "," color},${opacity})";
+      in
+      # css
+      ''
+        * {
+          font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
+          font-size: 12pt;
+          padding: 0;
+          margin: 0 0.4em;
+        }
 
-      window#waybar {
-        padding: 0;
-        border-radius: 0.5em;
-        background-color: ${toRGBA colors.base00 "0.7"};
-        color: #${colors.base05};
-      }
-      .modules-left {
-        margin-left: -0.65em;
-      }
-      .modules-right {
-        margin-right: -0.65em;
-      }
+        window#waybar {
+          padding: 0;
+          border-radius: 0.5em;
+          background-color: ${toRGBA colors.base00 "0.7"};
+          color: #${colors.base05};
+        }
+        .modules-left {
+          margin-left: -0.65em;
+        }
+        .modules-right {
+          margin-right: -0.65em;
+        }
 
-      #workspaces button {
-        background-color: #${colors.base00};
-        color: #${colors.base05};
-        padding-left: 0.4em;
-        padding-right: 0.4em;
-        margin-top: 0.15em;
-        margin-bottom: 0.15em;
-      }
-      #workspaces button.hidden {
-        background-color: #${colors.base00};
-        color: #${colors.base04};
-      }
-      #workspaces button.focused,
-      #workspaces button.active {
-        background-color: #${colors.base0A};
-        color: #${colors.base00};
-      }
+        #workspaces button {
+          background-color: #${colors.base00};
+          color: #${colors.base05};
+          padding-left: 0.4em;
+          padding-right: 0.4em;
+          margin-top: 0.15em;
+          margin-bottom: 0.15em;
+        }
+        #workspaces button.hidden {
+          background-color: #${colors.base00};
+          color: #${colors.base04};
+        }
+        #workspaces button.focused,
+        #workspaces button.active {
+          background-color: #${colors.base0A};
+          color: #${colors.base00};
+        }
 
-      #clock {
-        padding-right: 1em;
-        padding-left: 1em;
-        border-radius: 0.5em;
-      }
+        #clock {
+          padding-right: 1em;
+          padding-left: 1em;
+          border-radius: 0.5em;
+        }
 
-      #custom-menu {
-        background-color: #${colors.base01};
-        padding-right: 1.5em;
-        padding-left: 1em;
-        margin-right: 0;
-        border-radius: 0.5em;
-      }
-      #custom-menu.fullscreen {
-        background-color: #${colors.base0C};
-        color: #${colors.base00};
-      }
-      #custom-hostname {
-        padding-right: 1em;
-        padding-left: 1em;
-        margin-left: 0;
-        border-radius: 0.5em;
-      }
-      #custom-currentplayer {
-        padding-right: 0;
-      }
-      #tray {
-        color: #${colors.base05};
-      }
-      #custom-gpu, #cpu, #memory {
-        margin-left: 0.05em;
-        margin-right: 0.55em;
-      }
-    '';
+        #custom-menu {
+          background-color: #${colors.base01};
+          padding-right: 1.5em;
+          padding-left: 1em;
+          margin-right: 0;
+          border-radius: 0.5em;
+        }
+        #custom-menu.fullscreen {
+          background-color: #${colors.base0C};
+          color: #${colors.base00};
+        }
+        #custom-hostname {
+          padding-right: 1em;
+          padding-left: 1em;
+          margin-left: 0;
+          border-radius: 0.5em;
+        }
+        #custom-currentplayer {
+          padding-right: 0;
+        }
+        #tray {
+          color: #${colors.base05};
+        }
+        #custom-gpu, #cpu, #memory {
+          margin-left: 0.05em;
+          margin-right: 0.55em;
+        }
+      '';
   };
 }

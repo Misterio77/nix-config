@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.minecraft-servers.servers.proxy = {
     extraReload = ''
       echo 'velocitab reload' > /run/minecraft-server/proxy.stdin
@@ -18,18 +19,20 @@
         only_list_players_in_same_group = false;
         remove_spectator_effect = true;
         sort_players = false;
-        server_display_names = {};
+        server_display_names = { };
       };
       "plugins/velocitab/tab_groups.yml".value = {
-        groups = [{
-          name = "default";
-          headers = [ "&7FierceLands" ];
-          footers = [];
-          format = "&7[%server%] &r%prefix%%username%";
-          servers = [];
-          header_footer_update_rate = 1000;
-          placeholder_update_rate = 1000;
-        }];
+        groups = [
+          {
+            name = "default";
+            headers = [ "&7FierceLands" ];
+            footers = [ ];
+            format = "&7[%server%] &r%prefix%%username%";
+            servers = [ ];
+            header_footer_update_rate = 1000;
+            placeholder_update_rate = 1000;
+          }
+        ];
       };
     };
   };

@@ -1,3 +1,1 @@
-{
-  imports = [ ./global ];
-}
+{ imports = [ ./global ]; }

@@ -1,11 +1,15 @@
 {
-  imports = [
-    ../common/optional/ephemeral-btrfs.nix
-  ];
+  imports = [ ../common/optional/ephemeral-btrfs.nix ];
 
   boot = {
     initrd = {
-      availableKernelModules = [ "ata_piix" "sr_mod" "uhci_hcd" "virtio_blk" "virtio_pci" ];
+      availableKernelModules = [
+        "ata_piix"
+        "sr_mod"
+        "uhci_hcd"
+        "virtio_blk"
+        "virtio_pci"
+      ];
     };
     loader.grub = {
       enable = true;
@@ -20,10 +24,12 @@
     options = [ "subvol=boot" ];
   };
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 3072;
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 3072;
+    }
+  ];
 
   hardware.cpu.intel.updateMicrocode = true;
 

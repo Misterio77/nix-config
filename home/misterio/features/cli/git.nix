@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   ssh = "${pkgs.openssh}/bin/ssh";
 
@@ -30,7 +35,10 @@ let
   '';
 in
 {
-  home.packages = [ git-m7 git-fixup ];
+  home.packages = [
+    git-m7
+    git-fixup
+  ];
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
@@ -61,6 +69,9 @@ in
       rerere.enabled = true;
     };
     lfs.enable = true;
-    ignores = [ ".direnv" "result" ];
+    ignores = [
+      ".direnv"
+      "result"
+    ];
   };
 }

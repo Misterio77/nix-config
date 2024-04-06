@@ -1,5 +1,6 @@
 { config, lib, ... }:
-let port = "5232";
+let
+  port = "5232";
 in
 {
   services = {
@@ -7,7 +8,10 @@ in
       enable = true;
       settings = {
         server = {
-          hosts = [ "127.0.0.1:${port}" "::1:${port}" ];
+          hosts = [
+            "127.0.0.1:${port}"
+            "::1:${port}"
+          ];
         };
         auth = {
           type = "htpasswd";

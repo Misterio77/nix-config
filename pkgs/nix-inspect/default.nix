@@ -1,4 +1,9 @@
-{ writeShellScriptBin, perl, gnugrep, findutils }:
+{
+  writeShellScriptBin,
+  perl,
+  gnugrep,
+  findutils,
+}:
 writeShellScriptBin "nix-inspect" ''
   read -ra EXCLUDED <<< "$@"
   EXCLUDED+=(''${NIX_INSPECT_EXCLUDE[@]:-})

@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   homeCfgs = config.home-manager.users;
   homeSharePaths = lib.mapAttrsToList (_: v: "${v.home.path}/share") homeCfgs;
@@ -9,14 +14,16 @@ let
   iconTheme = misterioCfg.gtk.iconTheme;
   wallpaper = misterioCfg.wallpaper;
 
-  sway-kiosk = command: "${lib.getExe pkgs.sway} --unsupported-gpu --config ${pkgs.writeText "kiosk.config" ''
-    output * bg #000000 solid_color
-    xwayland disable
-    input "type:touchpad" {
-      tap enabled
-    }
-    exec '${vars} ${command}; ${pkgs.sway}/bin/swaymsg exit'
-  ''}";
+  sway-kiosk =
+    command:
+    "${lib.getExe pkgs.sway} --unsupported-gpu --config ${pkgs.writeText "kiosk.config" ''
+      output * bg #000000 solid_color
+      xwayland disable
+      input "type:touchpad" {
+        tap enabled
+      }
+      exec '${vars} ${command}; ${pkgs.sway}/bin/swaymsg exit'
+    ''}";
 in
 {
   users.extraUsers.greeter = {

@@ -14,9 +14,7 @@ in
           base_domain = "m7.rs";
           magic_dns = true;
           domains = [ "ts.m7.rs" ];
-          nameservers = [
-            "9.9.9.9"
-          ];
+          nameservers = [ "9.9.9.9" ];
         };
         server_url = "https://tailscale.m7.rs";
         metrics_listen_addr = "127.0.0.1:8095";
@@ -62,7 +60,6 @@ in
 
   # Derp server
   networking.firewall.allowedUDPPorts = [ derpPort ];
-
 
   environment.systemPackages = [ config.services.headscale.package ];
 

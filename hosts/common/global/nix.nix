@@ -1,4 +1,9 @@
-{ inputs, lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 {
   nix = {
     # TODO
@@ -7,17 +12,24 @@
     package = pkgs.nixVersions.nix_2_18;
 
     settings = {
-      substituters = lib.mkAfter [
-        "https://cache.m7.rs"
+      substituters = lib.mkAfter [ "https://cache.m7.rs" ];
+      trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
+      trusted-users = [
+        "root"
+        "@wheel"
       ];
-      trusted-public-keys = [
-        "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg="
-      ];
-      trusted-users = [ "root" "@wheel" ];
       auto-optimise-store = lib.mkDefault true;
-      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "repl-flake"
+      ];
       warn-dirty = false;
-      system-features = [ "kvm" "big-parallel" "nixos-test" ];
+      system-features = [
+        "kvm"
+        "big-parallel"
+        "nixos-test"
+      ];
       flake-registry = ""; # Disable global flake registry
     };
     gc = {

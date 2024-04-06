@@ -1,4 +1,8 @@
-{ fetchFromGitHub, buildPythonPackage, dbus-python }:
+{
+  fetchFromGitHub,
+  buildPythonPackage,
+  dbus-python,
+}:
 
 buildPythonPackage rec {
   pname = "lyrics";

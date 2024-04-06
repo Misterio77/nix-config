@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   services.deluge = {
     enable = true;
     declarative = true;
@@ -19,7 +20,10 @@
       daemon_port = 58846;
       # Listen on 6880 only
       random_port = false;
-      listen_ports = [ 6880 6880 ];
+      listen_ports = [
+        6880
+        6880
+      ];
       # Outgoing is random
       random_outgoing_ports = true;
     };
@@ -37,10 +41,12 @@
     # Remote control port
     allowedTCPPorts = [ 58846 ];
     # Listen
-    allowedTCPPortRanges = [{
-      from = 6880;
-      to = 6890;
-    }];
+    allowedTCPPortRanges = [
+      {
+        from = 6880;
+        to = 6890;
+      }
+    ];
   };
 
   environment.persistence = {

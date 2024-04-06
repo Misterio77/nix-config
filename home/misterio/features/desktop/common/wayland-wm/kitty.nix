@@ -14,7 +14,6 @@ in
     };
   };
 
-
   programs.kitty = {
     enable = true;
     font = {

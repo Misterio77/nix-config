@@ -1,15 +1,23 @@
-{ pkgs, config, lib, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
   programs.neovim = {
-    extraConfig = lib.mkAfter /* vim */ ''
-      function! SetCustomKeywords()
-        syn match Todo  /TODO/
-        syn match Done  /DONE/
-        syn match Start /START/
-        syn match End   /END/
-      endfunction
+    extraConfig =
+      lib.mkAfter # vim
+        ''
+          function! SetCustomKeywords()
+            syn match Todo  /TODO/
+            syn match Done  /DONE/
+            syn match Start /START/
+            syn match End   /END/
+          endfunction
 
-      autocmd Syntax * call SetCustomKeywords()
-    '';
+          autocmd Syntax * call SetCustomKeywords()
+        '';
     plugins = with pkgs.vimPlugins; [
       rust-vim
       dart-vim-plugin
@@ -29,23 +37,25 @@
 
       {
         plugin = vimtex;
-        config = /* vim */ ''
-          let g:vimtex_view_method = '${if config.programs.zathura.enable then "zathura" else "general"}'
-        '';
+        config = # vim
+          ''
+            let g:vimtex_view_method = '${if config.programs.zathura.enable then "zathura" else "general"}'
+          '';
       }
 
       # Tree sitter
       {
         plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
-        config = /* lua */ ''
-          require('nvim-treesitter.configs').setup{
-            highlight = {
-              enable = true,
-              additional_vim_regex_highlighting = false,
-            },
-          }
-        '';
+        config = # lua
+          ''
+            require('nvim-treesitter.configs').setup{
+              highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+              },
+            }
+          '';
       }
     ];
   };

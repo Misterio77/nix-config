@@ -1,11 +1,15 @@
 {
-  imports = [
-    ../common/optional/ephemeral-btrfs.nix
-  ];
+  imports = [ ../common/optional/ephemeral-btrfs.nix ];
 
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "rtsx_usb_sdmmc" "usbhid" ];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "rtsx_usb_sdmmc"
+        "usbhid"
+      ];
       kernelModules = [ "kvm-intel" ];
     };
     loader = {
@@ -24,10 +28,12 @@
     };
   };
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 8196;
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 8196;
+    }
+  ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = true;

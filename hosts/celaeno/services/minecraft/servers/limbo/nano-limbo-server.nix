@@ -1,4 +1,8 @@
-{ stdenv, fetchurl, jre_headless }:
+{
+  stdenv,
+  fetchurl,
+  jre_headless,
+}:
 stdenv.mkDerivation rec {
   pname = "nano-limbo";
   version = "1.5.2";

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.minecraft-servers.servers.lobby = {
     enable = true;
     enableReload = true;
@@ -12,7 +13,12 @@
       gamemode = "adventure";
       force-gamemode = true;
       generator-settings = builtins.toJSON {
-        layers = [{ block = "air"; height = "1"; }];
+        layers = [
+          {
+            block = "air";
+            height = "1";
+          }
+        ];
         biome = "the_void";
       };
       enable-rcon = true;
@@ -20,11 +26,13 @@
       "rcon.port" = 24474;
     };
     files = {
-      "ops.json".value = [{
-        uuid = "3fc76c64-b1b2-4a95-b3cf-0d7d94db2d75";
-        name = "Misterio7x";
-        level = 4;
-      }];
+      "ops.json".value = [
+        {
+          uuid = "3fc76c64-b1b2-4a95-b3cf-0d7d94db2d75";
+          name = "Misterio7x";
+          level = 4;
+        }
+      ];
       "config/paper-global.yml".value = {
         proxies.velocity = {
           enabled = true;
@@ -74,12 +82,16 @@
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
         hash = "sha256-JSE71YbivWCqUzNwPVFNgqlhhFkMoIstrn+L/F3qdFM=";
       };
-      "plugins/LuckPerms.jar" = let build = "1515"; in pkgs.fetchurl rec {
-        pname = "LuckPerms";
-        version = "5.4.102";
-        url = "https://download.luckperms.net/${build}/bukkit/loader/${pname}-Bukkit-${version}.jar";
-        hash = "sha256-rShKJtW6FzPba4yATlsS2JHFtBZrQhZeRrPfv/4w1ZY=";
-      };
+      "plugins/LuckPerms.jar" =
+        let
+          build = "1515";
+        in
+        pkgs.fetchurl rec {
+          pname = "LuckPerms";
+          version = "5.4.102";
+          url = "https://download.luckperms.net/${build}/bukkit/loader/${pname}-Bukkit-${version}.jar";
+          hash = "sha256-rShKJtW6FzPba4yATlsS2JHFtBZrQhZeRrPfv/4w1ZY=";
+        };
       "plugins/HidePLayerJoinQuit.jar" = pkgs.fetchurl rec {
         pname = "HidePLayerJoinQuit";
         version = "1.0";

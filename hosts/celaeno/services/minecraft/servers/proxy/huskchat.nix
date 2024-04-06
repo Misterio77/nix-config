@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services.minecraft-servers.servers.proxy = {
     extraReload = ''
       echo 'huskchat reload' > /run/minecraft-server/proxy.stdin
@@ -29,32 +30,56 @@
         check_for_updates = false;
         default_channel = "default";
         channel_log_format = "[CHAT] [%channel%] %sender%: ";
-        channel_command_aliases = [ "/channel" "/c" ];
+        channel_command_aliases = [
+          "/channel"
+          "/c"
+        ];
 
-        channels =  {
+        channels = {
           default = {
             format = "&7[%servername%] %fullname%&r: ";
             broadcast_scope = "GLOBAL";
             log_to_console = true;
-            shortcut_commands = [ "/global" "/g" "/default" "/d" ];
+            shortcut_commands = [
+              "/global"
+              "/g"
+              "/default"
+              "/d"
+            ];
           };
           internal = {
             format = "%fullname%&r&0: ";
             broadcast_scope = "PASSTHROUGH";
-            shortcut_commands = [ "/i" "/internal" ];
+            shortcut_commands = [
+              "/i"
+              "/internal"
+            ];
           };
         };
         broadcast_command = {
           enabled = true;
-          broadcast_aliases = [ "/broadcast" "/alert" ];
+          broadcast_aliases = [
+            "/broadcast"
+            "/alert"
+          ];
           format = "&4[SERVER]&e ";
           log_to_console = true;
           log_format = "[SERVER]: ";
         };
         message_command = {
           enabled = true;
-          msg_aliases = [ "/msg" "/m" "/tell" "/whisper" "/w" "/pm" ];
-          reply_aliases = [ "/reply" "/r" ];
+          msg_aliases = [
+            "/msg"
+            "/m"
+            "/tell"
+            "/whisper"
+            "/w"
+            "/pm"
+          ];
+          reply_aliases = [
+            "/reply"
+            "/r"
+          ];
           log_to_console = true;
           log_format = "[MSG] [%sender% -> %receiver%]: ";
           group_messages.enabled = false;

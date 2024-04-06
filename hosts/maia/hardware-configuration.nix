@@ -5,7 +5,12 @@
   ];
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "sd_mod"
+      ];
       kernelModules = [ "kvm-intel" ];
     };
     loader = {
@@ -24,10 +29,12 @@
     };
   };
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 8196;
-  }];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 8196;
+    }
+  ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = true;

@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   mbsync = "${config.programs.mbsync.package}/bin/mbsync";
@@ -32,7 +37,10 @@ in
       personal = rec {
         primary = true;
         address = "hi@m7.rs";
-        aliases = ["gabriel@gsfontes.com" "eu@misterio.me"];
+        aliases = [
+          "gabriel@gsfontes.com"
+          "eu@misterio.me"
+        ];
         passwordCommand = "${pass} ${smtp.host}/${address}";
 
         imap.host = "mail.m7.rs";
@@ -49,7 +57,13 @@ in
         };
         neomutt = {
           enable = true;
-          extraMailboxes = [ "Archive" "Drafts" "Junk" "Sent" "Trash" ];
+          extraMailboxes = [
+            "Archive"
+            "Drafts"
+            "Junk"
+            "Sent"
+            "Trash"
+          ];
         };
 
         msmtp.enable = true;
@@ -70,20 +84,21 @@ in
         address = "gabriel@zoocha.com";
         passwordCommand = "${pass} ${smtp.host}/${address}";
 
-        /* TODO: add imap (conditionally)
-        imap.host = "imap.gmail.com";
-        mbsync = {
-          enable = true;
-          create = "maildir";
-          expunge = "both";
-        };
-        folders = {
-          inbox = "INBOX";
-          trash = "Trash";
-        };
-        neomutt = {
-          enable = true;
-        };
+        /*
+          TODO: add imap (conditionally)
+          imap.host = "imap.gmail.com";
+          mbsync = {
+            enable = true;
+            create = "maildir";
+            expunge = "both";
+          };
+          folders = {
+            inbox = "INBOX";
+            trash = "Trash";
+          };
+          neomutt = {
+            enable = true;
+          };
         */
 
         msmtp.enable = true;
@@ -97,9 +112,12 @@ in
   programs.msmtp.enable = true;
 
   systemd.user.services.mbsync = {
-    Unit = { Description = "mbsync synchronization"; };
+    Unit = {
+      Description = "mbsync synchronization";
+    };
     Service =
-      let gpgCmds = import ../cli/gpg-commands.nix { inherit pkgs; };
+      let
+        gpgCmds = import ../cli/gpg-commands.nix { inherit pkgs; };
       in
       {
         Type = "oneshot";
@@ -110,11 +128,15 @@ in
       };
   };
   systemd.user.timers.mbsync = {
-    Unit = { Description = "Automatic mbsync synchronization"; };
+    Unit = {
+      Description = "Automatic mbsync synchronization";
+    };
     Timer = {
       OnBootSec = "30";
       OnUnitActiveSec = "5m";
     };
-    Install = { WantedBy = [ "timers.target" ]; };
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
   };
 }

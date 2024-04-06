@@ -4,7 +4,5 @@ let
   mainPkg = callPackage ./default.nix { };
 in
 mainPkg.overrideAttrs (oa: {
-  nativeBuildInputs = [
-    clang-tools
-  ] ++ (oa.nativeBuildInputs or [ ]);
+  nativeBuildInputs = [ clang-tools ] ++ (oa.nativeBuildInputs or [ ]);
 })

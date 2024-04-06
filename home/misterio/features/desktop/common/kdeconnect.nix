@@ -8,7 +8,6 @@ let
   script-fortune = pkgs.writeShellScriptBin "fortune" ''
     ${kdeconnect-cli} -d $(${kdeconnect-cli} --list-available --id-only) --ping-msg "$(${fortune})"
   '';
-
 in
 {
   # Hide all .desktop, except for org.kde.kdeconnect.settings
@@ -33,7 +32,6 @@ in
   services.kdeconnect = {
     enable = true;
     indicator = true;
-
   };
 
   xdg.configFile = {

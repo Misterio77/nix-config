@@ -1,4 +1,8 @@
-{ callPackage, haskell-language-server, cabal-install }:
+{
+  callPackage,
+  haskell-language-server,
+  cabal-install,
+}:
 
 let
   mainPkg = callPackage ./default.nix { };

@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
-let inherit (config.colorscheme) colors kind;
+let
+  inherit (config.colorscheme) colors kind;
 in
 {
   home.persistence = {
@@ -11,8 +12,6 @@ in
     ];
   };
 
-
-
   xdg.mimeApps.defaultApplications = {
     "text/html" = [ "org.qutebrowser.qutebrowser.desktop" ];
     "text/xml" = [ "org.qutebrowser.qutebrowser.desktop" ];
@@ -21,12 +20,14 @@ in
     "x-scheme-handler/qute" = [ "org.qutebrowser.qutebrowser.desktop" ];
   };
 
-
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
     settings = {
-      editor.command = [ "xdg-open" "{file}" ];
+      editor.command = [
+        "xdg-open"
+        "{file}"
+      ];
       tabs = {
         show = "multiple";
         position = "left";

@@ -1,6 +1,16 @@
-{ sshKeyFile, writeShellApplication, jq, git, ... }: writeShellApplication {
+{
+  sshKeyFile,
+  writeShellApplication,
+  jq,
+  git,
+  ...
+}:
+writeShellApplication {
   name = "release-host-branch";
-  runtimeInputs = [ jq git ];
+  runtimeInputs = [
+    jq
+    git
+  ];
   text = ''
     job="$(jq -r '.job' < "$HYDRA_JSON")"
     outpath="$(jq -r '.outputs[] | select(.name == "out") | .path' < "$HYDRA_JSON")"
