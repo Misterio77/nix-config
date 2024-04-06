@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, outputs, lib, ... }:
 {
   services = {
     prometheus = {
@@ -27,6 +27,13 @@
           scheme = "https";
           static_configs = [{
             targets = [ "alcyone.m7.rs" "celaeno.m7.rs" "merope.m7.rs" ];
+          }];
+        }
+        {
+          job_name = "hosts";
+          scheme = "http";
+          static_configs = [{
+            targets = lib.mapAttrsToList (n: v: "${n}:${toString v.config.services.prometheus.exporters.node.port}") outputs.nixosConfigurations;
           }];
         }
       ];

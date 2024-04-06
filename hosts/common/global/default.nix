@@ -17,6 +17,7 @@
     ./tailscale.nix
     ./gamemode.nix
     ./nix-ld.nix
+    ./prometheus-node-exporter.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager.extraSpecialArgs = { inherit inputs outputs; };
