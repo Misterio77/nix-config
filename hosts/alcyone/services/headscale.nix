@@ -27,8 +27,8 @@ in
           level = "warn";
         };
         ip_prefixes = [
-          "100.64.0.0/10"
-          "fdef:6567:bd7a::/48"
+          "100.77.0.0/24"
+          "fdef:6567:bd7a:77::/64"
         ];
         derp.server = {
           enable = true;
