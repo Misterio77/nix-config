@@ -31,7 +31,7 @@
           add_lsp(lspconfig.clangd, {})
           add_lsp(lspconfig.nil_ls, {
             settings = { ['nil'] = {
-              formatting = { command = { "nixfmt" }}
+              formatting = { command = { "alejandra" }}
             }}
           })
           add_lsp(lspconfig.pylsp, {})

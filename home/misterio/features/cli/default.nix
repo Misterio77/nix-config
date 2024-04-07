@@ -36,7 +36,7 @@
     timer # To help with my ADHD paralysis
 
     nil # Nix LSP
-    nixfmt-rfc-style # Nix formatter
+    alejandra # Nix formatter
     nvd # Differ
     nix-output-monitor
     nh # Nice wrapper for NixOS and HM
