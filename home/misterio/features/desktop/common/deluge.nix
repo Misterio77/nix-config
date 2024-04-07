@@ -1,4 +1,3 @@
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [ deluge ];
+{pkgs, ...}: {
+  home.packages = with pkgs; [deluge];
 }

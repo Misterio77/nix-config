@@ -1,14 +1,15 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   inherit (config.colorscheme) colors;
   kitty-xterm = pkgs.writeShellScriptBin "xterm" ''
     ${config.programs.kitty.package}/bin/kitty "$@"
   '';
-in
-{
+in {
   home = {
-    packages = [ kitty-xterm ];
+    packages = [kitty-xterm];
     sessionVariables = {
       TERMINAL = "kitty -1";
     };

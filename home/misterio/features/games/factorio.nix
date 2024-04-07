@@ -1,11 +1,14 @@
-{ lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   home = {
-    packages = [ pkgs.factorio ];
+    packages = [pkgs.factorio];
     persistence = {
       "/persist/home/misterio" = {
         allowOther = true;
-        directories = [ ".factorio" ];
+        directories = [".factorio"];
       };
     };
   };

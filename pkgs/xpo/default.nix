@@ -1,6 +1,5 @@
 # Exposes a port through SSH
 # xpo [local port] [remote host] [remote port]
-
 {
   lib,
   writeShellApplication,
@@ -8,7 +7,7 @@
 }:
 (writeShellApplication {
   name = "xpo";
-  runtimeInputs = [ openssh ];
+  runtimeInputs = [openssh];
   text = builtins.readFile ./xpo.sh;
 })
 // {

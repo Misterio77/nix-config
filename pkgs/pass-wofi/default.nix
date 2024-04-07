@@ -13,24 +13,22 @@
   gnused,
   coreutils,
 }:
-
 with lib;
+  stdenv.mkDerivation {
+    name = "pass-wofi";
+    version = "1.0";
+    src = ./pass-wofi.sh;
 
-stdenv.mkDerivation {
-  name = "pass-wofi";
-  version = "1.0";
-  src = ./pass-wofi.sh;
+    nativeBuildInputs = [makeWrapper];
 
-  nativeBuildInputs = [ makeWrapper ];
+    dontUnpack = true;
+    dontBuild = true;
+    dontConfigure = true;
 
-  dontUnpack = true;
-  dontBuild = true;
-  dontConfigure = true;
-
-  installPhase = ''
-    install -Dm 0755 $src $out/bin/pass-wofi
-    wrapProgram $out/bin/pass-wofi --prefix PATH \
-      "${
+    installPhase = ''
+      install -Dm 0755 $src $out/bin/pass-wofi
+      wrapProgram $out/bin/pass-wofi --prefix PATH \
+        "${
         makeBinPath [
           pass
           jq
@@ -42,12 +40,12 @@ stdenv.mkDerivation {
           coreutils
         ]
       }"
-  '';
+    '';
 
-  meta = {
-    description = "A wofi graphical menu for pass";
-    license = licenses.mit;
-    platforms = platforms.all;
-    mainProgram = "pass-wofi";
-  };
-}
+    meta = {
+      description = "A wofi graphical menu for pass";
+      license = licenses.mit;
+      platforms = platforms.all;
+      mainProgram = "pass-wofi";
+    };
+  }

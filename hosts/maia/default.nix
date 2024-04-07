@@ -1,5 +1,8 @@
-{ pkgs, inputs, ... }:
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-gpu-nvidia
@@ -30,7 +33,7 @@
 
   i18n.defaultLocale = "pt_BR.UTF-8";
 
-  boot.kernelModules = [ "coretemp" ];
+  boot.kernelModules = ["coretemp"];
   services.thermald.enable = true;
   environment.etc."sysconfig/lm_sensors".text = ''
     HWMON_MODULES="coretemp"

@@ -3,9 +3,8 @@
   lib,
   config,
   ...
-}:
-{
-  imports = [ ./packages.nix ];
+}: {
+  imports = [./packages.nix];
 
   users.mutableUsers = false;
   users.users.layla = {
@@ -26,6 +25,6 @@
 
   # Persist entire home
   environment.persistence = {
-    "/persist".directories = [ "/home/layla" ];
+    "/persist".directories = ["/home/layla"];
   };
 }

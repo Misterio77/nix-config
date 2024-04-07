@@ -4,12 +4,9 @@
   config,
   ...
 }:
-with lib;
-
-let
+with lib; let
   cfg = config.services.rgbdaemon;
-in
-{
+in {
   options.services.rgbdaemon = {
     enable = mkOption {
       type = types.bool;
@@ -52,17 +49,16 @@ in
         '';
       };
     };
-    colors =
-      let
-        mkColorOption = name: {
-          inherit name;
-          value = mkOption {
-            type = types.strMatching "[a-fA-F0-9]{6}";
-            description = "${name} color.";
-            default = "ffffff";
-          };
+    colors = let
+      mkColorOption = name: {
+        inherit name;
+        value = mkOption {
+          type = types.strMatching "[a-fA-F0-9]{6}";
+          description = "${name} color.";
+          default = "ffffff";
         };
-      in
+      };
+    in
       listToAttrs (
         map mkColorOption [
           "background"
@@ -86,7 +82,7 @@ in
       highlighted = mkOption {
         type = types.listOf types.str;
         description = "Always highlighted mouse keys";
-        default = [ ];
+        default = [];
       };
     };
     keyboard = {
@@ -98,7 +94,7 @@ in
       highlighted = mkOption {
         type = types.listOf types.str;
         description = "Always highlighted keyboard keys";
-        default = [ ];
+        default = [];
       };
     };
   };
@@ -134,7 +130,7 @@ in
         Restart = "always";
       };
       Install = {
-        WantedBy = [ "graphical-session.target" ];
+        WantedBy = ["graphical-session.target"];
       };
     };
   };

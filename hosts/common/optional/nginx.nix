@@ -1,8 +1,10 @@
-{ lib, config, ... }:
-let
-  inherit (config.networking) hostName;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  inherit (config.networking) hostName;
+in {
   services = {
     nginx = {
       enable = true;
@@ -28,7 +30,7 @@ in
       settings.namespaces = [
         {
           name = "filelogger";
-          source.files = [ "/var/log/nginx/access.log" ];
+          source.files = ["/var/log/nginx/access.log"];
           format = "$remote_addr - $remote_user [$time_local] \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\"";
         }
       ];
@@ -38,10 +40,10 @@ in
       enable = true;
       user = "nginx";
       group = "nginx";
-      plugins = [ "cgi" ];
+      plugins = ["cgi"];
       instance = {
         type = "emperor";
-        vassals = lib.mkBefore { };
+        vassals = lib.mkBefore {};
       };
     };
   };

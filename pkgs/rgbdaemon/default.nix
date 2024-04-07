@@ -11,26 +11,23 @@
   pulseaudio,
   playerctl,
 }:
-
 with lib;
+  (writeShellApplication {
+    name = "rgbdaemon";
+    runtimeInputs = [
+      findutils
+      gnugrep
+      procps
+      gawk
+      coreutils
+      openrgb
+      pastel
+      pulseaudio
+      playerctl
+    ];
 
-(writeShellApplication {
-  name = "rgbdaemon";
-  runtimeInputs = [
-    findutils
-    gnugrep
-    procps
-    gawk
-    coreutils
-    openrgb
-    pastel
-    pulseaudio
-    playerctl
-  ];
-
-  checkPhase = "";
-  text =
-    ''
+    checkPhase = "";
+    text = ''
       set +o nounset
 
       base_colors() {
@@ -177,10 +174,10 @@ with lib;
 
       startup
     '';
-})
-// {
-  meta = with lib; {
-    license = licenses.mit;
-    platforms = platforms.all;
-  };
-}
+  })
+  // {
+    meta = with lib; {
+      license = licenses.mit;
+      platforms = platforms.all;
+    };
+  }

@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   nix = {
     sshServe = {
       enable = true;
@@ -9,6 +8,6 @@
       protocol = "ssh";
       write = true;
     };
-    settings.trusted-users = [ "nix-ssh" ];
+    settings.trusted-users = ["nix-ssh"];
   };
 }

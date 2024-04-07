@@ -1,5 +1,4 @@
-{ buildNpmPackage }:
-
+{buildNpmPackage}:
 buildNpmPackage {
   pname = "foo-bar";
   version = "0.1.0";

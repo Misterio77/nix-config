@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   services.deluge = {
     enable = true;
     declarative = true;
@@ -39,7 +38,7 @@
 
   networking.firewall = {
     # Remote control port
-    allowedTCPPorts = [ 58846 ];
+    allowedTCPPorts = [58846];
     # Listen
     allowedTCPPortRanges = [
       {

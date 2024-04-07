@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   xdg = {
     desktopEntries = {
       neomutt = {
@@ -20,7 +19,7 @@
           "ConsoleOnly"
         ];
         type = "Application";
-        mimeType = [ "x-scheme-handler/mailto" ];
+        mimeType = ["x-scheme-handler/mailto"];
       };
     };
     mimeApps.defaultApplications = {
@@ -62,64 +61,61 @@
       {
         action = "toggle-new";
         key = "B";
-        map = [ "index" ];
+        map = ["index"];
       }
     ];
-    macros =
-      let
-        browserpipe = "cat /dev/stdin > /tmp/muttmail.html && xdg-open /tmp/muttmail.html";
-      in
-      [
-        {
-          action = "<sidebar-next><sidebar-open>";
-          key = "J";
-          map = [
-            "index"
-            "pager"
-          ];
-        }
-        {
-          action = "<sidebar-prev><sidebar-open>";
-          key = "K";
-          map = [
-            "index"
-            "pager"
-          ];
-        }
-        {
-          action = "<save-message>+Archive<enter>";
-          key = "A";
-          map = [
-            "index"
-            "pager"
-          ];
-        }
-        {
-          action = "<pipe-entry>${browserpipe}<enter><exit>";
-          key = "V";
-          map = [ "attach" ];
-        }
-        {
-          action = "<pipe-message>${pkgs.urlscan}/bin/urlscan<enter><exit>";
-          key = "F";
-          map = [ "pager" ];
-        }
-        {
-          action = "<view-attachments><search>html<enter><pipe-entry>${browserpipe}<enter><exit>";
-          key = "V";
-          map = [
-            "index"
-            "pager"
-          ];
-        }
-      ];
-    extraConfig =
-      let
-        # Collect all addresses and aliases
-        addresses = lib.flatten (
-          lib.mapAttrsToList (n: v: [ v.address ] ++ v.aliases) config.accounts.email.accounts
-        );
-      in
+    macros = let
+      browserpipe = "cat /dev/stdin > /tmp/muttmail.html && xdg-open /tmp/muttmail.html";
+    in [
+      {
+        action = "<sidebar-next><sidebar-open>";
+        key = "J";
+        map = [
+          "index"
+          "pager"
+        ];
+      }
+      {
+        action = "<sidebar-prev><sidebar-open>";
+        key = "K";
+        map = [
+          "index"
+          "pager"
+        ];
+      }
+      {
+        action = "<save-message>+Archive<enter>";
+        key = "A";
+        map = [
+          "index"
+          "pager"
+        ];
+      }
+      {
+        action = "<pipe-entry>${browserpipe}<enter><exit>";
+        key = "V";
+        map = ["attach"];
+      }
+      {
+        action = "<pipe-message>${pkgs.urlscan}/bin/urlscan<enter><exit>";
+        key = "F";
+        map = ["pager"];
+      }
+      {
+        action = "<view-attachments><search>html<enter><pipe-entry>${browserpipe}<enter><exit>";
+        key = "V";
+        map = [
+          "index"
+          "pager"
+        ];
+      }
+    ];
+    extraConfig = let
+      # Collect all addresses and aliases
+      addresses = lib.flatten (
+        lib.mapAttrsToList (n: v: [v.address] ++ v.aliases) config.accounts.email.accounts
+      );
+    in
       ''
         alternates "${lib.concatStringsSep "|" addresses}"
       ''

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   services.minecraft-servers.servers.survival = {
     enable = true;
     enableReload = true;
@@ -59,10 +58,9 @@
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
         hash = "sha256-JSE71YbivWCqUzNwPVFNgqlhhFkMoIstrn+L/F3qdFM=";
       };
-      "plugins/LuckPerms.jar" =
-        let
-          build = "1515";
-        in
+      "plugins/LuckPerms.jar" = let
+        build = "1515";
+      in
         pkgs.fetchurl rec {
           pname = "LuckPerms";
           version = "5.4.102";

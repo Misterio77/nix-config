@@ -1,9 +1,9 @@
 {
-  imports = [ ../common/optional/ephemeral-btrfs.nix ];
+  imports = [../common/optional/ephemeral-btrfs.nix];
 
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" ];
+      availableKernelModules = ["xhci_pci"];
     };
     loader.timeout = 5;
   };

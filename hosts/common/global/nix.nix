@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   nix = {
     # TODO
     # https://github.com/NixOS/nix/issues/9579
@@ -12,8 +11,8 @@
     package = pkgs.nixVersions.nix_2_18;
 
     settings = {
-      substituters = lib.mkAfter [ "https://cache.m7.rs" ];
-      trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
+      substituters = lib.mkAfter ["https://cache.m7.rs"];
+      trusted-public-keys = ["cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg="];
       trusted-users = [
         "root"
         "@wheel"
@@ -41,10 +40,10 @@
 
     # Add each flake input as a registry
     # To make nix3 commands consistent with the flake
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
 
     # Add nixpkgs input to NIX_PATH
     # This lets nix2 commands still use <nixpkgs>
-    nixPath = [ "nixpkgs=${inputs.nixpkgs.outPath}" ];
+    nixPath = ["nixpkgs=${inputs.nixpkgs.outPath}"];
   };
 }

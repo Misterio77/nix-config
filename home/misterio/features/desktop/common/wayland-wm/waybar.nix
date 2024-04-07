@@ -5,9 +5,7 @@
   pkgs,
   inputs,
   ...
-}:
-
-let
+}: let
   # Dependencies
   cat = "${pkgs.coreutils}/bin/cat";
   cut = "${pkgs.coreutils}/bin/cut";
@@ -29,34 +27,30 @@ let
   wofi = "${pkgs.wofi}/bin/wofi";
 
   # Function to simplify making waybar outputs
-  jsonOutput =
-    name:
-    {
-      pre ? "",
-      text ? "",
-      tooltip ? "",
-      alt ? "",
-      class ? "",
-      percentage ? "",
-    }:
-    "${pkgs.writeShellScriptBin "waybar-${name}" ''
-      set -euo pipefail
-      ${pre}
-      ${jq} -cn \
-        --arg text "${text}" \
-        --arg tooltip "${tooltip}" \
-        --arg alt "${alt}" \
-        --arg class "${class}" \
-        --arg percentage "${percentage}" \
-        '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-    ''}/bin/waybar-${name}";
+  jsonOutput = name: {
+    pre ? "",
+    text ? "",
+    tooltip ? "",
+    alt ? "",
+    class ? "",
+    percentage ? "",
+  }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
+    set -euo pipefail
+    ${pre}
+    ${jq} -cn \
+      --arg text "${text}" \
+      --arg tooltip "${tooltip}" \
+      --arg alt "${alt}" \
+      --arg class "${class}" \
+      --arg percentage "${percentage}" \
+      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+  ''}/bin/waybar-${name}";
 
   hasSway = config.wayland.windowManager.sway.enable;
   sway = config.wayland.windowManager.sway.package;
   hasHyprland = config.wayland.windowManager.hyprland.enable;
   hyprland = config.wayland.windowManager.hyprland.package;
-in
-{
+in {
   # Let it try to start a few more times
   systemd.user.services.waybar = {
     Unit.StartLimitBurst = 30;
@@ -64,7 +58,7 @@ in
   programs.waybar = {
     enable = true;
     package = pkgs.waybar.overrideAttrs (oa: {
-      mesonFlags = (oa.mesonFlags or [ ]) ++ [ "-Dexperimental=true" ];
+      mesonFlags = (oa.mesonFlags or []) ++ ["-Dexperimental=true"];
     });
     systemd.enable = true;
     settings = {
@@ -75,7 +69,7 @@ in
         margin = "6";
         position = "top";
         modules-left =
-          [ "custom/menu" ]
+          ["custom/menu"]
           ++ (lib.optionals hasSway [
             "sway/workspaces"
             "sway/mode"
@@ -190,13 +184,12 @@ in
         "custom/tailscale-ping" = {
           interval = 10;
           return-type = "json";
-          exec =
-            let
-              inherit (builtins) concatStringsSep attrNames;
-              hosts = attrNames outputs.nixosConfigurations;
-              homeMachine = "merope";
-              remoteMachine = "alcyone";
-            in
+          exec = let
+            inherit (builtins) concatStringsSep attrNames;
+            hosts = attrNames outputs.nixosConfigurations;
+            homeMachine = "merope";
+            remoteMachine = "alcyone";
+          in
             jsonOutput "tailscale-ping" {
               # Build variables for each host
               pre = ''
@@ -204,7 +197,8 @@ in
                 ${concatStringsSep "\n" (
                   map (host: ''
                     ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
-                  '') hosts
+                  '')
+                  hosts
                 )}
               '';
               # Access a remote machine's and a home machine's ping
@@ -215,28 +209,25 @@ in
           format = "{}";
           on-click = "";
         };
-        "custom/menu" =
-          let
-            isFullScreen =
-              if hasHyprland then
-                "${hyprland}/bin/hyprctl activewindow -j | ${jq} -e '.fullscreen' &>/dev/null"
-              else
-                "false";
-          in
-          {
-            interval = 1;
-            return-type = "json";
-            exec = jsonOutput "menu" {
-              text = "";
-              tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
-              class = "$(if ${isFullScreen}; then echo fullscreen; fi)";
-            };
-            on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
-            on-click-right = lib.concatStringsSep ";" (
-              (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace")
-              ++ (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
-            );
+        "custom/menu" = let
+          isFullScreen =
+            if hasHyprland
+            then "${hyprland}/bin/hyprctl activewindow -j | ${jq} -e '.fullscreen' &>/dev/null"
+            else "false";
+        in {
+          interval = 1;
+          return-type = "json";
+          exec = jsonOutput "menu" {
+            text = "";
+            tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
+            class = "$(if ${isFullScreen}; then echo fullscreen; fi)";
           };
+          on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
+          on-click-right = lib.concatStringsSep ";" (
+            (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace")
+            ++ (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
+          );
+        };
         "custom/hostname" = {
           exec = "echo $USER@$HOSTNAME";
           on-click = "${systemctl} --user restart waybar";
@@ -269,10 +260,9 @@ in
         "custom/gpg-agent" = {
           interval = 2;
           return-type = "json";
-          exec =
-            let
-              gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs; };
-            in
+          exec = let
+            gpgCmds = import ../../../cli/gpg-commands.nix {inherit pkgs;};
+          in
             jsonOutput "gpg-agent" {
               pre = ''status=$(${gpgCmds.isUnlocked} && echo "unlocked" || echo "locked")'';
               alt = "$status";
@@ -369,13 +359,14 @@ in
     # x y -> vertical, horizontal
     # x y z -> top, horizontal, bottom
     # w x y z -> top, right, bottom, left
-    style =
-      let
-        inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
-        inherit (config.colorscheme) colors;
-        toRGBA = color: opacity: "rgba(${hexToRGBString "," color},${opacity})";
-      in
-      # css
+    style = let
+      inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
+      inherit (config.colorscheme) colors;
+      toRGBA = color: opacity: "rgba(${hexToRGBString "," color},${opacity})";
+    in
+      /*
+      css
+      */
       ''
         * {
           font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};

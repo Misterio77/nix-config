@@ -1,5 +1,8 @@
-{ lib, config, ... }:
 {
+  lib,
+  config,
+  ...
+}: {
   services = {
     navidrome = {
       enable = true;
@@ -28,6 +31,6 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [ "/var/lib/private/navidrome" ];
+    "/persist".directories = ["/var/lib/private/navidrome"];
   };
 }

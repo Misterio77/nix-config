@@ -1,7 +1,10 @@
 # This file contains an ephemeral btrfs root configuration
 # TODO: perhaps partition using disko in the future
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   hostname = config.networking.hostName;
   wipeScript = ''
     mkdir /tmp -p
@@ -24,20 +27,19 @@ let
     )
   '';
   phase1Systemd = config.boot.initrd.systemd.enable;
-in
-{
+in {
   boot.initrd = {
-    supportedFilesystems = [ "btrfs" ];
+    supportedFilesystems = ["btrfs"];
     postDeviceCommands = lib.mkIf (!phase1Systemd) (lib.mkBefore wipeScript);
     systemd.services.restore-root = lib.mkIf phase1Systemd {
       description = "Rollback btrfs rootfs";
-      wantedBy = [ "initrd.target" ];
-      requires = [ "dev-disk-by\\x2dlabel-${hostname}.device" ];
+      wantedBy = ["initrd.target"];
+      requires = ["dev-disk-by\\x2dlabel-${hostname}.device"];
       after = [
         "dev-disk-by\\x2dlabel-${hostname}.device"
         "systemd-cryptsetup@${hostname}.service"
       ];
-      before = [ "sysroot.mount" ];
+      before = ["sysroot.mount"];
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
       script = wipeScript;

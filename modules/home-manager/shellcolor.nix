@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-let
+}: let
   cfg = config.programs.shellcolor;
   package = pkgs.shellcolord;
 
@@ -13,8 +11,7 @@ let
     ${key}=${value}
   '';
   renderSettings = settings: lib.concatStrings (lib.mapAttrsToList renderSetting settings);
-in
-{
+in {
   options.programs.shellcolor = {
     enable = lib.mkEnableOption "shellcolor";
 
@@ -57,7 +54,7 @@ in
 
     settings = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
-      default = { };
+      default = {};
       example = lib.literalExpression ''
         {
           base00 = "000000";
@@ -72,9 +69,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ package ];
+    home.packages = [package];
 
-    xdg.configFile."shellcolor.conf" = lib.mkIf (cfg.settings != { }) {
+    xdg.configFile."shellcolor.conf" = lib.mkIf (cfg.settings != {}) {
       text = renderSettings cfg.settings;
       onChange = ''
         timeout 1 ${package}/bin/shellcolor apply || true

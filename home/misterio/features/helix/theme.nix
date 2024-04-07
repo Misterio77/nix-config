@@ -1,11 +1,10 @@
-{ colorscheme }:
-{
+{colorscheme}: {
   "${colorscheme.slug}" = {
     palette = builtins.mapAttrs (name: value: "#${value}") colorscheme.colors; # Add leading '#'
     "attributes" = "base09";
     "comment" = {
       fg = "base03";
-      modifiers = [ "italic" ];
+      modifiers = ["italic"];
     };
     "constant" = "base09";
     "constant.character.escape" = "base0C";
@@ -13,7 +12,7 @@
     "constructor" = "base0D";
     "debug" = "base03";
     "diagnostic" = {
-      modifiers = [ "underlined" ];
+      modifiers = ["underlined"];
     };
     "diagnostic.error" = {
       underline = {
@@ -46,23 +45,23 @@
     "label" = "base0E";
     "markup.bold" = {
       fg = "base0A";
-      modifiers = [ "bold" ];
+      modifiers = ["bold"];
     };
     "markup.heading" = "base0D";
     "markup.italic" = {
       fg = "base0E";
-      modifiers = [ "italic" ];
+      modifiers = ["italic"];
     };
     "markup.link.text" = "base08";
     "markup.link.url" = {
       fg = "base09";
-      modifiers = [ "underlined" ];
+      modifiers = ["underlined"];
     };
     "markup.list" = "base08";
     "markup.quote" = "base0C";
     "markup.raw" = "base0B";
     "markup.strikethrough" = {
-      modifiers = [ "crossed_out" ];
+      modifiers = ["crossed_out"];
     };
     "namespace" = "base0E";
     "operator" = "base05";
@@ -79,23 +78,23 @@
     "ui.bufferline.active" = {
       fg = "base00";
       bg = "base03";
-      modifiers = [ "bold" ];
+      modifiers = ["bold"];
     };
     "ui.cursor" = {
       fg = "base04";
-      modifiers = [ "reversed" ];
+      modifiers = ["reversed"];
     };
     "ui.cursor.insert" = {
       fg = "base0A";
-      modifiers = [ "underlined" ];
+      modifiers = ["underlined"];
     };
     "ui.cursor.match" = {
       fg = "base0A";
-      modifiers = [ "underlined" ];
+      modifiers = ["underlined"];
     };
     "ui.cursor.select" = {
       fg = "base0A";
-      modifiers = [ "underlined" ];
+      modifiers = ["underlined"];
     };
     "ui.cursorline.primary" = {
       fg = "base05";
@@ -115,7 +114,7 @@
     "ui.linenr.selected" = {
       fg = "base04";
       bg = "base01";
-      modifiers = [ "bold" ];
+      modifiers = ["bold"];
     };
     "ui.menu" = {
       fg = "base05";

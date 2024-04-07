@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     ./hyprland-vnc.nix
     ./gammastep.nix
@@ -37,5 +36,5 @@
     LIBSEAT_BACKEND = "logind";
   };
 
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-wlr];
 }

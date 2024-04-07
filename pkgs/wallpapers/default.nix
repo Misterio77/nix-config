@@ -1,4 +1,7 @@
-{ lib, fetchurl }:
+{
+  lib,
+  fetchurl,
+}:
 lib.listToAttrs (
   map (wallpaper: {
     inherit (wallpaper) name;

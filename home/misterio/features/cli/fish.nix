@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   inherit (lib) mkIf;
   packageNames = map (p: p.pname or p.name or null) config.home.packages;
   hasPackage = name: lib.any (x: x == name) packageNames;
@@ -18,8 +17,7 @@ let
   hasShellColor = config.programs.shellcolor.enable;
   hasKitty = config.programs.kitty.enable;
   shellcolor = "${pkgs.shellcolord}/bin/shellcolor";
-in
-{
+in {
   programs.fish = {
     enable = true;
     plugins = [
@@ -33,7 +31,9 @@ in
             hash = "sha256-l17v/aJ4PkjYM8kJDA0zUo87UTsfFqq+Prei/Qq0DRA=";
           };
           patches = [
-            (builtins.toFile "fix-complete.diff" # diff
+            (
+              builtins.toFile "fix-complete.diff" # diff
+              
               ''
                 diff --git a/completions/aws.fish b/completions/aws.fish
                 index fc75188..1e8d931 100644
@@ -104,7 +104,10 @@ in
       nvimrg = mkIf (hasNeovim && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
       # Merge history upon doing up-or-search
       # This lets multiple fish instances share history
-      up-or-search = /* fish */
+      up-or-search =
+        /*
+        fish
+        */
         ''
           if commandline --search-mode
             commandline -f history-search-backward
@@ -126,19 +129,23 @@ in
       # Integrate ssh with shellcolord
       ssh =
         mkIf hasShellColor # fish
-          ''
-            ${shellcolor} disable $fish_pid
-            # Check if kitty is available
-            if set -q KITTY_PID && set -q KITTY_WINDOW_ID && type -q -f kitty
-              kitty +kitten ssh $argv
-            else
-              command ssh $argv
-            end
-            ${shellcolor} enable $fish_pid
-            ${shellcolor} apply $fish_pid
-          '';
+        
+        ''
+          ${shellcolor} disable $fish_pid
+          # Check if kitty is available
+          if set -q KITTY_PID && set -q KITTY_WINDOW_ID && type -q -f kitty
+            kitty +kitten ssh $argv
+          else
+            command ssh $argv
+          end
+          ${shellcolor} enable $fish_pid
+          ${shellcolor} apply $fish_pid
+        '';
     };
-    interactiveShellInit = /* fish */
+    interactiveShellInit =
+      /*
+      fish
+      */
       ''
         # Open command buffer in vim when alt+e is pressed
         bind \ee edit_command_buffer

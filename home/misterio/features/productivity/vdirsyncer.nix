@@ -3,12 +3,10 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   pass = "${config.programs.password-store.package}/bin/pass";
-in
-{
-  home.packages = with pkgs; [ vdirsyncer ];
+in {
+  home.packages = with pkgs; [vdirsyncer];
 
   home.persistence = {
     "/persist/home/misterio".directories = [
@@ -18,7 +16,10 @@ in
     ];
   };
 
-  xdg.configFile."vdirsyncer/config".text = /* ini */
+  xdg.configFile."vdirsyncer/config".text =
+    /*
+    ini
+    */
     ''
       [general]
       status_path = "~/.local/share/vdirsyncer/status"
@@ -63,17 +64,15 @@ in
     Unit = {
       Description = "vdirsyncer synchronization";
     };
-    Service =
-      let
-        gpgCmds = import ../cli/gpg-commands.nix { inherit pkgs; };
-      in
-      {
-        Type = "oneshot";
-        ExecCondition = ''
-          /bin/sh -c "${gpgCmds.isUnlocked}"
-        '';
-        ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync";
-      };
+    Service = let
+      gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs;};
+    in {
+      Type = "oneshot";
+      ExecCondition = ''
+        /bin/sh -c "${gpgCmds.isUnlocked}"
+      '';
+      ExecStart = "${pkgs.vdirsyncer}/bin/vdirsyncer sync";
+    };
   };
   systemd.user.timers.vdirsyncer = {
     Unit = {
@@ -84,7 +83,7 @@ in
       OnUnitActiveSec = "5m";
     };
     Install = {
-      WantedBy = [ "timers.target" ];
+      WantedBy = ["timers.target"];
     };
   };
 }

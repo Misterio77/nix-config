@@ -1,10 +1,6 @@
-{ pkgs, ... }:
-let
-  geyserUrl =
-    n: v: b:
-    "https://download.geysermc.org/v2/projects/${n}/versions/${v}/builds/${b}/downloads/velocity";
-in
-{
+{pkgs, ...}: let
+  geyserUrl = n: v: b: "https://download.geysermc.org/v2/projects/${n}/versions/${v}/builds/${b}/downloads/velocity";
+in {
   services.minecraft-servers.servers.proxy = {
     symlinks = {
       "plugins/Geyser.jar" = pkgs.fetchurl rec {

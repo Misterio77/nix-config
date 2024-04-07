@@ -1,5 +1,5 @@
 {
-  imports = [ ../common/optional/ephemeral-btrfs.nix ];
+  imports = [../common/optional/ephemeral-btrfs.nix];
 
   boot = {
     initrd = {
@@ -21,7 +21,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/alcyone";
     fsType = "btrfs";
-    options = [ "subvol=boot" ];
+    options = ["subvol=boot"];
   };
 
   swapDevices = [
@@ -34,7 +34,7 @@
   hardware.cpu.intel.updateMicrocode = true;
 
   virtualisation.hypervGuest.enable = true;
-  systemd.services.hv-kvp.unitConfig.ConditionPathExists = [ "/dev/vmbus/hv_kvp" ];
+  systemd.services.hv-kvp.unitConfig.ConditionPathExists = ["/dev/vmbus/hv_kvp"];
 
   nixpkgs.hostPlatform = "x86_64-linux";
 }

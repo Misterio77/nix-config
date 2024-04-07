@@ -3,15 +3,15 @@
   writeText,
   config,
   ...
-}:
-let
+}: let
   emacsPackages = emacsPackagesFor config.programs.emacs.package;
   scheme = config.colorscheme;
 in
-emacsPackages.trivialBuild {
-  pname = "theme";
-  src =
-    writeText "nix-${scheme.slug}.el" # commonlisp
+  emacsPackages.trivialBuild {
+    pname = "theme";
+    src =
+      writeText "nix-${scheme.slug}.el" # commonlisp
+      
       ''
         (require 'base16-theme)
 
@@ -45,5 +45,5 @@ emacsPackages.trivialBuild {
 
         (provide 'base16-${scheme.slug}-theme)
       '';
-  packageRequires = [ emacsPackages.base16-theme ];
-}
+    packageRequires = [emacsPackages.base16-theme];
+  }

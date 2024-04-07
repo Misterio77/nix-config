@@ -1,8 +1,6 @@
-{ config, ... }:
-let
+{config, ...}: let
   inherit (config) colorscheme;
-in
-{
+in {
   home.sessionVariables.COLORTERM = "truecolor";
   programs.helix = {
     enable = true;
@@ -19,6 +17,6 @@ in
         };
       };
     };
-    themes = import ./theme.nix { inherit colorscheme; };
+    themes = import ./theme.nix {inherit colorscheme;};
   };
 }

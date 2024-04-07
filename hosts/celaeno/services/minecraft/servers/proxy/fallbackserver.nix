@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   services.minecraft-servers.servers.proxy = {
     extraReload = ''
       echo 'fsv reload' > /run/minecraft-server/proxy.stdin
@@ -13,12 +12,12 @@
     files = {
       "plugins/fallbackservervelocity/config.yml".value = {
         settings = {
-          blacklisted_words = [ "ban" ];
+          blacklisted_words = ["ban"];
           check_updates = false;
           command_tab_complete = true;
           command_without_permission = true;
           disabled_servers = false;
-          disabled_servers_list = { };
+          disabled_servers_list = {};
           fallback_list = [
             "lobby"
             "limbo"
@@ -29,7 +28,7 @@
             "lobby"
           ];
           server_blacklist = false;
-          server_blacklist_list = [ ];
+          server_blacklist_list = [];
           stats = true;
           task_period = 5;
         };

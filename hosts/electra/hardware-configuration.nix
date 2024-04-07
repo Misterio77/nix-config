@@ -1,5 +1,5 @@
 {
-  imports = [ ../common/optional/ephemeral-btrfs.nix ];
+  imports = [../common/optional/ephemeral-btrfs.nix];
 
   boot = {
     initrd = {
@@ -10,7 +10,7 @@
         "rtsx_usb_sdmmc"
         "usbhid"
       ];
-      kernelModules = [ "kvm-intel" ];
+      kernelModules = ["kvm-intel"];
     };
     loader = {
       systemd-boot = {

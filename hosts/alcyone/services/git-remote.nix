@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-{
-
+}: {
   environment.persistence = {
-    "/persist".directories = [ "/srv/git" ];
+    "/persist".directories = ["/srv/git"];
   };
 
   services.gitDaemon = {
@@ -15,7 +13,7 @@
     basePath = "/srv/git";
     exportAll = true;
   };
-  networking.firewall.allowedTCPPorts = [ 9418 ];
+  networking.firewall.allowedTCPPorts = [9418];
 
   users = {
     users.git = {
@@ -25,15 +23,15 @@
       isSystemUser = true;
       shell = "${pkgs.bash}/bin/bash";
       group = "git";
-      packages = [ pkgs.git ];
+      packages = [pkgs.git];
       openssh.authorizedKeys.keys =
         # My key
         config.users.users.misterio.openssh.authorizedKeys.keys
         ++
-          # The key hydra uses to access other hosts
-          # This is used to push CI-gated branches to my nix-config
-          config.nix.sshServe.keys;
+        # The key hydra uses to access other hosts
+        # This is used to push CI-gated branches to my nix-config
+        config.nix.sshServe.keys;
     };
-    groups.git = { };
+    groups.git = {};
   };
 }

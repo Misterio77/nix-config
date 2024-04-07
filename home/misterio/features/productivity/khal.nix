@@ -1,7 +1,9 @@
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [ khal ];
-  xdg.configFile."khal/config".text = /* toml */
+{pkgs, ...}: {
+  home.packages = with pkgs; [khal];
+  xdg.configFile."khal/config".text =
+    /*
+    toml
+    */
     ''
       [calendars]
 

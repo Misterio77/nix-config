@@ -12,5 +12,5 @@
     ./minecraft
   ];
 
-  networking.firewall.allowedTCPPorts = [ 5432 ];
+  networking.firewall.allowedTCPPorts = [5432];
 }

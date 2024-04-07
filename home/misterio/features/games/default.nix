@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     ./lutris.nix
     ./steam.nix
@@ -7,7 +6,7 @@
     ./runescape.nix
   ];
   home = {
-    packages = with pkgs; [ gamescope ];
+    packages = with pkgs; [gamescope];
     persistence = {
       "/persist/home/misterio" = {
         allowOther = true;

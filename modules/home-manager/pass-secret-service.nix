@@ -4,14 +4,10 @@
   lib,
   ...
 }:
-
-with lib;
-
-let
+with lib; let
   cfg = config.services.pass-secret-service;
-in
-{
-  disabledModules = [ "services/pass-secret-service.nix" ];
+in {
+  disabledModules = ["services/pass-secret-service.nix"];
 
   meta.maintainers = with maintainers; [
     cab404
@@ -21,7 +17,7 @@ in
   options.services.pass-secret-service = {
     enable = mkEnableOption "Pass libsecret service";
 
-    package = mkPackageOption pkgs "pass-secret-service" { };
+    package = mkPackageOption pkgs "pass-secret-service" {};
 
     storePath = mkOption {
       type = with types; nullOr str;
@@ -33,13 +29,13 @@ in
 
     extraArgs = lib.mkOption {
       type = with lib.types; listOf str;
-      default = [ ];
+      default = [];
       description = "Extra command-line arguments to be passed to the service.";
     };
   };
 
   config = mkIf cfg.enable {
-    assertions = [ (hm.assertions.assertPlatform "services.pass-secret-service" pkgs platforms.linux) ];
+    assertions = [(hm.assertions.assertPlatform "services.pass-secret-service" pkgs platforms.linux)];
 
     services.pass-secret-service.extraArgs = optional (cfg.storePath != null) "--path=${cfg.storePath}";
 
@@ -48,7 +44,7 @@ in
         AssertFileIsExecutable = "${cfg.package}/bin/pass_secret_service";
         Description = "Pass libsecret service";
         Documentation = "https://github.com/mdellweg/pass_secret_service";
-        PartOf = [ "default.target" ];
+        PartOf = ["default.target"];
       };
 
       Service = {
@@ -56,7 +52,7 @@ in
       };
 
       Install = {
-        WantedBy = [ "default.target" ];
+        WantedBy = ["default.target"];
       };
     };
   };

@@ -1,6 +1,5 @@
 # Tally counter, also used as stopwatch
 # tly <operation> [list-name]
-
 {
   lib,
   writeShellApplication,

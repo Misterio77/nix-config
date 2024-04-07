@@ -3,12 +3,9 @@
   pkgs,
   inputs,
   ...
-}:
-
-let
-  inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) gtkThemeFromScheme;
-in
-rec {
+}: let
+  inherit (inputs.nix-colors.lib-contrib {inherit pkgs;}) gtkThemeFromScheme;
+in rec {
   gtk = {
     enable = true;
     font = {
@@ -17,7 +14,7 @@ rec {
     };
     theme = {
       name = "${config.colorscheme.slug}";
-      package = gtkThemeFromScheme { scheme = config.colorscheme; };
+      package = gtkThemeFromScheme {scheme = config.colorscheme;};
     };
     iconTheme = {
       name = "Papirus";
@@ -33,5 +30,5 @@ rec {
     };
   };
 
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 }

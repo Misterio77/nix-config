@@ -12,11 +12,10 @@
     wl-mirror
   ];
 
-  text =
-    ''
-      output=$(slurp -f "%o" -o)
-      wl-mirror "$output"
-    '';
+  text = ''
+    output=$(slurp -f "%o" -o)
+    wl-mirror "$output"
+  '';
 })
 // {
   meta = with lib; {

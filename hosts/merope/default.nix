@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{inputs, ...}: {
   imports = [
     inputs.hardware.nixosModules.raspberry-pi-4
 
@@ -41,7 +40,7 @@
 
   # Workaround for https://github.com/NixOS/nixpkgs/issues/154163
   nixpkgs.overlays = [
-    (final: prev: { makeModulesClosure = x: prev.makeModulesClosure (x // { allowMissing = true; }); })
+    (final: prev: {makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});})
   ];
 
   system.stateVersion = "22.05";

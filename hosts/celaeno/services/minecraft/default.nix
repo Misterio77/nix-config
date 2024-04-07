@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./servers/proxy
@@ -30,7 +29,7 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 25565 ];
+    allowedTCPPorts = [25565];
     allowedUDPPorts = [
       25565
       19132
@@ -38,7 +37,7 @@
   };
 
   services.mysql = {
-    ensureDatabases = [ "minecraft" ];
+    ensureDatabases = ["minecraft"];
     ensureUsers = [
       {
         name = "minecraft";
@@ -49,7 +48,7 @@
     ];
   };
   # Set minecrafts' password (the plugins don't play well with socket auth)
-  users.users.mysql.extraGroups = [ "minecraft" ]; # Get access to the secret
+  users.users.mysql.extraGroups = ["minecraft"]; # Get access to the secret
   systemd.services.mysql.postStart = lib.mkAfter ''
     source ${config.sops.secrets.minecraft-secrets.path}
     ${config.services.mysql.package}/bin/mysql <<EOF

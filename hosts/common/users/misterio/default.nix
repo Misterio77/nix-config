@@ -1,8 +1,10 @@
-{ pkgs, config, ... }:
-let
-  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-in
 {
+  pkgs,
+  config,
+  ...
+}: let
+  ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+in {
   users.mutableUsers = false;
   users.users.misterio = {
     isNormalUser = true;
@@ -26,9 +28,9 @@ in
         "deluge"
       ];
 
-    openssh.authorizedKeys.keys = [ (builtins.readFile ../../../../home/misterio/ssh.pub) ];
+    openssh.authorizedKeys.keys = [(builtins.readFile ../../../../home/misterio/ssh.pub)];
     hashedPasswordFile = config.sops.secrets.misterio-password.path;
-    packages = [ pkgs.home-manager ];
+    packages = [pkgs.home-manager];
   };
 
   sops.secrets.misterio-password = {
@@ -39,6 +41,6 @@ in
   home-manager.users.misterio = import ../../../../home/misterio/${config.networking.hostName}.nix;
 
   security.pam.services = {
-    swaylock = { };
+    swaylock = {};
   };
 }

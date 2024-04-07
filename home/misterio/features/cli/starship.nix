@@ -1,18 +1,19 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.starship = {
     enable = true;
     settings = {
-      format =
-        let
-          git = "$git_branch$git_commit$git_state$git_status";
-          cloud = "$aws$gcloud$openstack";
-        in
-        ''
-          $username$hostname($shlvl)($cmd_duration) $fill ($nix_shell)$custom
-          $directory(${git})(${cloud}) $fill $time
-          $jobs$character
-        '';
+      format = let
+        git = "$git_branch$git_commit$git_state$git_status";
+        cloud = "$aws$gcloud$openstack";
+      in ''
+        $username$hostname($shlvl)($cmd_duration) $fill ($nix_shell)$custom
+        $directory(${git})(${cloud}) $fill $time
+        $jobs$character
+      '';
 
       fill = {
         symbol = " ";
@@ -50,23 +51,21 @@
         style = "bold red";
       };
       custom = {
-        nix_inspect =
-          let
-            excluded = [
-              "kitty"
-              "imagemagick"
-              "ncurses"
-              "user-environment"
-            ];
-          in
-          {
-            disabled = false;
-            when = "test -z $IN_NIX_SHELL";
-            command = "${(lib.getExe pkgs.nix-inspect)} ${(lib.concatStringsSep " " excluded)}";
-            format = "[($output <- )$symbol]($style) ";
-            symbol = " ";
-            style = "bold blue";
-          };
+        nix_inspect = let
+          excluded = [
+            "kitty"
+            "imagemagick"
+            "ncurses"
+            "user-environment"
+          ];
+        in {
+          disabled = false;
+          when = "test -z $IN_NIX_SHELL";
+          command = "${(lib.getExe pkgs.nix-inspect)} ${(lib.concatStringsSep " " excluded)}";
+          format = "[($output <- )$symbol]($style) ";
+          symbol = " ";
+          style = "bold blue";
+        };
       };
 
       character = {

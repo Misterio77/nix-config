@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
-
-let
-  inherit (config.colorscheme) colors kind;
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (config.colorscheme) colors kind;
+in {
   home.persistence = {
     "/persist/home/misterio".directories = [
       ".config/qutebrowser/bookmarks"
@@ -13,11 +14,11 @@ in
   };
 
   xdg.mimeApps.defaultApplications = {
-    "text/html" = [ "org.qutebrowser.qutebrowser.desktop" ];
-    "text/xml" = [ "org.qutebrowser.qutebrowser.desktop" ];
-    "x-scheme-handler/http" = [ "org.qutebrowser.qutebrowser.desktop" ];
-    "x-scheme-handler/https" = [ "org.qutebrowser.qutebrowser.desktop" ];
-    "x-scheme-handler/qute" = [ "org.qutebrowser.qutebrowser.desktop" ];
+    "text/html" = ["org.qutebrowser.qutebrowser.desktop"];
+    "text/xml" = ["org.qutebrowser.qutebrowser.desktop"];
+    "x-scheme-handler/http" = ["org.qutebrowser.qutebrowser.desktop"];
+    "x-scheme-handler/https" = ["org.qutebrowser.qutebrowser.desktop"];
+    "x-scheme-handler/qute" = ["org.qutebrowser.qutebrowser.desktop"];
   };
 
   programs.qutebrowser = {

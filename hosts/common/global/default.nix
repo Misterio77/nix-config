@@ -1,25 +1,30 @@
 # This file (and the global directory) holds config that i use on all hosts
-{ inputs, outputs, ... }:
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-    ./acme.nix
-    ./auto-upgrade.nix
-    ./fish.nix
-    ./locale.nix
-    ./nix.nix
-    ./openssh.nix
-    ./optin-persistence.nix
-    ./podman.nix
-    ./sops.nix
-    ./ssh-serve-store.nix
-    ./steam-hardware.nix
-    ./systemd-initrd.nix
-    ./tailscale.nix
-    ./gamemode.nix
-    ./nix-ld.nix
-    ./prometheus-node-exporter.nix
-  ] ++ (builtins.attrValues outputs.nixosModules);
+  inputs,
+  outputs,
+  ...
+}: {
+  imports =
+    [
+      inputs.home-manager.nixosModules.home-manager
+      ./acme.nix
+      ./auto-upgrade.nix
+      ./fish.nix
+      ./locale.nix
+      ./nix.nix
+      ./openssh.nix
+      ./optin-persistence.nix
+      ./podman.nix
+      ./sops.nix
+      ./ssh-serve-store.nix
+      ./steam-hardware.nix
+      ./systemd-initrd.nix
+      ./tailscale.nix
+      ./gamemode.nix
+      ./nix-ld.nix
+      ./prometheus-node-exporter.nix
+    ]
+    ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager.extraSpecialArgs = {
     inherit inputs outputs;
@@ -35,7 +40,7 @@
   # Fix for qt6 plugins
   # TODO: maybe upstream this?
   environment.profileRelativeSessionVariables = {
-    QT_PLUGIN_PATH = [ "/lib/qt-6/plugins" ];
+    QT_PLUGIN_PATH = ["/lib/qt-6/plugins"];
   };
 
   hardware.enableRedistributableFirmware = true;

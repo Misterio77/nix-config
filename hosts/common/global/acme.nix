@@ -1,5 +1,4 @@
-{ lib, ... }:
-{
+{lib, ...}: {
   # Enable acme for usage with nginx vhosts
   security.acme = {
     defaults.email = "eu@misterio.me";
@@ -8,7 +7,7 @@
 
   environment.persistence = {
     "/persist" = {
-      directories = [ "/var/lib/acme" ];
+      directories = ["/var/lib/acme"];
     };
   };
 }

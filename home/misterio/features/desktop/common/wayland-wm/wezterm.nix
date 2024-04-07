@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   inherit (config) colorscheme;
   inherit (colorscheme) colors;
-in
-{
+in {
   programs.wezterm = {
     enable = true;
     colorSchemes = {
@@ -38,7 +39,10 @@ in
         selection_bg = "#${colors.base05}";
       };
     };
-    extraConfig = /* lua */
+    extraConfig =
+      /*
+      lua
+      */
       ''
         return {
           font = wezterm.font("${config.fontProfiles.monospace.family}"),

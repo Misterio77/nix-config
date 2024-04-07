@@ -3,9 +3,8 @@
   inputs,
   pkgs,
   ...
-}:
-{
-  imports = [ inputs.paste-misterio-me.nixosModules.server ];
+}: {
+  imports = [inputs.paste-misterio-me.nixosModules.server];
 
   services = {
     paste-misterio-me = {

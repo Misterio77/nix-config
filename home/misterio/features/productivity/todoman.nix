@@ -1,7 +1,9 @@
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [ todoman ];
-  xdg.configFile."todoman/config.py".text = /* python */
+{pkgs, ...}: {
+  home.packages = with pkgs; [todoman];
+  xdg.configFile."todoman/config.py".text =
+    /*
+    python
+    */
     ''
       path = "~/Calendars/*"
       default_list = "Personal"

@@ -1,4 +1,3 @@
-{ pkgs, ... }:
-{
-  home.packages = [ pkgs.wpa_supplicant_gui ];
+{pkgs, ...}: {
+  home.packages = [pkgs.wpa_supplicant_gui];
 }
