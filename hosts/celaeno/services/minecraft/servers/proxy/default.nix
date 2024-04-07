@@ -55,6 +55,9 @@ in
           enabled = true;
           port = 25565;
         };
+        advanced = {
+          login-ratelimite = 500;
+        };
       };
       "lang/messages.properties" = ./messages.properties;
     };
