@@ -27,7 +27,11 @@
           add_lsp(lspconfig.dockerls, {})
           add_lsp(lspconfig.bashls, {})
           add_lsp(lspconfig.clangd, {})
-          add_lsp(lspconfig.nil_ls, {})
+          add_lsp(lspconfig.nil_ls, {
+            settings = { ['nil'] = {
+              formatting = { command = { "nixfmt" }}
+            }}
+          })
           add_lsp(lspconfig.pylsp, {})
           add_lsp(lspconfig.dartls, {})
           add_lsp(lspconfig.hls, {})
