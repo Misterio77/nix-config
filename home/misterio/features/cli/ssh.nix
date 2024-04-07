@@ -1,4 +1,4 @@
-{ outputs, lib, ... }:
+{ outputs, lib, config, ... }:
 let
   hostnames = builtins.attrNames outputs.nixosConfigurations;
 in
@@ -24,6 +24,6 @@ in
   };
 
   home.persistence = {
-    "/persist/home/misterio".directories = [ ".ssh" ];
+    "/persist/home/${config.home.username}".directories = [ ".ssh" ];
   };
 }
