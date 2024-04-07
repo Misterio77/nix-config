@@ -7,7 +7,7 @@ let
 in
 {
   imports = [
-    ./geyser.nix
+    # ./geyser.nix
     ./librelogin.nix
     ./luckperms.nix
 
