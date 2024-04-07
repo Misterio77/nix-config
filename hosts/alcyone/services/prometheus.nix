@@ -39,13 +39,12 @@
         {
           job_name = "hosts";
           scheme = "http";
-          static_configs = [
-            {
-              targets = lib.mapAttrsToList (
-                n: v: "${n}:${toString v.config.services.prometheus.exporters.node.port}"
-              ) outputs.nixosConfigurations;
-            }
-          ];
+          static_configs = lib.mapAttrsToList (hostname: value: let
+            port = value.config.services.prometheus.exporters.node.port;
+          in {
+            targets = ["${hostname}:${toString port}"];
+            labels.instance = hostname;
+          }) outputs.nixosConfigurations;
         }
       ];
       extraFlags =
