@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   inputs,
@@ -25,6 +26,10 @@
       "hi@m7.rs" = {
         hashedPasswordFile = config.sops.secrets.gabriel-mail-password.path;
         aliases = map (d: "@" + d) domains;
+      };
+      "grafana@m7.rs" = lib.mkIf config.services.grafana.enable {
+        sendOnly = true;
+        hashedPasswordFile = config.sops.secrets.grafana-mail-password-hashed.path;
       };
     };
     mailboxes = {
@@ -63,9 +68,8 @@
   '';
 
   sops.secrets = {
-    gabriel-mail-password = {
-      sopsFile = ../secrets.yaml;
-    };
+    gabriel-mail-password.sopsFile = ../secrets.yaml;
+    grafana-mail-password-hashed.sopsFile = ../secrets.yaml;
   };
 
   # Webmail
