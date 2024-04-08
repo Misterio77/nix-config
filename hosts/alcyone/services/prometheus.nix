@@ -23,6 +23,16 @@
           static_configs = [{targets = ["tailscale.m7.rs"];}];
         }
         {
+          job_name = "grafana";
+          scheme = "https";
+          static_configs = [{targets = ["dash.m7.rs"];}];
+        }
+        {
+          job_name = "prometheus";
+          scheme = "https";
+          static_configs = [{targets = ["metrics.m7.rs"];}];
+        }
+        {
           job_name = "nginx";
           scheme = "https";
           static_configs = [

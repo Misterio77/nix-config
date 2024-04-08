@@ -4,6 +4,7 @@
     ../../common/optional/mysql.nix
     ../../common/optional/postgres.nix
 
+    ./grafana.nix
     ./firefly.nix
     ./cincobola.nix
     ./files-server.nix
