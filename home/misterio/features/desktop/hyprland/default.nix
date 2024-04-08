@@ -88,6 +88,7 @@ in {
         "ignorezero,notifications"
         "blur,wofi"
         "ignorezero,wofi"
+        "noanim,wallpaper"
       ];
 
       decoration = {
