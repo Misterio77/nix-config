@@ -5,7 +5,7 @@ in {
     allowedUDPPorts = [19132];
     extraCommands = let
       timeSeconds = 60;
-      maxHits = 30;
+      maxHits = 10;
     in
       # Block pesky china botnet
       "iptables -I INPUT -p udp --dport 19132 -m state --state NEW -m recent --update --seconds ${toString timeSeconds} --hitcount ${toString maxHits} -j DROP";
