@@ -1,6 +1,16 @@
 {pkgs, ...}: let
   geyserUrl = n: v: b: "https://download.geysermc.org/v2/projects/${n}/versions/${v}/builds/${b}/downloads/velocity";
 in {
+  networking.firewall = {
+    allowedUDPPorts = [19132];
+    extraCommands = let
+      timeSeconds = 60;
+      maxHits = 30;
+    in
+      # Block pesky china botnet
+      "iptables -I INPUT -p udp --dport 19132 -m state --state NEW -m recent --update --seconds ${toString timeSeconds} --hitcount ${toString maxHits} -j DROP";
+  };
+
   services.minecraft-servers.servers.proxy = {
     symlinks = {
       "plugins/Geyser.jar" = pkgs.fetchurl rec {

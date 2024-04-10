@@ -7,7 +7,7 @@
   proxyFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
 in {
   imports = [
-    # ./geyser.nix
+    ./geyser.nix
     ./librelogin.nix
     ./luckperms.nix
 
@@ -15,6 +15,12 @@ in {
     ./huskchat.nix
     ./velocitab.nix
   ];
+
+  networking.firewall = {
+    allowedTCPPorts = [25565];
+    allowedUDPPorts = [25565];
+  };
+
   services.minecraft-servers.servers.proxy = {
     enable = true;
 
@@ -26,7 +32,7 @@ in {
     extraPreStop = '''';
 
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
-    jvmOpts = proxyFlags "512M";
+    jvmOpts = proxyFlags "1G";
 
     files = {
       "velocity.toml".value = {

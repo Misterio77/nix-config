@@ -28,14 +28,6 @@
     environmentFile = config.sops.secrets.minecraft-secrets.path;
   };
 
-  networking.firewall = {
-    allowedTCPPorts = [25565];
-    allowedUDPPorts = [
-      25565
-      19132
-    ];
-  };
-
   services.mysql = {
     ensureDatabases = ["minecraft"];
     ensureUsers = [
