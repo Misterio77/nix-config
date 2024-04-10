@@ -1,16 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
-  mkDashboards = dashboards:
-    pkgs.linkFarm "dashboards" (builtins.listToAttrs (map (file: rec {
-        name = "${builtins.baseNameOf file}.json";
-        value = builtins.toFile name (builtins.toJSON (import file));
-      })
-      dashboards));
-in {
+{config, ...}: {
   sops.secrets = {
     grafana-misterio-password = {
       sopsFile = ../../secrets.yaml;
@@ -27,9 +15,8 @@ in {
       enable = true;
       settings = {
         server.http_port = 3000;
-        users = {
-          default_theme = "system";
-        };
+        users.default_theme = "system";
+        dashboards.default_home_dashboard_path = builtins.toFile "home.json" (builtins.toJSON (import ./dashboards/hosts.nix));
         security = {
           admin_user = "misterio";
           admin_email = "hi@m7.rs";
@@ -49,14 +36,6 @@ in {
       };
       provision = {
         enable = true;
-        dashboards.settings.providers = [
-          {
-            name = "Nix Dashboards";
-            options.path = mkDashboards [
-              ./dashboards/hosts.nix
-            ];
-          }
-        ];
         datasources.settings = {
           apiVersion = 1;
           datasources = [
