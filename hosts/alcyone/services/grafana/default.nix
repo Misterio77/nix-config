@@ -16,7 +16,7 @@
       settings = {
         server.http_port = 3000;
         users.default_theme = "system";
-        dashboards.default_home_dashboard_path = builtins.toFile "home.json" (builtins.toJSON (import ./dashboards/hosts.nix));
+        dashboards.default_home_dashboard_path = toString ./dashboards/hosts.json;
         security = {
           admin_user = "misterio";
           admin_email = "hi@m7.rs";
@@ -36,6 +36,9 @@
       };
       provision = {
         enable = true;
+        dashboards.settings.providers = [{
+          options.path = ./dashboards;
+        }];
         datasources.settings = {
           apiVersion = 1;
           datasources = [
@@ -59,9 +62,5 @@
         locations."/".proxyPass = "http://localhost:${toString port}";
       };
     };
-  };
-
-  environment.persistence = {
-    "/persist".directories = [config.services.grafana.dataDir];
   };
 }
