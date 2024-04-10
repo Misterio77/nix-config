@@ -1,12 +1,12 @@
-{config, pkgs, lib, ...}: let
-  dashboards = {
-    hosts = import ./dashboards/hosts.nix;
-  };
-  writeJSON = n: v: builtins.toFile n (builtins.toJSON v);
-  dashboardsDir = pkgs.linkFarm "dashboards" (lib.mapAttrs writeJSON dashboards);
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
 in {
   sops.secrets = {
-    grafana-misterio-password= {
+    grafana-misterio-password = {
       sopsFile = ../../secrets.yaml;
       owner = "grafana";
     };
@@ -43,19 +43,31 @@ in {
       };
       provision = {
         enable = true;
-        dashboards.settings.providers = [{
-          name = "Nix Dashboards";
-          options.path = dashboardsDir;
-        }];
+        dashboards.settings.providers = let
+          writeJSON = f: rec {
+            name = "${builtins.baseNameOf f}.json";
+            value = builtins.toFile name (builtins.toJSON (import f));
+          };
+          mkDashboards = dashboards: pkgs.linkFarm "dashboards" (lib.mapAttrsToList writeJSON dashboards);
+        in [
+          {
+            name = "Nix Dashboards";
+            options.path = mkDashboards [
+              ./dashboards/hosts.nix
+            ];
+          }
+        ];
         datasources.settings = {
           apiVersion = 1;
-          datasources = [{
-            name = "Prometheus";
-            type = "prometheus";
-            access = "proxy";
-            url = "https://metrics.m7.rs";
-            isDefault = true;
-          }];
+          datasources = [
+            {
+              name = "Prometheus";
+              type = "prometheus";
+              access = "proxy";
+              url = "https://metrics.m7.rs";
+              isDefault = true;
+            }
+          ];
         };
       };
     };
