@@ -84,4 +84,10 @@
       $config['plugins'] = [ "carddav" ];
     '';
   };
+
+  environment.persistence = {
+    "/persist".directories = [
+      "/var/lib/rspamd"
+    ];
+  };
 }
