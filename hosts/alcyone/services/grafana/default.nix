@@ -1,11 +1,11 @@
 {config, ...}: {
   sops.secrets = {
     grafana-misterio-password= {
-      sopsFile = ../secrets.yaml;
+      sopsFile = ../../secrets.yaml;
       owner = "grafana";
     };
     grafana-mail-password = {
-      sopsFile = ../secrets.yaml;
+      sopsFile = ../../secrets.yaml;
       owner = "grafana";
     };
   };
@@ -37,6 +37,10 @@
       };
       provision = {
         enable = true;
+        dashboards.settings.providers = [{
+          name = "Nix Dashboards";
+          options.path = ./dashboards;
+        }];
         datasources.settings = {
           apiVersion = 1;
           datasources = [{
@@ -58,5 +62,9 @@
         locations."/".proxyPass = "http://localhost:${toString port}";
       };
     };
+  };
+
+  environment.persistence = {
+    "/persist".directories = [config.services.grafana.dataDir];
   };
 }
