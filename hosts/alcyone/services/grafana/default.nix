@@ -1,4 +1,10 @@
-{config, ...}: {
+{config, pkgs, lib, ...}: let
+  dashboards = {
+    hosts = import ./dashboards/hosts.nix;
+  };
+  writeJSON = n: v: builtins.toFile n (builtins.toJSON v);
+  dashboardsDir = pkgs.linkFarm "dashboards" (lib.mapAttrs writeJSON dashboards);
+in {
   sops.secrets = {
     grafana-misterio-password= {
       sopsFile = ../../secrets.yaml;
@@ -39,7 +45,7 @@
         enable = true;
         dashboards.settings.providers = [{
           name = "Nix Dashboards";
-          options.path = ./dashboards;
+          options.path = dashboardsDir;
         }];
         datasources.settings = {
           apiVersion = 1;
