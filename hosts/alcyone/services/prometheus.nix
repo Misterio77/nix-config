@@ -74,4 +74,8 @@
       };
     };
   };
+
+  environment.persistence = {
+    "/persist".directories = ["/var/lib/prometheus2"];
+  };
 }
