@@ -4,6 +4,12 @@
   lib,
   ...
 }: let
+  mkDashboards = dashboards:
+    pkgs.linkFarm "dashboards" (builtins.listToAttrs (map (file: rec {
+        name = "${builtins.baseNameOf file}.json";
+        value = builtins.toFile name (builtins.toJSON (import file));
+      })
+      dashboards));
 in {
   sops.secrets = {
     grafana-misterio-password = {
@@ -43,13 +49,7 @@ in {
       };
       provision = {
         enable = true;
-        dashboards.settings.providers = let
-          writeJSON = f: rec {
-            name = "${builtins.baseNameOf f}.json";
-            value = builtins.toFile name (builtins.toJSON (import f));
-          };
-          mkDashboards = dashboards: pkgs.linkFarm "dashboards" (lib.mapAttrsToList writeJSON dashboards);
-        in [
+        dashboards.settings.providers = [
           {
             name = "Nix Dashboards";
             options.path = mkDashboards [
