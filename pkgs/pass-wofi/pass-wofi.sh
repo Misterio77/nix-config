@@ -23,31 +23,50 @@ selected=$(find -L . -not -path '*\/.*' -path "*.gpg" -type f -printf '%P\n' | \
 username=$(echo "$selected" | cut -d '/' -f2)
 url=$(echo "$selected" | cut -d '/' -f1)
 
-fields="Password
+if [ -n "$1" ]; then
+    field="$1"
+    shift 1
+else
+    fields="Password
 Username
 OTP
-URL"
+URL
+Fill"
 
-field=$(printf "$fields" | wofi -S dmenu) || field="Password"
+    field=$(printf "$fields" | wofi -S dmenu) || field="password"
+fi
 
-case "$field" in
-    "Password")
+case "${field,,}" in
+    "password")
         value="$(pass "$selected" | head -n 1)" && [ -n "$value" ] || \
             { notify-send "Error" "No password for $selected" -i error -t 6000; exit 3; }
         ;;
-    "Username")
+    "username")
         value="$username"
         ;;
-    "URL")
+    "url")
         value="$url"
         ;;
-    "OTP")
+    "otp")
         value="$(pass otp "$selected")" || \
             { notify-send "Error" "No OTP for $selected" -i error -t 6000; exit 3; }
+        ;;
+    "fill")
+        password="$(pass "$selected" | head -n 1)" && [ -n "$password" ] || \
+            { notify-send "Error" "No password for $selected" -i error -t 6000; exit 3; }
+        wtype "$username"
+        wtype -k tab
+        wtype "$password"
+        if otp="$(pass otp "$selected")" && [ -n "$otp" ]; then
+            field="OTP"
+            value="$otp"
+        fi
         ;;
     *)
         exit 4
 esac
 
-wl-copy "$value"
-notify-send "Copied $field:" "$value" -i edit-copy -t 4000
+if [ -n "$value" ]; then
+    wl-copy "$value"
+    notify-send "Copied $field:" "$value" -i edit-copy -t 4000
+fi

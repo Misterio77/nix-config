@@ -233,7 +233,10 @@ in {
                 lib.optionals config.programs.password-store.enable [
                   ",Scroll_Lock,exec,${pass-wofi}" # fn+k
                   ",XF86Calculator,exec,${pass-wofi}" # fn+f12
-                  "SUPER,semicolon,exec,pass-wofi"
+                  "SUPER,semicolon,exec,${pass-wofi}"
+                  "SHIFT,Scroll_Lock,exec,${pass-wofi} fill" # fn+k
+                  "SHIFT,XF86Calculator,exec,${pass-wofi} fill" # fn+f12
+                  "SHIFTSUPER,semicolon,exec,${pass-wofi} fill"
                 ]
             )
         );
