@@ -153,7 +153,7 @@
       ],
       "title": "Last upgrade",
       "type": "stat"
-    }
+    },
     {
       "fieldConfig": {
         "defaults": {
