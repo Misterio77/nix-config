@@ -51,9 +51,12 @@ in {
     userEmail = "hi@m7.rs";
     extraConfig = {
       init.defaultBranch = "main";
-      user.signing.key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
-      commit.gpgSign = true;
-      gpg.program = "${config.programs.gpg.package}/bin/gpg2";
+
+      gpg = {
+        format = "ssh";
+        ssh.defaultKeyCommand = "sh -c 'echo key::$(ssh-add -L | head -1)'";
+      };
+      commit.gpgsign = true;
 
       merge.conflictStyle = "zdiff3";
       commit.verbose = true;

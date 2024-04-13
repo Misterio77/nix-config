@@ -103,7 +103,6 @@ Most relevant user apps daily drivers:
 - qutebrowser
 - neomutt + mbsync
 - khal + khard + todoman + vdirsyncer
-- gpg + pass
 - tailscale
 - podman
 - zathura

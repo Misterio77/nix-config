@@ -9,17 +9,12 @@
 
   common = rec {
     realName = "Gabriel Fontes";
-    gpg = {
-      key = "7088 C742 1873 E0DB 97FF 17C2 245C AB70 B4C2 25E9";
-      signByDefault = true;
-    };
     signature = {
       showSignature = "append";
       text = ''
         ${realName}
 
         https://gsfontes.com
-        PGP: ${gpg.key}
       '';
     };
   };
@@ -113,31 +108,4 @@ in {
 
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
-
-  systemd.user.services.mbsync = {
-    Unit = {
-      Description = "mbsync synchronization";
-    };
-    Service = let
-      gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs;};
-    in {
-      Type = "oneshot";
-      ExecCondition = ''
-        /bin/sh -c "${gpgCmds.isUnlocked}"
-      '';
-      ExecStart = "${mbsync} -a";
-    };
-  };
-  systemd.user.timers.mbsync = {
-    Unit = {
-      Description = "Automatic mbsync synchronization";
-    };
-    Timer = {
-      OnBootSec = "30";
-      OnUnitActiveSec = "5m";
-    };
-    Install = {
-      WantedBy = ["timers.target"];
-    };
-  };
 }

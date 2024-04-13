@@ -91,7 +91,6 @@ in {
           "pulseaudio"
           "battery"
           "custom/unread-mail"
-          "custom/gpg-agent"
         ];
 
         modules-right = [
@@ -256,24 +255,6 @@ in {
             "unread" = "󰇮";
             "syncing" = "󰁪";
           };
-        };
-        "custom/gpg-agent" = {
-          interval = 2;
-          return-type = "json";
-          exec = let
-            gpgCmds = import ../../../cli/gpg-commands.nix {inherit pkgs;};
-          in
-            jsonOutput "gpg-agent" {
-              pre = ''status=$(${gpgCmds.isUnlocked} && echo "unlocked" || echo "locked")'';
-              alt = "$status";
-              tooltip = "GPG is $status";
-            };
-          format = "{icon}";
-          format-icons = {
-            "locked" = "";
-            "unlocked" = "";
-          };
-          on-click = "";
         };
         "custom/gammastep" = {
           interval = 5;
