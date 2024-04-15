@@ -67,6 +67,11 @@ in {
     # Sane default values and crash avoidance (https://github.com/k-vernooy/trekscii/pull/1)
     trekscii = addPatches prev.trekscii [./trekscii.patch];
 
+    # TODO: https://github.com/NixOS/nixpkgs/pull/304154
+    pam_rssh = prev.pam_rssh.overrideAttrs (oldAttrs: {
+      nativeCheckInputs = [(final.openssh.override { dsaKeysSupport = true; })];
+    });
+
     scgit = prev.cgit-pink.overrideAttrs (_: {
       pname = "scgit";
       version = "0.1";
