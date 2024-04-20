@@ -39,8 +39,8 @@ in {
     };
 
     settings = let
-      active = "0xaa${config.colorscheme.colors.base0C}";
-      inactive = "0xaa${config.colorscheme.colors.base02}";
+      active = "0xaa${lib.removePrefix "#" config.colorscheme.colors.primary}";
+      inactive = "0xaa${lib.removePrefix "#" config.colorscheme.colors.surface_bright}";
     in {
       general = {
         cursor_inactive_timeout = 4;

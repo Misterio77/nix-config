@@ -62,11 +62,15 @@
       url = "github:zoocha/awscli-console";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    matugen = {
+      url = "github:iniox/matugen";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disconic = {
       url = "github:misterio77/disconic";
       inputs.nixpkgs.follows = "nixpkgs";

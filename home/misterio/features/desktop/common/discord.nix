@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  c = config.colorscheme.palette;
+  c = config.colorscheme.colors;
 in {
   home.packages = with pkgs; [vesktop];
 
@@ -19,26 +19,26 @@ in {
       @import url("https://slowstab.github.io/dracula/BetterDiscord/source.css");
       @import url("https://mulverinex.github.io/legacy-settings-icons/dist-native.css");
       .theme-dark, .theme-light, :root {
-        --text-default: #${c.base05};
-        --header-primary: #${c.base05};
-        --header-secondary: #${c.base04};
-        --channeltextarea-background: #${c.base02};
-        --interactive-normal: #${c.base04};
-        --interactive-active: #${c.base05};
+        --text-default: ${c.on_surface};
+        --header-primary: ${c.on_surface};
+        --header-secondary: ${c.on_surface_variant};
+        --channeltextarea-background: ${c.surface_container};
+        --interactive-normal: ${c.surface_container_highest};
+        --interactive-active: ${c.on_surface};
 
-        --dracula-primary: #${c.base00};
-        --dracula-secondary: #${c.base01};
-        --dracula-secondary-alpha: #${c.base01}ee;
-        --dracula-tertiary: #${c.base03};
-        --dracula-tertiary-alpha: #${c.base03}aa;
-        --dracula-primary-light: #${c.base02};
+        --dracula-primary: ${c.surface};
+        --dracula-secondary: ${c.surface_dim};
+        --dracula-secondary-alpha: ${c.surface_dim}ee;
+        --dracula-tertiary: ${c.surface_bright};
+        --dracula-tertiary-alpha: ${c.surface_bright}aa;
+        --dracula-primary-light: ${c.surface_bright};
 
-        --dracula-accent: #${c.base09};
-        --dracula-accent-alpha: #${c.base09}66;
-        --dracula-accent-alpha-alt: #${c.base09}88;
-        --dracula-accent-alpha-alt2: #${c.base09}aa;
-        --dracula-accent-dark: #${c.base0E};
-        --dracula-accent-light: #${c.base08};
+        --dracula-accent: ${c.primary};
+        --dracula-accent-alpha: ${c.primary}66;
+        --dracula-accent-alpha-alt: ${c.secondary}88;
+        --dracula-accent-alpha-alt2: ${c.tertiary}aa;
+        --dracula-accent-dark: ${c.primary_fixed_dim};
+        --dracula-accent-light: ${c.primary_fixed};
       }
 
       html.theme-light #app-mount::after {

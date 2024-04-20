@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.colorscheme) colors;
+  inherit (config.colorscheme) colors harmonized;
   kitty-xterm = pkgs.writeShellScriptBin "xterm" ''
     ${config.programs.kitty.package}/bin/kitty "$@"
   '';
@@ -26,41 +26,41 @@ in {
       scrollback_lines = 4000;
       scrollback_pager_history_size = 2048;
       window_padding_width = 15;
-      foreground = "#${colors.base05}";
-      background = "#${colors.base00}";
-      selection_background = "#${colors.base05}";
-      selection_foreground = "#${colors.base00}";
-      url_color = "#${colors.base04}";
-      cursor = "#${colors.base05}";
-      active_border_color = "#${colors.base03}";
-      inactive_border_color = "#${colors.base01}";
-      active_tab_background = "#${colors.base00}";
-      active_tab_foreground = "#${colors.base05}";
-      inactive_tab_background = "#${colors.base01}";
-      inactive_tab_foreground = "#${colors.base04}";
-      tab_bar_background = "#${colors.base01}";
-      color0 = "#${colors.base00}";
-      color1 = "#${colors.base08}";
-      color2 = "#${colors.base0B}";
-      color3 = "#${colors.base0A}";
-      color4 = "#${colors.base0D}";
-      color5 = "#${colors.base0E}";
-      color6 = "#${colors.base0C}";
-      color7 = "#${colors.base05}";
-      color8 = "#${colors.base03}";
-      color9 = "#${colors.base08}";
-      color10 = "#${colors.base0B}";
-      color11 = "#${colors.base0A}";
-      color12 = "#${colors.base0D}";
-      color13 = "#${colors.base0E}";
-      color14 = "#${colors.base0C}";
-      color15 = "#${colors.base07}";
-      color16 = "#${colors.base09}";
-      color17 = "#${colors.base0F}";
-      color18 = "#${colors.base01}";
-      color19 = "#${colors.base02}";
-      color20 = "#${colors.base04}";
-      color21 = "#${colors.base06}";
+      foreground = "${colors.on_surface}";
+      background = "${colors.surface}";
+      selection_background = "${colors.on_surface}";
+      selection_foreground = "${colors.surface}";
+      url_color = "${colors.on_surface_variant}";
+      cursor = "${colors.on_surface}";
+      active_border_color = "${colors.outline}";
+      inactive_border_color = "${colors.surface_bright}";
+      active_tab_background = "${colors.surface}";
+      active_tab_foreground = "${colors.on_surface}";
+      inactive_tab_background = "${colors.surface_bright}";
+      inactive_tab_foreground = "${colors.on_surface_variant}";
+      tab_bar_background = "${colors.surface_bright}";
+      color0 = "${colors.surface}";
+      color1 = "${harmonized.red}";
+      color2 = "${harmonized.green}";
+      color3 = "${harmonized.yellow}";
+      color4 = "${harmonized.blue}";
+      color5 = "${harmonized.magenta}";
+      color6 = "${harmonized.cyan}";
+      color7 = "${colors.on_surface}";
+      color8 = "${colors.outline}";
+      color9 = "${harmonized.red}";
+      color10 = "${harmonized.green}";
+      color11 = "${harmonized.yellow}";
+      color12 = "${harmonized.blue}";
+      color13 = "${harmonized.magenta}";
+      color14 = "${harmonized.cyan}";
+      color15 = "${colors.surface_dim}";
+      color16 = "${harmonized.orange}";
+      color17 = "${colors.error}";
+      color18 = "${colors.surface_bright}";
+      color19 = "${colors.surface_container}";
+      color20 = "${colors.on_surface_variant}";
+      color21 = "${colors.inverse_surface}";
     };
   };
 }

@@ -5,14 +5,10 @@
   config,
   outputs,
   ...
-}: let
-  inherit (inputs.nix-colors) colorSchemes;
-  inherit (inputs.nix-colors.lib-contrib {inherit pkgs;}) nixWallpaperFromScheme;
-in {
+}: {
   imports =
     [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.nix-colors.homeManagerModule
       ../features/cli
       ../features/nvim
     ]
@@ -69,27 +65,14 @@ in {
     };
   };
 
-  colorscheme = lib.mkOverride 1499 colorSchemes.dracula;
+  colorscheme.mode = lib.mkOverride 1499 "dark";
   specialisation = {
-    dark.configuration.colorscheme = lib.mkOverride 1498 config.colorscheme;
-    light.configuration.colorscheme = lib.mkOverride 1498 config.colorscheme;
+    dark.configuration.colorscheme.mode = lib.mkOverride 1498 "dark";
+    light.configuration.colorscheme.mode = lib.mkOverride 1498 "light";
   };
   home.file = {
-    ".colorscheme".text = config.colorscheme.slug;
     ".colorscheme.json".text = builtins.toJSON config.colorscheme;
   };
-
-  wallpaper = let
-    largest = f: xs: builtins.head (builtins.sort (a: b: a > b) (map f xs));
-    largestWidth = largest (x: x.width) config.monitors;
-    largestHeight = largest (x: x.height) config.monitors;
-  in
-    lib.mkDefault (nixWallpaperFromScheme {
-      scheme = config.colorscheme;
-      width = largestWidth;
-      height = largestHeight;
-      logoScale = 4;
-    });
 
   home.packages = let
     specialisation = pkgs.writeShellScriptBin "specialisation" ''
@@ -125,7 +108,7 @@ in {
       if [ -n "$1" ]; then
         theme="$1"
       else
-        current="$(${lib.getExe pkgs.jq} -re '.kind' "$HOME/.colorscheme.json")"
+        current="$(${lib.getExe pkgs.jq} -re '.mode' "$HOME/.colorscheme.json")"
         if [ "$current" = "light" ]; then
           theme="dark"
         else

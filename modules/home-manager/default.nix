@@ -5,4 +5,5 @@
   shellcolor = import ./shellcolor.nix;
   wallpaper = import ./wallpaper.nix;
   xpo = import ./xpo.nix;
+  colors = import ./colors.nix;
 }

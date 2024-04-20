@@ -1,4 +1,4 @@
-{config, ...}: let
+{config, lib, ...}: let
   inherit (config.colorscheme) colors;
 in {
   services.rgbdaemon = {
@@ -9,11 +9,11 @@ in {
       player = true;
     };
     colors = {
-      background = "${colors.base00}";
-      foreground = "${colors.base05}";
-      secondary = "${colors.base0B}";
-      tertiary = "${colors.base0E}";
-      quaternary = "${colors.base05}";
+      background = "${lib.removePrefix "#" colors.surface}";
+      foreground = "${lib.removePrefix "#" colors.primary}";
+      secondary = "${lib.removePrefix "#" colors.secondary}";
+      tertiary = "${lib.removePrefix "#" colors.tertiary}";
+      quaternary = "${lib.removePrefix "#" colors.on_surface}";
     };
     keyboard = {
       device = "/dev/input/ckb1/cmd";

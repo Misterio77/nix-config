@@ -362,7 +362,7 @@ in {
     style = let
       inherit (inputs.nix-colors.lib.conversions) hexToRGBString;
       inherit (config.colorscheme) colors;
-      toRGBA = color: opacity: "rgba(${hexToRGBString "," color},${opacity})";
+      toRGBA = color: opacity: "rgba(${hexToRGBString "," (lib.removePrefix "#" color)},${opacity})";
     in
       /*
       css
@@ -378,8 +378,8 @@ in {
         window#waybar {
           padding: 0;
           border-radius: 0.5em;
-          background-color: ${toRGBA colors.base00 "0.7"};
-          color: #${colors.base05};
+          background-color: ${toRGBA colors.surface "0.7"};
+          color: ${colors.on_surface};
         }
         .modules-left {
           margin-left: -0.65em;
@@ -389,21 +389,21 @@ in {
         }
 
         #workspaces button {
-          background-color: #${colors.base00};
-          color: #${colors.base05};
+          background-color: ${colors.surface};
+          color: ${colors.on_surface};
           padding-left: 0.4em;
           padding-right: 0.4em;
           margin-top: 0.15em;
           margin-bottom: 0.15em;
         }
         #workspaces button.hidden {
-          background-color: #${colors.base00};
-          color: #${colors.base04};
+          background-color: ${colors.surface};
+          color: ${colors.on_surface_variant};
         }
         #workspaces button.focused,
         #workspaces button.active {
-          background-color: #${colors.base0A};
-          color: #${colors.base00};
+          background-color: ${colors.tertiary};
+          color: ${colors.on_tertiary};
         }
 
         #clock {
@@ -413,15 +413,15 @@ in {
         }
 
         #custom-menu {
-          background-color: #${colors.base01};
+          background-color: ${colors.surface_bright};
           padding-right: 1.5em;
           padding-left: 1em;
           margin-right: 0;
           border-radius: 0.5em;
         }
         #custom-menu.fullscreen {
-          background-color: #${colors.base0C};
-          color: #${colors.base00};
+          background-color: ${colors.primary};
+          color: ${colors.on_primary};
         }
         #custom-hostname {
           padding-right: 1em;
@@ -433,7 +433,7 @@ in {
           padding-right: 0;
         }
         #tray {
-          color: #${colors.base05};
+          color: ${colors.on_surface};
         }
         #custom-gpu, #cpu, #memory {
           margin-left: 0.05em;

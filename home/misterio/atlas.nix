@@ -1,11 +1,8 @@
 {
-  inputs,
-  lib,
   pkgs,
+  config,
   ...
-}: let
-  inherit (inputs.nix-colors) colorSchemes;
-in {
+}: {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -18,11 +15,8 @@ in {
     ./features/music
   ];
 
-  wallpaper = pkgs.wallpapers.aurora-borealis-water-mountain;
-  colorscheme = lib.mkDefault colorSchemes.rose-pine-moon;
-  specialisation = {
-    light.configuration.colorscheme = colorSchemes.rose-pine-dawn;
-  };
+  wallpaper = pkgs.wallpapers.mountain-pink-purple;
+  colorscheme.source = config.wallpaper;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

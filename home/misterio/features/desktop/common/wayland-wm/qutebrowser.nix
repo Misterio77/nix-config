@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
-  inherit (config.colorscheme) colors kind;
+{config, ...}: let
+  inherit (config.colorscheme) colors harmonized mode;
 in {
   home.persistence = {
     "/persist/home/misterio".directories = [
@@ -32,6 +28,7 @@ in {
       tabs = {
         show = "multiple";
         position = "left";
+        indicator.width = 0;
       };
       fonts = {
         default_family = config.fontProfiles.regular.family;
@@ -39,135 +36,182 @@ in {
       };
       colors = {
         webpage = {
-          preferred_color_scheme = kind;
+          preferred_color_scheme = mode;
           bg = "#ffffff";
         };
         completion = {
-          fg = "#${colors.base05}";
-          match.fg = "#${colors.base09}";
-          even.bg = "#${colors.base00}";
-          odd.bg = "#${colors.base00}";
+          fg = colors.on_surface;
+          match.fg = colors.primary;
+          even.bg = colors.surface_dim;
+          odd.bg = colors.surface_bright;
           scrollbar = {
-            bg = "#${colors.base00}";
-            fg = "#${colors.base05}";
+            bg = colors.surface;
+            fg = colors.on_surface;
           };
           category = {
-            bg = "#${colors.base00}";
-            fg = "#${colors.base0D}";
+            bg = colors.secondary;
+            fg = colors.on_secondary;
             border = {
-              bottom = "#${colors.base00}";
-              top = "#${colors.base00}";
+              bottom = colors.surface;
+              top = colors.surface;
             };
           };
           item.selected = {
-            bg = "#${colors.base02}";
-            fg = "#${colors.base05}";
-            match.fg = "#${colors.base05}";
+            bg = colors.primary;
+            fg = colors.on_primary;
+            match.fg = colors.tertiary;
             border = {
-              bottom = "#${colors.base02}";
-              top = "#${colors.base02}";
+              bottom = colors.outline;
+              top = colors.outline;
             };
           };
         };
         contextmenu = {
           disabled = {
-            bg = "#${colors.base01}";
-            fg = "#${colors.base04}";
+            bg = colors.surface_dim;
+            fg = colors.on_surface_variant;
           };
           menu = {
-            bg = "#${colors.base00}";
-            fg = "#${colors.base05}";
+            bg = colors.surface;
+            fg = colors.on_surface;
           };
           selected = {
-            bg = "#${colors.base02}";
-            fg = "#${colors.base05}";
+            bg = colors.secondary;
+            fg = colors.on_secondary;
           };
         };
         downloads = {
-          bar.bg = "#${colors.base00}";
-          error.fg = "#${colors.base08}";
+          bar.bg = colors.surface_dim;
+          error = {
+            fg = colors.on_error;
+            bg = colors.error;
+          };
           start = {
-            bg = "#${colors.base0D}";
-            fg = "#${colors.base00}";
+            bg = colors.primary;
+            fg = colors.on_primary;
           };
           stop = {
-            bg = "#${colors.base0C}";
-            fg = "#${colors.base00}";
+            bg = colors.secondary;
+            fg = colors.on_secondary;
           };
         };
         hints = {
-          bg = "#${colors.base0A}";
-          fg = "#${colors.base00}";
-          match.fg = "#${colors.base05}";
+          bg = colors.secondary;
+          fg = colors.on_secondary;
+          match.fg = colors.on_surface;
         };
         keyhint = {
-          bg = "#${colors.base00}";
-          fg = "#${colors.base05}";
-          suffix.fg = "#${colors.base05}";
+          bg = colors.surface;
+          fg = colors.on_surface;
+          suffix.fg = colors.on_surface;
         };
         messages = {
-          error.bg = "#${colors.base08}";
-          error.border = "#${colors.base08}";
-          error.fg = "#${colors.base00}";
-          info.bg = "#${colors.base00}";
-          info.border = "#${colors.base00}";
-          info.fg = "#${colors.base05}";
-          warning.bg = "#${colors.base0E}";
-          warning.border = "#${colors.base0E}";
-          warning.fg = "#${colors.base00}";
+          error = {
+            bg = colors.error;
+            border = colors.outline;
+            fg = colors.on_error;
+          };
+          info = {
+            bg = colors.secondary;
+            border = colors.outline;
+            fg = colors.on_secondary;
+          };
+          warning = {
+            bg = colors.primary;
+            border = colors.outline;
+            fg = colors.on_primary;
+          };
         };
         prompts = {
-          bg = "#${colors.base00}";
-          fg = "#${colors.base05}";
-          border = "#${colors.base00}";
-          selected.bg = "#${colors.base02}";
+          bg = colors.surface;
+          fg = colors.on_surface;
+          border = colors.surface;
+          selected.bg = colors.inverse_primary;
         };
         statusbar = {
-          caret.bg = "#${colors.base00}";
-          caret.fg = "#${colors.base0D}";
-          caret.selection.bg = "#${colors.base00}";
-          caret.selection.fg = "#${colors.base0D}";
-          command.bg = "#${colors.base01}";
-          command.fg = "#${colors.base04}";
-          command.private.bg = "#${colors.base01}";
-          command.private.fg = "#${colors.base0E}";
-          insert.bg = "#${colors.base00}";
-          insert.fg = "#${colors.base0C}";
-          normal.bg = "#${colors.base00}";
-          normal.fg = "#${colors.base05}";
-          passthrough.bg = "#${colors.base00}";
-          passthrough.fg = "#${colors.base0A}";
-          private.bg = "#${colors.base00}";
-          private.fg = "#${colors.base0E}";
-          progress.bg = "#${colors.base0D}";
-          url.error.fg = "#${colors.base08}";
-          url.fg = "#${colors.base05}";
-          url.hover.fg = "#${colors.base09}";
-          url.success.http.fg = "#${colors.base0B}";
-          url.success.https.fg = "#${colors.base0B}";
-          url.warn.fg = "#${colors.base0E}";
+          caret = {
+            bg = colors.surface;
+            fg = colors.on_surface;
+            selection = {
+              bg = colors.surface;
+              fg = colors.on_surface_variant;
+            };
+          };
+          command = {
+            bg = colors.surface_bright;
+            fg = colors.on_surface;
+            private = {
+              bg = colors.surface_bright;
+              fg = colors.on_surface;
+            };
+          };
+          insert = {
+            bg = colors.surface;
+            fg = colors.primary;
+          };
+          normal = {
+            bg = colors.surface;
+            fg = colors.on_surface;
+          };
+          passthrough = {
+            bg = colors.secondary;
+            fg = colors.on_secondary;
+          };
+          private = {
+            bg = colors.tertiary;
+            fg = colors.on_tertiary;
+          };
+          progress.bg = colors.tertiary;
+          url = {
+            error.fg = colors.error;
+            fg = colors.on_surface;
+            success = {
+              http.fg = colors.secondary;
+              https.fg = colors.secondary;
+            };
+            warn.fg = colors.tertiary;
+          };
         };
         tabs = {
-          bar.bg = "#${colors.base00}";
-          even.bg = "#${colors.base00}";
-          even.fg = "#${colors.base05}";
-          indicator.error = "#${colors.base08}";
-          indicator.start = "#${colors.base0D}";
-          indicator.stop = "#${colors.base0C}";
-          odd.bg = "#${colors.base00}";
-          odd.fg = "#${colors.base05}";
-          pinned.even.bg = "#${colors.base0B}";
-          pinned.even.fg = "#${colors.base00}";
-          pinned.odd.bg = "#${colors.base0B}";
-          pinned.odd.fg = "#${colors.base00}";
-          pinned.selected.even.bg = "#${colors.base02}";
-          pinned.selected.even.fg = "#${colors.base05}";
-          pinned.selected.odd.bg = "#${colors.base02}";
-          pinned.selected.odd.fg = "#${colors.base05}";
-          selected.even.bg = "#${colors.base02}";
-          selected.even.fg = "#${colors.base05}";
-          selected.odd.bg = "#${colors.base02}";
-          selected.odd.fg = "#${colors.base05}";
+          bar.bg = colors.surface;
+          even = {
+            bg = colors.surface_bright;
+            fg = colors.on_surface;
+          };
+          odd = {
+            bg = colors.surface_dim;
+            fg = colors.on_surface;
+          };
+          selected = {
+            even = {
+              bg = colors.primary;
+              fg = colors.on_primary;
+            };
+            odd = {
+              bg = colors.primary;
+              fg = colors.on_primary;
+            };
+          };
+          pinned = {
+            even = {
+              bg = colors.surface_bright;
+              fg = colors.tertiary;
+            };
+            odd = {
+              bg = colors.surface_dim;
+              fg = colors.tertiary;
+            };
+            selected = {
+              even = {
+                bg = colors.tertiary;
+                fg = colors.on_tertiary;
+              };
+              odd = {
+                bg = colors.tertiary;
+                fg = colors.on_tertiary;
+              };
+            };
+          };
         };
       };
     };
