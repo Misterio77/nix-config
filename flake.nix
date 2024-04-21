@@ -67,7 +67,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     matugen = {
-      url = "github:iniox/matugen";
+      url = "github:misterio77/matugen/overridable-systems";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
