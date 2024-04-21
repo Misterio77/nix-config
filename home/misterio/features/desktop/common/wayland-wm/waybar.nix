@@ -63,8 +63,8 @@ in {
     systemd.enable = true;
     settings = {
       primary = {
-        mode = "dock";
-        layer = "top";
+        exclusive = false;
+        passthrough = false;
         height = 40;
         margin = "6";
         position = "top";
