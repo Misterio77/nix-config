@@ -92,16 +92,16 @@
         exit 1
       fi
 
-      if [ "$1" = "list" ] || [ "$1" = "-l" ] || [ "$1" = "--list" ]; then
+      if [ -z "$1" ] || [ "$1" = "list" ] || [ "$1" = "-l" ] || [ "$1" = "--list" ]; then
         find "$base/specialisation" -type l -printf "%f\n"
         exit 0
       fi
 
-      echo >&2 "Switching to ''${1:-base} specialisation"
-      if [ -n "$1" ]; then
-        "$base/specialisation/$1/activate"
-      else
+      echo >&2 "Switching to ''${1} specialisation"
+      if [ "$1" == "base"  ]; then
         "$base/activate"
+      else
+        "$base/specialisation/$1/activate"
       fi
     '';
     toggle-theme = pkgs.writeShellScriptBin "toggle-theme" ''
