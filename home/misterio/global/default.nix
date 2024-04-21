@@ -120,5 +120,6 @@
   in [
     specialisation
     toggle-theme
+    pkgs.inputs.matugen.default
   ];
 }
