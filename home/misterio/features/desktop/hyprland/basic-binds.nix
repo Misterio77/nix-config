@@ -63,6 +63,7 @@
         "SUPERSHIFT,tab,changegroupactive,b"
 
         "SUPER,apostrophe,workspace,previous"
+        "SUPERSHIFT,apostrophe,workspace,next"
 
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
