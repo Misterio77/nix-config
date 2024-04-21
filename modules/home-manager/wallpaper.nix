@@ -2,8 +2,8 @@
   inherit (lib) types mkOption;
 in {
   options.wallpaper = mkOption {
-    type = types.path;
-    default = "";
+    type = types.nullOr types.path;
+    default = null;
     description = ''
       Wallpaper path
     '';

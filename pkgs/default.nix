@@ -21,4 +21,6 @@
 
   # My wallpaper collection
   wallpapers = pkgs.callPackage ./wallpapers {};
+  # And colorschemes based on it
+  colorschemes = pkgs.callPackage ./colorschemes {inherit wallpapers;};
 }

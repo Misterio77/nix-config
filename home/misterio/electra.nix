@@ -1,10 +1,12 @@
-{
+{pkgs, ...}: {
   imports = [
     ./global
     ./features/desktop/wireless
     ./features/desktop/hyprland
     ./features/pass
   ];
+
+  wallpaper = pkgs.wallpapers.plains-gold-field;
 
   monitors = [
     {

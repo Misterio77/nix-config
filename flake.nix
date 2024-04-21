@@ -66,10 +66,6 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    matugen = {
-      url = "github:misterio77/matugen/overridable-systems";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     disconic = {
       url = "github:misterio77/disconic";
