@@ -49,9 +49,6 @@ in {
         pass-otp = addPatches prev.passExtensions.pass-otp [./pass-otp-fix-completion.patch];
       };
 
-    # https://github.com/NixOS/nix/issues/7098
-    hydra_unstable = addPatches prev.hydra_unstable [./hydra-restrict-eval.diff];
-
     pfetch = prev.pfetch.overrideAttrs (oldAttrs: {
       version = "unstable-2021-12-10";
       src = final.fetchFromGitHub {
