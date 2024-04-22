@@ -42,6 +42,12 @@ in {
         ];
       };
 
+    qutebrowser = addPatches prev.qutebrowser [
+      (final.fetchurl {
+        url = "https://patch-diff.githubusercontent.com/raw/qutebrowser/qutebrowser/pull/8110.patch";
+        hash = "sha256-W30aGOAy8F/PlfUK2fgJQEcVu5QHcWSus6RKIlvVT1g=";
+      })
+    ];
     # TODO: https://github.com/NixOS/nixpkgs/pull/304154
     pam_rssh = prev.pam_rssh.overrideAttrs (oldAttrs: {
       nativeCheckInputs = [(final.openssh.override {dsaKeysSupport = true;})];
