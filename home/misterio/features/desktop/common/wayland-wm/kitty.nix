@@ -1,20 +1,14 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{config, ...}: let
   inherit (config.colorscheme) colors harmonized;
-  kitty-xterm = pkgs.writeShellScriptBin "xterm" ''
-    ${config.programs.kitty.package}/bin/kitty "$@"
-  '';
 in {
-  home = {
-    packages = [kitty-xterm];
-    sessionVariables = {
-      TERMINAL = "kitty -1";
+  xdg.mimeApps = {
+    associations.added = {
+      "x-scheme-handler/terminal" = "kitty.desktop";
+    };
+    defaultApplications = {
+      "x-scheme-handler/terminal" = "kitty.desktop";
     };
   };
-
   programs.kitty = {
     enable = true;
     font = {

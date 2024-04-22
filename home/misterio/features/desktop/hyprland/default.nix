@@ -149,18 +149,13 @@ in {
         tly = lib.getExe pkgs.tly;
         gtk-play = lib.getExe' pkgs.libcanberra-gtk3 "canberra-gtk-play";
         notify-send = lib.getExe' pkgs.libnotify "notify-send";
-
-        terminal = config.home.sessionVariables.TERMINAL;
-        defaultApp = type: "${lib.getExe' pkgs.gtk3 "gtk-launch"} $(${lib.getExe' pkgs.xdg-utils "xdg-mime"} query default ${type})";
-        browser = defaultApp "x-scheme-handler/https";
-        editor = defaultApp "text/plain";
+        defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
       in
         [
           # Program bindings
-          "SUPER,Return,exec,${terminal}"
-          "SUPER,e,exec,${editor}"
-          "SUPER,v,exec,${editor}"
-          "SUPER,b,exec,${browser}"
+          "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
+          "SUPER,e,exec,${defaultApp "text/plain"}"
+          "SUPER,b,exec,${defaultApp "x-scheme-handler/https"}"
           # Brightness control (only works if the system has lightd)
           ",XF86MonBrightnessUp,exec,light -A 10"
           ",XF86MonBrightnessDown,exec,light -U 10"

@@ -1,5 +1,10 @@
-{config, ...}: let
-  inherit (config.colorscheme) colors harmonized mode;
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit (config.colorscheme) colors mode;
 in {
   home.persistence = {
     "/persist/home/misterio".directories = [
@@ -21,10 +26,8 @@ in {
     enable = true;
     loadAutoconfig = true;
     settings = {
-      editor.command = [
-        "xdg-open"
-        "{file}"
-      ];
+      downloads.open_dispatcher = "${lib.getExe pkgs.handlr-regex} open {}";
+      editor.command = ["${lib.getExe pkgs.handlr-regex}" "open" "{file}"];
       tabs = {
         show = "multiple";
         position = "left";
