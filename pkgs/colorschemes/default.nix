@@ -34,7 +34,9 @@
       };
     };
   in
-    pkgs.runCommand "colorscheme-${name}" {} ''
+    pkgs.runCommand "colorscheme-${name}" {
+      __contentAddressed = true;
+    } ''
       mkdir "$out" -p
       for type in ${lib.concatStringsSep " " schemeTypes}; do
         ${matugen}/bin/matugen ${
