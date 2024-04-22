@@ -13,12 +13,9 @@
   };
 
   inputs = {
+    # Nix ecosystem
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url ="github:nixos/nixpkgs/nixos-23.11";
-
-    hardware.url = "github:nixos/nixos-hardware";
-    impermanence.url = "github:nix-community/impermanence";
-    nix-colors.url = "github:misterio77/nix-colors";
 
     nix = {
       url = "github:nixos/nix/2.21-maintenance";
@@ -30,14 +27,17 @@
       inputs.nix.follows = "nix";
     };
 
+    hardware.url = "github:nixos/nixos-hardware";
+    impermanence.url = "github:nix-community/impermanence";
+    nix-colors.url = "github:misterio77/nix-colors";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
@@ -47,11 +47,8 @@
       url = "github:misterio77/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    firefly = {
-      url = "github:timhae/firefly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
+    # Hyprland ecosystem
     hyprland = {
       url = "github:hyprwm/hyprland/v0.39.1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,6 +62,11 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    # Third party programs, packaged with nix
+    firefly = {
+      url = "github:timhae/firefly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -78,6 +80,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # My own programs, packaged with nix
     disconic = {
       url = "github:misterio77/disconic";
       inputs.nixpkgs.follows = "nixpkgs";
