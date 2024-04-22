@@ -20,7 +20,7 @@
   plymouth-spinner-monochrome = pkgs.callPackage ./plymouth-spinner-monochrome {};
 
   # My wallpaper collection
-  wallpapers = pkgs.callPackage ./wallpapers {};
+  wallpapers = import ./wallpapers {inherit pkgs;};
   # And colorschemes based on it
-  colorschemes = pkgs.callPackage ./colorschemes {inherit wallpapers;};
+  colorschemes = import ./colorschemes {inherit pkgs wallpapers;};
 }

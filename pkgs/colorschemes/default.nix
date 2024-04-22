@@ -1,7 +1,6 @@
 {
   wallpapers,
   pkgs,
-  lib,
   ...
 }: let
   matugen = import (fetchTarball {
@@ -10,7 +9,7 @@
   }) {inherit pkgs;};
   generateColorschemes = name: source: let
     schemeTypes = ["content" "expressive" "fidelity" "fruit-salad" "monochrome" "neutral" "rainbow" "tonal-spot"];
-    isHexColor = c: lib.isString c && (builtins.match "#([0-9a-fA-F]{3}){1,2}" c) != null;
+    isHexColor = c: pkgs.lib.isString c && (builtins.match "#([0-9a-fA-F]{3}){1,2}" c) != null;
 
     config = (pkgs.formats.toml {}).generate "config.toml" {
       templates = {};
@@ -38,7 +37,7 @@
       __contentAddressed = true;
     } ''
       mkdir "$out" -p
-      for type in ${lib.concatStringsSep " " schemeTypes}; do
+      for type in ${pkgs.lib.concatStringsSep " " schemeTypes}; do
         ${matugen}/bin/matugen ${
         if (isHexColor source)
         then "color hex"
@@ -47,4 +46,4 @@
       done
     '';
 in
-  (lib.mapAttrs generateColorschemes wallpapers) // {inherit generateColorschemes;}
+  (pkgs.lib.mapAttrs generateColorschemes wallpapers) // {inherit generateColorschemes;}
