@@ -4,7 +4,7 @@
         "type": 1,
         "hidden": false,
         "description": "Build main branch",
-        "flake": "github:misterio77/nix-config/main",
+        "flake": "git://m7.rs/nix-config",
         "checkinterval": 60,
         "schedulingshares": 10,
         "enableemail": false,
