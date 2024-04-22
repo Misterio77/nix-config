@@ -35,8 +35,8 @@ in {
       text-ver-color = "${colors.on_secondary}";
       text-wrong-color = "${colors.on_surface_variant}";
       text-caps-lock-color = "${colors.on_surface_variant}";
-      inside-clear-color = "${colors.primary}";
-      ring-clear-color = "${colors.on_primary}";
+      inside-clear-color = "${colors.surface}";
+      ring-clear-color = "${colors.primary}";
       inside-caps-lock-color = "${colors.on_tertiary}";
       ring-caps-lock-color = "${colors.surface}";
       separator-color = "${colors.surface}";
