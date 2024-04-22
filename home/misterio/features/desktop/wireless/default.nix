@@ -1,1 +1,3 @@
-{imports = [./wpa-gui.nix];}
+{ pkgs, ...}: {
+  home.packages = [pkgs.wpa_supplicant_gui];
+}

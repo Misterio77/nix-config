@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }: let
   kdeconnect-cli = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-cli";

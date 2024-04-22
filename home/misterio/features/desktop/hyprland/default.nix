@@ -22,7 +22,6 @@ in {
 
   home.packages = with pkgs; [
     inputs.hyprwm-contrib.grimblast
-    hyprslurp
     hyprpicker
   ];
 

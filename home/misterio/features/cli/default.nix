@@ -11,8 +11,6 @@
     ./lyrics.nix
     ./nix-index.nix
     ./pfetch.nix
-    ./ranger.nix
-    ./screen.nix
     ./shellcolor.nix
     ./ssh.nix
     ./starship.nix
@@ -42,8 +40,6 @@
     nh # Nice wrapper for NixOS and HM
 
     ltex-ls # Spell checking LSP
-
-    tly # Tally counter
 
     awscli2
     inputs.awscli-console.default

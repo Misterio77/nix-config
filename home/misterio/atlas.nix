@@ -13,7 +13,6 @@
     ./features/games
     ./features/games/star-citizen.nix
     ./features/games/yuzu.nix
-    ./features/music
   ];
 
   wallpaper = lib.mkDefault pkgs.wallpapers.abstract-cyan-purple;
