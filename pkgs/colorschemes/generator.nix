@@ -31,7 +31,7 @@
     };
   in
     pkgs.runCommand "colorscheme-${name}" {
-      __contentAddressed = true;
+      # __contentAddressed = true;
       passthru = let
         drv = generateColorscheme name source;
       in {
