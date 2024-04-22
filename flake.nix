@@ -14,6 +14,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url ="github:nixos/nixpkgs/nixos-23.11";
 
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
@@ -21,11 +22,11 @@
 
     nix = {
       url = "github:nixos/nix/2.21-maintenance";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     hydra = {
       url = "github:nixos/hydra";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
       inputs.nix.follows = "nix";
     };
 

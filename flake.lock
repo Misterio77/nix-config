@@ -311,7 +311,7 @@
           "nix"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ]
       },
       "locked": {
@@ -515,7 +515,7 @@
         "flake-compat": "flake-compat",
         "libgit2": "libgit2",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ],
         "nixpkgs-regression": "nixpkgs-regression"
       },
@@ -684,6 +684,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1713725259,
+        "narHash": "sha256-9ZR/Rbx5/Z/JZf5ehVNMoz/s5xjpP0a22tL6qNvLt5E=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a5e4bbcb4780c63c79c87d29ea409abf097de3f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-23.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "paste-misterio-me": {
       "inputs": {
         "nixpkgs": [
@@ -723,6 +739,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
         "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
         "website": "website"
