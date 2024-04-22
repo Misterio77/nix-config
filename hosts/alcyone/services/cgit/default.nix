@@ -1,5 +1,15 @@
 {pkgs, ...}: let
-  cgit = "${pkgs.scgit}";
+  cgit = pkgs.cgit-pink.overrideAttrs (_: {
+    pname = "scgit";
+    version = "0.1";
+    src = pkgs.fetchFromSourcehut {
+      owner = "~misterio";
+      repo = "scgit";
+      rev = "2cd05c95827fb94740e876733dc6f7fe88340de2";
+      sha256 = "sha256-95mRJ3ZCSkLHqehFQdwM2BY0h+YDhohwpnRiF6/lZtA=";
+    };
+  });
+
   compileSass = file:
     pkgs.runCommand "sass" {buildInputs = [pkgs.sass];} ''
       sass ${file} > $out

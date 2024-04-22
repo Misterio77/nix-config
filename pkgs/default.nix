@@ -5,7 +5,6 @@ in rec {
   rgbdaemon = pkgs.callPackage ./rgbdaemon {};
   shellcolord = pkgs.callPackage ./shellcolord {};
   trekscii = pkgs.callPackage ./trekscii {};
-  frcon = pkgs.callPackage ./frcon {};
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
 
   # Personal scripts
