@@ -8,7 +8,6 @@
   inherit (lib) types mkOption;
 
   hexColor = types.strMatching "#([0-9a-fA-F]{3}){1,2}";
-  schemeTypes = ["content" "expressive" "fidelity" "fruit-salad" "monochrome" "neutral" "rainbow" "tonal-spot"];
 
   removeFilterPrefixAttrs = prefix: attrs:
     lib.mapAttrs' (n: v: {
@@ -16,38 +15,44 @@
       value = v;
     }) (lib.filterAttrs (n: _: lib.hasPrefix prefix n) attrs);
 
-  rawColorscheme = lib.importJSON "${cfg.generatedDrv}/${cfg.type}.json";
 in {
   options.colorscheme = {
     source = mkOption {
       type = types.either types.path hexColor;
       # TODO: generate default from hostname
       # colorFromString = c: builtins.substring 0 6 (builtins.hashString "md5" c);
-      default = if config.wallpaper != null then config.wallpaper else "#2B3975";
+      default =
+        if config.wallpaper != null
+        then config.wallpaper
+        else "#2B3975";
     };
     mode = mkOption {
       type = types.enum ["dark" "light"];
       default = "dark";
     };
     type = mkOption {
-      type = types.enum schemeTypes;
+      type = types.enum (pkgs.generateColorscheme null null).schemeTypes;
       default = "fruit-salad";
     };
 
     generatedDrv = mkOption {
-      readOnly = true;
       type = types.package;
-      default = pkgs.colorschemes.generateColorschemes (cfg.source.pname or cfg.source) cfg.source;
+      default = pkgs.generateColorscheme (cfg.source.name or "default") cfg.source;
     };
+    rawColorscheme = mkOption {
+      type = types.attrs;
+      default = cfg.generatedDrv.imported.${cfg.type};
+    };
+
     colors = mkOption {
       readOnly = true;
       type = types.attrsOf hexColor;
-      default = rawColorscheme.colors.${cfg.mode};
+      default = cfg.rawColorscheme.colors.${cfg.mode};
     };
     harmonized = mkOption {
       readOnly = true;
       type = types.attrsOf hexColor;
-      default = removeFilterPrefixAttrs "${cfg.mode}-" rawColorscheme.harmonized_colors;
+      default = removeFilterPrefixAttrs "${cfg.mode}-" cfg.rawColorscheme.harmonized_colors;
     };
   };
 }

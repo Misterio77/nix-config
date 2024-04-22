@@ -18,19 +18,16 @@
 
   wallpaper = lib.mkDefault pkgs.wallpapers.abstract-cyan-purple;
   colorscheme.source = config.wallpaper;
-  specialisation = lib.mkForce (
-    lib.mapAttrs (n: w: {configuration.wallpaper = w;}) {
-      inherit
-        (pkgs.wallpapers)
-        abstract-cyan-purple
-        aurora-borealis-water-mountain
-        mountain-pink-purple
-        mountain-yellow-sunset
-        nebula-purple-gold
-        plains-gold-field
-        ;
-    }
-  );
+  specialisation = lib.mapAttrs (n: w: {configuration.wallpaper = w;}) {
+    inherit
+      (pkgs.wallpapers)
+      abstract-cyan-purple
+      cthulhu
+      mountain-pink-purple
+      mountain-yellow-sunset
+      plains-gold-field
+      ;
+  };
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

@@ -22,6 +22,6 @@
 in {
   pkgs = lib.mapAttrs filterValidPkgs outputs.packages;
   wallpapers = lib.mapAttrs (mkAggregate "wallpapers") outputs.packages;
-  colorschemes = lib.mapAttrs (mkAggregate "wallpapers") outputs.packages;
+  colorschemes = lib.mapAttrs (mkAggregate "colorschemes") outputs.packages;
   hosts = lib.mapAttrs getConfigTopLevel outputs.nixosConfigurations;
 }

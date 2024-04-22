@@ -1,4 +1,6 @@
-{pkgs ? import <nixpkgs> {}}: rec {
+{pkgs ? import <nixpkgs> {}}: let
+  inherit (pkgs) lib;
+in rec {
   # Packages with an actual source
   rgbdaemon = pkgs.callPackage ./rgbdaemon {};
   shellcolord = pkgs.callPackage ./shellcolord {};
@@ -22,5 +24,8 @@
   # My wallpaper collection
   wallpapers = import ./wallpapers {inherit pkgs;};
   # And colorschemes based on it
+  generateColorscheme = import ./colorschemes/generator.nix {inherit pkgs;};
   colorschemes = import ./colorschemes {inherit pkgs wallpapers;};
+  # This is here to help us keep IFD cached
+  allColorschemes = pkgs.writeText "colorschemes.json" (builtins.toJSON (lib.mapAttrs (_: drv: drv.imported) colorschemes));
 }
