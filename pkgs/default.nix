@@ -23,6 +23,8 @@ in rec {
 
   # My wallpaper collection
   wallpapers = import ./wallpapers {inherit pkgs;};
+  allWallpapers = pkgs.linkFarmFromDrvs "wallpapers" (lib.attrValues wallpapers);
+
   # And colorschemes based on it
   generateColorscheme = import ./colorschemes/generator.nix {inherit pkgs;};
   colorschemes = import ./colorschemes {inherit pkgs wallpapers;};

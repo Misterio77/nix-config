@@ -10,18 +10,7 @@
   filterValidPkgs = sys: pkgs: lib.filterAttrs (_: pkg: hasPlatform sys pkg && notBroken pkg && isDistributable pkg) pkgs;
 
   getConfigTopLevel = (_: cfg: cfg.config.system.build.toplevel);
-  mkAggregate = name: (
-      system: packages: let
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
-      in
-        pkgs.releaseTools.aggregate {
-          inherit name;
-          constituents = builtins.attrValues packages.${name};
-        }
-    );
 in {
   pkgs = lib.mapAttrs filterValidPkgs outputs.packages;
-  wallpapers = lib.mapAttrs (mkAggregate "wallpapers") outputs.packages;
-  colorschemes = lib.mapAttrs (mkAggregate "colorschemes") outputs.packages;
   hosts = lib.mapAttrs getConfigTopLevel outputs.nixosConfigurations;
 }
