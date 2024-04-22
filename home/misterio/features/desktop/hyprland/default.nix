@@ -146,8 +146,6 @@ in {
         grimblast = lib.getExe pkgs.inputs.hyprwm-contrib.grimblast;
         tesseract = lib.getExe pkgs.tesseract;
         pactl = lib.getExe' pkgs.pulseaudio "pactl";
-        tly = lib.getExe pkgs.tly;
-        gtk-play = lib.getExe' pkgs.libcanberra-gtk3 "canberra-gtk-play";
         notify-send = lib.getExe' pkgs.libnotify "notify-send";
         defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
       in
@@ -170,11 +168,6 @@ in {
           "SUPER,Print,exec,${grimblast} --notify --freeze copy area"
           # To OCR
           "ALT,Print,exec,${grimblast} --freeze save area - | ${tesseract} - - | wl-copy && ${notify-send} -t 3000 'OCR result copied to buffer'"
-          # Tally counter
-          "SUPER,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} add && ${gtk-play} -i dialog-information" # Add new entry
-          "SUPERCONTROL,z,exec,${notify-send} -t 1000 $(${tly} time) && ${tly} undo && ${gtk-play} -i dialog-warning" # Undo last entry
-          "SUPERCONTROLSHIFT,z,exec,${tly} reset && ${gtk-play} -i complete" # Reset
-          "SUPERSHIFT,z,exec,${notify-send} -t 1000 $(${tly} time)" # Show current time
         ]
         ++ (
           let

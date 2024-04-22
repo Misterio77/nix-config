@@ -10,23 +10,13 @@
     ./waybar.nix
     ./wofi.nix
     ./zathura.nix
+    ./imv.nix
   ];
 
   xdg.mimeApps.enable = true;
   home.packages = with pkgs; [
-    grim
-    imv
-    mimeo
-    primary-xwayland
-    pulseaudio
-    slurp
-    waypipe
     wf-recorder
     wl-clipboard
-    wl-mirror
-    wl-mirror-pick
-    xdg-utils
-    ydotool
   ];
 
   home.sessionVariables = {
