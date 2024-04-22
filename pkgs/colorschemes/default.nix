@@ -1,8 +1,7 @@
 {
-  wallpapers,
   pkgs,
+  wallpapers,
+  generateColorscheme,
   ...
-}: let
-  generator = import ./generator.nix {inherit pkgs;};
-in
-  pkgs.lib.mapAttrs (_: v: generator v.name v) wallpapers
+}:
+pkgs.lib.mapAttrs (_: v: generateColorscheme v.name v) wallpapers
