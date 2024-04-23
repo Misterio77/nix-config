@@ -91,7 +91,7 @@
     # Completions
     cmp-nvim-lsp
     cmp_luasnip
-
+    cmp-rg
     cmp-buffer
     cmp-path
     {
@@ -139,6 +139,7 @@
               { name='git' },
               { name='buffer', option = { get_bufnrs = vim.api.nvim_list_bufs }},
               { name='path' },
+              { name='rg' },
             },
           })
         '';
