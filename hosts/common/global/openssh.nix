@@ -7,8 +7,6 @@
 }: let
   inherit (config.networking) hostName;
   hosts = outputs.nixosConfigurations;
-  pubKey = host: ../../${host}/ssh_host_ed25519_key.pub;
-  gitHost = hosts."alcyone".config.networking.hostName;
 
   # Sops needs acess to the keys before the persist dirs are even mounted; so
   # just persisting the keys won't work, we must point at /persist
@@ -37,15 +35,20 @@ in {
   programs.ssh = {
     # Each hosts public key
     knownHosts =
-      builtins.mapAttrs (name: _: {
-        publicKeyFile = pubKey name;
+      builtins.mapAttrs (name: cfg: {
+        publicKeyFile = ../../${name}/ssh_host_ed25519_key.pub;
         extraHostNames =
-          (lib.optional (name == hostName) "localhost")
+          [
+            cfg.config.networking.fqdn
+          ]
+          ++
           # Alias for localhost if it's the same host
-          ++ (lib.optionals (name == gitHost) [
+          (lib.optional (name == hostName) "localhost")
+          # Alias to m7.rs and git.m7.rs if it's alcyone
+          ++ (lib.optionals (name == "alcyone") [
             "m7.rs"
             "git.m7.rs"
-          ]); # Alias for m7.rs and git.m7.rs if it's the git host
+          ]);
       })
       hosts;
   };
