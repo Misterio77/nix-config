@@ -36,14 +36,14 @@ in {
         default = config.networking.hostName;
       };
 
-      lastModified = lib.mkOption {
-        type = lib.types.nullOr lib.types.int;
+      oldFlakeRef = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
         default = null;
         description = ''
-          Current system's last modified date.
+          Current system's flake reference
 
           If non-null, the service will only upgrade if the new config is newer
-          than this value.
+          than this one's.
         '';
       };
     };
@@ -80,12 +80,16 @@ in {
         evalUrl = "${cfg.instance}/jobset/${cfg.project}/${cfg.jobset}/latest-eval";
         buildUrl = "${cfg.instance}/job/${cfg.project}/${cfg.jobset}/${cfg.job}/latest";
       in
-        (lib.optionalString (cfg.lastModified != null) ''
+        (lib.optionalString (cfg.oldFlakeRef != null) ''
           flake="$(curl -sLH 'accept: application/json' ${evalUrl} | jq -r '.flake')"
-          echo "Flake: $flake" >&2
+          echo "New flake: $flake" >&2
           new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
-          echo "Last modified at: $(date -d @$new)" >&2
-          current="${toString cfg.lastModified}"
+          echo "Modified at: $(date -d @$new)" >&2
+
+          echo "Current flake: ${cfg.oldFlakeRef}" >&2
+          current="$(nix flake metadata "${cfg.oldFlakeRef}" --json | jq -r '.lastModified')"}
+          echo "Modified at: $(date -d @$current)" >&2
+
           if [ "$new" -le "$current" ]; then
             echo "Skipping upgrade, as flake is not newer than current" >&2
             exit 0
