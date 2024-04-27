@@ -35,6 +35,7 @@
 
     nil # Nix LSP
     alejandra # Nix formatter
+    nixmft-rfc-style # Nix formatter, official
     nvd # Differ
     nix-output-monitor
     nh # Nice wrapper for NixOS and HM
