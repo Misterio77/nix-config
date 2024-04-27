@@ -8,7 +8,7 @@
       DB_HOST = "localhost";
       DB_USERNAME = "firefly-iii";
     };
-    nginxEnable = true;
+    enableNginx = true;
     virtualHost = "firefly.m7.rs";
   };
 
