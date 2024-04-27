@@ -53,23 +53,6 @@
         "type": "gitlab"
       }
     },
-    "composer2nix-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1646178110,
-        "narHash": "sha256-P3acfGwHYjjZQcviPiOT7T7qzzP/drc2mibzrsrNP18=",
-        "owner": "svanderburg",
-        "repo": "composer2nix",
-        "rev": "299caca4aac42d7639a42eb4dde951c010f6e91c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "svanderburg",
-        "ref": "v0.0.6",
-        "repo": "composer2nix",
-        "type": "github"
-      }
-    },
     "disconic": {
       "inputs": {
         "nixpkgs": [
@@ -88,45 +71,6 @@
       "original": {
         "owner": "misterio77",
         "repo": "disconic",
-        "type": "github"
-      }
-    },
-    "firefly": {
-      "inputs": {
-        "composer2nix-src": "composer2nix-src",
-        "firefly-iii-src": "firefly-iii-src",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1713378471,
-        "narHash": "sha256-9SGvK0Y0k0DHdjXIM+zrRSyYvzMGUa1EPJk6bMA8WLM=",
-        "owner": "timhae",
-        "repo": "firefly",
-        "rev": "5d5a379d6378847f6eff676e3e672ef8e627b20e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "timhae",
-        "repo": "firefly",
-        "type": "github"
-      }
-    },
-    "firefly-iii-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1709395923,
-        "narHash": "sha256-RPkSX9o/5XGh1dZhyyFYsPedl6/SHOGXOAY2/x7aiaM=",
-        "owner": "firefly-iii",
-        "repo": "firefly-iii",
-        "rev": "90d58ec8fa2963934be6fc7cc3d5a85171239025",
-        "type": "github"
-      },
-      "original": {
-        "owner": "firefly-iii",
-        "ref": "v6.1.10",
-        "repo": "firefly-iii",
         "type": "github"
       }
     },
@@ -725,7 +669,6 @@
       "inputs": {
         "awscli-console": "awscli-console",
         "disconic": "disconic",
-        "firefly": "firefly",
         "firefox-addons": "firefox-addons",
         "hardware": "hardware",
         "home-manager": "home-manager",

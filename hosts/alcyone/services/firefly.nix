@@ -1,23 +1,27 @@
-{
-  inputs,
-  config,
-  ...
-}: {
-  imports = [inputs.firefly.nixosModules.firefly-iii];
-
-  nixpkgs.overlays = [inputs.firefly.overlays.default];
-
+{config, ...}: {
   services.firefly-iii = {
     enable = true;
-    hostname = "firefly.m7.rs";
-    appKeyFile = config.sops.secrets.firefly-key.path;
-    nginx = {
-      serverAliases = ["firefly.m7.rs"];
-      forceSSL = true;
-      enableACME = true;
+    settings = {
+      APP_KEY_FILE = config.sops.secrets.firefly-key.path;
+      DB_CONNECTION = "mysql";
+      DB_DATABASE = "firefly";
+      DB_HOST = "localhost";
+      DB_USERNAME = "firefly-iii";
     };
-    group = "nginx";
-    database.createLocally = true;
+    nginxEnable = true;
+    virtualHost = "firefly.m7.rs";
+  };
+
+  services.mysql = let
+    inherit (config.services.firefly-iii) settings;
+  in {
+    ensureDatabases = [settings.DB_DATABASE];
+    ensureUsers = [
+      {
+        name = settings.DB_USERNAME;
+        ensurePermissions = {"${settings.DB_DATABASE}.*" = "ALL PRIVILEGES";};
+      }
+    ];
   };
 
   sops.secrets.firefly-key = {
