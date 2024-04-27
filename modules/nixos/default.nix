@@ -1,1 +1,4 @@
-{satisfactory = import ./satisfactory.nix;}
+{
+  satisfactory = import ./satisfactory.nix;
+  hydra-auto-upgrade = import ./hydra-auto-upgrade.nix;
+}
