@@ -8,7 +8,6 @@
     project = "nix-config";
     jobset = "main";
     job = "hosts.${config.networking.hostName}";
-    lastModified = inputs.self.lastModified;
     oldFlakeRef = "self";
   };
 }
