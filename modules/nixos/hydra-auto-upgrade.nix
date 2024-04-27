@@ -101,13 +101,13 @@ in {
           nvd --color=always diff "$profile" "$path"
 
           echo "Activating configuration" >&2
-          "$path/bin/switch-to-configuration test"
+          "$path/bin/switch-to-configuration" test
 
           echo "Setting profile" >&2
           nix build --no-link --profile "$profile" "$path"
 
           echo "Adding to bootloader" >&2
-          "$path/bin/switch-to-configuration boot"
+          "$path/bin/switch-to-configuration" boot
         '';
 
       startAt = cfg.dates;
