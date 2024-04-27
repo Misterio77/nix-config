@@ -98,7 +98,7 @@ in {
           nix build --no-link "$path"
 
           echo "Comparing changes" >&2
-          nvd diff "$profile" "$path"
+          nvd --color=always diff "$profile" "$path"
 
           echo "Activating configuration" >&2
           "$path/bin/switch-to-configuration test"
