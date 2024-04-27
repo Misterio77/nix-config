@@ -12,6 +12,7 @@
   networking = {
     hostName = "alcyone";
     useDHCP = true;
+    dhcpcd.IPv6rs = true;
     interfaces.ens3 = {
       useDHCP = true;
       wakeOnLan.enable = true;
