@@ -85,8 +85,9 @@ in {
           echo "New flake: $flake" >&2
           new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
           echo "Last modified at: $(date -d @$new)" >&2
-          if [ "$new" -le "${toString cfg.lastModified}" ]; then
-            echo "Skipping upgrade, as flake is not newer than current" >&2
+          current="${toString cfg.lastModified}"
+          if [ "$new" -le "$current" ]; then
+            echo "Skipping upgrade, as flake is not newer than current ($(date -d @$current))" >&2
             exit 0
           fi
         '')
