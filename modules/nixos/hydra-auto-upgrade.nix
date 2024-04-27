@@ -73,6 +73,7 @@ in {
         gnutar
         gzip
         jq
+        nvd
       ];
 
       script = let
@@ -80,27 +81,33 @@ in {
         buildUrl = "${cfg.instance}/job/${cfg.project}/${cfg.jobset}/${cfg.job}/latest";
       in
         (lib.optionalString (cfg.lastModified != null) ''
-          echo "Evaluation: ${evalUrl}" >&2
           flake="$(curl -sLH 'accept: application/json' ${evalUrl} | jq -r '.flake')"
-          echo "New flake: $flake" >&2
+          echo "Flake: $flake" >&2
           new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
           echo "Last modified at: $(date -d @$new)" >&2
           current="${toString cfg.lastModified}"
           if [ "$new" -le "$current" ]; then
-            echo "Skipping upgrade, as flake is not newer than current ($(date -d @$current))" >&2
+            echo "Skipping upgrade, as flake is not newer than current" >&2
             exit 0
           fi
         '')
         + ''
-          echo "Build: ${buildUrl}" >&2
-          path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
-          echo "Out path: $path" >&2
           profile="/nix/var/nix/profiles/system"
+          path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
+          echo "Building $path" >&2
+          nix build --no-link "$path"
 
-          echo "Setting profile ($profile)" >&2
-          nix-env --profile "$profile" --set "$path"
-          echo "Switching to configuration" >&2
-          "$path/bin/switch-to-configuration ${cfg.operation}"
+          echo "Comparing changes" >&2
+          nvd diff "$profile" "$path"
+
+          echo "Activating configuration" >&2
+          "$path/bin/switch-to-configuration test"
+
+          echo "Setting profile" >&2
+          nix build --no-link --profile "$profile" "$path"
+
+          echo "Adding to bootloader" >&2
+          "$path/bin/switch-to-configuration boot"
         '';
 
       startAt = cfg.dates;
