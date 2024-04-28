@@ -6,50 +6,45 @@
   inputs,
   ...
 }: let
-  # Dependencies
-  cat = "${pkgs.coreutils}/bin/cat";
-  cut = "${pkgs.coreutils}/bin/cut";
-  find = "${pkgs.findutils}/bin/find";
-  grep = "${pkgs.gnugrep}/bin/grep";
-  pgrep = "${pkgs.procps}/bin/pgrep";
-  tail = "${pkgs.coreutils}/bin/tail";
-  wc = "${pkgs.coreutils}/bin/wc";
-  xargs = "${pkgs.findutils}/bin/xargs";
-  timeout = "${pkgs.coreutils}/bin/timeout";
-  ping = "${pkgs.iputils}/bin/ping";
-
-  jq = "${pkgs.jq}/bin/jq";
-  systemctl = "${pkgs.systemd}/bin/systemctl";
-  journalctl = "${pkgs.systemd}/bin/journalctl";
-  playerctl = "${pkgs.playerctl}/bin/playerctl";
-  playerctld = "${pkgs.playerctl}/bin/playerctld";
-  pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
-  wofi = "${pkgs.wofi}/bin/wofi";
-
+  commonDeps = with pkgs; [coreutils gnugrep systemd];
   # Function to simplify making waybar outputs
-  jsonOutput = name: {
+  mkScript = {
+    name ? "script",
+    deps ? [],
+    script ? "",
+  }:
+    lib.getExe (pkgs.writeShellApplication {
+      inherit name;
+      text = script;
+      runtimeInputs = commonDeps ++ deps;
+    });
+  # Specialized for JSON outputs
+  mkScriptJson = {
+    name ? "script",
+    deps ? [],
     pre ? "",
     text ? "",
     tooltip ? "",
     alt ? "",
     class ? "",
     percentage ? "",
-  }: "${pkgs.writeShellScriptBin "waybar-${name}" ''
-    set -euo pipefail
-    ${pre}
-    ${jq} -cn \
-      --arg text "${text}" \
-      --arg tooltip "${tooltip}" \
-      --arg alt "${alt}" \
-      --arg class "${class}" \
-      --arg percentage "${percentage}" \
-      '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
-  ''}/bin/waybar-${name}";
+  }:
+    mkScript {
+      deps = [pkgs.jq] ++ deps;
+      script = ''
+        ${pre}
+        jq -cn \
+          --arg text "${text}" \
+          --arg tooltip "${tooltip}" \
+          --arg alt "${alt}" \
+          --arg class "${class}" \
+          --arg percentage "${percentage}" \
+          '{text:$text,tooltip:$tooltip,alt:$alt,class:$class,percentage:$percentage}'
+      '';
+    };
 
-  hasSway = config.wayland.windowManager.sway.enable;
-  sway = config.wayland.windowManager.sway.package;
-  hasHyprland = config.wayland.windowManager.hyprland.enable;
-  hyprland = config.wayland.windowManager.hyprland.package;
+  swayCfg = config.wayland.windowManager.sway;
+  hyprlandCfg = config.wayland.windowManager.hyprland;
 in {
   # Let it try to start a few more times
   systemd.user.services.waybar = {
@@ -70,11 +65,11 @@ in {
         position = "top";
         modules-left =
           ["custom/menu"]
-          ++ (lib.optionals hasSway [
+          ++ (lib.optionals swayCfg.enable [
             "sway/workspaces"
             "sway/mode"
           ])
-          ++ (lib.optionals hasHyprland [
+          ++ (lib.optionals hyprlandCfg.enable [
             "hyprland/workspaces"
             "hyprland/submap"
           ])
@@ -96,6 +91,7 @@ in {
 
         modules-right = [
           # "custom/gammastep" TODO: currently broken for some reason
+          "custom/rfkill"
           "custom/tailscale-ping"
           "network"
           "tray"
@@ -117,7 +113,7 @@ in {
         };
         "custom/gpu" = {
           interval = 5;
-          exec = "${cat} /sys/class/drm/card0/device/gpu_busy_percent";
+          exec = mkScript {script = "cat /sys/class/drm/card0/device/gpu_busy_percent";};
           format = "󰒋  {}%";
         };
         memory = {
@@ -138,7 +134,7 @@ in {
               ""
             ];
           };
-          on-click = pavucontrol;
+          on-click = lib.getExe pkgs.pavucontrol;
         };
         idle_inhibitor = {
           format = "{icon}";
@@ -179,24 +175,23 @@ in {
             {ipaddr}/{cidr}
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
-          on-click = "";
         };
         "custom/tailscale-ping" = {
           interval = 10;
           return-type = "json";
           exec = let
-            inherit (builtins) concatStringsSep attrNames;
-            hosts = attrNames outputs.nixosConfigurations;
+            pingCmd = host: "timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1";
+            hosts = lib.attrNames outputs.nixosConfigurations;
             homeMachine = "merope";
             remoteMachine = "alcyone";
           in
-            jsonOutput "tailscale-ping" {
+            mkScriptJson {
+              deps = [pkgs.iputils];
               # Build variables for each host
               pre = ''
-                set -o pipefail
-                ${concatStringsSep "\n" (
+                ${lib.concatStringsSep "\n" (
                   map (host: ''
-                    ping_${host}="$(${timeout} 2 ${ping} -c 1 -q ${host} 2>/dev/null | ${tail} -1 | ${cut} -d '/' -f5 | ${cut} -d '.' -f1)ms" || ping_${host}="Disconnected"
+                    ping_${host}="$(${pingCmd host})ms" || ping_${host}="Disconnected"
                   '')
                   hosts
                 )}
@@ -204,47 +199,44 @@ in {
               # Access a remote machine's and a home machine's ping
               text = "  $ping_${remoteMachine} /  $ping_${homeMachine}";
               # Show pings from all machines
-              tooltip = concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
+              tooltip = lib.concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
             };
           format = "{}";
-          on-click = "";
         };
-        "custom/menu" = let
-          isFullScreen =
-            if hasHyprland
-            then "${hyprland}/bin/hyprctl activewindow -j | ${jq} -e '.fullscreen' &>/dev/null"
-            else "false";
-        in {
+        "custom/menu" = {
           interval = 1;
           return-type = "json";
-          exec = jsonOutput "menu" {
+          exec = mkScriptJson {
+            deps = lib.optional hyprlandCfg.enable hyprlandCfg.package;
             text = "";
-            tooltip = ''$(${cat} /etc/os-release | ${grep} PRETTY_NAME | ${cut} -d '"' -f2)'';
-            class = "$(if ${isFullScreen}; then echo fullscreen; fi)";
+            tooltip = ''$(grep /etc/os-release PRETTY_NAME | cut -d '"' -f2)'';
+            class = let
+              isFullScreen =
+                if hyprlandCfg.enable
+                then "hyprctl activewindow -j | jq -e '.fullscreen' &>/dev/null"
+                else "false";
+            in "$(if ${isFullScreen}; then echo fullscreen; fi)";
           };
-          on-click-left = "${wofi} -S drun -x 10 -y 10 -W 25% -H 60%";
-          on-click-right = lib.concatStringsSep ";" (
-            (lib.optional hasHyprland "${hyprland}/bin/hyprctl dispatch togglespecialworkspace")
-            ++ (lib.optional hasSway "${sway}/bin/swaymsg scratchpad show")
-          );
         };
         "custom/hostname" = {
-          exec = "echo $USER@$HOSTNAME";
-          on-click = "${systemctl} --user restart waybar";
+          exec = mkScript {script = ''echo "$USER@$HOSTNAME"'';};
+          on-click = mkScript {script = "systemctl --user restart waybar";};
         };
         "custom/unread-mail" = {
           interval = 5;
           return-type = "json";
-          exec = jsonOutput "unread-mail" {
+          exec = mkScriptJson {
+            deps = [pkgs.findutils pkgs.procps];
             pre = ''
-              count=$(${find} ~/Mail/*/Inbox/new -type f | ${wc} -l)
-              if ${pgrep} mbsync &>/dev/null; then
+              count=$(find ~/Mail/*/Inbox/new -type f | wc -l)
+              if pgrep mbsync &>/dev/null; then
                 status="syncing"
-              else if [ "$count" == "0" ]; then
-                status="read"
               else
-                status="unread"
-              fi
+                if [ "$count" == "0" ]; then
+                  status="read"
+                else
+                  status="unread"
+                fi
               fi
             '';
             text = "$count";
@@ -260,28 +252,29 @@ in {
         "custom/gpg-agent" = {
           interval = 2;
           return-type = "json";
-          exec = let
-            gpgCmds = import ../../../cli/gpg-commands.nix {inherit pkgs;};
-          in
-            jsonOutput "gpg-agent" {
-              pre = ''status=$(${gpgCmds.isUnlocked} && echo "unlocked" || echo "locked")'';
-              alt = "$status";
-              tooltip = "GPG is $status";
-            };
+          exec = mkScriptJson {
+            deps = [pkgs.procps pkgs.gnupg];
+            pre = let
+              isUnlocked = "pgrep 'gpg-agent' &> /dev/null && gpg-connect-agent 'scd getinfo card_list' /bye | grep SERIALNO -q";
+            in ''status=$(${isUnlocked} && echo "unlocked" || echo "locked")'';
+            alt = "$status";
+            tooltip = "GPG is $status";
+          };
           format = "{icon}";
           format-icons = {
             "locked" = "";
             "unlocked" = "";
           };
-          on-click = "";
         };
         "custom/gammastep" = {
           interval = 5;
           return-type = "json";
-          exec = jsonOutput "gammastep" {
+          exec = mkScriptJson {
+            deps = [pkgs.findutils];
             pre = ''
-              if unit_status="$(${systemctl} --user is-active gammastep)"; then
-                status="$unit_status ($(${journalctl} --user -u gammastep.service -g 'Period: ' | ${tail} -1 | ${cut} -d ':' -f6 | ${xargs}))"
+              if unit_status="$(systemctl --user is-active gammastep)"; then
+                period="$(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs)"
+                status="$unit_status ($period)"
               else
                 status="$unit_status"
               fi
@@ -303,15 +296,24 @@ in {
             "active (Transition (Day)" = " ";
             "active (Transition (Daytime)" = " ";
           };
-          on-click = "${systemctl} --user is-active gammastep && ${systemctl} --user stop gammastep || ${systemctl} --user start gammastep";
+          on-click = mkScript {
+            script = ''
+              if systemctl --user is-active gammastep; then
+                systemctl --user stop gammastep
+              else
+                systemctl --user start gammastep
+              fi
+            '';
+          };
         };
         "custom/currentplayer" = {
           interval = 2;
           return-type = "json";
-          exec = jsonOutput "currentplayer" {
+          exec = mkScriptJson {
+            deps = [pkgs.playerctl];
             pre = ''
-              player="$(${playerctl} status -f "{{playerName}}" 2>/dev/null || echo "No player active" | ${cut} -d '.' -f1)"
-              count="$(${playerctl} -l 2>/dev/null | ${wc} -l)"
+              player="$(playerctl status -f "{{playerName}}" 2>/dev/null || echo "No player active" | cut -d '.' -f1)"
+              count="$(playerctl -l 2>/dev/null | wc -l)"
               if ((count > 1)); then
                 more=" +$((count - 1))"
               else
@@ -335,12 +337,26 @@ in {
             "kdeconnect" = "󰄡 ";
             "chromium" = " ";
           };
-          on-click = "${playerctld} shift";
-          on-click-right = "${playerctld} unshift";
+        };
+        "custom/rfkill" = {
+          interval = 1;
+          exec-if = mkScript {
+            deps = [pkgs.util-linux];
+            script = "rfkill | grep '\<blocked\>'";
+          };
         };
         "custom/player" = {
-          exec-if = "${playerctl} status 2>/dev/null";
-          exec = ''${playerctl} metadata --format '{"text": "{{title}} - {{artist}}", "alt": "{{status}}", "tooltip": "{{title}} - {{artist}} ({{album}})"}' 2>/dev/null '';
+          exec-if = mkScript {
+            deps = [pkgs.playerctl];
+            script = "playerctl status 2>/dev/null";
+          };
+          exec = let
+            format = ''{"text": "{{title}} - {{artist}}", "alt": "{{status}}", "tooltip": "{{title}} - {{artist}} ({{album}})"}'';
+          in
+            mkScript {
+              deps = [pkgs.playerctl];
+              script = "playerctl metadata --format '${format}' 2>/dev/null";
+            };
           return-type = "json";
           interval = 2;
           max-length = 30;
@@ -350,7 +366,10 @@ in {
             "Paused" = "󰏤 ";
             "Stopped" = "󰓛";
           };
-          on-click = "${playerctl} play-pause";
+          on-click = mkScript {
+            deps = [pkgs.playerctl];
+            script = "playerctl play-pause";
+          };
         };
       };
     };
