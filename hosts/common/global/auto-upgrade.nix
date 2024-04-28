@@ -1,7 +1,6 @@
 {inputs, config, ...}: {
   system.hydraAutoUpgrade = {
     # Only enable if not dirty
-    # As otherwise lastModified is innacurate
     enable = inputs.self ? rev;
     dates = "hourly";
     instance = "https://hydra.m7.rs";

@@ -87,17 +87,23 @@ in {
           echo "Modified at: $(date -d @$new)" >&2
 
           echo "Current flake: ${cfg.oldFlakeRef}" >&2
-          current="$(nix flake metadata "${cfg.oldFlakeRef}" --json | jq -r '.lastModified')"}
+          current="$(nix flake metadata "${cfg.oldFlakeRef}" --json | jq -r '.lastModified')"
           echo "Modified at: $(date -d @$current)" >&2
 
           if [ "$new" -le "$current" ]; then
-            echo "Skipping upgrade, as flake is not newer than current" >&2
+            echo "Skipping upgrade, not newer" >&2
             exit 0
           fi
         '')
         + ''
           profile="/nix/var/nix/profiles/system"
           path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
+
+          if [ "$(readlink -f "$profile")" = "$path" ]; then
+            echo "Already up to date" >&2
+            exit 0
+          fi
+
           echo "Building $path" >&2
           nix build --no-link "$path"
 
