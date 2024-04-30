@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  home.packages = [pkgs.prismlauncher-qt5];
+  home.packages = [pkgs.prismlauncher];
 
   home.persistence = {
     "/persist/home/misterio".directories = [".local/share/PrismLauncher"];
