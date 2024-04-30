@@ -75,10 +75,21 @@ in {
       windowrulev2 = let
         sweethome3d-tooltips = "title:^(win[0-9])$,class:^(com-eteks-sweethome3d-SweetHome3DBootstrap)$";
         steam = "title:^()$,class:^(steam)$";
+        kdeconnect-pointer = "class:^(kdeconnect.daemon)$";
       in [
         "nofocus, ${sweethome3d-tooltips}"
+
         "stayfocused, ${steam}"
         "minsize 1 1, ${steam}"
+
+        "size 100% 110%, ${kdeconnect-pointer}"
+        "center, ${kdeconnect-pointer}"
+        "nofocus, ${kdeconnect-pointer}"
+        "noblur, ${kdeconnect-pointer}"
+        "noanim, ${kdeconnect-pointer}"
+        "noshadow, ${kdeconnect-pointer}"
+        "noborder, ${kdeconnect-pointer}"
+        "suppressevent fullscreen, ${kdeconnect-pointer}"
       ];
       layerrule = [
         "animation fade,waybar"
