@@ -1,15 +1,10 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }: let
   hydraUser = config.users.users.hydra.name;
   hydraGroup = config.users.users.hydra.group;
-
-  release-host-branch = pkgs.callPackage ./lib/release-host-branch.nix {
-    sshKeyFile = config.sops.secrets.nix-ssh-key.path;
-  };
 in {
   imports = [./machines.nix];
 
@@ -38,10 +33,6 @@ in {
             jobs = .*
             useShortContext = true
           </githubstatus>
-          <runcommand>
-            job = nix-config:main:*
-            command = ${lib.getExe release-host-branch}
-          </runcommand>
         '';
       extraEnv = {
         HYDRA_DISALLOW_UNFREE = "0";

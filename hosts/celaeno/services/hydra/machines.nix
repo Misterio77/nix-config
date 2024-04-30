@@ -3,7 +3,29 @@
   pkgs,
   ...
 }: let
-  buildMachinesFile = (import ./lib/mk-build-machines-file.nix) [
+  mkBuildMachine = {
+    uri ? null,
+    systems ? null,
+    sshKey ? null,
+    maxJobs ? null,
+    speedFactor ? null,
+    supportedFeatures ? null,
+    mandatoryFeatures ? null,
+    publicHostKey ? null,
+  }: let
+    field = x:
+      if (x == null || x == [] || x == "")
+      then "-"
+      else if (builtins.isInt x)
+      then (builtins.toString x)
+      else if (builtins.isList x)
+      then (builtins.concatStringsSep "," x)
+      else x;
+  in ''
+    ${field uri} ${field systems} ${field sshKey} ${field maxJobs} ${field speedFactor} ${field supportedFeatures} ${field mandatoryFeatures} ${field publicHostKey}
+  '';
+
+  buildMachinesFile = builtins.concatStringsSep "\n" (map mkBuildMachine [
     {
       uri = "ssh://nix-ssh@atlas";
       systems = [
@@ -53,7 +75,7 @@
         "nixos-test"
       ];
     }
-  ];
+  ]);
 in {
   services.hydra.buildMachinesFiles = ["/etc/nix/hydra-machines"];
 
@@ -111,7 +133,7 @@ in {
 
         while read -r host_line; do
           check_host "$host_line" &
-        done < "${buildMachinesFile}"
+        done < "${builtins.toFile "machines" buildMachinesFile}"
 
         wait
 
