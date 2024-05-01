@@ -33,7 +33,7 @@
     trekscii # Cute startrek cli printer
     timer # To help with my ADHD paralysis
 
-    nil # Nix LSP
+    nixd # Nix LSP
     alejandra # Nix formatter
     nvd # Differ
     nix-output-monitor

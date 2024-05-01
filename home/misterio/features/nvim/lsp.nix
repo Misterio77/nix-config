@@ -29,8 +29,8 @@
           add_lsp(lspconfig.dockerls, {})
           add_lsp(lspconfig.bashls, {})
           add_lsp(lspconfig.clangd, {})
-          add_lsp(lspconfig.nil_ls, {
-            settings = { ['nil'] = {
+          add_lsp(lspconfig.nixd, {
+            settings = { nixd = {
               formatting = { command = { "alejandra" }}
             }}
           })
