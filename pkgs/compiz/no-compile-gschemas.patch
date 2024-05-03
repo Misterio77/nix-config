@@ -1,0 +1,19 @@
+diff -Nur original/cmake/recompile_gsettings_schemas_in_dir_user_env.cmake modified/cmake/recompile_gsettings_schemas_in_dir_user_env.cmake
+--- original/cmake/recompile_gsettings_schemas_in_dir_user_env.cmake	2019-02-16 12:44:41.000000000 +0000
++++ modified/cmake/recompile_gsettings_schemas_in_dir_user_env.cmake	2019-02-16 23:36:58.589706824 +0000
+@@ -15,9 +15,9 @@
+ 
+ find_program (GLIB_COMPILE_SCHEMAS glib-compile-schemas)
+ 
+-if (GLIB_COMPILE_SCHEMAS)
+-
+-    message ("-- Recompiling GSettings schemas in ${SCHEMADIR}")
+-    execute_process (COMMAND ${GLIB_COMPILE_SCHEMAS} ${SCHEMADIR})
+-
+-endif (GLIB_COMPILE_SCHEMAS)
++#if (GLIB_COMPILE_SCHEMAS)
++#
++#    message ("-- Recompiling GSettings schemas in ${SCHEMADIR}")
++#    execute_process (COMMAND ${GLIB_COMPILE_SCHEMAS} ${SCHEMADIR})
++#
++#endif (GLIB_COMPILE_SCHEMAS)

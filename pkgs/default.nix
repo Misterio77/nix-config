@@ -4,6 +4,7 @@
   shellcolord = pkgs.callPackage ./shellcolord {};
   trekscii = pkgs.callPackage ./trekscii {};
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
+  compiz = pkgs.callPackage ./compiz {};
 
   # Personal scripts
   nix-inspect = pkgs.callPackage ./nix-inspect {};

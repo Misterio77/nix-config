@@ -1,0 +1,15 @@
+diff -rupN compiz/plugins/screenshot/src/screenshot.cpp compiz.new/plugins/screenshot/src/screenshot.cpp
+--- compiz/plugins/screenshot/src/screenshot.cpp	2014-09-01 00:21:45.807271000 -0400
++++ compiz.new/plugins/screenshot/src/screenshot.cpp	2014-09-01 00:52:30.634288167 -0400
+@@ -434,10 +434,10 @@ namespace
+ 	    compLogMessage ("screenshot", CompLogLevelWarn, "glReadPixels failed");
+ 	}
+ 
+-	if (!success)
++	if (success)
+ 	    success =
+ 		launchApplicationAndTakeScreenshot (alternativeApplication,
+-						    directory);
++						    path);
+ 
+ 	return success;

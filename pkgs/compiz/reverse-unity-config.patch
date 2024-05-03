@@ -1,0 +1,871 @@
+diff -Nur original/compizconfig/integration/gnome/gsettings/org.compiz.integrated.gschema.xml modified/compizconfig/integration/gnome/gsettings/org.compiz.integrated.gschema.xml
+--- original/compizconfig/integration/gnome/gsettings/org.compiz.integrated.gschema.xml	2019-02-16 12:44:41.000000000 +0000
++++ modified/compizconfig/integration/gnome/gsettings/org.compiz.integrated.gschema.xml	2019-02-17 14:11:58.762747647 +0000
+@@ -10,9 +10,6 @@
+ 	<key type="s" name="command-screenshot">
+ 	    <default>"gnome-screenshot"</default>
+ 	</key>
+-	<key type="as" name="run-command-21">
+-	    <default>["&lt;Control&gt;&lt;Alt&gt;Delete"]</default>
+-	</key>
+ 	<key type="as" name="run-command-12">
+ 	    <default>["Disabled"]</default>
+ 	</key>
+@@ -49,9 +46,6 @@
+ 	<key type="as" name="run-command-1">
+ 	    <default>["Disabled"]</default>
+ 	</key>
+-	<key type="s" name="command-21">
+-	    <default>"/usr/bin/gnome-system-monitor -p"</default>
+-	</key>
+ 	<key type="s" name="command-12">
+ 	    <default>""</default>
+ 	</key>
+diff -Nur original/metadata/core.xml.in modified/metadata/core.xml.in
+--- original/metadata/core.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/metadata/core.xml.in	2019-02-17 14:11:58.762747647 +0000
+@@ -144,7 +144,7 @@
+ 			<option name="focus_prevention_match" type="match">
+ 			<_short>Focus Prevention Windows</_short>
+ 			<_long>Focus prevention windows</_long>
+-			<default>!(class=Polkit-gnome-authentication-agent-1)</default>
++			<default>any</default>
+ 			</option>
+ 		</group>
+ 		<group>
+@@ -179,7 +179,7 @@
+ 			<option name="minimize_window_key" type="key">
+ 			<_short>Minimize Window</_short>
+ 			<_long>Minimize active window</_long>
+-			<default>&lt;Control&gt;&lt;Alt&gt;KP_0</default>
++			<default>&lt;Alt&gt;F9</default>
+ 			</option>
+ 			<option name="minimize_window_button" type="button">
+ 			<_short>Minimize Window</_short>
+@@ -188,16 +188,16 @@
+ 			<option name="maximize_window_key" type="key">
+ 			<_short>Maximize Window</_short>
+ 			<_long>Maximize active window</_long>
+-			<default>&lt;Control&gt;&lt;Super&gt;Up</default>
++			<default>&lt;Alt&gt;F10</default>
+ 			</option>
+ 			<option name="unmaximize_window_key" type="key">
+ 			<_short>Unmaximize Window</_short>
+ 			<_long>Unmaximize active window</_long>
++			<default>&lt;Alt&gt;F5</default>
+ 			</option>
+ 			<option name="unmaximize_or_minimize_window_key" type="key">
+ 			<_short>Unmaximize or Minimize Window</_short>
+ 			<_long>Unmaximize or minimize active window</_long>
+-			<default>&lt;Control&gt;&lt;Super&gt;Down</default>
+ 			</option>
+ 			<option name="maximize_window_horizontally_key" type="key">
+ 			<_short>Maximize Window Horizontally</_short>
+@@ -220,6 +220,7 @@
+ 			<option name="show_desktop_key" type="key">
+ 			<_short>Show Desktop</_short>
+ 			<_long>Hide all windows and focus desktop</_long>
++			<default>&lt;Control&gt;&lt;Alt&gt;d</default>
+ 			</option>
+ 			<option name="show_desktop_edge" type="edge">
+ 			<_short>Show Desktop</_short>
+@@ -229,7 +230,6 @@
+ 			<option name="toggle_window_maximized_key" type="key">
+ 			<_short>Toggle Window Maximized</_short>
+ 			<_long>Toggle active window maximized</_long>
+-			<default>&lt;Control&gt;&lt;Alt&gt;KP_5</default>
+ 			</option>
+ 			<option name="toggle_window_maximized_button" type="button">
+ 			<_short>Toggle Window Maximized</_short>
+@@ -254,7 +254,7 @@
+ 			<option name="hsize" type="int">
+ 			<_short>Horizontal Virtual Size</_short>
+ 			<_long>Screen size multiplier for horizontal virtual size</_long>
+-			<default>1</default>
++			<default>4</default>
+ 			<min>1</min>
+ 			<max>32</max>
+ 			</option>
+diff -Nur original/plugins/animation/animation.xml.in modified/plugins/animation/animation.xml.in
+--- original/plugins/animation/animation.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/animation/animation.xml.in	2019-02-17 14:11:58.766082647 +0000
+@@ -36,7 +36,7 @@
+ 	    <extensible/>
+ 	    <sort start="2"/>
+ 	    <default>
+-	      <value>animation:Glide 2</value>
++	      <value>animation:Zoom</value>
+ 	      <value>animation:Fade</value>
+ 	      <value>animation:Fade</value>
+ 	    </default>
+@@ -48,9 +48,9 @@
+ 	    <min>50</min>
+ 	    <max>4000</max>
+ 	    <default>
+-	      <value>120</value>
+-	      <value>80</value>
+-	      <value>80</value>
++	      <value>200</value>
++	      <value>150</value>
++	      <value>150</value>
+ 	    </default>
+ 	  </option>
+ 	  <option name="open_matches" type="list">
+@@ -58,8 +58,8 @@
+ 	    <_long>The windows that will be animated.</_long>
+ 	    <type>match</type>
+ 	    <default>
+- 	      <value>((type=Normal | Unknown) | name=sun-awt-X11-XFramePeer | name=sun-awt-X11-XDialogPeer) &amp; !(role=toolTipTip | role=qtooltip_label) &amp; !(type=Normal &amp; override_redirect=1) &amp; !(name=gnome-screensaver)</value>
+- 	      <value>((type=Menu | PopupMenu | DropdownMenu | Combo | Dialog | ModalDialog | Normal) &amp; !(class=\\.exe$))</value>
++	      <value>(type=Normal | Dialog | ModalDialog | Unknown) &amp; !(name=gnome-screensaver)</value>
++	      <value>(type=Menu | PopupMenu | DropdownMenu | Combo)</value>
+ 	      <value>(type=Tooltip | Notification | Utility) &amp; !(name=compiz) &amp; !(title=notify-osd)</value>
+ 	    </default>
+ 	  </option>
+@@ -102,7 +102,7 @@
+ 	    <extensible/>
+ 	    <sort start="2"/>
+ 	    <default>
+-	      <value>animation:Glide 2</value>
++	      <value>animation:Zoom</value>
+ 	      <value>animation:Fade</value>
+ 	      <value>animation:Fade</value>
+ 	    </default>
+@@ -114,9 +114,9 @@
+ 	    <min>50</min>
+ 	    <max>4000</max>
+ 	    <default>
+-	      <value>120</value>
+-	      <value>80</value>
+-	      <value>50</value>
++	      <value>200</value>
++	      <value>150</value>
++	      <value>150</value>
+ 	    </default>
+ 	  </option>
+ 	  <option name="close_matches" type="list">
+@@ -124,8 +124,8 @@
+ 	    <_long>The windows that will be animated.</_long>
+ 	    <type>match</type>
+ 	    <default>
+- 	      <value>((type=Normal | Unknown) | name=sun-awt-X11-XFramePeer | name=sun-awt-X11-XDialogPeer) &amp; !(role=toolTipTip | role=qtooltip_label) &amp; !(type=Normal &amp; override_redirect=1) &amp; !(name=gnome-screensaver) &amp; !(name=gnome-screenshot)</value>
+- 	      <value>((type=Menu | PopupMenu | DropdownMenu | Combo | Dialog | ModalDialog | Normal) &amp; !(class=\\.exe$))</value>
++	      <value>(type=Normal | Dialog | ModalDialog | Unknown) &amp; !(name=gnome-screensaver)</value>
++	      <value>(type=Menu | PopupMenu | DropdownMenu | Combo)</value>
+ 	      <value>(type=Tooltip | Notification | Utility) &amp; !(name=compiz) &amp; !(title=notify-osd)</value>
+ 	    </default>
+ 	  </option>
+@@ -168,7 +168,7 @@
+ 	    <extensible/>
+ 	    <sort start="2"/>
+ 	    <default>
+-	      <value>animation:Zoom</value>
++	      <value>animation:Magic Lamp</value>
+ 	    </default>
+ 	  </option>
+ 	  <option name="minimize_durations" type="list">
+@@ -178,7 +178,7 @@
+ 	    <min>50</min>
+ 	    <max>4000</max>
+ 	    <default>
+-	      <value>220</value>
++	      <value>300</value>
+ 	    </default>
+ 	  </option>
+ 	  <option name="minimize_matches" type="list">
+@@ -341,7 +341,7 @@
+ 	    <extensible/>
+ 	    <sort start="1"/>
+ 	    <default>
+-	      <value>animation:Fade</value>
++	      <value>animation:None</value>
+ 	    </default>
+ 	  </option>
+ 	  <option name="focus_durations" type="list">
+@@ -351,7 +351,7 @@
+ 	    <min>50</min>
+ 	    <max>4000</max>
+ 	    <default>
+-	      <value>150</value>
++	      <value>300</value>
+ 	    </default>
+ 	  </option>
+ 	  <option name="focus_matches" type="list">
+@@ -385,7 +385,7 @@
+ 	<option name="time_step" type="int">
+ 	  <_short>Animation Time Step</_short>
+ 	  <_long>The amount of time in milliseconds between each render of the animation. The higher the number, the jerkier the movements become.</_long>
+-	  <default>16</default>
++	  <default>10</default>
+ 	  <min>1</min>
+ 	  <max>400</max>
+ 	</option>
+@@ -473,7 +473,7 @@
+ 	  <option name="glide2_away_position" type="float">
+ 	    <_short>Away Position</_short>
+ 	    <_long>Closeness of window to camera at the end of the animation (1.0: Close to camera, -2.0: Away from camera).</_long>
+-	    <default>-0.1</default>
++	    <default>-0.4</default>
+ 	    <min>-2</min>
+ 	    <max>1</max>
+ 	    <precision>0.05</precision>
+@@ -481,7 +481,7 @@
+ 	  <option name="glide2_away_angle" type="float">
+ 	    <_short>Away Angle</_short>
+ 	    <_long>Angle of window at the end of the animation.</_long>
+-	    <default>0</default>
++	    <default>-45</default>
+ 	    <min>-540</min>
+ 	    <max>540</max>
+ 	    <precision>5</precision>
+@@ -686,7 +686,7 @@
+ 	  <option name="zoom_springiness" type="float">
+ 	    <_short>Springiness</_short>
+ 	    <_long>How spring-like the Zoom animation should be.</_long>
+-	    <default>0.08</default>
++	    <default>0.0</default>
+ 	    <min>0</min>
+ 	    <max>1</max>
+ 	    <precision>0.01</precision>
+diff -Nur original/plugins/commands/commands.xml.in modified/plugins/commands/commands.xml.in
+--- original/plugins/commands/commands.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/commands/commands.xml.in	2019-02-17 14:11:58.766082647 +0000
+@@ -117,7 +117,7 @@
+ 		<option name="command20" type="string">
+ 		    <_short>Command line 20</_short>
+ 		    <_long>Command line to be executed in shell when run_command20 is invoked</_long>
+-		    <default>/usr/bin/gnome-system-monitor -p</default>
++		    <default></default>
+ 		</option>
+ 	    </group>
+ 	    <group>
+@@ -205,7 +205,6 @@
+ 		<option name="run_command20_key" type="key">
+ 		    <_short>Run command 20</_short>
+ 		    <_long>A keybinding that when invoked, will run the shell command identified by command20</_long>
+-		    <default>&lt;Control&gt;&lt;Alt&gt;Delete</default>
+ 		</option>
+ 	    </group>
+ 	    <group>
+diff -Nur original/plugins/decor/decor.xml.in modified/plugins/decor/decor.xml.in
+--- original/plugins/decor/decor.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/decor/decor.xml.in	2019-02-17 14:13:24.345517674 +0000
+@@ -31,7 +31,7 @@
+ 		<option name="active_shadow_opacity" type="float">
+ 		    <_short>Shadow Opacity</_short>
+ 		    <_long>Drop shadow opacity</_long>
+-		    <default>0.8</default>
++		    <default>0.5</default>
+ 		    <min>0.01</min>
+ 		    <max>6.0</max>
+ 		    <precision>0.01</precision>
+@@ -66,7 +66,7 @@
+ 		<option name="inactive_shadow_radius" type="float">
+ 		    <_short>Shadow Radius</_short>
+ 		    <_long>Drop shadow radius</_long>
+-		    <default>5.0</default>
++		    <default>8.0</default>
+ 		    <min>0.1</min>
+ 		    <max>13.0</max>
+ 		    <precision>0.1</precision>
+@@ -74,7 +74,7 @@
+ 		<option name="inactive_shadow_opacity" type="float">
+ 		    <_short>Shadow Opacity</_short>
+ 		    <_long>Drop shadow opacity</_long>
+-		    <default>0.4</default>
++		    <default>0.5</default>
+ 		    <min>0.01</min>
+ 		    <max>6.0</max>
+ 		    <precision>0.01</precision>
+@@ -101,7 +101,7 @@
+ 	    <option name="command" type="string">
+ 		<_short>Command</_short>
+ 		<_long>Decorator command line that is executed if no decorator is already running.</_long>
+-		<default>gtk-window-decorator</default>
++		<default>exec /usr/bin/compiz-decorator</default>
+ 	    </option>
+ 	    <option name="mipmap" type="bool">
+ 		<_short>Mipmap</_short>
+diff -Nur original/plugins/expo/expo.xml.in modified/plugins/expo/expo.xml.in
+--- original/plugins/expo/expo.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/expo/expo.xml.in	2019-02-17 14:11:58.766082647 +0000
+@@ -17,7 +17,6 @@
+ 		<plugin>wobbly</plugin>
+ 		<plugin>animation</plugin>
+ 		<plugin>wallpaper</plugin>
+-		<plugin>imgpng</plugin>
+ 	    </relation>
+ 	</deps>
+ 	<options>
+@@ -26,7 +25,7 @@
+ 		<option name="expo_key" type="key">
+ 		    <_short>Expo Key</_short>
+ 		    <_long>Initiate or terminate Expo mode with this keyboard shortcut.</_long>
+-		    <default>&lt;Super&gt;s</default>
++		    <default>&lt;Super&gt;e</default>
+ 		</option>
+ 		<option name="expo_button" type="button">
+ 		    <_short>Expo Button</_short>
+@@ -37,6 +36,7 @@
+ 		    <_short>Expo Corner/Edge</_short>
+ 		    <_long>Initiate or terminate Expo mode by moving the pointer to this corner or edge of your screen(s).</_long>
+ 		    <default>
++			<edge name="TopLeft"/>
+ 		    </default>
+ 		</option>
+ 		<option name="double_click_time" type="int">
+@@ -80,7 +80,7 @@
+ 		<option name="zoom_time" type="float">
+ 		    <_short>Animation Duration</_short>
+ 		    <_long>Duration of the selected animation (in seconds).</_long>
+-		    <default>0.3</default>
++		    <default>0.5</default>
+ 		    <min>0.1</min>
+ 		    <max>5.0</max>
+ 		    <precision>0.1</precision>
+@@ -146,12 +146,12 @@
+ 		<option name="x_offset" type="int">
+ 		    <_short>X Offset</_short>
+ 		    <_long>Horizontal offset (in pixels).</_long>
+-		    <default>64</default>
++		    <default>0</default>
+ 		</option>
+ 		<option name="y_offset" type="int">
+ 		    <_short>Y Offset</_short>
+ 		    <_long>Vertical offset (in pixels).</_long>
+-		    <default>24</default>
++		    <default>0</default>
+ 		</option>
+ 		<option name="y_bottom_offset" type="int">
+ 		    <_short>Y Bottom Offset</_short>
+@@ -170,7 +170,7 @@
+ 		<option name="vp_distance" type="float">
+ 		    <_short>Viewport Distance</_short>
+ 		    <_long>The distance between viewports in Expo mode.</_long>
+-		    <default>0.2</default>
++		    <default>0.10</default>
+ 		    <min>0.0</min>
+ 		    <max>1.0</max>
+ 		    <precision>0.01</precision>
+@@ -198,7 +198,7 @@
+ 		    <_long>How the Expo wall should be displayed, if multiple output devices are used.</_long>
+ 		    <min>0</min>
+ 		    <max>1</max>
+-		    <default>1</default>
++		    <default>0</default>
+ 		    <desc>
+ 			<value>0</value>
+ 			<_name>One big wall</_name>
+@@ -213,7 +213,7 @@
+ 		    <option name="vp_brightness" type="float">
+ 			<_short>Brightness</_short>
+ 			<_long>The brightness of unfocused viewports (in percent).</_long>
+-			<default>40.0</default>
++			<default>75.0</default>
+ 			<min>0.0</min>
+ 			<max>100.0</max>
+ 			<precision>0.1</precision>
+@@ -233,7 +233,7 @@
+ 			    <red>0xfbfb</red>
+ 			    <green>0x8b8b</green>
+ 			    <blue>0x0</blue>
+-			    <alpha>0xffff</alpha>
++			    <alpha>0x0</alpha>
+ 			</default>
+ 		    </option>
+ 		</subgroup>
+@@ -242,7 +242,7 @@
+ 		    <option name="reflection" type="bool">
+ 			<_short>Reflection</_short>
+ 			<_long>Render a realtime reflection of the viewports on the ground.</_long>
+-			<default>false</default>
++			<default>true</default>
+ 		    </option>
+ 		    <option name="ground_color1" type="color">
+ 			<_short>Ground Color (near)</_short>
+diff -Nur original/plugins/ezoom/ezoom.xml.in modified/plugins/ezoom/ezoom.xml.in
+--- original/plugins/ezoom/ezoom.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/ezoom/ezoom.xml.in	2019-02-17 14:11:58.766082647 +0000
+@@ -30,7 +30,7 @@
+ 		<option type="button" name="zoom_in_button">
+ 		    <_short>Zoom In Button</_short>
+ 		    <_long>Mouse button shortcut to invoke zooming in.</_long>
+-		    <default></default>
++		    <default>&lt;Super&gt;Button4</default>
+ 		</option>
+ 		<option type="key" name="zoom_in_key">
+ 		    <_short>Zoom In Key</_short>
+@@ -39,7 +39,7 @@
+ 		<option type="button" name="zoom_out_button">
+ 		    <_short>Zoom Out Button</_short>
+ 		    <_long>Mouse button shortcut to invoke zooming out.</_long>
+-		    <default></default>
++		    <default>&lt;Super&gt;Button5</default>
+ 		</option>
+ 		<option type="key" name="zoom_out_key">
+ 		    <_short>Zoom Out Key</_short>
+@@ -48,7 +48,7 @@
+ 		<option type="button" name="zoom_box_button">
+ 		    <_short>Invoke Zoom Box Button</_short>
+ 		    <_long>Define a rectangle area and zoom into it.</_long>
+-		    <default></default>
++		    <default>&lt;Super&gt;Button2</default>
+ 		</option>
+ 		<option name="zoom_box_outline_color" type="color">
+ 			<_short>Zoom Box Outline Color</_short>
+@@ -346,7 +346,7 @@
+ 		    <option type="key" name="fit_to_window_key">
+ 			<_short>Fit zoomed area to window</_short>
+ 			<_long>Zooms in/out so the focused window is zoomed to the maximum while still being fully visible.</_long>
+-			<default></default>
++			<default>&lt;Super&gt;r</default>
+ 		    </option>
+ 		</subgroup>
+ 	    </group>
+diff -Nur original/plugins/fade/fade.xml.in modified/plugins/fade/fade.xml.in
+--- original/plugins/fade/fade.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/fade/fade.xml.in	2019-02-17 14:11:58.772752647 +0000
+@@ -10,7 +10,6 @@
+ 	    </requirement>
+ 	    <relation type="after">
+ 		<plugin>decor</plugin>
+-		<plugin>staticswitcher</plugin>
+ 	    </relation>
+ 	    <relation type="before">
+ 		<plugin>cube</plugin>
+@@ -51,7 +50,7 @@
+ 	    <option name="window_match" type="match">
+ 		<_short>Fade windows</_short>
+ 		<_long>Windows that should be fading</_long>
+-                <default>any &amp; !(title=notify-osd)</default>
++		<default>any</default>
+ 	    </option>
+ 	    <option name="visual_bell" type="bell">
+ 		<_short>Visual Bell</_short>
+diff -Nur original/plugins/gnomecompat/gnomecompat.xml.in modified/plugins/gnomecompat/gnomecompat.xml.in
+--- original/plugins/gnomecompat/gnomecompat.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/gnomecompat/gnomecompat.xml.in	2019-02-17 14:11:58.772752647 +0000
+@@ -57,7 +57,6 @@
+ 		<option name="run_command_terminal_key" type="key">
+ 		    <_short>Open a terminal</_short>
+ 		    <_long>Open a terminal</_long>
+-		    <default>&lt;Control&gt;&lt;Alt&gt;T</default>
+ 		</option>
+ 	    </group>
+ 	</options>
+diff -Nur original/plugins/grid/grid.xml.in modified/plugins/grid/grid.xml.in
+--- original/plugins/grid/grid.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/grid/grid.xml.in	2019-02-17 14:11:58.779422647 +0000
+@@ -68,12 +68,12 @@
+ 		<option name="put_maximize_key" type="key">
+ 		    <_short>Maximize Key</_short>
+ 		    <_long>Maximize window.</_long>
+-		    <default>&lt;Control&gt;&lt;Super&gt;Up</default>
++		    <default>&lt;Control&gt;&lt;Alt&gt;KP_0</default>
+ 		</option>
+ 		<option name="put_restore_key" type="key">
+ 		    <_short>Restore</_short>
+ 		    <_long>Restore window to it's original size. Note: Use the same shortcut you are using to unmaximize a window to be able to restore grid-maximized windows.</_long>
+-		    <default>&lt;Control&gt;&lt;Super&gt;Down</default>
++		    <default>&lt;Alt&gt;F5</default>
+ 		</option>
+ 		<option name="left_maximize" type="key">
+ 		    <_short>Left Maximize</_short>
+diff -Nur original/plugins/resize/resize.xml.in modified/plugins/resize/resize.xml.in
+--- original/plugins/resize/resize.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/resize/resize.xml.in	2019-02-17 14:11:58.779422647 +0000
+@@ -56,7 +56,7 @@
+ 	    <option name="maximize_vertically" type="bool">
+ 	        <short>Maximize Vertically if screen edge hit</short>
+ 	        <long>Maximizes the window vertically if the top or bottom screen edge is hit while resizing</long>
+-	        <default>true</default>
++	        <default>false</default>
+ 	    </option>
+ 	    <option name="increase_border_contrast" type="bool">
+ 		<_short>Use a double-border in 'Rectangle' and 'Outline' modes</_short>
+@@ -72,9 +72,9 @@
+ 		<_short>Border Color</_short>
+ 		<_long>Border color used for outline and rectangle resize modes</_long>
+ 		<default>
+-		    <red>0xfbfb</red>
+-		    <green>0x8b8b</green>
+-		    <blue>0x0</blue>
++		    <red>0x2f2f</red>
++		    <green>0x2f2f</green>
++		    <blue>0x4f4f</blue>
+ 		    <alpha>0x9f9f</alpha>
+ 		</default>
+ 	    </option>
+@@ -82,10 +82,10 @@
+ 		<_short>Fill Color</_short>
+ 		<_long>Fill color used for rectangle resize mode</_long>
+ 		<default>
+-		    <red>0xfbfb</red>
+-		    <green>0x8b8b</green>
+-		    <blue>0x0</blue>
+-		    <alpha>0x1919</alpha>
++		    <red>0x2f2f</red>
++		    <green>0x2f2f</green>
++		    <blue>0x4f4f</blue>
++		    <alpha>0x4f4f</alpha>
+ 		</default>
+ 	    </option>
+ 	    <option name="disable_blend" type="bool">
+diff -Nur original/plugins/scale/scale.xml.in modified/plugins/scale/scale.xml.in
+--- original/plugins/scale/scale.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/scale/scale.xml.in	2019-02-17 14:11:58.779422647 +0000
+@@ -21,7 +21,7 @@
+ 			<option name="spacing" type="int">
+ 				<_short>Spacing</_short>
+ 				<_long>Space between windows</_long>
+-				<default>20</default>
++				<default>10</default>
+ 				<min>0</min>
+ 				<max>250</max>
+ 			</option>
+@@ -46,7 +46,7 @@
+ 			<option name="speed" type="float">
+ 				<_short>Speed</_short>
+ 				<_long>Scale speed</_long>
+-				<default>5.0</default>
++				<default>1.5</default>
+ 				<min>0.1</min>
+ 				<max>50</max>
+ 				<precision>0.1</precision>
+@@ -54,7 +54,7 @@
+ 			<option name="timestep" type="float">
+ 				<_short>Timestep</_short>
+ 				<_long>Scale timestep</_long>
+-				<default>0.1</default>
++				<default>1.2</default>
+ 				<min>0.1</min>
+ 				<max>50</max>
+ 				<precision>0.1</precision>
+@@ -67,7 +67,7 @@
+ 			<option name="opacity" type="int">
+ 				<_short>Opacity</_short>
+ 				<_long>Amount of opacity in percent</_long>
+-				<default>100</default>
++				<default>75</default>
+ 				<min>0</min>
+ 				<max>100</max>
+ 			</option>
+@@ -76,7 +76,7 @@
+ 				<_long>Overlay an icon on windows once they are scaled</_long>
+ 				<min>0</min>
+ 				<max>2</max>
+-				<default>0</default>
++				<default>1</default>
+ 				<desc>
+ 					<value>0</value>
+ 					<_name>None</_name>
+@@ -129,7 +129,7 @@
+ 				<_long>Selects where windows are scaled if multiple output devices are used.</_long>
+ 				<min>0</min>
+ 				<max>1</max>
+-				<default>1</default>
++				<default>0</default>
+ 				<desc>
+ 					<value>0</value>
+ 					<_name>On current output device</_name>
+@@ -150,7 +150,7 @@
+ 			<option name="key_bindings_toggle" type="bool">
+ 			    <_short>Key Bindings Toggle Scale Mode</_short>
+ 			    <_long>Key bindings toggle scale mode instead of enabling it when pressed and disabling it when released.</_long>
+-			    <default>true</default>
++			    <default>false</default>
+ 			</option>
+ 			<option name="button_bindings_toggle" type="bool">
+ 			    <_short>Button Bindings Toggle Scale Mode</_short>
+@@ -160,12 +160,15 @@
+ 			<option name="initiate_edge" type="edge">
+ 				<_short>Initiate Window Picker</_short>
+ 				<_long>Layout and start transforming windows</_long>
++				<default>
++				<edge name="TopRight"/>
++				</default>
+ 				<allowed edgednd="true"/>
+ 			</option>
+ 			<option name="initiate_key" type="key">
+ 				<_short>Initiate Window Picker</_short>
+ 				<_long>Layout and start transforming windows</_long>
+-				<default>&lt;Super&gt;w</default>
++				<default>&lt;Shift&gt;&lt;Alt&gt;Up</default>
+ 			</option>
+ 			<option name="initiate_button" type="button">
+ 				<_short>Initiate Window Picker</_short>
+@@ -183,7 +186,6 @@
+ 			<option name="initiate_all_key" type="key">
+ 				<_short>Initiate Window Picker For All Windows</_short>
+ 				<_long>Layout and start transforming all windows</_long>
+-				<default>&lt;Super&gt;&lt;Shift&gt;w</default>
+ 			</option>
+ 			<option name="initiate_group_edge" type="edge">
+ 				<_short>Initiate Window Picker For Window Group</_short>
+diff -Nur original/plugins/staticswitcher/staticswitcher.xml.in modified/plugins/staticswitcher/staticswitcher.xml.in
+--- original/plugins/staticswitcher/staticswitcher.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/staticswitcher/staticswitcher.xml.in	2019-02-17 14:11:58.782757647 +0000
+@@ -11,6 +11,7 @@
+ 	    <relation type="after">
+ 		<plugin>composite</plugin>
+ 		<plugin>opengl</plugin>
++		<plugin>fade</plugin>
+ 		<plugin>compiztoolbox</plugin>
+ 		<plugin>decor</plugin>
+ 	    </relation>
+@@ -139,12 +140,12 @@
+ 		<option name="auto_change_vp" type="bool">
+ 		    <_short>Auto Change Viewport</_short>
+ 		    <_long>Change to the viewport of the selected window while switching</_long>
+-		    <default>true</default>
++		    <default>false</default>
+ 		</option>
+ 		<option name="popup_delay" type="float">
+ 		    <_short>Popup Window Delay</_short>
+ 		    <_long>Time (in s) the popup window should be delayed before appearing</_long>
+-		    <default>0.2</default>
++		    <default>0.0</default>
+ 		    <min>0.0</min>
+ 		    <max>2.0</max>
+ 		    <precision>0.05</precision>
+@@ -152,7 +153,7 @@
+ 		<option name="mouse_select" type="bool">
+ 		    <_short>Allow Mouse Selection</_short>
+ 		    <_long>Allow selection of windows from the switcher window with the mouse</_long>
+-		    <default>true</default>
++		    <default>false</default>
+ 		</option>
+ 	    </group>
+ 	    <group>
+@@ -160,14 +161,14 @@
+ 		<option name="saturation" type="int">
+ 		    <_short>Saturation</_short>
+ 		    <_long>Amount of saturation in percent</_long>
+-		    <default>100</default>
++		    <default>50</default>
+ 		    <min>0</min>
+ 		    <max>100</max>
+ 		</option>
+ 		<option name="brightness" type="int">
+ 		    <_short>Brightness</_short>
+ 		    <_long>Amount of brightness in percent</_long>
+-		    <default>100</default>
++		    <default>50</default>
+ 		    <min>0</min>
+ 		    <max>100</max>
+ 		</option>
+@@ -191,7 +192,7 @@
+ 		<option name="mipmap" type="bool">
+ 		    <_short>Mipmap</_short>
+ 		    <_long>Generate mipmaps when possible for higher quality scaling</_long>
+-		    <default>false</default>
++		    <default>true</default>
+ 		</option>
+ 		<option name="row_align" type="int">
+ 		    <_short>Row Alignment</_short>
+@@ -220,7 +221,7 @@
+ 		    <option name="bring_to_front" type="bool">
+ 			<_short>Bring To Front</_short>
+ 			<_long>Bring selected window to front</_long>
+-			<default>false</default>
++			<default>true</default>
+ 		    </option>
+ 		    <_short>Selected Window Highlight</_short>
+ 		    <option name="highlight_mode" type="int">
+@@ -228,7 +229,7 @@
+ 			<_long>Mode for highlighting the currently selected window</_long>
+ 			<min>0</min>
+ 			<max>2</max>
+-			<default>0</default>
++			<default>1</default>
+ 			<desc>
+ 			    <value>0</value>
+ 			    <_name>None</_name>
+diff -Nur original/plugins/vpswitch/vpswitch.xml.in modified/plugins/vpswitch/vpswitch.xml.in
+--- original/plugins/vpswitch/vpswitch.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/vpswitch/vpswitch.xml.in	2019-02-17 14:11:58.782757647 +0000
+@@ -95,11 +95,13 @@
+ 				<option name="next_button" type="button">
+ 					<_short>Move Next</_short>
+ 					<_long>Move to the next viewport</_long>
++					<default>Button5</default>
+ 					<internal/>
+ 				</option>
+ 				<option name="prev_button" type="button">
+ 					<_short>Move Prev</_short>
+ 					<_long>Move to the previous viewport</_long>
++					<default>Button4</default>
+ 					<internal/>
+ 				</option>
+ 				<option name="initiate_button" type="button">
+diff -Nur original/plugins/wall/wall.xml.in modified/plugins/wall/wall.xml.in
+--- original/plugins/wall/wall.xml.in	2019-02-16 12:44:41.000000000 +0000
++++ modified/plugins/wall/wall.xml.in	2019-02-17 14:11:58.782757647 +0000
+@@ -30,12 +30,12 @@
+ 				<option name="miniscreen" type="bool">
+ 					<_short>Show Live Viewport Previews</_short>
+ 					<_long>Show live viewport previews in switcher window</_long>
+-					<default>true</default>
++					<default>false</default>
+ 				</option>
+ 				<option name="preview_timeout" type="float">
+ 					<_short>Switch Target Preview Visibility Time</_short>
+ 					<_long>Duration (in s) the switch target preview should remain visible after switching ends.</_long>
+-					<default>0.2</default>
++					<default>0.4</default>
+ 					<min>0.0</min>
+ 					<max>2.0</max>
+ 					<precision>0.05</precision>
+@@ -43,7 +43,7 @@
+ 				<option name="preview_scale" type="int">
+ 					<_short>Preview Scale</_short>
+ 					<_long>Size of the preview in %</_long>
+-					<default>130</default>
++					<default>100</default>
+ 					<min>0</min>
+ 					<max>400</max>
+ 				</option>
+@@ -57,7 +57,7 @@
+ 				<option name="border_width" type="int">
+ 					<_short>Border Width</_short>
+ 					<_long>Width of the border between the previews</_long>
+-					<default>7</default>
++					<default>10</default>
+ 					<min>0</min>
+ 					<max>30</max>
+ 				</option>
+@@ -65,10 +65,10 @@
+ 					<_short>Outline Color</_short>
+ 					<_long>Outline color of the switcher window.</_long>
+ 					<default>
+-						<red>0xffff</red>
+-						<green>0xffff</green>
+-						<blue>0xffff</blue>
+-						<alpha>0x3232</alpha>
++						<red>0x3333</red>
++						<green>0x3333</green>
++						<blue>0x3333</blue>
++						<alpha>0xd998</alpha>
+ 						</default>
+ 				</option>
+ 				<subgroup>
+@@ -78,30 +78,30 @@
+ 						<_short>Base Color</_short>
+ 						<_long>First color for the background gradient of the switcher window.</_long>
+ 						<default>
+-							<red>0x0000</red>
+-							<green>0x0000</green>
+-							<blue>0x0000</blue>
+-							<alpha>0x6464</alpha>
++							<red>0xcccc</red>
++							<green>0xcccc</green>
++							<blue>0xe665</blue>
++							<alpha>0xd998</alpha>
+ 						</default>
+ 					</option>
+ 					<option name="background_gradient_highlight_color" type="color">
+ 						<_short>Highlight Color</_short>
+ 						<_long>Second color for the background gradient of the switcher window.</_long>
+ 						<default>
+-							<red>0x0000</red>
+-							<green>0x0000</green>
+-							<blue>0x0000</blue>
+-							<alpha>0x6464</alpha>
++							<red>0xf332</red>
++							<green>0xf332</green>
++							<blue>0xffff</blue>
++							<alpha>0xd998</alpha>
+ 						</default>
+ 					</option>
+ 					<option name="background_gradient_shadow_color" type="color">
+ 						<_short>Shadow Color</_short>
+ 						<_long>Third color for the background gradient of the switcher window.</_long>
+ 						<default>
+-							<red>0x0000</red>
+-							<green>0x0000</green>
+-							<blue>0x0000</blue>
+-							<alpha>0x6464</alpha>
++							<red>0xf332</red>
++							<green>0xf332</green>
++							<blue>0xffff</blue>
++							<alpha>0xd998</alpha>
+ 						</default>
+ 					</option>
+ 				</subgroup>
+@@ -112,20 +112,20 @@
+ 						<_short>Base Color</_short>
+ 						<_long>First color for the thumb gradient of the switcher window.</_long>
+ 						<default>
+-							<red>0x5555</red>
+-							<green>0x5555</green>
+-							<blue>0x5555</blue>
+-							<alpha>0x3232</alpha>
++							<red>0x3333</red>
++							<green>0x3333</green>
++							<blue>0x3333</blue>
++							<alpha>0x5999</alpha>
+ 						</default>
+ 					</option>
+ 					<option name="thumb_gradient_highlight_color" type="color">
+ 						<_short>Highlight Color</_short>
+ 						<_long>Second color for the thumb gradient of the switcher window.</_long>
+ 						<default>
+-							<red>0x5555</red>
+-							<green>0x5555</green>
+-							<blue>0x5555</blue>
+-							<alpha>0x3232</alpha>
++							<red>0x3fff</red>
++							<green>0x3fff</green>
++							<blue>0x3fff</blue>
++							<alpha>0x3fff</alpha>
+ 						</default>
+ 					</option>
+ 				</subgroup>
+@@ -139,7 +139,7 @@
+ 							<red>0xffff</red>
+ 							<green>0xffff</green>
+ 							<blue>0xffff</blue>
+-							<alpha>0xffff</alpha>
++							<alpha>0xf332</alpha>
+ 						</default>
+ 					</option>
+ 					<option name="thumb_highlight_gradient_shadow_color" type="color">
+@@ -149,7 +149,7 @@
+ 							<red>0xdfff</red>
+ 							<green>0xdfff</green>
+ 							<blue>0xdfff</blue>
+-							<alpha>0xffff</alpha>
++							<alpha>0xa665</alpha>
+ 						</default>
+ 					</option>
+ 				</subgroup>
+@@ -201,7 +201,7 @@
+ 				<option name="auto_switch_vp_and_window" type="bool">
+ 					<_short>Auto Switch Vp And Window</_short>
+ 					<_long>Auto switch the viewport and move window when Alt-Tab to window that is more than half contained in another viewport</_long>
+-					<default>false</default>
++					<default>true</default>
+ 				</option>
+ 			</group>
+ 			<group>
+@@ -356,7 +356,7 @@
+ 				<option name="edgeflip_move" type="bool">
+ 					<_short>Edge Flip Move</_short>
+ 					<_long>Flip viewport when moving a window to a screen edge</_long>
+-					<default>false</default>
++					<default>true</default>
+ 				</option>
+ 				<option name="edgeflip_dnd" type="bool">
+ 					<_short>Edge Flip DnD</_short>
+diff -Nur original/tests/system/xorg-gtest/tests/compiz_xorg_gtest_ewmh.cpp modified/tests/system/xorg-gtest/tests/compiz_xorg_gtest_ewmh.cpp
+--- original/tests/system/xorg-gtest/tests/compiz_xorg_gtest_ewmh.cpp	2019-02-16 12:44:41.000000000 +0000
++++ modified/tests/system/xorg-gtest/tests/compiz_xorg_gtest_ewmh.cpp	2019-02-17 14:11:58.782757647 +0000
+@@ -46,7 +46,7 @@
+ 
+ namespace
+ {
+-unsigned int DEFAULT_VIEWPORT_WIDTH = 1;
++unsigned int DEFAULT_VIEWPORT_WIDTH = 4;
+ unsigned int DEFAULT_VIEWPORT_HEIGHT = 1;
+ 
+ bool Advance (Display *d, bool r)

@@ -1,0 +1,12 @@
+diff -Naur original/metadata/core.xml.in modified/metadata/core.xml.in
+--- original/metadata/core.xml.in	2013-07-23 20:58:03.000000000 +0100
++++ modified/metadata/core.xml.in	2014-06-11 09:06:53.839302487 +0100
+@@ -114,7 +114,7 @@
+ 			<_long>Level of focus stealing prevention</_long>
+ 			<min>0</min>
+ 			<max>4</max>
+-			<default>1</default>
++			<default>0</default>
+ 			<desc>
+ 				<value>0</value>
+ 				<_name>Off</_name>

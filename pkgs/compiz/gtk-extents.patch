@@ -1,0 +1,13 @@
+# Diff from https://code.launchpad.net/~albertsmuktupavels/compiz/add-gtk-frame-extents-to-net-supported/+merge/257303
+=== modified file 'src/screen.cpp'
+--- a/src/screen.cpp	2014-12-02 19:37:10 +0000
++++ b/src/screen.cpp	2015-04-23 20:41:24 +0000
+@@ -2362,6 +2362,7 @@
+ 
+     atoms.push_back (Atoms::wmUserTime);
+     atoms.push_back (Atoms::frameExtents);
++    atoms.push_back (Atoms::frameGtkExtents);
+     atoms.push_back (Atoms::frameWindow);
+ 
+     atoms.push_back (Atoms::winState);
+
