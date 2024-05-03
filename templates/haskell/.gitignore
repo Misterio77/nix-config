@@ -1,6 +1,0 @@
-# nix build
-result
-# cabal build
-dist-newstyle
-# cabal v1-build
-dist
