@@ -13,13 +13,13 @@
   };
 
   inputs = {
-    systems.url = "github:nix-systems/default";
     # Nix ecosystem
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
+    systems.url = "github:nix-systems/default";
 
     nix = {
-      url = "github:nixos/nix/2.21-maintenance";
+      url = "github:nixos/nix/2.22-maintenance";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     hydra = {
@@ -51,8 +51,9 @@
 
     # Hyprland ecosystem
     hyprland = {
-      url = "github:hyprwm/hyprland/v0.39.1";
+      url = "github:hyprwm/hyprland/v0.40.0";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
     hyprwm-contrib = {
       url = "github:hyprwm/contrib";
@@ -71,6 +72,7 @@
     awscli-console = {
       url = "github:zoocha/awscli-console";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
@@ -81,14 +83,17 @@
     disconic = {
       url = "github:misterio77/disconic";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
     website = {
       url = "github:misterio77/website";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
     paste-misterio-me = {
       url = "github:misterio77/paste.misterio.me";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
   };
 
