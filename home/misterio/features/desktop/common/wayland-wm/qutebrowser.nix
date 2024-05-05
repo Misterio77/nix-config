@@ -40,7 +40,7 @@ in {
       colors = {
         webpage = {
           preferred_color_scheme = "auto";
-          bg = "#ffffff";
+          bg = colors.surface;
         };
         completion = {
           fg = colors.on_surface;
