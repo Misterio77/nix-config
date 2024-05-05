@@ -4,12 +4,12 @@
   lib,
   ...
 }: let
-  hash = builtins.hashString "md5" (builtins.toJSON config.colorscheme);
+  inherit (builtins) hashString toJSON;
   rendersvg = pkgs.runCommand "rendersvg" {} ''
     mkdir -p $out/bin
     ln -s ${pkgs.resvg}/bin/resvg $out/bin/rendersvg
   '';
-  materiaTheme = colors:
+  materiaTheme = name: colors:
     pkgs.stdenv.mkDerivation {
       name = "generated-gtk-theme";
       src = pkgs.fetchFromGitHub {
@@ -60,12 +60,12 @@
           WM_BORDER_FOCUS=${colors.outline}
           WM_BORDER_UNFOCUS=${colors.outline_variant}
           UNITY_DEFAULT_LAUNCHER_STYLE=False
-          NAME=generated-${hash}
+          NAME=${name}
           MATERIA_STYLE_COMPACT=True
         EOF
 
         echo "Changing colours:"
-        ./change_color.sh -o generated-${hash} /build/gtk-colors -i False -t "$out/share/themes"
+        ./change_color.sh -o ${name} /build/gtk-colors -i False -t "$out/share/themes"
         chmod 555 -R .
       '';
     };
@@ -76,10 +76,13 @@ in rec {
       name = config.fontProfiles.regular.family;
       size = 12;
     };
-    theme = {
-      name = "generated-${hash}";
-      package = materiaTheme (
-        lib.mapAttrs (_: v: lib.removePrefix "#" v) config.colorscheme.colors
+    theme = let
+      inherit (config.colorscheme) mode colors;
+      name = "generated-${hashString "md5" (toJSON colors)}-${mode}";
+    in {
+      inherit name;
+      package = materiaTheme name (
+        lib.mapAttrs (_: v: lib.removePrefix "#" v) colors
       );
     };
     iconTheme = {
