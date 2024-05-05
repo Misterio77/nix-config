@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  inherit (config.colorscheme) colors mode;
+  inherit (config.colorscheme) colors;
 in {
   home.persistence = {
     "/persist/home/misterio".directories = [
@@ -39,7 +39,7 @@ in {
       };
       colors = {
         webpage = {
-          preferred_color_scheme = mode;
+          preferred_color_scheme = "auto";
           bg = "#ffffff";
         };
         completion = {

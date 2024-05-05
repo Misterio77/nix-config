@@ -42,13 +42,29 @@ in {
         ];
       };
 
-    qutebrowser = addPatches prev.qutebrowser [
-      # TODO: Waiting for a new release that includes this
-      (final.fetchurl {
-        url = "https://patch-diff.githubusercontent.com/raw/qutebrowser/qutebrowser/pull/8110.patch";
-        hash = "sha256-W30aGOAy8F/PlfUK2fgJQEcVu5QHcWSus6RKIlvVT1g=";
-      })
-    ];
+    qutebrowser = prev.qutebrowser.overrideAttrs (oldAttrs: {
+      # Using 'wayland' platform seems to force qt to read color scheme prefers from xdp instead of reading from the color theme name
+      # The former seems to not get live-reloaded for now
+      # Might get fixed by https://codereview.qt-project.org/c/qt/qtbase/+/547252
+      # In the meantime, force qutebrowser to use xorg so that we get live reloads
+      preFixup =
+        oldAttrs.preFixup
+        + ''
+          makeWrapperArgs+=(
+            --set QT_QPA_PLATFORM xcb
+          )
+        '';
+      patches =
+        (oldAttrs.patches or [])
+        ++ [
+          # Reload on SIGHUP
+          # https://github.com/qutebrowser/qutebrowser/pull/8110
+          (final.fetchurl {
+            url = "https://patch-diff.githubusercontent.com/raw/qutebrowser/qutebrowser/pull/8110.patch";
+            hash = "sha256-W30aGOAy8F/PlfUK2fgJQEcVu5QHcWSus6RKIlvVT1g=";
+          })
+        ];
+    });
 
     qemu = prev.qemu.overrideAttrs (oldAttrs: rec {
       version = "8.2.3";
