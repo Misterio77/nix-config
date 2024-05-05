@@ -50,18 +50,9 @@
     };
 
     # Hyprland ecosystem
-    hyprland = {
-      url = "github:hyprwm/hyprland/v0.40.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-    };
     hyprwm-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins/e9457e08ca3ff16dc5a815be62baf9e18b539197";
-      inputs.hyprland.follows = "hyprland";
     };
 
     # Third party programs, packaged with nix

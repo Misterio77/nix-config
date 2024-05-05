@@ -5,6 +5,8 @@
   trekscii = pkgs.callPackage ./trekscii {};
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
   compiz = pkgs.callPackage ./compiz {};
+  hyprbars = pkgs.callPackage ./hyprbars {};
+  grimblast = pkgs.callPackage ./grimblast {};
 
   # Personal scripts
   nix-inspect = pkgs.callPackage ./nix-inspect {};
