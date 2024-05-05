@@ -43,10 +43,8 @@ in {
       };
 
     qutebrowser = prev.qutebrowser.overrideAttrs (oldAttrs: {
-      # Using 'wayland' platform seems to force qt to read color scheme prefers from xdp instead of reading from the color theme name
-      # The former seems to not get live-reloaded for now
-      # Might get fixed by https://codereview.qt-project.org/c/qt/qtbase/+/547252
-      # In the meantime, force qutebrowser to use xorg so that we get live reloads
+      # Force x11, as live-refreshing colorscheme based on portal is not working on wayland platform atm
+      # This is fixed by https://codereview.qt-project.org/c/qt/qtbase/+/547252
       preFixup =
         oldAttrs.preFixup
         + ''
@@ -57,6 +55,8 @@ in {
       patches =
         (oldAttrs.patches or [])
         ++ [
+          # Repaint tabs when colorscheme changes
+          ./qutebrowser-refresh-tab-colorscheme.patch
           # Reload on SIGHUP
           # https://github.com/qutebrowser/qutebrowser/pull/8110
           (final.fetchurl {

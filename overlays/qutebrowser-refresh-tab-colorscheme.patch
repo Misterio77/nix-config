@@ -1,0 +1,45 @@
+diff --git a/qutebrowser/app.py b/qutebrowser/app.py
+index 51603a2b9..21c412dd1 100644
+--- a/qutebrowser/app.py
++++ b/qutebrowser/app.py
+@@ -553,6 +553,7 @@ class Application(QApplication):
+
+         self.launch_time = datetime.datetime.now()
+         self.focusObjectChanged.connect(self.on_focus_object_changed)
++        self.styleHints().colorSchemeChanged.connect(self._on_colorscheme_changed)
+
+         if machinery.IS_QT5:
+             # default and removed in Qt 6
+@@ -560,6 +561,14 @@ class Application(QApplication):
+
+         self.new_window.connect(self._on_new_window)
+
++    def _on_colorscheme_changed(self, *args):
++        # Repaint all tabs when styleHints is updated
++        log.init.debug(f"Colorscheme changed to {args[0]}, refreshing tabs")
++        for window in objreg.window_registry.values():
++            for tab in window.tabbed_browser.widgets():
++                tab.refresh()
++
++
+     @pyqtSlot(mainwindow.MainWindow)
+     def _on_new_window(self, window):
+         window.tabbed_browser.shutting_down.connect(functools.partial(
+diff --git a/qutebrowser/browser/webengine/webenginetab.py b/qutebrowser/browser/webengine/webenginetab.py
+index 02d912a50..402fa7b4f 100644
+--- a/qutebrowser/browser/webengine/webenginetab.py
++++ b/qutebrowser/browser/webengine/webenginetab.py
+@@ -1660,6 +1660,13 @@ class WebEngineTab(browsertab.AbstractTab):
+         else:
+             selection.selectNone()
+
++    def refresh(self):
++        """Properly repaint the tab content."""
++        settings = self.settings._settings
++        show_scroll_bars = settings.WebAttribute.ShowScrollBars
++        # Dirty hack
++        settings.setAttribute(show_scroll_bars, settings.testAttribute(show_scroll_bars))
++
+     def _connect_signals(self):
+         view = self._widget
+         page = view.page()
