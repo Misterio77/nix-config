@@ -15,7 +15,7 @@
     ./features/games/yuzu.nix
   ];
 
-  wallpaper = lib.mkDefault pkgs.wallpapers.desert-dunes;
+  wallpaper = lib.mkDefault pkgs.wallpapers.desert-dunes-night;
   colorscheme.source = config.wallpaper;
 
   #  ------   -----   ------
