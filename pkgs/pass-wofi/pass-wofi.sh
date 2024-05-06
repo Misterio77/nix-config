@@ -7,7 +7,7 @@ elif [ "$XDG_CURRENT_DESKTOP" == "sway" ]; then
     class=$(jq -r '.window_properties.class' <<< "$focused")
 fi
 
-if [[ "$class" == "org.qutebrowser.qutebrowser" ]]; then
+if [[ "$class" == "org.qutebrowser.qutebrowser" ]] || [[ "$class" == "qutebrowser" ]]; then
     qutebrowser :yank
     query=$(wl-paste | cut -d '/' -f3 | sed s/"www."//)
 elif [[ "$class" == "discord" ]]; then
