@@ -28,7 +28,7 @@ in {
         };
         ip_prefixes = [
           "100.77.0.0/24"
-          "fdef:6567:bd7a:77::/64"
+          "fd7a:115c:a1e0:77::/64"
         ];
         derp.server = {
           enable = true;
