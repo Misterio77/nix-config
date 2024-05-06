@@ -3,7 +3,12 @@
   pkgs,
   ...
 }: let
-  color = pkgs.writeText "color.vim" (import ./theme.nix config.colorscheme);
+  reloadNvim = ''
+    XDG_RUNTIME_DIR=''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
+    for server in $XDG_RUNTIME_DIR/nvim.*; do
+      nvim --server $server --remote-send '<Esc>:source $MYVIMRC<CR>' &
+    done
+  '';
 in {
   imports = [
     ./lsp.nix
@@ -23,7 +28,7 @@ in {
         "Use system clipboard
         set clipboard=unnamedplus
         "Source colorscheme
-        source ${color}
+        source ~/.config/nvim/color.vim
 
         "Lets us easily trigger completion from binds
         set wildcharm=<tab>
@@ -164,16 +169,9 @@ in {
     ];
   };
 
-  xdg.configFile."nvim/init.lua".onChange =
-    /*
-    bash
-    */
-    ''
-      XDG_RUNTIME_DIR=''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
-      for server in $XDG_RUNTIME_DIR/nvim.*; do
-        nvim --server $server --remote-send '<Esc>:source $MYVIMRC<CR>' &
-      done
-    '';
+  xdg.configFile."nvim/color.vim".source = pkgs.writeText "color.vim" (import ./theme.nix config.colorscheme);
+  xdg.configFile."nvim/color.vim".onChange = reloadNvim;
+  xdg.configFile."nvim/init.lua".onChange = reloadNvim;
 
   xdg.desktopEntries = {
     nvim = {

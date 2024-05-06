@@ -172,56 +172,56 @@
     homeConfigurations = {
       # Desktops
       "misterio@atlas" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/atlas.nix];
+        modules = [./home/misterio/atlas.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@maia" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/maia.nix];
+        modules = [./home/misterio/maia.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@pleione" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/pleione.nix];
+        modules = [./home/misterio/pleione.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@electra" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/electra.nix];
+        modules = [./home/misterio/electra.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@alcyone" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/alcyone.nix];
+        modules = [./home/misterio/alcyone.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@merope" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/merope.nix];
+        modules = [./home/misterio/merope.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.aarch64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@celaeno" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/celaeno.nix];
+        modules = [./home/misterio/celaeno.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.aarch64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
       "misterio@generic" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/generic.nix];
+        modules = [./home/misterio/generic.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;

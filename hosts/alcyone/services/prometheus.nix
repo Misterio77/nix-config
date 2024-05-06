@@ -3,7 +3,9 @@
   outputs,
   lib,
   ...
-}: {
+}: let
+  hosts = lib.attrNames outputs.nixosConfigurations;
+in {
   services = {
     prometheus = {
       enable = true;
@@ -49,13 +51,11 @@
           job_name = "hosts";
           scheme = "http";
           static_configs =
-            lib.mapAttrsToList (hostname: value: let
-              port = value.config.services.prometheus.exporters.node.port;
-            in {
-              targets = ["${hostname}:${toString port}"];
+            map (hostname: {
+              targets = ["${hostname}:${toString config.services.prometheus.exporters.node.port}"];
               labels.instance = hostname;
             })
-            outputs.nixosConfigurations;
+            hosts;
         }
       ];
       extraFlags = let

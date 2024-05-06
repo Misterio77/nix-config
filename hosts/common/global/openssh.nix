@@ -5,8 +5,7 @@
   pkgs,
   ...
 }: let
-  inherit (config.networking) hostName;
-  hosts = outputs.nixosConfigurations;
+  hosts = lib.attrNames outputs.nixosConfigurations;
 
   # Sops needs acess to the keys before the persist dirs are even mounted; so
   # just persisting the keys won't work, we must point at /persist
@@ -34,23 +33,21 @@ in {
 
   programs.ssh = {
     # Each hosts public key
-    knownHosts =
-      builtins.mapAttrs (name: cfg: {
-        publicKeyFile = ../../${name}/ssh_host_ed25519_key.pub;
-        extraHostNames =
-          [
-            cfg.config.networking.fqdn
-          ]
-          ++
-          # Alias for localhost if it's the same host
-          (lib.optional (name == hostName) "localhost")
-          # Alias to m7.rs and git.m7.rs if it's alcyone
-          ++ (lib.optionals (name == "alcyone") [
-            "m7.rs"
-            "git.m7.rs"
-          ]);
-      })
-      hosts;
+    knownHosts = lib.genAttrs hosts (hostname: {
+      publicKeyFile = ../../${hostname}/ssh_host_ed25519_key.pub;
+      extraHostNames =
+        [
+          "${hostname}.m7.rs"
+        ]
+        ++
+        # Alias for localhost if it's the same host
+        (lib.optional (hostname == config.networking.hostName) "localhost")
+        # Alias to m7.rs and git.m7.rs if it's alcyone
+        ++ (lib.optionals (hostname == "alcyone") [
+          "m7.rs"
+          "git.m7.rs"
+        ]);
+    });
   };
 
   # Passwordless sudo when SSH'ing with keys

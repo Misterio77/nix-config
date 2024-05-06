@@ -26,6 +26,7 @@
     ]
     ++ (builtins.attrValues outputs.nixosModules);
 
+  home-manager.useGlobalPkgs = true;
   home-manager.extraSpecialArgs = {
     inherit inputs outputs;
   };
