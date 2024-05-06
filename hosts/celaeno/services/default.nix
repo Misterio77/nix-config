@@ -9,7 +9,7 @@
     ./disconic.nix
 
     ./hydra
-    ./minecraft
+    # ./minecraft
   ];
 
   networking.firewall.allowedTCPPorts = [5432];
