@@ -55,7 +55,9 @@ case "${field,,}" in
         password="$(pass "$selected" | head -n 1)" && [ -n "$password" ] || \
             { notify-send "Error" "No password for $selected" -i error -t 6000; exit 3; }
         wtype "$username"
+        sleep 0.1
         wtype -k tab
+        sleep 0.1
         wtype "$password"
         if otp="$(pass otp "$selected")" && [ -n "$otp" ]; then
             field="OTP"
