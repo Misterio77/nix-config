@@ -42,6 +42,11 @@ in {
         ];
       };
 
+    # https://github.com/NixOS/nixpkgs/pull/303472
+    gns3-server = prev.gns3-server.overrideAttrs (oldAttrs: {
+      makeWrapperArgs = [ "--suffix PATH : ${final.lib.makeBinPath [ final.util-linux ]}" ];
+    });
+
     # https://github.com/mdellweg/pass_secret_service/pull/37
     pass-secret-service = addPatches prev.pass-secret-service [./pass-secret-service-native.diff];
 
