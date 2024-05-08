@@ -26,6 +26,8 @@ in {
   };
 
   home.persistence = {
-    "/persist/home/misterio".directories = [".ssh"];
+    "/persist/home/misterio".files = [
+      ".ssh/known_hosts"
+    ];
   };
 }

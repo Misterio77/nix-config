@@ -8,7 +8,12 @@ in {
   home.packages = with pkgs; [vesktop];
 
   home.persistence = {
-    "/persist/home/misterio".directories = [".config/vesktop"];
+    "/persist/home/misterio" = {
+      directories = [
+        ".config/vesktop/sessionData"
+        ".config/vesktop/settings"
+      ];
+    };
   };
 
   xdg.configFile."vesktop/themes/base16.css".text =

@@ -9,6 +9,6 @@
     };
   };
   home.persistence = {
-    "/persist/home/misterio".directories = [".config/gh"];
+    "/persist/home/misterio".files = [".config/hosts.yml"];
   };
 }

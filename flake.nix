@@ -29,7 +29,8 @@
     };
 
     hardware.url = "github:nixos/nixos-hardware";
-    impermanence.url = "github:nix-community/impermanence";
+    # impermanence.url = "github:nix-community/impermanence";
+    impermanence.url = "github:misterio77/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
     home-manager = {
       url = "github:nix-community/home-manager";

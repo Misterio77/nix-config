@@ -44,6 +44,7 @@
 
     persistence = {
       "/persist/home/misterio" = {
+        defaultDirectoryMethod = "symlink";
         directories = [
           "Documents"
           "Downloads"
