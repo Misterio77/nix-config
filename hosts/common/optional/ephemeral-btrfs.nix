@@ -15,15 +15,18 @@
 
       echo "Creating needed directories"
       mkdir -p "$MNTPOINT"/persist/var/{log,lib/{nixos,systemd}}
+      if [ -e "$MNTPOINT/persist/dont-wipe" ]; then
+        echo "Skipping wipe"
+      else
+        echo "Cleaning root subvolume"
+        btrfs subvolume list -o "$MNTPOINT/root" | cut -f9 -d ' ' |
+        while read -r subvolume; do
+          btrfs subvolume delete "$MNTPOINT/$subvolume"
+        done && btrfs subvolume delete "$MNTPOINT/root"
 
-      echo "Cleaning root subvolume"
-      btrfs subvolume list -o "$MNTPOINT/root" | cut -f9 -d ' ' |
-      while read -r subvolume; do
-        btrfs subvolume delete "$MNTPOINT/$subvolume"
-      done && btrfs subvolume delete "$MNTPOINT/root"
-
-      echo "Restoring blank subvolume"
-      btrfs subvolume snapshot "$MNTPOINT/root-blank" "$MNTPOINT/root"
+        echo "Restoring blank subvolume"
+        btrfs subvolume snapshot "$MNTPOINT/root-blank" "$MNTPOINT/root"
+      fi
     )
   '';
   phase1Systemd = config.boot.initrd.systemd.enable;
