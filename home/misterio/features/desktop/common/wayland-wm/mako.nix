@@ -18,6 +18,8 @@ in {
     borderColor = "${colors.secondary}dd";
     textColor = "${colors.on_surface}dd";
     layer = "overlay";
-    max-history = 50;
+    extraConfig = ''
+      max-history=50
+    '';
   };
 }
