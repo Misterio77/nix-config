@@ -49,12 +49,12 @@
       Type=Application
     '';
 in {
-  home.packages = with pkgs; [
+  home.packages = [
     steam-with-pkgs
     steam-session
-    gamescope
-    mangohud
-    protontricks
+    pkgs.gamescope
+    pkgs.mangohud
+    pkgs.protontricks
   ];
   home.persistence = {
     "/persist/home/misterio" = {
