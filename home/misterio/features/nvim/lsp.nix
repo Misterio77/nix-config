@@ -26,28 +26,27 @@
             end
           end
 
-          add_lsp(lspconfig.dockerls, {})
           add_lsp(lspconfig.bashls, {})
           add_lsp(lspconfig.clangd, {})
-          add_lsp(lspconfig.nixd, {
-            settings = { nixd = {
-              formatting = { command = { "alejandra" }}
-            }}
-          })
-          add_lsp(lspconfig.pylsp, {})
           add_lsp(lspconfig.dartls, {})
-          add_lsp(lspconfig.hls, {})
-          add_lsp(lspconfig.kotlin_language_server, {})
-          add_lsp(lspconfig.solargraph, {})
-          add_lsp(lspconfig.phpactor, {})
-          add_lsp(lspconfig.terraformls, {})
+          add_lsp(lspconfig.dockerls, {})
           add_lsp(lspconfig.gopls, {})
-          add_lsp(lspconfig.lua_ls, {})
+          add_lsp(lspconfig.hls, {})
           add_lsp(lspconfig.jdtls, {})
+          add_lsp(lspconfig.kotlin_language_server, {})
+          add_lsp(lspconfig.lua_ls, {})
+          add_lsp(lspconfig.nixd, { settings = { nixd = {
+            formatting = { command = { "alejandra" }}
+          }}})
+          add_lsp(lspconfig.phpactor, {})
+          add_lsp(lspconfig.pylsp, {})
+          add_lsp(lspconfig.solargraph, {})
+          add_lsp(lspconfig.terraformls, {})
+          add_lsp(lspconfig.texlab, { chktex = {
+            onEdit = true,
+            onOpenAndSave = true
+          }})
           add_lsp(lspconfig.tsserver, {})
-          add_lsp(lspconfig.texlab, {
-            chktex = { onEdit = true, onOpenAndSave = true }
-          })
         '';
     }
     {
