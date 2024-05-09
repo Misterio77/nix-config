@@ -144,7 +144,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "time() - node_systemd_timer_last_trigger_seconds{name=\"nixos-upgrade.timer\",instance=\"$hosts\"}",
+          "expr": "time() - (node_systemd_timer_last_trigger_seconds{name=\"nixos-upgrade.timer\",instance=\"$hosts\"} > 0)",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
