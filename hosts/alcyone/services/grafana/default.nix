@@ -16,7 +16,7 @@
       settings = {
         server.http_port = 3000;
         users.default_theme = "system";
-        dashboards.default_home_dashboard_path = toString ./dashboards/hosts.json;
+        dashboards.default_home_dashboard_path = "${./dashboards}/hosts.json";
         security = {
           admin_user = "misterio";
           admin_email = "hi@m7.rs";
