@@ -59,14 +59,6 @@ in {
       preFixup =
         oldAttrs.preFixup
         +
-        # Force x11, as live-refreshing colorscheme based on portal is not working on wayland platform atm
-        # This is fixed by https://codereview.qt-project.org/c/qt/qtbase/+/547252
-        ''
-          makeWrapperArgs+=(
-            --set QT_QPA_PLATFORM xcb
-          )
-        ''
-        +
         # Fix for https://github.com/NixOS/nixpkgs/issues/168484
         (let
           schemaPath = package: "${package}/share/gsettings-schemas/${package.name}";
