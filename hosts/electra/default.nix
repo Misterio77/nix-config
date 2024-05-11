@@ -28,7 +28,7 @@
       "aarch64-linux"
       "i686-linux"
     ];
-    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
   };
 
   # Compliance
