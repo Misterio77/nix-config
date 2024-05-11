@@ -21,6 +21,7 @@
       run-always_parse_args = true;
       run-cache_file = "/dev/null";
       run-exec_search = true;
+      matching = "multi-contains";
     };
   };
 
