@@ -19,8 +19,6 @@ in {
   options.colorscheme = {
     source = mkOption {
       type = types.either types.path hexColor;
-      # TODO: generate default from hostname
-      # colorFromString = c: builtins.substring 0 6 (builtins.hashString "md5" c);
       default =
         if config.wallpaper != null
         then config.wallpaper

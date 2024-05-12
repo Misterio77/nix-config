@@ -7,9 +7,6 @@
   flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
 in {
   nix = {
-    # TODO
-    # https://github.com/NixOS/nix/issues/9579
-    # https://github.com/NixOS/nix/pull/9547
     package = pkgs.inputs.nix.nix;
 
     settings = {

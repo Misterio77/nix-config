@@ -81,19 +81,5 @@ in {
           })
         ];
     });
-
-    qemu = prev.qemu.overrideAttrs (oldAttrs: rec {
-      version = "8.2.3";
-      src = final.fetchurl {
-        url = "https://download.qemu.org/qemu-${version}.tar.xz";
-        hash = "sha256-d1sRjKpjZiCnr0saFWRFoaKA9a1Ss7y7F/jilkhB21g=";
-      };
-    });
-
-
-    # TODO: https://github.com/NixOS/nixpkgs/pull/304154
-    pam_rssh = prev.pam_rssh.overrideAttrs (oldAttrs: {
-      nativeCheckInputs = [(final.openssh.override {dsaKeysSupport = true;})];
-    });
   };
 }
