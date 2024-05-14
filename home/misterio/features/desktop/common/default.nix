@@ -19,6 +19,8 @@
     ./sublime-music.nix
   ];
 
+  home.packages = [pkgs.libnotify];
+
   # Also sets org.freedesktop.appearance color-scheme
   dconf.settings."org/gnome/desktop/interface".color-scheme =
     if config.colorscheme.mode == "dark"
