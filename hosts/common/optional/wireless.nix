@@ -40,9 +40,6 @@
       "VIVOFIBRA-FC41-5G" = {
         pskRaw = "@MARCOS_SANTOS_5G@";
       };
-      "zoocha" = {
-        pskRaw = "@ZOOCHA@";
-      };
       "eduroam" = {
         authProtocols = ["WPA-EAP"];
         auth = ''

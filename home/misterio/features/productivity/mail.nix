@@ -80,34 +80,6 @@ in {
           userName = address;
         }
         // common;
-
-      zoocha =
-        rec {
-          address = "gabriel@zoocha.com";
-          passwordCommand = "${pass} ${smtp.host}/${address}";
-
-          /*
-          TODO: add imap (conditionally)
-          imap.host = "imap.gmail.com";
-          mbsync = {
-            enable = true;
-            create = "maildir";
-            expunge = "both";
-          };
-          folders = {
-            inbox = "INBOX";
-            trash = "Trash";
-          };
-          neomutt = {
-            enable = true;
-          };
-          */
-
-          msmtp.enable = true;
-          smtp.host = "smtp.gmail.com";
-          userName = address;
-        }
-        // common;
     };
   };
 

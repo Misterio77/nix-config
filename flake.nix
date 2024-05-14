@@ -62,7 +62,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     awscli-console = {
-      url = "github:zoocha/awscli-console";
+      url = "github:misterio77/awscli-console";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
@@ -140,13 +140,6 @@
           inherit inputs outputs;
         };
       };
-      # Work laptop
-      electra = lib.nixosSystem {
-        modules = [./hosts/electra];
-        specialArgs = {
-          inherit inputs outputs;
-        };
-      };
       # Core server (Vultr)
       alcyone = lib.nixosSystem {
         modules = [./hosts/alcyone];
@@ -188,13 +181,6 @@
       };
       "misterio@pleione" = lib.homeManagerConfiguration {
         modules = [./home/misterio/pleione.nix ./home/misterio/nixpkgs.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-      "misterio@electra" = lib.homeManagerConfiguration {
-        modules = [./home/misterio/electra.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
