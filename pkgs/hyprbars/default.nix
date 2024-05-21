@@ -5,8 +5,8 @@ hyprlandPlugins.mkHyprlandPlugin hyprland {
   src = fetchFromGitHub {
     owner = "hyprwm";
     repo = "hyprland-plugins";
-    rev = "e9457e08ca3ff16dc5a815be62baf9e18b539197";
-    hash = "sha256-qf6yev9OlJuQv557ApLQ/5V8pQj0YOO9tyh5j3It1mY=";
+    rev = "c28d1011f4868c1a1ee80b10d9ee79900686df82";
+    hash = "sha256-KrSLG2H3KGELxTFdiBhv8U6D53Q3UsJsQO+KgEabsNA=";
   };
   sourceRoot = "source/hyprbars";
 
