@@ -31,6 +31,6 @@
   };
 
   environment.persistence = {
-    "/persist".directories = ["/var/lib/private/navidrome"];
+    "/persist".directories = ["/var/lib/navidrome"];
   };
 }
