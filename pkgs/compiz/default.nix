@@ -10,6 +10,7 @@
   fuse,
   glibmm,
   gnome,
+  gtk3,
   intltool,
   libnotify,
   libstartup_notification,
@@ -19,9 +20,12 @@
   mesa_glu,
   pcre2,
   protobuf,
+  python3,
   python3Packages,
+  gobject-introspection,
   xorg,
   xorgserver,
+  wrapGAppsHook3,
   ...
 }:
 stdenv.mkDerivation (f: {
@@ -40,6 +44,8 @@ stdenv.mkDerivation (f: {
     xorg.libXdmcp.dev
     pcre2.dev
     libxml2.dev
+    wrapGAppsHook3
+    python3Packages.wrapPython
   ];
   buildInputs = [
     boost
@@ -47,6 +53,8 @@ stdenv.mkDerivation (f: {
     fuse
     glibmm
     gnome.metacity
+    gobject-introspection
+    gtk3
     intltool
     libnotify
     libstartup_notification
@@ -57,22 +65,27 @@ stdenv.mkDerivation (f: {
     pcre2
     pcre2.dev
     protobuf
-    python3Packages.cython
-    python3Packages.pycairo
-    python3Packages.pygobject3
-    python3Packages.setuptools
     xorg.libXcursor
     xorg.libXdmcp
     xorg.libXdmcp.dev
     xorgserver
+    (python3.withPackages (p: [p.cython p.pycairo p.pygobject3 p.setuptools]))
+  ];
+
+  pythonPath = with python3Packages; [
+    cython
+    pycairo
+    pygobject3
+    setuptools
   ];
 
   postInstall = ''
     sed -i "s|/usr/bin/metacity|${gnome.metacity}/bin/metacity|" $out/bin/compiz-decorator
     sed -i "s|/usr/bin/compiz-decorator|$out/bin/compiz-decorator|" $out/share/compiz/decor.xml
     wrapProgram $out/bin/compiz \
-      --suffix LD_LIBRARY_PATH : "$out/lib" \
-      --suffix COMPIZ_BIN_PATH : "$out/bin/"
+      --prefix LD_LIBRARY_PATH : "$out/lib" \
+      --prefix COMPIZ_BIN_PATH : "$out/bin/"
+    wrapPythonPrograms
   '';
 
   patches = [
