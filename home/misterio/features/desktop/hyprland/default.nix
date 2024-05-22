@@ -42,12 +42,14 @@
       inactive = "0xaa${lib.removePrefix "#" config.colorscheme.colors.surface_bright}";
     in {
       general = {
-        cursor_inactive_timeout = 4;
         gaps_in = 15;
         gaps_out = 20;
         border_size = 2;
         "col.active_border" = active;
         "col.inactive_border" = inactive;
+      };
+      cursor = {
+        inactive_timeout = 4;
       };
       group = {
         "col.border_active" = active;
