@@ -15,7 +15,7 @@
     ./features/games/yuzu.nix
   ];
 
-  wallpaper = lib.mkDefault pkgs.wallpapers.aenami-northern-lights;
+  wallpaper = lib.mkDefault pkgs.wallpapers.aenami-lost-in-between;
   colorscheme.source = config.wallpaper;
 
   #  ------   -----   ------
