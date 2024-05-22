@@ -1,15 +1,13 @@
 {
-  stdenv,
-  fetchurl,
   lib,
-  cmake,
-  pkg-config,
-  makeWrapper,
   boost,
   cairo,
+  cmake,
+  fetchurl,
   fuse,
   glibmm,
   gnome,
+  gobject-introspection,
   gtk3,
   intltool,
   libnotify,
@@ -17,14 +15,16 @@
   libwnck3,
   libxml2,
   libxslt,
+  makeWrapper,
   mesa_glu,
   pcre2,
+  pkg-config,
   protobuf,
   python3Packages,
-  gobject-introspection,
+  stdenv,
+  wrapGAppsHook3,
   xorg,
   xorgserver,
-  wrapGAppsHook3,
   ...
 }:
 stdenv.mkDerivation (f: {
@@ -38,15 +38,14 @@ stdenv.mkDerivation (f: {
 
   nativeBuildInputs = [
     cmake
-    pkg-config
+    libxml2
     makeWrapper
-    xorg.libXdmcp.dev
-    pcre2.dev
-    libxml2.dev
-    wrapGAppsHook3
+    pcre2
+    pkg-config
     python3Packages.cython
     python3Packages.setuptools
     python3Packages.wrapPython
+    wrapGAppsHook3
   ];
   buildInputs = [
     boost
@@ -64,25 +63,35 @@ stdenv.mkDerivation (f: {
     libxslt
     mesa_glu
     pcre2
-    pcre2.dev
     protobuf
     xorg.libXcursor
     xorg.libXdmcp
-    xorg.libXdmcp.dev
     xorgserver
   ];
+
+  postInstall = ''
+    sed -i "s|/usr/bin/metacity|metacity|" $out/bin/compiz-decorator
+    sed -i "s|/usr/bin/compiz-decorator|$out/bin/compiz-decorator|" $out/share/compiz/decor.xml
+  '';
+
+  dontWrapGApps = true;
 
   pythonPath = with python3Packages; [
     pycairo
     pygobject3
   ];
 
-  postInstall = ''
-    sed -i "s|/usr/bin/metacity|${gnome.metacity}/bin/metacity|" $out/bin/compiz-decorator
-    sed -i "s|/usr/bin/compiz-decorator|$out/bin/compiz-decorator|" $out/share/compiz/decor.xml
-    wrapProgram $out/bin/compiz \
-      --prefix LD_LIBRARY_PATH : "$out/lib" \
-      --prefix COMPIZ_BIN_PATH : "$out/bin/"
+  postFixup = ''
+    wrapProgram "$out/bin/compiz" \
+      --prefix COMPIZ_BIN_PATH : "$out/bin/" \
+      --prefix LD_LIBRARY_PATH : "$out/lib"
+
+    wrapProgram "$out/bin/compiz-decorator" \
+      --prefix COMPIZ_BIN_PATH : "$out/bin/" \
+      --prefix PATH : "${gnome.metacity}/bin"
+
+    # Wrap CCSM with GApps and Python path
+    makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
     wrapPythonPrograms
   '';
 
