@@ -20,7 +20,6 @@
   mesa_glu,
   pcre2,
   protobuf,
-  python3,
   python3Packages,
   gobject-introspection,
   xorg,
@@ -45,6 +44,8 @@ stdenv.mkDerivation (f: {
     pcre2.dev
     libxml2.dev
     wrapGAppsHook3
+    python3Packages.cython
+    python3Packages.setuptools
     python3Packages.wrapPython
   ];
   buildInputs = [
@@ -69,14 +70,11 @@ stdenv.mkDerivation (f: {
     xorg.libXdmcp
     xorg.libXdmcp.dev
     xorgserver
-    (python3.withPackages (p: [p.cython p.pycairo p.pygobject3 p.setuptools]))
   ];
 
   pythonPath = with python3Packages; [
-    cython
     pycairo
     pygobject3
-    setuptools
   ];
 
   postInstall = ''
