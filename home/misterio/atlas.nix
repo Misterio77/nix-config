@@ -15,7 +15,7 @@
     ./features/games/yuzu.nix
   ];
 
-  wallpaper = lib.mkDefault pkgs.wallpapers.planet-pink-gold;
+  wallpaper = lib.mkDefault pkgs.wallpapers.aenami-northern-lights;
   colorscheme.source = config.wallpaper;
 
   #  ------   -----   ------
