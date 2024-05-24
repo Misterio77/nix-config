@@ -28,8 +28,8 @@ in {
         --header-primary: ${c.on_surface};
         --header-secondary: ${c.on_surface_variant};
         --channeltextarea-background: ${c.surface_container};
-        --interactive-normal: ${c.surface_container_highest};
-        --interactive-active: ${c.on_surface};
+        --interactive-normal: ${c.on_surface};
+        --interactive-active: ${c.tertiary};
 
         --dracula-primary: ${c.surface};
         --dracula-secondary: ${c.surface_dim};
