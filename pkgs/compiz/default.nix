@@ -20,6 +20,7 @@
   pcre2,
   pkg-config,
   protobuf,
+  python3,
   python3Packages,
   stdenv,
   wrapGAppsHook3,
@@ -93,14 +94,22 @@ stdenv.mkDerivation (f: {
     # Wrap CCSM with GApps and Python path
     makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
     wrapPythonPrograms
+    for i in $out/bin/*
+    do
+      wrapProgram $i \
+        --set PATH ${lib.makeBinPath [
+          (python3.withPackages(pp: [pp.pygobject3]))
+        ]}
+    done
   '';
 
   patches = [
-    ./reverse-unity-config.patch
+    # ./reverse-unity-config.patch
     ./focus-prevention-disable.patch
     ./gtk-extents.patch
     ./screenshot-launch-fix.patch
     ./no-compile-gschemas.patch
+    ./compiz-suse-defaults.patch
   ];
 
   cmakeFlags = [
