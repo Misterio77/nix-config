@@ -97,7 +97,7 @@ stdenv.mkDerivation (f: {
     for i in $out/bin/*
     do
       wrapProgram $i \
-        --set PATH ${lib.makeBinPath [
+        --prefix PATH : ${lib.makeBinPath [
           (python3.withPackages(pp: [pp.pygobject3]))
         ]}
     done
