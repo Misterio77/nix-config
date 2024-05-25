@@ -79,7 +79,7 @@
  		<_short>Command</_short>
  		<_long>Decorator command line that is executed if no decorator is already running.</_long>
 -		<default>gtk-window-decorator</default>
-+		<default>compiz-decorator</default>
++		<default>/run/current-system/sw/bin/gtk-window-decorator</default>
  	    </option>
  	    <option name="mipmap" type="bool">
  		<_short>Mipmap</_short>
