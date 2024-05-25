@@ -47,6 +47,7 @@
             onOpenAndSave = true
           }})
           add_lsp(lspconfig.tsserver, {})
+          add_lsp(elixirls, {cmd = {"elixir-ls"}})
         '';
     }
     {
