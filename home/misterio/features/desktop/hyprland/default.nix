@@ -249,26 +249,15 @@
         );
 
       monitor = let
-        inherit (config.wayland.windowManager.hyprland.settings.general) gaps_in gaps_out;
-        gap = gaps_out - gaps_in;
-        inherit (config.programs.waybar.settings.primary) position height width;
-        waybarSpace = {
-          top =
-            if (position == "top")
-            then height + gap
-            else 0;
-          bottom =
-            if (position == "bottom")
-            then height + gap
-            else 0;
-          left =
-            if (position == "left")
-            then width + gap
-            else 0;
-          right =
-            if (position == "right")
-            then width + gap
-            else 0;
+        waybarSpace = let
+          inherit (config.wayland.windowManager.hyprland.settings.general) gaps_in gaps_out;
+          inherit (config.programs.waybar.settings.primary) position height width;
+          gap = gaps_out - gaps_in;
+        in {
+          top = if (position == "top") then height + gap else 0;
+          bottom = if (position == "bottom") then height + gap else 0;
+          left = if (position == "left") then width + gap else 0;
+          right = if (position == "right") then width + gap else 0;
         };
       in
         [
