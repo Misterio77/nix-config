@@ -245,6 +245,13 @@
                   "SHIFT,XF86Calculator,exec,${pass-wofi} fill" # fn+f12
                   "SHIFTSUPER,semicolon,exec,${pass-wofi} fill"
                 ]
+            ) ++ (
+              let
+                cliphist = lib.getExe config.services.cliphist.package;
+              in
+              lib.optionals config.services.cliphist.enable [
+                ''SUPER,c,exec,selected=$(${cliphist} list | ${wofi} -S dmenu) && echo "$selected" | ${cliphist} decode | wl-copy''
+              ]
             )
         );
 

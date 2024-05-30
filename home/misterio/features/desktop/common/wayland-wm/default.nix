@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./cliphist.nix
     ./gammastep.nix
     ./kitty.nix
     ./mako.nix
