@@ -21,7 +21,7 @@
   };
 
   home.packages = with pkgs; [
-    inputs.hyprwm-contrib.grimblast
+    grimblast
     hyprpicker
   ];
 
@@ -155,7 +155,7 @@
       exec = ["${pkgs.swaybg}/bin/swaybg -i ${config.wallpaper} --mode fill"];
 
       bind = let
-        grimblast = lib.getExe pkgs.inputs.hyprwm-contrib.grimblast;
+        grimblast = lib.getExe pkgs.grimblast;
         tesseract = lib.getExe pkgs.tesseract;
         pactl = lib.getExe' pkgs.pulseaudio "pactl";
         notify-send = lib.getExe' pkgs.libnotify "notify-send";

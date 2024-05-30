@@ -294,26 +294,6 @@
         "type": "github"
       }
     },
-    "hyprwm-contrib": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1716228712,
-        "narHash": "sha256-y+LOXuSRMfkR2Vfwl5K2NVrszi1h5MJpML+msLnVS8U=",
-        "owner": "hyprwm",
-        "repo": "contrib",
-        "rev": "33b38358559054d316eb605ccb733980dfa7dc63",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hyprwm",
-        "repo": "contrib",
-        "type": "github"
-      }
-    },
     "impermanence": {
       "locked": {
         "lastModified": 1715197858,
@@ -594,7 +574,6 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "hydra": "hydra",
-        "hyprwm-contrib": "hyprwm-contrib",
         "impermanence": "impermanence",
         "nix": "nix",
         "nix-colors": "nix-colors",

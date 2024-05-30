@@ -50,12 +50,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Hyprland ecosystem
-    hyprwm-contrib = {
-      url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Third party programs, packaged with nix
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
