@@ -10,7 +10,6 @@
     ./gns3.nix
 
     ./hydra
-    # ./minecraft
   ];
 
   networking.firewall.allowedTCPPorts = [5432];

@@ -45,10 +45,6 @@
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-minecraft = {
-      url = "github:misterio77/nix-minecraft";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Third party programs, packaged with nix
     firefox-addons = {
