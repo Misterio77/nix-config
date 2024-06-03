@@ -14,9 +14,6 @@
       apps.enable = true;
     };
   };
-  programs = {
-    pantheon-tweaks.enable = true;
-  };
   # Fix shutdown taking a long time
   # https://gist.github.com/worldofpeace/27fcdcb111ddf58ba1227bf63501a5fe
   systemd.extraConfig = ''
