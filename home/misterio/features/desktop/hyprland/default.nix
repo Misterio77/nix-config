@@ -279,7 +279,7 @@
           }"
         ) (config.monitors));
 
-      workspace = map (m: "${m.name},${m.workspace}") (
+      workspace = map (m: "name:${m.workspace},monitor:${m.name}") (
         lib.filter (m: m.enabled && m.workspace != null) config.monitors
       );
     };
