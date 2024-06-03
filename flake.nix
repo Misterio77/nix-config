@@ -18,16 +18,6 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     systems.url = "github:nix-systems/default-linux";
 
-    nix = {
-      url = "github:nixos/nix/2.22-maintenance";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
-    hydra = {
-      url = "github:nixos/hydra";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-      inputs.nix.follows = "nix";
-    };
-
     hardware.url = "github:nixos/nixos-hardware";
     # impermanence.url = "github:nix-community/impermanence";
     impermanence.url = "github:misterio77/impermanence";

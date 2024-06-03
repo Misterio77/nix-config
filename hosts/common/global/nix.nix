@@ -7,7 +7,7 @@
   flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
 in {
   nix = {
-    package = pkgs.inputs.nix.nix;
+    package = pkgs.nixVersions.nix_2_22;
 
     settings = {
       substituters = lib.mkAfter ["https://cache.m7.rs"];

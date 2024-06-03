@@ -81,5 +81,20 @@ in {
           })
         ];
     });
+
+    hydra_unstable =
+      (prev.hydra_unstable.overrideAttrs (old: {
+        version = "2024-05-23";
+        src = final.fetchFromGitHub {
+          owner = "nixos";
+          repo = "hydra";
+          rev = "b3e0d9a8b78d55e5fea394839524f5a24d694230";
+          hash = "sha256-WAJJ4UL3hsqsfZ05cHthjEwItnv7Xy84r2y6lzkBMh8=";
+        };
+        patches = [./hydra-restrict-eval.diff];
+      }))
+      .override {
+        nix = final.nixVersions.nix_2_22;
+      };
   };
 }

@@ -14,9 +14,7 @@ in {
   services = {
     hydra = {
       enable = true;
-      package = pkgs.inputs.hydra.default.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./hydra-restrict-eval.diff];
-      });
+      package = pkgs.hydra_unstable;
       hydraURL = "https://hydra.m7.rs";
       notificationSender = "hydra@m7.rs";
       listenHost = "localhost";
