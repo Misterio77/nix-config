@@ -47,10 +47,11 @@
         border_size = 2;
         "col.active_border" = active;
         "col.inactive_border" = inactive;
+        # v0.40.0 and earlier
+        cursor_inactive_timeout = 4;
       };
-      cursor = {
-        inactive_timeout = 4;
-      };
+      # Later versions
+      # cursor.inactive_timeout = 4;
       group = {
         "col.border_active" = active;
         "col.border_inactive" = inactive;
