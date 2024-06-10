@@ -73,12 +73,6 @@ in {
         ++ [
           # Repaint tabs when colorscheme changes
           ./qutebrowser-refresh-tab-colorscheme.patch
-          # Reload on SIGHUP
-          # https://github.com/qutebrowser/qutebrowser/pull/8110
-          (final.fetchurl {
-            url = "https://patch-diff.githubusercontent.com/raw/qutebrowser/qutebrowser/pull/8110.patch";
-            hash = "sha256-W30aGOAy8F/PlfUK2fgJQEcVu5QHcWSus6RKIlvVT1g=";
-          })
         ];
     });
 
