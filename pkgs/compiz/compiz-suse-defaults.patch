@@ -1,0 +1,116 @@
+--- a/metadata/core.xml.in
++++ b/metadata/core.xml.in
+@@ -13,7 +13,7 @@
+ 	    <option name="audible_bell" type="bool">
+ 		<_short>Audible Bell</_short>
+ 		<_long>Audible system beep</_long>
+-		<default>true</default>
++		<default>false</default>
+ 	    </option>
+ 	    <option name="ignore_hints_when_maximized" type="bool">
+ 		<_short>Ignore Hints When Maximized</_short>
+@@ -35,7 +35,7 @@
+ 	    <option name="ping_delay" type="int">
+ 		<_short>Ping Delay</_short>
+ 		<_long>Interval between ping messages</_long>
+-		<default>5000</default>
++		<default>7500</default>
+ 		<min>1000</min>
+ 		<max>30000</max>
+ 	    </option>
+@@ -254,7 +254,7 @@
+ 			<option name="hsize" type="int">
+ 			<_short>Horizontal Virtual Size</_short>
+ 			<_long>Screen size multiplier for horizontal virtual size</_long>
+-			<default>1</default>
++			<default>4</default>
+ 			<min>1</min>
+ 			<max>32</max>
+ 			</option>
+--- a/plugins/cube/cube.xml.in
++++ b/plugins/cube/cube.xml.in
+@@ -123,18 +123,18 @@
+ 			<_short>Skydome Gradient Start Color</_short>
+ 			<_long>Color and opacity to use for the top color-stop of the skydome-fallback gradient.</_long>
+ 			<default>
+-				<red>0x0d0d</red>
+-				<green>0xb1b1</green>
+-				<blue>0xfdfd</blue>
++				<red>0xafaf</red>
++				<green>0xafaf</green>
++				<blue>0xafaf</blue>
+ 			</default>
+ 			</option>
+ 			<option name="skydome_gradient_end_color" type="color">
+ 			<_short>Skydome Gradient End Color</_short>
+ 			<_long>Color and opacity to use for the bottom color-stop of the skydome-fallback gradient.</_long>
+ 			<default>
+-				<red>0xfefe</red>
+-				<green>0xffff</green>
+-				<blue>0xc7c7</blue>
++				<red>0x7777</red>
++				<green>0x7777</green>
++				<blue>0x7777</blue>
+ 			</default>
+ 			</option>
+ 			</subgroup>
+@@ -144,7 +144,7 @@
+ 			<option name="active_opacity" type="float">
+ 			<_short>Opacity During Rotation</_short>
+ 			<_long>Opacity of the desktop during cube rotation (in percent).</_long>
+-			<default>100.0</default>
++			<default>40.0</default>
+ 			<min>0.0</min>
+ 			<max>100.0</max>
+ 			<precision>1.0</precision>
+@@ -160,7 +160,7 @@
+ 			<option name="transparent_manual_only" type="bool">
+ 			<_short>Transparency Only On Mouse Rotate</_short>
+ 			<_long>Initiates cube transparency only, if the rotation is mouse driven.</_long>
+-			<default>true</default>
++			<default>false</default>
+ 			</option>
+ 	    </group>
+ 	</options>
+--- a/plugins/decor/decor.xml.in
++++ b/plugins/decor/decor.xml.in
+@@ -23,7 +23,7 @@
+ 		<option name="active_shadow_radius" type="float">
+ 		    <_short>Shadow Radius</_short>
+ 		    <_long>Drop shadow radius</_long>
+-		    <default>8.0</default>
++		    <default>7.0</default>
+ 		    <min>0.1</min>
+ 		    <max>18.0</max>
+ 		    <precision>0.1</precision>
+@@ -101,7 +101,7 @@
+ 	    <option name="command" type="string">
+ 		<_short>Command</_short>
+ 		<_long>Decorator command line that is executed if no decorator is already running.</_long>
+-		<default>gtk-window-decorator</default>
++		<default>/run/current-system/sw/bin/gtk-window-decorator</default>
+ 	    </option>
+ 	    <option name="mipmap" type="bool">
+ 		<_short>Mipmap</_short>
+--- a/plugins/place/place.xml.in
++++ b/plugins/place/place.xml.in
+@@ -20,7 +20,7 @@
+ 	    <option name="mode" type="int">
+ 		<_short>Placement Mode</_short>
+ 		<_long>Algorithm to use for window placement</_long>
+-		<default>2</default>
++		<default>1</default>
+ 		<min>0</min>
+ 		<max>5</max>
+ 		<desc>
+--- a/tests/system/xorg-gtest/tests/compiz_xorg_gtest_ewmh.cpp
++++ b/tests/system/xorg-gtest/tests/compiz_xorg_gtest_ewmh.cpp
+@@ -46,7 +46,7 @@
+ 
+ namespace
+ {
+-unsigned int DEFAULT_VIEWPORT_WIDTH = 1;
++unsigned int DEFAULT_VIEWPORT_WIDTH = 4;
+ unsigned int DEFAULT_VIEWPORT_HEIGHT = 1;
+ 
+ bool Advance (Display *d, bool r)
