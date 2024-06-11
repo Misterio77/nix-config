@@ -13,6 +13,9 @@
         CovertArtPriority = "*.jpg, *.JPG, *.png, *.PNG, embedded";
         AutoImportPlaylists = false;
         EnableSharing = true;
+        "LastFM.Enabled" = true;
+        "LastFM.ApiKey" = config.sops.secrets.last-fm-key.path;
+        "LastFM.Secret" = config.sops.secrets.last-fm-secret.path;
       };
     };
 
@@ -27,6 +30,19 @@
         enableACME = true;
         locations."/".return = "302 https://music.m7.rs$request_uri";
       };
+    };
+  };
+
+  sops.secrets = {
+    last-fm-key = {
+      sopsFile = ../secrets.yaml;
+      owner = config.users.users.navidrome.name;
+      group = config.users.users.navidrome.name;
+    };
+    last-fm-secret = {
+      sopsFile = ../secrets.yaml;
+      owner = config.users.users.navidrome.name;
+      group = config.users.users.navidrome.name;
     };
   };
 
