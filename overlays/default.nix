@@ -45,6 +45,9 @@ in {
         vim-numbertoggle = addPatches prev.vimPlugins.vim-numbertoggle [
           ./vim-numbertoggle-command-mode.patch
         ];
+        ltex_extra-nvim = addPatches prev.vimPlugins.ltex_extra-nvim [
+          ./ltex-change-lang-command.diff
+        ];
       };
 
     # https://github.com/NixOS/nixpkgs/pull/303472

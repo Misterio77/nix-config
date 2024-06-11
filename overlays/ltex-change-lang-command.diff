@@ -1,0 +1,84 @@
+diff --git a/lua/ltex_extra/commands-lsp.lua b/lua/ltex_extra/commands-lsp.lua
+index 6b1a1e2..e0abc53 100644
+--- a/lua/ltex_extra/commands-lsp.lua
++++ b/lua/ltex_extra/commands-lsp.lua
+@@ -7,6 +7,7 @@ local types = {
+     ["dict"] = "dictionary",
+     ["dRules"] = "disabledRules",
+     ["hRules"] = "hiddenFalsePositives",
++    ["language"] = "language",
+ }
+ 
+ local function get_settings(client)
+@@ -45,6 +46,14 @@ local function update_hiddenFalsePositive(client, lang)
+     return client.notify("workspace/didChangeConfiguration", settings)
+ end
+ 
++local function update_language(client, lang)
++    log.trace("update_language")
++    local settings = get_settings(client)
++    settings.ltex.language = lang
++    log.debug(vim.inspect(settings.ltex.language))
++    return client.notify("workspace/didChangeConfiguration", settings)
++end
++
+ local M = {}
+ 
+ function M.catch_ltex()
+@@ -66,12 +75,14 @@ function M.updateConfig(configtype, lang)
+             update_disabledRules(client, lang)
+         elseif configtype == types.hRules then
+             update_hiddenFalsePositive(client, lang)
++        elseif configtype == types.language then
++            update_language(client, lang)
+         else
+             log.fmt_error("Config type unknown")
+             return vim.notify("Config type unknown")
+         end
+     else
+-        return error("Error catching ltex client",1)
++        return error("Error catching ltex client", 1)
+     end
+ end
+ 
+@@ -124,4 +135,14 @@ function M.hideFalsePositives(command)
+     end
+ end
+ 
++function M.switchLanguage(lang)
++    log.trace("language")
++    local client = M.catch_ltex()
++    if client then
++        M.updateConfig(types.language, lang)
++    else
++        return error("Error catching ltex client", 1)
++    end
++end
++
+ return M
+diff --git a/lua/ltex_extra/init.lua b/lua/ltex_extra/init.lua
+index c0e163a..51efedc 100644
+--- a/lua/ltex_extra/init.lua
++++ b/lua/ltex_extra/init.lua
+@@ -40,6 +40,13 @@ local function extend_ltex_on_attach(on_attach)
+     end
+ end
+ 
++local register_user_cmds = function()
++    vim.api.nvim_create_user_command("LtexSwitchLang", function(opts)
++        require("ltex_extra.commands-lsp").switchLanguage(opts.args)
++    end, { desc = "ltex_extra.nvim: Switch server language", nargs = 1 })
++end
++
++
+ M.reload = function(...)
+     require("ltex_extra.commands-lsp").reload(...)
+ end
+@@ -48,6 +55,7 @@ M.setup = function(opts)
+     M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
+     M.opts.path = vim.fs.normalize(M.opts.path)
+ 
++    register_user_cmds()
+     register_lsp_commands()
+ 
+     if M.opts.server_opts and M.opts.server_start then
