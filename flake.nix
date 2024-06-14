@@ -187,6 +187,13 @@
           inherit inputs outputs;
         };
       };
+      "misterio@electra" = lib.homeManagerConfiguration {
+        module = [./home/misterio/electra.nix ./home/misterio/nixpkgs.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
       "misterio@generic" = lib.homeManagerConfiguration {
         modules = [./home/misterio/generic.nix ./home/misterio/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
