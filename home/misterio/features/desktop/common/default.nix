@@ -15,7 +15,6 @@
     ./pavucontrol.nix
     ./playerctl.nix
     ./qt.nix
-    ./slack.nix
     ./sublime-music.nix
   ];
 
