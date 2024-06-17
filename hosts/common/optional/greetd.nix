@@ -8,10 +8,10 @@
   homeSharePaths = lib.mapAttrsToList (_: v: "${v.home.path}/share") homeCfgs;
   vars = ''XDG_DATA_DIRS="$XDG_DATA_DIRS:${lib.concatStringsSep ":" homeSharePaths}" GTK_USE_PORTAL=0'';
 
-  misterioCfg = homeCfgs.misterio;
-  gtkTheme = misterioCfg.gtk.theme;
-  iconTheme = misterioCfg.gtk.iconTheme;
-  wallpaper = misterioCfg.wallpaper;
+  gabrielCfg = homeCfgs.gabriel;
+  gtkTheme = gabrielCfg.gtk.theme;
+  iconTheme = gabrielCfg.gtk.iconTheme;
+  wallpaper = gabrielCfg.wallpaper;
 
   sway-kiosk = command: "${lib.getExe pkgs.sway} --unsupported-gpu --config ${pkgs.writeText "kiosk.config" ''
     output * bg #000000 solid_color

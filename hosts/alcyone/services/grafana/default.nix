@@ -1,6 +1,6 @@
 {config, ...}: {
   sops.secrets = {
-    grafana-misterio-password = {
+    grafana-gabriel-password = {
       sopsFile = ../../secrets.yaml;
       owner = "grafana";
     };
@@ -18,9 +18,9 @@
         users.default_theme = "system";
         dashboards.default_home_dashboard_path = "${./dashboards}/hosts.json";
         security = {
-          admin_user = "misterio";
+          admin_user = "gabriel";
           admin_email = "hi@m7.rs";
-          admin_password = "$__file{${config.sops.secrets.grafana-misterio-password.path}}";
+          admin_password = "$__file{${config.sops.secrets.grafana-gabriel-password.path}}";
           cookie_secure = true;
         };
         "auth.anonymous" = {

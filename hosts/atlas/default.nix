@@ -11,7 +11,7 @@
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/users/misterio
+    ../common/users/gabriel
 
     ../common/optional/ckb-next.nix
     ../common/optional/greetd.nix
