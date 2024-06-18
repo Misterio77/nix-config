@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{config, pkgs, lib, ...}: {
   services.gns3-server = {
     enable = true;
     settings.Server = {
@@ -15,6 +15,7 @@
   users.users.gns3 = {
     group = "gns3";
     isSystemUser = true;
+    shell = pkgs.bashInteractive;
   };
   systemd.services.gns3-server.serviceConfig = {
     User = "gns3";
