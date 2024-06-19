@@ -16,7 +16,7 @@ in {
       quaternary = "${lib.removePrefix "#" colors.on_surface}";
     };
     keyboard = {
-      device = "/dev/input/ckb1/cmd";
+      model = "CORSAIR K70 RGB MK.2 Mechanical Gaming Keyboard";
       highlighted = [
         "h"
         "j"
@@ -34,7 +34,7 @@ in {
       ];
     };
     mouse = {
-      device = "/dev/input/ckb2/cmd";
+      model = "CORSAIR SCIMITAR RGB ELITE Gaming Mouse";
       dpi = 750;
       highlighted = [
         "wheel"

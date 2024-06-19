@@ -11,7 +11,6 @@
   pulseaudio,
   playerctl,
 }:
-with lib;
   (writeShellApplication {
     name = "rgbdaemon";
     runtimeInputs = [
@@ -107,6 +106,16 @@ with lib;
         echo "bind dpidn:mouse5" > $MOUSE_DEVICE
       }
 
+      get_device() {
+        model="$1"
+        device_path="$(dirname "$(grep -l "$model" /dev/input/ckb*/model | tail -1)")"
+        if [[ "$device_path" == "." ]]; then
+          return 1
+        else
+          echo "$device_path/cmd"
+        fi
+      }
+
       startup() {
         if [ -n "''${rgb_pid}" ]; then
           kill "''${rgb_pid}"
@@ -115,8 +124,8 @@ with lib;
         source ''${XDG_CONFIG_HOME:-$HOME/.config}/rgbdaemon.conf
 
         export DAEMON_INTERVAL=''${DAEMON_INTERVAL:-0.8}
-        export KEYBOARD_DEVICE=''${KEYBOARD_DEVICE:-/dev/input/ckb1/cmd}
-        export MOUSE_DEVICE=''${MOUSE_DEVICE:-/dev/input/ckb2/cmd}
+        export KEYBOARD_MODEL=''${KEYBOARD_MODEL:-CORSAIR K70 RGB MK.2 Mechanical Gaming Keyboard}
+        export MOUSE_MODEL=''${MOUSE_MODEL:-CORSAIR SCIMITAR RGB ELITE Gaming Mouse}
         export KEYBOARD_HIGHLIGHTED=''${KEYBOARD_HIGHLIGHTED}
         export MOUSE_HIGHLIGHTED=''${MOUSE_HIGHLIGHTED}
         export ENABLE_SWAY_WORKSPACES=''${ENABLE_SWAY_WORKSPACES}
@@ -130,6 +139,9 @@ with lib;
         export color_tertiary=$(pastel saturate 0.1 $COLOR_TERTIARY | pastel format hex | cut -d '#' -f2)
         export color_quaternary=$(pastel lighten 0.1 $COLOR_QUATERNARY | pastel format hex | cut -d '#' -f2)
         echo "COLORS: $color_primary | $color_secondary | $color_tertiary | $color_quaternary"
+
+        export KEYBOARD_DEVICE=$(get_device "$KEYBOARD_MODEL")
+        export MOUSE_DEVICE=$(get_device "$MOUSE_MODEL")
 
         # Activate devices
         echo active > $KEYBOARD_DEVICE || exit -1

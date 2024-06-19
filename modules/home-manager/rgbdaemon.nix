@@ -69,10 +69,10 @@ in {
         ]
       );
     mouse = {
-      device = mkOption {
-        type = types.path;
-        description = "Mouse device cmd path";
-        default = "/dev/input/ckb2/cmd";
+      model = mkOption {
+        type = types.str;
+        description = "Mouse model name";
+        default = "CORSAIR SCIMITAR RGB ELITE Gaming Mouse";
       };
       dpi = mkOption {
         type = types.int;
@@ -86,10 +86,10 @@ in {
       };
     };
     keyboard = {
-      device = mkOption {
-        type = types.path;
-        description = "Mouse device cmd path";
-        default = "/dev/input/ckb1/cmd";
+      model = mkOption {
+        type = types.str;
+        description = "Keyboard model name";
+        default = "CORSAIR K70 RGB MK.2 Mechanical Gaming Keyboard";
       };
       highlighted = mkOption {
         type = types.listOf types.str;
@@ -103,8 +103,8 @@ in {
     xdg.configFile."rgbdaemon.conf" = {
       text = ''
         DAEMON_INTERVAL=${lib.strings.floatToString cfg.interval}
-        KEYBOARD_DEVICE=${cfg.keyboard.device}
-        MOUSE_DEVICE=${cfg.mouse.device}
+        KEYBOARD_MODEL=${cfg.keyboard.model}
+        MOUSE_MODEL=${cfg.mouse.model}
         KEYBOARD_HIGHLIGHTED=${lib.concatStringsSep "," cfg.keyboard.highlighted}
         MOUSE_HIGHLIGHTED=${lib.concatStringsSep "," cfg.mouse.highlighted}
         COLOR_BACKGROUND=${cfg.colors.background}
