@@ -8,7 +8,6 @@
 in {
   users.mutableUsers = false;
   users.users.gabriel = {
-    uid = 1000; # TODO: remove me
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups =
