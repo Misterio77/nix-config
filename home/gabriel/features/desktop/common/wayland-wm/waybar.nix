@@ -180,18 +180,18 @@ in {
           interval = 10;
           return-type = "json";
           exec = let
-            pingCmd = host: "timeout 2 ping -c 1 -q ${host} 2>/dev/null | tail -1 | cut -d '/' -f5 | cut -d '.' -f1";
+            pingCmd = host: "timeout 2 tailscale ping -c 1 ${host} | tail -1 | cut -d ' ' -f8";
             hosts = lib.attrNames outputs.nixosConfigurations;
             homeMachine = "merope";
             remoteMachine = "alcyone";
           in
             mkScriptJson {
-              deps = [pkgs.iputils];
+              deps = [pkgs.tailscale];
               # Build variables for each host
               pre = ''
                 ${lib.concatStringsSep "\n" (
                   map (host: ''
-                    ping_${host}="$(${pingCmd host})ms" || ping_${host}="Disconnected"
+                    ping_${host}="$(${pingCmd host})" || ping_${host}="Disconnected"
                   '')
                   hosts
                 )}
