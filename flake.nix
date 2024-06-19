@@ -34,6 +34,7 @@
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-24_05.follows = "nixpkgs-stable";
     };
     nix-gl = {
       url = "github:nix-community/nixgl";
