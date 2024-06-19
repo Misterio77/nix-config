@@ -102,19 +102,19 @@ in {
   config = mkIf cfg.enable {
     xdg.configFile."rgbdaemon.conf" = {
       text = ''
-        DAEMON_INTERVAL=${lib.strings.floatToString cfg.interval}
-        KEYBOARD_MODEL=${cfg.keyboard.model}
-        MOUSE_MODEL=${cfg.mouse.model}
-        KEYBOARD_HIGHLIGHTED=${lib.concatStringsSep "," cfg.keyboard.highlighted}
-        MOUSE_HIGHLIGHTED=${lib.concatStringsSep "," cfg.mouse.highlighted}
-        COLOR_BACKGROUND=${cfg.colors.background}
-        COLOR_FOREGROUND=${cfg.colors.foreground}
-        COLOR_SECONDARY=${cfg.colors.secondary}
-        COLOR_TERTIARY=${cfg.colors.tertiary}
-        COLOR_QUATERNARY=${cfg.colors.quaternary}
-        ENABLE_SWAY_LOCK=${toString cfg.daemons.swayLock}
-        ENABLE_MUTE=${toString cfg.daemons.mute}
-        ENABLE_PLAYER=${toString cfg.daemons.player}
+        DAEMON_INTERVAL="${lib.strings.floatToString cfg.interval}"
+        KEYBOARD_MODEL="${cfg.keyboard.model}"
+        MOUSE_MODEL="${cfg.mouse.model}"
+        KEYBOARD_HIGHLIGHTED="${lib.concatStringsSep "," cfg.keyboard.highlighted}"
+        MOUSE_HIGHLIGHTED="${lib.concatStringsSep "," cfg.mouse.highlighted}"
+        COLOR_BACKGROUND="${cfg.colors.background}"
+        COLOR_FOREGROUND="${cfg.colors.foreground}"
+        COLOR_SECONDARY="${cfg.colors.secondary}"
+        COLOR_TERTIARY="${cfg.colors.tertiary}"
+        COLOR_QUATERNARY="${cfg.colors.quaternary}"
+        ENABLE_SWAY_LOCK="${toString cfg.daemons.swayLock}"
+        ENABLE_MUTE="${toString cfg.daemons.mute}"
+        ENABLE_PLAYER="${toString cfg.daemons.player}"
       '';
       onChange = ''
         ${pkgs.procps}/bin/pkill -u $USER -f -SIGHUP rgbdaemon || true
