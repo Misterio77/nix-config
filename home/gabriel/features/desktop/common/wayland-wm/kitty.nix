@@ -1,6 +1,18 @@
-{config, ...}: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (config.colorscheme) colors harmonized;
 in {
+  home.packages = [
+    (
+      pkgs.writeShellScriptBin "xterm" ''
+        ${lib.getExe config.programs.kitty.package} "$@"
+      ''
+    )
+  ];
   xdg.mimeApps = {
     associations.added = {
       "x-scheme-handler/terminal" = "kitty.desktop";
