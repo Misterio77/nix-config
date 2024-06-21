@@ -17,6 +17,12 @@ in {
 
   targets.genericLinux.enable = true;
 
+  programs.git = {
+    userEmail = "gabriel.fontes@luizalabs.com";
+    # Not adding my work email to my gpg, thanks
+    extraConfig.commit.gpgSign = false;
+  };
+
   monitors = [{
     name = "eDP-1";
     width = 1920;

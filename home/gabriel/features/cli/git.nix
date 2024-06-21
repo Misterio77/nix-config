@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
   ssh = "${pkgs.openssh}/bin/ssh";
@@ -47,11 +48,11 @@ in {
       add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
     };
     userName = "Gabriel Fontes";
-    userEmail = "hi@m7.rs";
+    userEmail = lib.mkDefault "hi@m7.rs";
     extraConfig = {
       init.defaultBranch = "main";
       user.signing.key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
-      commit.gpgSign = true;
+      commit.gpgSign = lib.mkDefault true;
       gpg.program = "${config.programs.gpg.package}/bin/gpg2";
 
       merge.conflictStyle = "zdiff3";
