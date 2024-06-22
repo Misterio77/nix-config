@@ -84,12 +84,12 @@
           "exemplar": false,
           "expr": "sum((node_time_seconds{instance=\"$hosts\",job=\"hosts\"} - node_boot_time_seconds{instance=\"$hosts\",job=\"hosts\"}) OR vector(0))",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "Uptime",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Up time",
+      "title": "Uptime",
       "type": "stat"
     },
     {
@@ -412,17 +412,23 @@
               "type": "value"
             }
           ],
+          "max": 3600,
+          "min": 0,
           "noValue": "Off",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "text",
+                "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 3600
               }
             ]
           },
-          "unit": "dateTimeFromNow"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -452,9 +458,8 @@
       "pluginVersion": "11.0.0",
       "targets": [
         {
-          "editorMode": "code",
           "exemplar": false,
-          "expr": "sum((node_systemd_timer_last_trigger_seconds{name=\"nixos-upgrade.timer\",instance=\"$hosts\"} * 1000) or vector(0))",
+          "expr": "sum((time() - (node_systemd_timer_last_trigger_seconds{name=\"nixos-upgrade.timer\",instance=\"$hosts\"} > 0)) or vector(0))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -464,112 +469,6 @@
         }
       ],
       "title": "Last Upgrade",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "Zero",
-            "binary": {
-              "left": "Time",
-              "operator": "-",
-              "right": "Time"
-            },
-            "mode": "binary",
-            "reduce": {
-              "include": [],
-              "reducer": "allIsZero"
-            },
-            "unary": {
-              "fieldName": "",
-              "operator": "floor"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "1 hour ago",
-            "binary": {
-              "left": "Time",
-              "operator": "-",
-              "right": "3600000"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "From",
-            "binary": {
-              "left": "${__from}",
-              "right": "0"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "calculateField",
-          "options": {
-            "alias": "To",
-            "binary": {
-              "left": "${__to}",
-              "right": "0"
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            }
-          }
-        },
-        {
-          "id": "configFromData",
-          "options": {
-            "applyTo": {
-              "id": "byName",
-              "options": "Last Upgrade"
-            },
-            "configRefId": "Last upgrade",
-            "mappings": [
-              {
-                "fieldName": "Time",
-                "handlerKey": "__ignore"
-              },
-              {
-                "fieldName": "Last Upgrade",
-                "handlerKey": "__ignore"
-              },
-              {
-                "fieldName": "Zero",
-                "handlerKey": "threshold1"
-              },
-              {
-                "fieldName": "1 hour ago",
-                "handlerArguments": {
-                  "threshold": {
-                    "color": "green"
-                  }
-                },
-                "handlerKey": "threshold1"
-              },
-              {
-                "fieldName": "From",
-                "handlerKey": "min"
-              },
-              {
-                "fieldName": "To",
-                "handlerKey": "max"
-              }
-            ]
-          }
-        }
-      ],
       "type": "stat"
     }
   ],
@@ -607,5 +506,5 @@
       }
     ]
   },
-  "title": "Hosts - Nix (Temp)"
+  "title": "Hosts - Nix",
 }
