@@ -10,24 +10,22 @@ in {
   users.users.gabriel = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups =
-      [
-        "wheel"
-        "video"
-        "audio"
-      ]
-      ++ ifTheyExist [
-        "minecraft"
-        "network"
-        "wireshark"
-        "i2c"
-        "mysql"
-        "docker"
-        "podman"
-        "git"
-        "libvirtd"
-        "deluge"
-      ];
+    extraGroups = ifTheyExist [
+      "audio"
+      "deluge"
+      "docker"
+      "git"
+      "i2c"
+      "libvirtd"
+      "lxd"
+      "minecraft"
+      "mysql"
+      "network"
+      "podman"
+      "video"
+      "wheel"
+      "wireshark"
+    ];
 
     openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/gabriel/ssh.pub);
     hashedPasswordFile = config.sops.secrets.gabriel-password.path;
