@@ -167,12 +167,19 @@
         pactl = lib.getExe' pkgs.pulseaudio "pactl";
         notify-send = lib.getExe' pkgs.libnotify "notify-send";
         defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
+        remote = lib.getExe (pkgs.writeShellScriptBin "remote" ''
+          host="$(cat ~/.current-remote)"
+          waypipe ssh "$host" "\$SHELL -c '$@ && sleep 5'"
+        '');
       in
         [
           # Program bindings
           "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
           "SUPER,e,exec,${defaultApp "text/plain"}"
           "SUPER,b,exec,${defaultApp "x-scheme-handler/https"}"
+          "SUPERALT,Return,exec,${remote} ${defaultApp "x-scheme-handler/terminal"}"
+          "SUPERALT,e,exec,${remote} ${defaultApp "text/plain"}"
+          "SUPERALT,b,exec,${remote} ${defaultApp "x-scheme-handler/https"}"
           # Brightness control (only works if the system has lightd)
           ",XF86MonBrightnessUp,exec,light -A 10"
           ",XF86MonBrightnessDown,exec,light -U 10"
@@ -236,9 +243,10 @@
             lib.optionals config.programs.wofi.enable [
               "SUPER,x,exec,${wofi} -S drun -x 10 -y 10 -W 25% -H 60%"
               "SUPER,s,exec,specialisation $(specialisation | ${wofi} -S dmenu)"
-              "SUPERSHIFT,s,exec,specialisation $(specialisation | shuf -n1)"
-
               "SUPER,d,exec,${wofi} -S run"
+
+              "SUPERALT,x,exec,${remote} ${wofi} -S drun -x 10 -y 10 -W 25% -H 60%"
+              "SUPERALT,d,exec,${remote} ${wofi} -S run"
             ]
             ++ (
               let
