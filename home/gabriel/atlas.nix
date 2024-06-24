@@ -23,18 +23,10 @@
   #  ------   -----   ------
   monitors = [
     {
-      name = "DP-3";
-      width = 1920;
-      height = 1080;
-      x = 0;
-      workspace = "3";
-      enabled = false;
-    }
-    {
       name = "DP-1";
       width = 2560;
       height = 1080;
-      x = 1920;
+      x = 0;
       workspace = "1";
       primary = true;
     }
@@ -42,7 +34,7 @@
       name = "DP-2";
       width = 1920;
       height = 1080;
-      x = 4480;
+      x = 2560;
       workspace = "2";
     }
   ];

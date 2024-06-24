@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./cliphist.nix
+    ./hyprland-vnc.nix
     ./gammastep.nix
     ./kitty.nix
     ./mako.nix
