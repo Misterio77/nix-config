@@ -30,6 +30,9 @@ in {
           }
         ];
         setEnv.WAYLAND_DISPLAY = "/%d/.waypipe/display";
+        extraConfig = ''
+          StreamLocalBindUnlink yes
+        '';
       };
     };
   };
