@@ -17,7 +17,6 @@
     ./xpo.nix
     ./fzf.nix
     ./jira.nix
-    ./waypipe.nix
   ];
   home.packages = with pkgs; [
     comma # Install and run programs by sticking a , before them
