@@ -6,6 +6,7 @@
       Service = {
         ExecStartPre = "${lib.getExe' pkgs.coreutils "mkdir"} %h/.waypipe -p";
         ExecStart = "${lib.getExe pkgs.waypipe} --socket %h/.waypipe/client.sock client";
+        ExecStopPost = "${lib.getExe' pkgs.coreutils "rm"} -f %h/.waypipe/client.sock";
       };
       Install.WantedBy = ["default.target"];
     };
@@ -15,6 +16,7 @@
         Type = "simple";
         ExecStartPre = "${lib.getExe' pkgs.coreutils "mkdir"} %h/.waypipe -p";
         ExecStart = "${lib.getExe pkgs.waypipe} --socket %h/.waypipe/server.sock --no-gpu --display %h/.waypipe/display server -- ${lib.getExe' pkgs.coreutils "sleep"} inf";
+        ExecStopPost = "${lib.getExe' pkgs.coreutils "rm"} -f %h/.waypipe/server.sock %h/.waypipe/display";
       };
       Install.WantedBy = ["default.target"];
     };
