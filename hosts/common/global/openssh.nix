@@ -21,6 +21,8 @@ in {
       StreamLocalBindUnlink = "yes";
       # Allow forwarding ports to everywhere
       GatewayPorts = "clientspecified";
+      # Let WAYLAND_DISPLAY be forwarded
+      AcceptEnv = "WAYLAND_DISPLAY";
     };
 
     hostKeys = [
