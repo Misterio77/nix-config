@@ -168,8 +168,9 @@
         notify-send = lib.getExe' pkgs.libnotify "notify-send";
         defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
         remote = lib.getExe (pkgs.writeShellScriptBin "remote" ''
-          host="$(cat ~/.current-remote)"
-          waypipe ssh "$host" "\$SHELL -c '$@ && sleep 5'"
+          socket="$(basename "$(find ~/.ssh -name 'master-*' | head -1 | cut -d ':' -f1)")"
+          host="''${socket#master-}"
+          ssh "$host" "$@"
         '');
       in
         [
