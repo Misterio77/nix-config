@@ -12,7 +12,6 @@
     ./wofi.nix
     ./zathura.nix
     ./imv.nix
-    ./waypipe.nix
   ];
 
   xdg.mimeApps.enable = true;

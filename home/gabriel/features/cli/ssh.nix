@@ -12,18 +12,24 @@ in {
     enable = true;
     matchBlocks = {
       net = {
-        host = builtins.concatStringsSep " " hostnames;
+        host = builtins.concatStringsSep " " ([
+            "m7.rs"
+            "*.m7.rs"
+            "*.ts.m7.rs"
+          ]
+          ++ hostnames);
         forwardAgent = true;
         remoteForwards = [
           {
             bind.address = ''/%d/.gnupg-sockets/S.gpg-agent'';
             host.address = ''/%d/.gnupg-sockets/S.gpg-agent.extra'';
           }
+          {
+            bind.address = ''/%d/.waypipe/server.sock'';
+            host.address = ''/%d/.waypipe/client.sock'';
+          }
         ];
-      };
-      trusted = lib.hm.dag.entryBefore ["net"] {
-        host = "m7.rs *.m7.rs *.ts.m7.rs";
-        forwardAgent = true;
+        setEnv.WAYLAND_DISPLAY = "/%d/.waypipe/display";
       };
     };
   };
