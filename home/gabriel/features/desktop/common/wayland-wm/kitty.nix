@@ -13,6 +13,10 @@ in {
       ''
     )
   ];
+  # I prefer to use ssh -M explicitly, thanks.
+  xdg.configFile."kitty/ssh.conf".text = ''
+    share_connections no
+  '';
   xdg.mimeApps = {
     associations.added = {
       "x-scheme-handler/terminal" = "kitty.desktop";
@@ -28,6 +32,7 @@ in {
       size = 12;
     };
     settings = {
+      editor = config.home.sessionVariables.EDITOR;
       shell_integration = "no-rc"; # I prefer to do it manually
       scrollback_lines = 4000;
       scrollback_pager_history_size = 2048;
