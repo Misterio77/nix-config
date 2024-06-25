@@ -38,10 +38,7 @@ in {
         default_size = "12pt";
       };
       colors = {
-        webpage = {
-          preferred_color_scheme = "auto";
-          bg = colors.surface;
-        };
+        webpage.preferred_color_scheme = "auto";
         completion = {
           fg = colors.on_surface;
           match.fg = colors.primary;
