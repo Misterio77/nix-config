@@ -197,7 +197,7 @@ in {
                 )}
               '';
               # Access a remote machine's and a home machine's ping
-              text = "  $ping_${remoteMachine} /  $ping_${homeMachine}";
+              text = "  $ping_${remoteMachine} /   $ping_${homeMachine}";
               # Show pings from all machines
               tooltip = lib.concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
             };
