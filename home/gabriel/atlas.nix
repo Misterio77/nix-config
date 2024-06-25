@@ -15,8 +15,8 @@
     ./features/games/yuzu.nix
   ];
 
-  wallpaper = lib.mkDefault pkgs.wallpapers.aenami-lost-in-between;
-  colorscheme.source = config.wallpaper;
+  # Purple
+  wallpaper = pkgs.wallpapers.mountain-nebula-purple-pink;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

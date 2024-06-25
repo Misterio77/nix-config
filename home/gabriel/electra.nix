@@ -30,6 +30,6 @@ in {
     workspace = "1";
     primary = true;
   }];
-
-  wallpaper = pkgs.wallpapers.aenami-the-day-you-left;
+  # Green
+  wallpaper = pkgs.wallpapers.aenami-northern-lights;
 }

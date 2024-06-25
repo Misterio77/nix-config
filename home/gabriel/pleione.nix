@@ -8,6 +8,7 @@
     ./features/games
   ];
 
+  # Red
   wallpaper = pkgs.wallpapers.aenami-dawn;
 
   monitors = [

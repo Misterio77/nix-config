@@ -1,4 +1,5 @@
 {pkgs, ...}: {
   imports = [./global];
-  wallpaper = pkgs.wallpapers.abstract-salmon-blue;
+  # Yellow
+  wallpaper = pkgs.wallpapers.lake-houses-sunset-gold;
 }
