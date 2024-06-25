@@ -1,0 +1,140 @@
+commit f8ad083d454166c630d5059d6eea5a9888f48593
+Author: Gabriel Fontes <hi@m7.rs>
+Date:   2024-06-25 17:34:55 -0300
+
+    hyprbars: add bar_color & title_color windowrules
+
+diff --git a/README.md b/README.md
+index 89abc21..7c7d4c4 100644
+--- a/README.md
++++ b/README.md
+@@ -58,4 +58,6 @@ hyprbars-button = color, size, icon, on-click
+
+ Hyprbars supports the following _dynamic_ window rules:
+
+-`plugin:hyprbars:nobar` -> disables the bar on matching windows.
+\ No newline at end of file
++`plugin:hyprbars:nobar` -> disables the bar on matching windows.
++`plugin:hyprbars:bar_color` -> sets the bar background color on matching windows.
++`plugin:hyprbars:title_color` -> sets the bar title color on matching windows.
+diff --git a/barDeco.cpp b/barDeco.cpp
+index 19a76ff..e8017b7 100644
+--- a/barDeco.cpp
++++ b/barDeco.cpp
+@@ -217,7 +217,7 @@ void CHyprBar::renderBarTitle(const Vector2D& bufferSize, const float scale) {
+     const auto   scaledButtonsPad  = **PBARBUTTONPADDING * scale;
+     const auto   scaledBarPadding  = **PBARPADDING * scale;
+
+-    const CColor COLOR = **PCOLOR;
++    const CColor COLOR = m_bForcedTitleColor.value_or(**PCOLOR);
+
+     const auto   CAIROSURFACE = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, bufferSize.x, bufferSize.y);
+     const auto   CAIRO        = cairo_create(CAIROSURFACE);
+@@ -409,7 +409,7 @@ void CHyprBar::draw(CMonitor* pMonitor, float a) {
+
+     const auto scaledRounding = ROUNDING > 0 ? ROUNDING * pMonitor->scale - 2 /* idk why but otherwise it looks bad due to the gaps */ : 0;
+
+-    CColor     color = **PCOLOR;
++    CColor     color = m_bForcedBarColor.value_or(**PCOLOR);
+     color.a *= a;
+
+     m_seExtents = {{0, **PHEIGHT}, {}};
+@@ -458,7 +458,7 @@ void CHyprBar::draw(CMonitor* pMonitor, float a) {
+     g_pHyprOpenGL->renderRect(&titleBarBox, color, scaledRounding);
+
+     // render title
+-    if (**PENABLETITLE && (m_szLastTitle != PWINDOW->m_szTitle || m_bWindowSizeChanged || m_tTextTex.m_iTexID == 0)) {
++    if (**PENABLETITLE && (m_szLastTitle != PWINDOW->m_szTitle || m_bWindowSizeChanged || m_tTextTex.m_iTexID == 0 || m_bTitleColorChanged)) {
+         m_szLastTitle = PWINDOW->m_szTitle;
+         renderBarTitle(BARBUF, pMonitor->scale);
+     }
+@@ -488,6 +488,7 @@ void CHyprBar::draw(CMonitor* pMonitor, float a) {
+     renderBarButtonsText(&textBox, pMonitor->scale, a);
+
+     m_bWindowSizeChanged = false;
++    m_bTitleColorChanged = false;
+
+     // dynamic updates change the extents
+     if (m_iLastHeight != **PHEIGHT) {
+@@ -537,11 +538,36 @@ PHLWINDOW CHyprBar::getOwner() {
+     return m_pWindow.lock();
+ }
+
+-void CHyprBar::setHidden(bool hidden) {
+-    if (m_bHidden == hidden)
+-        return;
++void CHyprBar::updateRules() {
++    const auto PWINDOW = m_pWindow.lock();
++    auto rules = PWINDOW->m_vMatchedRules;
++    auto prev_m_bHidden = m_bHidden;
++    auto prev_m_bForcedTitleColor = m_bForcedTitleColor;
+
+-    m_bHidden = hidden;
++    m_bForcedBarColor = std::nullopt;
++    m_bForcedTitleColor = std::nullopt;
++    m_bHidden = false;
+
+-    g_pDecorationPositioner->repositionDeco(this);
++    for(auto& r : rules) {
++        applyRule(r);
++    }
++
++    if (prev_m_bHidden != m_bHidden) {
++        g_pDecorationPositioner->repositionDeco(this);
++    }
++    if (prev_m_bForcedTitleColor != m_bForcedTitleColor) {
++        m_bTitleColorChanged = true;
++    }
++}
++
++void CHyprBar::applyRule(const SWindowRule& r) {
++    auto arg = r.szRule.substr(r.szRule.find_first_of(' ') + 1);
++
++    if (r.szRule == "plugin:hyprbars:nobar") {
++        m_bHidden = true;
++    } else if (r.szRule.starts_with("plugin:hyprbars:bar_color")) {
++        m_bForcedBarColor = CColor(configStringToInt(arg));
++    } else if (r.szRule.starts_with("plugin:hyprbars:title_color")) {
++        m_bForcedTitleColor = CColor(configStringToInt(arg));
++    }
+ }
+diff --git a/barDeco.hpp b/barDeco.hpp
+index 4d2cd97..163af95 100644
+--- a/barDeco.hpp
++++ b/barDeco.hpp
+@@ -33,7 +33,8 @@ class CHyprBar : public IHyprWindowDecoration {
+
+     PHLWINDOW                          getOwner();
+
+-    void                               setHidden(bool hidden);
++    void                               updateRules();
++    void                               applyRule(const SWindowRule&);
+
+   private:
+     SWindowDecorationExtents          m_seExtents;
+@@ -47,6 +48,9 @@ class CHyprBar : public IHyprWindowDecoration {
+
+     bool                              m_bWindowSizeChanged = false;
+     bool                              m_bHidden            = false;
++    bool                              m_bTitleColorChanged = false;
++    std::optional<CColor>             m_bForcedBarColor;
++    std::optional<CColor>             m_bForcedTitleColor;
+
+     Vector2D                          cursorRelativeToBar();
+
+diff --git a/main.cpp b/main.cpp
+index 060f1a5..7d58476 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -49,9 +49,8 @@ static void onUpdateWindowRules(PHLWINDOW window) {
+     if (BARIT == g_pGlobalState->bars.end())
+         return;
+
+-    const auto HASNOBAR = std::find_if(window->m_vMatchedRules.begin(), window->m_vMatchedRules.end(), [](const auto& rule) { return rule.szRule == "plugin:hyprbars:nobar"; }) != window->m_vMatchedRules.end();
+-
+-    (*BARIT)->setHidden(HASNOBAR);
++    (*BARIT)->updateRules();
++    window->updateWindowDecos();
+ }
+
+ Hyprlang::CParseResult onNewButton(const char* K, const char* V) {

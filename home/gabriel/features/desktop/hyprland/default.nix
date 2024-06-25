@@ -2,8 +2,17 @@
   lib,
   config,
   pkgs,
+  outputs,
   ...
-}: {
+}: let
+  getHostname = x: lib.last (lib.splitString "@" x);
+  remoteColorschemes = lib.mapAttrs' (n: v: {
+    name = getHostname n;
+    value = v.config.colorscheme.rawColorscheme.colors.${config.colorscheme.mode};
+  }) outputs.homeConfigurations;
+  rgb = color: "rgb(${lib.removePrefix "#" color})";
+  rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
+in {
   imports = [
     ../common
     ../common/wayland-wm
@@ -37,24 +46,21 @@
       ];
     };
 
-    settings = let
-      active = "0xaa${lib.removePrefix "#" config.colorscheme.colors.primary}";
-      inactive = "0xaa${lib.removePrefix "#" config.colorscheme.colors.surface_bright}";
-    in {
+    settings = {
       general = {
         gaps_in = 15;
         gaps_out = 20;
         border_size = 2;
-        "col.active_border" = active;
-        "col.inactive_border" = inactive;
+        "col.active_border" = rgba config.colorscheme.colors.primary "aa";
+        "col.inactive_border" = rgba config.colorscheme.colors.surface_bright "aa";
         # v0.40.0 and earlier
         cursor_inactive_timeout = 4;
       };
       # Later versions
       # cursor.inactive_timeout = 4;
       group = {
-        "col.border_active" = active;
-        "col.border_inactive" = inactive;
+        "col.border_active" = rgba config.colorscheme.colors.primary "aa";
+        "col.border_inactive" = rgba config.colorscheme.colors.surface_bright "aa";
         groupbar.font_size = 11;
       };
       binds = {
@@ -93,7 +99,9 @@
         "noshadow, ${kdeconnect-pointer}"
         "noborder, ${kdeconnect-pointer}"
         "suppressevent fullscreen, ${kdeconnect-pointer}"
-      ];
+      ] ++ (lib.mapAttrsToList (name: colors:
+        "bordercolor ${rgba colors.primary "aa"} ${rgba colors.surface_bright "aa"}, title:^(\\[${name}\\])"
+      ) remoteColorschemes);
       layerrule = [
         "animation fade,hyprpicker"
         "animation fade,selection"
@@ -112,8 +120,8 @@
       ];
 
       decoration = {
-        active_opacity = 0.97;
-        inactive_opacity = 0.77;
+        active_opacity = 1.0;
+        inactive_opacity = 0.85;
         fullscreen_opacity = 1.0;
         rounding = 7;
         blur = {
@@ -133,29 +141,32 @@
       animations = {
         enabled = true;
         bezier = [
-          "easein,0.11, 0, 0.5, 0"
-          "easeout,0.5, 1, 0.89, 1"
+          "easein,0.1, 0, 0.5, 0"
+          "easeinback,0.35, 0, 0.95, -0.3"
+
+          "easeout,0.5, 1, 0.9, 1"
+          "easeoutback,0.35, 1.35, 0.65, 1"
+
           "easeinout,0.45, 0, 0.55, 1"
-          "easeinback,0.36, 0, 0.66, -0.56"
-          "easeoutback,0.34, 1.56, 0.64, 1"
-          "easeinoutback,0.68, -0.6, 0.32, 1.6"
         ];
 
         animation = [
-          "border,1,3,easeout"
-          "workspaces,1,2,easeoutback,slide"
-          "windowsIn,1,3,easeoutback,slide"
-          "windowsOut,1,3,easeinback,slide"
-          "windowsMove,1,3,easeoutback"
           "fadeIn,1,3,easeout"
-          "fadeOut,1,3,easein"
-          "fadeSwitch,1,3,easeinout"
-          "fadeShadow,1,3,easeinout"
-          "fadeDim,1,3,easeinout"
           "fadeLayersIn,1,3,easeoutback"
-          "fadeLayersOut,1,3,easeinback"
           "layersIn,1,3,easeoutback,slide"
+          "windowsIn,1,3,easeoutback,slide"
+
+          "fadeLayersOut,1,3,easeinback"
+          "fadeOut,1,3,easein"
           "layersOut,1,3,easeinback,slide"
+          "windowsOut,1,3,easeinback,slide"
+
+          "border,1,3,easeout"
+          "fadeDim,1,3,easeinout"
+          "fadeShadow,1,3,easeinout"
+          "fadeSwitch,1,3,easeinout"
+          "windowsMove,1,3,easeoutback"
+          "workspaces,1,2.6,easeoutback,slide"
         ];
       };
 

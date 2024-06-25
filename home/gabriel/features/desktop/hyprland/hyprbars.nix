@@ -2,8 +2,17 @@
   config,
   pkgs,
   lib,
+  outputs,
   ...
 }: let
+  getHostname = x: lib.last (lib.splitString "@" x);
+  remoteColorschemes = lib.mapAttrs' (n: v: {
+    name = getHostname n;
+    value = v.config.colorscheme.rawColorscheme.colors.${config.colorscheme.mode};
+  }) outputs.homeConfigurations;
+  rgb = color: "rgb(${lib.removePrefix "#" color})";
+  rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
+
   hyprbars =
     (pkgs.hyprbars.override {
       # Make sure it's using the same hyprland package as we are
@@ -24,11 +33,12 @@ in {
     settings = {
       "plugin:hyprbars" = {
         bar_height = 25;
-        bar_color = "0xdd${lib.removePrefix "#" config.colorscheme.colors.surface}";
-        "col.text" = "0xee${lib.removePrefix "#" config.colorscheme.colors.on_surface}";
+        bar_color = rgba config.colorscheme.colors.surface "cc";
+        "col.text" = rgb config.colorscheme.colors.primary;
         bar_text_font = config.fontProfiles.regular.family;
         bar_text_size = 12;
         bar_part_of_window = true;
+        bar_precedence_over_border = true;
         hyprbars-button = let
           closeAction = "hyprctl dispatch killactive";
 
@@ -40,19 +50,24 @@ in {
           maximizeAction = "hyprctl dispatch togglefloating";
         in [
           # Red close button
-          "rgb(${lib.removePrefix "#" config.colorscheme.harmonized.red}),12,,${closeAction}"
+          "${rgb config.colorscheme.harmonized.red},12,,${closeAction}"
           # Yellow "minimize" (send to special workspace) button
-          "rgb(${lib.removePrefix "#" config.colorscheme.harmonized.yellow}),12,,${minimizeAction}"
+          "${rgb config.colorscheme.harmonized.yellow},12,,${minimizeAction}"
           # Green "maximize" (togglefloating) button
-          "rgb(${lib.removePrefix "#" config.colorscheme.harmonized.green}),12,,${maximizeAction}"
+          "${rgb config.colorscheme.harmonized.green},12,,${maximizeAction}"
         ];
       };
-      bind = let
-        barsEnabled = "hyprctl -j getoption plugin:hyprbars:bar_height | ${lib.getExe pkgs.jq} -re '.int != 0'";
-        setBarHeight = height: "hyprctl keyword plugin:hyprbars:bar_height ${toString height}";
-        toggleOn = setBarHeight config.wayland.windowManager.hyprland.settings."plugin:hyprbars".bar_height;
-        toggleOff = setBarHeight 0;
-      in ["SUPER,m,exec,${barsEnabled} && ${toggleOff} || ${toggleOn}"];
+
+      windowrulev2 = [
+        "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "bb"}, focus:1"
+        "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.surface}, focus:1"
+      ] ++ (lib.flatten (lib.mapAttrsToList (name: colors: [
+        "plugin:hyprbars:bar_color ${rgba colors.surface "cc"}, title:^(\\[${name}\\])"
+        "plugin:hyprbars:title_color ${rgb colors.primary}, title:^(\\[${name}\\])"
+
+        "plugin:hyprbars:bar_color ${rgba colors.primary "bb"}, title:^(\\[${name}\\]), focus:1"
+        "plugin:hyprbars:title_color ${rgb colors.surface}, title:^(\\[${name}\\]), focus:1"
+      ]) remoteColorschemes));
     };
   };
 }
