@@ -23,6 +23,7 @@
       ./gamemode.nix
       ./nix-ld.nix
       ./prometheus-node-exporter.nix
+      ./kdeconnect.nix
     ]
     ++ (builtins.attrValues outputs.nixosModules);
 

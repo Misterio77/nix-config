@@ -2,14 +2,7 @@
   pkgs,
   config,
   ...
-}: let
-  kdeconnect-cli = "${pkgs.plasma5Packages.kdeconnect-kde}/bin/kdeconnect-cli";
-  fortune = "${pkgs.fortune}/bin/fortune";
-
-  script-fortune = pkgs.writeShellScriptBin "fortune" ''
-    ${kdeconnect-cli} -d $(${kdeconnect-cli} --list-available --id-only) --ping-msg "$(${fortune})"
-  '';
-in {
+}: {
   # Hide all .desktop, except for org.kde.kdeconnect.settings
   xdg.desktopEntries = {
     "org.kde.kdeconnect.sms" = {
@@ -32,10 +25,7 @@ in {
   services.kdeconnect = {
     enable = true;
     indicator = true;
-  };
-
-  xdg.configFile = {
-    "kdeconnect-scripts/fortune.sh".source = "${script-fortune}/bin/fortune";
+    package = pkgs.kdePackages.kdeconnect-kde;
   };
 
   home.persistence = {
