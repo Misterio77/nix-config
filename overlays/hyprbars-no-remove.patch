@@ -1,0 +1,14 @@
+diff --git a/main.cpp b/main.cpp
+index 7d58476..2881a74 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -34,9 +34,6 @@ static void onCloseWindow(void* self, std::any data) {
+
+     if (BARIT == g_pGlobalState->bars.end())
+         return;
+-
+-    // we could use the API but this is faster + it doesn't matter here that much.
+-    PWINDOW->removeWindowDeco(*BARIT);
+ }
+
+ static void onPreConfigReload() {
