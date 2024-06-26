@@ -4,6 +4,7 @@ in {
   imports = [
     ./global
     ./features/desktop/hyprland
+    ./features/pass
   ];
   home.persistence."/persist/${config.home.homeDirectory}" = lib.mkForce {};
   home.username = "gabriel";
