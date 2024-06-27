@@ -29,7 +29,7 @@ in {
             host.address = ''/%d/.waypipe/client.sock'';
           }
         ];
-        setEnv.WAYLAND_DISPLAY = "${config.home.homeDirectory}/.waypipe/display";
+        setEnv.WAYLAND_DISPLAY = "wayland-waypipe";
         extraOptions.StreamLocalBindUnlink = "yes";
       };
     };
