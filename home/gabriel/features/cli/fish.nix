@@ -20,7 +20,8 @@
 in {
   programs.fish = {
     enable = true;
-    plugins = [
+    plugins =
+      lib.optional hasAwsCli
       {
         name = "aws";
         src = pkgs.applyPatches {
@@ -32,9 +33,7 @@ in {
           };
           patches = [
             (
-              builtins.toFile "fix-complete.diff" # diff
-              
-              ''
+              builtins.toFile "fix-complete.diff" /* diff */ ''
                 diff --git a/completions/aws.fish b/completions/aws.fish
                 index fc75188..1e8d931 100644
                 --- a/completions/aws.fish
@@ -52,8 +51,7 @@ in {
             )
           ];
         };
-      }
-    ];
+      };
 
     shellAbbrs = rec {
       jqless = "jq -C | less -r";
