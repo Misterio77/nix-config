@@ -31,6 +31,9 @@ in {
       name = config.fontProfiles.monospace.family;
       size = 12;
     };
+    keybindings = {
+      "ctrl+enter" = "send_text normal clone-in-kitty --type os-window\\r";
+    };
     settings = {
       editor = config.home.sessionVariables.EDITOR;
       shell_integration = "no-rc"; # I prefer to do it manually
