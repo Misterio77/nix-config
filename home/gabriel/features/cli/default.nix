@@ -43,8 +43,5 @@
     nh # Nice wrapper for NixOS and HM
 
     ltex-ls # Spell checking LSP
-
-    awscli2
-    inputs.awscli-console.default
   ];
 }
