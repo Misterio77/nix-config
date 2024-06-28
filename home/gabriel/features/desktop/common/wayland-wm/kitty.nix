@@ -35,7 +35,7 @@ in {
       editor = config.home.sessionVariables.EDITOR;
       shell_integration = "no-rc"; # I prefer to do it manually
       scrollback_lines = 4000;
-      scrollback_pager_history_size = 2048;
+      scrollback_pager_history_size = 100000;
       window_padding_width = 15;
       foreground = "${colors.on_surface}";
       background = "${colors.surface}";
