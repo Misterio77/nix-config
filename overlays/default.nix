@@ -94,6 +94,6 @@ in {
         nix = final.nixVersions.nix_2_22;
       };
 
-    hyprbars = addPatches prev.hyprbars [./hyprbars-color-windowrules.patch ./hyprbars-no-remove.patch];
+    hyprbars = addPatches prev.hyprbars [./hyprbars-color-windowrules.patch];
   };
 }
