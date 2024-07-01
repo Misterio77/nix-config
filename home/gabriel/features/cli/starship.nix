@@ -80,7 +80,7 @@
                 JUJU_MODEL="$(yq -r --arg model "$JUJU_CONTROLLER" '.controllers."$model"."current-model"' "$JUJU_DATA/models.yaml" || true)"
               fi
 
-              if [ -z "$JUJU_MODEL"] || [ "$JUJU_MODEL" = "null" ]; then
+              if [ -z "$JUJU_MODEL" ] || [ "$JUJU_MODEL" = "null" ]; then
                 echo "$JUJU_CONTROLLER"
               else
                 echo "$JUJU_MODEL ($JUJU_CONTROLLER)"
