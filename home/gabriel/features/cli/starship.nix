@@ -73,26 +73,20 @@
             checkPhase = false;
             text = ''
               JUJU_DATA="''${JUJU_DATA:-$HOME/.local/share/juju}"
-              if [ -z "''${JUJU_CONTROLLER:-}" ]; then
-                JUJU_CONTROLLER="$(yq -re '."current-controller"' "$JUJU_DATA/controllers.yaml" || exit 1)"
-              fi
-              if [ -z "''${JUJU_MODEL:-}" ]; then
-                JUJU_MODEL="$(yq -r --arg controller "$JUJU_CONTROLLER" '.controllers.[$controller]."current-model"' "$JUJU_DATA/models.yaml" || true)"
-              fi
+              whoami="$(juju whoami)"
+              JUJU_CONTROLLER="$(echo "$whoami" | grep Controller | tr -s ' ' | cut -d ' ' -f2)"
+              JUJU_MODEL="$(echo "$whoami" | grep Model | tr -s ' ' | cut -d ' ' -f2)"
 
-              if [ -z "$JUJU_MODEL" ] || [ "$JUJU_MODEL" = "null" ]; then
+              if [ -z "$JUJU_MODEL" ]; then
                 echo "$JUJU_CONTROLLER"
               else
                 echo "$JUJU_MODEL ($JUJU_CONTROLLER)"
               fi
             '';
           };
-          whenScript = pkgs.writeShellScriptBin "juju-prompt-when" ''
-            builtin type -P juju &>/dev/null && test -e "''${JUJU_DATA:-$HOME/.local/share/juju}/controllers.yaml"
-          '';
         in {
           disabled = false;
-          when = lib.getExe whenScript;
+          when = "builtin type -P juju";
           command = lib.getExe commandScript;
           format = "on [$symbol($output)]($style)";
           symbol = " ";
