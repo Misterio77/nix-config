@@ -10,7 +10,7 @@ fi
 if [[ "$class" == "org.qutebrowser.qutebrowser" ]] || [[ "$class" == "qutebrowser" ]]; then
     wtype -k escape
     wtype yy
-    sleep 0.1
+    sleep 0.2
     query=$(wl-paste | cut -d '/' -f3 | sed s/"www."//)
     wtype i
 elif [[ "$class" == "discord" ]]; then
