@@ -52,12 +52,12 @@ in {
         gaps_out = 20;
         border_size = 2;
         "col.active_border" = rgba config.colorscheme.colors.primary "aa";
-        "col.inactive_border" = rgba config.colorscheme.colors.on_primary "aa";
+        "col.inactive_border" = rgba config.colorscheme.colors.surface "aa";
       };
       cursor.inactive_timeout = 4;
       group = {
         "col.border_active" = rgba config.colorscheme.colors.primary "aa";
-        "col.border_inactive" = rgba config.colorscheme.colors.on_primary "aa";
+        "col.border_inactive" = rgba config.colorscheme.colors.surface "aa";
         groupbar.font_size = 11;
       };
       binds = {
@@ -97,7 +97,7 @@ in {
         "noborder, ${kdeconnect-pointer}"
         "suppressevent fullscreen, ${kdeconnect-pointer}"
       ] ++ (lib.mapAttrsToList (name: colors:
-        "bordercolor ${rgba colors.primary "aa"} ${rgba colors.on_primary "aa"}, title:^(\\[${name}\\])"
+        "bordercolor ${rgba colors.primary "aa"} ${rgba colors.surface "aa"}, title:^(\\[${name}\\])"
       ) remoteColorschemes);
       layerrule = [
         "animation fade,hyprpicker"

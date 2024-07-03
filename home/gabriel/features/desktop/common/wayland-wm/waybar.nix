@@ -421,8 +421,8 @@ in {
         }
         #workspaces button.focused,
         #workspaces button.active {
-          background-color: ${colors.tertiary};
-          color: ${colors.on_tertiary};
+          background-color: ${colors.primary};
+          color: ${colors.on_primary};
         }
 
         #clock {
@@ -432,19 +432,15 @@ in {
         }
 
         #custom-menu {
-          background-color: ${colors.on_primary};
+          background-color: ${colors.surface_container};
           color: ${colors.primary};
           padding-right: 1.5em;
           padding-left: 1em;
           margin-right: 0;
           border-radius: 0.5em;
         }
-        #custom-menu.fullscreen {
-          background-color: ${colors.primary};
-          color: ${colors.on_primary};
-        }
         #custom-hostname {
-          background-color: ${colors.on_primary};
+          background-color: ${colors.surface_container};
           color: ${colors.primary};
           padding-right: 1em;
           padding-left: 1em;
