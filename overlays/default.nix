@@ -79,6 +79,10 @@ in {
         ];
     });
 
+    wl-clipboard = addPatches prev.wl-clipboard [./wl-clipboard-secrets.diff];
+
+    pass = addPatches prev.pass [./pass-wlclipboard-secret.diff];
+
     hydra_unstable =
       (prev.hydra_unstable.overrideAttrs (old: {
         version = "2024-05-23";
