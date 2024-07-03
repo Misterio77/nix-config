@@ -33,7 +33,7 @@ in {
     settings = {
       "plugin:hyprbars" = {
         bar_height = 25;
-        bar_color = rgba config.colorscheme.colors.surface "cc";
+        bar_color = rgba config.colorscheme.colors.on_primary "cc";
         "col.text" = rgb config.colorscheme.colors.primary;
         bar_text_font = config.fontProfiles.regular.family;
         bar_text_size = 12;
@@ -60,13 +60,13 @@ in {
 
       windowrulev2 = [
         "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "bb"}, focus:1"
-        "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.surface}, focus:1"
+        "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.on_primary}, focus:1"
       ] ++ (lib.flatten (lib.mapAttrsToList (name: colors: [
-        "plugin:hyprbars:bar_color ${rgba colors.surface "cc"}, title:^(\\[${name}\\])"
+        "plugin:hyprbars:bar_color ${rgba colors.on_primary "cc"}, title:^(\\[${name}\\])"
         "plugin:hyprbars:title_color ${rgb colors.primary}, title:^(\\[${name}\\])"
 
         "plugin:hyprbars:bar_color ${rgba colors.primary "bb"}, title:^(\\[${name}\\]), focus:1"
-        "plugin:hyprbars:title_color ${rgb colors.surface}, title:^(\\[${name}\\]), focus:1"
+        "plugin:hyprbars:title_color ${rgb colors.on_primary}, title:^(\\[${name}\\]), focus:1"
       ]) remoteColorschemes));
     };
   };

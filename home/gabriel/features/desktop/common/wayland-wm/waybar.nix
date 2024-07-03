@@ -432,7 +432,8 @@ in {
         }
 
         #custom-menu {
-          background-color: ${colors.surface_bright};
+          background-color: ${colors.on_primary};
+          color: ${colors.primary};
           padding-right: 1.5em;
           padding-left: 1em;
           margin-right: 0;
@@ -443,6 +444,8 @@ in {
           color: ${colors.on_primary};
         }
         #custom-hostname {
+          background-color: ${colors.on_primary};
+          color: ${colors.primary};
           padding-right: 1em;
           padding-left: 1em;
           margin-left: 0;
