@@ -8,8 +8,11 @@ elif [ "$XDG_CURRENT_DESKTOP" == "sway" ]; then
 fi
 
 if [[ "$class" == "org.qutebrowser.qutebrowser" ]] || [[ "$class" == "qutebrowser" ]]; then
-    qutebrowser :yank
+    wtype -k escape
+    wtype yy
+    sleep 0.1
     query=$(wl-paste | cut -d '/' -f3 | sed s/"www."//)
+    wtype i
 elif [[ "$class" == "discord" ]]; then
     query="discord.com"
 elif [[ "$class" == "Steam" ]]; then
