@@ -6,7 +6,6 @@
 
     ./grafana
     ./firefly.nix
-    ./cincobola.nix
     ./files-server.nix
     ./git-remote.nix
     ./headscale.nix
