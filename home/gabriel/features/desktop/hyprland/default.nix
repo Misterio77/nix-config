@@ -97,7 +97,7 @@ in {
         "noborder, ${kdeconnect-pointer}"
         "suppressevent fullscreen, ${kdeconnect-pointer}"
       ] ++ (lib.mapAttrsToList (name: colors:
-        "bordercolor ${rgba colors.primary "aa"} ${rgba colors.surface "aa"}, title:^(\\[${name}\\])"
+        "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
       ) remoteColorschemes);
       layerrule = [
         "animation fade,hyprpicker"
