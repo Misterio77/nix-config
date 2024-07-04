@@ -439,6 +439,10 @@ in {
           margin-right: 0;
           border-radius: 0.5em;
         }
+        #custom-menu.fullscreen {
+          background-color: ${colors.primary};
+          color: ${colors.on_primary};
+        }
         #custom-hostname {
           background-color: ${colors.surface_container};
           color: ${colors.primary};
