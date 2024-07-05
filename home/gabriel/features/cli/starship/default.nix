@@ -5,20 +5,19 @@
 }: {
   programs.starship = {
     enable = true;
-    settings = {
-      format = let
-        git = "$git_branch$git_commit$git_state$git_status";
-        cloud = "$aws$gcloud$openstack";
-      in ''
-        $username$hostname($shlvl)($cmd_duration) $fill ($nix_shell)''${custom.nix_inspect}
-        $directory(${git})(${cloud})(''${custom.juju}) $fill $time
-        $jobs$character
+    settings = let
+      hostInfo = "$username$hostname($shlvl)($cmd_duration)";
+      nixInfo = "($nix_shell)\${custom.nix_inspect}";
+      localInfo = "$directory($git_branch$git_commit$git_state$git_status)($aws$gcloud$openstack)(\${custom.juju})";
+      prompt = "$jobs$character";
+    in {
+      format = ''
+        ${hostInfo} $fill ${nixInfo}
+        ${localInfo} $fill $time
+        ${prompt}
       '';
 
-      fill = {
-        symbol = " ";
-        disabled = false;
-      };
+      fill.symbol = " ";
 
       # Core
       username = {
@@ -51,43 +50,24 @@
         style = "bold red";
       };
       custom = {
-        nix_inspect = let
-          excluded = [
-            "kitty"
-            "imagemagick"
-            "ncurses"
-            "user-environment"
-          ];
-        in {
-          disabled = false;
+        nix_inspect = {
           when = "test -z $IN_NIX_SHELL";
-          command = "${lib.getExe pkgs.nix-inspect} ${lib.concatStringsSep " " excluded}";
+          command = lib.getExe (pkgs.writeShellApplication {
+            name = "nix-inspect";
+            runtimeInputs = with pkgs; [perl gnugrep findutils];
+            text = builtins.readFile ./nix-inspect-path.sh;
+          });
           format = "[($output <- )$symbol]($style) ";
           symbol = " ";
           style = "bold blue";
         };
-        juju = let
-          commandScript = pkgs.writeShellApplication {
+        juju = {
+          when = "builtin type -P juju";
+          command = lib.getExe (pkgs.writeShellApplication {
             name = "juju-prompt";
             runtimeInputs = [pkgs.yq];
-            checkPhase = false;
-            text = ''
-              JUJU_DATA="''${JUJU_DATA:-$HOME/.local/share/juju}"
-              whoami="$(juju whoami)"
-              JUJU_CONTROLLER="$(echo "$whoami" | grep Controller | tr -s ' ' | cut -d ' ' -f2)"
-              JUJU_MODEL="$(echo "$whoami" | grep Model | tr -s ' ' | cut -d ' ' -f2)"
-
-              if [ -z "$JUJU_MODEL" ]; then
-                echo "$JUJU_CONTROLLER"
-              else
-                echo "$JUJU_MODEL ($JUJU_CONTROLLER)"
-              fi
-            '';
-          };
-        in {
-          disabled = false;
-          when = "builtin type -P juju";
-          command = lib.getExe commandScript;
+            text = builtins.readFile ./juju-prompt.sh;
+          });
           format = "on [$symbol($output)]($style)";
           symbol = " ";
           style = "bold fg:208";
@@ -104,19 +84,14 @@
       };
 
       time = {
-        format = "\\\[[$time]($style)\\\]";
+        format = "\\[[$time]($style)\\]";
         disabled = false;
       };
 
-      # Cloud
-      gcloud = {
-        format = "on [$symbol$active(/$project)(\\($region\\))]($style)";
-      };
-      aws = {
-        format = "on [$symbol$profile(\\($region\\))]($style)";
-      };
+      # Cloud formatting
+      gcloud.format = "on [$symbol$active(/$project)(\\($region\\))]($style)";
+      aws.format = "on [$symbol$profile(\\($region\\))]($style)";
 
-      # Icon changes only \/
       aws.symbol = " ";
       conda.symbol = " ";
       dart.symbol = " ";

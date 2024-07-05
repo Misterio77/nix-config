@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   imports = [
+    ./starship
+
     ./bash.nix
     ./bat.nix
     ./direnv.nix
@@ -13,7 +15,6 @@
     ./pfetch.nix
     ./shellcolor.nix
     ./ssh.nix
-    ./starship.nix
     ./xpo.nix
     ./fzf.nix
     ./jira.nix

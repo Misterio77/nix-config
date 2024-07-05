@@ -25,6 +25,7 @@ in {
       "x-scheme-handler/terminal" = "kitty.desktop";
     };
   };
+  home.sessionVariables.NIX_INSPECT_EXCLUDE = "kitty ncurses imagemagick";
   programs.kitty = {
     enable = true;
     font = {

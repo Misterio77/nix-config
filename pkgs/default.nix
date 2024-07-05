@@ -8,7 +8,6 @@
   hyprbars = pkgs.callPackage ./hyprbars {};
 
   # Personal scripts
-  nix-inspect = pkgs.callPackage ./nix-inspect {};
   pass-wofi = pkgs.callPackage ./pass-wofi {};
   xpo = pkgs.callPackage ./xpo {};
 
