@@ -125,13 +125,13 @@ in {
           format = "{icon}  {volume}%";
           format-muted = "   0%";
           format-icons = {
-            headphone = "󰋋";
-            headset = "󰋎";
-            portable = "";
+            headphone = "󰋋 ";
+            headset = "󰋎 ";
+            portable = " ";
             default = [
-              ""
-              ""
-              ""
+              " "
+              " "
+              " "
             ];
           };
           on-click = lib.getExe pkgs.pavucontrol;
