@@ -1,28 +1,5 @@
 {
   "nodes": {
-    "awscli-console": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1712177337,
-        "narHash": "sha256-g4jauveuma7Re5Mpa3WMy8DTWrs7HnDjYyZt8vG40oE=",
-        "owner": "misterio77",
-        "repo": "awscli-console",
-        "rev": "e453f6e9ea7d3e19af4abefd3619ea2b6bd3b477",
-        "type": "github"
-      },
-      "original": {
-        "owner": "misterio77",
-        "repo": "awscli-console",
-        "type": "github"
-      }
-    },
     "base16-schemes": {
       "flake": false,
       "locked": {
@@ -385,7 +362,6 @@
     },
     "root": {
       "inputs": {
-        "awscli-console": "awscli-console",
         "disconic": "disconic",
         "firefox-addons": "firefox-addons",
         "hardware": "hardware",
