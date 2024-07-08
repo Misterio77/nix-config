@@ -113,7 +113,7 @@
     extraConfig = let
       # Collect all addresses and aliases
       addresses = lib.flatten (
-        lib.mapAttrsToList (n: v: [v.address] ++ v.aliases) config.accounts.email.accounts
+        lib.mapAttrsToList (_: v: [v.address] ++ v.aliases) config.accounts.email.accounts
       );
     in
       ''

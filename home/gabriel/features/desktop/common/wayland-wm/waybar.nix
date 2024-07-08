@@ -30,6 +30,7 @@
     percentage ? "",
   }:
     mkScript {
+      inherit name;
       deps = [pkgs.jq] ++ deps;
       script = ''
         ${pre}

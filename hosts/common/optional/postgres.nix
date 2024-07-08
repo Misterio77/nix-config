@@ -1,4 +1,4 @@
-{lib, ...}: {
+{
   services.postgresql.enable = true;
 
   environment.persistence = {

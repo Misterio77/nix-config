@@ -1,4 +1,4 @@
-{config, ...}: {
+{
   nix = {
     sshServe = {
       enable = true;

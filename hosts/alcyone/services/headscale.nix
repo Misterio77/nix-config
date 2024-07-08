@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   ...
 }: let
   derpPort = 3478;

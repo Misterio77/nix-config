@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   ...
 }: let
   port = "5232";

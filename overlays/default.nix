@@ -51,7 +51,7 @@ in {
       };
 
     # https://github.com/NixOS/nixpkgs/pull/303472
-    gns3-server = prev.gns3-server.overrideAttrs (oldAttrs: {
+    gns3-server = prev.gns3-server.overrideAttrs (_: {
       makeWrapperArgs = [ "--suffix PATH : ${final.lib.makeBinPath [ final.util-linux ]}" ];
     });
 
@@ -84,7 +84,7 @@ in {
     pass = addPatches prev.pass [./pass-wlclipboard-secret.diff];
 
     hydra_unstable =
-      (prev.hydra_unstable.overrideAttrs (old: {
+      (prev.hydra_unstable.overrideAttrs (_: {
         version = "2024-05-23";
         src = final.fetchFromGitHub {
           owner = "nixos";
