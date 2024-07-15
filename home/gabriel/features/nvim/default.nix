@@ -33,6 +33,8 @@ in {
         "Lets us easily trigger completion from binds
         set wildcharm=<tab>
 
+        "Folding
+        set foldmethod=expr
         "Set fold level to highest in file
         "so everything starts out unfolded at just the right level
         augroup initial_fold
@@ -149,6 +151,10 @@ in {
         add_sign("DiagnosticSignWarn", " ")
         add_sign("DiagnosticSignHint", "󰌶 ")
         add_sign("DiagnosticSignInfo", " ")
+
+        vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        -- When it releases
+        -- vim.opt.foldexpr = "v:lua.vim.treesitter.foldtext()"
       '';
 
     plugins = with pkgs.vimPlugins; [

@@ -7,7 +7,7 @@
   programs.neovim = {
     extraConfig =
       lib.mkAfter # vim
-      
+
       ''
         function! SetCustomKeywords()
           syn match Todo  /TODO/
