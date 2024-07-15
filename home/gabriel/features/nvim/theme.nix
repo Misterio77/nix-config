@@ -24,7 +24,7 @@ in
     hi ErrorMsg      guifg=${c.red} guibg=${c.surface} gui=NONE guisp=NONE
     hi Exception     guifg=${c.red} guibg=NONE gui=NONE guisp=NONE
     hi FoldColumn    guifg=${c.cyan} guibg=${c.surface} gui=NONE guisp=NONE
-    hi Folded        guifg=${c.primary_container} guibg=${c.surface_variant} gui=NONE guisp=NONE
+    hi Folded        guifg=${c.on_primary_container} guibg=${c.primary_container} gui=NONE guisp=NONE
     hi IncSearch     guifg=${c.surface_variant} guibg=${c.primary} gui=NONE guisp=NONE
     hi Italic        guifg=NONE guibg=NONE gui=NONE guisp=NONE
     hi Macro         guifg=${c.red} guibg=NONE gui=NONE guisp=NONE
