@@ -8,7 +8,7 @@
         ExecStart = "${lib.getExe pkgs.waypipe} --socket %h/.waypipe/client.sock client";
         ExecStopPost = "${lib.getExe' pkgs.coreutils "rm"} -f %h/.waypipe/client.sock";
       };
-      Install.WantedBy = ["default.target"];
+      Install.WantedBy = ["graphical-session.target"];
     };
     waypipe-server = {
       Unit.Description = "Runs waypipe on startup to support SSH forwarding";
