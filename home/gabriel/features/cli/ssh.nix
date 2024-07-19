@@ -29,6 +29,7 @@ in {
             host.address = ''/%d/.waypipe/client.sock'';
           }
         ];
+        forwardX11 = true;
         setEnv.WAYLAND_DISPLAY = "wayland-waypipe";
         extraOptions.StreamLocalBindUnlink = "yes";
       };
