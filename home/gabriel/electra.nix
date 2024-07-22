@@ -10,19 +10,8 @@ in {
   home.username = "gabriel";
   home.packages = [nixGL];
 
-  # programs.fish.interactiveShellInit = /* fish */ ''
-  #   set -p LD_LIBRARY_PATH (${lib.getExe nixGL} printenv LD_LIBRARY_PATH)
-  #   set -p LIBGL_DRIVERS_PATH (${lib.getExe nixGL} printenv LIBGL_DRIVERS_PATH)
-  #   set -p LIBVA_DRIVERS_PATH (${lib.getExe nixGL} printenv LIBVA_DRIVERS_PATH)
-  # '';
-
   targets.genericLinux.enable = true;
-
-  programs.git = {
-    userEmail = "gabriel.fontes@luizalabs.com";
-    # Not adding my work email to my gpg, thanks
-    extraConfig.commit.gpgSign = false;
-  };
+  programs.git.includes = [{ path = "~/.config/git/local.conf"; }];
 
   monitors = [{
     name = "eDP-1";
