@@ -8,6 +8,7 @@
     enable = true;
     profiles.gabriel = {
       search = {
+        force = true;
         default = "Kagi";
         privateDefault = "DuckDuckGo";
         order = ["Kagi" "DuckDuckGo" "Google"];
