@@ -1,8 +1,20 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   programs.browserpass.enable = true;
   programs.firefox = {
     enable = true;
     profiles.gabriel = {
+      search = {
+        default = "Kagi";
+        privateDefault = "DuckDuckGo";
+        order = ["Kagi" "DuckDuckGo" "Google"];
+        engines = {
+          "Kagi" = {
+            urls = [{template = "https://kagi.com/search?q={searchTerms}";}];
+            iconUpdateURL = "https://kagi.com/favicon.ico";
+          };
+          "Bing".metaData.hidden = true;
+        };
+      };
       bookmarks = {};
       extensions = with pkgs.inputs.firefox-addons; [
         ublock-origin
@@ -10,18 +22,101 @@
       ];
       bookmarks = {};
       settings = {
+        "browser.startup.homepage" = "about:home";
+
+        # Disable irritating first-run stuff
         "browser.disableResetPrompt" = true;
         "browser.download.panel.shown" = true;
-        "browser.download.useDownloadDir" = false;
-        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.feeds.showFirstRunUI" = false;
+        "browser.messaging-system.whatsNewPanel.enabled" = false;
+        "browser.rights.3.shown" = true;
         "browser.shell.checkDefaultBrowser" = false;
         "browser.shell.defaultBrowserCheckCount" = 1;
-        "browser.startup.homepage" = "https://start.duckduckgo.com";
-        "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"nav-bar":["back-button","forward-button","stop-reload-button","home-button","urlbar-container","downloads-button","library-button","ublock0_raymondhill_net-browser-action","_testpilot-containers-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["save-to-pocket-button","developer-button","ublock0_raymondhill_net-browser-action","_testpilot-containers-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","toolbar-menubar","TabsToolbar","widget-overflow-fixed-list"],"currentVersion":18,"newElementCount":4}'';
-        "dom.security.https_only_mode" = true;
+        "browser.startup.homepage_override.mstone" = "ignore";
+        "browser.uitour.enabled" = false;
+        "startup.homepage_override_url" = "";
+        "toolkit.telemetry.reportingpolicy.firstRun" = false;
+        "trailhead.firstrun.didSeeAboutWelcome" = true;
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "browser.bookmarks.addedImportButton" = true;
+
+        # Don't ask for download dir
+        "browser.download.useDownloadDir" = false;
+
+        # Disable crappy home activity stream page
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts" = false;
+        "browser.newtabpage.blocked" = lib.genAttrs [
+          # Youtube
+          "26UbzFJ7qT9/4DhodHKA1Q=="
+          # Facebook
+          "4gPpjkxgZzXPVtuEoAL9Ig=="
+          # Wikipedia
+          "eV8/WsSLxHadrTL1gAxhug=="
+          # Reddit
+          "gLv0ja2RYVgxKdp0I5qwvA=="
+          # Amazon
+          "K00ILysCaEq8+bEqV/3nuw=="
+          # Twitter
+          "T9nJot5PurhJSy8n038xGA=="
+        ] (_: 1);
+
+        # Disable some telemetry
+        "app.shield.optoutstudies.enabled" = false;
+        # Disable fx accounts
         "identity.fxaccounts.enabled" = false;
-        "privacy.trackingprotection.enabled" = true;
+        # Disable "save password" prompt
         "signon.rememberSignons" = false;
+        # Harden
+        "privacy.trackingprotection.enabled" = true;
+        "dom.security.https_only_mode" = true;
+        # Layout
+        "browser.uiCustomization.state" = ''
+          {
+            "placements": {
+              "widget-overflow-fixed-list": [],
+              "unified-extensions-area": [],
+              "nav-bar": [
+                "back-button",
+                "forward-button",
+                "stop-reload-button",
+                "urlbar-container",
+                "downloads-button",
+                "ublock0_raymondhill_net-browser-action",
+                "_testpilot-containers-browser-action",
+                "reset-pbm-toolbar-button",
+                "unified-extensions-button"
+              ],
+              "toolbar-menubar": [
+                "menubar-items"
+              ],
+              "TabsToolbar": [
+                "tabbrowser-tabs",
+                "new-tab-button",
+                "alltabs-button"
+              ],
+              "PersonalToolbar": [
+                "personal-bookmarks"
+              ]
+            },
+            "seen": [
+              "save-to-pocket-button",
+              "developer-button",
+              "ublock0_raymondhill_net-browser-action",
+              "_testpilot-containers-browser-action"
+            ],
+            "dirtyAreaCache": [
+              "nav-bar",
+              "PersonalToolbar",
+              "toolbar-menubar",
+              "TabsToolbar",
+              "widget-overflow-fixed-list"
+            ],
+            "currentVersion": 20,
+            "newElementCount": 5
+          }
+'';
       };
     };
   };

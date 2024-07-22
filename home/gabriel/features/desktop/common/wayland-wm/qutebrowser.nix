@@ -25,7 +25,20 @@ in {
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
+    searchEngines = rec {
+      kagi = "https://kagi.com/search?q={}";
+      duckduckgo = "https://duckduckgo.com/?q={}";
+      google = "https://google.com/search?hl=en&q={}";
+      k = kagi;
+      ddg = duckduckgo;
+      g = google;
+      DEFAULT = kagi;
+    };
     settings = {
+      url = rec {
+        default_page = "about:blank";
+        start_pages = [default_page];
+      };
       downloads.open_dispatcher = "${lib.getExe pkgs.handlr-regex} open {}";
       editor.command = ["${lib.getExe pkgs.handlr-regex}" "open" "{file}"];
       tabs = {
