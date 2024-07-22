@@ -99,51 +99,20 @@
         "privacy.trackingprotection.enabled" = true;
         "dom.security.https_only_mode" = true;
         # Layout
-        "browser.uiCustomization.state" = ''
-          {
-            "placements": {
-              "widget-overflow-fixed-list": [],
-              "unified-extensions-area": [],
-              "nav-bar": [
-                "back-button",
-                "forward-button",
-                "stop-reload-button",
-                "urlbar-container",
-                "downloads-button",
-                "ublock0_raymondhill_net-browser-action",
-                "_testpilot-containers-browser-action",
-                "reset-pbm-toolbar-button",
-                "unified-extensions-button"
-              ],
-              "toolbar-menubar": [
-                "menubar-items"
-              ],
-              "TabsToolbar": [
-                "tabbrowser-tabs",
-                "new-tab-button",
-                "alltabs-button"
-              ],
-              "PersonalToolbar": [
-                "personal-bookmarks"
-              ]
-            },
-            "seen": [
-              "save-to-pocket-button",
-              "developer-button",
-              "ublock0_raymondhill_net-browser-action",
-              "_testpilot-containers-browser-action"
-            ],
-            "dirtyAreaCache": [
-              "nav-bar",
-              "PersonalToolbar",
-              "toolbar-menubar",
-              "TabsToolbar",
-              "widget-overflow-fixed-list"
-            ],
-            "currentVersion": 20,
-            "newElementCount": 5
-          }
-        '';
+        "browser.uiCustomization.state" = builtins.toJSON {
+          currentVersion = 20;
+          newElementCount = 5;
+          dirtyAreaCache = ["nav-bar" "PersonalToolbar" "toolbar-menubar" "TabsToolbar" "widget-overflow-fixed-list"];
+          placements = {
+            PersonalToolbar = ["personal-bookmarks"];
+            TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
+            nav-bar = ["back-button" "forward-button" "stop-reload-button" "urlbar-container" "downloads-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action" "reset-pbm-toolbar-button" "unified-extensions-button"];
+            toolbar-menubar = ["menubar-items"];
+            unified-extensions-area = [];
+            widget-overflow-fixed-list = [];
+          };
+          seen = ["save-to-pocket-button" "developer-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action"];
+        };
       };
     };
   };
