@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }: let
   derpPort = 3478;
@@ -29,10 +30,14 @@ in {
           "100.77.0.0/24"
           "fd7a:115c:a1e0:77::/64"
         ];
-        derp.server = {
-          enable = true;
-          region_id = 999;
-          stun_listen_addr = "0.0.0.0:${toString derpPort}";
+        derp = {
+          server = {
+            enable = true;
+            region_id = 999;
+            stun_listen_addr = "0.0.0.0:${toString derpPort}";
+          };
+          urls = lib.mkForce [];
+          paths = lib.mkForce [];
         };
       };
     };
