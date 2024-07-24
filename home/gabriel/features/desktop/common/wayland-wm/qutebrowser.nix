@@ -36,7 +36,7 @@ in {
     };
     settings = {
       url = rec {
-        default_page = "about:blank";
+        default_page = "https://kagi.com";
         start_pages = [default_page];
       };
       downloads.open_dispatcher = "${lib.getExe pkgs.handlr-regex} open {}";
