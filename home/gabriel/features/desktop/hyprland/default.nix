@@ -215,9 +215,9 @@ in {
               ",XF86AudioPrev,exec,${playerctl} previous"
               ",XF86AudioPlay,exec,${playerctl} play-pause"
               ",XF86AudioStop,exec,${playerctl} stop"
-              "ALT,XF86AudioNext,exec,${playerctld} shift"
-              "ALT,XF86AudioPrev,exec,${playerctld} unshift"
-              "ALT,XF86AudioPlay,exec,systemctl --user restart playerctld"
+              "SHIFT,XF86AudioNext,exec,${playerctld} shift"
+              "SHIFT,XF86AudioPrev,exec,${playerctld} unshift"
+              "SHIFT,XF86AudioPlay,exec,systemctl --user restart playerctld"
             ]
         )
         ++
