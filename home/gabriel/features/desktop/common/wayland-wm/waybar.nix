@@ -181,7 +181,7 @@ in {
           interval = 10;
           return-type = "json";
           exec = let
-            pingCmd = host: "timeout 2 tailscale ping -c 1 ${host} | tail -1 | cut -d ' ' -f8";
+            pingCmd = host: "timeout 2 tailscale ping --until-direct=false -c 1 ${host} | tail -1 | cut -d ' ' -f8";
             hosts = lib.attrNames outputs.nixosConfigurations;
             homeMachine = "merope";
             remoteMachine = "alcyone";
