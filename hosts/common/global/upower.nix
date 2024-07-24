@@ -1,0 +1,3 @@
+{
+  services.upower.enable = true;
+}
