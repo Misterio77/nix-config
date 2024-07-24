@@ -21,6 +21,8 @@ in {
       "minecraft"
       "mysql"
       "network"
+      "openrazer"
+      "plugdev"
       "podman"
       "video"
       "wheel"

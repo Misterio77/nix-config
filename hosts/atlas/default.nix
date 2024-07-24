@@ -14,6 +14,7 @@
     ../common/users/gabriel
 
     ../common/optional/ckb-next.nix
+    ../common/optional/openrazer.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
