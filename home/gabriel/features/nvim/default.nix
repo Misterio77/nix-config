@@ -34,13 +34,8 @@ in {
         set wildcharm=<tab>
 
         "Folding
-        set foldmethod=expr
-        "Set fold level to highest in file
-        "so everything starts out unfolded at just the right level
-        augroup initial_fold
-          autocmd!
-          autocmd BufWinEnter * let &foldlevel = max(map(range(1, line('$')), 'foldlevel(v:val)'))
-        augroup END
+        set foldmethod=manual
+        "Should be expr, but it's slow. So just use ':set fdm=expr' when it's needed.
 
         "Tabs
         set tabstop=4 "4 char-wide tab
