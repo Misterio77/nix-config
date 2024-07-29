@@ -123,17 +123,19 @@ in {
         };
 
         pulseaudio = {
-          format = "{icon}  {volume}%";
-          format-muted = "   0%";
+          format-source = "󰍬 {volume}%";
+          format-source-muted = "󰍭 0%";
+          format = "{icon} {volume}% {format_source}";
+          format-muted = "{icon} 0% {format_source}";
           format-icons = {
             headphone = "󰋋 ";
-            headset = "󰋎 ";
-            portable = " ";
+            headphone-muted = "󰟎 ";
             default = [
-              " "
-              " "
-              " "
+              "󰕿 "
+              "󰖀 "
+              "󰕾 "
             ];
+            default-muted = "󰸈 ";
           };
           on-click = lib.getExe pkgs.pavucontrol;
         };
