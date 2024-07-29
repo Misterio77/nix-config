@@ -67,10 +67,16 @@ in {
         kb_layout = "br";
         touchpad.disable_while_typing = false;
       };
-      device = [{
-        name = "keychron-keychron-v3";
-        kb_layout = "us_intl";
-      }];
+      device = [
+        {
+          name = "keychron-keychron-v3";
+          kb_layout = "us_intl";
+        }
+        {
+          name = "keychron-keychron-v3-keyboard";
+          kb_layout = "us_intl";
+        }
+      ];
       dwindle = {
         split_width_multiplier = 1.35;
         pseudotile = true;
@@ -200,7 +206,6 @@ in {
           ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
           ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
           ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
-
           "SHIFT,XF86AudioRaiseVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ +5%"
           "SHIFT,XF86AudioLowerVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ -5%"
           "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
@@ -234,9 +239,8 @@ in {
             swaylock = lib.getExe config.programs.swaylock.package;
           in
             lib.optionals config.programs.swaylock.enable [
-              ",XF86Launch5,exec,${swaylock} -S --grace 2"
-              ",XF86Launch4,exec,${swaylock} -S --grace 2"
               "SUPER,backspace,exec,${swaylock} -S --grace 2"
+              "SUPER,XF86Calculator,exec,${swaylock} -S --grace 2"
             ]
         )
         ++
@@ -269,11 +273,10 @@ in {
                 pass-wofi = lib.getExe (pkgs.pass-wofi.override {pass = config.programs.password-store.package;});
               in
                 lib.optionals config.programs.password-store.enable [
-                  ",Scroll_Lock,exec,${pass-wofi}" # fn+k
-                  ",XF86Calculator,exec,${pass-wofi}" # fn+f12
+                  ",XF86Calculator,exec,${pass-wofi}" 
+                  "SHIFT,XF86Calculator,exec,${pass-wofi} fill"
+
                   "SUPER,semicolon,exec,${pass-wofi}"
-                  "SHIFT,Scroll_Lock,exec,${pass-wofi} fill" # fn+k
-                  "SHIFT,XF86Calculator,exec,${pass-wofi} fill" # fn+f12
                   "SHIFTSUPER,semicolon,exec,${pass-wofi} fill"
                 ]
             ) ++ (
