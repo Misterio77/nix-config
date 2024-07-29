@@ -67,6 +67,7 @@ in {
           schemaPath = package: "${package}/share/gsettings-schemas/${package.name}";
         in ''
           makeWrapperArgs+=(
+            --prefix GIO_EXTRA_MODULES : "${final.lib.getLib final.dconf}/lib/gio/modules"
             --prefix XDG_DATA_DIRS : ${schemaPath final.gsettings-desktop-schemas}
             --prefix XDG_DATA_DIRS : ${schemaPath final.gtk3}
           )
