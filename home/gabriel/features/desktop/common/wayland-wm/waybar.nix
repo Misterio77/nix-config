@@ -84,17 +84,14 @@ in {
           "custom/gpu"
           "memory"
           "clock"
-          "pulseaudio"
-          "battery"
           "custom/unread-mail"
-          "custom/gpg-agent"
         ];
 
         modules-right = [
-          # "custom/gammastep" TODO: currently broken for some reason
           "custom/rfkill"
-          "custom/tailscale-ping"
           "network"
+          "pulseaudio"
+          "battery"
           "tray"
           "custom/hostname"
         ];
@@ -176,33 +173,6 @@ in {
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
         };
-        "custom/tailscale-ping" = {
-          interval = 10;
-          return-type = "json";
-          exec = let
-            pingCmd = host: "timeout 2 tailscale ping --until-direct=false -c 1 ${host} | tail -1 | cut -d ' ' -f8";
-            hosts = lib.attrNames outputs.nixosConfigurations;
-            homeMachine = "merope";
-            remoteMachine = "alcyone";
-          in
-            mkScriptJson {
-              deps = [pkgs.tailscale];
-              # Build variables for each host
-              pre = ''
-                ${lib.concatStringsSep "\n" (
-                  map (host: ''
-                    ping_${host}="$(${pingCmd host})" || ping_${host}="Disconnected"
-                  '')
-                  hosts
-                )}
-              '';
-              # Access a remote machine's and a home machine's ping
-              text = "  $ping_${remoteMachine} /   $ping_${homeMachine}";
-              # Show pings from all machines
-              tooltip = lib.concatStringsSep "\n" (map (host: "${host}: $ping_${host}") hosts);
-            };
-          format = "{}";
-        };
         "custom/menu" = {
           interval = 1;
           return-type = "json";
@@ -247,63 +217,6 @@ in {
             "read" = "󰇯";
             "unread" = "󰇮";
             "syncing" = "󰁪";
-          };
-        };
-        "custom/gpg-agent" = {
-          interval = 2;
-          return-type = "json";
-          exec = mkScriptJson {
-            deps = [pkgs.procps pkgs.gnupg];
-            pre = let
-              isUnlocked = "pgrep 'gpg-agent' &> /dev/null && gpg-connect-agent 'scd getinfo card_list' /bye | grep SERIALNO -q";
-            in ''status=$(${isUnlocked} && echo "unlocked" || echo "locked")'';
-            alt = "$status";
-            tooltip = "GPG is $status";
-          };
-          format = "{icon}";
-          format-icons = {
-            "locked" = "";
-            "unlocked" = "";
-          };
-        };
-        "custom/gammastep" = {
-          interval = 5;
-          return-type = "json";
-          exec = mkScriptJson {
-            deps = [pkgs.findutils];
-            pre = ''
-              if unit_status="$(systemctl --user is-active gammastep)"; then
-                period="$(journalctl --user -u gammastep.service -g 'Period: ' | tail -1 | cut -d ':' -f6 | xargs)"
-                status="$unit_status ($period)"
-              else
-                status="$unit_status"
-              fi
-            '';
-            alt = "\${status:-inactive}";
-            tooltip = "Gammastep is $status";
-          };
-          format = "{icon}";
-          format-icons = {
-            "activating" = "󰁪 ";
-            "deactivating" = "󰁪 ";
-            "inactive" = "? ";
-            "active (Night)" = " ";
-            "active (Nighttime)" = " ";
-            "active (Transition (Night)" = " ";
-            "active (Transition (Nighttime)" = " ";
-            "active (Day)" = " ";
-            "active (Daytime)" = " ";
-            "active (Transition (Day)" = " ";
-            "active (Transition (Daytime)" = " ";
-          };
-          on-click = mkScript {
-            script = ''
-              if systemctl --user is-active gammastep; then
-                systemctl --user stop gammastep
-              else
-                systemctl --user start gammastep
-              fi
-            '';
           };
         };
         "custom/currentplayer" = {
