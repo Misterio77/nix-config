@@ -13,11 +13,11 @@
     ../common/global
     ../common/users/gabriel
 
-    ../common/optional/ckb-next.nix
-    ../common/optional/openrazer.nix
+    ../common/optional/peripherals.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
+
     ../common/optional/starcitizen-fixes.nix
   ];
 
@@ -39,11 +39,7 @@
     dconf.enable = true;
   };
 
-  services.hardware.openrgb.enable = true;
-  hardware = {
-    opengl.enable = true;
-    opentabletdriver.enable = true;
-  };
+  hardware.opengl.enable = true;
 
   system.stateVersion = "22.05";
 }

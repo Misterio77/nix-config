@@ -13,11 +13,13 @@
     ../common/global
     ../common/users/gabriel
 
-    ../common/optional/tlp.nix
-    ../common/optional/wireless.nix
+    ../common/optional/peripherals.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
+
+    ../common/optional/tlp.nix
+    ../common/optional/wireless.nix
   ];
 
   networking = {
