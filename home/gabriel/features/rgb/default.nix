@@ -1,14 +1,16 @@
-{config, lib, ...}: let
+{config, lib, pkgs, ...}: let
   inherit (config.colorscheme) colors;
+  setColor = color: "${lib.getExe pkgs.openrgb} --client -c ${lib.removePrefix "#"color} -m static";
 in {
   systemd.user.services.rgb = {
     Unit.Description = "Set RGB colors to match scheme. Requires openrgb.";
     Service = {
       Type = "oneshot";
-      ExecStart = "openrgb --client --color ${lib.removePrefix "#" colors.surface} --mode direct";
-      ExecStop = "openrgb --client --color 000000 --mode direct";
+      ExecStart = setColor colors.inverse_primary;
+      ExecStop = setColor "#000000";
+      Restart = "on-failure";
       RemainAfterExit = true;
-      ExecCondition = "systemctl is-active openrgb";
     };
+    Install.WantedBy = ["default.target"];
   };
 }

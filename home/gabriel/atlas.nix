@@ -14,7 +14,7 @@
   ];
 
   # Purple
-  wallpaper = pkgs.wallpapers.mountain-nebula-purple-pink;
+  wallpaper = pkgs.wallpapers.aenami-lost-in-between;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |
