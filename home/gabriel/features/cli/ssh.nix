@@ -12,12 +12,12 @@ in {
     enable = true;
     matchBlocks = {
       net = {
-        host = builtins.concatStringsSep " " ([
-            "m7.rs"
-            "*.m7.rs"
-            "*.ts.m7.rs"
-          ]
-          ++ hostnames);
+        host = lib.concatStringsSep " " (lib.flatten (map (host: [
+            host
+            "${host}.m7.rs"
+            "${host}.ts.m7.rs"
+          ])
+          hostnames));
         forwardAgent = true;
         remoteForwards = [
           {
@@ -30,6 +30,7 @@ in {
           }
         ];
         forwardX11 = true;
+        forwardX11Trusted = true;
         setEnv.WAYLAND_DISPLAY = "wayland-waypipe";
         extraOptions.StreamLocalBindUnlink = "yes";
       };
