@@ -66,6 +66,7 @@ in {
       input = {
         kb_layout = "br";
         touchpad.disable_while_typing = false;
+        resolve_binds_by_sym = true;
       };
       device = [
         {
@@ -273,7 +274,7 @@ in {
                 pass-wofi = lib.getExe (pkgs.pass-wofi.override {pass = config.programs.password-store.package;});
               in
                 lib.optionals config.programs.password-store.enable [
-                  ",XF86Calculator,exec,${pass-wofi}" 
+                  ",XF86Calculator,exec,${pass-wofi}"
                   "SHIFT,XF86Calculator,exec,${pass-wofi} fill"
 
                   "SUPER,semicolon,exec,${pass-wofi}"
