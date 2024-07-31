@@ -64,6 +64,8 @@
 
         "SUPER,apostrophe,workspace,previous"
         "SUPERSHIFT,apostrophe,workspace,next"
+        "SUPER,grave,workspace,previous"
+        "SUPERSHIFT,grave,workspace,next"
 
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
