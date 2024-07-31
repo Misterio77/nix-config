@@ -37,16 +37,19 @@
 
       {
         plugin = vimtex;
-        config =
+        config = let
+          viewMethod =
+            if config.programs.zathura.enable
+            then "zathura"
+            else "general";
+        in
           /*
           vim
           */
           ''
-            let g:vimtex_view_method = '${
-              if config.programs.zathura.enable
-              then "zathura"
-              else "general"
-            }'
+            let g:vimtex_view_method = '${viewMethod}'
+            "Don't open automatically
+            let g:vimtex_quickfix_mode = 0
           '';
       }
 
