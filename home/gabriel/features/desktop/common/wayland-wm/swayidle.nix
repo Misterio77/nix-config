@@ -41,13 +41,6 @@ in {
         }
       ]
       ++
-      # Mute mic
-      (afterLockTimeout {
-        timeout = 10;
-        command = "${pactl} set-source-mute @DEFAULT_SOURCE@ yes";
-        resumeCommand = "${pactl} set-source-mute @DEFAULT_SOURCE@ no";
-      })
-      ++
       # Turn off displays (hyprland)
       (lib.optionals config.wayland.windowManager.hyprland.enable (afterLockTimeout {
         timeout = 40;
