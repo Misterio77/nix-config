@@ -22,7 +22,7 @@
   mkScriptJson = {
     name ? "script",
     deps ? [],
-    pre ? "",
+    script ? "",
     text ? "",
     tooltip ? "",
     alt ? "",
@@ -33,7 +33,7 @@
       inherit name;
       deps = [pkgs.jq] ++ deps;
       script = ''
-        ${pre}
+        ${script}
         jq -cn \
           --arg text "${text}" \
           --arg tooltip "${tooltip}" \
@@ -88,11 +88,11 @@ in {
         ];
 
         modules-right = [
+          "tray"
           "custom/rfkill"
           "network"
           "pulseaudio"
           "battery"
-          "tray"
           "custom/hostname"
         ];
 
@@ -111,7 +111,7 @@ in {
         };
         "custom/gpu" = {
           interval = 5;
-          exec = mkScript {script = "cat /sys/class/drm/card0/device/gpu_busy_percent";};
+          exec = mkScript {script = "cat /sys/class/drm/card*/device/gpu_busy_percent | head -1";};
           format = "󰒋  {}%";
         };
         memory = {
@@ -179,7 +179,7 @@ in {
           exec = mkScriptJson {
             deps = lib.optional hyprlandCfg.enable hyprlandCfg.package;
             text = "";
-            tooltip = ''$(grep /etc/os-release PRETTY_NAME | cut -d '"' -f2)'';
+            tooltip = ''$(grep PRETTY_NAME /etc/os-release | cut -d '"' -f2)'';
             class = let
               isFullScreen =
                 if hyprlandCfg.enable
@@ -189,15 +189,19 @@ in {
           };
         };
         "custom/hostname" = {
-          exec = mkScript {script = ''echo "$USER@$HOSTNAME"'';};
-          on-click = mkScript {script = "systemctl --user restart waybar";};
+          exec = mkScript {script = ''
+            echo "$USER@$HOSTNAME"
+          '';};
+          on-click = mkScript {script = ''
+            systemctl --user restart waybar
+          '';};
         };
         "custom/unread-mail" = {
           interval = 5;
           return-type = "json";
           exec = mkScriptJson {
             deps = [pkgs.findutils pkgs.procps];
-            pre = ''
+            script = ''
               count=$(find ~/Mail/*/Inbox/new -type f | wc -l)
               if pgrep mbsync &>/dev/null; then
                 status="syncing"
@@ -224,22 +228,17 @@ in {
           return-type = "json";
           exec = mkScriptJson {
             deps = [pkgs.playerctl];
-            pre = ''
-              player="$(playerctl status -f "{{playerName}}" 2>/dev/null || echo "No player active" | cut -d '.' -f1)"
-              count="$(playerctl -l 2>/dev/null | wc -l)"
-              if ((count > 1)); then
-                more=" +$((count - 1))"
-              else
-                more=""
-              fi
+            script = ''
+              all_players=$(playerctl -l 2>/dev/null)
+              selected_player="$(playerctl status -f "{{playerName}}" 2>/dev/null || true)"
+              clean_player="$(echo "$selected_player" | cut -d '.' -f1)"
             '';
-            alt = "$player";
-            tooltip = "$player ($count available)";
-            text = "$more";
+            alt = "$clean_player";
+            tooltip = "$all_players";
           };
           format = "{icon}{}";
           format-icons = {
-            "No player active" = " ";
+            "" = " ";
             "Celluloid" = "󰎁 ";
             "spotify" = "󰓇 ";
             "ncspot" = "󰓇 ";
@@ -251,25 +250,22 @@ in {
             "chromium" = " ";
           };
         };
-        "custom/rfkill" = {
-          interval = 1;
-          exec-if = mkScript {
-            deps = [pkgs.util-linux];
-            script = "rfkill | grep '\<blocked\>'";
-          };
-        };
         "custom/player" = {
           exec-if = mkScript {
             deps = [pkgs.playerctl];
-            script = "playerctl status 2>/dev/null";
+            script = ''
+              selected_player="$(playerctl status -f "{{playerName}}" 2>/dev/null || true)"
+              playerctl status -p "$selected_player" 2>/dev/null
+            '';
           };
-          exec = let
-            format = ''{"text": "{{title}} - {{artist}}", "alt": "{{status}}", "tooltip": "{{title}} - {{artist}} ({{album}})"}'';
-          in
-            mkScript {
-              deps = [pkgs.playerctl];
-              script = "playerctl metadata --format '${format}' 2>/dev/null";
-            };
+          exec = mkScript {
+            deps = [pkgs.playerctl];
+            script = ''
+              selected_player="$(playerctl status -f "{{playerName}}" 2>/dev/null || true)"
+              playerctl metadata -p "$selected_player" \
+                --format '{"text": "{{artist}} - {{title}}", "alt": "{{status}}", "tooltip": "{{artist}} - {{title}} ({{album}})"}' 2>/dev/null
+            '';
+          };
           return-type = "json";
           interval = 2;
           max-length = 30;
@@ -282,6 +278,13 @@ in {
           on-click = mkScript {
             deps = [pkgs.playerctl];
             script = "playerctl play-pause";
+          };
+        };
+        "custom/rfkill" = {
+          interval = 1;
+          exec-if = mkScript {
+            deps = [pkgs.util-linux];
+            script = "rfkill | grep '\<blocked\>'";
           };
         };
       };
