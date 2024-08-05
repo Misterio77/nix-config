@@ -5,9 +5,8 @@
       settings = {
         Detectors.detectors = {
           "ASUS Aura Motherboard" = true;
+          "Razer Naga Epic Chroma" = true;
           "Keychron V3" = true;
-          "OpenRazer" = true;
-          # "Razer Naga Epic Chroma" = true;
         };
         QMKOpenRGBDevices.devices = [{
           name = "Keychron V3";
@@ -20,6 +19,5 @@
   hardware = {
     keyboard.qmk.enable = true;
     opentabletdriver.enable = true;
-    openrazer.enable = true;
   };
 }
