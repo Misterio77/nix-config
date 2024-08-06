@@ -16,7 +16,7 @@ in {
   # The guys over at $WORK don't like me mentioning my work email or hostnames
   # in github :(
   programs.git.includes = [{ path = "local.conf"; }];
-  programs.ssh.includes = "local.conf";
+  programs.ssh.includes = ["local.conf"];
 
   monitors = [{
     name = "eDP-1";
