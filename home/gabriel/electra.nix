@@ -11,7 +11,12 @@ in {
   home.packages = [nixGL];
 
   targets.genericLinux.enable = true;
-  programs.git.includes = [{ path = "~/.config/git/local.conf"; }];
+
+  # Local configuration file overrides for git and SSH
+  # The guys over at $WORK don't like me mentioning my work email or hostnames
+  # in github :(
+  programs.git.includes = [{ path = "local.conf"; }];
+  programs.ssh.includes = "local.conf";
 
   monitors = [{
     name = "eDP-1";
