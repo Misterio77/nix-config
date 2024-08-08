@@ -29,13 +29,9 @@ in {
             type = types.int;
             default = 60;
           };
-          x = mkOption {
-            type = types.int;
-            default = 0;
-          };
-          y = mkOption {
-            type = types.int;
-            default = 0;
+          position = mkOption {
+            type = types.str;
+            default = "auto";
           };
           enabled = mkOption {
             type = types.bool;

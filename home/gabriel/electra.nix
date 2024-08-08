@@ -18,13 +18,22 @@ in {
   programs.git.includes = [{ path = "local.conf"; }];
   programs.ssh.includes = ["local.conf"];
 
-  monitors = [{
-    name = "eDP-1";
-    width = 1920;
-    height = 1080;
-    workspace = "1";
-    primary = true;
-  }];
+  monitors = [
+    {
+      name = "eDP-1";
+      width = 1920;
+      height = 1080;
+      workspace = "1";
+      primary = true;
+    }
+    {
+      name = "HDMI-A-1";
+      width = 1920;
+      height = 1080;
+      workspace = "2";
+      position = "auto-left";
+    }
+  ];
   # Green
   wallpaper = pkgs.wallpapers.aenami-northern-lights;
   colorscheme.type = "rainbow";
