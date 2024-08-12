@@ -1,0 +1,31 @@
+diff --git a/src/plugins/platformthemes/gtk2/gtk2.json b/src/plugins/platformthemes/gtk2/gtk2.json
+index 86dd8e5..178db4b 100644
+--- a/src/plugins/platformthemes/gtk2/gtk2.json
++++ b/src/plugins/platformthemes/gtk2/gtk2.json
+@@ -1,3 +1,3 @@
+ {
+-    "Keys": [ "gtk2" ]
++    "Keys": [ "gtk2", "gtk3" ]
+ }
+diff --git a/src/plugins/styles/gtk2/gtk2.json b/src/plugins/styles/gtk2/gtk2.json
+index 86dd8e5..178db4b 100644
+--- a/src/plugins/styles/gtk2/gtk2.json
++++ b/src/plugins/styles/gtk2/gtk2.json
+@@ -1,3 +1,3 @@
+ {
+-    "Keys": [ "gtk2" ]
++    "Keys": [ "gtk2", "gtk3" ]
+ }
+diff --git a/src/plugins/styles/gtk2/plugin.cpp b/src/plugins/styles/gtk2/plugin.cpp
+index cfd73a3..8aeeac9 100644
+--- a/src/plugins/styles/gtk2/plugin.cpp
++++ b/src/plugins/styles/gtk2/plugin.cpp
+@@ -47,7 +47,7 @@ public:
+ 
+ QStyle *QGtk2StylePlugin::create(const QString &key)
+ {
+-    if (key == "gtk2")
++    if (key == "gtk2" || key == "gtk3")
+         return new QGtkStyle;
+     return 0;
+ }

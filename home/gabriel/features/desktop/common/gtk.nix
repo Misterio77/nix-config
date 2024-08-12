@@ -86,7 +86,11 @@ in rec {
       );
     };
     iconTheme = {
-      name = "Papirus";
+      name = "Papirus-${
+        if config.colorscheme.mode == "dark"
+        then "Dark"
+        else "Light"
+      }";
       package = pkgs.papirus-icon-theme;
     };
   };
