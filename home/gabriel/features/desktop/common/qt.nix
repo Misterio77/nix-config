@@ -10,4 +10,6 @@
       };
     };
   };
+  # For QT5, GTK2
+  home.packages = [pkgs.libsForQt5.qtstyleplugins];
 }
