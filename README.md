@@ -45,7 +45,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - `pkgs`: My custom packages. Also accessible via `nix build`. You can compose
   these into your own configuration by using my flake's overlay, or consume them through NUR.
 - `templates`: A couple project templates for different languages. Accessible
-  via `nix init`.
+  via `nix flake init`.
 
 
 ## About the installation
