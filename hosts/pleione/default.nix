@@ -49,7 +49,7 @@
     lidSwitchExternalPower = "lock";
   };
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   system.stateVersion = "22.05";
 }

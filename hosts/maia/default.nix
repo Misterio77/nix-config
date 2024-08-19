@@ -44,9 +44,7 @@
       prime.offload.enable = false;
       modesetting.enable = true;
     };
-    opengl = {
-      enable = true;
-    };
+    graphics.enable = true;
   };
 
   system.stateVersion = "22.05";
