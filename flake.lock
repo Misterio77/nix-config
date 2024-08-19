@@ -42,11 +42,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1714931374,
-        "narHash": "sha256-ClOLVXhVDV+7W8j+pFAoCG47OGL/BeeZ2+Ack56/YUo=",
+        "lastModified": 1724078696,
+        "narHash": "sha256-wRXF17R3PAPQMezjEp6cgMq/apUa+1yTPgZLHz18HHU=",
         "owner": "misterio77",
         "repo": "disconic",
-        "rev": "1126029498ba1a59bc2096d61d534c1459c18a15",
+        "rev": "ac4ed5d9d7fe5171ec616c039706b332929f30ea",
         "type": "github"
       },
       "original": {
