@@ -98,7 +98,5 @@ in {
       .override {
         nix = final.nixVersions.nix_2_22;
       };
-
-    hyprbars = addPatches prev.hyprbars [./hyprbars-color-windowrules.patch];
   };
 }
