@@ -10,6 +10,7 @@
 in {
   programs.ssh = {
     enable = true;
+    userKnownHostsFile = "~/.ssh/known_hosts.d/hosts";
     matchBlocks = {
       net = {
         host = lib.concatStringsSep " " (lib.flatten (map (host: [
@@ -38,8 +39,8 @@ in {
   };
 
   home.persistence = {
-    "/persist/${config.home.homeDirectory}".files = [
-      ".ssh/known_hosts"
+    "/persist/${config.home.homeDirectory}".directories = [
+      ".ssh/known_hosts.d"
     ];
   };
 }
