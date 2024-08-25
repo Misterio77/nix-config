@@ -178,7 +178,10 @@ in {
         ];
       };
 
-      exec = ["${pkgs.swaybg}/bin/swaybg -i ${config.wallpaper} --mode fill"];
+      exec = [
+        "${pkgs.swaybg}/bin/swaybg -i ${config.wallpaper} --mode fill"
+        "hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}"
+      ];
 
       bind = let
         grimblast = lib.getExe pkgs.grimblast;

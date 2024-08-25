@@ -9,9 +9,8 @@
   vars = ''XDG_DATA_DIRS="$XDG_DATA_DIRS:${lib.concatStringsSep ":" homeSharePaths}" GTK_USE_PORTAL=0'';
 
   gabrielCfg = homeCfgs.gabriel;
-  gtkTheme = gabrielCfg.gtk.theme;
-  iconTheme = gabrielCfg.gtk.iconTheme;
-  wallpaper = gabrielCfg.wallpaper;
+  gtkCfg = gabrielCfg.gtk;
+  fontCfg = gabrielCfg.fontProfiles.regular;
 
   sway-kiosk = command: "${lib.getExe pkgs.sway} --unsupported-gpu --config ${pkgs.writeText "kiosk.config" ''
     output * bg #000000 solid_color
@@ -24,8 +23,10 @@
 in {
   users.extraUsers.greeter = {
     packages = [
-      gtkTheme.package
-      iconTheme.package
+      gtkCfg.theme.package
+      gtkCfg.iconTheme.package
+      gtkCfg.cursorTheme.package
+      fontCfg.package
     ];
     # For caching and such
     home = "/tmp/greeter-home";
@@ -36,11 +37,13 @@ in {
     enable = true;
     settings = {
       GTK = {
-        icon_theme_name = "Papirus";
-        theme_name = gtkTheme.name;
+        theme_name = gtkCfg.theme.name;
+        icon_theme_name = gtkCfg.iconTheme.name;
+        cursor_theme_name = gtkCfg.cursorTheme.name;
+        font_name = "${fontCfg.family} ${toString gtkCfg.font.size}";
       };
       background = {
-        path = wallpaper;
+        path = gabrielCfg.wallpaper;
         fit = "Cover";
       };
     };
