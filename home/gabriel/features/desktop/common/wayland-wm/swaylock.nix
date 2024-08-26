@@ -12,8 +12,8 @@ in {
       effect-blur = "20x3";
       fade-in = 0.1;
 
-      font = config.fontProfiles.regular.family;
-      font-size = 15;
+      font = config.fontProfiles.regular.name;
+      font-size = config.fontProfiles.regular.size + 3;
 
       line-uses-inside = true;
       disable-caps-lock-text = true;

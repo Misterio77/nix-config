@@ -47,8 +47,8 @@ in {
         indicator.width = 0;
       };
       fonts = {
-        default_family = config.fontProfiles.regular.family;
-        default_size = "12pt";
+        default_family = config.fontProfiles.regular.name;
+        default_size = "${toString config.fontProfiles.regular.size}pt";
       };
       colors = {
         webpage.preferred_color_scheme = "auto";

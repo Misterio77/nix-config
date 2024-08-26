@@ -29,8 +29,7 @@ in {
   programs.kitty = {
     enable = true;
     font = {
-      name = config.fontProfiles.monospace.family;
-      size = 12;
+      inherit (config.fontProfiles.monospace) name size;
     };
     keybindings = {
       "ctrl+enter" = "send_text normal clone-in-kitty --type os-window\\r";

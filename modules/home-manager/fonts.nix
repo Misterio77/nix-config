@@ -4,7 +4,7 @@
   ...
 }: let
   mkFontOption = kind: {
-    family = lib.mkOption {
+    name = lib.mkOption {
       type = lib.types.str;
       default = null;
       description = "Family name for ${kind} font profile";
@@ -15,6 +15,12 @@
       default = null;
       description = "Package for ${kind} font profile";
       example = "pkgs.fira-code";
+    };
+    size = lib.mkOption {
+      type = lib.types.int;
+      default = 12;
+      description = "Size in pixels for ${kind} font profile";
+      example = "14";
     };
   };
   cfg = config.fontProfiles;

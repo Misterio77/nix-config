@@ -35,8 +35,8 @@ in {
         bar_height = 25;
         bar_color = rgba config.colorscheme.colors.surface "dd";
         "col.text" = rgb config.colorscheme.colors.primary;
-        bar_text_font = config.fontProfiles.regular.family;
-        bar_text_size = 12;
+        bar_text_font = config.fontProfiles.regular.name;
+        bar_text_size = config.fontProfiles.regular.size;
         bar_part_of_window = true;
         bar_precedence_over_border = true;
         hyprbars-button = let

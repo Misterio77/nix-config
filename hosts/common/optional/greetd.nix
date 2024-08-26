@@ -29,10 +29,10 @@ in {
     enable = true;
     iconTheme = gabrielCfg.gtk.iconTheme;
     theme = gabrielCfg.gtk.theme;
+    font = gabrielCfg.fontProfiles.regular;
     cursorTheme = {
       inherit (gabrielCfg.gtk.cursorTheme) name package;
     };
-    font.name = gabrielCfg.fontProfiles.regular.family;
     settings.background = {
       path = gabrielCfg.wallpaper;
       fit = "Cover";
