@@ -338,35 +338,21 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1720386169,
-        "narHash": "sha256-NGKVY4PjzwAa4upkGtAMz1npHGoRzWotlSnVlqI40mo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "194846768975b7ad2c4988bdb82572c00222c0d7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "paste-misterio-me": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "systems": [
           "systems"
         ]
       },
       "locked": {
-        "lastModified": 1720568674,
-        "narHash": "sha256-zcmXFetjGKlPAYayM+v1ARXIxRoszuD6xjdWxjpRVC4=",
+        "lastModified": 1724680683,
+        "narHash": "sha256-DTg/j7LXvC9TJXn1Idlo9deP5Os+k2iBwK8xIStn1jQ=",
         "owner": "misterio77",
         "repo": "paste.misterio.me",
-        "rev": "43040d3aacec86232410f32022b0203ea40da158",
+        "rev": "8f2af838574cc538f6fe7efb1c6cd425d2cf6ec8",
         "type": "github"
       },
       "original": {

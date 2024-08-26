@@ -64,8 +64,7 @@
     };
     paste-misterio-me = {
       url = "github:misterio77/paste.misterio.me";
-      # TODO: fix for rust 1.80
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
   };
