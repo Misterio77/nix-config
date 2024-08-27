@@ -1,6 +1,4 @@
-{pkgs, lib, config, ...}: let
-  nixGL = pkgs.inputs.nix-gl.nixGLIntel;
-in {
+{pkgs, lib, config, ...}: {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -8,7 +6,11 @@ in {
   ];
   home.persistence."/persist/${config.home.homeDirectory}" = lib.mkForce {};
   home.username = "gabriel";
-  home.packages = [nixGL];
+  home.packages = [
+    pkgs.inputs.nix-gl.nixGLIntel
+    pkgs.juju
+    pkgs.sshuttle
+  ];
 
   targets.genericLinux.enable = true;
 
