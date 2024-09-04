@@ -37,7 +37,7 @@ in {
       [
         {
           timeout = lockTime;
-          command = "${swaylock} -i ${config.wallpaper} --daemonize";
+          command = "${swaylock} -i ${config.wallpaper} --daemonize --grace 15";
         }
       ]
       ++
