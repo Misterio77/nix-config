@@ -124,12 +124,15 @@ in {
       lua
       */
       ''
+        vim.lsp.inlay_hint.enable(true)
+
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
         vim.keymap.set("n", "<space>f", vim.lsp.buf.format, { desc = "Format code" })
         vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
         vim.keymap.set("n", "<space>a", vim.lsp.buf.code_action, { desc = "Code action" })
+        vim.keymap.set("n", "<space>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, { desc = "Toggle inlay hint" })
 
         -- Diagnostic
         vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, { desc = "Floating diagnostic" })

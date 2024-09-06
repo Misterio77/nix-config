@@ -18,8 +18,12 @@
               options["cmd"] = server["document_config"]["default_config"]["cmd"]
             end
             if not options["capabilities"] then
-              options["capabilities"] = require("cmp_nvim_lsp").default_capabilities()
+              options["capabilities"] = {}
             end
+            options["capabilities"] = vim.tbl_extend("keep",
+              options["capabilities"],
+              require("cmp_nvim_lsp").default_capabilities()
+            )
 
             if vim.fn.executable(options["cmd"][1]) == 1 then
               server.setup(options)
@@ -39,7 +43,13 @@
             formatting = { command = { "alejandra" }}
           }}})
           add_lsp(lspconfig.phpactor, {})
-          add_lsp(lspconfig.pylsp, {})
+          add_lsp(lspconfig.pylsp, {
+            capabilities = {
+              experimental = {
+                inlayHintProvider = true,
+              }
+            }
+          })
           add_lsp(lspconfig.solargraph, {})
           add_lsp(lspconfig.terraformls, {})
           add_lsp(lspconfig.texlab, { chktex = {

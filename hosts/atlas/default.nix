@@ -22,6 +22,9 @@
     ../common/optional/starcitizen-fixes.nix
   ];
 
+  environment.systemPackages = with pkgs; [
+    hello
+  ];
   networking = {
     hostName = "atlas";
     useDHCP = true;
