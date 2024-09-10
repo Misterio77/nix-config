@@ -94,7 +94,7 @@ in {
         sweethome3d-tooltips = "title:^(win[0-9])$,class:^(com-eteks-sweethome3d-SweetHome3DBootstrap)$";
         steam = "title:^()$,class:^(steam)$";
         steamGame = "class:^(steam_app_[0-9]*)$";
-        kdeconnect-pointer = "class:^(kdeconnect.daemon)$";
+        kdeconnect-pointer = "class:^(org.kdeconnect.daemon)$";
       in [
         "nofocus, ${sweethome3d-tooltips}"
 
