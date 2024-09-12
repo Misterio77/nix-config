@@ -18,7 +18,6 @@
         libkrb5
         keyutils
         gamescope
-        mangohud
       ];
   };
 
@@ -53,7 +52,6 @@ in {
     steam-with-pkgs
     steam-session
     pkgs.gamescope
-    pkgs.mangohud
     pkgs.protontricks
   ];
   home.persistence = {

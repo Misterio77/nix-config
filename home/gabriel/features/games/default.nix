@@ -3,6 +3,7 @@
     ./lutris.nix
     ./steam.nix
     ./prism-launcher.nix
+    ./mangohud.nix
   ];
   home = {
     packages = with pkgs; [gamescope];
