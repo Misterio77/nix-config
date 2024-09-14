@@ -21,12 +21,11 @@ in {
     ./hyprbars.nix
   ];
 
-  xdg.portal = let
-    hyprland = config.wayland.windowManager.hyprland.package;
-    xdph = pkgs.xdg-desktop-portal-hyprland.override {inherit hyprland;};
-  in {
-    extraPortals = [xdph];
-    configPackages = [hyprland];
+  xdg.portal = {
+    extraPortals = [pkgs.xdg-desktop-portal-wlr];
+    config.hyprland = {
+      default = ["wlr" "gtk"];
+    };
   };
 
   home.packages = with pkgs; [
