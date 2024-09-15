@@ -9,7 +9,6 @@
       inputs.home-manager.nixosModules.home-manager
       ./acme.nix
       ./auto-upgrade.nix
-      ./fish.nix
       ./locale.nix
       ./nix.nix
       ./openssh.nix

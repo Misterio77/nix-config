@@ -29,6 +29,13 @@ in {
         Whether to enable Zsh integration.
       '';
     };
+    enableNushellIntegration = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+      description = ''
+        Whether to enable Nushell integration.
+      '';
+    };
     enableFishIntegration = lib.mkOption {
       default = true;
       type = lib.types.bool;
@@ -97,6 +104,10 @@ in {
         ${package}/bin/shellcolord $$ & disown
       ''
     );
+
+    programs.nushell.configFile.text = lib.mkIf cfg.enableNushellIntegration (lib.mkBefore ''
+      sh -c $"${package}/bin/shellcolord ($nu.pid) & disown"
+    '');
 
     programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration (
       lib.mkBefore ''

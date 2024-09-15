@@ -9,7 +9,7 @@ in {
   users.mutableUsers = false;
   users.users.gabriel = {
     isNormalUser = true;
-    shell = pkgs.fish;
+    shell = pkgs.nushell;
     extraGroups = ifTheyExist [
       "audio"
       "deluge"

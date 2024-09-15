@@ -1,14 +1,9 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{config, ...}: {
   imports = [./packages.nix];
 
   users.mutableUsers = false;
   users.users.layla = {
     isNormalUser = true;
-    shell = pkgs.fish;
     extraGroups = [
       "wheel"
       "video"
