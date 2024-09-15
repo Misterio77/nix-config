@@ -226,5 +226,7 @@ in {
           }
         '';
     }
+    hunk-nvim
+    nui-nvim
   ];
 }

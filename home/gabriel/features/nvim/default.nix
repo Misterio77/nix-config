@@ -156,7 +156,6 @@ in {
       '';
 
     plugins = with pkgs.vimPlugins; [
-      hunk-nvim
       vim-table-mode
       editorconfig-nvim
       vim-surround
