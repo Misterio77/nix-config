@@ -4,4 +4,5 @@
   vim-medieval = pkgs.callPackage ./vim-medieval {};
   mermaid-vim = pkgs.callPackage ./mermaid-vim {};
   nvim-femaco = pkgs.callPackage ./nvim-femaco {};
+  hunk-nvim = pkgs.callPackage ./hunk-nvim {};
 }
