@@ -70,6 +70,7 @@ in {
     ignores = [
       ".direnv"
       "result"
+      ".jj"
     ];
   };
 }
