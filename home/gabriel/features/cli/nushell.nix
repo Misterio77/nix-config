@@ -1,7 +1,7 @@
 {
   programs.nushell = {
     enable = true;
-    configFile.text = /* nu */ ''
+    extraConfig = /* nu */ ''
       def create_left_prompt [] {
           let dir = match (do --ignore-shell-errors { $env.PWD | path relative-to $nu.home-path }) {
               null => $env.PWD
@@ -44,7 +44,7 @@
       $env.PROMPT_COMMAND_RIGHT = { || create_right_prompt }
       $env.PROMPT_INDICATOR = {|| "> " }
       $env.PROMPT_INDICATOR_VI_INSERT = {|| "> " }
-      $env.PROMPT_INDICATOR_VI_NORMAL = {|| "* " }
+      $env.PROMPT_INDICATOR_VI_NORMAL = {|| "| " }
       $env.PROMPT_MULTILINE_INDICATOR = {|| "::: " }
 
       $env.config = {
@@ -58,6 +58,12 @@
           osc133: true,
           osc633: true,
           reset_application_mode: true,
+        },
+        completions: {
+          algorithm: "fuzzy",
+        },
+        history: {
+          sync_on_enter: true,
         },
         hooks: {
           pre_prompt: [{
