@@ -11,8 +11,7 @@
   fileSystems = {
     "/boot" = {
       device = "/dev/disk/by-label/BOOT";
-      fsType = "ext4";
-      neededForBoot = true;
+      fsType = "vfat";
     };
 
     "/firmware" = {
