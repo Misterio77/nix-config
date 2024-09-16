@@ -12,6 +12,13 @@
         ];
         pager = "less -FRX";
       };
+      signing = let
+        gitCfg = config.programs.git.extraConfig;
+      in {
+        backend = "gpg";
+        sign-all = gitCfg.commit.gpgSign;
+        key = gitCfg.user.signing.key;
+      };
     };
   };
 }
