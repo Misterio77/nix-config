@@ -44,6 +44,15 @@
           }}})
           add_lsp(lspconfig.phpactor, {})
           add_lsp(lspconfig.pylsp, {
+            settings = {
+              pylsp = {
+                plugins = {
+                  ruff = {
+                    severities = { ["F401"] = "W" }
+                  }
+                }
+              }
+            },
             capabilities = {
               experimental = {
                 inlayHintProvider = true,
