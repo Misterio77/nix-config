@@ -106,7 +106,7 @@ in {
     );
 
     programs.nushell.configFile.text = lib.mkIf cfg.enableNushellIntegration (lib.mkBefore ''
-      sh -c $"${package}/bin/shellcolord ($nu.pid) & disown"
+      ${pkgs.bash}/bin/bash -c $"${package}/bin/shellcolord ($nu.pid) & disown"
     '');
 
     programs.fish.interactiveShellInit = lib.mkIf cfg.enableFishIntegration (
