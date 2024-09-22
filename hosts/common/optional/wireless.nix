@@ -12,31 +12,31 @@
     enable = true;
     fallbackToWPA2 = false;
     # Declarative
-    environmentFile = config.sops.secrets.wireless.path;
+    secretsFile = config.sops.secrets.wireless.path;
     networks = {
       "JVGCLARO" = {
-        psk = "@JVGCLARO@";
+        pskRaw = "ext:jvgclaro";
       };
       "Kartodrorealm" = {
-        psk = "@KARTODROREALM@";
+        pskRaw = "ext:kartodrorealm";
       };
       "Kartodrorealm-5G" = {
-        psk = "@KARTODROREALM@";
+        pskRaw = "ext:kartodrorealm";
       };
       "CAT_HOUSE" = {
-        psk = "@CAT_HOUSE@";
+        pskRaw = "ext:cat_house";
       };
       "Marcos_2.4Ghz" = {
-        pskRaw = "@MARCOS_24@";
+        pskRaw = "ext:marcos_24";
       };
       "Marcos_5Ghz" = {
-        pskRaw = "@MARCOS_50@";
+        pskRaw = "ext:marcos_50";
       };
       "Misterio" = {
-        pskRaw = "@MISTERIO@";
+        pskRaw = "ext:misterio";
       };
       "VIVOFIBRA-FC41-5G" = {
-        pskRaw = "@MARCOS_SANTOS_5G@";
+        pskRaw = "ext:marcos_santos_5g";
       };
       "eduroam" = {
         authProtocols = ["WPA-EAP"];
@@ -47,7 +47,7 @@
           domain_suffix_match="semfio.usp.br"
           ca_cert="${./eduroam-cert.pem}"
           identity="10856803@usp.br"
-          password="@EDUROAM@"
+          password=ext:eduroam
           phase2="auth=MSCHAPV2"
         '';
       };
