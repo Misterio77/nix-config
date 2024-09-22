@@ -66,7 +66,6 @@ in {
       input = {
         kb_layout = "br";
         touchpad.disable_while_typing = false;
-        resolve_binds_by_sym = true;
       };
       device = [
         {
