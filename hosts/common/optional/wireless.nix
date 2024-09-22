@@ -14,15 +14,6 @@
     # Declarative
     secretsFile = config.sops.secrets.wireless.path;
     networks = {
-      "JVGCLARO" = {
-        pskRaw = "ext:jvgclaro";
-      };
-      "Kartodrorealm" = {
-        pskRaw = "ext:kartodrorealm";
-      };
-      "Kartodrorealm-5G" = {
-        pskRaw = "ext:kartodrorealm";
-      };
       "CAT_HOUSE" = {
         pskRaw = "ext:cat_house";
       };
