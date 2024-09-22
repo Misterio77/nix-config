@@ -106,13 +106,6 @@
           inherit inputs outputs;
         };
       };
-      # Secondary desktop
-      maia = lib.nixosSystem {
-        modules = [./hosts/maia];
-        specialArgs = {
-          inherit inputs outputs;
-        };
-      };
       # Personal laptop
       pleione = lib.nixosSystem {
         modules = [./hosts/pleione];
@@ -157,14 +150,6 @@
       # Main desktop
       "gabriel@atlas" = lib.homeManagerConfiguration {
         modules = [./home/gabriel/atlas.nix ./home/gabriel/nixpkgs.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-      # Secondary desktop
-      "gabriel@maia" = lib.homeManagerConfiguration {
-        modules = [./home/gabriel/maia.nix ./home/gabriel/nixpkgs.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;

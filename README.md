@@ -31,7 +31,6 @@ Looking for something simpler to start out with flakes? Try [my starter config r
     - `optional`: Opt-in configurations my machines can use.
   - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Hyprland
   - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Hyprland
-  - `maia`: Secondary Desktop PC - 16GB RAM, i5 6600, GTX 970 | Server
   - `merope`: Raspberry Pi 4 - 8GB RAM | Server
   - `celaeno`: Oracle Could VPS (Ampere) - 24GB RAM & 4vCPUs | Server
   - `alcyone`: Vultr VPS - 1GB RAM & 1 vCPU | Server

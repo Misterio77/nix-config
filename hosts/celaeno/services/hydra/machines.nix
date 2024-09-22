@@ -42,21 +42,6 @@
       ];
     }
     {
-      uri = "ssh://nix-ssh@maia";
-      systems = [
-        "x86_64-linux"
-        "i686-linux"
-      ];
-      sshKey = config.sops.secrets.nix-ssh-key.path;
-      maxJobs = 8;
-      speedFactor = 100;
-      supportedFeatures = [
-        "kvm"
-        "big-parallel"
-        "nixos-test"
-      ];
-    }
-    {
       uri = "localhost";
       systems = [
         "aarch64-linux"

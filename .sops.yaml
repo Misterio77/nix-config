@@ -7,7 +7,6 @@ keys:
     - &atlas age1hm5lf4qk84r4wh00atn6hpts7mpdx80adq26wht2e5qh9ewvhyaszfv82d
     - &merope age1709qfrwglm75v5x8lpuhryt83k6p6c90npplzzec6a5w8ct93ejscpqpc3
     - &pleione age1j9ld6ey62hqd33xkyd2fg9362k6xhm5gavsrpsfalwpcs8smxfdqpk84a2
-    - &maia age1dn7pkareh83k8el2yt4dmdfdzn7f45fuc785cnnxgzf3h4r5gqhqd4l93h
     - &alcyone age1uxvuygmvwpfjrd9d3ulg6ln8dgvaw4l2c90mw0tr72qg3n8vd9ns3dm000
     - &celaeno age1gxhy9eq38xfplay0kvkeyvsg96g0c4p6rkhajkrj8nc9dswdzqhssgvns0
 
@@ -37,7 +36,6 @@ creation_rules:
       - *atlas
       - *merope
       - *pleione
-      - *maia
       - *alcyone
       - *celaeno
       pgp:
