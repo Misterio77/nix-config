@@ -19,6 +19,21 @@
         sign-all = gitCfg.commit.gpgSign;
         key = gitCfg.user.signing.key;
       };
+      templates = {
+        draft_commit_description = ''
+          concat(
+            description,
+            indent("JJ: ", concat(
+              "\n",
+              "Change summary:\n",
+              indent("     ", diff.summary()),
+              "\n",
+              "Full change:\n",
+              indent("     ", diff.git()),
+            )),
+          )
+        '';
+      };
     };
   };
 }
