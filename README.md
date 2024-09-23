@@ -97,7 +97,7 @@ Most relevant user apps daily drivers:
 - hyprland + swayidle + swaylock
 - waybar
 - neovim
-- nushell
+- fish
 - kitty
 - qutebrowser
 - neomutt + mbsync
