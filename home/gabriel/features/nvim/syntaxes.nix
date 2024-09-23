@@ -3,22 +3,22 @@
   config,
   lib,
   ...
-}: {
+}: let
+  jj-vim = pkgs.writeTextDir "syntax/jj.vim" (lib.readFile ./jj.vim);
+in {
   programs.neovim = {
-    extraConfig =
-      lib.mkAfter # vim
+    extraConfig = lib.mkAfter /* vim */ ''
+      function! SetCustomKeywords()
+        syn match Todo  /TODO/
+        syn match Done  /DONE/
+        syn match Start /START/
+        syn match End   /END/
+      endfunction
 
-      ''
-        function! SetCustomKeywords()
-          syn match Todo  /TODO/
-          syn match Done  /DONE/
-          syn match Start /START/
-          syn match End   /END/
-        endfunction
-
-        autocmd Syntax * call SetCustomKeywords()
-      '';
+      autocmd Syntax * call SetCustomKeywords()
+    '';
     plugins = with pkgs.vimPlugins; [
+      jj-vim
       rust-vim
       dart-vim-plugin
       plantuml-syntax
