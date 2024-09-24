@@ -187,9 +187,7 @@ in {
 
       bind = let
         grimblast = lib.getExe pkgs.grimblast;
-        tesseract = lib.getExe pkgs.tesseract;
         pactl = lib.getExe' pkgs.pulseaudio "pactl";
-        notify-send = lib.getExe' pkgs.libnotify "notify-send";
         defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
         remote = lib.getExe (pkgs.writeShellScriptBin "remote" ''
           socket="$(basename "$(find ~/.ssh -name 'master-gabriel@*' | head -1 | cut -d ':' -f1)")"
@@ -219,8 +217,6 @@ in {
           # Screenshotting
           ",Print,exec,${grimblast} --notify --freeze copy area"
           "SHIFT,Print,exec,${grimblast} --notify --freeze copy output"
-          # To OCR
-          "ALT,Print,exec,${grimblast} --freeze save area - | ${tesseract} - - | wl-copy && ${notify-send} -t 3000 'OCR result copied to buffer'"
         ]
         ++ (
           let

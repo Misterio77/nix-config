@@ -41,7 +41,5 @@
     nix-diff # Differ, more detailed
     nix-output-monitor
     nh # Nice wrapper for NixOS and HM
-
-    ltex-ls # Spell checking LSP
   ];
 }

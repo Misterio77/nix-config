@@ -1,6 +1,5 @@
 {pkgs, config, ...}: {
   imports = [
-    ./lutris.nix
     ./steam.nix
     ./prism-launcher.nix
     ./mangohud.nix
