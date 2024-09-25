@@ -232,8 +232,4 @@ in {
       c.tabs.padding = {"bottom": 10, "left": 10, "right": 10, "top": 10}
     '';
   };
-
-  xdg.configFile."qutebrowser/config.py".onChange = lib.mkForce ''
-    ${pkgs.procps}/bin/pkill -u $USER -HUP qutebrowser || true
-  '';
 }
