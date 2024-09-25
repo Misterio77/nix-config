@@ -85,6 +85,7 @@ in {
           ++ [
             "custom/currentplayer"
             "custom/player"
+            "custom/minicava"
           ];
 
         modules-center = [
@@ -287,6 +288,10 @@ in {
             deps = [pkgs.playerctl];
             script = "playerctl play-pause";
           };
+        };
+        "custom/minicava" = {
+          exec = mkScript {script = lib.getExe pkgs.minicava;};
+          "restart-interval" = 5;
         };
         "custom/rfkill" = {
           interval = 1;
