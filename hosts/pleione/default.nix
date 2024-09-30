@@ -20,8 +20,6 @@
 
     ../common/optional/tlp.nix
     ../common/optional/wireless.nix
-
-    ../common/optional/lxc.nix
   ];
 
   networking = {
