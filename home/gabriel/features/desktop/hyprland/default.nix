@@ -102,13 +102,14 @@ in {
 
         "immediate, ${steamGame}"
 
-        "size 100% 110%, ${kdeconnect-pointer}"
-        "center, ${kdeconnect-pointer}"
+        "size 100% 100%, ${kdeconnect-pointer}"
+        "float, ${kdeconnect-pointer}"
         "nofocus, ${kdeconnect-pointer}"
         "noblur, ${kdeconnect-pointer}"
         "noanim, ${kdeconnect-pointer}"
         "noshadow, ${kdeconnect-pointer}"
         "noborder, ${kdeconnect-pointer}"
+        "plugin:hyprbars:nobar, ${kdeconnect-pointer}"
         "suppressevent fullscreen, ${kdeconnect-pointer}"
 
         "noblur, ${xembedsniproxy}"
