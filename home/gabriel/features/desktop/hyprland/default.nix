@@ -90,6 +90,7 @@ in {
       };
       windowrulev2 = let
         sweethome3d-tooltips = "title:^(win[0-9])$,class:^(com-eteks-sweethome3d-SweetHome3DBootstrap)$";
+        xembedsniproxy = "class:^()$,title:^()$,xwayland:1,floating:1";
         steam = "title:^()$,class:^(steam)$";
         steamGame = "class:^(steam_app_[0-9]*)$";
         kdeconnect-pointer = "class:^(org.kdeconnect.daemon)$";
@@ -109,6 +110,11 @@ in {
         "noshadow, ${kdeconnect-pointer}"
         "noborder, ${kdeconnect-pointer}"
         "suppressevent fullscreen, ${kdeconnect-pointer}"
+
+        "noblur, ${xembedsniproxy}"
+        "opacity 0, ${xembedsniproxy}"
+        "workspace special, ${xembedsniproxy}"
+        "noinitialfocus, ${xembedsniproxy}"
       ] ++ (lib.mapAttrsToList (name: colors:
         "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
       ) remoteColorschemes);
