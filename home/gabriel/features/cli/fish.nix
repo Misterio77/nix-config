@@ -30,36 +30,7 @@ in {
           hash = "sha256-85iU1QzcZmZYGhK30/ZaKwJNLTsx+j3w6St8bFiQWxc=";
         };
       }
-    ] ++ (lib.optional hasAwsCli {
-      name = "aws";
-      src = pkgs.applyPatches {
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-aws";
-          rev = "e53a1de3f826916cb83f6ebd34a7356af8f754d1";
-          hash = "sha256-l17v/aJ4PkjYM8kJDA0zUo87UTsfFqq+Prei/Qq0DRA=";
-        };
-        patches = [
-          (
-            builtins.toFile "fix-complete.diff" /* diff */ ''
-              diff --git a/completions/aws.fish b/completions/aws.fish
-              index fc75188..1e8d931 100644
-              --- a/completions/aws.fish
-              +++ b/completions/aws.fish
-              @@ -1,7 +1,7 @@
-              function __aws_complete
-              if set -q aws_completer_path
-              set -lx COMP_SHELL fish
-              -    set -lx COMP_LINE (commandline -opc)
-              +    set -lx COMP_LINE (commandline -pc)
-
-              if string match -q -- "-*" (commandline -opt)
-              set COMP_LINE $COMP_LINE -
-            ''
-          )
-        ];
-      };
-    });
+    ];
 
     shellAbbrs = rec {
       jqless = "jq -C | less -r";
