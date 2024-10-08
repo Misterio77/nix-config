@@ -98,7 +98,7 @@ Most relevant user apps daily drivers:
 - waybar
 - neovim
 - fish
-- kitty
+- alacritty
 - qutebrowser
 - neomutt + mbsync
 - khal + khard + todoman + vdirsyncer

@@ -1,8 +1,8 @@
 {pkgs, ...}: {
   imports = [
+    ./alacritty.nix
     ./cliphist.nix
     ./gammastep.nix
-    ./kitty.nix
     ./mako.nix
     ./qutebrowser.nix
     ./swayidle.nix

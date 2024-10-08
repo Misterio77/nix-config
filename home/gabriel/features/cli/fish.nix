@@ -14,7 +14,6 @@
   hasNeovim = config.programs.neovim.enable;
   hasEmacs = config.programs.emacs.enable;
   hasNeomutt = config.programs.neomutt.enable;
-  hasKitty = config.programs.kitty.enable;
 in {
   programs.fish = {
     enable = true;
@@ -62,9 +61,6 @@ in {
       mutt = mkIf hasNeomutt "neomutt";
       m = mutt;
 
-      cik = mkIf hasKitty "clone-in-kitty --type os-window";
-      ck = cik;
-
       aws-switch = mkIf hasAwsCli "export AWS_PROFILE=(aws configure list-profiles | fzf)";
       awssw = aws-switch;
     };
@@ -109,12 +105,6 @@ in {
       ''
         # Open command buffer in vim when alt+e is pressed
         bind \ee edit_command_buffer
-
-        # kitty integration
-        set --global KITTY_INSTALLATION_DIR "${pkgs.kitty}/lib/kitty"
-        set --global KITTY_SHELL_INTEGRATION enabled
-        source "$KITTY_INSTALLATION_DIR/shell-integration/fish/vendor_conf.d/kitty-shell-integration.fish"
-        set --prepend fish_complete_path "$KITTY_INSTALLATION_DIR/shell-integration/fish/vendor_completions.d"
 
         # Use vim bindings and cursors
         fish_vi_key_bindings
