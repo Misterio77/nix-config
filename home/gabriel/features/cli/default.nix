@@ -12,7 +12,6 @@
     ./nushell.nix
     ./nix-index.nix
     ./pfetch.nix
-    ./shellcolor.nix
     ./ssh.nix
     ./xpo.nix
     ./fzf.nix
