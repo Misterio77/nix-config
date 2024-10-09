@@ -11,6 +11,7 @@
     ./jujutsu.nix
     ./lyrics.nix
     ./nushell.nix
+    ./carapace.nix
     ./nix-index.nix
     ./pfetch.nix
     ./ssh.nix
