@@ -31,7 +31,7 @@
           foreground = config.colorscheme.colors.on_surface;
         };
         normal = {
-          black = config.colorscheme.colors.surface_bright;
+          black = config.colorscheme.colors.surface_dim;
           white = config.colorscheme.colors.on_surface;
           red = config.colorscheme.harmonized.red;
           green = config.colorscheme.harmonized.green;
@@ -41,7 +41,9 @@
           cyan = config.colorscheme.harmonized.cyan;
         };
         # TODO make actual bright variants
-        bright = normal;
+        bright = normal // {
+          black = config.colorscheme.colors.on_surface_variant;
+        };
       };
     };
   };
