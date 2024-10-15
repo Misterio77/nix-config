@@ -212,7 +212,7 @@
     functions = {
       # Improved nix shell
       _tide_item_nix3_shell = /* fish */ ''
-        set packages (set -s PATH | grep "PATH\[.*/nix/store" | cut -d '|' -f2 |  grep -v -e "-man" -e "-terminfo" | perl -pe 's:^/nix/store/\w{32}-([^/]*)/bin$:\1:' | sort | uniq)
+        set packages (nix-inspect)
         if test -n "$IN_NIX_SHELL"
           set -q name; or set name nix-shell
           set -p packages $name
