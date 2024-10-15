@@ -65,10 +65,7 @@ in {
       up-or-search = lib.readFile ./up-or-search.fish;
       # Check stuff in PATH
       nix-inspect = /* fish */ ''
-        set -s PATH | grep "PATH\[.*/nix/store" \
-          | cut -d '|' -f2 |  grep -v -e "-man" -e "-terminfo" -e "-wrapper" \
-          | perl -pe 's:^/nix/store/\w{32}-([^/]*)/bin$:\1:' \
-          | sort | uniq
+        set -s PATH | grep "PATH\[.*/nix/store" | cut -d '|' -f2 |  grep -v -e "-man" -e "-terminfo" | perl -pe 's:^/nix/store/\w{32}-([^/]*)/bin$:\1:' | sort | uniq
       '';
     };
     interactiveShellInit = /* fish */ ''
