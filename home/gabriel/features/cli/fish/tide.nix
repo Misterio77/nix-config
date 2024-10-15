@@ -218,7 +218,7 @@
           set -p packages $name
         end
         if set -q packages[1] &>/dev/null
-          _tide_print_item nix3_shell $tide_nix3_shell_icon' ' " $(string shorten -m $(math --scale=0 "$(tput cols)/2.5") "$packages")"
+          _tide_print_item nix3_shell $tide_nix3_shell_icon' ' " $(string shorten -m 40 "$packages")"
         end
       '';
       # Prompt item for jujutsu VCS
