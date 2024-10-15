@@ -55,7 +55,7 @@
       set -x tide_left_prompt_suffix " "
       
       set -x tide_right_prompt_frame_enabled "false"
-      set -x tide_right_prompt_items status cmd_duration context jobs direnv bun node python rustc java php pulumi ruby go gcloud kubectl distrobox toolbox terraform aws nix_shell crystal elixir zig time
+      set -x tide_right_prompt_items status cmd_duration context jobs direnv bun node python rustc java php pulumi ruby go gcloud kubectl distrobox toolbox terraform aws nix3_shell crystal elixir zig time
       set -x tide_right_prompt_prefix " "
       set -x tide_right_prompt_separator_diff_color " "
       set -x tide_right_prompt_separator_same_color " "
@@ -161,9 +161,9 @@
       set -x tide_kubectl_color "blue"
       set -x tide_kubectl_icon "󱃾"
 
-      set -x tide_nix_shell_bg_color "normal"
-      set -x tide_nix_shell_color "brblue"
-      set -x tide_nix_shell_icon ""
+      set -x tide_nix3_shell_bg_color "normal"
+      set -x tide_nix3_shell_color "brblue"
+      set -x tide_nix3_shell_icon ""
 
       set -x tide_node_bg_color "normal"
       set -x tide_node_color "green"
@@ -210,6 +210,17 @@
       set -x tide_zig_icon ""
     '';
     functions = {
+      # Improved nix shell
+      _tide_item_nix3_shell = /* fish */ ''
+        set packages (set -s PATH | grep "PATH\[.*/nix/store" | cut -d '|' -f2 |  grep -v -e "-man" -e "-terminfo" | perl -pe 's:^/nix/store/\w{32}-([^/]*)/bin$:\1:' | sort | uniq)
+        if test -n "$IN_NIX_SHELL"
+          set -q name; or set name nix-shell
+          set -p packages $name
+        end
+        if set -q packages[1] &>/dev/null
+          _tide_print_item nix3_shell $tide_nix3_shell_icon' ' " $(string shorten -m $(math --scale=0 "$(tput cols)/2.5") "$packages")"
+        end
+      '';
       # Prompt item for jujutsu VCS
       _tide_item_jj = /* fish */ ''
         if not command -sq jj; or not jj root --quiet &>/dev/null
