@@ -53,7 +53,7 @@
       set -x tide_left_prompt_separator_diff_color " "
       set -x tide_left_prompt_separator_same_color " "
       set -x tide_left_prompt_suffix " "
-      
+
       set -x tide_right_prompt_frame_enabled "false"
       set -x tide_right_prompt_items status cmd_duration context jobs direnv bun node python rustc java php pulumi ruby go gcloud kubectl distrobox toolbox terraform aws nix3_shell crystal elixir zig time
       set -x tide_right_prompt_prefix " "
@@ -130,7 +130,7 @@
       set -x tide_distrobox_bg_color "normal"
       set -x tide_distrobox_color "brmagenta"
       set -x tide_distrobox_icon "󰆧"
-      
+
       set -x tide_docker_bg_color "normal"
       set -x tide_docker_color "blue"
       set -x tide_docker_default_contexts default colima
@@ -256,7 +256,7 @@
         ' | string trim)
         _tide_print_item jj $tide_jj_icon' ' (
             set_color black; echo -ns '('
-            set_color white; echo -ns "$(string join ', ' $jj_status)"
+            set_color normal; echo -ns "$(string join ', ' $jj_status)"
             set_color black; echo -ns ')'
         )
       '';
