@@ -165,6 +165,10 @@
       set -x tide_nix3_shell_color "brblue"
       set -x tide_nix3_shell_icon ""
 
+      set -x tide_juju_bg_color "normal"
+      set -x tide_juju_color "yellow"
+      set -x tide_juju_icon ""
+
       set -x tide_node_bg_color "normal"
       set -x tide_node_color "green"
       set -x tide_node_icon ""
@@ -210,6 +214,16 @@
       set -x tide_zig_icon ""
     '';
     functions = {
+      _tide_item_juju = /* fish */ ''
+        if not command -sq juju
+          return 1
+        end
+        set whoami (juju whoami 2>/dev/null | cut -d ':' -f2 | string trim)
+        if test $status -ne 0
+            return 1
+        end
+        _tide_print_item juju $tide_juju_icon' ' "$whoami[1]@$whoami[2]"
+      '';
       # Improved nix shell
       _tide_item_nix3_shell = /* fish */ ''
         set packages (nix-inspect)
