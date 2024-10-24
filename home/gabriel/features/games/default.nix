@@ -3,7 +3,6 @@
     ./steam.nix
     ./prism-launcher.nix
     ./mangohud.nix
-    ./factorio.nix
   ];
   home = {
     packages = with pkgs; [gamescope];
