@@ -2,6 +2,10 @@
   config,
   ...
 }: {
+  hardware.bluetooth = {
+    enable = true;
+  };
+
   # Wireless secrets stored through sops
   sops.secrets.wireless = {
     sopsFile = ../secrets.yaml;
