@@ -243,7 +243,7 @@
 
         set jj_status (jj log -r@ -n1 --ignore-working-copy --no-graph --color always -T '
           separate(" ",
-            branches.map(|x| if(
+            bookmarks.map(|x| if(
               x.name().substr(0, 10).starts_with(x.name()),
               x.name().substr(0, 10),
               x.name().substr(0, 9) ++ "…")
