@@ -5,7 +5,6 @@
     ../../common/optional/postgres.nix
 
     ./grafana
-    ./firefly.nix
     ./cincobola.nix
     ./files-server.nix
     ./git-remote.nix
