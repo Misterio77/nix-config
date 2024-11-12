@@ -10,12 +10,11 @@ in {
       port = 8085;
       address = "127.0.0.1";
       settings = {
-        dns_config = {
+        dns = {
           override_local_dns = true;
-          base_domain = "m7.rs";
+          base_domain = "ts.m7.rs";
           magic_dns = true;
-          domains = ["ts.m7.rs"];
-          nameservers = ["9.9.9.9"];
+          nameservers.global = ["9.9.9.9"];
         };
         server_url = "https://tailscale.m7.rs";
         metrics_listen_addr = "127.0.0.1:8095";
