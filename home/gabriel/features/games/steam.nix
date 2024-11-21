@@ -58,7 +58,10 @@ in {
     "/persist/${config.home.homeDirectory}" = {
       allowOther = true;
       directories = [
-        ".factorio"
+        {
+          directory = ".factorio";
+          method = "bindfs";
+        }
         ".config/Hero_Siege"
         ".config/unity3d/Berserk Games/Tabletop Simulator"
         ".config/unity3d/IronGate/Valheim"
