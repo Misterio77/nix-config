@@ -7,8 +7,6 @@
     ./binary-cache.nix
     ./paste-misterio-me.nix
     ./disconic.nix
-    ./gns3.nix
-
     ./hydra
   ];
 
