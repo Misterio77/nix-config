@@ -6,10 +6,12 @@
   ...
 }: let
   getHostname = x: lib.last (lib.splitString "@" x);
-  remoteColorschemes = lib.mapAttrs' (n: v: {
-    name = getHostname n;
-    value = v.config.colorscheme.rawColorscheme.colors.${config.colorscheme.mode};
-  }) outputs.homeConfigurations;
+  remoteColorschemes =
+    lib.mapAttrs' (n: v: {
+      name = getHostname n;
+      value = v.config.colorscheme.rawColorscheme.colors.${config.colorscheme.mode};
+    })
+    outputs.homeConfigurations;
   rgb = color: "rgb(${lib.removePrefix "#" color})";
   rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
 in {
@@ -94,31 +96,34 @@ in {
         steam = "title:^()$,class:^(steam)$";
         steamGame = "class:^(steam_app_[0-9]*)$";
         kdeconnect-pointer = "class:^(org.kdeconnect.daemon)$";
-      in [
-        "nofocus, ${sweethome3d-tooltips}"
+      in
+        [
+          "nofocus, ${sweethome3d-tooltips}"
 
-        "stayfocused, ${steam}"
-        "minsize 1 1, ${steam}"
+          "stayfocused, ${steam}"
+          "minsize 1 1, ${steam}"
 
-        "immediate, ${steamGame}"
+          "immediate, ${steamGame}"
 
-        "size 100% 100%, ${kdeconnect-pointer}"
-        "float, ${kdeconnect-pointer}"
-        "nofocus, ${kdeconnect-pointer}"
-        "noblur, ${kdeconnect-pointer}"
-        "noanim, ${kdeconnect-pointer}"
-        "noshadow, ${kdeconnect-pointer}"
-        "noborder, ${kdeconnect-pointer}"
-        "plugin:hyprbars:nobar, ${kdeconnect-pointer}"
-        "suppressevent fullscreen, ${kdeconnect-pointer}"
+          "size 100% 100%, ${kdeconnect-pointer}"
+          "float, ${kdeconnect-pointer}"
+          "nofocus, ${kdeconnect-pointer}"
+          "noblur, ${kdeconnect-pointer}"
+          "noanim, ${kdeconnect-pointer}"
+          "noshadow, ${kdeconnect-pointer}"
+          "noborder, ${kdeconnect-pointer}"
+          "plugin:hyprbars:nobar, ${kdeconnect-pointer}"
+          "suppressevent fullscreen, ${kdeconnect-pointer}"
 
-        "noblur, ${xembedsniproxy}"
-        "opacity 0, ${xembedsniproxy}"
-        "workspace special, ${xembedsniproxy}"
-        "noinitialfocus, ${xembedsniproxy}"
-      ] ++ (lib.mapAttrsToList (name: colors:
-        "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
-      ) remoteColorschemes);
+          "noblur, ${xembedsniproxy}"
+          "opacity 0, ${xembedsniproxy}"
+          "workspace special, ${xembedsniproxy}"
+          "noinitialfocus, ${xembedsniproxy}"
+        ]
+        ++ (lib.mapAttrsToList (
+            name: colors: "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
+          )
+          remoteColorschemes);
       layerrule = [
         "animation fade,hyprpicker"
         "animation fade,selection"
@@ -148,6 +153,13 @@ in {
           new_optimizations = true;
           ignore_opacity = true;
           popups = true;
+        };
+        shadow = {
+          enabled = true;
+          offset = "3 3";
+          range = 12;
+          color = "0x44000000";
+          color_inactive = "0x66000000";
         };
         drop_shadow = true;
         shadow_range = 12;
@@ -288,13 +300,14 @@ in {
                   "SUPER,semicolon,exec,${pass-wofi}"
                   "SHIFTSUPER,semicolon,exec,${pass-wofi} fill"
                 ]
-            ) ++ (
+            )
+            ++ (
               let
                 cliphist = lib.getExe config.services.cliphist.package;
               in
-              lib.optionals config.services.cliphist.enable [
-                ''SUPER,c,exec,selected=$(${cliphist} list | ${wofi} -S dmenu) && echo "$selected" | ${cliphist} decode | wl-copy''
-              ]
+                lib.optionals config.services.cliphist.enable [
+                  ''SUPER,c,exec,selected=$(${cliphist} list | ${wofi} -S dmenu) && echo "$selected" | ${cliphist} decode | wl-copy''
+                ]
             )
         );
 
@@ -304,10 +317,22 @@ in {
           inherit (config.programs.waybar.settings.primary) position height width;
           gap = gaps_out - gaps_in;
         in {
-          top = if (position == "top") then height + gap else 0;
-          bottom = if (position == "bottom") then height + gap else 0;
-          left = if (position == "left") then width + gap else 0;
-          right = if (position == "right") then width + gap else 0;
+          top =
+            if (position == "top")
+            then height + gap
+            else 0;
+          bottom =
+            if (position == "bottom")
+            then height + gap
+            else 0;
+          left =
+            if (position == "left")
+            then width + gap
+            else 0;
+          right =
+            if (position == "right")
+            then width + gap
+            else 0;
         };
       in
         [
