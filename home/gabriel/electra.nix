@@ -10,6 +10,8 @@
     pkgs.inputs.nix-gl.nixGLIntel
     pkgs.juju
     pkgs.sshuttle
+    pkgs.charmcraft
+    pkgs.lxd-lts
   ];
 
   targets.genericLinux.enable = true;
