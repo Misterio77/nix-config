@@ -96,6 +96,7 @@ in {
         steam = "title:^()$,class:^(steam)$";
         steamGame = "class:^(steam_app_[0-9]*)$";
         kdeconnect-pointer = "class:^(org.kdeconnect.daemon)$";
+        wineTray ="class:^(explorer.exe)$";
       in
         [
           "nofocus, ${sweethome3d-tooltips}"
@@ -119,6 +120,8 @@ in {
           "opacity 0, ${xembedsniproxy}"
           "workspace special, ${xembedsniproxy}"
           "noinitialfocus, ${xembedsniproxy}"
+
+          "workspace special, ${wineTray}"
         ]
         ++ (lib.mapAttrsToList (
             name: colors: "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
