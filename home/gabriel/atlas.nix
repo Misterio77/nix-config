@@ -10,6 +10,7 @@
     ./features/productivity
     ./features/pass
     ./features/games
+    ./features/games/star-citizen.nix
   ];
 
   # Purple
