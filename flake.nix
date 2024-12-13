@@ -46,7 +46,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming = {
-      url = "github:fufexan/nix-gaming";
+      # url = "github:fufexan/nix-gaming";
+      url = "github:misterio77/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
