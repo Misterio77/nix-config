@@ -2,8 +2,8 @@
   fontProfiles = {
     enable = true;
     monospace = {
-      name = "FiraCode Nerd Font";
-      package = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+      name = "FiraMono Nerd Font";
+      package = pkgs.nerd-fonts.fira-mono;
     };
     regular = {
       name = "Fira Sans";
