@@ -54,7 +54,7 @@ in {
         border_size = 2;
         "col.active_border" = rgba config.colorscheme.colors.primary "aa";
         "col.inactive_border" = rgba config.colorscheme.colors.surface "aa";
-        allow_tearing = true;
+        # allow_tearing = true;
       };
       cursor.inactive_timeout = 4;
       group = {
