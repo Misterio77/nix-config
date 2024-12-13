@@ -97,6 +97,7 @@ in {
         steamGame = "class:^(steam_app_[0-9]*)$";
         kdeconnect-pointer = "class:^(org.kdeconnect.daemon)$";
         wineTray ="class:^(explorer.exe)$";
+        rsiLauncher ="class:^(rsi launcher.exe)$";
       in
         [
           "nofocus, ${sweethome3d-tooltips}"
@@ -122,6 +123,8 @@ in {
           "noinitialfocus, ${xembedsniproxy}"
 
           "workspace special silent, ${wineTray}"
+
+          "tile, ${rsiLauncher}"
         ]
         ++ (lib.mapAttrsToList (
             name: colors: "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
