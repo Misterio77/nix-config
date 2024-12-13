@@ -50,11 +50,11 @@ in {
           maximizeAction = "hyprctl dispatch fullscreen 1";
         in [
           # Red close button
-          "${rgb config.colorscheme.harmonized.red},12,,${closeAction}"
+          "${rgb config.colorscheme.colors.red},12,,${closeAction}"
           # Yellow "minimize" (send to special workspace) button
-          "${rgb config.colorscheme.harmonized.yellow},12,,${minimizeAction}"
+          "${rgb config.colorscheme.colors.yellow},12,,${minimizeAction}"
           # Green "maximize" (fullscreen) button
-          "${rgb config.colorscheme.harmonized.green},12,,${maximizeAction}"
+          "${rgb config.colorscheme.colors.green},12,,${maximizeAction}"
         ];
       };
 

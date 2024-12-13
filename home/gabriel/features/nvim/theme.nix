@@ -1,5 +1,5 @@
 scheme: let
-  c = scheme.colors // scheme.harmonized;
+  c = scheme.colors;
   hash = builtins.hashString "md5" (builtins.toJSON scheme.colors);
 in
   /*

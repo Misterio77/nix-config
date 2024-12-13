@@ -33,12 +33,12 @@
         normal = {
           black = config.colorscheme.colors.surface_dim;
           white = config.colorscheme.colors.on_surface;
-          red = config.colorscheme.harmonized.red;
-          green = config.colorscheme.harmonized.green;
-          yellow = config.colorscheme.harmonized.yellow;
-          blue = config.colorscheme.harmonized.blue;
-          magenta = config.colorscheme.harmonized.magenta;
-          cyan = config.colorscheme.harmonized.cyan;
+          red = config.colorscheme.colors.red;
+          green = config.colorscheme.colors.green;
+          yellow = config.colorscheme.colors.yellow;
+          blue = config.colorscheme.colors.blue;
+          magenta = config.colorscheme.colors.magenta;
+          cyan = config.colorscheme.colors.cyan;
         };
         # TODO make actual bright variants
         bright = normal // {
