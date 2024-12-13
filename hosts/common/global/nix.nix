@@ -1,14 +1,11 @@
 {
   inputs,
   lib,
-  pkgs,
   ...
 }: let
   flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
 in {
   nix = {
-    package = pkgs.nixVersions.nix_2_22;
-
     settings = {
       extra-substituters = lib.mkAfter ["https://cache.m7.rs"];
       extra-trusted-public-keys = ["cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg="];
