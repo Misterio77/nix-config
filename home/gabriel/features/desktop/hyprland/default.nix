@@ -118,10 +118,10 @@ in {
 
           "noblur, ${xembedsniproxy}"
           "opacity 0, ${xembedsniproxy}"
-          "workspace special, ${xembedsniproxy}"
+          "workspace special silent, ${xembedsniproxy}"
           "noinitialfocus, ${xembedsniproxy}"
 
-          "workspace special, ${wineTray}"
+          "workspace special silent, ${wineTray}"
         ]
         ++ (lib.mapAttrsToList (
             name: colors: "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:^(\\[${name}\\])"
