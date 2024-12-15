@@ -79,6 +79,11 @@ in {
 
     pass = addPatches prev.pass [./pass-wlclipboard-secret.diff];
 
+    # https://github.com/ValveSoftware/gamescope/issues/1622
+    gamescope = prev.gamescope.overrideAttrs (_: {
+      NIX_CFLAGS_COMPILE = ["-fno-fast-math"];
+    });
+
     hydra_unstable = prev.hydra_unstable.overrideAttrs (_: {
       patches = [./hydra-restrict-eval.diff];
     });
