@@ -1,0 +1,32 @@
+{config, ...}: let
+  inherit (config) colorscheme;
+  hash = builtins.hashString "md5" (builtins.toJSON colorscheme.colors);
+in {
+  programs.helix = {
+    enable = true;
+    settings = {
+      theme = "nix-${hash}";
+      editor = {
+        color-modes = true;
+        line-number = "relative";
+        indent-guides.render = true;
+        cursor-shape = {
+          normal = "block";
+          insert = "bar";
+          select = "underline";
+        };
+      };
+    };
+    languages = {
+      language = [{
+        name = "nix";
+        language-servers = ["nixd" "nil"];
+      }];
+      language-server.nixd = {
+        command = "nixd";
+        config.formatting.command = "alejandra";
+      };
+    };
+    themes."nix-${hash}" = import ./theme.nix {inherit colorscheme;};
+  };
+}
