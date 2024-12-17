@@ -17,7 +17,16 @@
     ./sublime-music.nix
   ];
 
-  home.packages = [pkgs.libnotify];
+  home.packages = [
+    pkgs.libnotify
+    pkgs.handlr-regex
+    (pkgs.writeShellScriptBin "xterm" ''
+      handlr launch x-scheme-handler/terminal -- "$@"
+    '')
+    (pkgs.writeShellScriptBin "xdg-open" ''
+      handlr open "$@"
+    '')
+  ];
 
   # Also sets org.freedesktop.appearance color-scheme
   dconf.settings."org/gnome/desktop/interface".color-scheme =
