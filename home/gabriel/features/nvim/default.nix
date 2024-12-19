@@ -15,8 +15,6 @@ in {
     ./syntaxes.nix
     ./ui.nix
   ];
-  home.sessionVariables.EDITOR = "nvim";
-
   programs.neovim = {
     enable = true;
 
