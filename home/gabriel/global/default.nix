@@ -10,7 +10,6 @@
     [
       inputs.impermanence.nixosModules.home-manager.impermanence
       ../features/cli
-      ../features/nvim
       ../features/helix
     ]
     ++ (builtins.attrValues outputs.homeManagerModules);
