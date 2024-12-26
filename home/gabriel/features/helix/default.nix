@@ -11,6 +11,7 @@ in {
       editor = {
         color-modes = true;
         line-number = "relative";
+        bufferline = "multiple";
         indent-guides.render = true;
         cursor-shape = {
           normal = "block";
