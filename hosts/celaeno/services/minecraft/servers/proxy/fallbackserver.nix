@@ -22,11 +22,8 @@
             "lobby"
             "limbo"
           ];
-          lobby_command = true;
-          lobby_command_aliases = [
-            "hub"
-            "lobby"
-          ];
+          lobby_command = false;
+          lobby_command_aliases = [];
           server_blacklist = false;
           server_blacklist_list = [];
           stats = true;
@@ -39,6 +36,19 @@
           remove.enabled = false;
           set.enabled = false;
           status.enabled = false;
+        };
+      };
+      "plugins/fallbackservervelocity/messages.yaml".value = {
+        MESSAGES = {
+          prefix = "";
+          moved_to_lobby = [
+            ""
+            "&eVocê foi movido para &b%server%"
+          ];
+        };
+        TITLES = {
+          fallback.enabled = false;
+          lobby.enabled = false;
         };
       };
     };
