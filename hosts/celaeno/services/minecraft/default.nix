@@ -8,7 +8,6 @@
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./servers/proxy
     ./servers/limbo
-    ./servers/lobby
     ./servers/create-above-and-beyond
   ];
 
