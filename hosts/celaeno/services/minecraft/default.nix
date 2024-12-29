@@ -23,6 +23,10 @@
     enable = true;
     eula = true;
     environmentFile = config.sops.secrets.minecraft-secrets.path;
+    managementSystem = {
+      tmux.enable = false;
+      systemd-socket.enable = true;
+    };
   };
 
   services.mysql = {
