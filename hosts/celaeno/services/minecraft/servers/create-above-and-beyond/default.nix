@@ -19,6 +19,10 @@ in {
     };
     operators = import ../../ops.nix;
 
+    # Conflicts with bungeeforge
+    extraStartPre = ''
+      rm mods/connectivity*.jar
+    '';
     files = {
       config = "${modpack}/config";
       defaultconfigs = "${modpack}/defaultconfigs";
