@@ -16,6 +16,7 @@ in {
       server-port = 25575;
       online-mode = false;
       level-type = "biomesoplenty";
+      difficulty = "normal";
     };
     operators = import ../../ops.nix;
 
