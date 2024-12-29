@@ -36,7 +36,7 @@
 
         channels = {
           default = {
-            format = "&7[%servername%] %fullname%&r: ";
+            format = "&7[%servername%] %fullname%&r&f: ";
             broadcast_scope = "GLOBAL";
             log_to_console = true;
             shortcut_commands = [
