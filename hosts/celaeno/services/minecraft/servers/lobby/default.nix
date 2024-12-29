@@ -73,6 +73,12 @@
         url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
         hash = "sha256-kOyHZUZddHWpXy8EqXTUj9r+MrFZD8V33jDgtS9OSGM=";
       };
+      "plugins/ViaRewind.jar" = pkgs.fetchurl rec {
+        pname = "ViaRewind";
+        version = "4.0.4";
+        url = "https://github.com/ViaVersion/${pname}/releases/download/${version}/${pname}-${version}.jar";
+        hash = "sha256-wJlG0D+ev22xUvOucpnccSpjCZtDi9a2OesIU/TJkb8=";
+      };
       "plugins/LuckPerms.jar" = let
         build = "1568";
       in
