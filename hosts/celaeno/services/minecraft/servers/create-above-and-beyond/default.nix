@@ -10,20 +10,8 @@ in {
   services.minecraft-servers.servers.create-ab = {
     enable = true;
     enableReload = true;
-    package = let
-      version = "1.16.5-36.2.34";
-      installer = pkgs.fetchurl {
-        pname = "forge-installer";
-        inherit version;
-        url = "https://maven.minecraftforge.net/net/minecraftforge/forge/${version}/forge-${version}-installer.jar";
-      };
-      java = "${pkgs.jre8}/bin/java";
-    in pkgs.writeShellScriptBin "server" ''
-      ${java} -jar ${installer} --installServer
-      exec ${java} $@ -jar forge-${version}.jar nogui
-    '';
+    package = pkgs.callPackage ./forge-server.nix {};
     jvmOpts = (import ../../aikar-flags.nix) "8G";
-
     serverProperties = {
       server-port = 25575;
       online-mode = false;
