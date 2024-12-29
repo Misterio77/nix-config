@@ -12,6 +12,7 @@ in {
     enableReload = true;
     package = pkgs.callPackage ./forge-server.nix {};
     jvmOpts = (import ../../aikar-flags.nix) "8G";
+    whitelist = import ../../whitelist.nix;
     serverProperties = {
       server-port = 25575;
       online-mode = false;
