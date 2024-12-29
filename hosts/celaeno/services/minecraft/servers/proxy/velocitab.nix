@@ -24,7 +24,7 @@
         groups = [
           {
             name = "default";
-            headers = ["&7FierceLands"];
+            headers = [];
             footers = [];
             format = "&7[%server%] &r%prefix%%username%";
             servers = [];
