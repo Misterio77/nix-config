@@ -22,12 +22,18 @@ in {
     files = {
       config = "${modpack}/config";
       defaultconfigs = "${modpack}/defaultconfigs";
+      kubejs = "${modpack}/kubejs";
     };
     symlinks = collectFilesAt modpack "mods" // {
       "server-icon.png" = "${modpack}/server-icon.png";
-      kubejs = "${modpack}/kubejs";
       openloader = "${modpack}/openloader";
       worldshape = "${modpack}/worldshape";
+      "mods/bungeeforge-1.16.5.jar" = pkgs.fetchurl rec {
+        pname = "bungeeforge";
+        version = "1.0.6";
+        url = "https://github.com/caunt/BungeeForge/releases/download/v${version}/bungeeforge-1.16.5.jar";
+        hash = "sha256-Gtq/b/XqS1WwWA5N0YVJjw6AqJu5qoeNBaFwgjeNpxk=";
+      };
     };
   };
 }
