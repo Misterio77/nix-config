@@ -64,6 +64,12 @@ in {
         url = "https://github.com/wisp-forest/owo-velocity-plugin/releases/download/${version}/${pname}.jar";
         hash = "sha256-aiAlYdJV2tCxaCMWv9S0Opn29aMGHVyPiJ00ePe1CDw=";
       };
+      "plugins/Ambassador-Velocity.jar" = pkgs.fetchurl rec {
+        pname = "Ambassador";
+        version = "1.4.5";
+        url = "https://github.com/adde0109/Ambassador/releases/download/v${version}/Ambassador-Velocity-${version}-all.jar";
+        hash = "sha256-fFemScOUhnLL7zWjuqj3OwRqxQnqj/pu4wCIkNNvLBc=";
+      };
     };
   };
 }
