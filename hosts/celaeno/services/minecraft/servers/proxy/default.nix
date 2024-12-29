@@ -41,6 +41,7 @@ in {
         servers = {
           lobby = "localhost:${toString servers.lobby.serverProperties.server-port}";
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
+          create-ab = "localhost:${toString servers.create-ab.serverProperties.server-port}";
           try = ["lobby"];
         };
         forced-hosts = {};

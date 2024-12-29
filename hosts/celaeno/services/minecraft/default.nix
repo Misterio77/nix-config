@@ -9,6 +9,7 @@
     ./servers/proxy
     ./servers/limbo
     ./servers/lobby
+    ./servers/create-above-and-beyond
   ];
 
   sops.secrets.minecraft-secrets = {
