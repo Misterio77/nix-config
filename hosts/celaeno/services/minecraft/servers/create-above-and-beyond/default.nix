@@ -1,7 +1,5 @@
 {pkgs, inputs, ...}: let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
-  forge = "forge-1.16.5-36.2.20.jar";
-  forgeInstaller = "forge-1.16.5-36.2.20-installer.jar";
   modpack = pkgs.fetchzip {
     url = "https://www.curseforge.com/api/v1/mods/542763/files/3567576/download";
     hash = "sha256-B/fbtYpgGwj+Tcr1gAIpIH60leOrAkzcfIARZQFl5Yk=";
@@ -12,13 +10,17 @@ in {
   services.minecraft-servers.servers.create-ab = {
     enable = true;
     enableReload = true;
-    extraStartPre = ''
-      if ! [ -e "${forge}" ]; then
-        ${pkgs.jre8}/bin/java -jar ${forgeInstaller} --installServer
-      fi
-    '';
-    package = pkgs.writeShellScriptBin "server" ''
-      exec ${pkgs.jre8}/bin/java $@ -jar ${forge} nogui
+    package = let
+      version = "1.16.5-36.2.34";
+      installer = pkgs.fetchurl {
+        pname = "forge-installer";
+        inherit version;
+        url = "https://maven.minecraftforge.net/net/minecraftforge/forge/${version}/forge-${version}-installer.jar";
+      };
+      java = "${pkgs.jre8}/bin/java";
+    in pkgs.writeShellScriptBin "server" ''
+      ${java} -jar ${installer} --installServer
+      exec ${java} $@ -jar forge-${version}.jar nogui
     '';
     jvmOpts = (import ../../aikar-flags.nix) "8G";
 
@@ -33,7 +35,6 @@ in {
       config = "${modpack}/config";
     };
     symlinks = collectFilesAt modpack "mods" // {
-      "${forgeInstaller}" = "${modpack}/${forgeInstaller}";
       "server-icon.png" = "${modpack}/server-icon.png";
       defaultconfigs = "${modpack}/defaultconfigs";
       kubejs = "${modpack}/kubejs";
