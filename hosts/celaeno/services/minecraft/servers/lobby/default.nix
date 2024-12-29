@@ -38,6 +38,10 @@
         };
       };
       "spigot.yml".value = {
+        settings = {
+          bungeecord = true;
+          restart-on-crash = false;
+        };
         messages = {
           whitelist = "Você não está na whitelist!";
           unknown-command = "Comando desconhecido.";
