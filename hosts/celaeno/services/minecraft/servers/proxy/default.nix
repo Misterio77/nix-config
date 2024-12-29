@@ -42,9 +42,11 @@ in {
           lobby = "localhost:${toString servers.lobby.serverProperties.server-port}";
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
           create-ab = "localhost:${toString servers.create-ab.serverProperties.server-port}";
-          try = ["lobby"];
+          try = ["lobby" "limbo"];
         };
-        forced-hosts = {};
+        forced-hosts = {
+          "celaeno.m7.rs" = ["create-ab" "limbo"];
+        };
         query = {
           enabled = true;
           port = 25565;
