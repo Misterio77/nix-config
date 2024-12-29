@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{pkgs, inputs, ...}: let
+  inherit (inputs.nix-minecraft.lib) collectFilesAt;
   forge = "forge-1.16.5-36.2.20.jar";
   forgeInstaller = "forge-1.16.5-36.2.20-installer.jar";
   modpack = pkgs.fetchzip {
@@ -31,12 +32,11 @@ in {
     files = {
       config = "${modpack}/config";
     };
-    symlinks = {
+    symlinks = collectFilesAt modpack "mods" // {
       "${forgeInstaller}" = "${modpack}/${forgeInstaller}";
       "server-icon.png" = "${modpack}/server-icon.png";
       defaultconfigs = "${modpack}/defaultconfigs";
       kubejs = "${modpack}/kubejs";
-      mods = "${modpack}/mods";
       openloader = "${modpack}/openloader";
       worldshape = "${modpack}/worldshape";
     };
