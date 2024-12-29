@@ -21,10 +21,10 @@ in {
 
     files = {
       config = "${modpack}/config";
+      defaultconfigs = "${modpack}/defaultconfigs";
     };
     symlinks = collectFilesAt modpack "mods" // {
       "server-icon.png" = "${modpack}/server-icon.png";
-      defaultconfigs = "${modpack}/defaultconfigs";
       kubejs = "${modpack}/kubejs";
       openloader = "${modpack}/openloader";
       worldshape = "${modpack}/worldshape";
