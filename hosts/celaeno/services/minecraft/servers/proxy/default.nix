@@ -39,14 +39,12 @@ in {
         player-info-forwarding-mode = "legacy";
         online-mode = true;
         servers = {
-          lobby = "localhost:${toString servers.lobby.serverProperties.server-port}";
           limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
+          auth = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
           create-ab = "localhost:${toString servers.create-ab.serverProperties.server-port}";
-          try = ["lobby"];
+          try = ["limbo"];
         };
-        forced-hosts = {
-          "celaeno.m7.rs" = ["create-ab"];
-        };
+        forced-hosts = {};
         query = {
           enabled = true;
           port = 25565;

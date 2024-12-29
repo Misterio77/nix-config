@@ -35,7 +35,7 @@ in {
         default-crypto-provider = "BCrypt-2A";
         fallback = false;
         kick-on-wrong-password = false;
-        limbo = ["limbo"];
+        limbo = ["auth"];
         migration = {};
         milliseconds-to-refresh-notification = 10000;
         minimum-password-length = -1;
