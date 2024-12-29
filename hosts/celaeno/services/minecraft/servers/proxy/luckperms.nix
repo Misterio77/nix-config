@@ -5,7 +5,7 @@
 }: {
   services.minecraft-servers.servers.proxy = rec {
     extraStartPost = ''
-      echo 'lpv import initial.json.gz' > /run/minecraft-server/proxy.stdin
+      echo 'lpv import initial.json.gz' > /run/minecraft/proxy.stdin
     '';
     extraReload = extraStartPost;
 

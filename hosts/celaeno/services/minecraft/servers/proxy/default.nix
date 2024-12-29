@@ -25,7 +25,7 @@ in {
     enableReload = true;
     stopCommand = "end";
     extraReload = ''
-      echo 'velocity reload' > /run/minecraft-server/proxy.stdin
+      echo 'velocity reload' > /run/minecraft/proxy.stdin
     '';
 
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
