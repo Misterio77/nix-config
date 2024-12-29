@@ -58,7 +58,7 @@ in {
         config-version = "1.1";
         disconnect-reset-message = "&ePor favor, reconecte.";
         silence-warnings = true;
-        server-switch-cancellation-time = 120;
+        server-switch-cancellation-time = 1200;
       };
     };
     symlinks = {
