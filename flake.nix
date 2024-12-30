@@ -194,6 +194,14 @@
           inherit inputs outputs;
         };
       };
+      # Build and game server (Magalu Cloud)
+      "gabriel@taygeta" = lib.homeManagerConfiguration {
+        modules = [./home/gabriel/taygeta.nix ./home/gabriel/nixpkgs.nix];
+        pkgs = pkgsFor.aarch64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
       # Media server (RPi)
       "gabriel@merope" = lib.homeManagerConfiguration {
         modules = [./home/gabriel/merope.nix ./home/gabriel/nixpkgs.nix];
