@@ -44,7 +44,10 @@ in {
           create-ab = "localhost:${toString servers.create-ab.serverProperties.server-port}";
           try = ["limbo"];
         };
-        forced-hosts = {};
+        forced-hosts = {
+          "create.mc.m7.rs" = ["create-ab" "limbo"];
+          "create-ab.mc.m7.rs" = ["create-ab" "limbo"];
+        };
         query = {
           enabled = true;
           port = 25565;
