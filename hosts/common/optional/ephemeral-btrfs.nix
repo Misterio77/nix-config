@@ -1,5 +1,6 @@
 # This file contains an ephemeral btrfs root configuration
 # TODO: perhaps partition using disko in the future
+# TODO: set the device through a custom option, or extract from config.disko.devices.disk.<name>.content.partitions.<name>.device
 {
   lib,
   config,
@@ -50,7 +51,7 @@ in {
   };
 
   fileSystems = {
-    "/" = {
+    "/" = lib.mkDefault {
       device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [
@@ -59,7 +60,7 @@ in {
       ];
     };
 
-    "/nix" = {
+    "/nix" = lib.mkDefault {
       device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [
@@ -69,7 +70,7 @@ in {
       ];
     };
 
-    "/persist" = {
+    "/persist" = lib.mkDefault {
       device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [
@@ -79,7 +80,7 @@ in {
       neededForBoot = true;
     };
 
-    "/swap" = {
+    "/swap" = lib.mkDefault {
       device = "/dev/disk/by-label/${hostname}";
       fsType = "btrfs";
       options = [

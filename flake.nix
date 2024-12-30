@@ -43,6 +43,10 @@
       url = "github:misterio77/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Third party programs, packaged with nix
     firefox-addons = {
@@ -127,6 +131,13 @@
       # Build and game server (Oracle)
       celaeno = lib.nixosSystem {
         modules = [./hosts/celaeno];
+        specialArgs = {
+          inherit inputs outputs;
+        };
+      };
+      # Build and game server (Magalu Cloud)
+      taygeta = lib.nixosSystem {
+        modules = [./hosts/taygeta];
         specialArgs = {
           inherit inputs outputs;
         };

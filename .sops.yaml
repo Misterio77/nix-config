@@ -9,8 +9,15 @@ keys:
     - &pleione age1j9ld6ey62hqd33xkyd2fg9362k6xhm5gavsrpsfalwpcs8smxfdqpk84a2
     - &alcyone age1uxvuygmvwpfjrd9d3ulg6ln8dgvaw4l2c90mw0tr72qg3n8vd9ns3dm000
     - &celaeno age1gxhy9eq38xfplay0kvkeyvsg96g0c4p6rkhajkrj8nc9dswdzqhssgvns0
+    - &taygeta age1szxq4pz3wuxrs5ynqt3gys4wxslg27lr67smsqvg5guhap800szs3y73vd
 
 creation_rules:
+  - path_regex: hosts/taygeta/secrets.ya?ml$
+    key_groups:
+    - age:
+      - *taygeta
+      pgp:
+      - *misterio
   - path_regex: hosts/celaeno/secrets.ya?ml$
     key_groups:
     - age:
@@ -38,5 +45,6 @@ creation_rules:
       - *pleione
       - *alcyone
       - *celaeno
+      - *taygeta
       pgp:
       - *misterio
