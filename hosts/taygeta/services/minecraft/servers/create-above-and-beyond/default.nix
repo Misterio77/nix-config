@@ -18,6 +18,7 @@ in {
       online-mode = false;
       level-type = "biomesoplenty";
       difficulty = "normal";
+      max-tick-time = -1;
     };
     operators = import ../../ops.nix;
 
