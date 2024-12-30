@@ -7,6 +7,10 @@
   inherit (lib) mapAttrs' replaceStrings nameValuePair;
 in {
   services.minecraft-servers.servers.proxy = {
+    extraReload = ''
+      echo 'librelogin reload configuration' > /run/minecraft/proxy.stdin
+      echo 'librelogin reload messages' > /run/minecraft/proxy.stdin
+    '';
     symlinks."plugins/LibreLogin.jar" = pkgs.fetchurl rec {
       pname = "LibreLogin";
       version = "0.23.0";
