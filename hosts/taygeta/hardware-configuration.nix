@@ -3,7 +3,7 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     inputs.disko.nixosModules.disko
-    # ../common/optional/ephemeral-btrfs.nix
+    ../common/optional/ephemeral-btrfs.nix
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
