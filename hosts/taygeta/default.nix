@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./services
 
     ../common/global
     ../common/users/gabriel
@@ -11,6 +12,4 @@
     useDHCP = true;
   };
   system.stateVersion = "22.11";
-  # Slows down write operations considerably
-  nix.settings.auto-optimise-store = false;
 }

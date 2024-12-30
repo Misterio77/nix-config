@@ -8,7 +8,6 @@
     ./paste-misterio-me.nix
     ./disconic.nix
     ./hydra
-    ./minecraft
   ];
 
   networking.firewall.allowedTCPPorts = [5432];
