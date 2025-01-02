@@ -46,6 +46,8 @@ in {
         position = "left";
         indicator.width = 0;
       };
+      # Also avoids qutebrowser stealing focus when reloading
+      new_instance_open_target = "window";
       fonts = {
         default_family = config.fontProfiles.regular.name;
         default_size = "${toString config.fontProfiles.regular.size}pt";
