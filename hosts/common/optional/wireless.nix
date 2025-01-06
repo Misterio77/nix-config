@@ -29,6 +29,10 @@
       };
       "Misterio" = {
         pskRaw = "ext:misterio";
+        authProtocols = ["WPA-PSK"];
+        # extraConfig = ''
+        #   mesh_fwding=1
+        # '';
       };
       "VIVOFIBRA-FC41-5G" = {
         pskRaw = "ext:marcos_santos_5g";
