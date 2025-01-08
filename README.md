@@ -16,7 +16,7 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - Deployment **secrets** using **sops-nix**
 - **Mesh networked** hosts with **tailscale** and **headscale**
 - Flexible **Home Manager** Configs through **feature flags**
-- Extensively configured wayland environments (**sway** and **hyprland**) and editor (**neovim**)
+- Extensively configured wayland environments (**sway** and **hyprland**)
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
 - **Hydra CI/CD server and binary cache** that uses the **desktops as remote builders**
 
@@ -96,7 +96,7 @@ Most relevant user apps daily drivers:
 
 - hyprland + swayidle + swaylock
 - waybar
-- neovim
+- helix
 - fish
 - alacritty
 - qutebrowser

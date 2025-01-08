@@ -6,12 +6,9 @@
   inherit (lib) mkIf;
   packageNames = map (p: p.pname or p.name or null) config.home.packages;
   hasPackage = name: lib.any (x: x == name) packageNames;
-  hasRipgrep = hasPackage "ripgrep";
   hasEza = hasPackage "eza";
   hasSpecialisationCli = hasPackage "specialisation";
   hasAwsCli = hasPackage "awscli2";
-  hasNeovim = config.programs.neovim.enable;
-  hasEmacs = config.programs.emacs.enable;
   hasNeomutt = config.programs.neomutt.enable;
 in {
   imports = [./tide.nix];
@@ -40,12 +37,6 @@ in {
       ls = mkIf hasEza "eza";
       exa = ls;
 
-      e = mkIf hasEmacs "emacsclient -t";
-
-      vim = mkIf hasNeovim "nvim";
-      vi = vim;
-      v = vim;
-
       mutt = mkIf hasNeomutt "neomutt";
       m = mutt;
 
@@ -59,8 +50,6 @@ in {
     functions = {
       # Disable greeting
       fish_greeting = "";
-      # Grep using ripgrep and pass to nvim
-      nvimrg = mkIf (hasNeovim && hasRipgrep) "nvim -q (rg --vimgrep $argv | psub)";
       # Merge history when pressing up
       up-or-search = lib.readFile ./up-or-search.fish;
       # Check stuff in PATH
