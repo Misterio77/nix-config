@@ -30,7 +30,7 @@ in {
     };
     type = mkOption {
       type = types.enum (pkgs.generateColorscheme null null).schemeTypes;
-      default = "content";
+      default = "rainbow";
     };
 
     generatedDrv = mkOption {

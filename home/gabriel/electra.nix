@@ -40,5 +40,4 @@
   ];
   # Green
   wallpaper = pkgs.wallpapers.aenami-northern-lights;
-  colorscheme.type = "rainbow";
 }
