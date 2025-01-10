@@ -11,7 +11,10 @@
   hasAwsCli = hasPackage "awscli2";
   hasNeomutt = config.programs.neomutt.enable;
 in {
-  imports = [./tide.nix];
+  imports = [
+    ./tide.nix
+    ./bindings.nix
+  ];
   programs.fish = {
     enable = true;
     shellAbbrs = rec {
@@ -58,15 +61,8 @@ in {
       '';
     };
     interactiveShellInit = /* fish */ ''
-      # Open command buffer in vim when alt+e is pressed
+      # Open command buffer in editor when alt+e is pressed
       bind \ee edit_command_buffer
-
-      # Use vim bindings and cursors
-      fish_vi_key_bindings
-      set fish_cursor_default     block      blink
-      set fish_cursor_insert      line       blink
-      set fish_cursor_replace_one underscore blink
-      set fish_cursor_visual      block
 
       # Use terminal colors
       set -x fish_color_autosuggestion      brblack
