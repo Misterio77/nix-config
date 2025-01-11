@@ -47,9 +47,17 @@
   swayCfg = config.wayland.windowManager.sway;
   hyprlandCfg = config.wayland.windowManager.hyprland;
 in {
-  # Let it try to start a few more times
   systemd.user.services.waybar = {
-    Unit.StartLimitBurst = 30;
+    Unit = {
+      # Let it try to start a few more times
+      StartLimitBurst = 30;
+      # Reload instead of restarting
+      X-Restart-Triggers = lib.mkForce [];
+      X-Reload-Triggers = [
+        "${config.xdg.configFile."waybar/config".source}"
+        "${config.xdg.configFile."waybar/style.css".source}"
+      ];
+    };
   };
   programs.waybar = {
     enable = true;
