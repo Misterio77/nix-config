@@ -11,6 +11,7 @@
     ./features/pass
     ./features/games
     ./features/games/star-citizen.nix
+    ./features/games/shadps4.nix
   ];
 
   # Purple

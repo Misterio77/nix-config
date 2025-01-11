@@ -87,5 +87,15 @@ in {
     hydra_unstable = prev.hydra_unstable.overrideAttrs (_: {
       patches = [./hydra-restrict-eval.diff];
     });
+
+    shadps4 = prev.shadps4.overrideAttrs (old: {
+      dontWrapGApps = true;
+      nativeBuildInputs = [
+        final.wrapGAppsHook
+      ] ++ old.nativeBuildInputs;
+      preFixup = ''
+        qtWrapperArgs+=("''${gappsWrapperArgs[@]}")
+      '';
+    });
   };
 }
