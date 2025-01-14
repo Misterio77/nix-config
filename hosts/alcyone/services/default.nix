@@ -13,7 +13,8 @@
     ./prometheus.nix
     ./radicale.nix
 
-    ./cgit
+    # Disabled for now
+    # ./cgit
     ./website
   ];
 }
