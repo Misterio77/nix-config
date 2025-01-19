@@ -96,6 +96,7 @@ in {
         kdeconnect-pointer = "class:org.kdeconnect.daemon";
         wineTray ="class:explorer.exe";
         rsiLauncher ="class:rsi launcher.exe";
+        steamBigPicture = "title:Steam Big Picture Mode";
       in
         [
           "nofocus, ${sweethome3d-tooltips}"
@@ -115,6 +116,8 @@ in {
           "workspace special silent, ${wineTray}"
 
           "tile, ${rsiLauncher}"
+
+          "fullscreen, ${steamBigPicture}"
         ]
         ++ (lib.mapAttrsToList (
             name: colors: "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:\\[${name}\\].*"
