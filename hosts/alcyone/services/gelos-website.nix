@@ -10,7 +10,6 @@
 in {
   services.nginx.virtualHosts = {
     "gelos.club" = {
-      default = true;
       forceSSL = true;
       enableACME = true;
       locations = {
