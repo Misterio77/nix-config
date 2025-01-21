@@ -75,6 +75,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
+    gelos-site = {
+      url = "github:gelos-icmc/site";
+      # FIXME
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+    gelos-identidade-visual = {
+      url = "github:gelos-icmc/identidade-visual";
+      # FIXME
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {

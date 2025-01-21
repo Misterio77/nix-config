@@ -12,6 +12,7 @@
     ./mail.nix
     ./prometheus.nix
     ./radicale.nix
+    ./gelos-website.nix
 
     # Disabled for now
     # ./cgit
