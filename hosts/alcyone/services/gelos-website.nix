@@ -55,16 +55,6 @@ in {
         "=/if5".return = "301 https://gelos.club/2024/03/01/installfest-2024-1.html";
       };
     };
-    "gelos.icmc.usp.br" = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/".return = "302 https://gelos.club$request_uri";
-    };
-    "galapagos.gelos.icmc.usp.br" = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/".return = "302 https://gelos.club$request_uri";
-    };
 
     "telegram.gelos.club" = {
       forceSSL = true;
