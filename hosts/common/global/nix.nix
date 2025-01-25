@@ -17,7 +17,6 @@ in {
       experimental-features = [
         "nix-command"
         "flakes"
-        "ca-derivations"
       ];
       warn-dirty = false;
       system-features = [
