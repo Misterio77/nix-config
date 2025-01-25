@@ -294,15 +294,16 @@
     },
     "impermanence": {
       "locked": {
-        "lastModified": 1715197858,
-        "narHash": "sha256-a5Ij25qafHePoSlSzAw3OIG0A/r2OC9v+5XBCaRV1O0=",
+        "lastModified": 1737817750,
+        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
         "owner": "misterio77",
         "repo": "impermanence",
-        "rev": "a0593216958c23e44f1d6b2b4124981f011d4d0b",
+        "rev": "8825ba211a9b079f9b0c45d74645cf81b2c82b4a",
         "type": "github"
       },
       "original": {
         "owner": "misterio77",
+        "ref": "hm-default-method",
         "repo": "impermanence",
         "type": "github"
       }
