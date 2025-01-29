@@ -77,11 +77,11 @@ in {
       ];
 
       script = let
-        evalUrl = "${cfg.instance}/jobset/${cfg.project}/${cfg.jobset}/latest-eval";
         buildUrl = "${cfg.instance}/job/${cfg.project}/${cfg.jobset}/${cfg.job}/latest";
       in
         (lib.optionalString (cfg.oldFlakeRef != null) ''
-          flake="$(curl -sLH 'accept: application/json' ${evalUrl} | jq -r '.flake')"
+          eval="$(curl -sLH 'accept: application/json' "${buildUrl}" | jq -r '.jobsetevals[0]')"
+          flake="$(curl -sLH 'accept: application/json' "${cfg.instance}/eval/$eval" | jq -r '.flake')"
           echo "New flake: $flake" >&2
           new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
           echo "Modified at: $(date -d @$new)" >&2
