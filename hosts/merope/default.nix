@@ -37,6 +37,9 @@
     };
   };
 
+  # Avoiding some heavy IO
+  nix.settings.auto-optimise-store = false;
+
   # Enable argonone fan daemon
   services.hardware.argonone.enable = true;
 
