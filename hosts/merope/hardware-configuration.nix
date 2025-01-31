@@ -34,5 +34,5 @@
 
   nixpkgs.hostPlatform.system = "aarch64-linux";
 
-  powerManagement.cpuFreqGovernor = "ondemand";
+  powerManagement.cpuFreqGovernor = "powersave";
 }
