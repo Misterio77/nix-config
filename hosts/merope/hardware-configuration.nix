@@ -18,11 +18,6 @@
       device = "/dev/disk/by-label/FIRMWARE";
       fsType = "vfat";
     };
-
-    "/media" = {
-      device = "/dev/disk/by-label/MEDIA_HDD";
-      fsType = "ext4";
-    };
   };
 
   swapDevices = [

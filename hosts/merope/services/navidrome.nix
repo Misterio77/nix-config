@@ -8,7 +8,7 @@
       settings = {
         Address = "0.0.0.0";
         Port = 4533;
-        MusicFolder = "/media/music";
+        MusicFolder = "/srv/music";
         CovertArtPriority = "*.jpg, *.JPG, *.png, *.PNG, embedded";
         AutoImportPlaylists = false;
         EnableSharing = true;
