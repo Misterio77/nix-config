@@ -15,6 +15,13 @@ in {
           base_domain = "ts.m7.rs";
           magic_dns = true;
           nameservers.global = ["9.9.9.9"];
+          extra_records = [
+            {
+              name = "merope.m7.rs";
+              type = "A";
+              value = "100.77.0.5";
+            }
+          ];
         };
         server_url = "https://tailscale.m7.rs";
         metrics_listen_addr = "127.0.0.1:8095";
