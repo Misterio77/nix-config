@@ -14,8 +14,8 @@
     ./features/games/shadps4.nix
   ];
 
-  # Purple
-  wallpaper = pkgs.wallpapers.aenami-lost-in-between;
+  # Red
+  wallpaper = pkgs.wallpapers.aenami-dawn;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

@@ -8,8 +8,8 @@
     ./features/games
   ];
 
-  # Red
-  wallpaper = pkgs.wallpapers.aenami-dawn;
+  # Purple
+  wallpaper = pkgs.wallpapers.aenami-lost-in-between;
 
   monitors = [
     {
