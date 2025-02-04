@@ -20,8 +20,7 @@ in {
     ../common/wayland-wm
 
     ./basic-binds.nix
-    # FIXME
-    # ./hyprbars.nix
+    ./hyprbars.nix
   ];
 
   xdg.portal = {
