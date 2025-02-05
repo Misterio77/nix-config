@@ -21,13 +21,12 @@
           concat(
             description,
             indent("JJ: ", concat(
-              "\n",
               "Change summary:\n",
               indent("     ", diff.summary()),
-              "\n",
               "Full change:\n",
-              indent("     ", diff.git()),
+              "ignore-rest\n",
             )),
+            diff.git(),
           )
         '';
       };
