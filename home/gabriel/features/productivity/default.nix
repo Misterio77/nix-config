@@ -1,6 +1,7 @@
 {
   imports = [
-    ./khal.nix
+    # TODO: broken
+    # ./khal.nix
     ./khard.nix
     ./todoman.nix
     ./vdirsyncer.nix
