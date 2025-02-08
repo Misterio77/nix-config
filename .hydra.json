@@ -9,18 +9,6 @@
         "schedulingshares": 10,
         "enableemail": false,
         "emailoverride": "",
-        "keepnr": 2
-    },
-   "staging": {
-        "enabled": 1,
-        "type": 1,
-        "hidden": false,
-        "description": "Build staging branch",
-        "flake": "git://m7.rs/nix-config?ref=staging",
-        "checkinterval": 60,
-        "schedulingshares": 5,
-        "enableemail": false,
-        "emailoverride": "",
         "keepnr": 1
     }
 }
