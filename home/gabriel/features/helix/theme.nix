@@ -132,10 +132,12 @@ in {
     bg = c.secondary_container;
   };
   "ui.selection" = {
-    bg = c.on_primary;
+    bg = c.primary_container;
+    fg = c.on_primary_container;
   };
   "ui.selection.primary" = {
-    bg = c.on_primary;
+    bg = c.primary_container;
+    fg = c.on_primary_container;
   };
   "ui.statusline" = {
     fg = c.primary_fixed;
