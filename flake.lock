@@ -702,11 +702,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736864150,
-        "narHash": "sha256-yqFf+MdfZresVm2JFctnAWPv2qLKonQgUv4wBtukW8A=",
+        "lastModified": 1739185160,
+        "narHash": "sha256-+Eg2Hy2fJpCdJo4VccS54j8yulshvqNOIzxNvHW3AVY=",
         "owner": "misterio77",
         "repo": "website",
-        "rev": "2bcce1a0f582e038ec866eb828c2e19ca1baa5d5",
+        "rev": "682612523be9f4fc6b5bd293edbc538542d2cec6",
         "type": "github"
       },
       "original": {
