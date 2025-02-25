@@ -19,8 +19,7 @@
     systems.url = "github:nix-systems/default-linux";
 
     hardware.url = "github:nixos/nixos-hardware";
-    # impermanence.url = "github:nix-community/impermanence";
-    impermanence.url = "github:misterio77/impermanence/hm-default-method";
+    impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -77,13 +76,11 @@
     };
     gelos-site = {
       url = "github:gelos-icmc/site";
-      # FIXME
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     gelos-identidade-visual = {
       url = "github:gelos-icmc/identidade-visual";
-      # FIXME
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
