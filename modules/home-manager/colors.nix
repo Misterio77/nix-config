@@ -8,13 +8,6 @@
   inherit (lib) types mkOption;
 
   hexColor = types.strMatching "#([0-9a-fA-F]{3}){1,2}";
-
-  removeFilterPrefixAttrs = prefix: attrs:
-    lib.mapAttrs' (n: v: {
-      name = lib.removePrefix prefix n;
-      value = v;
-    }) (lib.filterAttrs (n: _: lib.hasPrefix prefix n) attrs);
-
 in {
   options.colorscheme = {
     source = mkOption {
@@ -29,13 +22,13 @@ in {
       default = "dark";
     };
     type = mkOption {
-      type = types.enum (pkgs.generateColorscheme null null).schemeTypes;
+      type = types.str;
       default = "rainbow";
     };
 
     generatedDrv = mkOption {
       type = types.package;
-      default = pkgs.generateColorscheme (cfg.source.name or "default") cfg.source;
+      default = pkgs.inputs.themes.generateColorscheme (cfg.source.name or "default") cfg.source;
     };
     rawColorscheme = mkOption {
       type = types.attrs;

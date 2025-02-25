@@ -9,7 +9,7 @@
   ];
 
   # Purple
-  wallpaper = pkgs.wallpapers.aenami-lost-in-between;
+  wallpaper = pkgs.inputs.themes.wallpapers.aenami-lost-in-between;
 
   monitors = [
     {

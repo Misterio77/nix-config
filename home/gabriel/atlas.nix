@@ -15,7 +15,7 @@
   ];
 
   # Red
-  wallpaper = pkgs.wallpapers.aenami-dawn;
+  wallpaper = pkgs.inputs.themes.wallpapers.aenami-dawn;
 
   #  ------   -----   ------
   # | DP-3 | | DP-1| | DP-2 |

@@ -26,11 +26,11 @@ in {
         {
           name = "nix";
           language-servers = ["nixd" "nil"];
+          formatter.command = "alejandra";
         }
       ];
       language-server.nixd = {
         command = "nixd";
-        config.formatting.command = "alejandra";
       };
     };
     themes."nix-${hash}" = import ./theme.nix {inherit colorscheme;};

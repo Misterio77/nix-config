@@ -39,5 +39,5 @@
     }
   ];
   # Green
-  wallpaper = pkgs.wallpapers.aenami-northern-lights;
+  wallpaper = pkgs.inputs.themes.wallpapers.aenami-northern-lights;
 }

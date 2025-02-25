@@ -59,6 +59,10 @@
     };
 
     # My own programs, packaged with nix
+    themes = {
+      url = "github:misterio77/themes";
+      inputs.systems.follows = "systems";
+    };
     disconic = {
       url = "github:misterio77/disconic";
       inputs.nixpkgs.follows = "nixpkgs";

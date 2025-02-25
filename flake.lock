@@ -478,6 +478,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1740367490,
+        "narHash": "sha256-WGaHVAjcrv+Cun7zPlI41SerRtfknGQap281+AakSAw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "0196c0175e9191c474c26ab5548db27ef5d34b05",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "paste-misterio-me": {
       "inputs": {
         "nixpkgs": [
@@ -521,6 +537,7 @@
         "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
         "systems": "systems_4",
+        "themes": "themes",
         "website": "website"
       }
     },
@@ -601,6 +618,27 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "themes": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1740513031,
+        "narHash": "sha256-zx8w02+vXSgmr/JBIbe4PXT2V0BtKdLblvdQ1TtAJBw=",
+        "owner": "misterio77",
+        "repo": "themes",
+        "rev": "f9a7c19c5bfd10a467ba885785f42026bd06505c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "misterio77",
+        "repo": "themes",
         "type": "github"
       }
     },
