@@ -84,10 +84,6 @@ in {
       NIX_CFLAGS_COMPILE = ["-fno-fast-math"];
     });
 
-    hydra_unstable = prev.hydra_unstable.overrideAttrs (_: {
-      patches = [./hydra-restrict-eval.diff];
-    });
-
     shadps4 = prev.shadps4.overrideAttrs (_: {
       version = "0.5.0-unstable-2025-01-26";
       src = final.fetchFromGitHub {
