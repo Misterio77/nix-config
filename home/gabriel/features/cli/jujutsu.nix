@@ -8,6 +8,7 @@
       };
       ui = {
         pager = "less -FRX";
+        show-cryptographic-signatures = true;
       };
       signing = let
         gitCfg = config.programs.git.extraConfig;
