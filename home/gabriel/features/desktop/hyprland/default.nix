@@ -89,6 +89,9 @@ in {
         focus_on_activate = true;
         # Unfullscreen when opening something
         new_window_takes_over_fullscreen = 2;
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+        disable_hyprland_qtutils_check = true;
       };
       windowrulev2 = let
         sweethome3d-tooltips = "title:win[0-9],class:com-eteks-sweethome3d-SweetHome3DBootstrap";
