@@ -14,7 +14,7 @@ in {
     enable = true;
     settings = {
       # Harden
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       PermitRootLogin = "no";
 
       # Automatically remove stale sockets
