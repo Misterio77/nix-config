@@ -10,6 +10,7 @@ in {
     settings = {
       theme = "nix-${hash}";
       editor = {
+        soft-wrap.enable = true;
         color-modes = true;
         line-number = "relative";
         bufferline = "multiple";
