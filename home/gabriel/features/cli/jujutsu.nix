@@ -17,11 +17,21 @@
         sign-all = gitCfg.commit.gpgSign;
         key = gitCfg.user.signing.key;
       };
+      template-aliases = {
+        "gerrit_change_id(change_id)" = ''
+          "Id0000000" ++ change_id.normal_hex()
+        '';
+      };
       templates = {
         draft_commit_description = ''
           concat(
             description,
             indent("JJ: ", concat(
+              if(
+                !description.contains("Change-Id: "),
+                "Change-Id: " ++ gerrit_change_id(change_id) ++ "\n",
+                "",
+              ),
               "Change summary:\n",
               indent("     ", diff.summary()),
               "Full change:\n",
