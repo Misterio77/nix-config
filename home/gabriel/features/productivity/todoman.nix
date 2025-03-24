@@ -12,4 +12,7 @@
       humanize = True
       default_due = 0
     '';
+  programs.fish.interactiveShellInit = /* fish */ ''
+    complete -xc todo -a '(__fish_complete_bash)'
+  '';
 }
