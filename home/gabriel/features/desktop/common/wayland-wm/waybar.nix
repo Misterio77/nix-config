@@ -53,10 +53,6 @@ in {
       StartLimitBurst = 30;
       # Reload instead of restarting
       X-Restart-Triggers = lib.mkForce [];
-      X-Reload-Triggers = [
-        "${config.xdg.configFile."waybar/config".source}"
-        "${config.xdg.configFile."waybar/style.css".source}"
-      ];
       X-SwitchMethod = "reload";
     };
   };
