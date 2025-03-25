@@ -55,6 +55,7 @@ in {
         "=/if5".return = "301 https://gelos.club/2024/03/01/installfest-2024-1.html";
         "=/installfest-6".return = "301 https://gelos.club/2025/03/25/installfest-2025-1.html";
         "=/if6".return = "301 https://gelos.club/2025/03/25/installfest-2025-1.html";
+        "=/AulaShell2025".return = "301 https://gelos.club/2025/03/24/aula-shell.html";
       };
     };
 
