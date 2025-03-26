@@ -32,6 +32,7 @@
     jq # JSON pretty printer and manipulator
     trekscii # Cute startrek cli printer
     timer # To help with my ADHD paralysis
+    viddy # Better watch
 
     nixd # Nix LSP
     alejandra # Nix formatter
