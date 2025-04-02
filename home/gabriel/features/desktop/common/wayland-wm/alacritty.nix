@@ -12,6 +12,9 @@
   programs.alacritty = {
     enable = true;
     settings = {
+      keyboard.bindings = [
+        { key = "N"; mods = "Control|Shift"; action = "SpawnNewInstance"; }
+      ];
       font = {
         size = config.fontProfiles.monospace.size;
         normal = {
