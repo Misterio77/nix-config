@@ -9,15 +9,16 @@
     profiles.gabriel = {
       search = {
         force = true;
-        default = "Kagi";
-        privateDefault = "DuckDuckGo";
-        order = ["Kagi" "DuckDuckGo" "Google"];
+        default = "kagi";
+        privateDefault = "ddg";
+        order = ["kagi" "ddg" "google"];
         engines = {
-          "Kagi" = {
+          kagi = {
+            name = "Kagi";
             urls = [{template = "https://kagi.com/search?q={searchTerms}";}];
-            iconUpdateURL = "https://kagi.com/favicon.ico";
+            icon = "https://kagi.com/favicon.ico";
           };
-          "Bing".metaData.hidden = true;
+          bing.metaData.hidden = true;
         };
       };
       bookmarks = {};
