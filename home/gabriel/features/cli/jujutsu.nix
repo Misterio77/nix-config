@@ -14,7 +14,7 @@
         gitCfg = config.programs.git.extraConfig;
       in {
         backend = "gpg";
-        sign-all = gitCfg.commit.gpgSign;
+        behaviour = if gitCfg.commit.gpgSign then "own" else "never";
         key = gitCfg.user.signing.key;
       };
       template-aliases = {
