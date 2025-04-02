@@ -94,15 +94,5 @@ in {
     gamescope = prev.gamescope.overrideAttrs (_: {
       NIX_CFLAGS_COMPILE = ["-fno-fast-math"];
     });
-
-    shadps4 = prev.shadps4.overrideAttrs (_: {
-      version = "0.5.0-unstable-2025-01-26";
-      src = final.fetchFromGitHub {
-        owner = "shadps4-emu";
-        repo = "shadPS4";
-        rev = "6f04ea18e4f3d87e9a89f0fefcc1c8c722a87de6";
-        hash = "sha256-3sRMfQcFvUVWsw57gpaw2oiMX4PNuubUAXJ9n650qLQ=";
-      };
-    });
   };
 }
