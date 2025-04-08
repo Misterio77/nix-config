@@ -1,4 +1,4 @@
-{pkgs, lib, config, ...}: {
+{pkgs, lib, config, inputs, ...}: {
   imports = [
     ./global
     ./features/desktop/hyprland
@@ -7,7 +7,6 @@
   home.persistence."/persist/${config.home.homeDirectory}" = lib.mkForce {};
   home.username = "gabriel";
   home.packages = [
-    pkgs.inputs.nix-gl.nixGLIntel
     pkgs.juju
     pkgs.sshuttle
     pkgs.charmcraft
@@ -15,6 +14,12 @@
   ];
 
   targets.genericLinux.enable = true;
+  nixGL = {
+    packages = inputs.nix-gl.packages;
+    defaultWrapper = "mesa";
+    installScripts = ["mesa"];
+    vulkan.enable = true;
+  };
 
   # Local configuration file overrides for git and SSH
   # The guys over at $WORK don't like me mentioning my work email or hostnames
