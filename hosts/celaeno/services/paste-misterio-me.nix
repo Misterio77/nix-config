@@ -13,6 +13,7 @@
       database.createLocally = true;
       environmentFile = config.sops.secrets.paste-misterio-me-secrets.path;
       port = 8082;
+      maxBodySize = "30MiB";
     };
 
     nginx.virtualHosts."paste.misterio.me" = {
