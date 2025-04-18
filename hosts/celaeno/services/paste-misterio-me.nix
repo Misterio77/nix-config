@@ -18,6 +18,9 @@
     nginx.virtualHosts."paste.misterio.me" = {
       forceSSL = true;
       enableACME = true;
+      extraConfig = ''
+        client_max_body_size 30M;
+      '';
       locations."/".proxyPass = "http://localhost:${toString config.services.paste-misterio-me.port}";
     };
   };
