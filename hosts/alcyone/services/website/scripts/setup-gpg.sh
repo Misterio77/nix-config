@@ -42,3 +42,6 @@ gpgconf --launch gpg-agent
 gpg-connect-agent updatestartuptty /bye
 
 echo "GPG Agent restarted" >&2
+
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+echo "SSH socket set" >&2
