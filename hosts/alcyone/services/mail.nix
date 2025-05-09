@@ -98,6 +98,18 @@
       ];
     };
   };
+  services.nginx.virtualHosts = let
+    redir = to: {
+      forceSSL = true;
+      enableACME = true;
+      locations."/".return = "302 https://${to}$request_uri";
+    };
+  in {
+    "autoconfig.misterio.me" = redir "autoconfig.m7.rs";
+    "autoconfig.gsfontes.com" = redir "autoconfig.m7.rs";
+    "autodiscover.misterio.me" = redir "autodiscover.m7.rs";
+    "autodiscover.gsfontes.com" = redir "autodiscover.m7.rs";
+  };
 
   environment.persistence = {
     "/persist".directories = [
