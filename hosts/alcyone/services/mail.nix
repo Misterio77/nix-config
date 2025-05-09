@@ -85,6 +85,20 @@
     '';
   };
 
+  # Autoconfig
+  services.automx2 = {
+    enable = true;
+    domain = "m7.rs";
+    settings = {
+      provider = "Gabriel Fontes";
+      domains = ["m7.rs" "misterio.me" "gsfontes.com"];
+      servers = [
+        { type = "imap"; name = "mail.m7.rs"; }
+        { type = "smtp"; name = "mail.m7.rs"; }
+      ];
+    };
+  };
+
   environment.persistence = {
     "/persist".directories = [
       "/var/lib/rspamd"
