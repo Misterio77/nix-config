@@ -6,7 +6,7 @@
   programs.nix-index.enable = true;
 
   systemd.user.services.nix-index-database-sync = {
-    Unit.Description = "fetch mic92/nix-index-database";
+    Unit.Description = "fetch nix-community/nix-index-database";
     Service = {
       Type = "oneshot";
       ExecStart = lib.getExe (
@@ -20,7 +20,7 @@
             mkdir -p ~/.cache/nix-index
             cd ~/.cache/nix-index
             name="index-${pkgs.stdenv.system}"
-            wget -N "https://github.com/Mic92/nix-index-database/releases/latest/download/$name"
+            wget -N "https://github.com/nix-community/nix-index-database/releases/download/2025-05-04-033656/$name"
             ln -sf "$name" "files"
           '';
         }
@@ -30,7 +30,7 @@
     };
   };
   systemd.user.timers.nix-index-database-sync = {
-    Unit.Description = "Automatic github:mic92/nix-index-database fetching";
+    Unit.Description = "Automatic github:nix-community/nix-index-database fetching";
     Timer = {
       OnBootSec = "10m";
       OnUnitActiveSec = "24h";
