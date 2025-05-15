@@ -117,6 +117,13 @@
           inherit inputs outputs;
         };
       };
+      # Personal laptop (Framework 13)
+      maia = lib.nixosSystem {
+        modules = [./hosts/maia];
+        specialArgs = {
+          inherit inputs outputs;
+        };
+      };
       # Core server (Vultr)
       alcyone = lib.nixosSystem {
         modules = [./hosts/alcyone];
