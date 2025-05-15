@@ -38,6 +38,7 @@
     adb.enable = true;
     dconf.enable = true;
   };
+  environment.systemPackages = [pkgs.brightnessctl];
 
   # Lid settings
   services.logind = {

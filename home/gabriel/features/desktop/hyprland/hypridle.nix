@@ -20,6 +20,12 @@
           on-resume = "light -I";
         }
         {
+          timeout = 20;
+          on-timeout = "brightnessctl --save --device *:kbd_backlight set 0";
+          on-resume = "brightnessctl --restore --device *:kbd_backlight";
+        }
+
+        {
           timeout = lockTime;
           on-timeout = lock;
         }
