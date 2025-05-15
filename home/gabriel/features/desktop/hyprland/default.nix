@@ -74,19 +74,9 @@ in {
         movefocus_cycles_fullscreen = false;
       };
       input = {
-        kb_layout = "br";
+        kb_layout = "us_intl";
         touchpad.disable_while_typing = false;
       };
-      device = [
-        {
-          name = "keychron-keychron-v3";
-          kb_layout = "us_intl";
-        }
-        {
-          name = "keychron-keychron-v3-keyboard";
-          kb_layout = "us_intl";
-        }
-      ];
       dwindle = {
         split_width_multiplier = 1.35;
         pseudotile = true;
