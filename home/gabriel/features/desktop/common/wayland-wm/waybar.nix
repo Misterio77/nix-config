@@ -190,7 +190,7 @@ in {
           '';};
         };
         "custom/unread-mail" = {
-          interval = 5;
+          interval = 30;
           return-type = "json";
           exec = mkScriptJson {
             deps = [pkgs.findutils pkgs.procps];
