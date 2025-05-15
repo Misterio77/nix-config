@@ -30,7 +30,6 @@
     fd # Better find
     httpie # Better curl
     jq # JSON pretty printer and manipulator
-    trekscii # Cute startrek cli printer
     timer # To help with my ADHD paralysis
     viddy # Better watch
 

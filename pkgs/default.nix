@@ -1,6 +1,5 @@
 {pkgs ? import <nixpkgs> {}, ...}: rec {
   # Packages with an actual source
-  trekscii = pkgs.callPackage ./trekscii {};
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
 
   # Personal scripts
