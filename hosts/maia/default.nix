@@ -18,7 +18,6 @@
     ../common/optional/quietboot.nix
 
     ../common/optional/wireless.nix
-    ../common/optional/tlp.nix
   ];
 
   networking = {
