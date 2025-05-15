@@ -102,6 +102,7 @@ in {
         steamBigPicture = "title:Steam Big Picture Mode";
       in
         [
+          "idleinhibit focus, fullscreenstate:2 *"
           "nofocus, ${sweethome3d-tooltips}"
 
           "immediate, ${steamGame}"
