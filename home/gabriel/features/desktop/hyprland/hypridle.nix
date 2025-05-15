@@ -15,6 +15,11 @@
       };
       listener = [
         {
+          timeout = 20;
+          on-timeout = "light -O && light -U 40";
+          on-resume = "light -I";
+        }
+        {
           timeout = lockTime;
           on-timeout = lock;
         }
