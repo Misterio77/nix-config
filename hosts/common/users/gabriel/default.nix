@@ -42,5 +42,6 @@ in {
 
   security.pam.services = {
     swaylock = {};
+    hyprlock = {};
   };
 }
