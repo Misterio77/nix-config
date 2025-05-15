@@ -112,6 +112,7 @@ in {
         };
 
         cpu = {
+          interval = 5;
           format = "  {usage}%";
         };
         "custom/gpu" = {
