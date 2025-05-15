@@ -19,6 +19,7 @@
       workspace = "1";
       primary = true;
       refreshRate = 120;
+      scale = "1.8";
     }
   ];
 }
