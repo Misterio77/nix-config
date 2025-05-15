@@ -14,9 +14,8 @@
       && notBroken pkg
       && isDistributable pkg)
     pkgs;
-
-  getConfigTopLevel = _: cfg: cfg.config.system.build.toplevel;
 in {
   pkgs = lib.mapAttrs filterValidPkgs outputs.packages;
-  hosts = lib.mapAttrs getConfigTopLevel outputs.nixosConfigurations;
+  hosts = lib.mapAttrs (_: cfg: cfg.config.system.build.toplevel) outputs.nixosConfigurations;
+  homes = lib.mapAttrs (_: cfg: cfg.activationPackage) outputs.homeConfigurations;
 }
