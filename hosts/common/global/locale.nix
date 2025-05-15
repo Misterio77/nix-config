@@ -11,4 +11,5 @@
   };
   location.provider = "geoclue2";
   time.timeZone = lib.mkDefault "America/Sao_Paulo";
+  services.automatic-timezoned.enable = true;
 }
