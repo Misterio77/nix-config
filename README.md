@@ -20,32 +20,6 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
 - **Hydra CI/CD server and binary cache** that uses the **desktops as remote builders**
 
-## Structure
-
-- `flake.nix`: Entrypoint for hosts and home configurations. Also exposes a
-  devshell for boostrapping (`nix develop` or `nix-shell`).
-- `lib`: A few lib functions for making my flake cleaner
-- `hosts`: NixOS Configurations, accessible via `nixos-rebuild --flake`.
-  - `common`: Shared configurations consumed by the machine-specific ones.
-    - `global`: Configurations that are globally applied to all my machines.
-    - `optional`: Opt-in configurations my machines can use.
-  - `atlas`: Desktop PC - 32GB RAM, R5 3600x, RX 5700XT | Hyprland
-  - `pleione`: Lenovo Ideapad 3 - 8GB RAM, R7 5700u | Hyprland
-  - `merope`: Raspberry Pi 4 - 8GB RAM | Server
-  - `celaeno`: Oracle Could VPS (Ampere) - 24GB RAM & 4vCPUs | Server
-  - `alcyone`: Vultr VPS - 1GB RAM & 1 vCPU | Server
-- `home`: My Home-manager configuration, acessible via `home-manager --flake`
-    - Each directory here is a "feature" each hm configuration can toggle, thus
-      customizing my setup for each machine (be it a server, desktop, laptop,
-      anything really).
-- `modules`: A few actual modules (with options) I haven't upstreamed yet.
-- `overlay`: Patches and version overrides for some packages. Accessible via
-  `nix build`.
-- `pkgs`: My custom packages. Also accessible via `nix build`. You can compose
-  these into your own configuration by using my flake's overlay, or consume them through NUR.
-- `templates`: A couple project templates for different languages. Accessible
-  via `nix init`.
-
 
 ## About the installation
 
