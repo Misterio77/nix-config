@@ -82,7 +82,6 @@ in {
           ++ [
             "custom/currentplayer"
             "custom/player"
-            "custom/minicava"
           ];
 
         modules-center = [
