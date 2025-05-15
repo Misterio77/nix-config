@@ -117,13 +117,6 @@
           inherit inputs outputs;
         };
       };
-      # Personal laptop
-      pleione = lib.nixosSystem {
-        modules = [./hosts/pleione];
-        specialArgs = {
-          inherit inputs outputs;
-        };
-      };
       # Core server (Vultr)
       alcyone = lib.nixosSystem {
         modules = [./hosts/alcyone];
