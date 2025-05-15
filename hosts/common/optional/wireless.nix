@@ -37,6 +37,9 @@
       "VIVOFIBRA-FC41-5G" = {
         pskRaw = "ext:marcos_santos_5g";
       };
+      "Nijland" = {
+        pskRaw = "ext:nijland";
+      };
       "eduroam" = {
         authProtocols = ["WPA-EAP"];
         auth = ''
