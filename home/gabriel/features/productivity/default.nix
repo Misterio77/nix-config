@@ -4,6 +4,7 @@
     ./khard.nix
     ./todoman.nix
     ./vdirsyncer.nix
+    ./oama.nix
     ./syncthing.nix
 
     ./mail.nix
