@@ -23,6 +23,7 @@ in {
     ./hyprbars.nix
     ./hyprlock.nix
     ./hypridle.nix
+    ./hyprpaper.nix
   ];
 
   xdg.portal = {
@@ -62,13 +63,13 @@ in {
         gaps_in = 15;
         gaps_out = 20;
         border_size = 2;
-        "col.active_border" = rgba config.colorscheme.colors.primary "aa";
+        "col.active_border" = rgba config.colorscheme.colors.primary "ee";
         "col.inactive_border" = rgba config.colorscheme.colors.surface "aa";
         # allow_tearing = true;
       };
       cursor.inactive_timeout = 4;
       group = {
-        "col.border_active" = rgba config.colorscheme.colors.primary "aa";
+        "col.border_active" = rgba config.colorscheme.colors.primary "ee";
         "col.border_inactive" = rgba config.colorscheme.colors.surface "aa";
         groupbar.font_size = 11;
       };
@@ -124,7 +125,7 @@ in {
           "fullscreen, ${steamBigPicture}"
         ]
         ++ (lib.mapAttrsToList (
-            name: colors: "bordercolor ${rgba colors.primary "aa"} ${rgba colors.primary_container "aa"}, title:\\[${name}\\].*"
+            name: colors: "bordercolor ${rgba colors.primary "ee"} ${rgba colors.primary_container "aa"}, title:\\[${name}\\].*"
           )
           remoteColorschemes);
       layerrule = [
@@ -150,7 +151,7 @@ in {
         fullscreen_opacity = 1.0;
         rounding = 7;
         blur = {
-          enabled = true;
+          enabled = false;
           size = 4;
           passes = 3;
           new_optimizations = true;
@@ -158,7 +159,7 @@ in {
           popups = true;
         };
         shadow = {
-          enabled = true;
+          enabled = false;
           offset = "3 3";
           range = 12;
           color = "0x44000000";
@@ -198,7 +199,6 @@ in {
       };
 
       exec = [
-        "${pkgs.swaybg}/bin/swaybg -i ${config.wallpaper} --mode fill"
         "hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}"
       ];
 
