@@ -18,6 +18,7 @@
     ../common/optional/quietboot.nix
 
     ../common/optional/wireless.nix
+    ../common/optional/secure-boot.nix
   ];
 
   networking = {

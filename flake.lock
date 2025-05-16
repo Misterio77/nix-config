@@ -32,6 +32,21 @@
         "type": "gitlab"
       }
     },
+    "crane": {
+      "locked": {
+        "lastModified": 1746291859,
+        "narHash": "sha256-DdWJLA+D5tcmrRSg5Y7tp/qWaD05ATI4Z7h22gd1h7Q=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "dfd9a8dfd09db9aad544c4d3b6c47b12562544a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "disconic": {
       "inputs": {
         "nixpkgs": [
@@ -100,6 +115,22 @@
     "flake-compat": {
       "flake": false,
       "locked": {
+        "lastModified": 1733328505,
+        "narHash": "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
         "lastModified": 1673956053,
         "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
         "owner": "edolstra",
@@ -113,7 +144,7 @@
         "type": "github"
       }
     },
-    "flake-compat_2": {
+    "flake-compat_3": {
       "flake": false,
       "locked": {
         "lastModified": 1747046372,
@@ -130,6 +161,27 @@
       }
     },
     "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "lanzaboote",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743550720,
+        "narHash": "sha256-hIshGgKZCgWh6AYJpJmRgFdR3WUbkY04o82X05xqQiY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "c621e8422220273271f52058f618c94e405bb0f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib_2"
       },
@@ -186,7 +238,7 @@
           "nixos-mailserver",
           "flake-compat"
         ],
-        "gitignore": "gitignore",
+        "gitignore": "gitignore_2",
         "nixpkgs": [
           "nixos-mailserver",
           "nixpkgs"
@@ -207,6 +259,28 @@
       }
     },
     "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "lanzaboote",
+          "pre-commit-hooks-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_2": {
       "inputs": {
         "nixpkgs": [
           "nixos-mailserver",
@@ -278,6 +352,31 @@
         "type": "github"
       }
     },
+    "lanzaboote": {
+      "inputs": {
+        "crane": "crane",
+        "flake-compat": "flake-compat",
+        "flake-parts": "flake-parts",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pre-commit-hooks-nix": "pre-commit-hooks-nix",
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1747056319,
+        "narHash": "sha256-qSKcBaISBozadtPq6BomnD+wIYTZIkiua3UuHLaD52c=",
+        "owner": "nix-community",
+        "repo": "lanzaboote",
+        "rev": "2e425f3da6ce7f5b34fa6eaf7a2a7f78dbabcc85",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "lanzaboote",
+        "type": "github"
+      }
+    },
     "nix-colors": {
       "inputs": {
         "base16-schemes": "base16-schemes",
@@ -299,7 +398,7 @@
     },
     "nix-gaming": {
       "inputs": {
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -341,7 +440,7 @@
     },
     "nix-minecraft": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": "flake-compat_2",
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
@@ -364,7 +463,7 @@
     "nixos-mailserver": {
       "inputs": {
         "blobs": "blobs",
-        "flake-compat": "flake-compat_2",
+        "flake-compat": "flake-compat_3",
         "git-hooks": "git-hooks",
         "nixpkgs": [
           "nixpkgs"
@@ -485,6 +584,32 @@
         "type": "github"
       }
     },
+    "pre-commit-hooks-nix": {
+      "inputs": {
+        "flake-compat": [
+          "lanzaboote",
+          "flake-compat"
+        ],
+        "gitignore": "gitignore",
+        "nixpkgs": [
+          "lanzaboote",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746537231,
+        "narHash": "sha256-Wb2xeSyOsCoTCTj7LOoD6cdKLEROyFAArnYoS+noCWo=",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "fa466640195d38ec97cf0493d6d6882bc4d14969",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disconic": "disconic",
@@ -493,6 +618,7 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "lanzaboote": "lanzaboote",
         "nix-colors": "nix-colors",
         "nix-gaming": "nix-gaming",
         "nix-gl": "nix-gl",
@@ -505,6 +631,27 @@
         "systems": "systems_2",
         "themes": "themes",
         "website": "website"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "lanzaboote",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1747017456,
+        "narHash": "sha256-C/U12fcO+HEF071b5mK65lt4XtAIZyJSSJAg9hdlvTk=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "5b07506ae89b025b14de91f697eba23b48654c52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sops-nix": {
