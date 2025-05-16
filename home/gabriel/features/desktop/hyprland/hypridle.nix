@@ -15,30 +15,38 @@
         after_sleep_cmd = displayOn;
       };
       listener = [
-        {
-          timeout = 20;
-          on-timeout = "light -O && light -U 40";
-          on-resume = "light -I";
-        }
+        # Before locked
         {
           timeout = 20;
           on-timeout = "brightnessctl --save --device *:kbd_backlight set 0";
           on-resume = "brightnessctl --restore --device *:kbd_backlight";
         }
+        {
+          timeout = 20;
+          on-timeout = "light -O && light -U 30";
+          on-resume = "light -I";
+        }
+        {
+          timeout = lockTime - 10;
+          on-timeout = "light -U 40";
+          on-resume = "light -I";
+        }
 
+        # Lock
         {
           timeout = lockTime;
           on-timeout = lock;
         }
 
+        # After locked
         {
-          timeout = lockTime + 25;
+          timeout = lockTime + 20;
           on-timeout = displayOff;
           on-resume = displayOn;
         }
         {
           timeout = 25;
-          on-timeout = script "${isLocked} && ${displayOff}";
+          on-timeout = script "if ${isLocked}; then ${displayOff}; fi";
           on-resume = displayOn;
         }
       ];
