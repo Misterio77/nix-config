@@ -5,10 +5,13 @@
       auth.fingerprint.enabled = true;
       animations = {
         enabled = true;
-        bezier = "linear, 1, 1, 0, 0";
+        bezier = [
+          "easeout,0.5, 1, 0.9, 1"
+          "easeoutback,0.34,1.22,0.65,1"
+        ];
         animation = [
-          "fade, 1, 2, linear"
-          "inputField, 1, 1, linear"
+          "fade, 1, 3, easeout"
+          "inputField, 1, 1, easeoutback"
         ];
       };
       background = {
