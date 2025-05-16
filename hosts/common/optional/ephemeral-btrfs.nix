@@ -20,11 +20,7 @@
         echo "Skipping wipe"
       else
         echo "Cleaning root subvolume"
-        btrfs subvolume list -o "$MNTPOINT/root" | cut -f9 -d ' ' | sort |
-        while read -r subvolume; do
-          btrfs subvolume delete "$MNTPOINT/$subvolume"
-        done && btrfs subvolume delete "$MNTPOINT/root"
-
+        btrfs subvolume delete -R "$MNTPOINT/root"
         echo "Restoring blank subvolume"
         btrfs subvolume snapshot "$MNTPOINT/root-blank" "$MNTPOINT/root"
       fi
