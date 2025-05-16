@@ -2,11 +2,13 @@
   services.hypridle = {
     enable = true;
     settings = let
+      lockTime = 60 * 2;
+      suspendTime = 60 * 15;
       lock = lib.getExe config.programs.hyprlock.package;
       isLocked = "pgrep -f ${lock}";
       displayOn = "hyprctl dispatch dpms on";
       displayOff = "hyprctl dispatch dpms off";
-      lockTime = 120;
+      isDischarging = "grep Discharging /sys/class/power_supply/BAT{0,1}/status -q";
       script = text: lib.getExe (pkgs.writeShellScriptBin "script" text);
     in {
       general = {
@@ -48,6 +50,11 @@
           timeout = 25;
           on-timeout = script "if ${isLocked}; then ${displayOff}; fi";
           on-resume = displayOn;
+        }
+
+        {
+          timeout = suspendTime;
+          on-timeout = script "if ${isDischarging}; then systemctl suspend; fi";
         }
       ];
     };
