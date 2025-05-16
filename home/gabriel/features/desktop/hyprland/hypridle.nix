@@ -1,60 +1,60 @@
-{config, lib, pkgs, ...}: {
+{config, lib, ...}: {
   services.hypridle = {
     enable = true;
     settings = let
-      lockTime = 60 * 2;
-      suspendTime = 60 * 15;
-      lock = lib.getExe config.programs.hyprlock.package;
-      isLocked = "pgrep -f ${lock}";
-      displayOn = "hyprctl dispatch dpms on";
-      displayOff = "hyprctl dispatch dpms off";
+      isLocked = "pgrep hyprlock";
       isDischarging = "grep Discharging /sys/class/power_supply/BAT{0,1}/status -q";
-      script = text: lib.getExe (pkgs.writeShellScriptBin "script" text);
     in {
       general = {
-        lock_cmd = lock;
-        before_sleep_cmd = lock;
-        after_sleep_cmd = displayOn;
+        lock_cmd = "if ! ${isLocked}; then ${lib.getExe config.programs.hyprlock.package}; fi";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+        inhibit_sleep = 3; # Wait for lock before suspend
       };
       listener = [
-        # Before locked
+        {
+          timeout = 10;
+          on-timeout = "brightnessctl --save";
+          on-resume = "brightnessctl --restore";
+        }
+        {
+          timeout = 30;
+          on-timeout = "brightnessctl --device *:kbd_backlight --save set 0";
+          on-resume = "brightnessctl --device *:kbd_backlight --restore";
+        }
+        {
+          timeout = 50;
+          on-timeout = "brightnessctl set 50%-";
+        }
+        {
+          timeout = 110;
+          on-timeout = "brightnessctl set 50%-";
+        }
+        {
+          timeout = 120;
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 140;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+
+        # If already locked
+        {
+          timeout = 15;
+          on-timeout = "if ${isLocked}; then brightnessctl set 75%-; fi";
+        }
         {
           timeout = 20;
-          on-timeout = "brightnessctl --save --device *:kbd_backlight set 0";
-          on-resume = "brightnessctl --restore --device *:kbd_backlight";
-        }
-        {
-          timeout = 20;
-          on-timeout = "light -O && light -U 30";
-          on-resume = "light -I";
-        }
-        {
-          timeout = lockTime - 10;
-          on-timeout = "light -U 40";
-          on-resume = "light -I";
+          on-timeout = "if ${isLocked}; then hyprctl dispatch dpms off; fi";
+          on-resume = "hyprctl dispatch dpms on";
         }
 
-        # Lock
+        # If discharging
         {
-          timeout = lockTime;
-          on-timeout = lock;
-        }
-
-        # After locked
-        {
-          timeout = lockTime + 20;
-          on-timeout = displayOff;
-          on-resume = displayOn;
-        }
-        {
-          timeout = 25;
-          on-timeout = script "if ${isLocked}; then ${displayOff}; fi";
-          on-resume = displayOn;
-        }
-
-        {
-          timeout = suspendTime;
-          on-timeout = script "if ${isDischarging}; then systemctl suspend; fi";
+          timeout = 900;
+          on-timeout = "if ${isDischarging}; then systemctl suspend; fi";
         }
       ];
     };
