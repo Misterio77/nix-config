@@ -3,6 +3,9 @@
     enable = true;
     settings = {
       auth.fingerprint.enabled = true;
+      general = {
+        grace = 5;
+      };
       animations = {
         enabled = true;
         bezier = [
