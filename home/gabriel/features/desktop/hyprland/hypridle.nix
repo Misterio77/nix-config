@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{config, lib, pkgs, ...}: {
   services.hypridle = {
     enable = true;
     settings = let
@@ -7,6 +7,7 @@
       displayOn = "hyprctl dispatch dpms on";
       displayOff = "hyprctl dispatch dpms off";
       lockTime = 120;
+      script = text: lib.getExe (pkgs.writeShellScriptBin "script" text);
     in {
       general = {
         lock_cmd = lock;
@@ -37,7 +38,7 @@
         }
         {
           timeout = 25;
-          on-timeout = "${isLocked} && ${displayOff}";
+          on-timeout = script "${isLocked} && ${displayOff}";
           on-resume = displayOn;
         }
       ];
