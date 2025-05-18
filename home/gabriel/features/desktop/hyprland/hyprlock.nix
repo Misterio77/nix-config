@@ -48,4 +48,18 @@
       };
     };
   };
+
+  wayland.windowManager.hyprland = {
+    settings = {
+      exec-once = [
+        "${lib.getExe config.programs.hyprlock.package} --immediate --immediate-render --no-fade-in"
+      ];
+      bind = let
+        hyprlock = lib.getExe config.programs.hyprlock.package;
+      in [
+        "SUPER,backspace,exec,${hyprlock} --immediate"
+        "SUPER,XF86Calculator,exec,${hyprlock} --immediate"
+      ];
+    };
+  };
 }

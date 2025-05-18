@@ -207,8 +207,6 @@ in {
         "hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}"
       ];
 
-      exec-once = lib.optional config.programs.hyprlock.enable "${lib.getExe config.programs.hyprlock.package} --immediate --immediate-render --no-fade-in";
-
       bind = let
         grimblast = lib.getExe pkgs.grimblast;
         pactl = lib.getExe' pkgs.pulseaudio "pactl";
@@ -256,17 +254,6 @@ in {
               "SHIFT,XF86AudioNext,exec,${playerctld} shift"
               "SHIFT,XF86AudioPrev,exec,${playerctld} unshift"
               "SHIFT,XF86AudioPlay,exec,systemctl --user restart playerctld"
-            ]
-        )
-        ++
-        # Screen lock
-        (
-          let
-            hyprlock = lib.getExe config.programs.hyprlock.package;
-          in
-            lib.optionals config.programs.hyprlock.enable [
-              "SUPER,backspace,exec,${hyprlock} --immediate"
-              "SUPER,XF86Calculator,exec,${hyprlock} --immediate"
             ]
         )
         ++
