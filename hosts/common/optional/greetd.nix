@@ -3,7 +3,16 @@
   lib,
   config,
   ...
-}: {
+}: let
+  sway-kiosk = command: "${lib.getExe pkgs.sway} --unsupported-gpu --config ${pkgs.writeText "kiosk.config" ''
+    output * bg #000000 solid_color
+    xwayland disable
+    input "type:touchpad" {
+      tap enabled
+    }
+    exec 'GTK_USE_PORTAL=0 ${command}; ${pkgs.sway}/bin/swaymsg exit'
+  ''}";
+in {
   users.extraUsers.greeter = {
     # For caching and such
     home = "/tmp/greeter-home";
@@ -23,7 +32,7 @@
     font = {
       name = "Fira Sans";
       package = pkgs.fira;
-      size = 16;
+      size = 12;
     };
   };
 
@@ -31,7 +40,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${lib.getExe pkgs.cage} -s -mlast -- ${lib.getExe config.programs.regreet.package}";
+        command = sway-kiosk (lib.getExe config.programs.regreet.package);
         user = config.users.extraUsers.greeter.name;
       };
     };
