@@ -59,8 +59,4 @@
       ];
     };
   };
-
-  xdg.configFile."hypr/hyprland.conf".text = lib.mkBefore ''
-    exec-once = ${lib.getExe config.programs.hyprlock.package} --immediate --immediate-render --no-fade-in
-  '';
 }
