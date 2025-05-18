@@ -17,6 +17,7 @@
         "/etc/machine-id"
       ];
       directories = [
+        "/var/lib/fprint"
         "/var/lib/systemd"
         "/var/lib/nixos"
         "/var/log"
