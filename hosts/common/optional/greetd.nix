@@ -11,7 +11,7 @@
       tap enabled
     }
     exec 'GTK_USE_PORTAL=0 ${command}; ${pkgs.sway}/bin/swaymsg exit'
-  ''}";
+  ''} &>/dev/null";
 in {
   users.extraUsers.greeter = {
     # For caching and such
