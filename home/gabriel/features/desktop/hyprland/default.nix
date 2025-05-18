@@ -27,6 +27,8 @@ in {
     ./hyprpaper.nix
   ];
 
+  home.pointerCursor.hyprcursor.enable = true;
+
   xdg.portal = {
     extraPortals = [pkgs.xdg-desktop-portal-wlr];
     config.hyprland = {

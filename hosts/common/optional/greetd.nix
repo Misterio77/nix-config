@@ -36,6 +36,10 @@ in {
       package = pkgs.fira;
       size = 12;
     };
+    cursorTheme = {
+      package = pkgs.apple-cursor;
+      name = "macOS";
+    };
   };
 
   services.greetd = {
