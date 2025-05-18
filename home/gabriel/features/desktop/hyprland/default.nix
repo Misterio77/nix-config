@@ -58,6 +58,14 @@ in {
       ];
     };
 
+    importantPrefixes = [
+      "$"
+      "bezier"
+      "name"
+      "source"
+      "exec-once"
+    ];
+
     settings = {
       general = {
         gaps_in = 15;
@@ -198,6 +206,8 @@ in {
       exec = [
         "hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}"
       ];
+
+      exec-once = lib.optional config.programs.hyprlock.enable "${lib.getExe config.programs.hyprlock.package} --immediate --immediate-render --no-fade-in";
 
       bind = let
         grimblast = lib.getExe pkgs.grimblast;

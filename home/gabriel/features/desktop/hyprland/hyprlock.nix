@@ -5,6 +5,7 @@
       auth.fingerprint.enabled = true;
       general = {
         grace = 5;
+        hide_cursor = true;
       };
       animations = {
         enabled = true;

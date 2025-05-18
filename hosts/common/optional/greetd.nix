@@ -23,7 +23,7 @@
     font = {
       name = "Fira Sans";
       package = pkgs.fira;
-      size = 12;
+      size = 16;
     };
   };
 
