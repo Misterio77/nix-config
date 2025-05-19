@@ -44,7 +44,7 @@ in {
 
           isOnSpecial = ''hyprctl activewindow -j | jq -re 'select(.workspace.name == "special")' >/dev/null'';
           moveToSpecial = "hyprctl dispatch movetoworkspacesilent special";
-          moveToActive = "hyprctl dispatch movetoworkspacesilent name:$(hyprctl -j activeworkspace | jq -re '.name')";
+          moveToActive = "hyprctl dispatch movetoworkspacesilent $(hyprctl -j activeworkspace | jq -re '.id')";
           minimizeAction = "${isOnSpecial} && ${moveToActive} || ${moveToSpecial}";
 
           maximizeAction = "hyprctl dispatch fullscreen 1";

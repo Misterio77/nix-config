@@ -17,18 +17,6 @@
         "7"
         "8"
         "9"
-        "F1"
-        "F2"
-        "F3"
-        "F4"
-        "F5"
-        "F6"
-        "F7"
-        "F8"
-        "F9"
-        "F10"
-        "F11"
-        "F12"
       ];
       # Map keys (arrows and hjkl) to hyprland directions (l, r, u, d)
       directions = rec {
@@ -73,10 +61,10 @@
       ]
       ++
       # Change workspace
-      (map (n: "SUPER,${n},workspace,name:${n}") workspaces)
+      (map (n: "SUPER,${n},workspace,${n}") workspaces)
       ++
       # Move window to workspace
-      (map (n: "SUPERSHIFT,${n},movetoworkspacesilent,name:${n}") workspaces)
+      (map (n: "SUPERSHIFT,${n},movetoworkspacesilent,${n}") workspaces)
       ++
       # Move focus
       (lib.mapAttrsToList (key: direction: "SUPER,${key},movefocus,${direction}") directions)
