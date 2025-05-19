@@ -3,11 +3,11 @@
     ./khal.nix
     ./khard.nix
     ./todoman.nix
-    ./vdirsyncer.nix
     ./oama.nix
     ./syncthing.nix
 
     ./mail.nix
+    ./calendar.nix
     ./neomutt.nix
 
     # Pass feature is required
