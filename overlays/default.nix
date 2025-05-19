@@ -90,6 +90,8 @@ in {
 
     pass = addPatches prev.pass [./pass-wlclipboard-secret.diff];
 
+    vdirsyncer = addPatches prev.vdirsyncer [./vdirsyncer-fixed-oauth-token.patch];
+
     # https://github.com/ValveSoftware/gamescope/issues/1622
     gamescope = prev.gamescope.overrideAttrs (_: {
       NIX_CFLAGS_COMPILE = ["-fno-fast-math"];
