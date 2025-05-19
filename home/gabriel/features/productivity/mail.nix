@@ -127,7 +127,7 @@ in {
             enable = true;
             create = "maildir";
             expunge = "both";
-            groups.gmail.channels = gmail_channels;
+            groups.rug.channels = gmail_channels;
             extraConfig.account.AuthMechs = "XOAUTH2";
           };
           neomutt = {
@@ -160,7 +160,7 @@ in {
             enable = true;
             create = "maildir";
             expunge = "both";
-            groups.gmail.channels = gmail_channels;
+            groups.usp.channels = gmail_channels;
             extraConfig.account.AuthMechs = "XOAUTH2";
           };
           neomutt = {
