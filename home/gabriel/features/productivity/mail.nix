@@ -4,7 +4,6 @@
   config,
   ...
 }: let
-  mbsync = "${config.programs.mbsync.package}/bin/mbsync";
   pass = "${config.programs.password-store.package}/bin/pass";
   oama = "${config.programs.oama.package}/bin/oama";
 
@@ -185,50 +184,26 @@ in {
     };
   };
 
+  programs.msmtp.enable = true;
   programs.mbsync = {
     enable = true;
     package = pkgs.isync.override {
       withCyrusSaslXoauth2 = true;
     };
   };
-  programs.msmtp.enable = true;
 
-  systemd.user.services.mbsync = {
-    Unit = {
-      Description = "mbsync synchronization";
-    };
-    Service = let
-      gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs;};
-    in {
-      Type = "oneshot";
-      ExecCondition = ''
-        /bin/sh -c "${gpgCmds.isUnlocked}"
-      '';
-      ExecStart = "${mbsync} -a";
-    };
-  };
-  systemd.user.timers.mbsync = {
-    Unit = {
-      Description = "Automatic mbsync synchronization";
-    };
-    Timer = {
-      OnBootSec = "30";
-      OnUnitActiveSec = "5m";
-    };
-    Install = {
-      WantedBy = ["timers.target"];
-    };
+  services.mbsync = {
+    enable = true;
+    package = config.programs.mbsync.package;
+    preExec = ''
+      ${pkgs.coreutils}/bin/mkdir -m700 -p ${lib.concatStringsSep " " (lib.mapAttrsToList (_: v: v.maildir.absPath) config.accounts.email.accounts)}
+    '';
   };
 
-  # Run 'createMaildir' after 'linkGeneration'
-  home.activation = let
-    mbsyncAccounts = lib.filter (a: a.mbsync.enable) (lib.attrValues config.accounts.email.accounts);
-  in
-    lib.mkIf (mbsyncAccounts != []) {
-      createMaildir = lib.mkForce (lib.hm.dag.entryAfter ["linkGeneration"] ''
-        run mkdir -m700 -p $VERBOSE_ARG ${
-          lib.concatMapStringsSep " " (a: a.maildir.absPath) mbsyncAccounts
-        }
-      '');
-    };
+  # Only run if gpg is unlocked
+  systemd.user.services.mbsync.Service.ExecCondition = let
+    gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs;};
+  in ''
+    /bin/sh -c "${gpgCmds.isUnlocked}"
+  '';
 }
