@@ -195,9 +195,6 @@ in {
   services.mbsync = {
     enable = true;
     package = config.programs.mbsync.package;
-    preExec = ''
-      ${pkgs.coreutils}/bin/mkdir -m700 -p ${lib.concatStringsSep " " (lib.mapAttrsToList (_: v: v.maildir.absPath) config.accounts.email.accounts)}
-    '';
   };
 
   # Only run if gpg is unlocked
@@ -206,4 +203,13 @@ in {
   in ''
     /bin/sh -c "${gpgCmds.isUnlocked}"
   '';
+
+  # Ensure 'createMaildir' runs after 'linkGeneration'
+  home.activation = {
+    createMaildir = lib.mkForce (lib.hm.dag.entryAfter ["linkGeneration"] ''
+      run mkdir -m700 -p $VERBOSE_ARG ${
+        lib.concatStringsSep " " (lib.mapAttrsToList (_: v: v.maildir.absPath) config.accounts.email.accounts)
+      }
+    '');
+  };
 }
