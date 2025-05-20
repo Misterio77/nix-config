@@ -30,8 +30,17 @@ in {
           formatter.command = "alejandra";
         }
       ];
-      language-server.nixd = {
-        command = "nixd";
+      language-server = {
+        nixd = {
+          command = "nixd";
+        };
+        tinymist = {
+          config = {
+            typstExtraArgs = ["main.typ"];
+            exportPdf = "onType";
+            outputPath = "$root/$name";
+          };
+        };
       };
     };
     themes."nix-${hash}" = import ./theme.nix {inherit colorscheme;};
