@@ -19,6 +19,7 @@
       ./ssh-serve-store.nix
       ./steam-hardware.nix
       ./systemd-initrd.nix
+      ./swappiness.nix
       ./tailscale.nix
       ./gamemode.nix
       ./nix-ld.nix
