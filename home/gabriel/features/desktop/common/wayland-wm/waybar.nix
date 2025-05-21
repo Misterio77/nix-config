@@ -6,6 +6,7 @@
   inputs,
   ...
 }: let
+  gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs config lib; };
   commonDeps = with pkgs; [coreutils gnugrep systemd];
   # Function to simplify making waybar outputs
   mkScript = {
@@ -234,9 +235,7 @@ in {
           };
           on-click = mkScript { deps = [pkgs.handlr-regex]; script = "handlr launch text/calendar"; };
         };
-        "custom/gpg-status" = let
-          gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs config lib; };
-        in {
+        "custom/gpg-status" = {
           interval = 3;
           return-type = "json";
           exec = mkScriptJson {
@@ -262,6 +261,7 @@ in {
         "custom/sync-status" = {
           interval = 10;
           return-type = "json";
+          exec-if = gpgCmds.isUnlocked;
           exec = mkScriptJson {
             script = ''
               results="$(systemctl --user show mbsync.service vdirsyncer.service --property Id,Result,ActiveState)"
