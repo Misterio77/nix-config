@@ -78,38 +78,27 @@ in {
           ++ (lib.optionals hyprlandCfg.enable [
             "hyprland/workspaces"
             "hyprland/submap"
-          ])
-          ++ [
-            "custom/currentplayer"
-            "custom/player"
-          ];
+          ]);
 
         modules-center = [
-          "cpu"
-          "custom/gpu"
-          "memory"
-          "clock"
-          "custom/next-event"
-          "custom/unread-mail"
+            "custom/currentplayer"
+            "custom/player"
         ];
 
         modules-right = [
           "tray"
-          "custom/rfkill"
+          "custom/unread-mail"
+          "custom/next-event"
           "network"
-          "pulseaudio"
           "battery"
-          "custom/hostname"
+          "pulseaudio"
+          "clock"
         ];
 
         clock = {
-          interval = 2;
-          format = "{:%d/%m %H:%M}";
-          format-alt = "{:%Y-%m-%d %H:%M:%S %z}";
+          format = "{:%H:%M}  ";
           on-click-left = "mode";
-          tooltip-format = ''
-            <big>{:%Y %B}</big>
-            <tt><small>{calendar}</small></tt>'';
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
         };
 
         cpu = {
@@ -126,18 +115,25 @@ in {
           interval = 5;
         };
 
-        pulseaudio = {
-          format-source = "󰍬 {volume}%";
-          format-source-muted = "󰍭 0%";
-          format = "{icon} {volume}% {format_source}";
-          format-muted = "󰸈 0% {format_source}";
+        "pulseaudio" = {
+          format = "{icon}";
+          format-bluetooth = "{icon}󰂯";
           format-icons = {
+            default-muted = "󰸈";
             default = [
               "󰕿"
               "󰖀"
+              "󰖀"
               "󰕾"
             ];
+            headphone-muted = "󰟎";
+            headphone = "󰋋";
+            headset-muted = "󰋐";
+            headset = "󰋎";
           };
+          tooltip-format = ''
+            Output: {volume}%
+            Input: {format_source}'';
           on-click = lib.getExe pkgs.pavucontrol;
         };
         idle_inhibitor = {
@@ -161,8 +157,9 @@ in {
             "󰂂"
             "󰁹"
           ];
-          format = "{icon} {capacity}%";
-          format-charging = "󰂄 {capacity}%";
+          format = "{icon}";
+          format-charging = "󰂄";
+          tooltip-format = "{capacity}% ({time})";
           onclick = "";
         };
         "sway/window" = {
@@ -170,10 +167,11 @@ in {
         };
         network = {
           interval = 3;
-          format-wifi = "   {essid}";
-          format-ethernet = "󰈁 Connected";
+          format-wifi = "󰖩";
+          format-ethernet = "󰈀";
           format-disconnected = "";
           tooltip-format = ''
+            {essid}
             {ifname}
             {ipaddr}/{cidr}
             Up: {bandwidthUpBits}
@@ -181,36 +179,29 @@ in {
         };
         "custom/menu" = {
           format = "";
-        };
-        "custom/hostname" = {
-          exec = mkScript {script = ''
-            echo "$USER@$HOSTNAME"
-          '';};
           on-click = mkScript {script = ''
             systemctl --user restart waybar
+            echo "$USER@$HOSTNAME"
           '';};
         };
         "custom/unread-mail" = {
-          interval = 30;
+          interval = 10;
           return-type = "json";
           exec = mkScriptJson {
-            deps = [pkgs.findutils pkgs.procps];
+            deps = [pkgs.findutils pkgs.gawk];
             script = ''
-              count=$(find ~/Mail/*/Inbox/new -type f | wc -l)
-              if pgrep mbsync &>/dev/null; then
-                status="syncing"
+              inbox_count="$(find ~/Mail/*/Inbox/new -type f | cut -d / -f5 | uniq -c | awk '{$1=$1};1')"
+              if [ -z "$inbox_count" ]; then
+                status="read"
+                inbox_count="No new mail!"
               else
-                if [ "$count" == "0" ]; then
-                  status="read"
-                else
-                  status="unread"
-                fi
+                status="unread"
               fi
             '';
-            text = "$count";
+            tooltip = "$inbox_count";
             alt = "$status";
           };
-          format = "{icon}  ({})";
+          format = "{icon}";
           format-icons = {
             "read" = "󰇯";
             "unread" = "󰇮";
@@ -224,14 +215,22 @@ in {
             deps = [config.programs.khal.package pkgs.gnugrep];
             script = ''
               events="$(khal list now 1d --notstarted --json title --json start-time | jq 'map("\(."start-time") \(.title)")[]' -r)"
-              # Exit if there are no events
-              printf "%s" "$events" | grep -q "^"
+              count="$(printf "%s" "$events" | grep -c "^" || true)"
+              if [ "$count" == 0 ]; then
+                status="no-event"
+                events="No events!"
+              else
+                status="has-event"
+              fi
             '';
-            text = "$events";
+            alt = "$status";
             tooltip = "$events";
           };
-          format = "󰃭 {}";
-          max-length = 20;
+          format = "{icon}";
+          format-icons = {
+            has-event = "󰃭";
+            no-event = "󰃮";
+          };
         };
         "custom/currentplayer" = {
           interval = 2;
@@ -329,19 +328,20 @@ in {
           border-radius: 0.5em;
           background-color: ${toRGBA colors.surface "0.7"};
           color: ${colors.on_surface};
+          padding-right: 1em;
         }
         .modules-left {
           margin-left: -0.65em;
         }
         .modules-right {
-          margin-right: -0.65em;
+          margin-right: -0.25em;
         }
 
         #workspaces button {
           background-color: ${colors.surface};
           color: ${colors.on_surface};
-          padding-left: 0.4em;
-          padding-right: 0.4em;
+          padding-left: 0.2em;
+          padding-right: 0.2em;
           margin-top: 0.15em;
           margin-bottom: 0.15em;
         }
@@ -355,17 +355,6 @@ in {
           color: ${colors.on_primary};
         }
 
-        #clock {
-          margin-left: 1em;
-          padding-right: 0;
-          margin-right: 0.5em;
-        }
-        #custom-next-event {
-          margin-right: 1em;
-          margin-left: 0.5em;
-          padding-left: 0;
-        }
-
         #custom-menu {
           background-color: ${colors.surface_container};
           color: ${colors.primary};
@@ -374,27 +363,24 @@ in {
           margin-right: 0;
           border-radius: 0.5em;
         }
-        #custom-menu.fullscreen {
-          background-color: ${colors.primary};
-          color: ${colors.on_primary};
-        }
-        #custom-hostname {
+        #clock {
           background-color: ${colors.surface_container};
           color: ${colors.primary};
-          padding-right: 1em;
+          padding-right: 0.5em;
           padding-left: 1em;
-          margin-left: 0;
+          margin-right: 0;
           border-radius: 0.5em;
+        }
+
+        #custom-player {
+          padding-left: 0;
+          margin-left: 0;
         }
         #custom-currentplayer {
           padding-right: 0;
         }
         #tray {
           color: ${colors.on_surface};
-        }
-        #custom-gpu, #cpu, #memory {
-          margin-left: 0.05em;
-          margin-right: 0.55em;
         }
       '';
   };
