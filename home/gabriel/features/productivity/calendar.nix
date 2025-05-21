@@ -1,4 +1,4 @@
-{config, pkgs, ...}: let
+{config, pkgs, lib, ...}: let
   pass = "${config.programs.password-store.package}/bin/pass";
   oama = "${config.programs.oama.package}/bin/oama";
 in {
@@ -83,7 +83,7 @@ in {
 
   # Only run if gpg is unlocked
   systemd.user.services.vdirsyncer.Service.ExecCondition = let
-    gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs;};
+    gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs config lib;};
   in ''
     /bin/sh -c "${gpgCmds.isUnlocked}"
   '';

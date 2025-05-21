@@ -199,7 +199,7 @@ in {
 
   # Only run if gpg is unlocked
   systemd.user.services.mbsync.Service.ExecCondition = let
-    gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs;};
+    gpgCmds = import ../cli/gpg-commands.nix {inherit pkgs config lib;};
   in ''
     /bin/sh -c "${gpgCmds.isUnlocked}"
   '';

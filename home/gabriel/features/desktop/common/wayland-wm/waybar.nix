@@ -85,6 +85,7 @@ in {
 
         modules-right = [
           "tray"
+          "custom/gpg-status"
           "custom/unread-mail"
           "custom/next-event"
           "network"
@@ -228,6 +229,31 @@ in {
           format-icons = {
             has-event = "󰃭";
             no-event = "󰃮";
+          };
+        };
+        "custom/gpg-status" = let
+          gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs config lib; };
+        in {
+          interval = 2;
+          return-type = "json";
+          exec = mkScriptJson {
+            script = ''
+              if ${gpgCmds.isUnlocked}; then
+                status="unlocked"
+                tooltip="GPG is unlocked"
+              else
+                status="locked"
+                tooltip="GPG is locked"
+              fi
+            '';
+            alt = "$status";
+            tooltip = "$tooltip";
+          };
+          on-click = "${gpgCmds.isUnlocked} && ${gpgCmds.lock} || ${gpgCmds.unlock}";
+          format = "{icon}";
+          format-icons = {
+            locked = "󰌾";
+            unlocked = "󰿆";
           };
         };
         "custom/currentplayer" = {
