@@ -89,6 +89,7 @@ in {
           "custom/gpu"
           "memory"
           "clock"
+          "custom/next-event"
           "custom/unread-mail"
         ];
 
@@ -216,6 +217,22 @@ in {
             "syncing" = "󰁪";
           };
         };
+        "custom/next-event" = {
+          interval = 10;
+          return-type = "json";
+          exec = mkScriptJson {
+            deps = [config.programs.khal.package pkgs.gnugrep];
+            script = ''
+              events="$(khal list now 1d --notstarted --json title --json start-time | jq 'map("\(."start-time") \(.title)")[]' -r)"
+              # Exit if there are no events
+              printf "%s" "$events" | grep -q "^"
+            '';
+            text = "$events";
+            tooltip = "$events";
+          };
+          format = "󰃭 {}";
+          max-length = 20;
+        };
         "custom/currentplayer" = {
           interval = 2;
           return-type = "json";
@@ -339,9 +356,14 @@ in {
         }
 
         #clock {
-          padding-right: 1em;
-          padding-left: 1em;
-          border-radius: 0.5em;
+          margin-left: 1em;
+          padding-right: 0;
+          margin-right: 0.5em;
+        }
+        #custom-next-event {
+          margin-right: 1em;
+          margin-left: 0.5em;
+          padding-left: 0;
         }
 
         #custom-menu {
