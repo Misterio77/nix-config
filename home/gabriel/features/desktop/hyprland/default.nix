@@ -219,6 +219,12 @@ in {
           host="''${socket#master-}"
           ssh "$host" "$@"
         '');
+        swayosd = {
+          brightness = "swayosd-client --brightness +0";
+          output-volume = "swayosd-client --output-volume +0";
+          input-volume = "swayosd-client --input-volume +0";
+          caps-lock = "sleep 0.2 && swayosd-client --caps-lock";
+        };
       in
         [
           # Program bindings
@@ -229,19 +235,21 @@ in {
           "SUPERALT,e,exec,${remote} ${defaultApp "text/plain"}"
           "SUPERALT,b,exec,${remote} ${defaultApp "x-scheme-handler/https"}"
           # Brightness control
-          ",XF86MonBrightnessUp,exec,brightnessctl s +10%"
-          ",XF86MonBrightnessDown,exec,brightnessctl s 10%-"
+          ",XF86MonBrightnessUp,exec,brightnessctl s +10%; ${swayosd.brightness}"
+          ",XF86MonBrightnessDown,exec,brightnessctl s 10%-; ${swayosd.brightness}"
           # Volume
-          ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
-          ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
-          ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
-          "SHIFT,XF86AudioRaiseVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ +5%"
-          "SHIFT,XF86AudioLowerVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ -5%"
-          "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
-          ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
+          ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%; ${swayosd.output-volume}"
+          ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%; ${swayosd.output-volume}"
+          ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle; ${swayosd.output-volume}"
+          "SHIFT,XF86AudioRaiseVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ +5%; ${swayosd.input-volume}"
+          "SHIFT,XF86AudioLowerVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ -5%; ${swayosd.input-volume}"
+          "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle; ${swayosd.input-volume}"
+          ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle; ${swayosd.input-volume}"
           # Screenshotting
           ",Print,exec,${grimblast} --notify --freeze copy area"
           "SHIFT,Print,exec,${grimblast} --notify --freeze copy output"
+          # Show caps lock
+          ",Caps_Lock,exec,${swayosd.caps-lock}"
         ]
         ++ (
           let

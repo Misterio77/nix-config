@@ -10,6 +10,7 @@
     ./zathura.nix
     ./imv.nix
     ./waypipe.nix
+    ./swayosd.nix
   ];
 
   xdg.mimeApps.enable = true;
