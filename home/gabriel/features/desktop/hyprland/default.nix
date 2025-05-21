@@ -228,9 +228,9 @@ in {
           "SUPERALT,Return,exec,${remote} ${defaultApp "x-scheme-handler/terminal"}"
           "SUPERALT,e,exec,${remote} ${defaultApp "text/plain"}"
           "SUPERALT,b,exec,${remote} ${defaultApp "x-scheme-handler/https"}"
-          # Brightness control (only works if the system has lightd)
-          ",XF86MonBrightnessUp,exec,light -A 10"
-          ",XF86MonBrightnessDown,exec,light -U 10"
+          # Brightness control
+          ",XF86MonBrightnessUp,exec,brightnessctl s +10%"
+          ",XF86MonBrightnessDown,exec,brightnessctl s 10%-"
           # Volume
           ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
           ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
