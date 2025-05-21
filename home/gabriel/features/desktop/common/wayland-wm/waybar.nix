@@ -329,20 +329,22 @@ in {
           color: ${colors.on_surface};
         }
         .modules-left {
-          background-color: ${toRGBA colors.surface "0.7"};
+          background-color: ${toRGBA colors.surface "0.8"};
           margin-left: 0;
           border-radius: 0.5em;
-          padding-right: 0.5em;
+          border-right: solid 0.4em ${colors.surface};
         }
         .modules-center {
-          background-color: ${toRGBA colors.surface "0.7"};
+          background-color: ${toRGBA colors.surface "0.8"};
           border-radius: 0.5em;
+          border-right: solid 0.4em ${colors.surface};
+          border-left: solid 0.4em ${colors.surface};
         }
         .modules-right {
-          background-color: ${toRGBA colors.surface "0.7"};
+          background-color: ${toRGBA colors.surface "0.8"};
           margin-right: 0;
           border-radius: 0.5em;
-          padding-left: 0.5em;
+          border-left: solid 0.4em ${colors.surface};
         }
 
         #workspaces button {
