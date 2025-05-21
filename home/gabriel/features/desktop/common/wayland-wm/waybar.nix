@@ -206,7 +206,6 @@ in {
           format-icons = {
             "read" = "󰇯";
             "unread" = "󰇮";
-            "syncing" = "󰁪";
           };
           on-click = mkScript { deps = [pkgs.handlr-regex]; script = "handlr launch x-scheme-handler/mailto"; };
         };
@@ -259,7 +258,7 @@ in {
           };
         };
         "custom/sync-status" = {
-          interval = 10;
+          interval = 3;
           return-type = "json";
           exec-if = gpgCmds.isUnlocked;
           exec = mkScriptJson {
@@ -290,11 +289,11 @@ in {
           on-click = mkScript { script = "systemctl --user start mbsync.service vdirsyncer.service"; };
           format = "{icon}";
           format-icons = {
-            activating= "󰓦";
-            failed = "󰓧";
-            condition = "󰓨";
-            success = "󰄬";
-            unknown = "?";
+            activating= "󰘿";
+            failed = "󰧠";
+            condition = "󱇱";
+            success = "󰅠";
+            unknown = "󰨹";
           };
         };
         "custom/currentplayer" = {
