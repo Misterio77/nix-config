@@ -78,9 +78,7 @@ in {
           ++ (lib.optionals hyprlandCfg.enable [
             "hyprland/workspaces"
             "hyprland/submap"
-          ]);
-
-        modules-center = [
+          ]) ++ [
             "custom/currentplayer"
             "custom/player"
         ];
@@ -333,12 +331,6 @@ in {
           margin-left: 0;
           border-radius: 0.5em;
           border-right: solid 0.4em ${colors.surface};
-        }
-        .modules-center {
-          background-color: ${toRGBA colors.surface "0.8"};
-          border-radius: 0.5em;
-          border-right: solid 0.4em ${colors.surface};
-          border-left: solid 0.4em ${colors.surface};
         }
         .modules-right {
           background-color: ${toRGBA colors.surface "0.8"};
