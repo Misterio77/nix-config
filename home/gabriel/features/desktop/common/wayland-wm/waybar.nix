@@ -86,6 +86,7 @@ in {
         modules-right = [
           "tray"
           "custom/gpg-status"
+          "custom/sync-status"
           "custom/unread-mail"
           "custom/next-event"
           "network"
@@ -236,7 +237,7 @@ in {
         "custom/gpg-status" = let
           gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs config lib; };
         in {
-          interval = 2;
+          interval = 3;
           return-type = "json";
           exec = mkScriptJson {
             script = ''
@@ -256,6 +257,44 @@ in {
           format-icons = {
             locked = "󰌾";
             unlocked = "󰿆";
+          };
+        };
+        "custom/sync-status" = {
+          interval = 10;
+          return-type = "json";
+          exec = mkScriptJson {
+            script = ''
+              results="$(systemctl --user show mbsync.service vdirsyncer.service --property Id,Result,ActiveState)"
+              last_sync="$(date --date="$(systemctl --user show mbsync.timer vdirsyncer.timer --property LastTriggerUSec --value | head -1)" +%H:%M)"
+              if grep -q ActiveState=activating <<< "$results"; then
+                tooltip="Syncing calendars and mail"
+                status="activating"
+              elif grep -q Result=exit-code <<< "$results"; then
+                tooltip="Failed to sync calendars and mail"
+                status="failed"
+              elif grep -q Result=exec-condition <<< "$results"; then
+                tooltip="Sync is paused as GPG key is not available"
+                status="condition"
+              elif [ "$(grep -c Result=success <<< "$results")" == 2 ]; then
+                tooltip="Calendars and mail are synced"
+                status="success"
+              else
+                tooltip="Unknown sync state"
+                status="unknown"
+              fi
+              tooltip+=$'\n'"Last sync: $last_sync"
+            '';
+            tooltip = "$tooltip";
+            alt = "$status";
+          };
+          on-click = mkScript { script = "systemctl --user start mbsync.service vdirsyncer.service"; };
+          format = "{icon}";
+          format-icons = {
+            activating= "󰓦";
+            failed = "󰓧";
+            condition = "󰓨";
+            success = "󰄬";
+            unknown = "?";
           };
         };
         "custom/currentplayer" = {
