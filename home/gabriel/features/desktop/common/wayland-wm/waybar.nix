@@ -221,7 +221,11 @@ in {
                 status="no-event"
                 events="No events!"
               else
-                status="has-event"
+                if test -n "$(khal list now 10m --notstarted)"; then
+                  status="has-close-event"
+                else
+                  status="has-event"
+                fi
               fi
             '';
             alt = "$status";
@@ -230,6 +234,7 @@ in {
           format = "{icon}";
           format-icons = {
             has-event = "󰃭";
+            has-close-event = "󰨱";
             no-event = "󰃮";
           };
           on-click = mkScript { deps = [pkgs.handlr-regex]; script = "handlr launch text/calendar"; };
