@@ -325,25 +325,34 @@ in {
 
         window#waybar {
           padding: 0;
-          border-radius: 0.5em;
-          background-color: ${toRGBA colors.surface "0.7"};
+          background-color: transparent;
           color: ${colors.on_surface};
-          padding-right: 1em;
         }
         .modules-left {
-          margin-left: -0.65em;
+          background-color: ${toRGBA colors.surface "0.7"};
+          margin-left: 0;
+          border-radius: 0.5em;
+          padding-right: 0.5em;
+        }
+        .modules-center {
+          background-color: ${toRGBA colors.surface "0.7"};
+          border-radius: 0.5em;
         }
         .modules-right {
-          margin-right: -0.25em;
+          background-color: ${toRGBA colors.surface "0.7"};
+          margin-right: 0;
+          border-radius: 0.5em;
+          padding-left: 0.5em;
         }
 
         #workspaces button {
-          background-color: ${colors.surface};
           color: ${colors.on_surface};
           padding-left: 0.2em;
           padding-right: 0.2em;
           margin-top: 0.15em;
           margin-bottom: 0.15em;
+          margin-left: 0.1em;
+          margin-right: 0.1em;
         }
         #workspaces button.hidden {
           background-color: ${colors.surface};
@@ -360,7 +369,7 @@ in {
           color: ${colors.primary};
           padding-right: 1.5em;
           padding-left: 1em;
-          margin-right: 0;
+          margin-left: 0;
           border-radius: 0.5em;
         }
         #clock {
@@ -375,9 +384,11 @@ in {
         #custom-player {
           padding-left: 0;
           margin-left: 0;
+          margin-right: 1em;
         }
         #custom-currentplayer {
           padding-right: 0;
+          margin-left: 1em;
         }
         #tray {
           color: ${colors.on_surface};
