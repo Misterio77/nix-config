@@ -9,7 +9,7 @@
   ];
 
   # Purple
-  wallpaper = pkgs.inputs.themes.wallpapers.aenami-from-this-moment;
+  wallpaper = pkgs.inputs.themes.wallpapers.deer-lunar-fantasy;
 
   monitors = [
     {
