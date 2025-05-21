@@ -206,6 +206,7 @@ in {
             "unread" = "󰇮";
             "syncing" = "󰁪";
           };
+          on-click = mkScript { deps = [pkgs.handlr-regex]; script = "handlr launch x-scheme-handler/mailto"; };
         };
         "custom/next-event" = {
           interval = 10;
@@ -230,6 +231,7 @@ in {
             has-event = "󰃭";
             no-event = "󰃮";
           };
+          on-click = mkScript { deps = [pkgs.handlr-regex]; script = "handlr launch text/calendar"; };
         };
         "custom/gpg-status" = let
           gpgCmds = import ../../../cli/gpg-commands.nix { inherit pkgs config lib; };
