@@ -251,7 +251,7 @@ in {
             alt = "$status";
             tooltip = "$tooltip";
           };
-          on-click = "${gpgCmds.isUnlocked} && ${gpgCmds.lock} || ${gpgCmds.unlock}";
+          on-click = mkScript { script = ''if ${gpgCmds.isUnlocked}; then ${gpgCmds.lock}; else ${gpgCmds.unlock}; fi''; };
           format = "{icon}";
           format-icons = {
             locked = "󰌾";
