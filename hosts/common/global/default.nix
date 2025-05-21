@@ -21,6 +21,7 @@
       ./systemd-initrd.nix
       ./swappiness.nix
       ./tailscale.nix
+      ./tpm.nix
       ./gamemode.nix
       ./nix-ld.nix
       ./prometheus-node-exporter.nix

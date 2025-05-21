@@ -23,6 +23,7 @@ in {
       "network"
       "plugdev"
       "podman"
+      "tss"
       "video"
       "wheel"
       "wireshark"
