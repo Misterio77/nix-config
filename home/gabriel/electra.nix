@@ -9,7 +9,6 @@
   home.packages = [
     pkgs.juju
     pkgs.sshuttle
-    pkgs.charmcraft
     pkgs.lxd-lts
   ];
 
