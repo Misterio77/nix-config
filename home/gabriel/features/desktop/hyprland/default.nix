@@ -224,29 +224,24 @@ in {
         "hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}"
       ];
 
-      bind =
+      # Will repeat when h[e]ld, also works when [l]ocked
+      bindel = [
+        # Brightness control
+        ",XF86MonBrightnessUp,exec,brightnessctl s +10%; ${swayosd.brightness}"
+        ",XF86MonBrightnessDown,exec,brightnessctl s 10%-; ${swayosd.brightness}"
+        # Volume
+        ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%; ${swayosd.output-volume}"
+        ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%; ${swayosd.output-volume}"
+        "SHIFT,XF86AudioRaiseVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ +5%; ${swayosd.input-volume}"
+        "SHIFT,XF86AudioLowerVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ -5%; ${swayosd.input-volume}"
+      ];
+      # Also works when [l]ocked
+      bindl =
         [
-          # Program bindings
-          "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
-          "SUPER,e,exec,${defaultApp "text/plain"}"
-          "SUPER,b,exec,${defaultApp "x-scheme-handler/https"}"
-          "SUPERALT,Return,exec,${remote} ${defaultApp "x-scheme-handler/terminal"}"
-          "SUPERALT,e,exec,${remote} ${defaultApp "text/plain"}"
-          "SUPERALT,b,exec,${remote} ${defaultApp "x-scheme-handler/https"}"
-          # Brightness control
-          ",XF86MonBrightnessUp,exec,brightnessctl s +10%; ${swayosd.brightness}"
-          ",XF86MonBrightnessDown,exec,brightnessctl s 10%-; ${swayosd.brightness}"
-          # Volume
-          ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%; ${swayosd.output-volume}"
-          ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%; ${swayosd.output-volume}"
+          # Mute volume
           ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle; ${swayosd.output-volume}"
-          "SHIFT,XF86AudioRaiseVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ +5%; ${swayosd.input-volume}"
-          "SHIFT,XF86AudioLowerVolume,exec,${pactl} set-source-volume @DEFAULT_SOURCE@ -5%; ${swayosd.input-volume}"
           "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle; ${swayosd.input-volume}"
           ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle; ${swayosd.input-volume}"
-          # Screenshotting
-          ",Print,exec,${grimblast} --notify --freeze copy area"
-          "SHIFT,Print,exec,${grimblast} --notify --freeze copy output"
           # Show caps lock
           ",Caps_Lock,exec,${swayosd.caps-lock}"
         ]
@@ -265,7 +260,22 @@ in {
               "SHIFT,XF86AudioPrev,exec,${playerctld} unshift"
               "SHIFT,XF86AudioPlay,exec,systemctl --user restart playerctld"
             ]
-        )
+        );
+
+      # Normal bindings
+      bind =
+        [
+          # Program bindings
+          "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
+          "SUPER,e,exec,${defaultApp "text/plain"}"
+          "SUPER,b,exec,${defaultApp "x-scheme-handler/https"}"
+          "SUPERALT,Return,exec,${remote} ${defaultApp "x-scheme-handler/terminal"}"
+          "SUPERALT,e,exec,${remote} ${defaultApp "text/plain"}"
+          "SUPERALT,b,exec,${remote} ${defaultApp "x-scheme-handler/https"}"
+          # Screenshotting
+          ",Print,exec,${grimblast} --notify --freeze copy area"
+          "SHIFT,Print,exec,${grimblast} --notify --freeze copy output"
+        ]
         ++
         # Notification manager
         (
