@@ -14,6 +14,20 @@
     outputs.homeConfigurations;
   rgb = color: "rgb(${lib.removePrefix "#" color})";
   rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
+  swayosd = {
+    brightness = "swayosd-client --brightness +0";
+    output-volume = "swayosd-client --output-volume +0";
+    input-volume = "swayosd-client --input-volume +0";
+    caps-lock = "sleep 0.2 && swayosd-client --caps-lock";
+  };
+  grimblast = lib.getExe pkgs.grimblast;
+  pactl = lib.getExe' pkgs.pulseaudio "pactl";
+  defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
+  remote = lib.getExe (pkgs.writeShellScriptBin "remote" ''
+    socket="$(basename "$(find ~/.ssh -name 'master-gabriel@*' | head -1 | cut -d ':' -f1)")"
+    host="''${socket#master-}"
+    ssh "$host" "$@"
+  '');
 in {
   imports = [
     ../common
@@ -109,8 +123,8 @@ in {
         sweethome3d-tooltips = "title:win[0-9],class:com-eteks-sweethome3d-SweetHome3DBootstrap";
         steamGame = "class:steam_app_[0-9]*";
         kdeconnect-pointer = "class:org.kdeconnect.daemon";
-        wineTray ="class:explorer.exe";
-        rsiLauncher ="class:rsi launcher.exe";
+        wineTray = "class:explorer.exe";
+        rsiLauncher = "class:rsi launcher.exe";
         steamBigPicture = "title:Steam Big Picture Mode";
       in
         [
@@ -210,22 +224,7 @@ in {
         "hyprctl setcursor ${config.gtk.cursorTheme.name} ${toString config.gtk.cursorTheme.size}"
       ];
 
-      bind = let
-        grimblast = lib.getExe pkgs.grimblast;
-        pactl = lib.getExe' pkgs.pulseaudio "pactl";
-        defaultApp = type: "${lib.getExe pkgs.handlr-regex} launch ${type}";
-        remote = lib.getExe (pkgs.writeShellScriptBin "remote" ''
-          socket="$(basename "$(find ~/.ssh -name 'master-gabriel@*' | head -1 | cut -d ':' -f1)")"
-          host="''${socket#master-}"
-          ssh "$host" "$@"
-        '');
-        swayosd = {
-          brightness = "swayosd-client --brightness +0";
-          output-volume = "swayosd-client --output-volume +0";
-          input-volume = "swayosd-client --input-volume +0";
-          caps-lock = "sleep 0.2 && swayosd-client --caps-lock";
-        };
-      in
+      bind =
         [
           # Program bindings
           "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
