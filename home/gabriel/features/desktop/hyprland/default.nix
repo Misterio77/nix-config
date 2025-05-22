@@ -118,6 +118,8 @@ in {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         disable_hyprland_qtutils_check = true;
+        enable_swallow = true;
+        swallow_regex = "(?i)(${lib.concatMapStringsSep "|" (lib.removeSuffix ".desktop") config.xdg.mimeApps.defaultApplications."x-scheme-handler/terminal"})";
       };
       windowrulev2 = let
         sweethome3d-tooltips = "title:win[0-9],class:com-eteks-sweethome3d-SweetHome3DBootstrap";

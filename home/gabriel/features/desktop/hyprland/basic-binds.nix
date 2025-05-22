@@ -1,4 +1,4 @@
-{lib, ...}: {
+{lib, config, ...}: {
   wayland.windowManager.hyprland.settings = {
     bindm = [
       "SUPER,mouse:272,movewindow"
@@ -58,6 +58,7 @@
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
         "SUPER,i,pseudo"
+        "SUPER,y,toggleswallow"
       ]
       ++
       # Change workspace
