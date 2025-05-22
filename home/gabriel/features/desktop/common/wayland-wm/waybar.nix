@@ -97,7 +97,7 @@ in {
         ];
 
         clock = {
-          format = "{:%H:%M}  ";
+          format = "{:%H:%M %d/%m}";
           on-click-left = "mode";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
         };
@@ -440,8 +440,8 @@ in {
         #clock {
           background-color: ${colors.surface_container};
           color: ${colors.primary};
-          padding-right: 0.5em;
-          padding-left: 1em;
+          padding-right: 0.8em;
+          padding-left: 0.7em;
           margin-right: 0;
           border-radius: 0.5em;
         }
