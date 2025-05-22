@@ -169,6 +169,8 @@ in {
         "ignorezero,wofi"
 
         "noanim,wallpaper"
+
+        "abovelock,swayosd"
       ];
 
       decoration = {
