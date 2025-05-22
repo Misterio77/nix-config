@@ -55,8 +55,8 @@ in {
         src = "${final.fetchFromGitHub {
           owner = "hyprwm";
           repo = "hyprland-plugins";
-          rev = "1f332c09a2382cb23da0f69a6f504f8b33433831";
-          hash = "sha256-lbdHyp2+NoyciCJBtBt3Cgm2dDvoHvTdCRMbmwJoUmk=";
+          rev = "v0.49.0";
+          hash = "sha256-GpsLyK/U05q7QnyFIWrnGS2loVyjPZByTtPitwu9UNw=";
         }}/hyprbars";
       });
     };
