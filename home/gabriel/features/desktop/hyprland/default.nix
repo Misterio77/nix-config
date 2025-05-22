@@ -50,9 +50,9 @@ in {
     };
   };
 
-  home.packages = with pkgs; [
-    grimblast
-    hyprpicker
+  home.packages = [
+    pkgs.grimblast
+    pkgs.hyprpicker
   ];
 
   wayland.windowManager.hyprland = {
