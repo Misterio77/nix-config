@@ -117,7 +117,9 @@ in {
         };
 
         "pulseaudio" = {
-          format = "{icon}";
+          format = "{icon}{format_source}";
+          format-source = "";
+          format-source-muted = " 󰍭";
           format-bluetooth = "{icon}󰂯";
           format-icons = {
             default-muted = "󰸈";
