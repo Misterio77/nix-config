@@ -17,19 +17,22 @@ in {
     package = lib.mkOption {
       readOnly = true;
       type = lib.types.package;
-      default = pkgs.writeShellApplication {
-        name = "oama";
-        runtimeInputs = [pkgs.oama config.programs.password-store.package pkgs.gnused pkgs.libsecret];
-        text = ''
-          oama --config <(sed "s/@CLIENT_SECRET@/$(pass oama/google_client_secret)/" "${settingsFile}") "$@"
+      default = pkgs.oama.overrideAttrs (old: {
+        nativeBuildInputs = [pkgs.makeBinaryWrapper];
+        postInstall = ''
+          wrapProgram $out/bin/oama \
+            --prefix PATH : ${lib.makeBinPath [
+              pkgs.coreutils
+              pkgs.libsecret
+              pkgs.gnupg
+            ]}
         '';
-      };
+      });
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      packages = [cfg.package];
-    };
+    home.packages = [cfg.package];
+    xdg.configFile."oama/config.yaml".source = settingsFile;
   };
 }
