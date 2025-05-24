@@ -269,6 +269,21 @@ in {
       # Normal bindings
       bind =
         [
+          # Rename workspace
+          "SUPER,r,exec,${pkgs.writeShellScript "rename" ''
+            workspace="$(hyprctl activeworkspace -j)"
+            id="$(jq -r .id <<< "$workspace")"
+            prefix="$id - "
+            name="$(jq -r .name <<< "$workspace")"
+            name="''${name#"$prefix"}" # Remove prefix
+            entry="$(GSK_RENDERER=cairo ${lib.getExe pkgs.zenity} --entry --title "Rename Workspace" --entry-text="$name")"
+            if [ -z "$entry" ] || [ "$entry" == "$id" ]; then
+              new_name="$id"
+            else
+              new_name="$prefix$entry"
+            fi
+            hyprctl dispatch renameworkspace "$id" "$new_name"
+          ''}"
           # Program bindings
           "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
           "SUPER,e,exec,${defaultApp "text/plain"}"
