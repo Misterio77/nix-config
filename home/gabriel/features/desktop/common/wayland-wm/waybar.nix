@@ -91,6 +91,7 @@ in {
           "custom/unread-mail"
           "custom/next-event"
           "network"
+          "custom/rfkill"
           "battery"
           "pulseaudio"
           "clock"
@@ -365,11 +366,12 @@ in {
           "restart-interval" = 5;
         };
         "custom/rfkill" = {
-          interval = 1;
+          interval = 3;
           exec-if = mkScript {
             deps = [pkgs.util-linux];
-            script = "rfkill | grep '\<blocked\>'";
+            script = "rfkill list wifi | grep yes -q";
           };
+          exec = "echo 󰀝";
         };
       };
     };
