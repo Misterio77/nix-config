@@ -135,9 +135,6 @@ in {
             headset-muted = "󰋐";
             headset = "󰋎";
           };
-          tooltip-format = ''
-            Output: {volume}%
-            Input: {format_source}'';
           on-click = lib.getExe pkgs.pavucontrol;
         };
         idle_inhibitor = {
