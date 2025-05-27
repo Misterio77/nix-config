@@ -103,7 +103,10 @@ in {
       };
       input = {
         kb_layout = "us_intl";
-        touchpad.disable_while_typing = false;
+        touchpad = {
+          disable_while_typing = false;
+          natural_scroll = true;
+        };
       };
       dwindle = {
         split_width_multiplier = 1.35;
