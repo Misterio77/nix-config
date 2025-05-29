@@ -4,6 +4,7 @@
   ...
 }: let
   servers = config.services.minecraft-servers.servers;
+  cfg = servers.proxy;
   proxyFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
 in {
   imports = [
@@ -15,8 +16,8 @@ in {
   ];
 
   networking.firewall = {
-    allowedTCPPorts = [25565];
-    allowedUDPPorts = [25565];
+    allowedTCPPorts = [cfg.serverProperties.server-port];
+    allowedUDPPorts = [cfg.serverProperties.server-port];
   };
 
   services.minecraft-servers.servers.proxy = {
@@ -28,20 +29,28 @@ in {
       echo 'velocity reload' > /run/minecraft/proxy.stdin
     '';
 
+    serverProperties = {
+      server-ip = "0.0.0.0";
+      server-port = 25565;
+      online-mode = true;
+      motd = "Server do Mr. GELOS";
+    };
+
     package = pkgs.inputs.nix-minecraft.velocity-server; # Latest build
     jvmOpts = proxyFlags "1G";
 
     files = {
       "velocity.toml".value = {
+        inherit (cfg.serverProperties) motd online-mode;
         config-version = "2.5";
-        bind = "0.0.0.0:25565";
-        motd = "Server do Mr. GELOS";
+        bind = "${cfg.serverProperties.server-ip}:${toString cfg.serverProperties.server-port}";
         player-info-forwarding-mode = "legacy";
-        online-mode = true;
-        servers = {
-          limbo = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
-          auth = "localhost:${toString servers.limbo.files."settings.yml".value.bind.port}";
-          create-ab = "localhost:${toString servers.create-ab.serverProperties.server-port}";
+        servers = let
+          mkIp = server: "${server.serverProperties.server-ip}:${toString server.serverProperties.server-port}";
+        in {
+          limbo = mkIp servers.limbo;
+          auth = mkIp servers.limbo;
+          create-ab = mkIp servers.create-ab;
           try = ["limbo"];
         };
         forced-hosts = {
@@ -50,7 +59,7 @@ in {
         };
         query = {
           enabled = true;
-          port = 25565;
+          port = cfg.serverProperties.server-port;
         };
         advanced = {
           login-ratelimite = 500;

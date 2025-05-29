@@ -1,10 +1,21 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: let
+  cfg = config.services.minecraft-servers.servers.limbo;
+in {
   services.minecraft-servers.servers.limbo = {
     enable = true;
+    serverProperties = {
+      server-ip = "127.0.0.1";
+      server-port = 25560;
+    };
+
     package = pkgs.callPackage ./nano-limbo-server.nix {};
     jvmOpts = "";
+
     files."settings.yml".value = {
-      bind.port = 25560;
+      bind = {
+        ip = cfg.serverProperties.server-ip;
+        port = cfg.serverProperties.server-port;
+      };
       maxPlayers = -1;
       ping = {
         description = "Limbo";

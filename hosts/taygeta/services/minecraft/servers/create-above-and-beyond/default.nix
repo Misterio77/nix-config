@@ -16,6 +16,7 @@ in {
     jvmOpts = "start";
     whitelist = import ../../whitelist.nix;
     serverProperties = {
+      server-ip = "127.0.0.1";
       server-port = 25575;
       online-mode = false;
       level-type = "biomesoplenty";
@@ -31,13 +32,17 @@ in {
     files = {
       "lazymc.toml".value = {
         config.version = pkgs.lazymc.version;
-        public.address = "127.0.0.1:${toString cfg.serverProperties.server-port}";
+        public.address = "${cfg.serverProperties.server-ip}:${toString cfg.serverProperties.server-port}";
         server = {
-          address = "127.0.0.1:${toString (cfg.serverProperties.server-port + 10000)}";
+          address = "127.0.0.1:${toString (cfg.serverProperties.server-port + 1)}";
           command = "${lib.getExe forgeServer} ${(import ../../aikar-flags.nix) "8G"}";
           directory = ".";
           probe_on_start = true;
           forge = true;
+        };
+        rcon = {
+          enabled = true;
+          port = cfg.serverProperties.server-port + 2;
         };
         join.methods = ["kick"];
         join.kick = {

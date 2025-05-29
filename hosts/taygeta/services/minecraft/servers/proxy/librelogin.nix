@@ -32,7 +32,7 @@ in {
           host = "localhost";
           max-life-time = 600000;
           password = "@DATABASE_PASSWORD@";
-          port = 3306;
+          port = config.services.mysql.port;
           user = "minecraft";
         };
         debug = false;
