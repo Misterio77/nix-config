@@ -1,4 +1,4 @@
-{pkgs, inputs, ...}: let
+{pkgs, inputs, lib, ...}: let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchzip {
     url = "https://www.curseforge.com/api/v1/mods/542763/files/3567576/download";
@@ -6,15 +6,16 @@
     extension = "zip";
     stripRoot = false;
   };
+  forgeServer = pkgs.callPackage ./forge-server.nix {};
+  jvmOpts = (import ../../aikar-flags.nix) "8G";
 in {
   services.minecraft-servers.servers.create-ab = {
     enable = true;
     enableReload = true;
-    package = pkgs.callPackage ./forge-server.nix {};
-    jvmOpts = (import ../../aikar-flags.nix) "8G";
+    package = pkgs.lazymc;
     whitelist = import ../../whitelist.nix;
     serverProperties = {
-      server-port = 25575;
+      server-port = 25585;
       online-mode = false;
       level-type = "biomesoplenty";
       difficulty = "normal";
@@ -27,6 +28,22 @@ in {
       rm mods/connectivity*.jar
     '';
     files = {
+      "lazymc.toml".value = {
+        config.version = pkgs.lazymc.version;
+        public.address = "127.0.0.1:25575";
+        server = {
+          address = "127.0.0.1:25585";
+          command = "${lib.getExe forgeServer} ${jvmOpts}";
+          directory = ".";
+          probe_on_start = true;
+          forge = true;
+        };
+        join.methods = ["kick"];
+        join.kick = {
+          starting = "Iniciando servidor... Aguarde alguns minutos.";
+          stopping = "Desligando servidor... Aguarde alguns minutos antes de entrar novamente.";
+        };
+      };
       config = "${modpack}/config";
       defaultconfigs = "${modpack}/defaultconfigs";
       kubejs = "${modpack}/kubejs";
