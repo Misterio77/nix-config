@@ -1,4 +1,4 @@
-{pkgs, inputs, lib, config, ...}: let
+{pkgs, inputs, config, ...}: let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchzip {
     url = "https://www.curseforge.com/api/v1/mods/542763/files/3567576/download";
@@ -7,13 +7,12 @@
     stripRoot = false;
   };
   forgeServer = pkgs.callPackage ./forge-server.nix {};
-  cfg = config.services.minecraft-servers.servers.create-ab;
 in {
   services.minecraft-servers.servers.create-ab = {
     enable = true;
     enableReload = true;
-    package = pkgs.lazymc;
-    jvmOpts = "start";
+    package = forgeServer;
+    jvmOpts = (import ../../aikar-flags.nix) "8G";
     whitelist = import ../../whitelist.nix;
     serverProperties = {
       server-ip = "0.0.0.0";
@@ -30,26 +29,6 @@ in {
       rm mods/connectivity*.jar
     '';
     files = {
-      "lazymc.toml".value = {
-        config.version = pkgs.lazymc.version;
-        public.address = "${cfg.serverProperties.server-ip}:${toString cfg.serverProperties.server-port}";
-        server = {
-          address = "127.0.0.1:${toString (cfg.serverProperties.server-port + 1)}";
-          command = "${lib.getExe forgeServer} ${(import ../../aikar-flags.nix) "8G"}";
-          directory = ".";
-          probe_on_start = true;
-          forge = true;
-        };
-        rcon = {
-          enabled = true;
-          port = cfg.serverProperties.server-port + 2;
-        };
-        join.methods = ["kick"];
-        join.kick = {
-          starting = "Iniciando servidor... Aguarde alguns minutos.";
-          stopping = "Desligando servidor... Aguarde alguns minutos antes de entrar novamente.";
-        };
-      };
       config = "${modpack}/config";
       defaultconfigs = "${modpack}/defaultconfigs";
       kubejs = "${modpack}/kubejs";
