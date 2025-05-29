@@ -50,12 +50,9 @@ in {
         in {
           limbo = mkIp servers.limbo;
           auth = mkIp servers.limbo;
-          create-ab = mkIp servers.create-ab;
           try = ["limbo"];
         };
         forced-hosts = {
-          "create.mc.m7.rs" = ["create-ab" "limbo"];
-          "create-ab.mc.m7.rs" = ["create-ab" "limbo"];
         };
         query = {
           enabled = true;
