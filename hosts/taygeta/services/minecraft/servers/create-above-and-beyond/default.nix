@@ -1,4 +1,4 @@
-{pkgs, inputs, lib, ...}: let
+{pkgs, inputs, lib, config, ...}: let
   inherit (inputs.nix-minecraft.lib) collectFilesAt;
   modpack = pkgs.fetchzip {
     url = "https://www.curseforge.com/api/v1/mods/542763/files/3567576/download";
@@ -7,7 +7,7 @@
     stripRoot = false;
   };
   forgeServer = pkgs.callPackage ./forge-server.nix {};
-  jvmOpts = (import ../../aikar-flags.nix) "8G";
+  cfg = config.services.minecraft-servers.servers.create-ab;
 in {
   services.minecraft-servers.servers.create-ab = {
     enable = true;
@@ -16,7 +16,7 @@ in {
     jvmOpts = "start";
     whitelist = import ../../whitelist.nix;
     serverProperties = {
-      server-port = 25585;
+      server-port = 25575;
       online-mode = false;
       level-type = "biomesoplenty";
       difficulty = "normal";
@@ -31,10 +31,10 @@ in {
     files = {
       "lazymc.toml".value = {
         config.version = pkgs.lazymc.version;
-        public.address = "127.0.0.1:25575";
+        public.address = "127.0.0.1:${toString cfg.serverProperties.server-port}";
         server = {
-          address = "127.0.0.1:25585";
-          command = "${lib.getExe forgeServer} ${jvmOpts}";
+          address = "127.0.0.1:${toString (cfg.serverProperties.server-port + 10000)}";
+          command = "${lib.getExe forgeServer} ${(import ../../aikar-flags.nix) "8G"}";
           directory = ".";
           probe_on_start = true;
           forge = true;
