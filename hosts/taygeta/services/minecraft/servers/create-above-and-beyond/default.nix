@@ -13,6 +13,7 @@ in {
     enable = true;
     enableReload = true;
     package = pkgs.lazymc;
+    jvmOpts = "start";
     whitelist = import ../../whitelist.nix;
     serverProperties = {
       server-port = 25585;
