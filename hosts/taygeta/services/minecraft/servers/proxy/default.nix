@@ -67,10 +67,10 @@ in {
       };
       "lang/messages.properties" = ./messages.properties;
       "plugins/ambassador/Ambassador.toml".value = {
-        config-version = "1.1";
-        disconnect-reset-message = "&ePor favor, reconecte.";
-        silence-warnings = true;
-        server-switch-cancellation-time = 1200;
+        config-version = "2.1";
+        bypass-registry-checks = true;
+        enable-kick-reset = true;
+        reconnect-message = "&ePor favor, reconecte.";
       };
     };
     symlinks = {
