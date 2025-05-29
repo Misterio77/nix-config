@@ -4,7 +4,7 @@ in {
   services.minecraft-servers.servers.limbo = {
     enable = true;
     serverProperties = {
-      server-ip = "localhost";
+      server-ip = "0.0.0.0";
       server-port = 25560;
     };
 

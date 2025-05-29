@@ -46,7 +46,7 @@ in {
         bind = "${cfg.serverProperties.server-ip}:${toString cfg.serverProperties.server-port}";
         player-info-forwarding-mode = "legacy";
         servers = let
-          mkIp = server: "${server.serverProperties.server-ip}:${toString server.serverProperties.server-port}";
+          mkIp = server: "localhost:${toString server.serverProperties.server-port}";
         in {
           limbo = mkIp servers.limbo;
           auth = mkIp servers.limbo;
