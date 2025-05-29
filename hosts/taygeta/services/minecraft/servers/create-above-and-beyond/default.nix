@@ -16,7 +16,7 @@ in {
     jvmOpts = "start";
     whitelist = import ../../whitelist.nix;
     serverProperties = {
-      server-ip = "127.0.0.1";
+      server-ip = "localhost";
       server-port = 25575;
       online-mode = false;
       level-type = "biomesoplenty";
@@ -34,7 +34,7 @@ in {
         config.version = pkgs.lazymc.version;
         public.address = "${cfg.serverProperties.server-ip}:${toString cfg.serverProperties.server-port}";
         server = {
-          address = "127.0.0.1:${toString (cfg.serverProperties.server-port + 1)}";
+          address = "localhost:${toString (cfg.serverProperties.server-port + 1)}";
           command = "${lib.getExe forgeServer} ${(import ../../aikar-flags.nix) "8G"}";
           directory = ".";
           probe_on_start = true;
