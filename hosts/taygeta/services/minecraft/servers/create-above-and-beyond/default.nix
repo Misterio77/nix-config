@@ -32,7 +32,7 @@ in {
     files = {
       "lazymc.toml".value = {
         config.version = pkgs.lazymc.version;
-        public.address = "localhost:${toString cfg.serverProperties.server-port}";
+        public.address = "${cfg.serverProperties.server-ip}:${toString cfg.serverProperties.server-port}";
         server = {
           address = "localhost:${toString (cfg.serverProperties.server-port + 1)}";
           command = "${lib.getExe forgeServer} ${(import ../../aikar-flags.nix) "8G"}";
