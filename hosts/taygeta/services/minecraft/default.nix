@@ -8,6 +8,7 @@
     inputs.nix-minecraft.nixosModules.minecraft-servers
     ./servers/proxy
     ./servers/limbo
+    ./servers/gtnh
   ];
 
   sops.secrets.minecraft-secrets = {
