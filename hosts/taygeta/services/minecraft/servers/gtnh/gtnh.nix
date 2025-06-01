@@ -3,30 +3,26 @@
   stdenvNoCC,
   fetchzip,
   jre_headless,
+  groovy,
   makeWrapper,
+  writeShellScript,
+  # Setup mods/config files during startup
+  setupFiles ? true,
   ...
 }: let
-  classPath = lib.concatStringsSep ":" [
-    "$out/lib/lwjgl3ify-forgePatches.jar"
-    # This list can be found in lwjgl3ify's META-INF/MANIFEST.mf
-    "$out/lib/libraries/com/typesafe/akka/akka-actor_2.11/2.3.3/akka-actor_2.11-2.3.3.jar"
-    "$out/lib/libraries/com/typesafe/config/1.2.1/config-1.2.1.jar"
-    "$out/lib/libraries/org/scala-lang/scala-actors-migration_2.11/1.1.0/scala-actors-migration_2.11-1.1.0.jar"
-    "$out/lib/libraries/org/scala-lang/scala-compiler/2.11.1/scala-compiler-2.11.1.jar"
-    "$out/lib/libraries/org/scala-lang/plugins/scala-continuations-library_2.11/1.0.2/scala-continuations-library_2.11-1.0.2.jar"
-    "$out/lib/libraries/org/scala-lang/plugins/scala-continuations-plugin_2.11.1/1.0.2/scala-continuations-plugin_2.11.1-1.0.2.jar"
-    "$out/lib/libraries/org/scala-lang/scala-library/2.11.1/scala-library-2.11.1.jar"
-    "$out/lib/libraries/org/scala-lang/scala-parser-combinators_2.11/1.0.1/scala-parser-combinators_2.11-1.0.1.jar"
-    "$out/lib/libraries/org/scala-lang/scala-reflect/2.11.1/scala-reflect-2.11.1.jar"
-    "$out/lib/libraries/org/scala-lang/scala-swing_2.11/1.0.1/scala-swing_2.11-1.0.1.jar"
-    "$out/lib/libraries/org/scala-lang/scala-xml_2.11/1.0.2/scala-xml_2.11-1.0.2.jar"
-    "$out/lib/libraries/lzma/lzma/0.0.1/lzma-0.0.1.jar"
-    "$out/lib/libraries/net/sfjopt-simple/jopt-simple/4.5/jopt-simple-4.5.jar"
-    "$out/lib/libraries/com/google/guava/guava/17.0/guava-17.0.jar"
-    "$out/lib/forge-1.7.10-10.13.4.1614-1.7.10-universal.jar"
-    "$out/lib/minecraft_server.1.7.10.jar"
-  ];
-  entryClass = "me.eigenraven.lwjgl3ify.rfb.entry.ServerMain";
+  # Groovy script to parse meta inf from jar
+  readMetaInf = /* groovy */ ''
+    import java.net.URL
+    import java.io.File
+    import java.util.jar.Attributes.Name
+
+    jarPath = args[0]
+    pathPrefix = args[1]
+    jar = new URL("jar:file:" + new File(jarPath).getAbsolutePath()+ "!/")
+    attributes =  jar.openConnection().getManifest().getMainAttributes()
+    println(attributes.get(Name.MAIN_CLASS))
+    println(attributes.get(Name.CLASS_PATH).split(' ').collect{"$pathPrefix/$it"}.join(':'))
+  '';
 in stdenvNoCC.mkDerivation {
   pname = "gt-new-horizons";
   version = "2.7.4";
@@ -41,13 +37,42 @@ in stdenvNoCC.mkDerivation {
     '';
   };
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [makeWrapper groovy];
+
+  preStart = writeShellScript "gtnh-prestart" ''
+    out=$1
+
+    # Link stuff
+    for name in "mods" "server-icon.png"; do
+      realpath="$(realpath -m "$name" || true)"
+      if [[ "$realpath" == "/nix/store/"*"/lib/$name" && "$realpath" != "$out/lib/$name" ]]; then
+        echo "$name out of date or broken. Cleaning up."
+        unlink "$name"
+      fi
+      if ! [[ -e "$name" ]]; then
+        echo "$name missing. Linking it from $out/lib."
+        ln -s "$out/lib/$name" .
+      fi
+    done
+    # Copy stuff
+    for name in "config" "serverutilities" "server.properties"; do
+      if ! [[ -e "$name" ]]; then
+        echo "$name missing. Copying it from $out/lib."
+        cp -rL "$out/lib/$name" .
+        chmod +w "$name" -R
+      fi
+    done
+  '';
 
   installPhase = ''
     mkdir $out
     ln -s $src $out/lib
+    lwjgl3ify="$out/lib/lwjgl3ify-forgePatches.jar"
+    # Get main_class and class_path from lwjgl3ify jar
+    { read main_class; read class_path; } < <(groovy -e ${lib.escapeShellArg readMetaInf} $lwjgl3ify $out/lib)
     # Create bin
     makeWrapper ${lib.getExe jre_headless} $out/bin/gt-new-horizons \
-      --append-flags "@$out/lib/java9args.txt -cp ${classPath} ${entryClass} nogui"
+      ${lib.optionalString setupFiles ''--run "$preStart $out"''} \
+      --append-flags "@$out/lib/java9args.txt -cp $lwjgl3ify:$class_path $main_class nogui"
   '';
 }
