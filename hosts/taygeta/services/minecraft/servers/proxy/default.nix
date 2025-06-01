@@ -50,6 +50,7 @@ in {
         in {
           limbo = mkIp servers.limbo;
           auth = mkIp servers.limbo;
+          gtnh = mkIp servers.gtnh;
           try = ["limbo"];
         };
         forced-hosts = {
