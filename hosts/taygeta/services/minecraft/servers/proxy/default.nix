@@ -9,7 +9,6 @@
 in {
   imports = [
     ./luckperms.nix
-    ./fallbackserver.nix
     ./huskchat.nix
     ./velocitab.nix
   ];
