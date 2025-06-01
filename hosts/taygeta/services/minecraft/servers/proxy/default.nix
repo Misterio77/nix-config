@@ -47,7 +47,6 @@ in {
           mkIp = server: "localhost:${toString server.serverProperties.server-port}";
         in {
           limbo = mkIp servers.limbo;
-          auth = mkIp servers.limbo;
           gtnh = mkIp servers.gtnh;
           try = ["limbo"];
         };
