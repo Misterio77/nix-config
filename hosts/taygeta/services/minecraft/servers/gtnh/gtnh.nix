@@ -6,8 +6,6 @@
   groovy,
   makeWrapper,
   writeShellScript,
-  # Setup mods/config files during startup
-  setupFiles ? true,
   ...
 }: let
   # Groovy script to parse meta inf from jar
@@ -29,32 +27,14 @@ in stdenvNoCC.mkDerivation {
 
   src = fetchzip {
     url = "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.4_Server_Java_17-21.zip";
-    hash = "sha256-EmjpJl3faXx7/FMKTpKk//q7cm/xNZ3m5fExa3rdB9U=";
+    hash = "sha256-wWGDbVwVe6989SyPjS0d/82oXTu//rHkDbjIVzFAVgY=";
     stripRoot = false;
-    postFetch = ''
-      # Extract IC2 dep to mod folder
-      unzip -j $out/mods/industrialcraft-2-2.2.828a-experimental.jar lib/EJML-core-0.26.jar -d $out/mods/ic2/
-    '';
   };
 
   nativeBuildInputs = [makeWrapper groovy];
 
   preStart = writeShellScript "gtnh-prestart" ''
     out=$1
-
-    # Link stuff
-    for name in "mods" "server-icon.png"; do
-      realpath="$(realpath -m "$name" || true)"
-      if [[ "$realpath" == "/nix/store/"*"/lib/$name" && "$realpath" != "$out/lib/$name" ]]; then
-        echo "$name out of date or broken. Cleaning up."
-        unlink "$name"
-      fi
-      if ! [[ -e "$name" ]]; then
-        echo "$name missing. Linking it from $out/lib."
-        ln -s "$out/lib/$name" .
-      fi
-    done
-    # Copy stuff
     for name in "config" "serverutilities" "server.properties"; do
       if ! [[ -e "$name" ]]; then
         echo "$name missing. Copying it from $out/lib."
@@ -62,17 +42,24 @@ in stdenvNoCC.mkDerivation {
         chmod +w "$name" -R
       fi
     done
+    if ! [[ -e "eula.txt" ]]; then
+      echo "NOTICE: by running this software, you agree to https://account.mojang.com/documents/minecraft_eula"
+      echo "eula=true" > eula.txt
+    fi
   '';
 
   installPhase = ''
     mkdir $out
     ln -s $src $out/lib
-    lwjgl3ify="$out/lib/lwjgl3ify-forgePatches.jar"
-    # Get main_class and class_path from lwjgl3ify jar
-    { read main_class; read class_path; } < <(groovy -e ${lib.escapeShellArg readMetaInf} $lwjgl3ify $out/lib)
-    # Create bin
+    mainJar="$out/lib/lwjgl3ify-forgePatches.jar"
+    # Get main_class and class_path from main jar
+    { read main_class; read class_path; } < <(groovy -e ${lib.escapeShellArg readMetaInf} $mainJar $out/lib)
+    # Add extra required jars to class_path
+    class_path+="$(printf ':%s' $out/lib/mods/lwjgl3ify-*.jar)"
+    # Collect mods and pass them as --mods. Has to be in runtime to get their path relative to PWD
     makeWrapper ${lib.getExe jre_headless} $out/bin/gt-new-horizons \
-      ${lib.optionalString setupFiles ''--run "$preStart $out"''} \
-      --append-flags "@$out/lib/java9args.txt -cp $lwjgl3ify:$class_path $main_class nogui"
+      --run "$preStart $out" \
+      --run 'mods="$(find "$(realpath --relative-to="$PWD" '$out'/lib/mods)" -name "*.jar" | tr "\n" ",")"' \
+      --append-flags "@$out/lib/java9args.txt -cp $mainJar:$class_path $main_class nogui --mods \"\$mods\""
   '';
 }
