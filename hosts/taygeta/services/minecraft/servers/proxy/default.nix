@@ -8,7 +8,6 @@
   proxyFlags = memory: "-Xms${memory} -Xmx${memory} -XX:+UseG1GC -XX:G1HeapRegionSize=4M -XX:+UnlockExperimentalVMOptions -XX:+ParallelRefProcEnabled -XX:+AlwaysPreTouch -XX:MaxInlineLevel=15";
 in {
   imports = [
-    ./librelogin.nix
     ./luckperms.nix
     ./fallbackserver.nix
     ./huskchat.nix
