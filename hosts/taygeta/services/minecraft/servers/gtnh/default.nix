@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: let
+  cfg = config.services.minecraft-servers.servers.gtnh;
+in {
+  networking.firewall = {
+    allowedTCPPorts = [cfg.serverProperties.server-port];
+    allowedUDPPorts = [cfg.serverProperties.server-port];
+  };
+
   services.minecraft-servers.servers.gtnh = rec {
     enable = true;
     package = pkgs.callPackage ./gtnh.nix { };
@@ -8,8 +15,8 @@
       level-type = "rwg";
       difficulty = 3;
       spawn-protection = 1;
-      server-port = 5001;
-      online-mode = false;
+      server-port = 25565;
+      online-mode = true;
     };
     files = {
       config = "${package}/lib/config";
