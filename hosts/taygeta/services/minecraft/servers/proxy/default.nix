@@ -54,6 +54,9 @@ in {
           try = ["limbo"];
         };
         forced-hosts = {
+          "gtnh.mc.m7.rs" = ["gtnh" "limbo"];
+          "limbo.mc.m7.rs" = ["limbo"];
+          "lobby.mc.m7.rs" = ["limbo"];
         };
         query = {
           enabled = true;
