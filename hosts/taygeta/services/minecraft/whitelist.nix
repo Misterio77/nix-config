@@ -13,4 +13,6 @@
   PG231 = "eddfb535-16e1-4c6a-8b6e-3fcf4b85dc73";
   epiclitebeans = "0fd1960c-dd17-3aef-b1e3-f0a390281899";
   tatuteu = "735ffd56-3b65-4892-8fb0-19c6eb026a44";
+  Kirao = "10ffa557-322a-4b6c-9b3e-cdc2792163ae";
+  C0baltt_ = "7ecb7208-e028-4e99-b147-dd6dc0d5f0fe";
 }
