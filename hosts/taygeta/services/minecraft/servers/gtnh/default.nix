@@ -22,6 +22,7 @@ in {
     files = {
       config = "${package}/lib/config";
       serverutilities = "${package}/lib/serverutilities";
+      "serverutilities/serverutilities.cfg" = ./serverutilities.cfg;
     };
     symlinks = {
       "mods/bungeeforge-1.7.10.jar" = pkgs.fetchurl rec {
