@@ -17,6 +17,7 @@ in {
       spawn-protection = 1;
       server-port = 25565;
       online-mode = true;
+      white-list = true;
     };
     files = {
       config = "${package}/lib/config";
