@@ -24,22 +24,7 @@ in {
       config = "${package}/lib/config";
       serverutilities = "${package}/lib/serverutilities";
       "serverutilities/serverutilities.cfg" = ./serverutilities.cfg;
-      "config/JourneyMapServer/world.cfg" = {
-        format = pkgs.formats.json {};
-        value = {
-          UseWorldID = true;
-          SaveInWorldFolder = true;
-          cave = {
-            PlayerCaveMapping = true;
-            OpCaveMapping = true;
-          };
-          radar = {
-            PlayerRadar = true;
-            OpRadar = true;
-          };
-          ConfigVersion = 1.11;
-        };
-      };
+      "config/JourneyMapServer/world.cfg" = ./journeymap-world.cfg;
     };
     symlinks = {
       "mods/bungeeforge-1.7.10.jar" = pkgs.fetchurl rec {
