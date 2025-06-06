@@ -20,6 +20,7 @@ in {
       online-mode = true;
       white-list = true;
       motd = "Greg\\u00f3rio T\\u00e9cnico: Novidades Horizontais";
+      max-tick-time = 60000; # 1 minute
     };
     files = {
       config = "${package}/lib/config";
