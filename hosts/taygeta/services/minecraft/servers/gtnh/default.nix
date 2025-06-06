@@ -19,7 +19,7 @@ in {
       server-port = 25565;
       online-mode = true;
       white-list = true;
-      motd = "Greg\\u00d3 T\\u00e9cnico: Novidades Horizontais";
+      motd = "Greg\\u00f3 T\\u00e9cnico: Novidades Horizontais";
     };
     files = {
       config = "${package}/lib/config";
