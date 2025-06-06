@@ -19,6 +19,7 @@ in {
       server-port = 25565;
       online-mode = true;
       white-list = true;
+      motd = "Gregório Técnico: Novidades Horizontais";
     };
     files = {
       config = "${package}/lib/config";
