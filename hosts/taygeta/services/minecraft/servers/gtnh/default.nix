@@ -8,6 +8,7 @@ in {
 
   services.minecraft-servers.servers.gtnh = rec {
     enable = true;
+    enableReload = true;
     package = pkgs.callPackage ./gtnh.nix { };
     jvmOpts = "-Xms6G -Xmx6G -Dfml.readTimeout=180";
     whitelist = import ../../whitelist.nix;
@@ -26,7 +27,17 @@ in {
       "config/JourneyMapServer/world.cfg" = {
         format = pkgs.formats.json {};
         value = {
+          UseWorldID = true;
           SaveInWorldFolder = true;
+          cave = {
+            PlayerCaveMapping = true;
+            OpCaveMapping = true;
+          };
+          radar = {
+            PlayerRadar = true;
+            OpRadar = true;
+          };
+          ConfigVersion = 1.11;
         };
       };
     };
