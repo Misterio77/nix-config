@@ -25,6 +25,7 @@ in {
       serverutilities = "${package}/lib/serverutilities";
       "serverutilities/serverutilities.cfg" = ./configs/serverutilities.cfg;
       "config/JourneyMapServer/world.cfg" = ./configs/journeymap-world.cfg;
+      "config/SpecialMobs.cfg" = ./configs/SpecialMobs.cfg;
     };
     symlinks = {
       "mods/bungeeforge-1.7.10.jar" = pkgs.fetchurl rec {
