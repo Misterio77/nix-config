@@ -15,4 +15,6 @@
   tatuteu = "735ffd56-3b65-4892-8fb0-19c6eb026a44";
   Kirao = "10ffa557-322a-4b6c-9b3e-cdc2792163ae";
   C0baltt_ = "7ecb7208-e028-4e99-b147-dd6dc0d5f0fe";
+  tmonster_extreme = "1400aedc-b20e-49f5-8fa4-9fb44969501b";
+  _Dimmy_ = "3e0ea896-2c84-40d2-b640-c25f642db468";
 }
