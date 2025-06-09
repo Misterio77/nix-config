@@ -17,4 +17,5 @@
   C0baltt_ = "7ecb7208-e028-4e99-b147-dd6dc0d5f0fe";
   tmonster_extreme = "1400aedc-b20e-49f5-8fa4-9fb44969501b";
   _Dimmy_ = "3e0ea896-2c84-40d2-b640-c25f642db468";
+  Sydney__Bronson = "118a574f-5406-46c5-aad7-f52eefd067b7";
 }
