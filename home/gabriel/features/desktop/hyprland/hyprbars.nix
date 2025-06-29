@@ -59,6 +59,7 @@ in {
       };
 
       windowrulev2 = [
+        "plugin:hyprbars:nobar, floating:1, class:vlc" # Disable bars on floating vlc
         "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, focus:1"
         "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.on_primary}, focus:1"
       ] ++ (lib.flatten (lib.mapAttrsToList (name: colors: [
