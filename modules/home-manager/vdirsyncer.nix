@@ -1,7 +1,9 @@
+# Forked from upstream
 {
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -193,7 +195,11 @@ let
 
 in
 {
-  disabledModules = ["programs/vdirsyncer.nix"];
+  disabledModules = ["programs/vdirsyncer"];
+  imports = [
+    (inputs.home-manager + "/modules/programs/vdirsyncer/accounts.nix")
+  ];
+
   options = {
     programs.vdirsyncer = {
       enable = lib.mkEnableOption "vdirsyncer";
