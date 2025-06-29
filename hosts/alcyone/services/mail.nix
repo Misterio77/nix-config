@@ -11,6 +11,7 @@
   services.dovecot2.sieve.extensions = ["fileinto"];
 
   mailserver = rec {
+    stateVersion = 1;
     enable = true;
     fqdn = "mail.m7.rs";
     sendingFqdn = "alcyone.m7.rs";
