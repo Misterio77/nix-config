@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   ...
 }: {
   home.packages = [
@@ -8,9 +7,6 @@
   ];
 
   home.persistence = {
-    "/persist/${config.home.homeDirectory}" = {
-      allowOther = true;
-      directories = [".runelite"];
-    };
+    "/persist".directories = [".runelite"];
   };
 }

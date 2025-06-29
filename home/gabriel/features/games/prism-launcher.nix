@@ -6,6 +6,6 @@
   home.packages = [pkgs.prismlauncher];
 
   home.persistence = {
-    "/persist/${config.home.homeDirectory}".directories = [".local/share/PrismLauncher"];
+    "/persist".directories = [".local/share/PrismLauncher"];
   };
 }

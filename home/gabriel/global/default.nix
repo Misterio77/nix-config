@@ -8,7 +8,7 @@
 }: {
   imports =
     [
-      inputs.impermanence.nixosModules.home-manager.impermanence
+      inputs.impermanence.homeManagerModules.impermanence
       ../features/cli
       ../features/helix
     ]
@@ -43,18 +43,14 @@
     };
 
     persistence = {
-      "/persist/${config.home.homeDirectory}" = {
-        defaultDirectoryMethod = "symlink";
-        directories = [
-          "Documents"
-          "Downloads"
-          "Pictures"
-          "Videos"
-          ".local/bin"
-          ".local/share/nix" # trusted settings and repl history
-        ];
-        allowOther = true;
-      };
+      "/persist".directories = [
+        "Documents"
+        "Downloads"
+        "Pictures"
+        "Videos"
+        ".local/bin"
+        ".local/share/nix" # trusted settings and repl history
+      ];
     };
   };
 

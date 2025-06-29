@@ -6,6 +6,6 @@
   home.packages = [pkgs.osu-lazer];
 
   home.persistence = {
-    "/persist/${config.home.homeDirectory}".directories = [".local/share/osu"];
+    "/persist".directories = [".local/share/osu"];
   };
 }

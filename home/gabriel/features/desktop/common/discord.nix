@@ -8,7 +8,7 @@ in {
   home.packages = with pkgs; [vesktop];
 
   home.persistence = {
-    "/persist/${config.home.homeDirectory}" = {
+    "/persist" = {
       directories = [
         ".config/vesktop/sessionData"
         ".config/vesktop/settings"

@@ -338,16 +338,25 @@
       }
     },
     "impermanence": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1737831083,
-        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
+        "lastModified": 1748267734,
+        "narHash": "sha256-il5MTwCdW1H8TUxKhNsVqUW+4oh9NapIVzGSIycXOp8=",
         "owner": "nix-community",
         "repo": "impermanence",
-        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
+        "rev": "a2f08d24271da9c2b676887ac094f15b0565b193",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "home-manager-v2",
         "repo": "impermanence",
         "type": "github"
       }

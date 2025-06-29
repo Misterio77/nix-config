@@ -3,7 +3,7 @@
   oama = "${config.programs.oama.package}/bin/oama";
 in {
   home.persistence = {
-    "/persist/${config.home.homeDirectory}".directories = [
+    "/persist".directories = [
       "Calendars"
       "Contacts"
       ".local/share/vdirsyncer"

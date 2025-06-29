@@ -19,11 +19,15 @@
     systems.url = "github:nix-systems/default-linux";
 
     hardware.url = "github:nixos/nixos-hardware";
-    impermanence.url = "github:nix-community/impermanence";
     nix-colors.url = "github:misterio77/nix-colors";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence/home-manager-v2";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
     };
     sops-nix = {
       url = "github:mic92/sops-nix";
@@ -161,13 +165,14 @@
     # Standalone HM only
     homeConfigurations = {
       # Work laptop
-      "gabriel@electra" = lib.homeManagerConfiguration {
-        modules = [ ./home/gabriel/electra.nix ./home/gabriel/nixpkgs.nix ];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
+      # Temporarily disabled as this trips up the impermanence HM assertions
+      # "gabriel@electra" = lib.homeManagerConfiguration {
+      #   modules = [ ./home/gabriel/electra.nix ./home/gabriel/nixpkgs.nix ];
+      #   pkgs = pkgsFor.x86_64-linux;
+      #   extraSpecialArgs = {
+      #     inherit inputs outputs;
+      #   };
+      # };
     };
   };
 }

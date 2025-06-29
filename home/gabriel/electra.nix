@@ -4,7 +4,7 @@
     ./features/desktop/hyprland
     ./features/pass
   ];
-  home.persistence."/persist/${config.home.homeDirectory}" = lib.mkForce {};
+  home.persistence."/persist" = lib.mkForce {};
   home.username = "gabriel";
   home.packages = [
     pkgs.juju
