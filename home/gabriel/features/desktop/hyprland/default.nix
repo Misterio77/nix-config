@@ -136,6 +136,8 @@ in {
         wineTray = "class:explorer.exe";
         rsiLauncher = "class:rsi launcher.exe";
         steamBigPicture = "title:Steam Big Picture Mode";
+        firefoxPictureInPicture = "class:firefox,title:Picture-in-Picture";
+        floatingVlc = "floating:1,class:vlc";
       in
         [
           "idleinhibit focus, fullscreenstate:2 *"
@@ -158,6 +160,11 @@ in {
           "tile, ${rsiLauncher}"
 
           "fullscreen, ${steamBigPicture}"
+
+          "float, ${firefoxPictureInPicture}"
+          "pin, ${firefoxPictureInPicture}"
+
+          "pin, ${floatingVlc}"
         ]
         ++ (lib.mapAttrsToList (
             name: colors: "bordercolor ${rgba colors.primary "ee"} ${rgba colors.primary_container "aa"}, title:\\[${name}\\].*"
