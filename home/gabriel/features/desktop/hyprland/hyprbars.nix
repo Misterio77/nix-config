@@ -32,9 +32,10 @@ in {
     plugins = [hyprbars];
     settings = {
       "plugin:hyprbars" = {
-        bar_height = 25;
+        # Local colors
         bar_color = rgba config.colorscheme.colors.surface "dd";
         "col.text" = rgb config.colorscheme.colors.primary;
+        bar_height = 25;
         bar_text_font = config.fontProfiles.regular.name;
         bar_text_size = config.fontProfiles.regular.size;
         bar_part_of_window = false;
@@ -59,13 +60,18 @@ in {
       };
 
       windowrulev2 = [
-        "plugin:hyprbars:nobar, floating:1, class:vlc" # Disable bars on floating vlc
+        # Disable bars on floating vlc 
+        "plugin:hyprbars:nobar, floating:1, class:vlc" 
+
+        # Local focused colors (this host's colors)
         "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, focus:1"
         "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.on_primary}, focus:1"
       ] ++ (lib.flatten (lib.mapAttrsToList (name: colors: [
+        # Remote host colors
         "plugin:hyprbars:bar_color ${rgba colors.primary_container "dd"}, title:\\[${name}\\].*"
         "plugin:hyprbars:title_color ${rgb colors.on_primary_container}, title:\\[${name}\\].*"
 
+        # Remote host focused colors
         "plugin:hyprbars:bar_color ${rgba colors.primary "ee"}, title:\\[${name}\\].*, focus:1"
         "plugin:hyprbars:title_color ${rgb colors.on_primary}, title:\\[${name}\\].*, focus:1"
       ]) remoteColorschemes));
