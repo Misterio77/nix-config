@@ -60,8 +60,8 @@ in {
       };
 
       windowrulev2 = [
-        # Disable bars on floating vlc 
-        "plugin:hyprbars:nobar, floating:1, class:vlc" 
+        # Disable bars in floating pinned windows 
+        "plugin:hyprbars:nobar, floating:1, pinned:1" 
 
         # Local focused colors (this host's colors)
         "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, focus:1"
