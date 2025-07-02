@@ -88,7 +88,7 @@
                   mountOptions = ["compress=zstd" "noatime"];
                   mountpoint = "/swap";
                   swap.swapfile = {
-                    size = "8196M";
+                    size = "16384M";
                     path = "swapfile";
                   };
                 };
