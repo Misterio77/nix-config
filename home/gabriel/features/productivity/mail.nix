@@ -140,6 +140,10 @@ in {
               "Sent"
               "Trash"
             ];
+            # Gmail already stores a copy
+            extraConfig = ''
+              set copy = no
+            '';
           };
 
           msmtp = {
@@ -173,6 +177,10 @@ in {
               "Sent"
               "Trash"
             ];
+            # Gmail already stores a copy
+            extraConfig = ''
+              set copy = no
+            '';
           };
 
           msmtp = {
