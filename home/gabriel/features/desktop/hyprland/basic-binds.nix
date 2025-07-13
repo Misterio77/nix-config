@@ -59,6 +59,7 @@
         "SUPERSHIFT,u,movetoworkspacesilent,special"
         "SUPER,y,toggleswallow"
         "SUPER,i,pin"
+        "SUPER,i,fullscreenstate,0 3"
       ]
       ++
       # Change workspace
