@@ -57,8 +57,8 @@
 
         "SUPER,u,togglespecialworkspace"
         "SUPERSHIFT,u,movetoworkspacesilent,special"
-        "SUPER,i,pseudo"
         "SUPER,y,toggleswallow"
+        "SUPER,i,pin"
       ]
       ++
       # Change workspace
