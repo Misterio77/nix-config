@@ -44,9 +44,9 @@ in {
   home.pointerCursor.hyprcursor.enable = true;
 
   xdg.portal = {
-    extraPortals = [pkgs.xdg-desktop-portal-wlr];
+    extraPortals = [(pkgs.xdg-desktop-portal-hyprland.override {hyprland = config.wayland.windowManager.hyprland.package;})];
     config.hyprland = {
-      default = ["wlr" "gtk"];
+      default = ["hyprland" "gtk"];
     };
   };
 
