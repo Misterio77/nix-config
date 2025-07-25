@@ -215,13 +215,13 @@ in {
           exec = mkScriptJson {
             deps = [config.programs.khal.package pkgs.gnugrep];
             script = ''
-              events="$(khal list now tomorrow --notstarted --json title --json start-time | jq 'map("\(."start-time") \(.title)")[]' -r)"
+              events="$(khal list now tomorrow --json title --json start-time | jq '.[] | "\(."start-time") \(.title)")' -r)"
               count="$(printf "%s" "$events" | grep -c "^" || true)"
               if [ "$count" == 0 ]; then
                 status="no-event"
                 events="No events!"
               else
-                if test -n "$(khal list now 10m --notstarted)"; then
+                if test -n "$(khal list now 10m --json title --json start-time | jq '.[] | select(."start-time" != "") | "\(.title)"' -r)"; then
                   status="has-close-event"
                 else
                   status="has-event"
