@@ -1,10 +1,10 @@
-{pkgs, lib, config, inputs, ...}: {
+{pkgs, lib, inputs, ...}: {
   imports = [
     ./global
     ./features/desktop/hyprland
     ./features/pass
   ];
-  home.persistence."/persist" = lib.mkForce {};
+  home.persistence = lib.mkForce {};
   home.username = "gabriel";
   home.packages = [
     pkgs.juju

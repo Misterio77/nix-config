@@ -25,7 +25,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
-      url = "github:nix-community/impermanence/home-manager-v2";
+      # https://github.com/nix-community/impermanence/pull/272#discussion_r2230796215
+      url = "github:misterio77/impermanence";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
@@ -165,14 +166,13 @@
     # Standalone HM only
     homeConfigurations = {
       # Work laptop
-      # Temporarily disabled as this trips up the impermanence HM assertions
-      # "gabriel@electra" = lib.homeManagerConfiguration {
-      #   modules = [ ./home/gabriel/electra.nix ./home/gabriel/nixpkgs.nix ];
-      #   pkgs = pkgsFor.x86_64-linux;
-      #   extraSpecialArgs = {
-      #     inherit inputs outputs;
-      #   };
-      # };
+      "gabriel@electra" = lib.homeManagerConfiguration {
+        modules = [ ./home/gabriel/electra.nix ./home/gabriel/nixpkgs.nix ];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
     };
   };
 }
