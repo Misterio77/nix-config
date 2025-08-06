@@ -116,43 +116,6 @@ in {
         }
         // common;
 
-      rug =
-        rec {
-          address = "g.silva.fontes@student.rug.nl";
-          userName = address;
-          passwordCommand = "${oama} access ${address}";
-          flavor = "gmail.com";
-
-          mbsync = {
-            enable = true;
-            create = "maildir";
-            expunge = "both";
-            groups.rug.channels = gmail_channels;
-            extraConfig.account.AuthMechs = "XOAUTH2";
-          };
-          neomutt = {
-            enable = true;
-            mailboxName = "=== RUG ===";
-            extraMailboxes = [
-              "Archive"
-              "Drafts"
-              "Junk"
-              "Sent"
-              "Trash"
-            ];
-            # Gmail already stores a copy
-            extraConfig = ''
-              set copy = no
-            '';
-          };
-
-          msmtp = {
-            extraConfig.auth = "oauthbearer";
-            enable = true;
-          };
-        }
-        // common;
-
       usp =
         rec {
           address = "g.fontes@usp.br";

@@ -55,26 +55,6 @@ in {
           accessTokenCommand = [oama "access" emailCfg.address];
         };
       };
-
-      rug = let
-        emailCfg = config.accounts.email.accounts.rug;
-      in {
-        primaryCollection = emailCfg.address;
-        khal = {
-          enable = true;
-          addresses = [emailCfg.address];
-          type = "discover";
-        };
-        remote = {
-          type = "google_calendar";
-        };
-        vdirsyncer = {
-          enable = true;
-          metadata = ["color" "displayname"];
-          collections = ["from a" "from b"];
-          accessTokenCommand = [oama "access" emailCfg.address];
-        };
-      };
     };
   };
 
