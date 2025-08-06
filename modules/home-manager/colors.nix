@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  outputs,
   ...
 }: let
   cfg = config.colorscheme;
@@ -39,6 +40,17 @@ in {
       readOnly = true;
       type = types.attrsOf hexColor;
       default = cfg.rawColorscheme.colors.${cfg.mode};
+    };
+
+    # Gives access to other homes' colors
+    hosts = mkOption {
+      readOnly = true;
+      type = types.attrs;
+      default = let
+        homeConfigs = lib.mapAttrs' (n: v: lib.nameValuePair (lib.last (lib.splitString "@" n)) v.config) outputs.homeConfigurations;
+        nixosConfigs = lib.mapAttrs (_: v: v.config.home-manager.users.gabriel) outputs.nixosConfigurations;
+      in 
+        lib.mapAttrs (_: v: v.colorscheme.rawColorscheme.colors.${cfg.mode}) (homeConfigs // nixosConfigs);
     };
   };
 }

@@ -2,14 +2,8 @@
   config,
   pkgs,
   lib,
-  outputs,
   ...
 }: let
-  getHostname = x: lib.last (lib.splitString "@" x);
-  remoteColorschemes = lib.mapAttrs' (n: v: {
-    name = getHostname n;
-    value = v.config.colorscheme.rawColorscheme.colors.${config.colorscheme.mode};
-  }) outputs.homeConfigurations;
   rgb = color: "rgb(${lib.removePrefix "#" color})";
   rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
 
@@ -74,7 +68,7 @@ in {
         # Remote host focused colors
         "plugin:hyprbars:bar_color ${rgba colors.primary "ee"}, title:\\[${name}\\].*, focus:1"
         "plugin:hyprbars:title_color ${rgb colors.on_primary}, title:\\[${name}\\].*, focus:1"
-      ]) remoteColorschemes));
+      ]) config.colorscheme.hosts));
     };
   };
 }

@@ -2,18 +2,11 @@
   lib,
   config,
   pkgs,
-  outputs,
   ...
 }: let
-  getHostname = x: lib.last (lib.splitString "@" x);
-  remoteColorschemes =
-    lib.mapAttrs' (n: v: {
-      name = getHostname n;
-      value = v.config.colorscheme.rawColorscheme.colors.${config.colorscheme.mode};
-    })
-    outputs.homeConfigurations;
   rgb = color: "rgb(${lib.removePrefix "#" color})";
   rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
+
   swayosd = {
     brightness = "swayosd-client --brightness +0";
     output-volume = "swayosd-client --output-volume +0";
@@ -169,7 +162,7 @@ in {
         ++ (lib.mapAttrsToList (
             name: colors: "bordercolor ${rgba colors.primary "ee"} ${rgba colors.primary_container "aa"}, title:\\[${name}\\].*"
           )
-          remoteColorschemes);
+          config.colorscheme.hosts);
       layerrule = [
         "animation fade,hyprpicker"
         "animation fade,selection"
