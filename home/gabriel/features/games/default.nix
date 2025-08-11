@@ -2,7 +2,6 @@
   imports = [
     ./steam.nix
     ./prism-launcher.nix
-    ./mangohud.nix
     ./runescape.nix
   ];
   home = {
