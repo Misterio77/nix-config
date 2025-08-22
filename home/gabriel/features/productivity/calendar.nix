@@ -32,7 +32,7 @@ in {
         vdirsyncer = {
           enable = true;
           metadata = ["color" "displayname"];
-          collections = ["from a" "from b"];
+          collections = ["GELOS" "Personal" "Postgrad" "3ce52be8-d87e-4b4d-8225-a9c65840c72e" "7eebf97d-5962-5fcd-4e73-888f22720cee"];
         };
       };
 
