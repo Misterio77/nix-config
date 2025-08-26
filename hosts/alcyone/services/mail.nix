@@ -77,6 +77,7 @@
   services.roundcube = rec {
     enable = true;
     package = pkgs.roundcube.withPlugins (p: [p.carddav]);
+    maxAttachmentSize = 200;
     hostName = "mail.m7.rs";
     extraConfig = ''
       $config['smtp_host'] = "tls://${hostName}:587";
