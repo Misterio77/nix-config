@@ -15,7 +15,6 @@
   inputs = {
     # Nix ecosystem
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     systems.url = "github:nix-systems/default-linux";
 
     hardware.url = "github:nixos/nixos-hardware";
@@ -37,7 +36,7 @@
     nixos-mailserver = {
       url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-25_05.follows = "nixpkgs-stable";
+      inputs.nixpkgs-25_05.follows = "nixpkgs";
     };
     nix-gl = {
       url = "github:nix-community/nixgl";
