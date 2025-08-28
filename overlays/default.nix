@@ -45,17 +45,6 @@ in {
         ];
       };
 
-    hyprlandPlugins = prev.hyprlandPlugins // {
-      hyprbars = prev.hyprlandPlugins.hyprbars.overrideAttrs (old: {
-        src = "${final.fetchFromGitHub {
-          owner = "hyprwm";
-          repo = "hyprland-plugins";
-          rev = "v0.49.0";
-          hash = "sha256-GpsLyK/U05q7QnyFIWrnGS2loVyjPZByTtPitwu9UNw=";
-        }}/hyprbars";
-      });
-    };
-
     # https://github.com/mdellweg/pass_secret_service/pull/37
     pass-secret-service = addPatches prev.pass-secret-service [./pass-secret-service-native.diff];
 
