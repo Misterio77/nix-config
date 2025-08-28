@@ -2,6 +2,7 @@
   fetchFromGitHub,
   buildPythonPackage,
   dbus-python,
+  setuptools,
 }:
 buildPythonPackage rec {
   pname = "lyrics";
@@ -17,6 +18,8 @@ buildPythonPackage rec {
   propagatedBuildInputs = [dbus-python];
 
   doCheck = false;
+  pyproject = true;
+  build-system = [setuptools];
 
   patches = [./fix-config-in-build-phase.diff];
 }
