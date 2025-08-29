@@ -4,7 +4,6 @@
     settings = {
       auth.fingerprint.enabled = true;
       general = {
-        grace = 5;
         hide_cursor = true;
       };
       animations = {
@@ -54,8 +53,8 @@
       bind = let
         hyprlock = lib.getExe config.programs.hyprlock.package;
       in [
-        "SUPER,backspace,exec,${hyprlock} --immediate"
-        "SUPER,XF86Calculator,exec,${hyprlock} --immediate"
+        "SUPER,backspace,exec,${hyprlock}"
+        "SUPER,XF86Calculator,exec,${hyprlock}"
       ];
     };
   };

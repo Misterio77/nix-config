@@ -6,7 +6,7 @@
       isDischarging = "grep Discharging /sys/class/power_supply/BAT{0,1}/status -q";
     in {
       general = {
-        lock_cmd = "if ! ${isLocked}; then ${lib.getExe config.programs.hyprlock.package}; fi";
+        lock_cmd = "if ! ${isLocked}; then ${lib.getExe config.programs.hyprlock.package} --grace 5; fi";
         before_sleep_cmd = "loginctl lock-session";
         after_sleep_cmd = "hyprctl dispatch dpms on";
         inhibit_sleep = 3; # Wait for lock before suspend
