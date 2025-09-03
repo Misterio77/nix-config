@@ -32,7 +32,7 @@ in {
         min-height: inherit;
         border-radius: inherit;
         border: none;
-        background-color: ${colors.on_surface};
+        background-color: ${colors.primary};
         opacity: 0.9;
       }
       progressbar {
@@ -50,7 +50,7 @@ in {
         min-height: inherit;
         border-radius: inherit;
         border: none;
-        background-color: ${colors.on_surface};
+        background-color: ${colors.surface_bright};
         opacity: 1;
       }
     '';
