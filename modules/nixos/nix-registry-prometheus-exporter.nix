@@ -2,7 +2,7 @@
 # This is useful, for example, to find out the nixpkgs rev.
 {config, lib, pkgs, ...}: let
   cfg = config.services.prometheus.exporters.nix-registry;
-  webroot = pkgs.writeTextDir "metrics/index.html" (lib.concatMapAttrsStringSep "\n" (name: value:
+  webroot = pkgs.writeTextDir "metrics/index.txt" (lib.concatMapAttrsStringSep "\n" (name: value:
     ''nix_registry{name="${name}",rev="${value.flake.rev or "dirty"}",last_modified="${toString value.flake.lastModified}"} 1''
   ) config.nix.registry);
 in {
@@ -25,7 +25,7 @@ in {
       serviceConfig = {
         Restart = "always";
         DynamicUser = true;
-        ExecStart = "${lib.getExe pkgs.webfs} -F -p ${toString cfg.port} -i ${cfg.listenAddress} -f index.html -r ${webroot}";
+        ExecStart = "${lib.getExe pkgs.webfs} -F -p ${toString cfg.port} -i ${cfg.listenAddress} -f index.txt -r ${webroot}";
       };
     };
   };
