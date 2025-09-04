@@ -52,7 +52,10 @@ in {
           scheme = "http";
           static_configs =
             map (hostname: {
-              targets = ["${hostname}:${toString config.services.prometheus.exporters.node.port}"];
+              targets = [
+                "${hostname}:${toString config.services.prometheus.exporters.node.port}"
+                "${hostname}:${toString config.services.prometheus.exporters.nix-registry.port}"
+              ];
               labels.instance = hostname;
             })
             hosts;
