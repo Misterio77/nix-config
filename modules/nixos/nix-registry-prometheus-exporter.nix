@@ -3,7 +3,7 @@
 {config, lib, pkgs, ...}: let
   cfg = config.services.prometheus.exporters.nix-registry;
   webroot = pkgs.writeTextDir "metrics/index.txt" (lib.concatMapAttrsStringSep "\n" (name: value:
-    ''nix_registry{name="${name}",rev="${value.flake.rev or "dirty"}",last_modified="${toString value.flake.lastModified}"} 1''
+    ''nix_registry{name="${name}",rev="${value.flake.rev or "dirty"}"} ${toString value.flake.lastModified}''
   ) config.nix.registry);
 in {
   options.services.prometheus.exporters.nix-registry = {
