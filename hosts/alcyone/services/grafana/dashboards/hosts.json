@@ -12,9 +12,9 @@
         "x": 0,
         "y": 0
       },
+      "id": 1,
       "panels": [],
       "repeat": "hosts",
-      "repeatDirection": "h",
       "title": "$hosts",
       "type": "row"
     },
@@ -42,7 +42,7 @@
             "steps": [
               {
                 "color": "red",
-                "value": null
+                "value": 0
               },
               {
                 "color": "green",
@@ -55,16 +55,18 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 5,
+        "h": 7,
+        "w": 3,
         "x": 0,
         "y": 1
       },
+      "id": 2,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -78,7 +80,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "12.1.0",
       "targets": [
         {
           "exemplar": false,
@@ -90,6 +92,163 @@
         }
       ],
       "title": "Uptime",
+      "type": "stat"
+    },
+    {
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": true,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "Off"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "Unknown",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rev"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "string"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 3,
+        "y": 1
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "percentChangeColorMode": "same_as_value",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": false
+      },
+      "pluginVersion": "12.1.0",
+      "targets": [
+        {
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(nix_registry{name=\"self\",instance=\"$hosts\"} > 1)*1000",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "Version",
+          "range": true,
+          "refId": "Version"
+        },
+        {
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(nix_registry{instance=\"$hosts\"})*1000",
+          "format": "time_series",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Newest",
+          "range": false,
+          "refId": "Newest"
+        }
+      ],
+      "title": "Flake",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "configRefId": "Newest",
+            "mappings": [
+              {
+                "fieldName": "Newest",
+                "handlerArguments": {
+                  "threshold": {
+                    "color": "green"
+                  }
+                },
+                "handlerKey": "threshold1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "instance": true,
+              "job": true,
+              "name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Time": "",
+              "Value": "Last Modified",
+              "rev": "Revision"
+            }
+          }
+        },
+        {
+          "id": "formatString",
+          "options": {
+            "outputFormat": "Substring",
+            "stringField": "Revision",
+            "substringEnd": 8
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -106,7 +265,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "green",
@@ -129,9 +288,10 @@
       "gridPos": {
         "h": 7,
         "w": 5,
-        "x": 5,
+        "x": 6,
         "y": 1
       },
+      "id": 3,
       "options": {
         "minVizHeight": 75,
         "minVizWidth": 75,
@@ -147,7 +307,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "12.1.0",
       "targets": [
         {
           "expr": "avg by (instance) (node_filesystem_size_bytes{instance=\"$hosts\",mountpoint=\"/\"} - node_filesystem_free_bytes{instance=\"$hosts\",mountpoint=\"/\"} > 0)",
@@ -211,7 +371,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "green",
@@ -234,9 +394,10 @@
       "gridPos": {
         "h": 7,
         "w": 5,
-        "x": 10,
+        "x": 11,
         "y": 1
       },
+      "id": 4,
       "options": {
         "minVizHeight": 75,
         "minVizWidth": 75,
@@ -252,7 +413,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "12.1.0",
       "targets": [
         {
           "expr": "sum(node_memory_MemTotal_bytes{instance=\"$hosts\"} - node_memory_MemAvailable_bytes{instance=\"$hosts\"} or vector(0))",
@@ -305,6 +466,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -339,7 +501,7 @@
             "steps": [
               {
                 "color": "text",
-                "value": null
+                "value": 0
               },
               {
                 "color": "green",
@@ -362,9 +524,10 @@
       "gridPos": {
         "h": 7,
         "w": 5,
-        "x": 15,
+        "x": 16,
         "y": 1
       },
+      "id": 5,
       "options": {
         "legend": {
           "calcs": [],
@@ -373,12 +536,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "12.1.0",
       "targets": [
         {
           "exemplar": false,
@@ -391,104 +555,22 @@
       ],
       "title": "System Load",
       "type": "timeseries"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "fieldMinMax": true,
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "red",
-                  "index": 0,
-                  "text": "Off"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "max": 3600,
-          "min": 0,
-          "noValue": "Off",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 3600
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 0,
-        "y": 5
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/^Last Upgrade$/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "text": {},
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "exemplar": false,
-          "expr": "sum((time() - (node_systemd_timer_last_trigger_seconds{name=\"nixos-upgrade.timer\",instance=\"$hosts\"} > 0)) or vector(0))",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "Last Upgrade",
-          "range": true,
-          "refId": "Last upgrade"
-        }
-      ],
-      "title": "Last Upgrade",
-      "type": "stat"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 39,
+  "schemaVersion": 41,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": [
-            "All"
-          ],
+          "text": "All",
           "value": [
             "$__all"
           ]
         },
         "definition": "label_values(up{job=\"hosts\"},instance)",
-        "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "hosts",
@@ -500,8 +582,6 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       }
     ]
