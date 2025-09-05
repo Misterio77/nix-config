@@ -143,6 +143,20 @@
                   "fixedColor": "blue",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "dirty": {
+                        "color": "yellow",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
               }
             ]
           }
@@ -180,10 +194,10 @@
           "exemplar": false,
           "expr": "(nix_registry{name=\"self\",instance=\"$hosts\"} > 1)*1000",
           "format": "table",
-          "instant": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "Version",
-          "range": true,
+          "range": false,
           "refId": "Version"
         },
         {
@@ -235,7 +249,7 @@
             "indexByName": {},
             "renameByName": {
               "Time": "",
-              "Value": "Last Modified",
+              "Value": "Commited at",
               "rev": "Revision"
             }
           }
@@ -244,7 +258,7 @@
           "id": "formatString",
           "options": {
             "outputFormat": "Substring",
-            "stringField": "Revision",
+            "stringField": "rev",
             "substringEnd": 8
           }
         }
