@@ -203,7 +203,7 @@
         {
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(nix_registry{instance=\"$hosts\"})*1000",
+          "expr": "max(nix_registry{name=\"self\"})*1000",
           "format": "time_series",
           "hide": false,
           "instant": true,
