@@ -35,6 +35,8 @@ in {
       DEFAULT = kagi;
     };
     settings = {
+      # Workaround for google meet
+      qt.args = ["disable-features=PermissionElement"];
       url = rec {
         default_page = "https://kagi.com";
         start_pages = [default_page];
