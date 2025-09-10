@@ -1,0 +1,1089 @@
+From 4b704244e5345ce302d9bada6ff3300eadf10547 Mon Sep 17 00:00:00 2001
+From: Sardorbek Imomaliev <imomaliev@hey.com>
+Date: Sun, 20 Jul 2025 19:50:17 +0100
+Subject: [PATCH 01/18] :show-nested: is deprecated
+
+Read more https://sphinx-click.readthedocs.io/en/latest/usage/#usage
+> This option is deprecated; use nested instead.
+---
+ docs/source/man.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/source/man.rst b/docs/source/man.rst
+index 467a9043..06e3e2a7 100644
+--- a/docs/source/man.rst
++++ b/docs/source/man.rst
+@@ -3,7 +3,7 @@ Man page
+
+ .. click:: todoman.cli:cli
+    :prog: todo
+-   :show-nested:
++   :nested: short
+
+ Description
+ -----------
+
+From 03ba2ce0521e6a6fe22cbbfd8ba2c7b6186e3c57 Mon Sep 17 00:00:00 2001
+From: Sardorbek Imomaliev <imomaliev@hey.com>
+Date: Sun, 20 Jul 2025 20:02:45 +0100
+Subject: [PATCH 02/18] Move content from usage.rst and configure.rst to
+ separate files
+
+This is required to fix duplicated toctree elements due to inclusion of
+usage.rst and configure.rst in man.rst. Now man.rst includes content
+only.
+---
+ docs/source/_configure.rst |  47 +++++++++++++++
+ docs/source/_usage.rst     | 115 +++++++++++++++++++++++++++++++++++++
+ docs/source/configure.rst  |  45 +--------------
+ docs/source/man.rst        |   4 +-
+ docs/source/usage.rst      | 113 +-----------------------------------
+ 5 files changed, 166 insertions(+), 158 deletions(-)
+ create mode 100644 docs/source/_configure.rst
+ create mode 100644 docs/source/_usage.rst
+
+diff --git a/docs/source/_configure.rst b/docs/source/_configure.rst
+new file mode 100644
+index 00000000..7b5b0f16
+--- /dev/null
++++ b/docs/source/_configure.rst
+@@ -0,0 +1,47 @@
++Configuring
++===========
++
++You'll need to configure Todoman before the first usage, using its simple
++ini-like configuration file.
++
++Configuration File
++------------------
++
++The configuration file should be placed in
++``$XDG_CONFIG_HOME/todoman/config.py``. ``$XDG_CONFIG_HOME`` defaults to
++``~/.config`` is most situations, so this will generally be
++``~/.config/todoman/config.py``.
++
++.. include:: confspec.tmp
++
++Sample configuration
++--------------------
++
++The below example should serve as a reference. It will read ics files from any
++directory inside ``~/.local/share/calendars/``, uses the ISO-8601 date format,
++and set the due date for new todos in 48hs.
++
++.. literalinclude:: ../../config.py.sample
++  :language: python
++
++Color and displayname
++---------------------
++
++- You can set a color for each task list by creating a ``color`` file containing
++  a color code in the hex format: ``#RRGGBB``.
++- A file named ``displayname`` indicates how the task list should be named and
++  is needed when there are multiple directories sharing a name, e.g.: when using
++  multiple $CloudInstances. The default is the directory name.
++
++See also `relevant documentation for the vdir format
++<https://vdirsyncer.pimutils.org/en/stable/vdir.html#metadata>`_.
++
++Timezone
++--------
++
++Todoman will use the system-wide configured timezone. If this doesn't work for
++you, you _may_ override the timezone by specifying the ``TZ`` environment
++variable.
++
++For instruction on changing your system's timezone, consult your distribution's
++documentation.
+diff --git a/docs/source/_usage.rst b/docs/source/_usage.rst
+new file mode 100644
+index 00000000..ac7ff6d0
+--- /dev/null
++++ b/docs/source/_usage.rst
+@@ -0,0 +1,115 @@
++Usage
++=====
++
++Todoman usage is `CLI`_ based (thought there are some TUI bits, and the
++intentions is to also provide a fully `TUI`_-based interface).
++
++The default action is ``list``, which outputs all tasks for all calendars, each
++with a semi-permanent unique id::
++
++    1 [ ] !!! 2015-04-30 Close bank account @work (0%)
++    2 [ ] !              Send minipimer back for warranty replacement @home (0%)
++    3 [X]     2015-03-29 Buy soy milk @home (100%)
++    4 [ ] !!             Fix the iPad's screen @home (0%)
++    5 [ ] !!             Fix the Touchpad battery @work (0%)
++
++The columns, in order, are:
++
++ * An id.
++ * Whether the task has been completed or not.
++ * An ``!!!`` indicating high priority, ``!!`` indicating medium priority,
++   ``!`` indicating low priority tasks.
++ * The due date.
++ * The task summary.
++ * The list the todo is from; it will be hidden when filtering by one list, or
++   if the database only contains a single list.
++ * The completed percentage.
++
++The id is retained by ``todoman`` until the next time you run the ``flush``
++command.
++
++To operate on a todo, the id is what's used to reference it. For example, to
++edit the `Buy soy milk` task from the example above, the proper command is
++``todo edit 3``, or ``todo undo 3`` to un-mark the task as done.
++
++Editing tasks can only be done via the TUI interface for now, and cannot be
++done via the command line yet.
++
++.. _cli: https://en.wikipedia.org/wiki/Command-line_interface
++.. _tui: https://en.wikipedia.org/wiki/Text-based_user_interface
++
++
++Synchronization
++---------------
++
++If you want to synchronize your tasks, you'll need something that syncs via
++CalDAV. `vdirsyncer`_ is the recommended tool for this.
++
++.. _vdirsyncer: https://vdirsyncer.readthedocs.org/en/stable/
++
++Interactive shell
++-----------------
++
++If you install `click-repl <https://github.com/untitaker/click-repl>`_, todoman
++gets a new command called ``repl``, which launches an interactive shell with
++tab-completion.
++
++Integrations
++------------
++
++When attempting to integrate ``todoman`` into other systems or parse its
++output, you're advised to use the ``--porcelain`` flag, which will print all
++output in a pre-defined format that will remain stable regardless of user
++configuration or version.
++
++The format is JSON, with a single array containing each todo as a single entry
++(object). Fields will always be present; if a todo does not have a value for a
++given field, it will be printed as ``null``.
++
++Fields MAY be added in future, but will never be removed.
++
++Conky
++`````
++
++Todoman can be used with `Conky`_  by using one of the shell execution
++`variables`_.
++Given the nature of pimutils utilities, there is no need to query new information
++every time conky updates so ``execi`` will be the best option most of the time.
++
++Adding ``${execi 30 todo}`` inside the text section will display the output of the
++command and update it every 30 seconds.
++
++A working configuration can be found `here`_.
++
++.. _conky: https://conky.cc
++.. _variables: https://conky.sourceforge.net/variables.html
++.. _here: https://github.com/r4ulill0/todoman/blob/main/docs/examples/conky.conf
++
++Sorting
++-------
++
++The tasks can be sorted with the ``--sort`` argument. Sorting may be done according to the following fields:
++
++    - ``description``
++    - ``location``
++    - ``status``
++    - ``summary``
++    - ``uid``
++    - ``rrule``
++    - ``percent_complete``
++    - ``priority``
++    - ``sequence``
++    - ``categories``
++    - ``completed_at``
++    - ``created_at``
++    - ``dtstamp``
++    - ``start``
++    - ``due``
++    - ``last_modified``
++
++It is possible to prepend a ``-`` to a field to sort by that field in ascending
++order (by default they are sorted in descending order).
++
++Example::
++
++    todo list --sort due,-priority
+diff --git a/docs/source/configure.rst b/docs/source/configure.rst
+index 7b5b0f16..37f852c4 100644
+--- a/docs/source/configure.rst
++++ b/docs/source/configure.rst
+@@ -1,47 +1,4 @@
+ Configuring
+ ===========
+
+-You'll need to configure Todoman before the first usage, using its simple
+-ini-like configuration file.
+-
+-Configuration File
+-------------------
+-
+-The configuration file should be placed in
+-``$XDG_CONFIG_HOME/todoman/config.py``. ``$XDG_CONFIG_HOME`` defaults to
+-``~/.config`` is most situations, so this will generally be
+-``~/.config/todoman/config.py``.
+-
+-.. include:: confspec.tmp
+-
+-Sample configuration
+---------------------
+-
+-The below example should serve as a reference. It will read ics files from any
+-directory inside ``~/.local/share/calendars/``, uses the ISO-8601 date format,
+-and set the due date for new todos in 48hs.
+-
+-.. literalinclude:: ../../config.py.sample
+-  :language: python
+-
+-Color and displayname
+----------------------
+-
+-- You can set a color for each task list by creating a ``color`` file containing
+-  a color code in the hex format: ``#RRGGBB``.
+-- A file named ``displayname`` indicates how the task list should be named and
+-  is needed when there are multiple directories sharing a name, e.g.: when using
+-  multiple $CloudInstances. The default is the directory name.
+-
+-See also `relevant documentation for the vdir format
+-<https://vdirsyncer.pimutils.org/en/stable/vdir.html#metadata>`_.
+-
+-Timezone
+---------
+-
+-Todoman will use the system-wide configured timezone. If this doesn't work for
+-you, you _may_ override the timezone by specifying the ``TZ`` environment
+-variable.
+-
+-For instruction on changing your system's timezone, consult your distribution's
+-documentation.
++.. include:: _configure.rst
+diff --git a/docs/source/man.rst b/docs/source/man.rst
+index 06e3e2a7..26a96219 100644
+--- a/docs/source/man.rst
++++ b/docs/source/man.rst
+@@ -15,12 +15,12 @@ using, for example, *vdirsyncer*.
+ Usage
+ -----
+
+-.. include:: usage.rst
++.. include:: _usage.rst
+
+ Configuring
+ -----------
+
+-.. include:: configure.rst
++.. include:: _configure.rst
+
+ Caveats
+ -------
+diff --git a/docs/source/usage.rst b/docs/source/usage.rst
+index ac7ff6d0..1e84fd2b 100644
+--- a/docs/source/usage.rst
++++ b/docs/source/usage.rst
+@@ -1,115 +1,4 @@
+ Usage
+ =====
+
+-Todoman usage is `CLI`_ based (thought there are some TUI bits, and the
+-intentions is to also provide a fully `TUI`_-based interface).
+-
+-The default action is ``list``, which outputs all tasks for all calendars, each
+-with a semi-permanent unique id::
+-
+-    1 [ ] !!! 2015-04-30 Close bank account @work (0%)
+-    2 [ ] !              Send minipimer back for warranty replacement @home (0%)
+-    3 [X]     2015-03-29 Buy soy milk @home (100%)
+-    4 [ ] !!             Fix the iPad's screen @home (0%)
+-    5 [ ] !!             Fix the Touchpad battery @work (0%)
+-
+-The columns, in order, are:
+-
+- * An id.
+- * Whether the task has been completed or not.
+- * An ``!!!`` indicating high priority, ``!!`` indicating medium priority,
+-   ``!`` indicating low priority tasks.
+- * The due date.
+- * The task summary.
+- * The list the todo is from; it will be hidden when filtering by one list, or
+-   if the database only contains a single list.
+- * The completed percentage.
+-
+-The id is retained by ``todoman`` until the next time you run the ``flush``
+-command.
+-
+-To operate on a todo, the id is what's used to reference it. For example, to
+-edit the `Buy soy milk` task from the example above, the proper command is
+-``todo edit 3``, or ``todo undo 3`` to un-mark the task as done.
+-
+-Editing tasks can only be done via the TUI interface for now, and cannot be
+-done via the command line yet.
+-
+-.. _cli: https://en.wikipedia.org/wiki/Command-line_interface
+-.. _tui: https://en.wikipedia.org/wiki/Text-based_user_interface
+-
+-
+-Synchronization
+----------------
+-
+-If you want to synchronize your tasks, you'll need something that syncs via
+-CalDAV. `vdirsyncer`_ is the recommended tool for this.
+-
+-.. _vdirsyncer: https://vdirsyncer.readthedocs.org/en/stable/
+-
+-Interactive shell
+------------------
+-
+-If you install `click-repl <https://github.com/untitaker/click-repl>`_, todoman
+-gets a new command called ``repl``, which launches an interactive shell with
+-tab-completion.
+-
+-Integrations
+-------------
+-
+-When attempting to integrate ``todoman`` into other systems or parse its
+-output, you're advised to use the ``--porcelain`` flag, which will print all
+-output in a pre-defined format that will remain stable regardless of user
+-configuration or version.
+-
+-The format is JSON, with a single array containing each todo as a single entry
+-(object). Fields will always be present; if a todo does not have a value for a
+-given field, it will be printed as ``null``.
+-
+-Fields MAY be added in future, but will never be removed.
+-
+-Conky
+-`````
+-
+-Todoman can be used with `Conky`_  by using one of the shell execution
+-`variables`_.
+-Given the nature of pimutils utilities, there is no need to query new information
+-every time conky updates so ``execi`` will be the best option most of the time.
+-
+-Adding ``${execi 30 todo}`` inside the text section will display the output of the
+-command and update it every 30 seconds.
+-
+-A working configuration can be found `here`_.
+-
+-.. _conky: https://conky.cc
+-.. _variables: https://conky.sourceforge.net/variables.html
+-.. _here: https://github.com/r4ulill0/todoman/blob/main/docs/examples/conky.conf
+-
+-Sorting
+--------
+-
+-The tasks can be sorted with the ``--sort`` argument. Sorting may be done according to the following fields:
+-
+-    - ``description``
+-    - ``location``
+-    - ``status``
+-    - ``summary``
+-    - ``uid``
+-    - ``rrule``
+-    - ``percent_complete``
+-    - ``priority``
+-    - ``sequence``
+-    - ``categories``
+-    - ``completed_at``
+-    - ``created_at``
+-    - ``dtstamp``
+-    - ``start``
+-    - ``due``
+-    - ``last_modified``
+-
+-It is possible to prepend a ``-`` to a field to sort by that field in ascending
+-order (by default they are sorted in descending order).
+-
+-Example::
+-
+-    todo list --sort due,-priority
++.. include:: _usage.rst
+
+From 117d94135b2b3f374ead08f77a4ccfa52ce9419d Mon Sep 17 00:00:00 2001
+From: Sardorbek Imomaliev <imomaliev@hey.com>
+Date: Mon, 21 Jul 2025 09:41:30 +0100
+Subject: [PATCH 03/18] Remove H1 from content files for usage and configure
+
+---
+ docs/source/_configure.rst | 3 ---
+ docs/source/_usage.rst     | 3 ---
+ 2 files changed, 6 deletions(-)
+
+diff --git a/docs/source/_configure.rst b/docs/source/_configure.rst
+index 7b5b0f16..acdd661b 100644
+--- a/docs/source/_configure.rst
++++ b/docs/source/_configure.rst
+@@ -1,6 +1,3 @@
+-Configuring
+-===========
+-
+ You'll need to configure Todoman before the first usage, using its simple
+ ini-like configuration file.
+
+diff --git a/docs/source/_usage.rst b/docs/source/_usage.rst
+index ac7ff6d0..593db928 100644
+--- a/docs/source/_usage.rst
++++ b/docs/source/_usage.rst
+@@ -1,6 +1,3 @@
+-Usage
+-=====
+-
+ Todoman usage is `CLI`_ based (thought there are some TUI bits, and the
+ intentions is to also provide a fully `TUI`_-based interface).
+
+
+From 3bc8a27c82b601b06ca78626fe3690e7c440e75c Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Mon, 21 Jul 2025 14:31:36 +0200
+Subject: [PATCH 04/18] docs: improve wording for repl
+
+---
+ docs/source/_usage.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/docs/source/_usage.rst b/docs/source/_usage.rst
+index 593db928..29bab103 100644
+--- a/docs/source/_usage.rst
++++ b/docs/source/_usage.rst
+@@ -47,8 +47,8 @@ CalDAV. `vdirsyncer`_ is the recommended tool for this.
+ Interactive shell
+ -----------------
+
+-If you install `click-repl <https://github.com/untitaker/click-repl>`_, todoman
+-gets a new command called ``repl``, which launches an interactive shell with
++If `click-repl <https://github.com/untitaker/click-repl>`_ is installed,
++todoman supports the ``repl`` command, which launches an interactive shell with
+ tab-completion.
+
+ Integrations
+
+From 8896f43af786ae68ea2d4a8119ba8659ec5d37ec Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:11:14 +0200
+Subject: [PATCH 05/18] Add missing type hints
+
+---
+ todoman/model.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/todoman/model.py b/todoman/model.py
+index 206e1362..cecd67c9 100644
+--- a/todoman/model.py
++++ b/todoman/model.py
+@@ -6,6 +6,7 @@
+ import socket
+ import sqlite3
+ import tempfile
++from collections.abc import Generator
+ from collections.abc import Iterable
+ from collections.abc import Iterator
+ from datetime import date
+@@ -16,6 +17,7 @@
+ from functools import cached_property
+ from os.path import normpath
+ from os.path import split
++from typing import IO
+ from uuid import uuid4
+
+ import icalendar
+@@ -261,9 +263,12 @@ def cancel(self) -> None:
+
+
+ @contextlib.contextmanager
+-def atomic_write(dest, overwrite=False):
++def atomic_write(
++    dest: str,
++    overwrite: bool = False,
++) -> Generator[IO[bytes], None, None]:
+     fd, src = tempfile.mkstemp(prefix=os.path.basename(dest), dir=os.path.dirname(dest))
+-    file = os.fdopen(fd, mode='wb')
++    file = os.fdopen(fd, mode="wb")
+
+     try:
+         yield file
+
+From c755df5a44d6517f2ac83e44cf4d536193a8880e Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:13:46 +0200
+Subject: [PATCH 06/18] ruff: use extend-select instead of select
+
+Ensures that we don't accidentally disable any default rules.
+---
+ pyproject.toml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 78667e9a..d73c2a01 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -70,9 +70,8 @@ todo = "todoman.cli:cli"
+ packages = ["todoman"]
+
+ [tool.ruff.lint]
+-select = [
++extend-select = [
+     "E",
+-    "F",
+     "W",
+     "B",
+     "I",
+
+From ecac35e0201208420843cd9e772047d338f8ee8b Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:20:16 +0200
+Subject: [PATCH 07/18] Collapse multiple literals into a single one
+
+---
+ todoman/cli.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/todoman/cli.py b/todoman/cli.py
+index ebcf4cef..d4ea7224 100644
+--- a/todoman/cli.py
++++ b/todoman/cli.py
+@@ -328,7 +328,7 @@ def formatter(self) -> formatters.Formatter:
+ @catch_errors
+ def cli(
+     click_ctx: click.Context,
+-    colour: Literal["always"] | Literal["auto"] | Literal["never"],
++    colour: Literal["always", "auto", "never"],
+     porcelain: bool,
+     humanize: bool,
+     config: str,
+
+From 262155fdb99438bda6948d64a11726e2ea4a7bc1 Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:20:43 +0200
+Subject: [PATCH 08/18] Declare class-mapping as immutable
+
+---
+ todoman/model.py | 39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
+
+diff --git a/todoman/model.py b/todoman/model.py
+index cecd67c9..b35e958d 100644
+--- a/todoman/model.py
++++ b/todoman/model.py
+@@ -17,6 +17,7 @@
+ from functools import cached_property
+ from os.path import normpath
+ from os.path import split
++from types import MappingProxyType
+ from typing import IO
+ from uuid import uuid4
+
+@@ -290,24 +291,26 @@ class VtodoWriter:
+     """Writes a Todo as a VTODO file."""
+
+     """Maps Todo field names to VTODO field names"""
+-    FIELD_MAP = {
+-        "summary": "summary",
+-        "priority": "priority",
+-        "sequence": "sequence",
+-        "uid": "uid",
+-        "categories": "categories",
+-        "completed_at": "completed",
+-        "description": "description",
+-        "dtstamp": "dtstamp",
+-        "start": "dtstart",
+-        "due": "due",
+-        "location": "location",
+-        "percent_complete": "percent-complete",
+-        "status": "status",
+-        "created_at": "created",
+-        "last_modified": "last-modified",
+-        "rrule": "rrule",
+-    }
++    FIELD_MAP = MappingProxyType(
++        {
++            "summary": "summary",
++            "priority": "priority",
++            "sequence": "sequence",
++            "uid": "uid",
++            "categories": "categories",
++            "completed_at": "completed",
++            "description": "description",
++            "dtstamp": "dtstamp",
++            "start": "dtstart",
++            "due": "due",
++            "location": "location",
++            "percent_complete": "percent-complete",
++            "status": "status",
++            "created_at": "created",
++            "last_modified": "last-modified",
++            "rrule": "rrule",
++        }
++    )
+
+     def __init__(self, todo: Todo) -> None:
+         self.todo = todo
+
+From f1e8da7c4dd9eed311d5c63d29c558663642303a Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:21:34 +0200
+Subject: [PATCH 09/18] Remove unused variables
+
+---
+ tests/conftest.py | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/tests/conftest.py b/tests/conftest.py
+index e3d5f898..c8dc19c4 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -5,8 +5,6 @@
+ from collections.abc import Iterable
+ from datetime import datetime
+ from typing import Callable
+-from typing import ParamSpec
+-from typing import TypeVar
+ from uuid import uuid4
+
+ import py
+@@ -44,10 +42,6 @@ def config(tmpdir: py.path.local, default_database: model.Database) -> py.path.l
+     return config_path
+
+
+-_T = TypeVar("_T")
+-_P = ParamSpec("_P")
+-
+-
+ @pytest.fixture
+ def runner(config: py.path.local, sleep: Callable[[], None]) -> CliRunner:
+     class SleepyCliRunner(CliRunner):
+
+From 6e6f61eecb1456ab4af9f6e2e50ccf3ee22744d8 Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:22:04 +0200
+Subject: [PATCH 10/18] Use unpacking operator to concatenate collections
+
+---
+ tests/test_config.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/test_config.py b/tests/test_config.py
+index 4585723f..a13eef52 100644
+--- a/tests/test_config.py
++++ b/tests/test_config.py
+@@ -104,7 +104,7 @@ def test_missing_path(
+         description=CONFIG_SPEC[0].description,
+         validation=CONFIG_SPEC[0].validation,
+     )
+-    new_config_spec = [patched_path] + CONFIG_SPEC[1:]
++    new_config_spec = [patched_path, *CONFIG_SPEC[1:]]
+
+     with mock.patch("todoman.configuration.CONFIG_SPEC", new_config_spec):
+         result = runner.invoke(cli, ["list"])
+
+From b4de0b5dbe1f690dafd4aa8e91e8da6e466d32cb Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:23:21 +0200
+Subject: [PATCH 11/18] ruff: enable RUF and PYI rules
+
+---
+ pyproject.toml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index d73c2a01..6a277ff4 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -79,10 +79,12 @@ extend-select = [
+     "N",
+     "ANN",
+     # "A",
+-    "C4",
++    "C4", # Comprehensions
+     "PT",
+     "SIM",
+     "TID",
++    "RUF",
++    "PYI",
+ ]
+ ignore = [
+   "ANN002",  # Annotations for *args
+
+From a6fc2f2977e5fe680567b000a396d0dd90d60eb5 Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:24:07 +0200
+Subject: [PATCH 12/18] ruff: sort rules alphabetically
+
+---
+ pyproject.toml | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 6a277ff4..0cfe2c4d 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -71,20 +71,20 @@ packages = ["todoman"]
+
+ [tool.ruff.lint]
+ extend-select = [
+-    "E",
+-    "W",
++    # "A",
++    "ANN",
+     "B",
++    "C4", # Comprehensions
++    "E",
+     "I",
+-    "UP",
+     "N",
+-    "ANN",
+-    # "A",
+-    "C4", # Comprehensions
+     "PT",
++    "PYI",
++    "RUF",
+     "SIM",
+     "TID",
+-    "RUF",
+-    "PYI",
++    "UP",
++    "W",
+ ]
+ ignore = [
+   "ANN002",  # Annotations for *args
+
+From d07157fc7b459c0553a7ad00354774e8ceae5c21 Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:25:08 +0200
+Subject: [PATCH 13/18] tox: fix missing argument in ruff commands
+
+---
+ tox.ini | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tox.ini b/tox.ini
+index 2d8bbd98..fcd3e77b 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -19,6 +19,6 @@ deps = pyicu
+ [testenv:lint]
+ extras = lint
+ commands =
+-  ruff check --fix --exit-non-zero-on-fix
+-  ruff format --diff
++  ruff check --fix --exit-non-zero-on-fix .
++  ruff format --diff .
+   mypy .
+
+From 4391b7921776889770788baa0d07b49db9832aba Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Tue, 22 Jul 2025 17:25:42 +0200
+Subject: [PATCH 14/18] ruff: enable INP rules
+
+---
+ pyproject.toml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 0cfe2c4d..64775d0a 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -77,6 +77,7 @@ extend-select = [
+     "C4", # Comprehensions
+     "E",
+     "I",
++    "INP",
+     "N",
+     "PT",
+     "PYI",
+
+From bf08791cbdc413068b43f4120020eb512b4f4db2 Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Sat, 26 Jul 2025 19:40:30 +0200
+Subject: [PATCH 15/18] Remove obsolete bin/todo
+
+---
+ CHANGELOG.rst           |  6 ++++++
+ bin/todo                |  7 -------
+ docs/source/install.rst | 11 -----------
+ 3 files changed, 6 insertions(+), 18 deletions(-)
+ delete mode 100755 bin/todo
+
+diff --git a/CHANGELOG.rst b/CHANGELOG.rst
+index 81edf594..775a49bb 100644
+--- a/CHANGELOG.rst
++++ b/CHANGELOG.rst
+@@ -4,6 +4,12 @@ Changelog
+ This file contains a brief summary of new features and dependency changes or
+ releases, in reverse chronological order.
+
++v4.7.0
++------
++
++* Removed ``bin/todo``. It is no longer requierd, as the entry point generated
++  by setuptools no longer has performance issues.
++
+ v4.6.0
+ ------
+
+diff --git a/bin/todo b/bin/todo
+deleted file mode 100755
+index 44a5e02d..00000000
+--- a/bin/todo
++++ /dev/null
+@@ -1,7 +0,0 @@
+-#!/usr/bin/env python
+-from __future__ import annotations
+-
+-from todoman.cli import cli
+-
+-if __name__ == "__main__":
+-    cli()
+diff --git a/docs/source/install.rst b/docs/source/install.rst
+index bace8fae..77065d5a 100644
+--- a/docs/source/install.rst
++++ b/docs/source/install.rst
+@@ -93,17 +93,6 @@ the setup.py_ file. New dependencies will be clearly announced in the
+ the third digit of the version is incremented) **will not** introduce new
+ dependencies.
+
+-If your packages are generated by running ``setup.py install`` or some similar
+-mechanism, you'll end up with a very slow entry point (that's the
+-``/usr/bin/todo`` file). Package managers should use the file included in this
+-repository under ``bin/todo`` and replace the above one.
+-
+-The root cause of the issue is really how python's setuptools generates these
+-and outside of the scope of this project.
+-
+-If your packages are generated using python wheels, this should not be an issue
+-(much like it won't be an issue for users installing via ``pip``).
+-
+ .. _setup.py: https://github.com/pimutils/todoman/blob/main/setup.py
+
+ Additionally, `jq` is dependency for zsh's autocompletion. For platforms where
+
+From 9898b43218556e1e5d41fa437b4e2cd465da8c22 Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Sat, 26 Jul 2025 19:42:22 +0200
+Subject: [PATCH 16/18] Remove outdated references to setup.py
+
+Fixes: https://github.com/pimutils/todoman/issues/592
+---
+ docs/source/contributing.rst |  7 ++++---
+ docs/source/install.rst      | 24 ++++++++++++++++++------
+ 2 files changed, 22 insertions(+), 9 deletions(-)
+
+diff --git a/docs/source/contributing.rst b/docs/source/contributing.rst
+index b1550af1..a2db60d5 100644
+--- a/docs/source/contributing.rst
++++ b/docs/source/contributing.rst
+@@ -16,9 +16,10 @@ working on it.
+ Hacking
+ ~~~~~~~
+
+-Runtime dependencies are listed in ``setup.py``. We recommend that you use
+-virtualenv to make sure that no additional dependencies are required without
+-them being properly documented.
++Runtime dependencies are listed in ``pyproject.toml``. We recommend that you
++use virtualenv to make sure that no additional dependencies are required
++without them being properly documented.
++
+ Run ``pip install -e .`` to install todoman and its dependencies into a
+ virtualenv.
+
+diff --git a/docs/source/install.rst b/docs/source/install.rst
+index 77065d5a..e5eec170 100644
+--- a/docs/source/install.rst
++++ b/docs/source/install.rst
+@@ -43,11 +43,10 @@ Manual installation
+ -------------------
+
+ If pip is not available either (this is most unlikely), you'll need to download
+-the source tarball and install via setup.py, though this is not a recommended
++the source tarball and install via pip, though this is not a recommended
+ installation method::
+
+-    python3 setup.py install
+-
++    pip install -e .
+
+ bash autocompletion (optional)
+ ------------------------------
+@@ -87,14 +86,27 @@ Recent versions also have experimental support for pypy3.
+ Notes for Packagers
+ -------------------
+
+-All of todoman's dependencies are listed in the ``install_requires`` section of
+-the setup.py_ file. New dependencies will be clearly announced in the
++All of todoman's dependencies are listed in the ``dependencies`` section of
++the pyproject.toml_ file. New dependencies will be clearly announced in the
+ ``CHANGELOG.rst`` file for each release. Patch releases (eg: those where only
+ the third digit of the version is incremented) **will not** introduce new
+ dependencies.
+
+-.. _setup.py: https://github.com/pimutils/todoman/blob/main/setup.py
++.. _pyproject.toml: https://github.com/pimutils/todoman/blob/main/pyproject.toml
+
+ Additionally, `jq` is dependency for zsh's autocompletion. For platforms where
+ `zsh` is the default shell, it is recommended to list `jq` as a dependency, for
+ others adding it as an optional dependency should suffice.
++
++A wheel can be build with::
++
++   python -m build
++
++It can then be installed with::
++
++   python3 -m installer .dist/*.whl
++
++When packaging, you usually want to install to a custom directory, rather than
++the root filesystem. For this, use ``-d``::
++
++   python3 -m installer -d "$pkgdir" .dist/*.whl
+
+From 4b6edfc42acc5b2f73f4f92f4aa864a4fff3b745 Mon Sep 17 00:00:00 2001
+From: David Edmondson <dme@dme.org>
+Date: Fri, 1 Aug 2025 16:51:11 +0100
+Subject: [PATCH 17/18] Add "recurring" and "list_colour" to the JSON output
+ (#593)
+
+* Porcelain (JSON) output should include whether an event recurs
+
+* Porcelain (JSON) output should include list colours, if any
+---
+ tests/test_porcelain.py | 12 ++++++++++++
+ todoman/formatters.py   |  2 ++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/tests/test_porcelain.py b/tests/test_porcelain.py
+index d311eff7..14b97bcf 100644
+--- a/tests/test_porcelain.py
++++ b/tests/test_porcelain.py
+@@ -35,9 +35,11 @@ def test_list_all(tmpdir: py.path.local, runner: CliRunner, create: Callable) ->
+             "due": 1451689200,
+             "id": 1,
+             "list": "default",
++            "list_colour": None,
+             "location": "Wherever",
+             "percent": 26,
+             "priority": 0,
++            "recurring": False,
+             "start": 1451606400,
+             "summary": "Do stuff",
+         }
+@@ -71,9 +73,11 @@ def test_list_start_date(
+             "due": None,
+             "id": 1,
+             "list": "default",
++            "list_colour": None,
+             "location": "Wherever",
+             "percent": 26,
+             "priority": 0,
++            "recurring": False,
+             "start": 1451692800,
+             "summary": "Do stuff",
+         }
+@@ -105,9 +109,11 @@ def test_list_due_date(
+             "due": 1451692800,
+             "id": 1,
+             "list": "default",
++            "list_colour": None,
+             "location": "Wherever",
+             "percent": 26,
+             "priority": 0,
++            "recurring": False,
+             "start": None,
+             "summary": "Do stuff",
+         }
+@@ -133,8 +139,10 @@ def test_list_nodue(tmpdir: py.path.local, runner: CliRunner, create: Callable)
+             "due": None,
+             "id": 1,
+             "list": "default",
++            "list_colour": None,
+             "location": "",
+             "percent": 12,
++            "recurring": False,
+             "priority": 4,
+             "start": None,
+             "summary": "Do stuff",
+@@ -203,9 +211,11 @@ def test_show(tmpdir: py.path.local, runner: CliRunner, create: Callable) -> Non
+         "due": None,
+         "id": 1,
+         "list": "default",
++        "list_colour": None,
+         "location": "",
+         "percent": 0,
+         "priority": 5,
++        "recurring": False,
+         "start": None,
+         "summary": "harhar",
+     }
+@@ -226,9 +236,11 @@ def test_simple_action(todo_factory: Callable) -> None:
+         "due": None,
+         "id": 7,
+         "list": "default",
++        "list_colour": None,
+         "location": "Downtown",
+         "percent": 0,
+         "priority": 0,
++        "recurring": False,
+         "start": None,
+         "summary": "YARR!",
+     }
+diff --git a/todoman/formatters.py b/todoman/formatters.py
+index eb1e5bf2..2424eef3 100644
+--- a/todoman/formatters.py
++++ b/todoman/formatters.py
+@@ -304,6 +304,7 @@ def _todo_as_dict(self, todo: Todo) -> dict:
+             "due": self.format_datetime(todo.due),
+             "id": todo.id,
+             "list": todo.list.name if todo.list else None,
++            "list_colour": todo.list.colour if todo.list else None,
+             "percent": todo.percent_complete,
+             "summary": todo.summary,
+             "categories": todo.categories,
+@@ -311,6 +312,7 @@ def _todo_as_dict(self, todo: Todo) -> dict:
+             "location": todo.location,
+             "description": todo.description,
+             "completed_at": self.format_datetime(todo.completed_at),
++            "recurring": todo.is_recurring,
+         }
+
+     def compact(self, todo: Todo) -> str:
+
+From bd417730a6ee761734d07686511c24a1ba7cebda Mon Sep 17 00:00:00 2001
+From: Hugo Osvaldo Barrera <hugo@whynothugo.nl>
+Date: Thu, 28 Aug 2025 11:31:11 +0200
+Subject: [PATCH 18/18] Update stale references to setup.py
+
+---
+ docs/source/contributing.rst | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/docs/source/contributing.rst b/docs/source/contributing.rst
+index a2db60d5..98d0349c 100644
+--- a/docs/source/contributing.rst
++++ b/docs/source/contributing.rst
+@@ -111,12 +111,12 @@ We appreciate distributions packaging todoman. Packaging should be relatively
+ straightforward following usual Python package guidelines. We recommend that
+ you git-clone tags, and build from source, since these tags are GPG signed.
+
+-Dependencies are listed in ``setup.py``. Please also try to include the
+-extras dependencies as optional dependencies (or what maps best for your
+-distribution).
++Dependencies are listed in ``pyproject.toml``. Please also try to include the
++extras dependencies as optional dependencies (or whatever equivalent is best
++for your distribution).
+
+-You'll need to run ``python setup.py build`` to generate the
+-``todoman/version.py`` file which is necessary at runtime.
++You'll need to run ``python -m build`` to generate the ``todoman/version.py``
++file which is necessary at runtime.
+
+ We recommend that you include the :doc:`man` in distribution packages. You can
+ build this by running::
