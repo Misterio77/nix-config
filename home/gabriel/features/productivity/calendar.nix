@@ -32,7 +32,16 @@ in {
         vdirsyncer = {
           enable = true;
           metadata = ["color" "displayname"];
-          collections = ["GELOS" "Personal" "Postgrad" "3ce52be8-d87e-4b4d-8225-a9c65840c72e" "7eebf97d-5962-5fcd-4e73-888f22720cee"];
+          collections = [
+            "Personal"
+            "projects"
+            "ideas"
+            "reading-list"
+            "7eebf97d-5962-5fcd-4e73-888f22720cee" # Casa
+            "Postgrad"
+            "GELOS"
+            "3ce52be8-d87e-4b4d-8225-a9c65840c72e" # Magalu
+          ];
         };
       };
 
