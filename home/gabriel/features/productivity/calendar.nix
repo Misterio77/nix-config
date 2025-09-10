@@ -37,6 +37,7 @@ in {
             "projects"
             "ideas"
             "reading-list"
+            "routine"
             "7eebf97d-5962-5fcd-4e73-888f22720cee" # Casa
             "Postgrad"
             "GELOS"
