@@ -14,6 +14,13 @@
     })
     .overrideAttrs
     (old: {
+      # Update to 0.51.0
+      src = "${pkgs.fetchFromGitHub {
+        owner = "hyprwm";
+        repo = "hyprland-plugins";
+        rev = "376d08bbbd861f2125f5ef86e0003e3636ce110f";
+        hash = "sha256-MeRYPD6GTbBEcoEqwl8kqCSKtM8CJcYayvPfKGoQkzc=";
+      }}/hyprbars";
       # Yeet the initialization notification (I hate it)
       postPatch =
         (old.postPatch or "")
@@ -54,8 +61,8 @@ in {
       };
 
       windowrulev2 = [
-        # Disable bars in floating pinned windows 
-        "plugin:hyprbars:nobar, floating:1, pinned:1" 
+        # Disable bars in floating pinned windows
+        "plugin:hyprbars:nobar, floating:1, pinned:1"
 
         # Local focused colors (this host's colors)
         "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, focus:1"

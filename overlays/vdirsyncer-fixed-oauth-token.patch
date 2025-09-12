@@ -1,5 +1,5 @@
 diff --git a/docs/config.rst b/docs/config.rst
-index d157be3..e2a8b7d 100644
+index a351f5c..c8437c1 100644
 --- a/docs/config.rst
 +++ b/docs/config.rst
 @@ -314,6 +314,10 @@ The ``token_file`` parameter should be a path to a file where vdirsyncer can
@@ -22,17 +22,17 @@ index d157be3..e2a8b7d 100644
         #end_date = null
         #item_types = []
 diff --git a/vdirsyncer/storage/google.py b/vdirsyncer/storage/google.py
-index 93b7848..85aaaf1 100644
+index 3109213..fb22b00 100644
 --- a/vdirsyncer/storage/google.py
 +++ b/vdirsyncer/storage/google.py
-@@ -14,6 +14,7 @@ import click
- from atomicwrites import atomic_write
+@@ -13,6 +13,7 @@ import aiohttp
+ import click
  
  from .. import exceptions
 +from ..http import USERAGENT
+ from ..utils import atomic_write
  from ..utils import checkdir
  from ..utils import expand_path
- from ..utils import open_graphical_browser
 @@ -39,10 +40,12 @@ except ImportError:
  class GoogleSession(dav.DAVSession):
      def __init__(
@@ -70,7 +70,7 @@ index 93b7848..85aaaf1 100644
          self._redirect_uri = None
  
      async def request(self, method, path, **kwargs):
-@@ -183,9 +189,9 @@ class GoogleCalendarStorage(dav.CalDAVStorage):
+@@ -184,9 +190,9 @@ class GoogleCalendarStorage(dav.CalDAVStorage):
  
      def __init__(
          self,
@@ -83,7 +83,7 @@ index 93b7848..85aaaf1 100644
          start_date=None,
          end_date=None,
          item_types=(),
-@@ -228,7 +234,7 @@ class GoogleContactsStorage(dav.CardDAVStorage):
+@@ -229,7 +235,7 @@ class GoogleContactsStorage(dav.CardDAVStorage):
  
      storage_name = "google_contacts"
  
