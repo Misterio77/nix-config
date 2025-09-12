@@ -71,11 +71,6 @@
       url = "github:misterio77/themes";
       inputs.systems.follows = "systems";
     };
-    disconic = {
-      url = "github:misterio77/disconic";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-    };
     website = {
       url = "github:misterio77/website";
       inputs.nixpkgs.follows = "nixpkgs";

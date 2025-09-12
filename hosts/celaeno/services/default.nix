@@ -6,7 +6,6 @@
 
     ./binary-cache.nix
     ./paste-misterio-me.nix
-    ./disconic.nix
     ./hydra
   ];
 

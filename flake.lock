@@ -47,29 +47,6 @@
         "type": "github"
       }
     },
-    "disconic": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1724078696,
-        "narHash": "sha256-wRXF17R3PAPQMezjEp6cgMq/apUa+1yTPgZLHz18HHU=",
-        "owner": "misterio77",
-        "repo": "disconic",
-        "rev": "ac4ed5d9d7fe5171ec616c039706b332929f30ea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "misterio77",
-        "repo": "disconic",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -607,7 +584,6 @@
     },
     "root": {
       "inputs": {
-        "disconic": "disconic",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
         "hardware": "hardware",
