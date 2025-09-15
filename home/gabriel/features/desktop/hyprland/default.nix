@@ -105,11 +105,9 @@ in {
         split_width_multiplier = 1.35;
         pseudotile = true;
       };
-      gestures = {
-        workspace_swipe = true;
-        workspace_swipe_min_speed_to_force = 10;
-        workspace_swipe_forever = true;
-      };
+      gesture = [
+        "3, horizontal, workspace"
+      ];
       misc = {
         vfr = true;
         close_special_on_empty = true;
