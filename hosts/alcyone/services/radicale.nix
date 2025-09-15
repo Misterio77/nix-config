@@ -18,7 +18,7 @@ in {
           type = "htpasswd";
           # htpasswd -5 -c /dev/stdout hi@m7.rs
           htpasswd_filename = config.sops.secrets.radicale-htpasswd.path;
-          htpasswd_encryption = "bcrypt";
+          htpasswd_encryption = "autodetect";
         };
         storage = {
           filesystem_folder = "/var/lib/radicale/collections";
