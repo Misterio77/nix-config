@@ -25,6 +25,7 @@
     localDnsResolver = false;
     loginAccounts = {
       "hi@m7.rs" = {
+        # mkpasswd -sm bcrypt
         hashedPasswordFile = config.sops.secrets.gabriel-mail-password.path;
         aliases = map (d: "@" + d) domains;
       };
