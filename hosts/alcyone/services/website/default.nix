@@ -33,6 +33,8 @@ in {
             add_header Cache-Control "max-age=${toString (hours 1)}, stale-while-revalidate=${toString (days 30)}";
           '';
         };
+        "/.well-known/caldav".return = "302 https://dav.m7.rs";
+        "/.well-known/carddav".return = "302 https://dav.m7.rs";
 
         "=/nix" = {
           # Script to download static nix
