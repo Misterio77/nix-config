@@ -34,12 +34,12 @@
 
   sops.secrets = {
     last-fm-key = {
-      sopsFile = ../secrets.yaml;
+      sopsFile = ../../secrets.yaml;
       owner = config.users.users.navidrome.name;
       group = config.users.users.navidrome.name;
     };
     last-fm-secret = {
-      sopsFile = ../secrets.yaml;
+      sopsFile = ../../secrets.yaml;
       owner = config.users.users.navidrome.name;
       group = config.users.users.navidrome.name;
     };
