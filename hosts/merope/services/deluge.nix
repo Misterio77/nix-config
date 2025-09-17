@@ -26,7 +26,18 @@
       # Outgoing is random
       random_outgoing_ports = true;
     };
-    openFirewall = true; # Forward listen ports
+    web = {
+      enable = true;
+      port = 8112;
+    };
+  };
+
+  services.nginx.virtualHosts = {
+    "deluge.m7.rs" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/".proxyPass = "http://localhost:${toString config.services.deluge.web.port}";
+    };
   };
 
   sops.secrets.deluge-accounts = {
