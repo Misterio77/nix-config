@@ -49,9 +49,10 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [
-      "/var/lib/deluge"
-      "/srv/torrents"
-    ];
+    "/persist".directories = [{
+      directory = config.services.deluge.dataDir;
+      user = config.services.deluge.user;
+      group = config.services.deluge.group;
+    }];
   };
 }

@@ -115,8 +115,10 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [
-      "/var/lib/rspamd"
-    ];
+    "/persist".directories = [{
+      directory = "/var/lib/rspamd";
+      user = "rspamd";
+      group = "rspamd";
+    }];
   };
 }

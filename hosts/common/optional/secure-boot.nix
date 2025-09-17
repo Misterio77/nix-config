@@ -25,6 +25,6 @@
 
   environment.systemPackages = [pkgs.sbctl];
   environment.persistence = {
-    "/persist".directories = ["/var/lib/sbctl"];
+    "/persist".directories = [{directory = "/var/lib/sbctl";}];
   };
 }

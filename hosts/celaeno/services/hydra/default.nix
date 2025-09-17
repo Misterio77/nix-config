@@ -67,6 +67,10 @@ in {
   };
 
   environment.persistence = {
-    "/persist".directories = ["/var/lib/hydra"];
+    "/persist".directories = [{
+      directory = config.users.users.hydra.home;
+      user = config.users.users.hydra.name;
+      group = config.users.users.hydra.group;
+    }];
   };
 }

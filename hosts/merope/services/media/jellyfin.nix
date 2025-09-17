@@ -1,4 +1,4 @@
-let
+{config, ...}: let
   # https://jellyfin.org/docs/general/post-install/networking/
   # TODO: https://github.com/Sveske-Juice/declarative-jellyfin
   port = 8096;
@@ -16,6 +16,10 @@ in {
     };
   };
   environment.persistence = {
-    "/persist".directories = ["/var/lib/jellyfin"];
+    "/persist".directories = [{
+      directory = "/var/lib/jellyfin";
+      user = config.services.jellyfin.user;
+      group = config.services.jellyfin.group;
+    }];
   };
 }

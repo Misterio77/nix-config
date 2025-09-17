@@ -4,7 +4,11 @@
   ...
 }: {
   environment.persistence = {
-    "/persist".directories = ["/srv/git"];
+    "/persist".directories = [{
+      directory = "/srv/git";
+      user = config.users.users.git.name;
+      group = config.users.users.git.group;
+    }];
   };
 
   services.gitDaemon = {

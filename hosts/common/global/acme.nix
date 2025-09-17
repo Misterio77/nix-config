@@ -6,8 +6,10 @@
   };
 
   environment.persistence = {
-    "/persist" = {
-      directories = ["/var/lib/acme"];
-    };
+    "/persist".directories = [{
+      directory = "/var/lib/acme";
+      user = "acme";
+      group = "acme";
+    }];
   };
 }

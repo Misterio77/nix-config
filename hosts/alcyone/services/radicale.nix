@@ -45,6 +45,10 @@ in {
   };
 
   environment.persistence = {
-    "/persist".directories = ["/var/lib/radicale"];
+    "/persist".directories = [{
+      directory = "/var/lib/radicale";
+      user = config.users.users.radicale.name;
+      group = config.users.users.radicale.group;
+    }];
   };
 }

@@ -79,6 +79,10 @@ in {
   };
 
   environment.persistence = {
-    "/persist".directories = ["/var/lib/prometheus2"];
+    "/persist".directories = [{
+      directory = "/var/lib/prometheus2";
+      user = "prometheus";
+      group = "prometheus";
+    }];
   };
 }

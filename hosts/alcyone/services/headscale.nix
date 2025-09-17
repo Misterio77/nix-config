@@ -71,6 +71,10 @@ in {
   environment.systemPackages = [config.services.headscale.package];
 
   environment.persistence = {
-    "/persist".directories = ["/var/lib/headscale"];
+    "/persist".directories = [{
+      directory = "/var/lib/headscale";
+      user = config.services.headscale.user;
+      group = config.services.headscale.group;
+    }];
   };
 }

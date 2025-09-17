@@ -1,10 +1,14 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
   };
 
   environment.persistence = {
-    "/persist".directories = ["/var/lib/mysql"];
+    "/persist".directories = [{
+      directory = "/var/lib/mysql";
+      user = config.services.mysql.user;
+      group = config.services.mysql.group;
+    }];
   };
 }
