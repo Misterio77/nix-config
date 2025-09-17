@@ -4,6 +4,7 @@
     declarative = true;
     authFile = config.sops.secrets.deluge-accounts.path;
     config = {
+      enabled_plugins = ["Label"];
       copy_torrent_file = true;
       move_completed = true;
       torrentfiles_location = "/srv/torrents/files";
