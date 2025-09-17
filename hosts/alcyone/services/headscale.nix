@@ -31,10 +31,10 @@ in {
         log = {
           level = "warn";
         };
-        ip_prefixes = [
-          "100.77.0.0/24"
-          "fd7a:115c:a1e0:77::/64"
-        ];
+        prefixes = {
+          v4 = "100.77.0.0/24";
+          v6 = "fd7a:115c:a1e0:77::/64";
+        };
         derp.server = {
           enable = true;
           region_id = 999;
