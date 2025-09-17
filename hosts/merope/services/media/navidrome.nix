@@ -48,7 +48,7 @@
   environment.persistence = {
     "/persist".directories = [{
       directory = "/var/lib/navidrome";
-      user = config.services.navirome.user;
+      user = config.services.navidrome.user;
       group = config.services.navidrome.group;
     }];
   };
