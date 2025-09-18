@@ -27,18 +27,19 @@
       # Outgoing is random
       random_outgoing_ports = true;
     };
+    # Publicly opens listen_ports only
+    openFirewall = true;
     web = {
       enable = true;
       port = 8112;
     };
   };
 
-  services.nginx.virtualHosts = {
-    "deluge.m7.rs" = {
-      forceSSL = true;
-      enableACME = true;
-      locations."/".proxyPass = "http://localhost:${toString config.services.deluge.web.port}";
-    };
+  # Make daemon available on tailnet
+  networking.firewall.interfaces."tailscale0" = {
+    allowedTCPPorts = [
+      config.services.deluge.config.daemon_port
+    ];
   };
 
   sops.secrets.deluge-accounts = {
@@ -46,18 +47,6 @@
     owner = config.users.users.deluge.name;
     group = config.users.users.deluge.group;
     mode = "0600";
-  };
-
-  networking.firewall = {
-    # Remote control port
-    allowedTCPPorts = [58846];
-    # Listen
-    allowedTCPPortRanges = [
-      {
-        from = 6880;
-        to = 6890;
-      }
-    ];
   };
 
   environment.persistence = {

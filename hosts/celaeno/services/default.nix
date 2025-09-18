@@ -8,6 +8,4 @@
     ./paste-misterio-me.nix
     ./hydra
   ];
-
-  networking.firewall.allowedTCPPorts = [5432];
 }
