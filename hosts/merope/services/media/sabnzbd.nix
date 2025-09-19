@@ -5,7 +5,7 @@ in {
     enable = true;
     configFile = config.sops.templates.sabnzbd-config.path;
   };
-  sops.templates.sabnzbd = {
+  sops.templates.sabnzbd-config = {
     content = /*ini*/ ''
       [misc]
       host = 127.0.0.1
