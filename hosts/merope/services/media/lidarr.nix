@@ -6,9 +6,12 @@
     };
   };
 
-  # Add lidarr to deluge's group
-  # Make sure lidarr can hard-link deluge-owned files
-  users.users.lidarr.extraGroups = [config.users.users.deluge.group];
+  # Add lidarr to deluge's and nzbget's groups
+  # Make sure lidarr can hard-link their files
+  users.users.lidarr.extraGroups = [
+    config.users.users.deluge.group
+    config.services.nzbget.group
+  ];
 
   environment.persistence = {
     "/persist".directories = [{
