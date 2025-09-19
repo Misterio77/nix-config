@@ -13,6 +13,16 @@ in {
         enableACME = true;
         locations."/".proxyPass = "http://localhost:${toString port}";
       };
+      "music.m7.rs" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".return = "302 https://media.m7.rs/web/#/music.html";
+      };
+      "music.misterio.me" = {
+        forceSSL = true;
+        enableACME = true;
+        locations."/".return = "302 https://media.m7.rs/web/#/music.html";
+      };
     };
   };
   environment.persistence = {
