@@ -3,6 +3,6 @@
     ./jellyfin.nix
     ./lidarr.nix
     ./deluge.nix
-    ./nzbget.nix
+    ./sabnzbd.nix
   ];
 }
