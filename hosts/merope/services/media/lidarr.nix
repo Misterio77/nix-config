@@ -10,7 +10,7 @@
   # Make sure lidarr can hard-link their files
   users.users.lidarr.extraGroups = [
     config.users.users.deluge.group
-    config.services.nzbget.group
+    config.services.sabnzbd.group
   ];
 
   environment.persistence = {
