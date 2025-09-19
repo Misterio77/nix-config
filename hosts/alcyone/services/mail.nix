@@ -56,7 +56,6 @@
         specialUse = "Trash";
       };
     };
-    # When setting up check that /srv is persisted!
     mailDirectory = "/srv/mail/vmail";
     sieveDirectory = "/srv/mail/sieve";
     dkimKeyDirectory = "/srv/mail/dkim";
@@ -115,11 +114,17 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [{
-      directory = "/var/lib/rspamd";
-      user = "rspamd";
-      group = "rspamd";
-      mode = "0700";
-    }];
+    "/persist".directories = [
+      {
+        directory = "/var/lib/rspamd";
+        user = "rspamd";
+        group = "rspamd";
+        mode = "0700";
+      }
+      {
+        directory = "/srv/mail";
+        mode = "755"; # The inner dirs have more strict permissions, set by their homeMode
+      }
+    ];
   };
 }

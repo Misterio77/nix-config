@@ -1,4 +1,6 @@
-{config, ...}: {
+{config, ...}: let
+  torrentDir = "/srv/torrents";
+in {
   services.deluge = {
     enable = true;
     declarative = true;
@@ -7,9 +9,9 @@
       enabled_plugins = ["Label"];
       copy_torrent_file = true;
       move_completed = true;
-      torrentfiles_location = "/srv/torrents/files";
-      download_location = "/srv/torrents/downloading";
-      move_completed_path = "/srv/torrents/completed";
+      torrentfiles_location = "${torrentDir}/files";
+      download_location = "${torrentDir}/downloading";
+      move_completed_path = "${torrentDir}/completed";
       dont_count_slow_torrents = true;
       max_active_seeding = -1;
       max_active_limit = -1;
@@ -50,11 +52,19 @@
   };
 
   environment.persistence = {
-    "/persist".directories = [{
-      directory = config.services.deluge.dataDir;
-      user = config.services.deluge.user;
-      group = config.services.deluge.group;
-      mode = "0700";
-    }];
+    "/persist".directories = [
+      {
+        directory = config.services.deluge.dataDir;
+        user = config.services.deluge.user;
+        group = config.services.deluge.group;
+        mode = "0700";
+      }
+      {
+        directory = torrentDir;
+        user = config.services.deluge.user;
+        group = config.services.deluge.group;
+        mode = "0770"; # So that others in the group (e.g. *arr) can move/hardlink completed torrents
+      }
+    ];
   };
 }
