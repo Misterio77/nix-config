@@ -71,6 +71,7 @@ in {
       directory = config.users.users.hydra.home;
       user = config.users.users.hydra.name;
       group = config.users.users.hydra.group;
+      mode = "0700";
     }];
   };
 }

@@ -54,6 +54,7 @@
       directory = config.services.deluge.dataDir;
       user = config.services.deluge.user;
       group = config.services.deluge.group;
+      mode = "0700";
     }];
   };
 }

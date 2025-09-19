@@ -10,6 +10,7 @@
       directory = "/var/lib/acme";
       user = "acme";
       group = "acme";
+      mode = "0700";
     }];
   };
 }

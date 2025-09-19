@@ -15,6 +15,7 @@
       directory = "/var/lib/lidarr";
       user = config.services.lidarr.user;
       group = config.services.lidarr.group;
+      mode = "0700";
     }];
   };
 }

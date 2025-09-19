@@ -83,6 +83,7 @@ in {
       directory = "/var/lib/prometheus2";
       user = "prometheus";
       group = "prometheus";
+      mode = "0700";
     }];
   };
 }

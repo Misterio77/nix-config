@@ -30,6 +30,7 @@ in {
       directory = "/var/lib/jellyfin";
       user = config.services.jellyfin.user;
       group = config.services.jellyfin.group;
+      mode = "0700";
     }];
   };
 }

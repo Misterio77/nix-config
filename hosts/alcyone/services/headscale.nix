@@ -75,6 +75,7 @@ in {
       directory = "/var/lib/headscale";
       user = config.services.headscale.user;
       group = config.services.headscale.group;
+      mode = "0700";
     }];
   };
 }

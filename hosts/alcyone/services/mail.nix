@@ -119,6 +119,7 @@
       directory = "/var/lib/rspamd";
       user = "rspamd";
       group = "rspamd";
+      mode = "0700";
     }];
   };
 }

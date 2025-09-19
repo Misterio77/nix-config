@@ -49,6 +49,7 @@ in {
       directory = "/var/lib/radicale";
       user = config.users.users.radicale.name;
       group = config.users.users.radicale.group;
+      mode = "0755";
     }];
   };
 }

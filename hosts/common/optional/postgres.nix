@@ -6,6 +6,7 @@
       directory = "/var/lib/postgresql";
       user = "postgres";
       group = "postgres";
+      mode = "0700";
     }];
   };
 }

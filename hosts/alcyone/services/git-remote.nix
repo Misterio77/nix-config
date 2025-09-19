@@ -8,6 +8,7 @@
       directory = "/srv/git";
       user = config.users.users.git.name;
       group = config.users.users.git.group;
+      mode = "0755";
     }];
   };
 
