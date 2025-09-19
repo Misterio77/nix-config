@@ -34,8 +34,8 @@ in {
   };
 
   sops.secrets = {
-    deluge-accounts.sabnzbd-key= ../../secrets.yaml;
-    deluge-accounts.frugalusenet-key = ../../secrets.yaml;
+    sabnzbd-key= ../../secrets.yaml;
+    frugalusenet-key = ../../secrets.yaml;
   };
 
   environment.persistence = {
