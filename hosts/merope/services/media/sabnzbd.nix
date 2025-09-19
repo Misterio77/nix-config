@@ -1,4 +1,4 @@
-{config, ...}: let
+{config, lib, ...}: let
   downloadsDir = "/srv/downloads";
 in {
   services.sabnzbd = {
@@ -15,7 +15,6 @@ in {
       inet_exposure = 2
       download_dir = ${downloadsDir}/downloading
       complete_dir = ${downloadsDir}/complete
-      log_dir = logs
 
       [servers]
       [[frugal]]
@@ -49,4 +48,9 @@ in {
       }
     ];
   };
+
+  # Force disable file logging
+  systemd.services.sabnzbd.serviceConfig.ExecStart = let
+    cfg = config.services.sabnzbd;
+  in lib.mkForce "${lib.getExe cfg.package} -d -f ${cfg.configFile} --disable-file-log";
 }
