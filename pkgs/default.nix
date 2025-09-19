@@ -1,6 +1,7 @@
 {pkgs ? import <nixpkgs> {}, ...}: rec {
   # Packages with an actual source
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
+  prefetcharr = pkgs.callPackage ./prefetcharr {};
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava {};
