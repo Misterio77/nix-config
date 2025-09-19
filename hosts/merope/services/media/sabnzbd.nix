@@ -5,29 +5,38 @@ in {
     enable = true;
     configFile = config.sops.templates.sabnzbd-config.path;
   };
-  sops.templates.sabnzbd.content = /*ini*/ ''
-    [misc]
-    host = 127.0.0.1
-    port = 6789
-    local_ranges = 127.0.0.1/32
-    api_key = ${config.sops.placeholder.sabnzbd-key}
-    inet_exposure = 2
-    download_dir = ${downloadsDir}/downloading
-    complete_dir = ${downloadsDir}/complete
+  sops.templates.sabnzbd = {
+    content = /*ini*/ ''
+      [misc]
+      host = 127.0.0.1
+      port = 6789
+      local_ranges = 127.0.0.1/32
+      api_key = ${config.sops.placeholder.sabnzbd-key}
+      inet_exposure = 2
+      download_dir = ${downloadsDir}/downloading
+      complete_dir = ${downloadsDir}/complete
 
-    [servers]
-    [[frugal]]
-    enable = 1
-    name = frugal
-    host = sanews.frugalusenet.com
-    port = 563
-    username = misterio
-    password = ${config.sops.placeholder.frugalusenet-key}
-    connections = 8
-    ssl = 1
-    priority = 0
-  '';
+      [servers]
+      [[frugal]]
+      enable = 1
+      name = frugal
+      host = sanews.frugalusenet.com
+      port = 563
+      username = misterio
+      password = ${config.sops.placeholder.frugalusenet-key}
+      connections = 8
+      ssl = 1
+      priority = 0
+    '';
+    owner = config.services.sabnzbd.user;
+    group = config.services.sabnzbd.group;
+    mode = "0600";
+  };
 
+  sops.secrets = {
+    deluge-accounts.sabnzbd-key= ../../secrets.yaml;
+    deluge-accounts.frugalusenet-key = ../../secrets.yaml;
+  };
 
   environment.persistence = {
     "/persist".directories = [
