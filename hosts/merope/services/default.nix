@@ -5,7 +5,6 @@
     ../../common/optional/postgres.nix
 
     ./media
-    ./deluge.nix
     ./files-server.nix
   ];
 }
