@@ -14,11 +14,19 @@
   ];
 
   environment.persistence = {
-    "/persist".directories = [{
-      directory = "/var/lib/lidarr";
-      user = config.services.lidarr.user;
-      group = config.services.lidarr.group;
-      mode = "0700";
-    }];
+    "/persist".directories = [
+      {
+        directory = "/var/lib/lidarr";
+        user = config.services.lidarr.user;
+        group = config.services.lidarr.group;
+        mode = "0700";
+      }
+      {
+        directory = "/srv/media/music";
+        user = config.services.lidarr.user;
+        group = config.services.lidarr.group;
+        mode = "0755";
+      }
+    ];
   };
 }

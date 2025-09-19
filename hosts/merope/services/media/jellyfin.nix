@@ -33,10 +33,6 @@ in {
         group = config.services.jellyfin.group;
         mode = "0700";
       }
-      {
-        directory = "/srv/media";
-        mode = "0755";
-      }
     ];
   };
 }
