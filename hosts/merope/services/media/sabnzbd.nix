@@ -15,6 +15,7 @@ in {
       inet_exposure = 2
       download_dir = ${downloadsDir}/downloading
       complete_dir = ${downloadsDir}/complete
+      log_dir = logs
 
       [servers]
       [[frugal]]
