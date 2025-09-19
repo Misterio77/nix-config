@@ -1,6 +1,4 @@
-{config, lib, ...}: let
-  downloadsDir = "/srv/downloads";
-in {
+{config, ...}: {
   services.sabnzbd = {
     enable = true;
     configFile = config.sops.templates.sabnzbd-config.path;
@@ -13,8 +11,8 @@ in {
       local_ranges = 127.0.0.1/32
       api_key = ${config.sops.placeholder.sabnzbd-key}
       inet_exposure = 2
-      download_dir = ${downloadsDir}/downloading
-      complete_dir = ${downloadsDir}/complete
+      download_dir = /var/lib/sabnzbd/downloading
+      complete_dir = /var/lib/sabnzbd/complete
       log_dir = /var/lib/sabnzbd/logs
       admin_dir = /var/lib/sabnzbd/admin
 
@@ -43,20 +41,4 @@ in {
     sabnzbd-key.sopsFile = ../../secrets.yaml;
     frugalusenet-key.sopsFile  = ../../secrets.yaml;
   };
-
-  environment.persistence = {
-    "/persist".directories = [
-      {
-        directory = downloadsDir;
-        user = config.services.sabnzbd.user;
-        group = config.services.sabnzbd.group;
-        mode = "0770"; # So that others in the group (e.g. *arr) can move/hardlink completed torrents
-      }
-    ];
-  };
-
-  # Force disable file logging
-  systemd.services.sabnzbd.serviceConfig.ExecStart = let
-    cfg = config.services.sabnzbd;
-  in lib.mkForce "${lib.getExe cfg.package} -d -f ${cfg.configFile} --disable-file-log";
 }
