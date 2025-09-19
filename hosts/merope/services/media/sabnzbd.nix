@@ -34,8 +34,8 @@ in {
   };
 
   sops.secrets = {
-    sabnzbd-key= ../../secrets.yaml;
-    frugalusenet-key = ../../secrets.yaml;
+    sabnzbd-key.sopsFile = ../../secrets.yaml;
+    frugalusenet-key.sopsFile  = ../../secrets.yaml;
   };
 
   environment.persistence = {
