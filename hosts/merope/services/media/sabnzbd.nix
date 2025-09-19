@@ -15,8 +15,8 @@ in {
       inet_exposure = 2
       download_dir = ${downloadsDir}/downloading
       complete_dir = ${downloadsDir}/complete
-      log_dir = ~/logs
-      admin_dir = ~/admin
+      log_dir = /var/lib/sabnzbd/logs
+      admin_dir = /var/lib/sabnzbd/admin
 
       [servers]
       [[frugal]]
