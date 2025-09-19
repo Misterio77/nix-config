@@ -26,11 +26,17 @@ in {
     };
   };
   environment.persistence = {
-    "/persist".directories = [{
-      directory = "/var/lib/jellyfin";
-      user = config.services.jellyfin.user;
-      group = config.services.jellyfin.group;
-      mode = "0700";
-    }];
+    "/persist".directories = [
+      {
+        directory = "/var/lib/jellyfin";
+        user = config.services.jellyfin.user;
+        group = config.services.jellyfin.group;
+        mode = "0700";
+      }
+      {
+        directory = "/srv/media";
+        mode = "0755";
+      }
+    ];
   };
 }
