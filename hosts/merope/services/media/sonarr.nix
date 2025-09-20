@@ -27,6 +27,12 @@
         group = config.services.sonarr.group;
         mode = "0755";
       }
+      {
+        directory = "/srv/media/anime";
+        user = config.services.sonarr.user;
+        group = config.services.sonarr.group;
+        mode = "0755";
+      }
     ];
   };
 }
