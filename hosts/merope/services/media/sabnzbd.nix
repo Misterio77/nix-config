@@ -31,8 +31,18 @@
       port = 563
       username = misterio
       password = ${config.sops.placeholder.frugalusenet-key}
-      connections = 75
+      connections = 150
       priority = 0
+      [[frugal-secondary]]
+      enable = 1
+      name = frugal-secondary
+      host = news.frugalusenet.com
+      ssl = 1
+      port = 563
+      username = misterio
+      password = ${config.sops.placeholder.frugalusenet-key}
+      connections = 75
+      priority = 1
       [[frugal-bonus]]
       enable = 1
       name = frugal-bonus
