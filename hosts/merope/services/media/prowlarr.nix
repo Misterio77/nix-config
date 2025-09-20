@@ -9,9 +9,6 @@
   environment.persistence = {
     "/persist".directories = [{
       directory = config.services.prowlarr.dataDir;
-      user = "prowlarr";
-      group = "prowlarr";
-      mode = "0700";
     }];
   };
 }
