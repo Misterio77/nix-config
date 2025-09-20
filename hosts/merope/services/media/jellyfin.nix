@@ -11,7 +11,10 @@ in {
       "media.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:${toString port}";
+        locations."/" = {
+          proxyPass = "http://localhost:${toString port}";
+          proxyWebsockets = true;
+        };
       };
       "music.m7.rs" = {
         forceSSL = true;
