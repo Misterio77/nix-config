@@ -2,7 +2,7 @@
   services.sonarr = {
     enable = true;
     settings = {
-      server.port = 8687;
+      server.port = 8688;
     };
   };
 
