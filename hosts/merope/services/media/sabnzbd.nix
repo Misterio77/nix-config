@@ -26,12 +26,22 @@
       enable = 1
       name = frugal
       host = sanews.frugalusenet.com
+      ssl = 1
       port = 563
       username = misterio
       password = ${config.sops.placeholder.frugalusenet-key}
       connections = 75
-      ssl = 1
       priority = 0
+      [[frugal-bonus]]
+      enable = 1
+      name = frugal-bonus
+      host = bonus.frugalusenet.com
+      ssl = 1
+      port = 563
+      username = misterio
+      password = ${config.sops.placeholder.frugalusenet-key}
+      connections = 50
+      priority = 2
     '';
     owner = config.services.sabnzbd.user;
     group = config.services.sabnzbd.group;
