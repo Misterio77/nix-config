@@ -29,7 +29,7 @@
       port = 563
       username = misterio
       password = ${config.sops.placeholder.frugalusenet-key}
-      connections = 8
+      connections = 75
       ssl = 1
       priority = 0
     '';
