@@ -5,7 +5,6 @@
     ./sonarr.nix
     ./radarr.nix
     ./prowlarr.nix
-    ./bazarr.nix
     ./flaresolverr.nix
     ./deluge.nix
     ./sabnzbd.nix
