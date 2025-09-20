@@ -1,13 +1,11 @@
 {config, ...}: {
-  services.sonarr = {
+  services.bazarr = {
     enable = true;
-    settings = {
-      server.port = 8689;
-    };
+    listenPort = 8689;
   };
 
   # Add bazarr to sonarr and radarr's groups
-  users.users.sonarr.extraGroups = [
+  users.users.bazarr.extraGroups = [
     config.services.sonarr.group
     config.services.radarr.group
   ];
