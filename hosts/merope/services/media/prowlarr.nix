@@ -8,7 +8,7 @@
 
   environment.persistence = {
     "/persist".directories = [{
-      directory = config.services.prowlarr.dataDir;
+      directory = "/var/lib/private/prowlerr";
     }];
   };
 }
