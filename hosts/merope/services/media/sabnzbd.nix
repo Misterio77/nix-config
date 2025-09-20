@@ -15,6 +15,7 @@
       complete_dir = /var/lib/sabnzbd/complete
       log_dir = /var/lib/sabnzbd/logs
       admin_dir = /var/lib/sabnzbd/admin
+      backup_dir = /var/lib/sabnzbd/backup
       permissions = 770
 
       [categories]
