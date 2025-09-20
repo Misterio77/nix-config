@@ -57,6 +57,7 @@
     owner = config.services.sabnzbd.user;
     group = config.services.sabnzbd.group;
     mode = "0600";
+    restartUnits = ["sabnzbd.service"];
   };
 
   sops.secrets = {
