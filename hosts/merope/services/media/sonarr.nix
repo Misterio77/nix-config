@@ -16,7 +16,7 @@
   environment.persistence = {
     "/persist".directories = [
       {
-        directory = "/var/lib/sonarr";
+        directory = config.services.sonarr.dataDir;
         user = config.services.sonarr.user;
         group = config.services.sonarr.group;
         mode = "0700";

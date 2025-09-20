@@ -16,7 +16,7 @@
   environment.persistence = {
     "/persist".directories = [
       {
-        directory = "/var/lib/lidarr";
+        directory = config.services.lidarr.dataDir;
         user = config.services.lidarr.user;
         group = config.services.lidarr.group;
         mode = "0700";
