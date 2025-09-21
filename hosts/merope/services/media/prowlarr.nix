@@ -18,9 +18,12 @@
     User = lib.mkForce "prowlarr";
     Group = lib.mkForce "prowlarr";
   };
-  users.users.prowlarr = {
-    home = "/var/lib/prowlarr";
-    group = "prowlarr";
-    isSystemUser = true;
+  users = {
+    users.prowlarr = {
+      home = "/var/lib/prowlarr";
+      group = "prowlarr";
+      isSystemUser = true;
+    };
+    groups.prowlarr = {};
   };
 }
