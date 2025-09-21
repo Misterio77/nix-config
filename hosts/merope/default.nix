@@ -17,8 +17,7 @@
     hostName = "merope";
     useDHCP = true;
     interfaces = {
-      # TODO change to eth0
-      wlan0 = {
+      end0 = {
         useDHCP = true;
         wakeOnLan.enable = true;
         ipv4.addresses = [
