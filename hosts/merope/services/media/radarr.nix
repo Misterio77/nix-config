@@ -21,12 +21,12 @@
         group = config.services.radarr.group;
         mode = "0700";
       }
-      {
-        directory = "/srv/media/movies";
-        user = config.services.radarr.user;
-        group = config.services.radarr.group;
-        mode = "0755";
-      }
     ];
+  };
+
+  systemd.tmpfiles.settings."/srv/media/movies".d = {
+    user = config.services.radarr.user;
+    group = config.services.radarr.group;
+    mode = "0755";
   };
 }

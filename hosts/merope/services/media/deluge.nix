@@ -1,6 +1,4 @@
-{config, ...}: let
-  torrentDir = "/srv/torrents";
-in {
+{config, ...}: {
   services.deluge = {
     enable = true;
     declarative = true;
@@ -9,9 +7,9 @@ in {
       enabled_plugins = ["Label"];
       copy_torrent_file = true;
       move_completed = true;
-      torrentfiles_location = "${torrentDir}/files";
-      download_location = "${torrentDir}/downloading";
-      move_completed_path = "${torrentDir}/completed";
+      torrentfiles_location = "/srv/torrents/files";
+      download_location = "/srv/torrents/downloading";
+      move_completed_path = "/srv/torrents/completed";
       dont_count_slow_torrents = true;
       max_active_seeding = -1;
       max_active_limit = -1;
@@ -59,12 +57,12 @@ in {
         group = config.services.deluge.group;
         mode = "0700";
       }
-      {
-        directory = torrentDir;
-        user = config.services.deluge.user;
-        group = config.services.deluge.group;
-        mode = "0770"; # So that others in the group (e.g. *arr) can move/hardlink completed torrents
-      }
     ];
+  };
+
+  systemd.tmpfiles.settings."/srv/torrents".d = {
+    user = config.services.deluge.user;
+    group = config.services.deluge.group;
+    mode = "0770"; # So that others in the group (e.g. *arr) can move/hardlink completed torrents
   };
 }

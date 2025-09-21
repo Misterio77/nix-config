@@ -121,10 +121,10 @@
         group = "rspamd";
         mode = "0700";
       }
-      {
-        directory = "/srv/mail";
-        mode = "755"; # The inner dirs have more strict permissions, set by their homeMode
-      }
     ];
+  };
+
+  systemd.tmpfiles.settings."/srv/mail".d = {
+    mode = "755"; # The inner dirs have more strict permissions, set by their homeMode
   };
 }

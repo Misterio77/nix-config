@@ -21,12 +21,12 @@
         group = config.services.lidarr.group;
         mode = "0700";
       }
-      {
-        directory = "/srv/media/music";
-        user = config.services.lidarr.user;
-        group = config.services.lidarr.group;
-        mode = "0755";
-      }
     ];
+  };
+
+  systemd.tmpfiles.settings."/srv/media/music".d = {
+    user = config.services.lidarr.user;
+    group = config.services.lidarr.group;
+    mode = "0755";
   };
 }

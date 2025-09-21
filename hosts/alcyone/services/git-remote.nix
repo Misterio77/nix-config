@@ -3,15 +3,6 @@
   pkgs,
   ...
 }: {
-  environment.persistence = {
-    "/persist".directories = [{
-      directory = "/srv/git";
-      user = config.users.users.git.name;
-      group = config.users.users.git.group;
-      mode = "0755";
-    }];
-  };
-
   services.gitDaemon = {
     enable = true;
     basePath = "/srv/git";
@@ -31,5 +22,11 @@
       openssh.authorizedKeys.keys = config.users.users.gabriel.openssh.authorizedKeys.keys;
     };
     groups.git = {};
+  };
+
+  systemd.tmpfiles.settings."/srv/git".d = {
+    user = config.users.users.git.name;
+    group = config.users.users.git.group;
+    mode = "0755";
   };
 }
