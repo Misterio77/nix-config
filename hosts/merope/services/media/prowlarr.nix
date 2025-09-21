@@ -8,7 +8,7 @@
 
   environment.persistence = {
     "/persist".directories = [{
-      directory = "/var/lib/private/prowlerr";
+      directory = "/var/lib/private/prowlarr";
     }];
   };
 }
