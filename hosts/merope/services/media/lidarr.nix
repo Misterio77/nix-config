@@ -24,7 +24,7 @@
     ];
   };
 
-  systemd.tmpfiles.srv-media-music.settings."/srv/media/music".d = {
+  systemd.tmpfiles.settings.srv-media-music."/srv/media/music".d = {
     user = config.services.lidarr.user;
     group = config.services.lidarr.group;
     mode = "0755";
