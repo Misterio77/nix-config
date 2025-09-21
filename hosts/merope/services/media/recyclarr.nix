@@ -11,7 +11,7 @@
           # Use anime quality definition globally (i.e. prefer smaller sizes)
           { template = "sonarr-quality-definition-anime"; }
           # WEB-1080p
-          { template = "sonarr-v4-quality-profile-web-1080"; }
+          { template = "sonarr-v4-quality-profile-web-1080p"; }
           { template = "sonarr-v4-custom-formats-web-1080p"; }
           # Remux-1080p - Anime
           { template = "sonarr-v4-quality-profile-anime"; }
