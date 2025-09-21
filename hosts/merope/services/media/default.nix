@@ -6,6 +6,7 @@
     ./radarr.nix
     ./prowlarr.nix
     ./flaresolverr.nix
+    ./recyclarr.nix
     ./deluge.nix
     ./sabnzbd.nix
   ];
