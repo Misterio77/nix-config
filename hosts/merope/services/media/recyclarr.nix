@@ -40,4 +40,9 @@
       };
     };
   };
+
+  sops.secrets = {
+    sonarr-key.sopsFile = ../../secrets.yaml;
+    radarr-key.sopsFile  = ../../secrets.yaml;
+  };
 }
