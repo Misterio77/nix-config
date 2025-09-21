@@ -24,7 +24,7 @@
     ];
   };
 
-  systemd.tmpfiles.settings."/srv/media/tv".d = {
+  systemd.tmpfiles.srv-media-tv.settings."/srv/media/tv".d = {
     user = config.services.sonarr.user;
     group = config.services.sonarr.group;
     mode = "0755";

@@ -124,7 +124,7 @@
     ];
   };
 
-  systemd.tmpfiles.settings."/srv/mail".d = {
+  systemd.tmpfiles.srv-mail.settings."/srv/mail".d = {
     mode = "755"; # The inner dirs have more strict permissions, set by their homeMode
   };
 }

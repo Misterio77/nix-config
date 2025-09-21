@@ -24,7 +24,7 @@
     ];
   };
 
-  systemd.tmpfiles.settings."/srv/media/movies".d = {
+  systemd.tmpfiles.srv-media-movies.settings."/srv/media/movies".d = {
     user = config.services.radarr.user;
     group = config.services.radarr.group;
     mode = "0755";

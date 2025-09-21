@@ -24,7 +24,7 @@
     groups.git = {};
   };
 
-  systemd.tmpfiles.settings."/srv/git".d = {
+  systemd.tmpfiles.srv-git.settings."/srv/git".d = {
     user = config.users.users.git.name;
     group = config.users.users.git.group;
     mode = "0755";

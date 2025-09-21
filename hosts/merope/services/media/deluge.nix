@@ -60,7 +60,7 @@
     ];
   };
 
-  systemd.tmpfiles.settings."/srv/torrents".d = {
+  systemd.tmpfiles.srv-torrents.settings."/srv/torrents".d = {
     user = config.services.deluge.user;
     group = config.services.deluge.group;
     mode = "0770"; # So that others in the group (e.g. *arr) can move/hardlink completed torrents
