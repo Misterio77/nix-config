@@ -9,6 +9,9 @@
   environment.persistence = {
     "/persist".directories = [{
       directory = "/var/lib/prowlarr";
+      user = "prowlarr";
+      group = "prowlarr";
+      mode = "0700";
     }];
   };
 
