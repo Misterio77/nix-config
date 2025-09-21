@@ -42,7 +42,15 @@
   };
 
   sops.secrets = {
-    sonarr-key.sopsFile = ../../secrets.yaml;
-    radarr-key.sopsFile  = ../../secrets.yaml;
+    sonarr-key = {
+      sopsFile = ../../secrets.yaml;
+      owner = config.services.recyclarr.user;
+      group = config.services.recyclarr.group;
+    };
+    radarr-key = {
+      sopsFile  = ../../secrets.yaml;
+      owner = config.services.recyclarr.user;
+      group = config.services.recyclarr.group;
+    };
   };
 }
