@@ -9,6 +9,7 @@
     persistence = {
       "/persist".directories = [
         "Games"
+        ".config/unity3d" # Unity game saves
       ];
     };
   };
