@@ -2,7 +2,7 @@
   services.recyclarr = {
     enable = true;
     configuration = {
-      sonarr.main = {
+      sonarr.main-sonarr = {
         api_key._secret = config.sops.secrets.sonarr-key.path;
         base_url = "http://localhost:${toString config.services.sonarr.settings.server.port}";
         delete_old_custom_formats = true;
@@ -18,7 +18,7 @@
           { template = "sonarr-v4-custom-formats-anime"; }
         ];
       };
-      radarr.main = {
+      radarr.main-radarr = {
         api_key._secret = config.sops.secrets.radarr-key.path;
         base_url = "http://localhost:${toString config.services.radarr.settings.server.port}";
         delete_old_custom_formats = true;
