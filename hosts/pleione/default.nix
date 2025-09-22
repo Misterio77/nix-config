@@ -14,8 +14,6 @@
 
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
-
-    ./kodi.nix
   ];
 
   hardware.nvidia = {
