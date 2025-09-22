@@ -4,9 +4,12 @@
   pkgs,
   ...
 }: {
-  programs.regreet = {
+  services.displayManager = {
     enable = true;
     sessionPackages = lib.flatten (lib.mapAttrsToList (_: v: v.home.exportedSessionPackages) config.home-manager.users);
+  };
+  programs.regreet = {
+    enable = true;
     cageArgs = ["-s" "-m" "last"];
     iconTheme = {
       name = "Papirus-Dark";

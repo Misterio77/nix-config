@@ -39,14 +39,14 @@
       "steam://open/bigpicture"
     ];
   in
-    pkgs.writeTextDir "share/wayland-sessions/steam-sesson.desktop" # ini
+    (pkgs.writeTextDir "share/wayland-sessions/steam-session.desktop" # ini
 
     ''
       [Desktop Entry]
       Name=Steam Session
       Exec=${gamescope} -- ${steam}
       Type=Application
-    '';
+    '').overrideAttrs (_: {passthru.providedSessions = ["steam-session"];});
 in {
   home.packages = [
     steam-with-pkgs
