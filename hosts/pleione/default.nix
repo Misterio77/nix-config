@@ -14,6 +14,10 @@
 
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
+    ../common/optional/greetd.nix
+
+    ./steam.nix
+    ./jellyfin-kiosk.nix
   ];
 
   hardware.nvidia = {
