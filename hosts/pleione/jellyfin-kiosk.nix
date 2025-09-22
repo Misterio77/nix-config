@@ -1,5 +1,5 @@
 {pkgs, lib, ...}: let
-  firefox = url: pkgs.wrapFirefox pkgs.firefox-unwrapped {
+  firefox = pkgs.wrapFirefox pkgs.firefox-unwrapped {
     extraPolicies = {
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
