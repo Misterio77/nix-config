@@ -19,8 +19,6 @@
 
     ../common/optional/wireless.nix
     ../common/optional/secure-boot.nix
-
-    ./media-kiosk.nix
   ];
 
   networking = {

@@ -16,6 +16,8 @@
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
+
+    ./media-kiosk.nix
   ];
 
   hardware.nvidia = {

@@ -45,7 +45,7 @@ in {
   services.greetd = {
     enable = true;
     settings = {
-      default_session = lib.mkDefault {
+      default_session = {
         command = sway-kiosk (lib.getExe config.programs.regreet.package);
         user = config.users.extraUsers.greeter.name;
       };
