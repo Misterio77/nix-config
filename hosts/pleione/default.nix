@@ -4,8 +4,8 @@
   ...
 }: {
   imports = [
-    inputs.hardware.nixosModules.common-cpu-amd
-    inputs.hardware.nixosModules.common-gpu-amd
+    inputs.hardware.nixosModules.common-gpu-nvidia
+    inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
@@ -13,23 +13,24 @@
     ../common/global
     ../common/users/gabriel
 
-    ../common/optional/peripherals.nix
     ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
-    ../common/optional/wireless.nix
-    ../common/optional/lxd.nix
-
-    ../common/optional/starcitizen-fixes.nix
   ];
 
+  hardware.nvidia = {
+    # Does not support maxwell gpu
+    open = false;
+    # No need to offload on a desktop
+    prime.offload.enable = false;
+  };
+
   networking = {
-    hostName = "atlas";
+    hostName = "pleione";
     useDHCP = true;
   };
 
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
     binfmt.emulatedSystems = [
       "aarch64-linux"
       "i686-linux"

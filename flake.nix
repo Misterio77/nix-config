@@ -120,6 +120,13 @@
           inherit inputs outputs;
         };
       };
+      # Living room desktop
+      pleione = lib.nixosSystem {
+        modules = [./hosts/pleione];
+        specialArgs = {
+          inherit inputs outputs;
+        };
+      };
       # Personal laptop (Framework 13)
       maia = lib.nixosSystem {
         modules = [./hosts/maia];
