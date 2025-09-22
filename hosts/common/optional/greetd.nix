@@ -3,13 +3,11 @@
   config,
   pkgs,
   ...
-}: let
-  sessionPackages = lib.mapAttrsToList (_: v: v.home.exportedSessionPackages) config.home-manager.users;
-in {
+}: {
   programs.regreet = {
     enable = true;
+    sessionPackages = lib.flatten (lib.mapAttrsToList (_: v: v.home.exportedSessionPackages) config.home-manager.users);
     cageArgs = ["-s" "-m" "last"];
-    cageEnv.XDG_DATA_DIRS = lib.map (v: "${v}/share") (lib.flatten sessionPackages);
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;

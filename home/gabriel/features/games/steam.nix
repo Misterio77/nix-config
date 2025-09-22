@@ -54,7 +54,7 @@ in {
     pkgs.protontricks
   ];
 
-  home.exportedSessionPackages = steam-session;
+  home.exportedSessionPackages = [steam-session];
 
   home.persistence = {
     "/persist".directories = [
