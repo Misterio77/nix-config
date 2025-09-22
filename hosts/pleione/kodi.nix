@@ -1,5 +1,5 @@
 {pkgs, lib, ...}: let
-  kodi = pkgs.kodi-wayland.withPackages (p: [p.jellyfin p.steam-library p.joystick p.osmc-skin]);
+  kodi = pkgs.kodi-wayland.withPackages (p: [p.jellyfin p.steam-library p.joystick]);
 in {
   users = {
     users.kodi =  {
