@@ -8,4 +8,5 @@
   colors = import ./colors.nix;
   calendar-changes = import ./calendar-changes.nix;
   vdirsyncer = import ./vdirsyncer.nix;
+  export-sessions = import ./export-sessions.nix;
 }

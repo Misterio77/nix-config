@@ -48,6 +48,8 @@ in {
     pkgs.hyprpicker
   ];
 
+  home.exportedSessionPackages = [config.wayland.windowManager.hyprland.package];
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = config.lib.nixGL.wrap (pkgs.hyprland.override {

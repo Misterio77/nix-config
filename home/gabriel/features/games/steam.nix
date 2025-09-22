@@ -50,10 +50,12 @@
 in {
   home.packages = [
     steam-with-pkgs
-    steam-session
     pkgs.gamescope
     pkgs.protontricks
   ];
+
+  home.exportedSessionPackages = steam-session;
+
   home.persistence = {
     "/persist".directories = [
       ".local/share/Steam"
