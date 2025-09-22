@@ -10,7 +10,7 @@ keys:
     - &celaeno age1gxhy9eq38xfplay0kvkeyvsg96g0c4p6rkhajkrj8nc9dswdzqhssgvns0
     - &taygeta age1szxq4pz3wuxrs5ynqt3gys4wxslg27lr67smsqvg5guhap800szs3y73vd
     - &maia age150kp4hx4qzfpcxayyfh8xcv8nf0uudppsknwgzgj724djqup2qvqz2gwj5
-    - &pleione age1rse7ehe8dju0yakqarmlnqdjdgaflv7rszznfaq9my7zdpemuqgshsyu8k
+    - &pleione age1mhlh8lj8jv58xy9mdhsarfyanckyx8c2xdu09xrn23nrc56e94xserztxx
 creation_rules:
   - path_regex: hosts/taygeta/secrets.ya?ml$
     key_groups:
