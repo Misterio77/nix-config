@@ -1,5 +1,4 @@
 {
-  pkgs,
   inputs,
   ...
 }: {
@@ -13,11 +12,10 @@
     ../common/global
     ../common/users/gabriel
 
-    ../common/optional/greetd.nix
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
 
-    ./media-kiosk.nix
+    ./kodi.nix
   ];
 
   hardware.nvidia = {
