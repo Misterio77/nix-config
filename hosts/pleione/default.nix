@@ -18,6 +18,7 @@
 
     ./steam.nix
     ./jellyfin-kiosk.nix
+    ./media-user.nix
   ];
 
   hardware.nvidia = {
