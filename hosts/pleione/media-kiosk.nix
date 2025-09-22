@@ -12,7 +12,7 @@
     enable = true;
     settings = {
       default_session = lib.mkForce {
-        command = "${lib.getExe pkgs.cage} ${lib.getExe pkgs.firefox} -kiosk https://media.m7.rs";
+        command = "${lib.getExe pkgs.cage} -- ${lib.getExe pkgs.firefox} -kiosk https://media.m7.rs";
         user = "kiosk";
       };
     };
