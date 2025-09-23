@@ -4,6 +4,13 @@
     listenPort = 8689;
   };
 
+  # Add bazarr to sonarr and radarr groups
+  # So that it can write to the library dirs
+  users.users.bazarr.extraGroups = [
+    config.services.sonarr.group
+    config.services.radarr.group
+  ];
+
   environment.persistence = {
     "/persist".directories = [
       {
