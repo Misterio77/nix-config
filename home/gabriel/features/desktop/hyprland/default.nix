@@ -26,7 +26,6 @@ in {
     ../common
     ../common/wayland-wm
 
-    ./autostart-tty1.nix
     ./basic-binds.nix
     ./hyprbars.nix
     ./hyprlock.nix
