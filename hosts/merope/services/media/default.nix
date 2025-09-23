@@ -4,6 +4,7 @@
     ./lidarr.nix
     ./sonarr.nix
     ./radarr.nix
+    ./bazarr.nix
     ./prowlarr.nix
     ./flaresolverr.nix
     ./recyclarr.nix
