@@ -1,16 +1,22 @@
-{pkgs, ...}: let
-  # Command executed when using "Exit to Desktop" in '-steamos3' mode
-  steamos-session-select = (pkgs.writeShellScriptBin "steamos-session-select" ''
-    /usr/bin/env steam -shutdown
-  '');
-in {
-  environment.systemPackages = [steamos-session-select];
+{config, ...}: {
   programs.steam = {
     enable = true;
-    gamescopeSession = {
-      enable = true;
-      steamArgs = ["-tenfoot" "-pipewire-dmabuf" "-steamos3"];
-    };
-    extraPackages = [steamos-session-select];
+    gamescopeSession.enable = true;
+  };
+
+  systemd.user.services.steam-gamescope-reaper = {
+    description = "Monitor and handle steam gamescope session exit requests";
+    wantedBy = ["steam-gamescope-session.target"];
+    partOf = ["steam-gamescope-session.target"];
+    after = ["steam-gamescope-session.target"];
+
+    script = ''
+      while sleep 5; do
+        if tail -n 10 ~/.steam/steam/logs/console-linux.txt | grep "The name org.freedesktop.DisplayManager was not provided by any .service files$" -q; then
+          echo "Exit request detected, sending shutdown signal"
+          ${config.programs.steam.package}/bin/steam -shutdown
+        fi
+      done
+    '';
   };
 }
