@@ -1,13 +1,5 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
-  services.displayManager = {
-    enable = true;
-    sessionPackages = lib.flatten (lib.mapAttrsToList (_: v: v.home.exportedSessionPackages) config.home-manager.users);
-  };
+# Graphical greeter, hooks into greetd
+{pkgs, ...}: {
   programs.regreet = {
     enable = true;
     cageArgs = ["-s" "-m" "last"];
@@ -28,10 +20,6 @@
       package = pkgs.apple-cursor;
       name = "macOS";
     };
-  };
-
-  services.greetd = {
-    enable = true;
   };
 
   environment.persistence = {

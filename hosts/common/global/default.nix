@@ -27,6 +27,7 @@
       ./prometheus-node-exporter.nix
       ./kdeconnect.nix
       ./upower.nix
+      ./display-manager.nix
     ]
     ++ (builtins.attrValues outputs.nixosModules);
 
