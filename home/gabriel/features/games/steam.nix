@@ -1,15 +1,6 @@
-{pkgs, ...}: let
-  steam-with-pkgs = pkgs.steam.override {
-    extraPkgs = pkgs: [
-      (pkgs.writeShellScriptBin "steamos-session-select" ''
-        /usr/bin/env steam -shutdown
-      '')
-      pkgs.gamescope
-    ];
-  };
-in {
+{pkgs, ...}: {
   home.packages = [
-    steam-with-pkgs
+    (pkgs.steam.override {extraPkgs = p: [p.gamescope];})
     pkgs.gamescope
     pkgs.protontricks
   ];
