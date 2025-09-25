@@ -1,4 +1,4 @@
-{config, inputs, ...}: {
+{config, inputs, pkgs, ...}: {
   imports = [
     inputs.disko.nixosModules.disko
     ../common/optional/ephemeral-btrfs.nix
@@ -13,6 +13,8 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    extraModulePackages = [config.hardware.nvidia.package];
     initrd = {
       availableKernelModules = [
         "xhci_pci"
