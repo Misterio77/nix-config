@@ -24,7 +24,6 @@
 
   hardware.nvidia = {
     powerManagement.enable = true;
-    powerManagement.finegrained = false;
 
     # Does not support maxwell gpu
     open = false;
