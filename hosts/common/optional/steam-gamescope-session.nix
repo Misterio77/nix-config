@@ -1,7 +1,10 @@
 {config, ...}: {
   programs.steam = {
     enable = true;
-    gamescopeSession.enable = true;
+    gamescopeSession = {
+      enable = true;
+      steamArgs = ["-tenfoot"];
+    };
   };
 
   systemd.user.services.steam-gamescope-reaper = {
