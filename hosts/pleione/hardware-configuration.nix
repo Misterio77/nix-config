@@ -5,8 +5,6 @@
   ];
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    powerManagement.enable = true;
     # Does not support maxwell gpu
     open = false;
     # No need to offload on a desktop
@@ -25,11 +23,10 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    extraModulePackages = [config.hardware.nvidia.package];
     extraModprobeConfig = ''
-      options nvidia_modeset vblank_sem_control=0 nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/var/tmp
+      options nvidia_modeset vblank_sem_control=0
     '';
+    extraModulePackages = [config.hardware.nvidia.package];
     kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia"];
     kernelParams = [ "nvidia-drm.modeset=1" ];
 
