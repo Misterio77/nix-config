@@ -29,7 +29,7 @@
       OverridePostUpdatePage =  "";
       PasswordManagerEnabled = false;
       Homepage = {
-        URL = "about:blank";
+        URL = "https://media.m7.rs";
         Locked = true;
       };
       UserMessaging = {
