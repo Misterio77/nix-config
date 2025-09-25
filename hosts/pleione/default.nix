@@ -15,6 +15,7 @@
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/regreet.nix
+    ../common/optional/keyd.nix
 
     ./steam.nix
     ./jellyfin-kiosk.nix
