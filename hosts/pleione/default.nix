@@ -23,17 +23,6 @@
     ./media-user.nix
   ];
 
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-    powerManagement.enable = true;
-    # Does not support maxwell gpu
-    open = false;
-    # No need to offload on a desktop
-    prime.offload.enable = false;
-  };
-  # Try to fix broken suspend
-  systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
-
   networking = {
     hostName = "pleione";
     useDHCP = true;

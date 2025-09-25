@@ -4,6 +4,18 @@
     ../common/optional/ephemeral-btrfs.nix
   ];
 
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    powerManagement.enable = true;
+    # Does not support maxwell gpu
+    open = false;
+    # No need to offload on a desktop
+    prime.offload.enable = false;
+  };
+
+  # Try to fix broken suspend
+  systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
+
   nixpkgs.hostPlatform.system = "x86_64-linux";
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
@@ -15,6 +27,12 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = [config.hardware.nvidia.package];
+    extraModprobeConfig = ''
+      options nvidia_modeset vblank_sem_control=0 nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/var/tmp
+    '';
+    kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia"];
+    kernelParams = [ "nvidia-drm.modeset=1" ];
+
     initrd = {
       availableKernelModules = [
         "xhci_pci"
