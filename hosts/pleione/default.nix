@@ -16,9 +16,9 @@
     ../common/optional/quietboot.nix
     ../common/optional/regreet.nix
     ../common/optional/keyd.nix
+    ../common/optional/steam-gamescope-session.nix
+    ../common/optional/jellyfin-firefox-session.nix
 
-    ./steam.nix
-    ./jellyfin-kiosk.nix
     ./media-user.nix
   ];
 
