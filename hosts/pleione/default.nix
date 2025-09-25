@@ -23,6 +23,10 @@
   ];
 
   hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+
     # Does not support maxwell gpu
     open = false;
     # No need to offload on a desktop
@@ -41,6 +45,7 @@
     ];
   };
 
+  powerManagement.powertop.enable = true;
   programs = {
     adb.enable = true;
     dconf.enable = true;
