@@ -45,6 +45,11 @@
     dconf.enable = true;
   };
 
+  services.logind = {
+    powerKey = "suspend";
+    powerKeyLongPress = "poweroff";
+  };
+
   hardware.graphics.enable = true;
 
   system.stateVersion = "22.05";
