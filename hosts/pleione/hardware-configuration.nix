@@ -28,18 +28,17 @@
       options nvidia_modeset vblank_sem_control=0
     '';
     extraModulePackages = [config.hardware.nvidia.package];
-    kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia"];
+    kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia" "xhci_pci"];
     kernelParams = [ "nvidia-drm.modeset=1" ];
 
     initrd = {
       availableKernelModules = [
-        "xhci_pci"
         "ahci"
         "usbhid"
         "usb_storage"
         "sd_mod"
       ];
-      kernelModules = ["kvm-intel"];
+      kernelModules = ["kvm-intel" "xhci_pci"];
     };
     loader = {
       systemd-boot = {
