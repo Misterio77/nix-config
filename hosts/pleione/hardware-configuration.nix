@@ -5,15 +5,11 @@
   ];
 
   hardware.nvidia = {
-    powerManagement.enable = true;
     # Does not support maxwell gpu
     open = false;
     # No need to offload on a desktop
     prime.offload.enable = false;
   };
-
-  # Try to fix broken suspend
-  systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
   boot.binfmt.emulatedSystems = [
@@ -28,17 +24,18 @@
       options nvidia_modeset vblank_sem_control=0
     '';
     extraModulePackages = [config.hardware.nvidia.package];
-    kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia" "xhci_pci"];
-    kernelParams = [ "nvidia-drm.modeset=1" ];
+    kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia"];
+    kernelParams = ["nvidia-drm.modeset=1"];
 
     initrd = {
       availableKernelModules = [
+        "xhci_pci"
         "ahci"
         "usbhid"
         "usb_storage"
         "sd_mod"
       ];
-      kernelModules = ["kvm-intel" "xhci_pci"];
+      kernelModules = ["kvm-intel"];
     };
     loader = {
       systemd-boot = {
