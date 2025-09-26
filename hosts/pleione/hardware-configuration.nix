@@ -5,6 +5,7 @@
   ];
 
   hardware.nvidia = {
+    powerManagement.enable = true;
     # Does not support maxwell gpu
     open = false;
     # No need to offload on a desktop
@@ -20,7 +21,6 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       availableKernelModules = [
         "xhci_pci"
