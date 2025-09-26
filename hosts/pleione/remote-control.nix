@@ -1,4 +1,4 @@
-{lib, ...}: {
+{lib, pkgs, ...}: {
   imports = [
     ../common/optional/keyd.nix
   ];
@@ -28,4 +28,10 @@
       };
     };
   };
+
+  powerManagement.resumeCommands = ''
+    ${pkgs.kmod}/bin/rmmod xhci_pci
+    sleep 1
+    ${pkgs.kmod}/bin/modprobe xhci_pci
+  '';
 }
