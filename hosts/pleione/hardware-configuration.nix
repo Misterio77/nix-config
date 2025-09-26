@@ -20,7 +20,7 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   boot = {
-    kernelPackages = pkgs.linux_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       availableKernelModules = [
         "xhci_pci"
