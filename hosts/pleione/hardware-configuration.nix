@@ -20,13 +20,7 @@
   powerManagement.cpuFreqGovernor = "ondemand";
 
   boot = {
-    extraModprobeConfig = ''
-      options nvidia_modeset vblank_sem_control=0
-    '';
-    extraModulePackages = [config.hardware.nvidia.package];
-    kernelModules = ["nvidia_uvm" "nvidia_modeset" "nvidia_drm" "nvidia"];
-    kernelParams = ["nvidia-drm.modeset=1"];
-
+    kernelPackages = pkgs.linux_latest;
     initrd = {
       availableKernelModules = [
         "xhci_pci"
