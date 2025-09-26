@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   ...
 }: {
   imports = [
@@ -27,6 +28,17 @@
     hostName = "pleione";
     useDHCP = true;
   };
+
+   services.udev.extraRules = ''
+     # disable USB auto suspend for remote control
+     ACTION=="bind", SUBSYSTEM=="usb", ATTR{idVendor}=="1d6b", ATTR{idProduct}=="0002", TEST=="power/control", ATTR{power/control}="on"
+     ACTION=="bind", SUBSYSTEM=="usb", ATTR{idVendor}=="1d6b", ATTR{idProduct}=="0003", TEST=="power/control", ATTR{power/control}="on"
+   '';
+
+  powerManagement.powertop.postStart = ''
+   ${lib.getExe' config.systemd.package "udevadm"} trigger -c bind -s usb -a idVendor=1d6b -a idProduct=0002
+   ${lib.getExe' config.systemd.package "udevadm"} trigger -c bind -s usb -a idVendor=1d6b -a idProduct=0003
+  '';
 
   boot = {
     binfmt.emulatedSystems = [
