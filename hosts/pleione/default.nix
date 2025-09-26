@@ -17,7 +17,6 @@
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/regreet.nix
-    ../common/optional/keyd.nix
     ../common/optional/steam-gamescope-session.nix
     ../common/optional/jellyfin-firefox-session.nix
 
@@ -37,11 +36,6 @@
   };
 
   powerManagement.powertop.enable = true;
-  powerManagement.resumeCommands = ''
-    rmmod xhci_pci
-    sleep 1
-    sudo modprobe xhci_pci
-  '';
 
   programs = {
     adb.enable = true;

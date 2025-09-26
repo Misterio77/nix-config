@@ -1,7 +1,8 @@
-{config, inputs, pkgs, ...}: {
+{config, inputs, pkgs, lib, ...}: {
   imports = [
     inputs.disko.nixosModules.disko
     ../common/optional/ephemeral-btrfs.nix
+    ./remote-control.nix
   ];
 
   hardware.nvidia = {
@@ -19,6 +20,15 @@
   ];
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "ondemand";
+
+  # Avoid random suspend wakeup
+  services.udev.extraRules = lib.concatStringsSep ", " [
+    ''ACTION=="add"''
+    ''SUBSYSTEM=="pci"''
+    ''ATTR{vendor}=="0x8086"''
+    ''ATTR{device}=="0x1901"''
+    ''ATTR{power/wakeup}="disabled"''
+  ];
 
   boot = {
     initrd = {
