@@ -23,11 +23,11 @@
   '';
 in stdenvNoCC.mkDerivation {
   pname = "gt-new-horizons";
-  version = "2.7.4";
+  version = "2.8.0";
 
   src = fetchzip {
-    url = "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.7.4_Server_Java_17-21.zip";
-    hash = "sha256-wWGDbVwVe6989SyPjS0d/82oXTu//rHkDbjIVzFAVgY=";
+    url = "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.8.0_Server_Java_17-25.zip";
+    hash = "sha256-HH/Z3T6H3cDHFuPsxKSlJELGLL4Hc/5s2DZCxU+Txhs=";
     stripRoot = false;
   };
 
