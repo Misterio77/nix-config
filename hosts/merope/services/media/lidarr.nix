@@ -6,6 +6,15 @@
     };
   };
 
+  services.nginx.virtualHosts."lidarr.m7.rs" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/" = {
+      proxyPass = "http://localhost:${toString config.services.lidarr.settings.server.port}";
+      proxyWebsockets = true;
+    };
+  };
+
   # Add lidarr to deluge's and nzbget's groups
   # Make sure lidarr can hard-link their files
   users.users.lidarr.extraGroups = [

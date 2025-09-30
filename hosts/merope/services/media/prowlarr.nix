@@ -6,6 +6,16 @@
     };
   };
 
+  services.nginx.virtualHosts."prowlarr.m7.rs" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/" = {
+      proxyPass = "http://localhost:${toString config.services.prowlarr.settings.server.port}";
+      proxyWebsockets = true;
+    };
+  };
+
+
   environment.persistence = {
     "/persist".directories = [{
       directory = "/var/lib/prowlarr";

@@ -6,6 +6,16 @@
     };
   };
 
+  services.nginx.virtualHosts."radarr.m7.rs" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/" = {
+      proxyPass = "http://localhost:${toString config.services.radarr.settings.server.port}";
+      proxyWebsockets = true;
+    };
+  };
+
+
   # Add radarr to deluge's and nzbget's groups
   # Make sure radarr can hard-link their files
   users.users.radarr.extraGroups = [
