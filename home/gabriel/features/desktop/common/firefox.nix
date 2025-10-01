@@ -99,20 +99,27 @@
         # Harden
         "privacy.trackingprotection.enabled" = true;
         "dom.security.https_only_mode" = true;
+        # Remove close button
+        "browser.tabs.inTitlebar" = 0;
+        # Vertical tabs
+        "sidebar.verticalTabs" = true;
+        "sidebar.revamp" = true;
+        "sidebar.main.tools" = ["history" "bookmarks"];
         # Layout
         "browser.uiCustomization.state" = builtins.toJSON {
-          currentVersion = 20;
-          newElementCount = 5;
-          dirtyAreaCache = ["nav-bar" "PersonalToolbar" "toolbar-menubar" "TabsToolbar" "widget-overflow-fixed-list"];
           placements = {
-            PersonalToolbar = ["personal-bookmarks"];
-            TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
-            nav-bar = ["back-button" "forward-button" "stop-reload-button" "urlbar-container" "downloads-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action" "reset-pbm-toolbar-button" "unified-extensions-button"];
-            toolbar-menubar = ["menubar-items"];
             unified-extensions-area = [];
             widget-overflow-fixed-list = [];
+            nav-bar = ["back-button" "forward-button" "vertical-spacer" "stop-reload-button" "urlbar-container" "downloads-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action" "reset-pbm-toolbar-button" "unified-extensions-button"];
+            toolbar-menubar = ["menubar-items"];
+            TabsToolbar = [];
+            vertical-tabs = ["tabbrowser-tabs"];
+            PersonalToolbar = ["personal-bookmarks"];
           };
-          seen = ["save-to-pocket-button" "developer-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action"];
+          seen = ["save-to-pocket-button" "developer-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action" "screenshot-button"];
+          dirtyAreaCache = ["nav-bar" "PersonalToolbar" "toolbar-menubar" "TabsToolbar" "widget-overflow-fixed-list" "vertical-tabs"];
+          currentVersion = 23;
+          newElementCount = 10;
         };
       };
     };
