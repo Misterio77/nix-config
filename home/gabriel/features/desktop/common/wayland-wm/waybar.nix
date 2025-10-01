@@ -182,7 +182,7 @@ in {
           return-type = "json";
           exec = mkScriptJson {
             tooltip = "$USER@$HOSTNAME";
-            alt = "$(grep LOGO /etc/os-release | cut -d = -f2)";
+            alt = "$(grep LOGO /etc/os-release | cut -d = -f2 | cut -d '\"' -f2)";
           };
           format = "{icon}";
           format-icons = {
