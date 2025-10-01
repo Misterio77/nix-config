@@ -20,6 +20,8 @@
     vulkan.enable = true;
   };
 
+  # Disable extensions for compliance at $WORK
+  programs.firefox.profiles.gabriel.extensions = lib.mkForce [];
   # Local configuration file overrides for git and SSH
   # The guys over at $WORK don't like me mentioning my work email or hostnames
   # in github :(

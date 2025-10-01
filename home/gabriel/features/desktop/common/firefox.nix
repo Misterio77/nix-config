@@ -24,7 +24,6 @@
       bookmarks = {};
       extensions.packages = with pkgs.inputs.firefox-addons; [
         ublock-origin
-        browserpass
       ];
       bookmarks = {};
       settings = {
