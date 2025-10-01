@@ -179,7 +179,8 @@ in {
             Down: {bandwidthDownBits}'';
         };
         "custom/menu" = {
-          on-click = mkScriptJson {
+          return-type = "json";
+          exec = mkScriptJson {
             tooltip = "$USER@$HOSTNAME";
             alt = "$(grep LOGO /etc/os-release | cut -d = -f2)";
           };
