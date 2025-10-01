@@ -179,11 +179,15 @@ in {
             Down: {bandwidthDownBits}'';
         };
         "custom/menu" = {
-          format = "";
-          on-click = mkScript {script = ''
-            systemctl --user restart waybar
-            echo "$USER@$HOSTNAME"
-          '';};
+          on-click = mkScriptJson {
+            tooltip = "$USER@$HOSTNAME";
+            alt = "$(grep LOGO /etc/os-release | cut -d = -f2)";
+          };
+          format = "{icon}";
+          format-icons = {
+            "nix-snowflake" = "";
+            "ubuntu-logo" = "󰕈";
+          };
         };
         "custom/unread-mail" = {
           interval = 10;
