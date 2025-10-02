@@ -5,6 +5,7 @@
 
     ../common/global
     ../common/users/gabriel
+    ../common/optional/ssh-serve-store.nix
   ];
 
   networking = {
