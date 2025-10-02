@@ -24,27 +24,31 @@
       input-field = {
         font_color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
         font_family = config.fontProfiles.regular.name;
-
-        position = "0, 20%";
-        halign = "center";
-        valign = "bottom";
-
+        position = "0, -20%";
+        # $FAIL is moves to another label
+        fail_text = "";
         # Hide outline and filling
         outline_thickness = 0;
         inner_color = "rgba(00000000)";
         check_color = "rgba(00000000)";
         fail_color = "rgba(00000000)";
       };
-      label = {
-        text = "$TIME";
-        color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
-        font_family = config.fontProfiles.regular.name;
-        font_size = "180";
-
-        position = "0 0";
-        halign = "center";
-        valign = "center";
-      };
+      label = [
+        {
+          text = "$TIME";
+          color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
+          font_family = config.fontProfiles.regular.name;
+          font_size = "140";
+          position = "0 0";
+        }
+        {
+          text = "$FAIL";
+          font_color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
+          font_family = config.fontProfiles.regular.name;
+          font_size = "18";
+          position = "0, -40%";
+        }
+      ];
     };
   };
 
