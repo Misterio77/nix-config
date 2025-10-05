@@ -10,5 +10,6 @@
     ./recyclarr.nix
     ./deluge.nix
     ./sabnzbd.nix
+    ./jellyseerr.nix
   ];
 }
