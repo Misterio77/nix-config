@@ -35,7 +35,7 @@
           # French, HD Bluray + WEB
           # (VF means "I want multiple (original+french), fallback to only french if multi is not available")
           { template = "radarr-quality-profile-hd-bluray-web-french-multi-vf"; }
-          { template = "radarr-custom-formats-hd-remux-web-french-multi-vf"; }
+          { template = "radarr-custom-formats-hd-bluray-web-french-multi-vf"; }
         ];
       };
     };
