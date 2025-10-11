@@ -83,5 +83,6 @@
   sops.secrets = {
     sabnzbd-key.sopsFile = ../../secrets.yaml;
     frugalusenet-key.sopsFile  = ../../secrets.yaml;
+    blocknews-key.sopsFile  = ../../secrets.yaml;
   };
 }
