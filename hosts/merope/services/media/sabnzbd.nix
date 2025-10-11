@@ -53,6 +53,26 @@
       password = ${config.sops.placeholder.frugalusenet-key}
       connections = 50
       priority = 2
+      [[blocknews]]
+      enable = 1
+      name = blocknews
+      host = sanews.blocknews.net
+      ssl = 1
+      port = 563
+      username = misterio
+      password = ${config.sops.placeholder.blocknews-key}
+      connections = 50
+      priority = 3
+      [[blocknews-secondary]]
+      enable = 1
+      name = blocknews-secondary
+      host = usnews.blocknews.net
+      ssl = 1
+      port = 563
+      username = misterio
+      password = ${config.sops.placeholder.blocknews-key}
+      connections = 50
+      priority = 4
     '';
     owner = config.services.sabnzbd.user;
     group = config.services.sabnzbd.group;
