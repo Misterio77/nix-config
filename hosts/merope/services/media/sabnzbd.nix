@@ -53,6 +53,16 @@
       password = ${config.sops.placeholder.frugalusenet-key}
       connections = 50
       priority = 2
+      [[eweka]]
+      enable = 1
+      name = eweka
+      host = news.eweka.nl
+      ssl = 1
+      port = 563
+      username = 043b11d25e1d9f6f
+      password = ${config.sops.placeholder.blocknews-key}
+      connections = 50
+      priority = 3
       [[blocknews]]
       enable = 1
       name = blocknews
@@ -62,7 +72,7 @@
       username = misterio
       password = ${config.sops.placeholder.blocknews-key}
       connections = 50
-      priority = 3
+      priority = 4
       [[blocknews-secondary]]
       enable = 1
       name = blocknews-secondary
@@ -72,7 +82,7 @@
       username = misterio
       password = ${config.sops.placeholder.blocknews-key}
       connections = 50
-      priority = 4
+      priority = 5
     '';
     owner = config.services.sabnzbd.user;
     group = config.services.sabnzbd.group;
@@ -84,5 +94,6 @@
     sabnzbd-key.sopsFile = ../../secrets.yaml;
     frugalusenet-key.sopsFile  = ../../secrets.yaml;
     blocknews-key.sopsFile  = ../../secrets.yaml;
+    eweka-key.sopsFile  = ../../secrets.yaml;
   };
 }
