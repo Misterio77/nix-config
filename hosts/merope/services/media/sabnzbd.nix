@@ -60,7 +60,7 @@
       ssl = 1
       port = 563
       username = 043b11d25e1d9f6f
-      password = ${config.sops.placeholder.blocknews-key}
+      password = ${config.sops.placeholder.eweka-key}
       connections = 50
       priority = 3
       [[blocknews]]
