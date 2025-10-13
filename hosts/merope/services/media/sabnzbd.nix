@@ -53,16 +53,6 @@
       password = ${config.sops.placeholder.frugalusenet-key}
       connections = 50
       priority = 2
-      [[eweka]]
-      enable = 1
-      name = eweka
-      host = news.eweka.nl
-      ssl = 1
-      port = 563
-      username = 043b11d25e1d9f6f
-      password = ${config.sops.placeholder.eweka-key}
-      connections = 50
-      priority = 3
       [[blocknews]]
       enable = 1
       name = blocknews
@@ -72,7 +62,7 @@
       username = misterio
       password = ${config.sops.placeholder.blocknews-key}
       connections = 50
-      priority = 4
+      priority = 3
       [[blocknews-secondary]]
       enable = 1
       name = blocknews-secondary
@@ -81,6 +71,16 @@
       port = 563
       username = misterio
       password = ${config.sops.placeholder.blocknews-key}
+      connections = 50
+      priority = 4
+      [[eweka]]
+      enable = 1
+      name = eweka
+      host = news.eweka.nl
+      ssl = 1
+      port = 563
+      username = 043b11d25e1d9f6f
+      password = ${config.sops.placeholder.eweka-key}
       connections = 50
       priority = 5
     '';
