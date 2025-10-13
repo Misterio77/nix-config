@@ -18,6 +18,24 @@
       device = "/dev/disk/by-label/FIRMWARE";
       fsType = "vfat";
     };
+
+    "/srv/media/tv" = {
+      device = "/dev/disk/by-label/media";
+      fsType = "btrfs";
+      options = [
+        "subvol=tv"
+        "noatime"
+      ];
+    };
+
+    "/srv/media/movies" = {
+      device = "/dev/disk/by-label/media";
+      fsType = "btrfs";
+      options = [
+        "subvol=movies"
+        "noatime"
+      ];
+    };
   };
 
   swapDevices = [
