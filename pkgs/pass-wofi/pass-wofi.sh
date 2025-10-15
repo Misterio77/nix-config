@@ -80,8 +80,4 @@ if [ -n "$value" ]; then
         mime="text/plain"
     fi
     wl-copy -t "$mime" "$value"
-    prefix="${value:0:3}"
-    suffix="${value:3}"
-    censored_value="${prefix}${suffix//?/*}"
-    notify-send "Copied $field:" "$censored_value" -i edit-copy -t 4000
 fi

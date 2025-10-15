@@ -299,8 +299,8 @@ in {
           "SUPERALT,e,exec,${remote} ${defaultApp "text/plain"}"
           "SUPERALT,b,exec,${remote} ${defaultApp "x-scheme-handler/https"}"
           # Screenshotting
-          ",Print,exec,${grimblast} --notify --freeze copy area"
-          "SHIFT,Print,exec,${grimblast} --notify --freeze copy output"
+          ",Print,exec,${grimblast} --freeze copy area"
+          "SHIFT,Print,exec,${grimblast} --freeze copy output"
         ]
         ++
         # Notification manager

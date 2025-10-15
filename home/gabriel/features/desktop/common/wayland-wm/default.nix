@@ -2,6 +2,7 @@
   imports = [
     ./alacritty.nix
     ./cliphist.nix
+    ./clip-notify.nix
     ./gammastep.nix
     ./mako.nix
     ./qutebrowser.nix
