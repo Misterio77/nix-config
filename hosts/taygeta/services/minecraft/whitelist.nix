@@ -20,4 +20,6 @@
   Sydney__Bronson = "118a574f-5406-46c5-aad7-f52eefd067b7";
   TokamakMineiro = "87cdd3ee-db82-4364-b903-357b83456562";
   OffRakki = "e556a699-248a-4ead-b611-575a891c9132";
+  SwitchSilver = "da246bf3-b644-42a2-bdd3-31e8a7f52bbc";
+  zViniP = "36d8ff49-2cbe-43fb-a50d-85be8e0ad9b3";
 }
