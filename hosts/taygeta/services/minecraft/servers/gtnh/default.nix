@@ -36,6 +36,12 @@ in {
         url = "https://github.com/caunt/BungeeForge/releases/download/v${version}/bungeeforge-1.7.10.jar";
         hash = "sha256-Y10ExD0nn1pkjhrgsSq9eiww5+n0J5skoC2EetXCVGM=";
       };
+      "mods/gtnh-web-map-0.3.45.jar" = pkgs.fetchurl rec {
+        pname = "gtnh-web-map";
+        version = "0.3.45";
+        url = "https://github.com/GTNewHorizons/GTNH-Web-Map/releases/download/${version}/gtnh-web-map-${version}.jar";
+        hash = "sha256-e9qt0egZSQxZHlfozfoGLIDbvyyy59df0pYkHSfMRAQ=";
+      };
     };
   };
 }
