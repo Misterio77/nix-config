@@ -28,6 +28,15 @@ in {
       "serverutilities/serverutilities.cfg" = ./configs/serverutilities.cfg;
       "config/JourneyMapServer/world.cfg" = ./configs/journeymap-world.cfg;
       "config/SpecialMobs.cfg" = ./configs/SpecialMobs.cfg;
+      "dynmap/configuration.txt" = {
+        format = pkgs.formats.yaml {};
+        value = {
+          webserver-port = 8123;
+          deftemplatesuffix = "hires";
+          defaultmap = "surface";
+          defaultworld = "world";
+        };
+      };
     };
     symlinks = {
       "mods/bungeeforge-1.7.10.jar" = pkgs.fetchurl rec {
@@ -43,5 +52,13 @@ in {
         hash = "sha256-e9qt0egZSQxZHlfozfoGLIDbvyyy59df0pYkHSfMRAQ=";
       };
     };
+  };
+
+  services.nginx.virtualHosts."mc.m7.rs" = let
+    dynmapCfg = cfg.files."dynmap/configuration.txt".value;
+  in {
+    forceSSL = true;
+    enableACME = true;
+    locations."/".proxyPass = "http://localhost:${toString dynmapCfg.webserver-port}";
   };
 }
