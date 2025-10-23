@@ -30,7 +30,7 @@ in {
       "config/SpecialMobs.cfg" = ./configs/SpecialMobs.cfg;
       "dynmap/configuration.txt" = {
         format = pkgs.formats.yaml {};
-        value = {
+        value = (import ./configs/dynmap.default.nix) {
           webserver-port = 8123;
           deftemplatesuffix = "hires";
           defaultmap = "surface";
