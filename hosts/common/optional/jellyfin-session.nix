@@ -13,6 +13,7 @@
       bindsym XF86AudioPlay    exec swayosd-client --playerctl play-pause
       bindsym XF86VoiceCommand exec swayosd-client --playerctl play-pause
 
+      for_window [all] fullscreen enable
       exec '${command}; swaymsg exit'
     '';
   in pkgs.writeShellApplication {
