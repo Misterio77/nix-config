@@ -2,7 +2,7 @@
   jellyfin-kiosk = pkgs.writeShellScriptBin "jellyfin-kiosk" ''
     systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
     systemctl --user start jellyfin-kiosk-session.target
-    ${lib.getExe' pkgs.pulseaudio} set-sink-volume @DEFAULT_SINK@ 80%
+    ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume @DEFAULT_SINK@ 80%
     ${lib.getExe pkgs.jellyfin-media-player} --tv
     systemctl --user stop jellyfin-kiosk-session.target
   '';
