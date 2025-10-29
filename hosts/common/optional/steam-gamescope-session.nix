@@ -3,7 +3,7 @@
     enable = true;
     gamescopeSession = {
       enable = true;
-      steamArgs = ["-tenfoot"];
+      steamArgs = ["-tenfoot" "&>/dev/null"];
     };
   };
 
