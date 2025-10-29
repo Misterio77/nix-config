@@ -19,7 +19,7 @@
   in pkgs.writeShellApplication {
     name = "sway-kiosk";
     runtimeInputs = with pkgs; [sway swayosd pulseaudio playerctl];
-    text = "sway --unsupported-gpu --config ${config}";
+    text = "sway --unsupported-gpu --config ${config} &>/dev/null";
   };
 
   sessionFile =
