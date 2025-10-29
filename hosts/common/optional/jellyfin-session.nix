@@ -1,6 +1,7 @@
 {pkgs, lib, ...}: let
   jellyfin-kiosk = pkgs.writeShellScriptBin "jellyfin-kiosk" ''
     systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
+    env > ~/jellyfin-kiosk-env
     systemctl --user start jellyfin-kiosk-session.target
     ${lib.getExe pkgs.jellyfin-media-player} --tv
     systemctl --user stop jellyfin-kiosk-session.target
