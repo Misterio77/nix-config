@@ -1,8 +1,8 @@
 {pkgs, lib, ...}: let
   jellyfin-kiosk = pkgs.writeShellScriptBin "jellyfin-kiosk" ''
     systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
-    env > ~/jellyfin-kiosk-env
     systemctl --user start jellyfin-kiosk-session.target
+    ${lib.getExe' pkgs.pulseaudio} set-sink-volume @DEFAULT_SINK@ 80%
     ${lib.getExe pkgs.jellyfin-media-player} --tv
     systemctl --user stop jellyfin-kiosk-session.target
   '';
@@ -29,44 +29,4 @@ in {
     wants = ["graphical-session-pre.target"];
     after = ["graphical-session-pre.target"];
   };
-
-  systemd.user.services.jellyfin-xbindkeys = {
-    description = "Handle keybinds in Jellyfin session";
-    wantedBy = ["jellyfin-kiosk-session.target"];
-    partOf = ["jellyfin-kiosk-session.target"];
-    after = ["jellyfin-kiosk-session.target"];
-    path = with pkgs; [xbindkeys swayosd pulseaudio playerctl];
-
-    script = ''
-      xbindkeys --nodaemon --verbose --file ${pkgs.writeText "jellyfin-xbindkeysrc" ''
-        # Volume control
-        "swayosd-client --output-volume raise"
-           XF86AudioRaiseVolume
-        "swayosd-client --output-volume lower"
-           XF86AudioLowerVolume
-       "swayosd-client --output-volume mute-toggle"
-           XF86AudioMute
-
-        # Player control
-        "swayosd-client --playerctl next"
-           XF86AudioNext
-        "swayosd-client --playerctl prev"
-           XF86AudioPrev
-        "swayosd-client --playerctl stop"
-           XF86AudioStop
-        "swayosd-client --playerctl play-pause"
-           XF86AudioPlay
-      ''}
-    '';
-  };
-
-  systemd.user.services.jellyfin-swayosd = {
-    description = "Show OSD in Jellyfin session";
-    wantedBy = ["jellyfin-kiosk-session.target"];
-    partOf = ["jellyfin-kiosk-session.target"];
-    after = ["jellyfin-kiosk-session.target"];
-    path = [pkgs.swayosd];
-    script = "swayosd-server";
-  };
-
 }

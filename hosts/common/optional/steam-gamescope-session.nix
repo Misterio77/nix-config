@@ -3,6 +3,7 @@
     export STEAM_ENABLE_VOLUME_HANDLER=1
     export STEAM_ENABLE_CEC=1
     systemctl --user start steam-gamescope-session.target
+    ${lib.getExe' pkgs.pulseaudio} set-sink-volume @DEFAULT_SINK@ 50%
     gamescope --steam -- steam -tenfoot &>/dev/null
     systemctl --user stop steam-gamescope-session.target
   '';
