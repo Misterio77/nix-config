@@ -26,7 +26,7 @@
       [Desktop Entry]
       Name=Jellyfin
       Comment=A media platform
-      Exec=${sway-kiosk "${lib.getExe pkgs.jellyfin-media-player} --tv"}
+      Exec=${lib.getExe (sway-kiosk "${lib.getExe pkgs.jellyfin-media-player} --tv")}
       Type=Application
     '').overrideAttrs
       (_: {
