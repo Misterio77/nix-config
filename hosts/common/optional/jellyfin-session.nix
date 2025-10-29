@@ -58,4 +58,14 @@ in {
       ''}
     '';
   };
+
+  systemd.user.services.jellyfin-swayosd = {
+    description = "Show OSD in Jellyfin session";
+    wantedBy = ["jellyfin-kiosk-session.target"];
+    partOf = ["jellyfin-kiosk-session.target"];
+    after = ["jellyfin-kiosk-session.target"];
+    path = [pkgs.swayosd];
+    script = "swayosd-server";
+  };
+
 }
