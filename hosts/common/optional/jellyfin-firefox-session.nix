@@ -51,4 +51,8 @@
       });
 in {
   services.displayManager.sessionPackages = [sessionFile];
+
+  environment.systemPackages = [pkgs.jellyfin-media-player];
+  nixpkgs.config.permittedInsecurePackages = ["qtwebengine-5.15.19"];
+
 }
