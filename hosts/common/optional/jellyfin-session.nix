@@ -1,7 +1,8 @@
 {pkgs, lib, ...}: let
   jellyfin-kiosk = pkgs.writeShellScriptBin "jellyfin-kiosk" ''
+    systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
     systemctl --user start jellyfin-kiosk-session.target
-    ${lib.getExe pkgs.cage} -s -m last -- ${lib.getExe pkgs.jellyfin-media-player} --tv &>/dev/null
+    ${lib.getExe pkgs.jellyfin-media-player} --tv
     systemctl --user stop jellyfin-kiosk-session.target
   '';
 
@@ -10,7 +11,7 @@
       [Desktop Entry]
       Name=Jellyfin
       Comment=A media platform
-      Exec=${lib.getExe jellyfin-kiosk}
+      Exec=${lib.getExe pkgs.cage} -s -m last -- ${lib.getExe jellyfin-kiosk}
       Type=Application
     '').overrideAttrs
       (_: {
@@ -36,7 +37,7 @@ in {
     path = with pkgs; [xbindkeys swayosd pulseaudio playerctl];
 
     script = ''
-      xbindkeys --file ${pkgs.writeText "jellyfin-xbindkeysrc" ''
+      xbindkeys --nodaemon --verbose --file ${pkgs.writeText "jellyfin-xbindkeysrc" ''
         # Volume control
         "swayosd-client --output-volume raise"
            XF86AudioRaiseVolume
