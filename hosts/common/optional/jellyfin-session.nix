@@ -1,39 +1,60 @@
 {pkgs, lib, ...}: let
-  sway-kiosk = command: let
-    config = pkgs.writeText "kiosk.config" ''
-      exec swayosd-server
-      # Volume control
-      bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
-      bindsym XF86AudioLowerVolume exec swayosd-client --output-volume lower
-      bindsym XF86AudioMute        exec swayosd-client --output-volume mute-toggle
-      # Player control
-      bindsym XF86AudioNext    exec swayosd-client --playerctl next
-      bindsym XF86AudioPrev    exec swayosd-client --playerctl prev
-      bindsym XF86AudioStop    exec swayosd-client --playerctl stop
-      bindsym XF86AudioPlay    exec swayosd-client --playerctl play-pause
-      bindsym XF86VoiceCommand exec swayosd-client --playerctl play-pause
+  jellyfin-kiosk = pkgs.writeShellScriptBin "jellyfin-kiosk" ''
+    systemctl --user start jellyfin-kiosk-session.target
+    ${lib.getExe pkgs.cage} -s -m last -- ${lib.getExe pkgs.jellyfin-media-player} --tv &>/dev/null
+    systemctl --user stop jellyfin-kiosk-session.target
+  '';
 
-      for_window [all] fullscreen enable
-      exec '${command}; swaymsg exit'
-    '';
-  in pkgs.writeShellApplication {
-    name = "sway-kiosk";
-    runtimeInputs = with pkgs; [sway swayosd pulseaudio playerctl];
-    text = "sway --unsupported-gpu --config ${config} &>/dev/null";
-  };
-
-  sessionFile =
-    (pkgs.writeTextDir "share/wayland-sessions/jellyfin-kiosk.desktop" ''
+  jellyfin-kiosk-session =
+    (pkgs.writeTextDir "share/wayland-sessions/jellyfin.desktop" ''
       [Desktop Entry]
       Name=Jellyfin
       Comment=A media platform
-      Exec=${lib.getExe (sway-kiosk "${lib.getExe pkgs.jellyfin-media-player} --tv")}
+      Exec=${lib.getExe jellyfin-kiosk}
       Type=Application
     '').overrideAttrs
       (_: {
-        passthru.providedSessions = [ "jellyfin-kiosk" ];
+        passthru.providedSessions = ["jellyfin"];
       });
 in {
-  services.displayManager.sessionPackages = [sessionFile];
   nixpkgs.config.permittedInsecurePackages = ["qtwebengine-5.15.19"];
+
+  services.displayManager.sessionPackages = [jellyfin-kiosk-session];
+
+  systemd.user.targets.jellyfin-kiosk-session = {
+    description = "Jellyfin session";
+    bindsTo = ["graphical-session.target"];
+    wants = ["graphical-session-pre.target"];
+    after = ["graphical-session-pre.target"];
+  };
+
+  systemd.user.services.jellyfin-xbindkeys = {
+    description = "Handle keybinds in Jellyfin session";
+    wantedBy = ["jellyfin-kiosk-session.target"];
+    partOf = ["jellyfin-kiosk-session.target"];
+    after = ["jellyfin-kiosk-session.target"];
+    path = with pkgs; [xbindkeys swayosd pulseaudio playerctl];
+
+    script = ''
+      xbindkeys --file ${pkgs.writeText "jellyfin-xbindkeysrc" ''
+        # Volume control
+        "swayosd-client --output-volume raise"
+           XF86AudioRaiseVolume
+        "swayosd-client --output-volume lower"
+           XF86AudioLowerVolume
+       "swayosd-client --output-volume mute-toggle"
+           XF86AudioMute
+
+        # Player control
+        "swayosd-client --playerctl next"
+           XF86AudioNext
+        "swayosd-client --playerctl prev"
+           XF86AudioPrev
+        "swayosd-client --playerctl stop"
+           XF86AudioStop
+        "swayosd-client --playerctl play-pause"
+           XF86AudioPlay
+      ''}
+    '';
+  };
 }

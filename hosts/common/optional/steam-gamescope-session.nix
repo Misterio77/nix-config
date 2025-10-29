@@ -1,10 +1,34 @@
-{config, ...}: {
-  programs.steam = {
-    enable = true;
-    gamescopeSession = {
-      enable = true;
-      steamArgs = ["-tenfoot" "&>/dev/null"];
-    };
+{config, pkgs, lib, ...}: let
+  steam-gamescope = pkgs.writeShellScriptBin "steam-gamescope" ''
+    export STEAM_ENABLE_VOLUME_HANDLER=1
+    export STEAM_ENABLE_CEC=1
+    systemctl --user start steam-gamescope-session.target
+    gamescope --steam -- steam -tenfoot &>/dev/null
+    systemctl --user stop steam-gamescope-session.target
+  '';
+
+  steam-gamescope-session =
+    (pkgs.writeTextDir "share/wayland-sessions/steam.desktop" ''
+      [Desktop Entry]
+      Name=Steam
+      Comment=A digital distribution platform
+      Exec=${lib.getExe steam-gamescope}
+      Type=Application
+    '').overrideAttrs
+      (_: {
+        passthru.providedSessions = ["steam"];
+      });
+in {
+  programs.gamescope.enable = true;
+  programs.steam.enable = true;
+
+  services.displayManager.sessionPackages = [steam-gamescope-session];
+
+  systemd.user.targets.steam-gamescope-session = {
+    description = "Steam (gamescope) session";
+    bindsTo = ["graphical-session.target"];
+    wants = ["graphical-session-pre.target"];
+    after = ["graphical-session-pre.target"];
   };
 
   systemd.user.services.steam-gamescope-reaper = {
