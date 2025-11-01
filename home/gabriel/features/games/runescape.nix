@@ -4,9 +4,10 @@
 }: {
   home.packages = [
     pkgs.runelite
+    pkgs.hdos
   ];
 
   home.persistence = {
-    "/persist".directories = [".runelite"];
+    "/persist".directories = [".runelite" ".config/hdos"];
   };
 }
