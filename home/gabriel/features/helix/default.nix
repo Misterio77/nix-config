@@ -1,4 +1,4 @@
-{config, pkgs, ...}: let
+{config, pkgs, lib, ...}: let
   inherit (config) colorscheme;
   hash = builtins.hashString "md5" (builtins.toJSON colorscheme.colors);
 in {
@@ -31,16 +31,14 @@ in {
         }
       ];
       language-server = {
-        nixd = {
-          command = "nixd";
+        tinymist.config = {
+          typstExtraArgs = ["main.typ"];
+          exportPdf = "onType";
+          outputPath = "$root/$name";
         };
-        tinymist = {
-          config = {
-            typstExtraArgs = ["main.typ"];
-            exportPdf = "onType";
-            outputPath = "$root/$name";
-          };
-        };
+
+        scls.command = lib.getExe pkgs.simple-completion-language-server;
+        colors.command = lib.getExe pkgs.uwu-colors;
       };
     };
     themes."nix-${hash}" = import ./theme.nix {inherit colorscheme;};
