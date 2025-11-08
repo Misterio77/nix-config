@@ -40,16 +40,18 @@ in {
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    aliases = {
-      p = "pull --ff-only";
-      ff = "merge --ff-only";
-      graph = "log --decorate --oneline --graph";
-      pushall = "!git remote | xargs -L1 git push --all";
-      add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
-    };
-    userName = "Gabriel Fontes";
-    userEmail = lib.mkDefault "hi@m7.rs";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Gabriel Fontes";
+        email = lib.mkDefault "hi@m7.rs";
+      };
+      aliases = {
+        p = "pull --ff-only";
+        ff = "merge --ff-only";
+        graph = "log --decorate --oneline --graph";
+        pushall = "!git remote | xargs -L1 git push --all";
+        add-nowhitespace = "!git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
+      };
       init.defaultBranch = "main";
       user.signing.key = "CE707A2C17FAAC97907FF8EF2E54EA7BFE630916";
       commit.gpgSign = lib.mkDefault true;

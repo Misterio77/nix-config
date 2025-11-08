@@ -3,15 +3,15 @@
     enable = true;
     settings = {
       user = {
-        name = config.programs.git.userName;
-        email = config.programs.git.userEmail;
+        name = config.programs.git.settings.user.name;
+        email = config.programs.git.settings.user.email;
       };
       ui = {
         pager = "less -FRX";
         show-cryptographic-signatures = true;
       };
       signing = let
-        gitCfg = config.programs.git.extraConfig;
+        gitCfg = config.programs.git.settings;
       in {
         backend = "gpg";
         behaviour = if gitCfg.commit.gpgSign then "own" else "never";
