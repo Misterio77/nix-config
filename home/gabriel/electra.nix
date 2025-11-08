@@ -9,7 +9,6 @@
   home.packages = [
     pkgs.juju
     pkgs.sshuttle
-    pkgs.lxd-lts
   ];
 
   targets.genericLinux.enable = true;

@@ -17,7 +17,6 @@ in {
       "git"
       "i2c"
       "libvirtd"
-      "lxd"
       "minecraft"
       "mysql"
       "network"
