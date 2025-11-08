@@ -14,7 +14,6 @@
     ./pavucontrol.nix
     ./playerctl.nix
     ./qt.nix
-    ./sublime-music.nix
   ];
 
   home.packages = [
