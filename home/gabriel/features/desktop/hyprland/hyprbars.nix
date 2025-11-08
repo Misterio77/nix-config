@@ -7,27 +7,10 @@
   rgb = color: "rgb(${lib.removePrefix "#" color})";
   rgba = color: alpha: "rgba(${lib.removePrefix "#" color}${alpha})";
 
-  hyprbars =
-    (pkgs.hyprlandPlugins.hyprbars.override {
-      # Make sure it's using the same hyprland package as we are
-      hyprland = config.wayland.windowManager.hyprland.package;
-    })
-    .overrideAttrs
-    (old: {
-      # Update to 0.51.0
-      src = "${pkgs.fetchFromGitHub {
-        owner = "hyprwm";
-        repo = "hyprland-plugins";
-        rev = "376d08bbbd861f2125f5ef86e0003e3636ce110f";
-        hash = "sha256-MeRYPD6GTbBEcoEqwl8kqCSKtM8CJcYayvPfKGoQkzc=";
-      }}/hyprbars";
-      # Yeet the initialization notification (I hate it)
-      postPatch =
-        (old.postPatch or "")
-        + ''
-          ${lib.getExe pkgs.gnused} -i '/Initialized successfully/d' main.cpp
-        '';
-    });
+  hyprbars = pkgs.hyprbars.override {
+    # Make sure it's using the same hyprland package as we are
+    hyprland = config.wayland.windowManager.hyprland.package;
+  };
 in {
   wayland.windowManager.hyprland = {
     plugins = [hyprbars];

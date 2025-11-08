@@ -2,6 +2,7 @@
   # Packages with an actual source
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
   prefetcharr = pkgs.callPackage ./prefetcharr {};
+  hyprbars = pkgs.callPackage ./hyprbars {};
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava {};
