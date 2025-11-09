@@ -29,6 +29,10 @@ in {
           language-servers = ["nixd" "nil"];
           formatter.command = "alejandra";
         }
+        {
+          name = "json";
+          language-servers = ["colors"];
+        }
       ];
       language-server = {
         tinymist.config = {
