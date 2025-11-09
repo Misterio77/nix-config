@@ -167,7 +167,7 @@ in {
         "animation fade,selection"
         "animation fade,hyprpaper"
 
-        "animation slide,waybar"
+        "animation fade,waybar"
         "blur,waybar"
         "ignorezero,waybar"
 
