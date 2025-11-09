@@ -255,7 +255,7 @@
           }
           {
             assign_scores_to = [{ name = "HD Bluray + WEB"; }];
-            trsh_ids = [
+            trash_ids = [
               # HQ Release Groups
               "ed27ebfef2f323e964fb1f61391bcb35" # HD Bluray Tier 01
               "c20c8647f2746a1f4c4262b0fbbeeeae" # HD Bluray Tier 02
@@ -286,7 +286,7 @@
           }
           {
             assign_scores_to = [{ name = "HD Bluray + WEB"; }];
-            trsh_ids = [
+            trash_ids = [
               # Streaming Services
               "b3b3a6ac74ecbd56bcdbefa4799fb9df" # AMZN
               "40e9380490e748672c2522eaaeb692f7" # ATVP
@@ -304,7 +304,7 @@
           }
           {
             assign_scores_to = [{ name = "FR-MULTi-VF-HD"; }];
-            trsh_ids = [
+            trash_ids = [
               # Language CFs
               "d6e9318c875905d6cfb5bee961afcea9" # Language: Not Original
               "533f782474f0819643c2ec0c1eeeb0ac" # Language: Not French
@@ -338,7 +338,7 @@
           }
           {
             assign_scores_to = [{ name = "FR-MULTi-VF-HD"; score = 0; }];
-            trsh_ids = [
+            trash_ids = [
               # Streaming Services
               "b3b3a6ac74ecbd56bcdbefa4799fb9df" # AMZN
               "40e9380490e748672c2522eaaeb692f7" # ATVP
