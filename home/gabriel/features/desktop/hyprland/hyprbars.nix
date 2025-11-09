@@ -47,13 +47,16 @@ in {
         # Disable bars in floating pinned windows
         "plugin:hyprbars:nobar, floating:1, pinned:1"
 
-        # Local focused colors (this host's colors)
+        # Local colors (this host's colors)
+        "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.surface "dd"}, focus:0"
+        "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.primary}, focus:0"
+        # Local focused colors
         "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, focus:1"
         "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.on_primary}, focus:1"
       ] ++ (lib.flatten (lib.mapAttrsToList (name: colors: [
         # Remote host colors
-        "plugin:hyprbars:bar_color ${rgba colors.primary_container "dd"}, title:\\[${name}\\].*"
-        "plugin:hyprbars:title_color ${rgb colors.on_primary_container}, title:\\[${name}\\].*"
+        "plugin:hyprbars:bar_color ${rgba colors.primary_container "dd"}, title:\\[${name}\\].*, focus:0"
+        "plugin:hyprbars:title_color ${rgb colors.on_primary_container}, title:\\[${name}\\].*, focus:0"
 
         # Remote host focused colors
         "plugin:hyprbars:bar_color ${rgba colors.primary "ee"}, title:\\[${name}\\].*, focus:1"
