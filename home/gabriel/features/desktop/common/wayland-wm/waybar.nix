@@ -319,7 +319,7 @@ in {
             alt = "$clean_player";
             tooltip = "$all_players";
           };
-          format = "{icon}{}";
+          format = "{icon}{text}";
           format-icons = {
             "" = " ";
             "Celluloid" = "󰎁 ";
