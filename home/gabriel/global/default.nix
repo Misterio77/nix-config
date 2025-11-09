@@ -68,16 +68,21 @@
       profiles="$HOME/.local/state/nix/profiles"
       current="$profiles/home-manager"
       base="$profiles/home-manager-base"
+      current_home="$HOME/.local/state/home-manager/gcroots/current-home" # For NixOS
 
+      # Try to get it from NixOS, if so, link it
+      if [ -d "$current_home/specialisation" ]; then
+        echo >&2 "Using current-home gcroot"
+        ln -sfT "$(readlink "$current_home")" "$base"
       # If current contains specialisations, link it as base
-      if [ -d "$current/specialisation" ]; then
+      elif [ -d "$current/specialisation" ]; then
         echo >&2 "Using current profile as base"
         ln -sfT "$(readlink "$current")" "$base"
       # Check that $base contains specialisations before proceeding
       elif [ -d "$base/specialisation" ]; then
         echo >&2 "Using previously linked base profile"
       else
-        echo >&2 "No suitable base config found. Try 'home-manager switch' again."
+        echo >&2 "No suitable base config found. Try 'home-manager switch' or 'nixos-rebuild switch' again."
         exit 1
       fi
 
