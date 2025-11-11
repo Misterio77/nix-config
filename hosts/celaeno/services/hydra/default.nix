@@ -27,6 +27,7 @@ in {
         ''
           Include ${config.sops.secrets.hydra-gh-auth.path}
           max_unsupported_time = 30
+          allow_import_from_derivation = true
           <githubstatus>
             jobs = .*
             useShortContext = true
