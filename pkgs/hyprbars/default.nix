@@ -17,7 +17,7 @@ hyprland.stdenv.mkDerivation (final: {
   '';
 
   meta = {
-    inherit (hyprland.meta) platform;
+    inherit (hyprland.meta) platforms;
     license = lib.licenses.bsd3;
   };
 })
