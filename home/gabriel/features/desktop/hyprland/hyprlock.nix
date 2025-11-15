@@ -42,7 +42,7 @@
           text = "$TIME";
           color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
           font_family = config.fontProfiles.regular.name;
-          font_size = toString (140 * monitor.scale);
+          font_size = toString (builtins.floor (140 * monitor.scale));
           position = "0 0";
         }
         {
@@ -50,7 +50,7 @@
           text = "$FAIL";
           font_color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
           font_family = config.fontProfiles.regular.name;
-          font_size = toString (18 * monitor.scale);
+          font_size = toString (builtins.floor (18 * monitor.scale));
           position = "0, -40%";
         }
       ]));
