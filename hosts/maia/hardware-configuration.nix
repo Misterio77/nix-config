@@ -1,4 +1,4 @@
-{config, inputs, pkgs, ...}: {
+{inputs, pkgs, ...}: {
   imports = [
     inputs.disko.nixosModules.disko
     ../common/optional/ephemeral-btrfs.nix
@@ -32,9 +32,7 @@
     };
   };
 
-  disko.devices.disk.main = let
-    inherit (config.networking) hostName;
-  in {
+  disko.devices.disk.main = {
     device = "/dev/nvme0n1";
     type = "disk";
     content = {
@@ -62,7 +60,6 @@
             settings.allowDiscards = true;
             content = {
               type = "btrfs";
-              extraArgs = [ "-L${hostName}" ];
               postCreateHook = ''
                 MNTPOINT=$(mktemp -d)
                 mount -t btrfs "$device" "$MNTPOINT"
