@@ -21,7 +21,10 @@
         path = "screenshot";
         blur_passes = 4;
       };
-      input-field = {
+      input-field = lib.forEach config.monitors (monitor: {
+        monitor = monitor.name;
+        dots_size = toString (0.15 * monitor.scale);
+
         font_color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
         font_family = config.fontProfiles.regular.name;
         position = "0, -20%";
@@ -32,23 +35,25 @@
         inner_color = "rgba(00000000)";
         check_color = "rgba(00000000)";
         fail_color = "rgba(00000000)";
-      };
-      label = [
+      });
+      label = lib.flatten (lib.forEach config.monitors (monitor: [
         {
+          monitor = monitor.name;
           text = "$TIME";
           color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
           font_family = config.fontProfiles.regular.name;
-          font_size = "140";
+          font_size = toString (140 * monitor.scale);
           position = "0 0";
         }
         {
+          monitor = monitor.name;
           text = "$FAIL";
           font_color = "rgb(${lib.removePrefix "#" config.colorscheme.colors.on_surface})";
           font_family = config.fontProfiles.regular.name;
-          font_size = "18";
+          font_size = toString (18 * monitor.scale);
           position = "0, -40%";
         }
-      ];
+      ]));
     };
   };
 
