@@ -36,7 +36,7 @@
             mountpoint = "/boot";
           };
         };
-        taygeta = {
+        root = {
           size = "100%";
           content = {
             type = "btrfs";

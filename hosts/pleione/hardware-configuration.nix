@@ -77,8 +77,8 @@
         luks = {
           size = "100%";
           content = {
+            name = "root";
             type = "luks";
-            name = hostName;
             settings.allowDiscards = true;
             content = {
               type = "btrfs";
