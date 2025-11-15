@@ -1,5 +1,8 @@
-{
-  imports = [../common/optional/ephemeral-btrfs.nix];
+{inputs, config, ...}: {
+  imports = [
+    ../common/optional/ephemeral-btrfs.nix
+    inputs.disko.nixosModules.disko
+  ];
 
   boot = {
     initrd = {
@@ -8,42 +11,93 @@
     loader.timeout = 5;
   };
 
-  fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-label/BOOT";
-      fsType = "vfat";
+  # TODO: migrate to UEFI using (https://github.com/pftf/RPi4), https://wiki.adtya.xyz/nix/nix-on-pi.html
+  disko.devices.disk = {
+    main = {
+      device = "/dev/sdb";
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions = {
+          firmware = {
+            size = "30M";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              extraArgs = ["-F" "16"]; # FAT16
+              mountpoint = "/firmware";
+            };
+          };
+          root = {
+            size = "100%-512M";
+            content = {
+              type = "btrfs";
+              postCreateHook = ''
+                MNTPOINT=$(mktemp -d)
+                mount -t btrfs "$device" "$MNTPOINT"
+                trap 'umount $MNTPOINT; rm -d $MNTPOINT' EXIT
+                btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
+              '';
+              subvolumes = {
+                "/root" = {
+                  mountOptions = ["compress=zstd"];
+                  mountpoint = "/";
+                };
+                "/nix" = {
+                  mountOptions = ["compress=zstd" "noatime"];
+                  mountpoint = "/nix";
+                };
+                "/persist" = {
+                  mountOptions = ["compress=zstd"];
+                  mountpoint = "/persist";
+                };
+                "/swap" = {
+                  mountOptions = ["compress=zstd" "noatime"];
+                  mountpoint = "/swap";
+                  swap.swapfile = {
+                    size = "8196M";
+                    path = "swapfile";
+                  };
+                };
+              };
+            };
+          };
+          boot = {
+            size = "512M";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
+          };
+        };
+      };
     };
-
-    "/firmware" = {
-      device = "/dev/disk/by-label/FIRMWARE";
-      fsType = "vfat";
-    };
-
-    "/srv/media/tv" = {
-      device = "/dev/disk/by-label/media";
-      fsType = "btrfs";
-      options = [
-        "subvol=tv"
-        "noatime"
-      ];
-    };
-
-    "/srv/media/movies" = {
-      device = "/dev/disk/by-label/media";
-      fsType = "btrfs";
-      options = [
-        "subvol=movies"
-        "noatime"
-      ];
+    hdd = {
+      device = "/dev/sda";
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions.media = {
+          size = "100%";
+          content = {
+            type = "btrfs";
+            subvolumes = {
+              "/tv" = {
+                mountOptions = ["noatime"];
+                mountpoint = "/srv/media/tv";
+              };
+              "/movies" = {
+                mountOptions = ["noatime"];
+                mountpoint = "/srv/media/movies";
+              };
+            };
+          };
+        };
+      };
     };
   };
-
-  swapDevices = [
-    {
-      device = "/swap/swapfile";
-      size = 8196;
-    }
-  ];
+  fileSystems."/persist".neededForBoot = true;
 
   hardware.raspberry-pi."4" = {
     i2c1.enable = true;
