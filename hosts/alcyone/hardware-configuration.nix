@@ -1,5 +1,8 @@
-{
-  imports = [../common/optional/ephemeral-btrfs.nix];
+{inputs, ...}: {
+  imports = [
+    ../common/optional/ephemeral-btrfs.nix
+    inputs.disko.nixosModules.disko
+  ];
 
   boot = {
     initrd = {
@@ -18,18 +21,53 @@
     };
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/alcyone";
-    fsType = "btrfs";
-    options = ["subvol=boot"];
+  disko.devices.disk.main = {
+    device = "/dev/vda";
+    type = "disk";
+    # TODO: switch to gpt when reinstalling alcyone, eventually.
+    content = {
+      type = "table";
+      format = "msdos";
+      partitions = [{
+        content = {
+          type = "btrfs";
+          postCreateHook = ''
+            MNTPOINT=$(mktemp -d)
+            mount -t btrfs "$device" "$MNTPOINT"
+            trap 'umount $MNTPOINT; rm -d $MNTPOINT' EXIT
+            btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
+          '';
+          subvolumes = {
+            "/boot" = {
+              mountOptions = [];
+              mountpoint = "/boot";
+            };
+            "/root" = {
+              mountOptions = ["compress=zstd"];
+              mountpoint = "/";
+            };
+            "/nix" = {
+              mountOptions = ["noatime" "compress=zstd"];
+              mountpoint = "/nix";
+            };
+            "/persist" = {
+              mountOptions = ["compress=zstd"];
+              mountpoint = "/persist";
+            };
+            "/swap" = {
+              mountOptions = ["compress=zstd" "noatime"];
+              mountpoint = "/swap";
+              swap.swapfile = {
+                size = "3072M";
+                path = "swapfile";
+              };
+            };
+          };
+        };
+      }];
+    };
   };
-
-  swapDevices = [
-    {
-      device = "/swap/swapfile";
-      size = 3072;
-    }
-  ];
+  fileSystems."/persist".neededForBoot = true;
 
   hardware.cpu.intel.updateMicrocode = true;
 
