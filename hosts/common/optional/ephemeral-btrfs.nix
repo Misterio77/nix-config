@@ -17,7 +17,7 @@
 
       echo "Creating needed directories"
       mkdir -p "$MNTPOINT"/persist/var/{log,lib/{nixos,systemd}}
-      if [ -e "$MNTPOINT/persist/dont-wipe" ]; then
+      if [ -e "$MNTPOINT/dont-wipe" ]; then
         echo "Skipping wipe"
       else
         echo "Cleaning root subvolume"
