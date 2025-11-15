@@ -1,17 +1,18 @@
-# This file contains an ephemeral btrfs root configuration
-# TODO: perhaps partition using disko in the future
-# TODO: set the device through a custom option, or extract from config.disko.devices.disk.<name>.content.partitions.<name>.device
+# This module implements an ephemeral root in btrfs by restoring the 'root' subvolume of ${config.fileSystems."/".device} to 'root-blank' on boot
 {
   lib,
   config,
   ...
 }: let
   hostname = config.networking.hostName;
+
+  root = config.fileSystems."/";
+
   wipeScript = ''
     mkdir /tmp -p
     MNTPOINT=$(mktemp -d)
     (
-      mount -t btrfs -o subvol=/ /dev/disk/by-label/${hostname} "$MNTPOINT"
+      mount -t btrfs -o subvol=/ ${root.device} "$MNTPOINT"
       trap 'umount "$MNTPOINT"' EXIT
 
       echo "Creating needed directories"
@@ -26,6 +27,10 @@
       fi
     )
   '';
+
+  # Convert a device path to a systemd .device
+  toSystemdDevice = device: lib.concatStringsSep "-" (lib.tail (map (lib.replaceString "-" "\\x2d" ) (lib.splitString "/" device))) + ".device";
+
   phase1Systemd = config.boot.initrd.systemd.enable;
 in {
   boot.initrd = {
@@ -34,11 +39,8 @@ in {
     systemd.services.restore-root = lib.mkIf phase1Systemd {
       description = "Rollback btrfs rootfs";
       wantedBy = ["initrd.target"];
-      requires = ["dev-disk-by\\x2dlabel-${hostname}.device"];
-      after = [
-        "dev-disk-by\\x2dlabel-${hostname}.device"
-        "systemd-cryptsetup@${hostname}.service"
-      ];
+      requires = [(toSystemdDevice root.device)];
+      after = [(toSystemdDevice root.device)];
       before = ["sysroot.mount"];
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
