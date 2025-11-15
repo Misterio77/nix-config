@@ -3,6 +3,7 @@
     ../common/optional/ephemeral-btrfs.nix
     ../common/optional/encrypted-root.nix
   ];
+  powerManagement.cpuFreqGovernor = "performance";
 
   boot = {
     initrd = {
