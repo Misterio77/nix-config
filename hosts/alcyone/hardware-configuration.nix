@@ -67,7 +67,6 @@
       }];
     };
   };
-  fileSystems."/persist".neededForBoot = true;
 
   hardware.cpu.intel.updateMicrocode = true;
 

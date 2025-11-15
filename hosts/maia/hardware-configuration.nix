@@ -94,7 +94,6 @@
       };
     };
   };
-  fileSystems."/persist".neededForBoot = true;
 
   programs.light.enable = true;
   environment.systemPackages = [pkgs.brightnessctl];

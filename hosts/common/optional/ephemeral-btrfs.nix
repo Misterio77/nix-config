@@ -4,8 +4,6 @@
   config,
   ...
 }: let
-  hostname = config.networking.hostName;
-
   root = config.fileSystems."/";
 
   wipeScript = ''
@@ -48,43 +46,5 @@ in {
     };
   };
 
-  fileSystems = {
-    "/" = lib.mkDefault {
-      device = "/dev/disk/by-label/${hostname}";
-      fsType = "btrfs";
-      options = [
-        "subvol=root"
-        "compress=zstd"
-      ];
-    };
-
-    "/nix" = lib.mkDefault {
-      device = "/dev/disk/by-label/${hostname}";
-      fsType = "btrfs";
-      options = [
-        "subvol=nix"
-        "noatime"
-        "compress=zstd"
-      ];
-    };
-
-    "/persist" = lib.mkDefault {
-      device = "/dev/disk/by-label/${hostname}";
-      fsType = "btrfs";
-      options = [
-        "subvol=persist"
-        "compress=zstd"
-      ];
-      neededForBoot = true;
-    };
-
-    "/swap" = lib.mkDefault {
-      device = "/dev/disk/by-label/${hostname}";
-      fsType = "btrfs";
-      options = [
-        "subvol=swap"
-        "noatime"
-      ];
-    };
-  };
+  fileSystems."/persist".neededForBoot = lib.mkDefault true;
 }

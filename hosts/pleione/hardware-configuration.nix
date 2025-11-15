@@ -114,5 +114,4 @@
       };
     };
   };
-  fileSystems."/persist".neededForBoot = true;
 }

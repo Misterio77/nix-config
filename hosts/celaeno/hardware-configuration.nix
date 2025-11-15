@@ -82,5 +82,4 @@
       };
     };
   };
-  fileSystems."/persist".neededForBoot = true;
 }
