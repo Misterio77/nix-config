@@ -1,4 +1,4 @@
-{config, inputs, ...}: {
+{config, inputs, pkgs, ...}: {
   imports = [
     inputs.disko.nixosModules.disko
     ../common/optional/ephemeral-btrfs.nix
@@ -100,4 +100,17 @@
     };
   };
   fileSystems."/persist".neededForBoot = true;
+
+  programs.light.enable = true;
+  environment.systemPackages = [pkgs.brightnessctl];
+
+  # Lid settings
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "lock";
+    powerKey = "suspend";
+    powerKeyLongPress = "poweroff";
+  };
+
+  hardware.graphics.enable = true;
 }

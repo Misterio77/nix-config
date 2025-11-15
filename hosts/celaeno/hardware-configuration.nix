@@ -4,6 +4,9 @@
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
+  # Slows down write operations considerably
+  nix.settings.auto-optimise-store = false;
+
   boot = {
     initrd = {
       availableKernelModules = [

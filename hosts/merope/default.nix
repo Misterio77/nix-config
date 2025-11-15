@@ -36,16 +36,5 @@
     };
   };
 
-  # Avoiding some heavy IO
-  nix.settings.auto-optimise-store = false;
-
-  # Enable argonone fan daemon
-  services.hardware.argonone.enable = true;
-
-  # Workaround for https://github.com/NixOS/nixpkgs/issues/154163
-  nixpkgs.overlays = [
-    (_: prev: {makeModulesClosure = x: prev.makeModulesClosure (x // {allowMissing = true;});})
-  ];
-
   system.stateVersion = "22.05";
 }

@@ -3,6 +3,13 @@
     ../common/optional/ephemeral-btrfs.nix
     ../common/optional/encrypted-root.nix
   ];
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+    "i686-linux"
+  ];
+  hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "performance";
 
   boot = {
@@ -39,7 +46,4 @@
       size = 8196;
     }
   ];
-
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = true;
 }

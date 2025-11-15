@@ -5,6 +5,8 @@
     ./remote-control.nix
   ];
 
+  hardware.graphics.enable = true;
+
   hardware.nvidia = {
     powerManagement.enable = true;
     # Does not support maxwell gpu

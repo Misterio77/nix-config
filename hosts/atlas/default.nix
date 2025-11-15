@@ -27,13 +27,7 @@
     useDHCP = true;
   };
 
-  boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
-    binfmt.emulatedSystems = [
-      "aarch64-linux"
-      "i686-linux"
-    ];
-  };
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
 
   powerManagement.powertop.enable = true;
   programs = {

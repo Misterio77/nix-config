@@ -25,31 +25,13 @@
     hostName = "maia";
   };
 
-  boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
-    binfmt.emulatedSystems = [
-      "aarch64-linux"
-      "i686-linux"
-    ];
-  };
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
 
   powerManagement.powertop.enable = true;
   programs = {
-    light.enable = true;
     adb.enable = true;
     dconf.enable = true;
   };
-  environment.systemPackages = [pkgs.brightnessctl];
-
-  # Lid settings
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchExternalPower = "lock";
-    powerKey = "suspend";
-    powerKeyLongPress = "poweroff";
-  };
-
-  hardware.graphics.enable = true;
 
   system.stateVersion = "22.05";
 }
