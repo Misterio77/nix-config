@@ -11,12 +11,14 @@
     pkgs.sshuttle
   ];
 
-  targets.genericLinux.enable = true;
-  nixGL = {
-    packages = inputs.nix-gl.packages;
-    defaultWrapper = "mesa";
-    installScripts = ["mesa"];
-    vulkan.enable = true;
+  targets.genericLinux = {
+    enable = true;
+    nixGL = {
+      packages = inputs.nix-gl.packages;
+      defaultWrapper = "mesa";
+      installScripts = ["mesa"];
+      vulkan.enable = true;
+    };
   };
 
   # Disable extensions for compliance at $WORK

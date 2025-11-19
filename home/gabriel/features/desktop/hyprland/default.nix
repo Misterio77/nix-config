@@ -117,7 +117,6 @@ in {
         new_window_takes_over_fullscreen = 2;
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
-        disable_hyprland_qtutils_check = true;
         enable_swallow = true;
         swallow_regex = "(?i)(${lib.concatMapStringsSep "|" (lib.removeSuffix ".desktop") config.xdg.mimeApps.defaultApplications."x-scheme-handler/terminal"})";
       };
