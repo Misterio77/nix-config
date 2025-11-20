@@ -14,7 +14,7 @@ in {
   services = {
     hydra = {
       enable = true;
-      package = pkgs.hydra_unstable;
+      package = pkgs.hydra;
       hydraURL = "https://hydra.m7.rs";
       notificationSender = "hydra@m7.rs";
       listenHost = "localhost";
