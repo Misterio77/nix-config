@@ -197,7 +197,7 @@
           "instant": true,
           "interval": "",
           "legendFormat": "Version",
-          "range": false,
+          "range": true,
           "refId": "Version"
         },
         {
@@ -209,7 +209,7 @@
           "instant": true,
           "interval": "",
           "legendFormat": "Newest",
-          "range": false,
+          "range": true,
           "refId": "Newest"
         }
       ],
