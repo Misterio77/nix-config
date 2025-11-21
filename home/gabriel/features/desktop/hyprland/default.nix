@@ -27,8 +27,7 @@ in {
     ../common/wayland-wm
 
     ./basic-binds.nix
-    # TODO: re-enable
-    # ./hyprbars.nix
+    ./hyprbars.nix
     ./hyprlock.nix
     ./hypridle.nix
     ./hyprpaper.nix
