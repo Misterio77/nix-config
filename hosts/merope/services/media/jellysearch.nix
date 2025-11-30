@@ -17,6 +17,15 @@
     };
   };
 
+  services.nginx.virtualHosts."media.m7.rs" = {
+    locations."/".extraConfig = ''
+      if ($arg_searchTerm) {
+          proxy_pass http://localhost:5000;
+          break;
+      }
+    '';
+  };
+
   users = {
     users.jellysearch = {
       home = "/var/lib/jellysearch";
