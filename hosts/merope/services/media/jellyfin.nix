@@ -33,9 +33,9 @@
     # Make config readable by jellyfin group (e.g. jellysearch)
     systemd = {
       tmpfiles.settings.jellyfinDirs = {
-        "${config.services.jellyfin.dataDir}".d.mode = "750";
+        "${config.services.jellyfin.dataDir}".d.mode = lib.mkForce "750";
       };
-      services.jellyfin.serviceConfig.UMask = "0027";
+      services.jellyfin.serviceConfig.UMask = lib.mkForce "0027";
     };
 
     environment.persistence = {
