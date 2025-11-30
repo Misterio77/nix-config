@@ -25,7 +25,7 @@
       # Add jellysearch to jellyfin group so that it can read config files
       extraGroups = [config.services.jellyfin.group];
     };
-    groups.jellyseerr = {};
+    groups.jellysearch = {};
   };
 
   services.meilisearch = {
