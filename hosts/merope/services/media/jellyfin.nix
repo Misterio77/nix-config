@@ -1,8 +1,8 @@
-{config, ...}: let
+{config, lib, ...}: {
   # https://jellyfin.org/docs/general/post-install/networking/
   # TODO: https://github.com/Sveske-Juice/declarative-jellyfin
-  port = 8096;
-in {
+  options.services.jellyfin.port = lib.mkOption { default = 8096; type = lib.types.port; };
+
   services = {
     jellyfin = {
       enable = true;
@@ -12,7 +12,7 @@ in {
         forceSSL = true;
         enableACME = true;
         locations."/" = {
-          proxyPass = "http://localhost:${toString port}";
+          proxyPass = "http://localhost:${toString config.services.jellyfin.port}";
           proxyWebsockets = true;
         };
       };
@@ -28,6 +28,15 @@ in {
       };
     };
   };
+
+  # Make config readable by jellyfin group (e.g. jellysearch)
+  systemd = {
+    tmpfiles.settings.jellyfinDirs = {
+      "${config.services.jellyfin.dataDir}".d.mode = "750";
+    };
+    services.jellyfin.serviceConfig.UMask = "0027";
+  };
+
   environment.persistence = {
     "/persist".directories = [
       {

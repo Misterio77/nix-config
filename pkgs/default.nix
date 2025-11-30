@@ -3,6 +3,7 @@
   lyrics = pkgs.python3Packages.callPackage ./lyrics {};
   prefetcharr = pkgs.callPackage ./prefetcharr {};
   hyprbars = pkgs.callPackage ./hyprbars {};
+  jellysearch = pkgs.callPackage ./jellysearch {};
 
   # Personal scripts
   minicava = pkgs.callPackage ./minicava {};
