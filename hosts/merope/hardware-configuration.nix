@@ -47,8 +47,12 @@
 
   hardware.raspberry-pi."4" = {
     i2c1.enable = true;
-    fkms-3d.enable = true;
+    fkms-3d = {
+      enable = true;
+      cma = 1024;
+    };
   };
+  hardware.graphics.enable = true;
 
   # Avoiding some heavy IO
   nix.settings.auto-optimise-store = false;
