@@ -8,7 +8,7 @@
     environment = {
       JELLYFIN_URL = "http://localhost:${toString config.services.jellyfin.port}";
       JELLYFIN_CONFIG_DIR = config.services.jellyfin.configDir;
-      MEILI_URL = "http://localhost:${toString config.services.meilisearch.port}";
+      MEILI_URL = "http://localhost:${toString config.services.meilisearch.listenPort}";
       INDEX_CRON = "0 0 * * * ?"; # hourly
     };
     serviceConfig = {
