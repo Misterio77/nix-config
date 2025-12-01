@@ -80,6 +80,7 @@
               orgId = 1;
               rules = [{
                 title = "Low disk";
+                uid = "low-disk-alert";
                 notification_settings.receiver = "alerts-email";
                 annotations = {
                   summary = "{{ $labels.instance }} is low on storage";
