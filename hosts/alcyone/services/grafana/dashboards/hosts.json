@@ -271,6 +271,8 @@
           "color": {
             "mode": "thresholds"
           },
+          "displayName": "${__field.displayName}",
+          "fieldMinMax": true,
           "mappings": [],
           "min": 0,
           "noValue": "?",
@@ -301,7 +303,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
+        "w": 6,
         "x": 7,
         "y": 1
       },
@@ -312,7 +314,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "min"
           ],
           "fields": "",
           "values": false
@@ -324,38 +326,84 @@
       "pluginVersion": "12.1.0",
       "targets": [
         {
-          "expr": "avg by (instance) (node_filesystem_size_bytes{instance=\"$hosts\",mountpoint=\"/\"} - node_filesystem_free_bytes{instance=\"$hosts\",mountpoint=\"/\"} > 0)",
-          "legendFormat": "Used Space",
-          "range": true,
+          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\"} - node_filesystem_free_bytes{instance=\"$hosts\"} > 1000000000)",
+          "legendFormat": "device={{device}},type=used",
+          "range": false,
+          "instant": true,
           "refId": "Used Space"
         },
         {
-          "expr": "avg by (instance) (node_filesystem_size_bytes{instance=\"$hosts\",mountpoint=\"/\"} > 0)",
-          "legendFormat": "Total Space",
-          "range": true,
+          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\"} > 1000000000)",
+          "legendFormat": "device={{device}},type=total",
+          "range": false,
+          "instant": true,
           "refId": "Total Space"
         }
       ],
-      "title": "Root disk usage",
+      "title": "Storage",
       "transformations": [
         {
-          "id": "configFromData",
+          "id": "seriesToRows",
+          "options": {}
+        },
+        {
+          "id": "extractFields",
           "options": {
-            "applyTo": {
-              "id": "byFrameRefID",
-              "options": "Used Space"
+            "delimiter": ",",
+            "keepTime": false,
+            "replace": false,
+            "source": "Metric"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Metric": true,
+              "Time": false
             },
-            "configRefId": "Total Space",
-            "mappings": [
+            "includeByName": {},
+            "indexByName": {
+              "Metric": 1,
+              "Time": 0,
+              "Value": 4,
+              "device": 2,
+              "type": 3
+            },
+            "orderByMode": "manual",
+            "renameByName": {
+              "Time": ""
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
               {
-                "fieldName": "Total Space",
-                "handlerKey": "max"
-              },
-              {
-                "fieldName": "Time",
-                "handlerKey": "__ignore"
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "tmpfs"
+                  }
+                },
+                "fieldName": "device"
               }
-            ]
+            ],
+            "match": "all",
+            "type": "exclude"
+          }
+        },
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "device"
+            ],
+            "keepFields": false,
+            "naming": {
+              "asLabels": true
+            }
           }
         }
       ],
@@ -408,7 +456,7 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 11,
+        "x": 13,
         "y": 1
       },
       "id": 4,
@@ -497,6 +545,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -538,7 +587,7 @@
       "gridPos": {
         "h": 5,
         "w": 7,
-        "x": 14,
+        "x": 16,
         "y": 1
       },
       "id": 5,
@@ -573,13 +622,15 @@
   ],
   "preload": false,
   "refresh": "",
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
@@ -599,6 +650,10 @@
         "type": "query"
       }
     ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
   },
   "title": "Hosts - Nix"
 }
