@@ -75,6 +75,7 @@
   sops.secrets = {
     gabriel-mail-password.sopsFile = ../secrets.yaml;
     grafana-mail-password-hashed.sopsFile = ../secrets.yaml;
+    media-mail-password-hashed.sopsFile = ../secrets.yaml;
   };
 
   # Webmail
