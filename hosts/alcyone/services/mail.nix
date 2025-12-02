@@ -33,6 +33,10 @@
         sendOnly = true;
         hashedPasswordFile = config.sops.secrets.grafana-mail-password-hashed.path;
       };
+      "media@m7.rs" = {
+        sendOnly = true;
+        hashedPasswordFile = config.sops.secrets.media-mail-password-hashed.path;
+      };
     };
     mailboxes = {
       Archive = {
