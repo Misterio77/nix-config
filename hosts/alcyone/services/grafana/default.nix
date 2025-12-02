@@ -81,7 +81,7 @@
               rules = [{
                 title = "Low disk";
                 uid = "low-disk-alert";
-                notification_settings.receiver = "alerts-email";
+                notification_settings.receiver = "default";
                 annotations = {
                   summary = "{{ $labels.instance }} is low on storage";
                   description = "{{ $labels.device }} at {{ $labels.instance }} is below 10% capacity.";
