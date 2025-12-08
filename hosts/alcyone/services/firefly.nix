@@ -8,6 +8,11 @@
     virtualHost = "firefly.m7.rs";
   };
 
+  services.nginx.virtualHosts.${config.services.firefly-iii.virtualHost} = {
+    forceSSL = true;
+    enableACME = true;
+  };
+
   sops.secrets.firefly-key = {
     owner = "firefly-iii";
     group = "nginx";
