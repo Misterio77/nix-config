@@ -12,6 +12,7 @@
     ./mail.nix
     ./prometheus.nix
     ./radicale.nix
+    ./firefly.nix
 
     # Disabled for now
     # ./cgit
