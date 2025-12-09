@@ -3,6 +3,8 @@
     enable = true;
     settings = {
       APP_KEY_FILE = config.sops.secrets.firefly-key.path;
+      ENABLE_EXCHANGE_RATES = "true";
+      ENABLE_EXTERNAL_RATES = "true";
     };
     enableNginx = true;
     virtualHost = "firefly.m7.rs";
