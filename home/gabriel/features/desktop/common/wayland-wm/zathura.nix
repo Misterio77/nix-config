@@ -29,4 +29,8 @@ in {
       recolor-darkcolor = "${colors.inverse_surface}";
     };
   };
+
+  xdg.mimeApps.associations.removed = {
+    "inode/directory" = "org.pwmt.zathura-cb.desktop";
+  };
 }
