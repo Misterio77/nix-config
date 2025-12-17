@@ -107,7 +107,7 @@
     '';
   };
 
-  # Run initial migrations for liboklab and calendar plugins
+  # Run initial migrations for libkolab and calendar plugins
   systemd.services.roundcube-setup.script = let
     psql = "psql ${config.services.roundcube.database.dbname}";
     mkDbInit = name: file: ''
@@ -117,8 +117,9 @@
       fi
     '';
   in lib.mkAfter ''
-    ${mkDbInit "liboklab" "libkolab/SQL/postgres.initial.sql"}
+    ${mkDbInit "libkolab" "libkolab/SQL/postgres.initial.sql"}
     ${mkDbInit "calendar-caldav" "calendar/drivers/caldav/SQL/postgres.initial.sql"}
+    ${mkDbInit "calendar-database" "calendar/drivers/database/SQL/postgres.initial.sql"}
     ${mkDbInit "tasklist-database" "tasklist/drivers/database/SQL/postgres.initial.sql"}
   '';
 
