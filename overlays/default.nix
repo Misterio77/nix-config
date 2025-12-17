@@ -30,6 +30,7 @@ in {
     // {
       formats = (prev.formats or {}) // import ../pkgs/formats {pkgs = final;};
       vimPlugins = (prev.vimPlugins or {}) // import ../pkgs/vim-plugins {pkgs = final;};
+      roundcubePlugins = (prev.roundcubePlugins or {}) // import ../pkgs/roundcube-plugins {pkgs = final;};
     };
 
   # Modifies existing packages

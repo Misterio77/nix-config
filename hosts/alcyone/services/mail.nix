@@ -81,7 +81,13 @@
   # Webmail
   services.roundcube = {
     enable = true;
-    package = pkgs.roundcube.withPlugins (p: [p.carddav]);
+    package = pkgs.roundcube.withPlugins (p: [
+      p.carddav
+
+      p.kolab-calendar
+      p.kolab-libcalendaring
+      p.kolab-libkolab
+    ]);
     maxAttachmentSize = 200;
     hostName = "mail.m7.rs";
     extraConfig = ''
@@ -89,7 +95,10 @@
       $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
-      $config['plugins'] = [ "carddav" ];
+      $config['plugins'] = ["carddav", "calendar"];
+      $config['calendar_driver'] = "caldav";
+      $config['calendar_caldav_server'] = "https://dav.m7.rs";
+      $config['calendar_timeslots'] = 4;
     '';
   };
 
