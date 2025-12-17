@@ -17,12 +17,10 @@ php.buildComposerProject2 {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out
-    ln -s $out/share/php/$pname/vendor $out/vendor
-
     mkdir -p $out/plugins
-    ln -s $out/share/php/$pname $out/plugins/calendar
-    ln -s $out/vendor/kolab/{libcalendaring,libkolab} $out/plugins/
+    mv $out/share/php/$pname $out/plugins/calendar
+    ln -s $out/plugins/calendar/vendor $out/vendor
+    ln -s $out/plugins/calendar/vendor/kolab/{libcalendaring,libkolab} $out/plugins/
 
     runHook postInstall
   '';
