@@ -81,13 +81,15 @@
   # Webmail
   services.roundcube = {
     enable = true;
-    package = pkgs.roundcube.withPlugins (p: [
-      p.carddav
-
-      p.kolab-calendar
-      p.kolab-libcalendaring
-      p.kolab-libkolab
-    ]);
+    package = pkgs.buildEnv {
+      name = "roundcube-with-plugins";
+      ignoreCollisions = true;
+      paths = [
+        pkgs.roundcubePlugins.carddav
+        pkgs.roundcubePlugins.kolab-calendar
+        pkgs.roundcube
+      ];
+    };
     maxAttachmentSize = 200;
     hostName = "mail.m7.rs";
     extraConfig = ''
@@ -101,6 +103,20 @@
       $config['calendar_timeslots'] = 4;
     '';
   };
+
+  # Run initial migrations for liboklab and calendar plugins
+  systemd.services.roundcube-setup.script = let
+    psql = "psql ${config.services.roundcube.database.dbname}";
+    mkDbInit = name: file: ''
+      if ! (grep -E '[a-zA-Z0-9]' <<< "$(${psql} -t <<< "select value from system where name = '${name}-version';" || true)"); then
+        echo "Missing ${name}-version in database, running ${file}"
+        ${psql} -f ${config.services.roundcube.package}/plugins/${file}
+      fi
+    '';
+  in lib.mkAfter ''
+    ${mkDbInit "liboklab" "libkolab/SQL/postgres.initial.sql"}
+    ${mkDbInit "calendar-caldav" "calendar/drivers/caldav/SQL/postgres.initial.sql"}
+  '';
 
   # Autoconfig
   services.automx2 = {
