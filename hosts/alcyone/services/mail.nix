@@ -87,6 +87,7 @@
       paths = [
         pkgs.roundcubePlugins.carddav
         pkgs.roundcubePlugins.kolab-calendar
+        pkgs.roundcubePlugins.kolab-tasklist
         pkgs.roundcube
       ];
     };
@@ -97,10 +98,12 @@
       $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
-      $config['plugins'] = ["carddav", "calendar"];
+      $config['plugins'] = ["carddav", "calendar", "tasklist"];
       $config['calendar_driver'] = "caldav";
       $config['calendar_caldav_server'] = "https://dav.m7.rs";
       $config['calendar_timeslots'] = 4;
+      $config['tasklist_driver'] = "caldav";
+      $config['tasklist_caldav_server'] = "https://dav.m7.rs";
     '';
   };
 
@@ -116,6 +119,7 @@
   in lib.mkAfter ''
     ${mkDbInit "liboklab" "libkolab/SQL/postgres.initial.sql"}
     ${mkDbInit "calendar-caldav" "calendar/drivers/caldav/SQL/postgres.initial.sql"}
+    ${mkDbInit "tasklist-database" "tasklist/drivers/database/SQL/postgres.initial.sql"}
   '';
 
   # Autoconfig
