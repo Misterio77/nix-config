@@ -1,0 +1,26 @@
+diff --git a/tests/test_model.py b/tests/test_model.py
+index cdb5d0b..fd43c7e 100644
+--- a/tests/test_model.py
++++ b/tests/test_model.py
+@@ -398,7 +398,7 @@ def test_clone() -> None:
+     assert todo.location == clone.location
+     assert todo.due == clone.due
+     assert todo.uid != clone.uid
+-    assert len(clone.uid) > 32
++    assert len(clone.uid) == 32
+     assert clone.id is None
+     assert todo.filename != clone.filename
+     assert clone.uid in clone.filename
+diff --git a/todoman/model.py b/todoman/model.py
+index 206e136..a17834f 100644
+--- a/todoman/model.py
++++ b/todoman/model.py
+@@ -72,7 +72,7 @@ class Todo:
+         """
+         self.list = list
+         now = datetime.now(LOCAL_TIMEZONE)
+-        self.uid = f"{uuid4().hex}@{socket.gethostname()}"
++        self.uid = f"{uuid4().hex}"
+ 
+         if new:
+             self.created_at = now

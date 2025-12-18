@@ -78,7 +78,11 @@ in {
     vdirsyncer = addPatches prev.vdirsyncer [./vdirsyncer-fixed-oauth-token.patch];
 
     # https://github.com/pimutils/todoman/pull/594
-    todoman = addPatches prev.todoman [./todoman-latest-main.patch ./todoman-subtasks.patch];
+    todoman = addPatches prev.todoman [
+      ./todoman-latest-main.patch
+      ./todoman-subtasks.patch
+      ./todoman-disable-uid-hostname-suffix.diff
+    ];
 
     # https://github.com/ValveSoftware/gamescope/issues/1622
     gamescope = prev.gamescope.overrideAttrs (_: {
