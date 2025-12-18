@@ -1,7 +1,7 @@
-Commit ID: c71876b7726c81a7c64c6a89097f23f56f1f5284
+Commit ID: 86618aaf0406351f1d249e5f328b305e36ffa89e
 Change ID: uuqkpqyoxozwxqyptqkxnqpqklnymnmr
 Author   : Gabriel Fontes <hi@m7.rs> (2025-12-18 09:23:01)
-Committer: Gabriel Fontes <hi@m7.rs> (2025-12-18 16:03:37)
+Committer: Gabriel Fontes <hi@m7.rs> (2025-12-18 16:47:14)
 Signature: (no signature)
 
     feat(tasklist): use none/low/medium/high priority instead of true/false flag
@@ -579,7 +579,7 @@ index 80940eb52a..35c67b0f3e 100644
  				<label for="taskedit-tasklist"><roundcube:label name="tasklist.list" /></label>
  				<roundcube:object name="plugin.tasklist_select" id="taskedit-tasklist" />
 diff --git a/plugins/tasklist/tasklist.js b/plugins/tasklist/tasklist.js
-index f79d57a5cc..c8bc90f32a 100644
+index f79d57a5cc..c19f076fcd 100644
 --- a/plugins/tasklist/tasklist.js
 +++ b/plugins/tasklist/tasklist.js
 @@ -38,7 +38,7 @@
@@ -753,6 +753,15 @@ index f79d57a5cc..c8bc90f32a 100644
          var tasklist = $('#taskedit-tasklist').prop('disabled', rec.parent_id ? true : false);
          var notify = $('#edit-attendees-donotify').get(0);
          var invite = $('#edit-attendees-invite').get(0);
+@@ -2581,7 +2613,7 @@
+             data._status_before = me.selected_task.status + '';
+ 
+             // copy form field contents into task object to save
+-            $.each({ title:title, description:description, date:recdate, time:rectime, startdate:recstartdate, starttime:recstarttime, status:taskstatus }, function(key,input){
++            $.each({ title:title, description:description, date:recdate, time:rectime, startdate:recstartdate, starttime:recstarttime, status:taskstatus, priority:priority }, function(key,input){
+                 data[key] = input.val();
+             });
+ 
 diff --git a/plugins/tasklist/tasklist.php b/plugins/tasklist/tasklist.php
 index 675a048527..59dd3c2606 100644
 --- a/plugins/tasklist/tasklist.php
