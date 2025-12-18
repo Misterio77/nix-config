@@ -10,6 +10,12 @@ php.buildComposerProject2 {
     hash = "sha256-qmE3R09t2LpuMbKfrXryDR82DRfbckqVwPr5to12PcY=";
   };
 
+  patches = [
+    # Reads priority 1-4 (instead of just 1) as "flagged"
+    # When flagging, set priority to 4 instead of 1
+    ./1-4-priority-flagged.diff
+  ];
+
   vendorHash = "sha256-nhohJBpv3+09PxX+WrHA3SoO2uCDqjEl1PRug3oUsIQ=";
   composerLock = ./composer.lock;
   composerStrictValidation = false;

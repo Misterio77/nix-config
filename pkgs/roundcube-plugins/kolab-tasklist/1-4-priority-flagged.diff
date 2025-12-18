@@ -1,0 +1,72 @@
+diff --git a/plugins/tasklist/drivers/caldav/tasklist_caldav_driver.php b/plugins/tasklist/drivers/caldav/tasklist_caldav_driver.php
+index aba2d766..c3f0ed73 100644
+--- a/plugins/tasklist/drivers/caldav/tasklist_caldav_driver.php
++++ b/plugins/tasklist/drivers/caldav/tasklist_caldav_driver.php
+@@ -1121,7 +1121,7 @@ class tasklist_caldav_driver extends tasklist_driver
+             'title' => $record['title'] ?? '',
+ //            'location' => $record['location'],
+             'description' => $record['description'] ?? '',
+-            'flagged' => !empty($record['priority']) && $record['priority'] == 1,
++            'flagged' => !empty($record['priority']) && $record['priority'] <= 4 && $record['priority'] >= 1,
+             'complete' => floatval(($record['complete'] ?? 0) / 100),
+             'status' => $record['status'] ?? null,
+             'parent_id' => !empty($record['parent_id']) ? $id_prefix . $record['parent_id'] : null,
+@@ -1242,9 +1242,9 @@ class tasklist_caldav_driver extends tasklist_driver
+         }
+ 
+         if (!empty($task['flagged'])) {
+-            $object['priority'] = 1;
++            $object['priority'] = 4;
+         } else {
+-            $object['priority'] = isset($old['priority']) && $old['priority'] > 1 ? $old['priority'] : 0;
++            $object['priority'] = isset($old['priority']) && $old['priority'] > 4 ? $old['priority'] : 0;
+         }
+ 
+         // remove list: prefix from parent_id
+diff --git a/plugins/tasklist/drivers/kolab/tasklist_kolab_driver.php b/plugins/tasklist/drivers/kolab/tasklist_kolab_driver.php
+index 2f7c59bd..7f0e8407 100644
+--- a/plugins/tasklist/drivers/kolab/tasklist_kolab_driver.php
++++ b/plugins/tasklist/drivers/kolab/tasklist_kolab_driver.php
+@@ -1288,7 +1288,7 @@ class tasklist_kolab_driver extends tasklist_driver
+             'title' => $record['title'] ?? null,
+ //            'location' => $record['location'],
+             'description' => $record['description'] ?? null,
+-            'flagged' => ($record['priority'] ?? null) == 1,
++            'flagged' => ($record['priority'] ?? null) <= 4 && ($record['priority'] ?? null) >= 1,
+             'complete' => floatval(($record['complete'] ?? null) / 100),
+             'status' => $record['status'] ?? null,
+             'parent_id' => ($record['parent_id'] ?? null) ? $id_prefix . $record['parent_id'] : null,
+@@ -1410,9 +1410,9 @@ class tasklist_kolab_driver extends tasklist_driver
+         }
+ 
+         if (!empty($task['flagged'])) {
+-            $object['priority'] = 1;
++            $object['priority'] = 4;
+         } else {
+-            $object['priority'] = ($old['priority'] ?? 0) > 1 ? $old['priority'] : 0;
++            $object['priority'] = ($old['priority'] ?? 0) > 4 ? $old['priority'] : 0;
+         }
+ 
+         // remove list: prefix from parent_id
+diff --git a/plugins/tasklist/tasklist.php b/plugins/tasklist/tasklist.php
+index 675a0485..a87b5d04 100644
+--- a/plugins/tasklist/tasklist.php
++++ b/plugins/tasklist/tasklist.php
+@@ -2471,7 +2471,7 @@ class tasklist extends rcube_plugin
+         }
+ 
+         if ($task['flagged']) {
+-            $object['priority'] = 1;
++            $object['priority'] = 4;
+         } elseif (empty($task['priority'])) {
+             $object['priority'] = 0;
+         }
+@@ -2487,7 +2487,7 @@ class tasklist extends rcube_plugin
+         $task = $vtodo;
+ 
+         $task['tags'] = array_filter((array)$vtodo['categories']);
+-        $task['flagged'] = $vtodo['priority'] == 1;
++        $task['flagged'] = ($vtodo['priority'] <= 4 && $vtodo['priority'] >= 1);
+         $task['complete'] = floatval($vtodo['complete'] / 100);
+ 
+         // convert from DateTime to internal date format
