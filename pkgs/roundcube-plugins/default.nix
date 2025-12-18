@@ -1,5 +1,4 @@
 {pkgs}: {
-  kolab-calendar = pkgs.callPackage ./kolab-calendar {};
-  kolab-tasklist = pkgs.callPackage ./kolab-tasklist {};
+  kolab-plugins = pkgs.callPackage ./kolab-plugins {};
 }
 

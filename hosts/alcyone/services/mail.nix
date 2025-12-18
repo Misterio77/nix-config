@@ -86,8 +86,7 @@
       ignoreCollisions = true;
       paths = [
         pkgs.roundcubePlugins.carddav
-        pkgs.roundcubePlugins.kolab-calendar
-        pkgs.roundcubePlugins.kolab-tasklist
+        pkgs.roundcubePlugins.kolab-plugins
         pkgs.roundcube
       ];
     };
