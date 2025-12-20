@@ -25,10 +25,16 @@ php.buildComposerProject2 (finalAttrs: {
     composerNoDev = true;
     composerNoPlugins = true;
     composerNoScripts = true;
-    vendorHash = "sha256-IvkWlGlYP5Xdp1mffEcB33Gy48rV5zgdVqbLncwj/S4=";
-    # Cleanup .git directories from git dependencies
+    strictDeps = true;
+    vendorHash = "sha256-QYERch9v0glBK+rqvsh36s78YziVed07TsHz10N6zgs=";
     postInstall = ''
+      # Cleanup .git directories from git dependencies
       rm -rf $out/vendor/**/*/.git
+      # Make include_paths.php deterministic
+      head -n 8 $out/vendor/composer/include_paths.php > include_paths.php
+      tail -n +9 $out/vendor/composer/include_paths.php | head -n -1 | sort >> include_paths.php
+      tail -n 1 $out/vendor/composer/include_paths.php >> include_paths.php
+      mv include_paths.php $out/vendor/composer/include_paths.php
     '';
   };
 
