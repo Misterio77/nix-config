@@ -4,7 +4,10 @@ in {
   programs.oama = {
     enable = true;
     settings = {
-      encryption.tag = "KEYRING";
+      encryption = {
+        tag = "GPG";
+        contents = "hi@m7.rs";
+      };
       services.google = {
         client_id_cmd = "${pass} oama/google_client_id | head -1";
         client_secret_cmd = "${pass} oama/google_client_secret | head -1";
