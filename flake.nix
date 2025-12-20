@@ -4,11 +4,9 @@
   nixConfig = {
     extra-substituters = [
       "https://cache.m7.rs"
-      "https://nix-gaming.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg="
-      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
     ];
   };
 
@@ -58,11 +56,6 @@
     # Third party programs, packaged with nix
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-gaming = {
-      # url = "github:fufexan/nix-gaming";
-      url = "github:misterio77/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
