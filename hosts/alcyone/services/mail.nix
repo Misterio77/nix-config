@@ -21,7 +21,7 @@
       "gsfontes.com"
     ];
     useFsLayout = true;
-    certificateScheme = "acme-nginx";
+    x509.useACMEHost = config.mailserver.fqdn;
     localDnsResolver = false;
     loginAccounts = {
       "hi@m7.rs" = {
