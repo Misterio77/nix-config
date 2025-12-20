@@ -25,7 +25,7 @@ php.buildComposerProject2 (finalAttrs: {
     composerNoDev = true;
     composerNoPlugins = true;
     composerNoScripts = true;
-    vendorHash = "sha256-pTXnO9wSqyAGVDNI5WU4UcLPuGXCQya9aITMp/V2sqg=";
+    vendorHash = "sha256-IvkWlGlYP5Xdp1mffEcB33Gy48rV5zgdVqbLncwj/S4=";
     # Cleanup .git directories from git dependencies
     postInstall = ''
       rm -rf $out/vendor/**/*/.git
