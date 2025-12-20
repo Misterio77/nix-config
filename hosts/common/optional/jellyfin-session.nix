@@ -1,11 +1,9 @@
 {pkgs, lib, ...}: let
-  inherit (pkgs.inputs.nixpkgs-stable) jellyfin-media-player;
-
   jellyfin-kiosk = pkgs.writeShellScriptBin "jellyfin-kiosk" ''
     systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
     systemctl --user start jellyfin-kiosk-session.target
     ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume @DEFAULT_SINK@ 80%
-    ${lib.getExe pkgs.gamescope} -- ${lib.getExe jellyfin-media-player} --tv --fullscreen
+    ${lib.getExe pkgs.gamescope} -- ${lib.getExe pkgs.jellyfin-media-player} --tv --fullscreen
     systemctl --user stop jellyfin-kiosk-session.target
   '';
 
