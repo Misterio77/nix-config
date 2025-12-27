@@ -60,14 +60,12 @@
             type = "luks";
             name = hostName;
             settings.allowDiscards = true;
-            content = let
-              this = config.disko.devices.disk.main.content.partitions.luks.content.content;
-            in {
+            content = {
               type = "btrfs";
               extraArgs = [ "-L${hostName}" ];
               postCreateHook = ''
                 MNTPOINT=$(mktemp -d)
-                mount -t btrfs "${this.device}" "$MNTPOINT"
+                mount -t btrfs "$device" "$MNTPOINT"
                 trap 'umount $MNTPOINT; rm -d $MNTPOINT' EXIT
                 btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
               '';

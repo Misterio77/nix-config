@@ -43,7 +43,7 @@
             extraArgs = [ "-L${config.networking.hostName}" ];
             postCreateHook = ''
               MNTPOINT=$(mktemp -d)
-              mount -t btrfs "${config.disko.devices.disk.main.content.partitions.taygeta.device}" "$MNTPOINT"
+              mount -t btrfs "$device" "$MNTPOINT"
               trap 'umount $MNTPOINT; rm -d $MNTPOINT' EXIT
               btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
             '';
