@@ -47,6 +47,20 @@
       $env.PROMPT_INDICATOR_VI_NORMAL = {|| "| " }
       $env.PROMPT_MULTILINE_INDICATOR = {|| "::: " }
 
+      let fish_completer = {|spans|
+          fish --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
+          | from tsv --flexible --noheaders --no-infer
+          | rename value description
+          | update value {|row|
+            let value = $row.value
+            let need_quote = ['\' ',' '[' ']' '(' ')' ' ' '\t' "'" '"' "`"] | any {$in in $value}
+            if ($need_quote and ($value | path exists)) {
+              let expanded_path = if ($value starts-with ~) {$value | path expand --no-symlink} else {$value}
+              $'"($expanded_path | str replace --all "\"" "\\\"")"'
+            } else {$value}
+          }
+      }
+
       $env.config = {
         edit_mode: vi,
         show_banner: false,
@@ -61,6 +75,10 @@
         },
         completions: {
           algorithm: "fuzzy",
+          external: {
+            enable: true,
+            completer: $fish_completer,
+          },
         },
         history: {
           sync_on_enter: true,
