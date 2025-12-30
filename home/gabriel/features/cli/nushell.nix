@@ -89,7 +89,6 @@
           }]
         }
       }
-      $env.KITTY_SHELL_INTEGRATION = "enabled"
     '';
   };
 }
