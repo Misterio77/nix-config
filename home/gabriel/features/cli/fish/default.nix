@@ -14,6 +14,7 @@
 in {
   imports = [
     ./tide.nix
+    ./zoxide.nix
     ./bindings.nix
   ];
   home.packages = [pkgs.bash-completion];
@@ -21,21 +22,6 @@ in {
     enable = true;
     shellAbbrs = rec {
       jqless = "jq -C | less -r";
-
-      n = "nix";
-      nd = "nix develop -c $SHELL";
-      ns = "nix shell";
-      nsn = "nix shell nixpkgs#";
-      nb = "nix build";
-      nbn = "nix build nixpkgs#";
-      nf = "nix flake";
-
-      nr = "nixos-rebuild --flake .";
-      nrs = "nixos-rebuild --flake . switch";
-      snr = "sudo nixos-rebuild --flake .";
-      snrs = "sudo nixos-rebuild --flake . switch";
-      hm = "home-manager --flake .";
-      hms = "home-manager --flake . switch";
 
       s = mkIf hasSpecialisationCli "specialisation";
 
