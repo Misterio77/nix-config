@@ -3,6 +3,7 @@
     ./steam.nix
     ./prism-launcher.nix
     ./runescape.nix
+    ./hytale.nix
   ];
   home = {
     packages = with pkgs; [gamescope];

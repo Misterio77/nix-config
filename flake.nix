@@ -58,6 +58,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hytale = {
+      url = "github:TNAZEP/HytaleLauncherFlake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # My own programs, packaged with nix
     themes = {
