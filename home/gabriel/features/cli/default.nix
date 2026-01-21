@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./fish
+    ./nushell
 
     ./bash.nix
     ./bat.nix
@@ -10,7 +11,6 @@
     ./gpg.nix
     ./jujutsu.nix
     ./lyrics.nix
-    ./nushell.nix
     ./nix-index.nix
     ./pfetch.nix
     ./ssh.nix
