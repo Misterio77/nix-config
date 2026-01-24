@@ -19,6 +19,7 @@
     ../common/optional/regreet.nix
     ../common/optional/steam-gamescope-session.nix
     ../common/optional/jellyfin-session.nix
+    ../common/optional/firefox-session.nix
 
     ./media-user.nix
   ];
