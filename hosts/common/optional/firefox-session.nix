@@ -28,18 +28,25 @@
         TopSites = false;
         Highlights = false;
       };
-      Homepage = {
-        URL = "https://duckduckgo.com";
-        Locked = true;
-      };
+      Homepage.URL = "about:blank";
       UserMessaging = {
         ExtensionRecommendations = false;
         SkipOnboarding = true;
       };
-      Preferences = {
-        "browser.search.selectedEngine" = {
-          Value = "DuckDuckGo";
-          Status = "locked";
+    };
+    profiles.default = {
+      id = 0;
+      name = "default";
+      search = {
+        default = "DuckDuckGo";
+        engines = {
+          "Kagi" = {
+            urls = [{ template = "https://kagi.com/search?q={searchTerms}"; }];
+            iconUpdateUrl = "https://assets.kagi.com/v2/apple-touch-icon.png";
+          };
+          "Amazon.com".metaData.hidden = true;
+          "Bing".metaData.hidden = true;
+          "eBay".metaData.hidden = true;
         };
       };
     };
