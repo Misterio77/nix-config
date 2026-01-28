@@ -34,22 +34,6 @@
         SkipOnboarding = true;
       };
     };
-    profiles.default = {
-      id = 0;
-      name = "default";
-      search = {
-        default = "DuckDuckGo";
-        engines = {
-          "Kagi" = {
-            urls = [{ template = "https://kagi.com/search?q={searchTerms}"; }];
-            iconUpdateUrl = "https://assets.kagi.com/v2/apple-touch-icon.png";
-          };
-          "Amazon.com".metaData.hidden = true;
-          "Bing".metaData.hidden = true;
-          "eBay".metaData.hidden = true;
-        };
-      };
-    };
   };
   firefox-kiosk = pkgs.writeShellScriptBin "firefox-kiosk" ''
     systemctl --user import-environment DISPLAY WAYLAND_DISPLAY
