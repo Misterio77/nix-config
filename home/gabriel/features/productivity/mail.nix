@@ -24,54 +24,43 @@
     };
   };
 
+  commonChannelCfg = {
+    Expunge = "Both"; # Sync deleted messages
+    Create = "Both"; # Create mailboxes if needed
+    Remove = "None"; # Don't ever delete mailboxes
+    SyncState = "*"; # Ensure sync state is in mail dir
+  };
+
   gmail_channels = {
     Inbox = {
       farPattern = "INBOX";
       nearPattern = "Inbox";
-      extraConfig = {
-        Create = "Near";
-        Expunge = "Both";
-      };
+      extraConfig = commonChannelCfg;
     };
     Archive = {
       farPattern = "Archived Mail";
       nearPattern = "Archive";
-      extraConfig = {
-        Create = "Both";
-        Expunge = "Both";
-      };
+      extraConfig = commonChannelCfg;
     };
     Junk = {
       farPattern = "[Gmail]/Spam";
       nearPattern = "Junk";
-      extraConfig = {
-        Create = "Near";
-        Expunge = "Both";
-      };
+      extraConfig = commonChannelCfg;
     };
     Trash = {
       farPattern = "[Gmail]/Trash";
       nearPattern = "Trash";
-      extraConfig = {
-        Create = "Near";
-        Expunge = "Both";
-      };
+      extraConfig = commonChannelCfg;
     };
     Drafts = {
       farPattern = "[Gmail]/Drafts";
       nearPattern = "Drafts";
-      extraConfig = {
-        Create = "Near";
-        Expunge = "Both";
-      };
+      extraConfig = commonChannelCfg;
     };
     Sent = {
       farPattern = "[Gmail]/Sent Mail";
       nearPattern = "Sent";
-      extraConfig = {
-        Create = "Near";
-        Expunge = "Both";
-      };
+      extraConfig = commonChannelCfg;
     };
   };
 in {
@@ -96,8 +85,7 @@ in {
           imap.host = "mail.m7.rs";
           mbsync = {
             enable = true;
-            create = "maildir";
-            expunge = "both";
+            extraConfig.channel = commonChannelCfg;
           };
           neomutt = {
             enable = true;
@@ -125,9 +113,8 @@ in {
 
           mbsync = {
             enable = true;
-            create = "maildir";
-            expunge = "both";
             groups.usp.channels = gmail_channels;
+            extraConfig.channel = commonChannelCfg;
             extraConfig.account.AuthMechs = "XOAUTH2";
           };
           neomutt = {
