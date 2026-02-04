@@ -113,7 +113,7 @@ in {
       cargoDeps = old.cargoDeps.overrideAttrs (old: {
         vendorStaging = old.vendorStaging.overrideAttrs {
           patches = [./automatic-timezoned-async-error-handling.patch];
-          outputHash = "sha256-1Q17ss0HXC4zx5LiJ1xDS6HFs6Xa/9byCxfgMi3Bz0A=";
+          outputHash = "sha256-iVA4ptzNK7KQcxTPexhQH/RB9Dl0BB93itG123KNOMs=";
         };
       });
     });

@@ -114,72 +114,61 @@ in {
         close_special_on_empty = true;
         focus_on_activate = true;
         # Unfullscreen when opening something
-        new_window_takes_over_fullscreen = 2;
+        on_focus_under_fullscreen = 2;
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         disable_hyprland_guiutils_check = true;
         enable_swallow = true;
         swallow_regex = "(?i)(${lib.concatMapStringsSep "|" (lib.removeSuffix ".desktop") config.xdg.mimeApps.defaultApplications."x-scheme-handler/terminal"})";
       };
-      windowrulev2 = let
-        sweethome3d-tooltips = "title:win[0-9],class:com-eteks-sweethome3d-SweetHome3DBootstrap";
-        steamGame = "class:steam_app_[0-9]*";
-        kdeconnect-pointer = "class:org.kdeconnect.daemon";
-        wineTray = "class:explorer.exe";
-        rsiLauncher = "class:rsi launcher.exe";
-        steamBigPicture = "title:Steam Big Picture Mode";
-        firefoxPictureInPicture = "class:firefox,title:Picture-in-Picture";
-        floatingVlc = "floating:1,class:vlc";
+      windowrule = let
+        sweethome3d-tooltips = "match:title win[0-9], match:class com-eteks-sweethome3d-SweetHome3DBootstrap";
+        steamGame = "match:class steam_app_[0-9]*";
+        wineTray = "match:class explorer.exe";
+        rsiLauncher = "match:class rsi launcher.exe";
+        steamBigPicture = "match:title Steam Big Picture Mode";
+        firefoxPictureInPicture = "match:class firefox, match:title Picture-in-Picture";
+        floatingVlc = "match:float 1, match:class vlc";
       in
         [
-          "idleinhibit focus, fullscreenstate:2 *"
-          "nofocus, ${sweethome3d-tooltips}"
+          "idle_inhibit focus, match:fullscreen_state_internal 2 *"
+          "no_initial_focus on, ${sweethome3d-tooltips}"
 
-          "immediate, ${steamGame}"
-
-          "size 100% 100%, ${kdeconnect-pointer}"
-          "float, ${kdeconnect-pointer}"
-          "nofocus, ${kdeconnect-pointer}"
-          "noblur, ${kdeconnect-pointer}"
-          "noanim, ${kdeconnect-pointer}"
-          "noshadow, ${kdeconnect-pointer}"
-          "noborder, ${kdeconnect-pointer}"
-          "plugin:hyprbars:nobar, ${kdeconnect-pointer}"
-          "suppressevent fullscreen, ${kdeconnect-pointer}"
+          "immediate on, ${steamGame}"
 
           "workspace special silent, ${wineTray}"
 
-          "tile, ${rsiLauncher}"
+          "tile on, ${rsiLauncher}"
 
-          "fullscreen, ${steamBigPicture}"
+          "fullscreen on, ${steamBigPicture}"
 
-          "float, ${firefoxPictureInPicture}"
-          "pin, ${firefoxPictureInPicture}"
+          "float on, ${firefoxPictureInPicture}"
+          "pin on, ${firefoxPictureInPicture}"
 
-          "pin, ${floatingVlc}"
+          "pin on, ${floatingVlc}"
         ]
         ++ (lib.mapAttrsToList (
-            name: colors: "bordercolor ${rgba colors.primary "ee"} ${rgba colors.primary_container "aa"}, title:\\[${name}\\].*"
+            name: colors: "border_color ${rgba colors.primary "ee"} ${rgba colors.primary_container "aa"}, match:title \\[${name}\\].*"
           )
           config.colorscheme.hosts);
       layerrule = [
-        "animation fade,hyprpicker"
-        "animation fade,selection"
-        "animation fade,hyprpaper"
+        "animation fade, match:namespace hyprpicker"
+        "animation fade, match:namespace selection"
+        "animation fade, match:namespace hyprpaper"
 
-        "animation fade,waybar"
-        "blur,waybar"
-        "ignorezero,waybar"
+        "animation fade, match:namespace waybar"
+        "blur on, match:namespace waybar"
+        "ignore_alpha 0, match:namespace waybar"
 
-        "blur,notifications"
-        "ignorezero,notifications"
+        "blur on, match:namespace notifications"
+        "ignore_alpha 0, match:namespace notifications"
 
-        "blur,wofi"
-        "ignorezero,wofi"
+        "blur on, match:namespace wofi"
+        "ignore_alpha 0, match:namespace wofi"
 
-        "noanim,wallpaper"
+        "no_anim on, match:namespace wallpaper"
 
-        "abovelock,swayosd"
+        "above_lock 2, match:namespace swayosd"
       ];
 
       decoration = {

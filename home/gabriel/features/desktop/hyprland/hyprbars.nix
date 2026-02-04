@@ -15,7 +15,7 @@ in {
   wayland.windowManager.hyprland = {
     plugins = [hyprbars];
     settings = {
-      "plugin:hyprbars" = {
+      plugin.hyprbars = {
         # Local colors
         bar_color = rgba config.colorscheme.colors.surface "dd";
         "col.text" = rgb config.colorscheme.colors.primary;
@@ -43,24 +43,24 @@ in {
         ];
       };
 
-      windowrulev2 = [
+      windowrule = [
         # Disable bars in floating pinned windows
-        "plugin:hyprbars:nobar, floating:1, pinned:1"
+        "hyprbars:no_bar on, match:float 1, match:pin 1"
 
         # Local colors (this host's colors)
-        "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.surface "dd"}, focus:0"
-        "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.primary}, focus:0"
+        "hyprbars:bar_color ${rgba config.colorscheme.colors.surface "dd"}, match:focus 0"
+        "hyprbars:title_color ${rgb config.colorscheme.colors.primary}, match:focus 0"
         # Local focused colors
-        "plugin:hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, focus:1"
-        "plugin:hyprbars:title_color ${rgb config.colorscheme.colors.on_primary}, focus:1"
+        "hyprbars:bar_color ${rgba config.colorscheme.colors.primary "ee"}, match:focus 1"
+        "hyprbars:title_color ${rgb config.colorscheme.colors.on_primary}, match:focus 1"
       ] ++ (lib.flatten (lib.mapAttrsToList (name: colors: [
         # Remote host colors
-        "plugin:hyprbars:bar_color ${rgba colors.primary_container "dd"}, title:\\[${name}\\].*, focus:0"
-        "plugin:hyprbars:title_color ${rgb colors.on_primary_container}, title:\\[${name}\\].*, focus:0"
+        "hyprbars:bar_color ${rgba colors.primary_container "dd"}, match:title \\[${name}\\].*, match:focus 0"
+        "hyprbars:title_color ${rgb colors.on_primary_container}, match:title \\[${name}\\].*, match:focus 0"
 
         # Remote host focused colors
-        "plugin:hyprbars:bar_color ${rgba colors.primary "ee"}, title:\\[${name}\\].*, focus:1"
-        "plugin:hyprbars:title_color ${rgb colors.on_primary}, title:\\[${name}\\].*, focus:1"
+        "hyprbars:bar_color ${rgba colors.primary "ee"}, match:title \\[${name}\\].*, match:focus 1"
+        "hyprbars:title_color ${rgb colors.on_primary}, match:title \\[${name}\\].*, match:focus 1"
       ]) config.colorscheme.hosts));
     };
   };
