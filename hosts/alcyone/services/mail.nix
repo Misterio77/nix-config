@@ -37,6 +37,10 @@
         sendOnly = true;
         hashedPasswordFile = config.sops.secrets.media-mail-password-hashed.path;
       };
+      "firefly@m7.rs" = {
+        sendOnly = true;
+        hashedPasswordFile = config.sops.secrets.firefly-mail-password-hashed.path;
+      };
     };
     mailboxes = {
       Archive = {
@@ -76,6 +80,7 @@
     gabriel-mail-password.sopsFile = ../secrets.yaml;
     grafana-mail-password-hashed.sopsFile = ../secrets.yaml;
     media-mail-password-hashed.sopsFile = ../secrets.yaml;
+    firefly-mail-password-hashed.sopsFile = ../secrets.yaml;
   };
 
   # Webmail
