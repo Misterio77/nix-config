@@ -8,7 +8,7 @@
   hardware.graphics.enable = true;
 
   hardware.nvidia = {
-    powerManagement.enable = true;
+    # powerManagement.enable = true;
     # Does not support maxwell gpu
     open = false;
     # No need to offload on a desktop
