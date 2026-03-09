@@ -2,8 +2,8 @@
   security.tpm2 = {
     enable = true;
     pkcs11.enable = true;
-
   };
+  services.fwupd.enable = true;
   boot.kernelModules = ["uhid"];
   # Needed for tpm-fido
   services.udev.extraRules = ''
