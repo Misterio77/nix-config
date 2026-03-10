@@ -107,5 +107,15 @@ in {
         runHook postInstall
       '';
     });
+
+    automatic-timezoned = prev.automatic-timezoned.overrideAttrs (old: {
+      patches = [./automatic-timezoned-async-error-handling.patch];
+      cargoDeps = old.cargoDeps.overrideAttrs (old: {
+        vendorStaging = old.vendorStaging.overrideAttrs {
+          patches = [./automatic-timezoned-async-error-handling.patch];
+          outputHash = "sha256-1Q17ss0HXC4zx5LiJ1xDS6HFs6Xa/9byCxfgMi3Bz0A=";
+        };
+      });
+    });
   };
 }
