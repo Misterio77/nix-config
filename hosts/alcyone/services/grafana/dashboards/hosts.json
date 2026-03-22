@@ -80,7 +80,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "exemplar": false,
@@ -187,7 +187,7 @@
         "textMode": "auto",
         "wideLayout": false
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "editorMode": "code",
@@ -314,7 +314,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "min"
+            "first"
           ],
           "fields": "",
           "values": false
@@ -323,18 +323,18 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
-          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\",device!~\"(none|ramfs|tmpfs)\",fstype!~\"vfat\"} - (node_filesystem_free_bytes{instance=\"$hosts\",device!~\"(none|ramfs|tmpfs)\",fstype!~\"vfat\"}))",
-          "legendFormat": "device={{device}},type=used",
+          "expr": "sum by (job, instance, uuid) (node_btrfs_used_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
+          "legendFormat": "device={{label}},type=used",
           "range": false,
           "instant": true,
           "refId": "Used Space"
         },
         {
-          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\",device!~\"(none|ramfs|tmpfs)\",fstype!~\"vfat\"})",
-          "legendFormat": "device={{device}},type=total",
+          "expr": "sum by (job, instance, uuid) (node_btrfs_device_size_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
+          "legendFormat": "device={{label}},type=total",
           "range": false,
           "instant": true,
           "refId": "Total Space"
@@ -377,24 +377,6 @@
           }
         },
         {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "equal",
-                  "options": {
-                    "value": "tmpfs"
-                  }
-                },
-                "fieldName": "device"
-              }
-            ],
-            "match": "all",
-            "type": "exclude"
-          }
-        },
-        {
           "id": "partitionByValues",
           "options": {
             "fields": [
@@ -402,7 +384,7 @@
             ],
             "keepFields": false,
             "naming": {
-              "asLabels": true
+              "asLabels": false
             }
           }
         }
@@ -475,7 +457,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "expr": "sum(node_memory_MemTotal_bytes{instance=\"$hosts\"} - node_memory_MemAvailable_bytes{instance=\"$hosts\"} or vector(0))",
@@ -605,7 +587,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.1.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "exemplar": false,

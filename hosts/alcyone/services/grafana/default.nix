@@ -84,7 +84,7 @@
                 notification_settings.receiver = "default";
                 annotations = {
                   summary = "{{ $labels.instance }} is low on storage";
-                  description = "{{ $labels.device }} at {{ $labels.instance }} is below 10% capacity.";
+                  description = "{{ $labels.label }} at {{ $labels.instance }} is below 10% capacity.";
                 };
                 condition = "B";
                 execErrState = "KeepLast";
@@ -96,7 +96,7 @@
                     model = {
                       refId = "A";
                       intervalMs = 1000;
-                      expr = "avg by (device, instance) (node_filesystem_free_bytes / node_filesystem_size_bytes)";
+                      expr = "sum by (job, instance, uuid) (node_btrfs_used_bytes) / sum by (job, instance, uuid) (node_btrfs_device_size_bytes) * on(uuid) group_left(label) node_btrfs_info";
                       instant = true;
                       range = false;
                       legendFormat = "__auto";
@@ -124,8 +124,8 @@
                         type = "query";
                         query.params = ["B"];
                         evaluator = {
-                          type = "lt";
-                          params = [ 0.1 ];
+                          type = "gt";
+                          params = [ 0.9 ];
                         };
                         operator.type = "and";
                         reducer.type = "last";
