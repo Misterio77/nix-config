@@ -444,7 +444,7 @@
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "expr": "sum(node_memory_MemTotal_bytes{instance=\"$hosts\"} - node_memory_MemAvailable_bytes{instance=\"$hosts\"} or vector(0))",
+          "expr": "sum(node_memory_MemTotal_bytes{instance=\"$hosts\"} - node_memory_MemAvailable_bytes{instance=\"$hosts\"})",
           "instant": false,
           "legendFormat": "Used Memory",
           "range": true,
