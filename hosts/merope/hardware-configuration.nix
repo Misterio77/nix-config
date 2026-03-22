@@ -96,6 +96,25 @@
         };
       };
     };
+    hdd2 = {
+      device = "/dev/sdc";
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions.backups = {
+          size = "100%";
+          content = {
+            type = "btrfs";
+            subvolumes = {
+              "/backups" = {
+                mountOptions = ["noatime"];
+                mountpoint = "/srv/backups";
+              };
+            };
+          };
+        };
+      };
+    };
   };
 
   hardware.raspberry-pi."4" = {
