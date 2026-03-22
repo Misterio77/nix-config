@@ -293,6 +293,10 @@
               {
                 "color": "red",
                 "value": 90
+              },
+              {
+                "color": "text",
+                "value": 100
               }
             ]
           },
