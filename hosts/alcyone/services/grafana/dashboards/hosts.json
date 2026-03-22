@@ -55,7 +55,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 3,
         "x": 0,
         "y": 1
@@ -163,7 +163,7 @@
         ]
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 4,
         "x": 3,
         "y": 1
@@ -275,7 +275,6 @@
           "fieldMinMax": true,
           "mappings": [],
           "min": 0,
-          "noValue": "?",
           "thresholds": {
             "mode": "percentage",
             "steps": [
@@ -285,7 +284,7 @@
               },
               {
                 "color": "green",
-                "value": 0.01
+                "value": 1e-14
               },
               {
                 "color": "yellow",
@@ -302,41 +301,52 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 6,
         "x": 7,
         "y": 1
       },
       "id": 3,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "maxVizHeight": 40,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "first"
+            "min"
           ],
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
           "expr": "sum by (job, instance, uuid) (node_btrfs_used_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
+          "instant": true,
           "legendFormat": "device={{label}},type=used",
           "range": false,
-          "instant": true,
           "refId": "Used Space"
         },
         {
           "expr": "sum by (job, instance, uuid) (node_btrfs_device_size_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
+          "instant": true,
           "legendFormat": "device={{label}},type=total",
           "range": false,
-          "instant": true,
           "refId": "Total Space"
         }
       ],
@@ -356,59 +366,35 @@
           }
         },
         {
-          "id": "organize",
+          "id": "groupingToMatrix",
           "options": {
-            "excludeByName": {
-              "Metric": true,
-              "Time": false
-            },
-            "includeByName": {},
-            "indexByName": {
-              "Metric": 1,
-              "Time": 0,
-              "Value": 4,
-              "device": 2,
-              "type": 3
-            },
-            "orderByMode": "manual",
-            "renameByName": {
-              "Time": ""
-            }
+            "columnField": "device",
+            "rowField": "type",
+            "valueField": "Value"
           }
         },
         {
-          "id": "partitionByValues",
+          "id": "organize",
           "options": {
-            "fields": [
-              "device"
-            ],
-            "keepFields": false,
-            "naming": {
-              "asLabels": false
-            }
+            "excludeByName": {
+              "type\\device": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "orderByMode": "manual",
+            "renameByName": {}
           }
         }
       ],
-      "type": "gauge"
+      "type": "bargauge"
     },
     {
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 0,
-                  "text": "?"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "min": 0,
+          "min": 1,
           "noValue": "?",
           "thresholds": {
             "mode": "percentage",
@@ -436,26 +422,24 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 3,
+        "h": 6,
+        "w": 4,
         "x": 13,
         "y": 1
       },
       "id": 4,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "12.3.1",
       "targets": [
@@ -495,7 +479,7 @@
           }
         }
       ],
-      "type": "gauge"
+      "type": "timeseries"
     },
     {
       "fieldConfig": {
@@ -567,9 +551,9 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 7,
-        "x": 16,
+        "h": 6,
+        "w": 6,
+        "x": 17,
         "y": 1
       },
       "id": 5,
