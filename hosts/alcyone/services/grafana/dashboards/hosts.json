@@ -326,14 +326,14 @@
       "pluginVersion": "12.1.0",
       "targets": [
         {
-          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\"} - node_filesystem_free_bytes{instance=\"$hosts\"} > 1000000000)",
+          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\",device!~\"(none|ramfs|tmpfs)\",fstype!~\"vfat\"} - (node_filesystem_free_bytes{instance=\"$hosts\",device!~\"(none|ramfs|tmpfs)\",fstype!~\"vfat\"}))",
           "legendFormat": "device={{device}},type=used",
           "range": false,
           "instant": true,
           "refId": "Used Space"
         },
         {
-          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\"} > 1000000000)",
+          "expr": "avg by (instance, device) (node_filesystem_size_bytes{instance=\"$hosts\",device!~\"(none|ramfs|tmpfs)\",fstype!~\"vfat\"})",
           "legendFormat": "device={{device}},type=total",
           "range": false,
           "instant": true,
