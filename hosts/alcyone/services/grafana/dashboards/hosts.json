@@ -55,8 +55,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
-        "w": 2,
+        "h": 7,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -164,8 +164,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 2,
-        "x": 2,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "id": 6,
@@ -173,7 +173,7 @@
         "colorMode": "value",
         "graphMode": "none",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "percentChangeColorMode": "same_as_value",
         "reduceOptions": {
           "calcs": [
@@ -269,133 +269,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
-          },
-          "displayName": "${__field.displayName}",
-          "fieldMinMax": true,
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "text",
-                "value": 0
-              },
-              {
-                "color": "green",
-                "value": 1e-14
-              },
-              {
-                "color": "yellow",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              },
-              {
-                "color": "text",
-                "value": 100
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 4,
-        "y": 1
-      },
-      "id": 3,
-      "options": {
-        "displayMode": "lcd",
-        "legend": {
-          "calcs": [
-            "max"
-          ],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "maxVizHeight": 40,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "left",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "min"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "manual",
-        "valueMode": "color"
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "expr": "sum by (job, instance, uuid) (node_btrfs_used_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
-          "instant": true,
-          "legendFormat": "device={{label}},type=used",
-          "range": false,
-          "refId": "Used Space"
-        },
-        {
-          "expr": "sum by (job, instance, uuid) (node_btrfs_device_size_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
-          "instant": true,
-          "legendFormat": "device={{label}},type=total",
-          "range": false,
-          "refId": "Total Space"
-        }
-      ],
-      "title": "Storage",
-      "transformations": [
-        {
-          "id": "seriesToRows",
-          "options": {}
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "delimiter": ",",
-            "keepTime": false,
-            "replace": false,
-            "source": "Metric"
-          }
-        },
-        {
-          "id": "groupingToMatrix",
-          "options": {
-            "columnField": "device",
-            "rowField": "type",
-            "valueField": "Value"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "type\\device": true
-            },
-            "includeByName": {},
-            "indexByName": {},
-            "orderByMode": "manual",
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "bargauge"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "mode": "palette-classic"
           },
           "min": 1,
@@ -427,8 +300,8 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 5,
-        "x": 10,
+        "w": 7,
+        "x": 8,
         "y": 1
       },
       "id": 4,
@@ -556,7 +429,7 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 6,
+        "w": 7,
         "x": 15,
         "y": 1
       },
@@ -588,6 +461,137 @@
       ],
       "title": "System Load",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "displayName": "${__field.displayName}",
+          "fieldMinMax": true,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1e-14
+              },
+              {
+                "color": "yellow",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              },
+              {
+                "color": "text",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "displayMode": "lcd",
+        "legend": {
+          "calcs": [
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "maxVizHeight": 40,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "left",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "expr": "sum by (job, instance, uuid) (node_btrfs_used_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
+          "instant": true,
+          "legendFormat": "device={{label}},type=used",
+          "range": false,
+          "refId": "Used Space"
+        },
+        {
+          "expr": "sum by (job, instance, uuid) (node_btrfs_device_size_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
+          "instant": true,
+          "legendFormat": "device={{label}},type=total",
+          "range": false,
+          "refId": "Total Space"
+        }
+      ],
+      "title": "Storage",
+      "transformations": [
+        {
+          "id": "seriesToRows",
+          "options": {}
+        },
+        {
+          "id": "extractFields",
+          "options": {
+            "delimiter": ",",
+            "keepTime": false,
+            "replace": false,
+            "source": "Metric"
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "device",
+            "rowField": "type",
+            "valueField": "Value"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "type\\device": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "orderByMode": "manual",
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "bargauge"
     }
   ],
   "preload": false,
