@@ -601,17 +601,13 @@
   "templating": {
     "list": [
       {
+        "allowCustomValue": false,
         "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": "All",
+          "value": "$__all"
         },
         "definition": "label_values(up{job=\"hosts\"},instance)",
         "includeAll": true,
-        "multi": true,
         "name": "hosts",
         "options": [],
         "query": {
