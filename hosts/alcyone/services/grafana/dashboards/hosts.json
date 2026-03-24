@@ -271,6 +271,41 @@
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
           "min": 1,
           "noValue": "?",
           "thresholds": {
@@ -463,10 +498,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus-default"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -506,27 +537,16 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 8,
         "x": 0,
         "y": 8
       },
       "id": 3,
       "options": {
-        "displayMode": "lcd",
-        "legend": {
-          "calcs": [
-            "max"
-          ],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "maxVizHeight": 40,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "left",
-        "orientation": "horizontal",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "min"
@@ -534,24 +554,24 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true,
-        "sizing": "manual",
-        "valueMode": "color"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
           "expr": "sum by (job, instance, uuid) (node_btrfs_used_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
-          "instant": true,
+          "range": true,
           "legendFormat": "device={{label}},type=used",
-          "range": false,
+          "instant": false,
           "refId": "Used Space"
         },
         {
           "expr": "sum by (job, instance, uuid) (node_btrfs_device_size_bytes{instance=\"$hosts\"}) * on(uuid) group_left(label) node_btrfs_info{instance=\"$hosts\"}",
-          "instant": true,
+          "range": true,
           "legendFormat": "device={{label}},type=total",
-          "range": false,
+          "instant": false,
           "refId": "Total Space"
         }
       ],
@@ -591,7 +611,7 @@
           }
         }
       ],
-      "type": "bargauge"
+      "type": "gauge"
     }
   ],
   "preload": false,
