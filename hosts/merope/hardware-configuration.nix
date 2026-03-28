@@ -91,6 +91,10 @@
                 mountOptions = ["noatime"];
                 mountpoint = "/srv/media/movies";
               };
+              "/photos" = {
+                mountOptions = ["noatime"];
+                mountpoint = "/srv/media/photos";
+              };
             };
           };
         };

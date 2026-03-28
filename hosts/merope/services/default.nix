@@ -6,5 +6,6 @@
 
     ./media
     ./files-server.nix
+    ./immich.nix
   ];
 }
