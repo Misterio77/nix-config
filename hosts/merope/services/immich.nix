@@ -3,9 +3,6 @@
     enable = true;
     accelerationDevices = ["/dev/dri/renderD128"];
     mediaLocation = "/srv/media/photos";
-    machine-learning = {
-      enable = false;
-    };
     settings = {
       server.externalDomain = "https://photos.m7.rs";
     };
