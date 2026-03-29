@@ -1,10 +1,11 @@
 {config, pkgs, lib, ...}: let
+  inherit (config.hardware.nvidia.prime.offload) enableOffloadCmd offloadCmdMainProgram;
   steam-gamescope = pkgs.writeShellScriptBin "steam-gamescope" ''
     export STEAM_ENABLE_VOLUME_HANDLER=1
     export STEAM_ENABLE_CEC=1
     systemctl --user start steam-gamescope-session.target
     ${lib.getExe' pkgs.pulseaudio "pactl"} set-sink-volume @DEFAULT_SINK@ 50%
-    gamescope --steam -- steam -tenfoot &>/dev/null
+    ${lib.optionalString enableOffloadCmd offloadCmdMainProgram} gamescope --steam -- steam -tenfoot &>/dev/null
     systemctl --user stop steam-gamescope-session.target
   '';
 
