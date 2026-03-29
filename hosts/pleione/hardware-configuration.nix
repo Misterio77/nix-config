@@ -84,7 +84,10 @@
           content = {
             name = "root";
             type = "luks";
-            settings.allowDiscards = true;
+            settings = {
+              allowDiscards = true;
+              keyFile = "/boot/keyfile";
+            };
             content = {
               type = "btrfs";
               postCreateHook = ''
