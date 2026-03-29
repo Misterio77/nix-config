@@ -8,11 +8,20 @@
   hardware.graphics.enable = true;
 
   hardware.nvidia = {
-    # powerManagement.enable = true;
+    powerManagement = {
+      enable = false;
+      finegrained = false;
+    };
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      nvidiaBusId = "PCI:1@0:0:0";
+      intelBusId = "PCI:0@0:2:0";
+    };
     # Does not support maxwell gpu
     open = false;
-    # No need to offload on a desktop
-    prime.offload.enable = false;
   };
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
