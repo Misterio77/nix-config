@@ -1,4 +1,7 @@
-{lib, pkgs, ...}: {
+{lib, pkgs, ...}: let
+  vendor = "1915";
+  product = "1025";
+in {
   imports = [
     ../common/optional/keyd.nix
   ];
@@ -7,7 +10,7 @@
     keyboards = {
       remoteControl = {
         ids = [
-          "1915:1025"
+          "${vendor}:${product}"
         ];
         settings.main = {
           # Back button
@@ -21,9 +24,8 @@
     };
   };
 
-  powerManagement.resumeCommands = ''
-    ${pkgs.kmod}/bin/rmmod xhci_pci
-    sleep 1
-    ${pkgs.kmod}/bin/modprobe xhci_pci
+  # Avoid suspend wakeup
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="${vendor}", ATTRS{idProduct}=="${product}", ATTR{power/wakeup}="disabled"
   '';
 }

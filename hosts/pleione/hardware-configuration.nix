@@ -32,12 +32,6 @@
   hardware.cpu.amd.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = "ondemand";
 
-  # Avoid random suspend wakeup
-  services.udev.extraRules = ''
-    ACTION=="add",SUBSYSTEM=="pci",ATTR{vendor}=="0x8086",ATTR{device}=="0x1901",ATTR{power/wakeup}="disabled"
-    ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="1915", ATTRS{idProduct}=="1025", ATTR{power/wakeup}="disabled"
-  '';
-
   boot = {
     kernelParams = [ "usbcore.autosuspend=-1" ];
     initrd = {
