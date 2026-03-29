@@ -33,6 +33,7 @@
   ];
 
   boot = {
+    kernelParams = [ "usbcore.autosuspend=-1" ];
     initrd = {
       availableKernelModules = [
         "xhci_pci"
