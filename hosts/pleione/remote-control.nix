@@ -28,4 +28,9 @@ in {
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="${vendor}", ATTRS{idProduct}=="${product}", ATTR{power/wakeup}="disabled"
   '';
+  powerManagement.resumeCommands = ''
+    ${pkgs.kmod}/bin/rmmod xhci_pci
+    sleep 1
+    ${pkgs.kmod}/bin/modprobe xhci_pci
+  '';
 }
