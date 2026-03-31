@@ -15,22 +15,6 @@ in {
           base_domain = "ts.m7.rs";
           magic_dns = true;
           nameservers.global = ["9.9.9.9"];
-          extra_records = [
-            # My home ISP router does not support NAT Hairpin
-            # Usually this shouldn't be a problem, because IPv6 works perfectly.
-            # A few devices might not support IPv6 for one reason or another
-            # So let's override the IPv4 DNS with my home servers tailnet IP
-            {
-              name = "merope.m7.rs";
-              type = "A";
-              value = "100.77.0.5";
-            }
-            {
-              name = "media.m7.rs";
-              type = "A";
-              value = "100.77.0.5";
-            }
-          ];
         };
         server_url = "https://tailscale.m7.rs";
         metrics_listen_addr = "127.0.0.1:8095";
