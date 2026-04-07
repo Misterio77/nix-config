@@ -19,7 +19,7 @@ in {
       "libvirtd"
       "minecraft"
       "mysql"
-      "network"
+      "wpa_supplicant"
       "plugdev"
       "podman"
       "tss"
