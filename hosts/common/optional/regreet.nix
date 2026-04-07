@@ -2,7 +2,7 @@
 {pkgs, ...}: {
   programs.regreet = {
     enable = true;
-    cageArgs = ["-s" "-m" "last"];
+    cageArgs = ["-d" "-s" "-m" "last"];
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
