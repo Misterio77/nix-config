@@ -80,7 +80,7 @@ in {
     settings = {
       general = {
         gaps_in = 15;
-        gaps_out = 20;
+        gaps_out = "70,20,20,20"; # 70 = 15 (waybar margin) + 20 (waybar height) + 15 (gaps_in)
         border_size = 2;
         "col.active_border" = rgba config.colorscheme.colors.primary "ee";
         "col.inactive_border" = rgba config.colorscheme.colors.surface "aa";
@@ -359,40 +359,11 @@ in {
             )
         );
 
-      monitor = let
-        waybarSpace = let
-          inherit (config.wayland.windowManager.hyprland.settings.general) gaps_in gaps_out;
-          inherit (config.programs.waybar.settings.primary) position height width;
-          gap = gaps_out - gaps_in;
-        in {
-          top =
-            if (position == "top")
-            then height + gap
-            else 0;
-          bottom =
-            if (position == "bottom")
-            then height + gap
-            else 0;
-          left =
-            if (position == "left")
-            then width + gap
-            else 0;
-          right =
-            if (position == "right")
-            then width + gap
-            else 0;
-        };
-      in
-        [
-          ",addreserved,${toString waybarSpace.top},${toString waybarSpace.bottom},${toString waybarSpace.left},${toString waybarSpace.right}"
-        ]
-        ++ (map (
-          m: "${m.name},${
-            if m.enabled
-            then "${toString m.width}x${toString m.height}@${toString m.refreshRate},${m.position},${toString m.scale}"
-            else "disable"
-          }"
-        ) (config.monitors));
+      monitor = map (m: "${m.name},${
+        if m.enabled
+        then "${toString m.width}x${toString m.height}@${toString m.refreshRate},${m.position},${toString m.scale}"
+        else "disable"
+      }") (config.monitors);
 
       workspace = map (m: "${m.workspace},monitor:${m.name}") (
         lib.filter (m: m.enabled && m.workspace != null) config.monitors
