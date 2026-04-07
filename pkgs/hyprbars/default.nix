@@ -6,8 +6,8 @@ hyprland.stdenv.mkDerivation (final: {
   src = "${fetchFromGitHub {
     owner = "hyprwm";
     repo = "hyprland-plugins";
-    rev = "64b7c2dff7e5e1fcb4cb7e5db078947744070e1a";
-    hash = "sha256-1WYjD66gyjj7PVOe7xbho6030FdrIUjh/XpAtp5+ASo=";
+    rev = "6acc0738f298f5efe40a99db2c12449112d65633";
+    hash = "sha256-xmzpa+kFv1zDei3nT1sWZ/Q9TdMK/Rhx1I09VuO2F3E=";
   }}/hyprbars";
   buildInputs = [hyprland] ++ hyprland.buildInputs;
   nativeBuildInputs = [pkg-config cmake];

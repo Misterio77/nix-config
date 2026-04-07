@@ -8,12 +8,17 @@
       sopsFile = ../../secrets.yaml;
       owner = "grafana";
     };
+    grafana-key = {
+      sopsFile = ../../secrets.yaml;
+      owner = "grafana";
+    };
   };
 
   services = {
     grafana = {
       enable = true;
       settings = {
+        security.secret_key = "$__file{${config.sops.secrets.grafana-key.path}}";
         server.http_port = 3000;
         users.default_theme = "system";
         dashboards.default_home_dashboard_path = "${./dashboards}/hosts.json";

@@ -95,7 +95,7 @@
     };
   };
 
-  programs.light.enable = true;
+  hardware.acpilight.enable = true;
   environment.systemPackages = [pkgs.brightnessctl];
 
   # Lid settings

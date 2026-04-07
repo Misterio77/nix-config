@@ -7,9 +7,6 @@
 }: {
   imports = [inputs.nixos-mailserver.nixosModules.mailserver];
 
-  # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/issues/275
-  services.dovecot2.sieve.extensions = ["fileinto"];
-
   mailserver = rec {
     stateVersion = 3;
     enable = true;
@@ -20,7 +17,7 @@
       "misterio.me"
       "gsfontes.com"
     ];
-    useFsLayout = true;
+    useFSLayout = true;
     x509.useACMEHost = config.mailserver.fqdn;
     localDnsResolver = false;
     loginAccounts = {
@@ -45,23 +42,23 @@
     mailboxes = {
       Archive = {
         auto = "subscribe";
-        specialUse = "Archive";
+        special_use = "\\Archive";
       };
       Drafts = {
         auto = "subscribe";
-        specialUse = "Drafts";
+        special_use = "\\Drafts";
       };
       Sent = {
         auto = "subscribe";
-        specialUse = "Sent";
+        special_use = "\\Sent";
       };
       Junk = {
         auto = "subscribe";
-        specialUse = "Junk";
+        special_use = "\\Junk";
       };
       Trash = {
         auto = "subscribe";
-        specialUse = "Trash";
+        special_use = "\\Trash";
       };
     };
     mailDirectory = "/srv/mail/vmail";
