@@ -5,7 +5,7 @@
   redir = {
     forceSSL = true;
     enableACME = true;
-    locations."/".return = "302 https://m7.rs$request_uri";
+    locations."/".return = "302 https://gsfontes.com$request_uri";
   };
   days = n: (hours n) * 24;
   hours = n: (minutes n) * 60;
@@ -17,7 +17,7 @@ in {
   ];
 
   services.nginx.virtualHosts = {
-    "m7.rs" = {
+    "gsfontes.com" = {
       forceSSL = true;
       enableACME = true;
       locations = {
@@ -52,7 +52,7 @@ in {
         "=/ssh".alias = sshKey;
       };
     };
-    "gsfontes.com" = redir;
+    "m7.rs" = redir;
     "misterio.me" = redir;
   };
 }
