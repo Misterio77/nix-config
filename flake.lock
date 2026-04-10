@@ -511,29 +511,6 @@
         "type": "github"
       }
     },
-    "paste-misterio-me": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1744953378,
-        "narHash": "sha256-kXZaTUgth4a1aDLM9/Y4autHqS0yt69hAuNQFZUMDyU=",
-        "owner": "misterio77",
-        "repo": "paste.misterio.me",
-        "rev": "1ad9ef9c3e7d68f8026cb925b9425fa233349e56",
-        "type": "github"
-      },
-      "original": {
-        "owner": "misterio77",
-        "repo": "paste.misterio.me",
-        "type": "github"
-      }
-    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -572,7 +549,6 @@
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
-        "paste-misterio-me": "paste-misterio-me",
         "sops-nix": "sops-nix",
         "systems": "systems_4",
         "themes": "themes",

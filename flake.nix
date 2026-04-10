@@ -73,11 +73,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
     };
-    paste-misterio-me = {
-      url = "github:misterio77/paste.misterio.me";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-    };
   };
 
   outputs = {
