@@ -18,6 +18,7 @@
     ../common/optional/pipewire.nix
     ../common/optional/quietboot.nix
     ../common/optional/wireless.nix
+    ../common/optional/waydroid.nix
 
     ../common/optional/starcitizen-fixes.nix
   ];
