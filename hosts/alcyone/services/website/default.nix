@@ -5,7 +5,7 @@
   redir = {
     forceSSL = true;
     enableACME = true;
-    locations."/".return = "302 https://gsfontes.com$request_uri";
+    locations."/".return = "301 https://gsfontes.com$request_uri";
   };
   days = n: (hours n) * 24;
   hours = n: (minutes n) * 60;
