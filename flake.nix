@@ -156,16 +156,6 @@
       };
     };
 
-    # Standalone HM only
-    homeConfigurations = {
-      # Work laptop
-      "gabriel@electra" = lib.homeManagerConfiguration {
-        modules = [ ./home/gabriel/electra.nix ./home/gabriel/nixpkgs.nix ];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-    };
+    homeConfigurations = {};
   };
 }
