@@ -29,23 +29,11 @@ in {
     import ../pkgs {pkgs = final;}
     // {
       formats = (prev.formats or {}) // import ../pkgs/formats {pkgs = final;};
-      vimPlugins = (prev.vimPlugins or {}) // import ../pkgs/vim-plugins {pkgs = final;};
       roundcubePlugins = (prev.roundcubePlugins or {}) // import ../pkgs/roundcube-plugins {pkgs = final;};
     };
 
   # Modifies existing packages
   modifications = final: prev: {
-    vimPlugins =
-      prev.vimPlugins
-      // {
-        vim-numbertoggle = addPatches prev.vimPlugins.vim-numbertoggle [
-          ./vim-numbertoggle-command-mode.patch
-        ];
-        ltex_extra-nvim = addPatches prev.vimPlugins.ltex_extra-nvim [
-          ./ltex-change-lang-command.diff
-        ];
-      };
-
     qutebrowser = prev.qutebrowser.overrideAttrs (oldAttrs: {
       preFixup =
         oldAttrs.preFixup
