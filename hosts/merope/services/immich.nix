@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, outputs, ...}: {
   services.immich = {
     enable = true;
     accelerationDevices = ["/dev/dri/renderD128"];
@@ -15,6 +15,11 @@
       proxyPass = "http://localhost:${toString config.services.immich.port}";
       proxyWebsockets = true;
     };
+    extraConfig = ''
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+      deny all;
+    '';
   };
 
   /*

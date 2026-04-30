@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, outputs, ...}: {
   services.bazarr = {
     enable = true;
     listenPort = 8689;
@@ -11,6 +11,11 @@
       proxyPass = "http://localhost:${toString config.services.bazarr.listenPort}";
       proxyWebsockets = true;
     };
+    extraConfig = ''
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+      deny all;
+    '';
   };
 
   # Add bazarr to sonarr and radarr groups

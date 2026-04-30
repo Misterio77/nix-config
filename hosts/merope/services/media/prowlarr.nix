@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{config, lib, outputs, ...}: {
   services.prowlarr = {
     enable = true;
     settings = {
@@ -13,6 +13,11 @@
       proxyPass = "http://localhost:${toString config.services.prowlarr.settings.server.port}";
       proxyWebsockets = true;
     };
+    extraConfig = ''
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+      deny all;
+    '';
   };
 
 

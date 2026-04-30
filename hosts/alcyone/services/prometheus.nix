@@ -74,6 +74,11 @@ in {
         forceSSL = true;
         enableACME = true;
         locations."/".proxyPass = "http://localhost:${toString config.services.prometheus.port}";
+        extraConfig = ''
+          allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+          allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+          deny all;
+        '';
       };
     };
   };

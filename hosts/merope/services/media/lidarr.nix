@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, outputs, ...}: {
   services.lidarr = {
     enable = true;
     settings = {
@@ -13,6 +13,11 @@
       proxyPass = "http://localhost:${toString config.services.lidarr.settings.server.port}";
       proxyWebsockets = true;
     };
+    extraConfig = ''
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+      deny all;
+    '';
   };
 
   # Add lidarr to deluge's and nzbget's groups
