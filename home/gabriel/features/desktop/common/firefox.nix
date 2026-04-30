@@ -6,6 +6,8 @@
   programs.browserpass.enable = true;
   programs.firefox = {
     enable = true;
+    # TODO: migrate to "${config.xdg.configHome}/mozilla/firefox" at some point
+    configPath = ".mozilla/firefox";
     profiles.gabriel = {
       search = {
         force = true;

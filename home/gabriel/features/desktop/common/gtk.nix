@@ -52,6 +52,7 @@ in {
     font = {
       inherit (config.fontProfiles.regular) name size;
     };
+    gtk4.theme = config.gtk.theme;
     theme = let
       inherit (config.colorscheme) mode colors;
       name = "generated-${builtins.hashString "md5" (builtins.toJSON colors)}-${mode}";
