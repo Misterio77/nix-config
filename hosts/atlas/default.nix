@@ -19,6 +19,7 @@
     ../common/optional/quietboot.nix
     ../common/optional/wireless.nix
     ../common/optional/waydroid.nix
+    ../common/optional/cups.nix
 
     ../common/optional/starcitizen-fixes.nix
   ];
