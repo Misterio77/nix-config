@@ -27,6 +27,7 @@
       ./kdeconnect.nix
       ./upower.nix
       ./display-manager.nix
+      ./mandoc.nix
     ]
     ++ (builtins.attrValues outputs.nixosModules);
 
