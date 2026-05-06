@@ -62,9 +62,8 @@ in {
 
     vdirsyncer = addPatches prev.vdirsyncer [./vdirsyncer-fixed-oauth-token.patch];
 
-    # https://github.com/pimutils/todoman/pull/594
     todoman = addPatches prev.todoman [
-      ./todoman-latest-main.patch
+      # https://github.com/pimutils/todoman/pull/594
       ./todoman-subtasks.patch
       ./todoman-disable-uid-hostname-suffix.diff
     ];

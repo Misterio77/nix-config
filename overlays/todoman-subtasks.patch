@@ -1,24 +1,22 @@
-From 87fc93e8017083485e12c9a7906eba21b26d1e91 Mon Sep 17 00:00:00 2001
+From 7817f29220c615a7ad3ee62a1c168b842a8d3128 Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Mon, 25 Aug 2025 20:21:24 +0200
-Subject: [PATCH 1/8] feat!: add support for `RELATED-TO` property and
- `RELTYPE` parameter
+Subject: [PATCH 1/9] feat: add support for `RELATED-TO` property and `RELTYPE`
+ parameter
 
 Taken from RFC 5545, section `3.8.4.5`. If present in a file,
 these values are now read and stored in the cache. Nothing in the UI
 has been changed. Tests are modified to reflect the change.
 
-BREAKING CHANGE: The cache has to be deleted manually and recreated if
-the cache was previously created using a version of the code,
-that is older than this commit.
+Increment `SCHEMA_VERSION` to allow cache recreation on todoman update.
 ---
  tests/test_backend.py |  6 ++++++
  tests/test_model.py   | 10 ++++++++++
- todoman/model.py      | 34 +++++++++++++++++++++++++++++++---
- 3 files changed, 47 insertions(+), 3 deletions(-)
+ todoman/model.py      | 41 +++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 53 insertions(+), 4 deletions(-)
 
 diff --git a/tests/test_backend.py b/tests/test_backend.py
-index 2a09a6b5..decd110f 100644
+index bf3f0f1..821bb77 100644
 --- a/tests/test_backend.py
 +++ b/tests/test_backend.py
 @@ -49,6 +49,8 @@ def test_supported_fields_are_serializeable() -> None:
@@ -35,7 +33,7 @@ index 2a09a6b5..decd110f 100644
          summary="Some tea",
          rrule="FREQ=MONTHLY",
 +        related_to=related_val,
-+        related_to_reltype=related_val_reltype
++        related_to_reltype=related_val_reltype,
      )
      writer = VtodoWriter(todo)
      vtodo = writer.serialize()
@@ -44,15 +42,15 @@ index 2a09a6b5..decd110f 100644
      assert str(vtodo.get("status")) == "IN-PROCESS"
      assert vtodo.get("rrule") == icalendar.vRecur.from_ical("FREQ=MONTHLY")
 +    assert vtodo.get("related-to") == related_val
-+    assert vtodo.get("related-to").params.get('reltype') == related_val_reltype
++    assert vtodo.get("related-to").params.get("reltype") == related_val_reltype
 
 
  @freeze_time("2017-04-04 20:11:57")
 diff --git a/tests/test_model.py b/tests/test_model.py
-index cdb5d0bc..d029016f 100644
+index a1989f9..d122039 100644
 --- a/tests/test_model.py
 +++ b/tests/test_model.py
-@@ -250,6 +250,12 @@ def test_todo_setters(todo_factory: Callable) -> None:
+@@ -260,6 +260,12 @@ def test_todo_setters(todo_factory: Callable) -> None:
      todo.due = None
      assert todo.due is None
 
@@ -65,7 +63,7 @@ index cdb5d0bc..d029016f 100644
 
  @freeze_time("2017-03-19-15")
  def test_is_completed() -> None:
-@@ -391,6 +397,8 @@ def test_clone() -> None:
+@@ -401,6 +407,8 @@ def test_clone() -> None:
      todo.uid = "123"
      todo.id = 123
      todo.filename = "123.ics"
@@ -74,7 +72,7 @@ index cdb5d0bc..d029016f 100644
 
      clone = todo.clone()
 
-@@ -402,6 +410,8 @@ def test_clone() -> None:
+@@ -412,6 +420,8 @@ def test_clone() -> None:
      assert clone.id is None
      assert todo.filename != clone.filename
      assert clone.uid in clone.filename
@@ -84,7 +82,7 @@ index cdb5d0bc..d029016f 100644
 
  @freeze_time("2017, 3, 20")
 diff --git a/todoman/model.py b/todoman/model.py
-index b35e958d..444d0811 100644
+index 0411eee..bce806d 100644
 --- a/todoman/model.py
 +++ b/todoman/model.py
 @@ -55,6 +55,8 @@ class Todo:
@@ -96,7 +94,7 @@ index b35e958d..444d0811 100644
      start: date | None
      id: int | None
 
-@@ -93,6 +95,8 @@ def __init__(
+@@ -93,6 +95,8 @@ class Todo:
          self.location = ""
          self.percent_complete = 0
          self.priority = 0
@@ -105,7 +103,7 @@ index b35e958d..444d0811 100644
          self.rrule = ""
          self.sequence = 0
          self.start = None
-@@ -126,6 +130,8 @@ def clone(self) -> Todo:
+@@ -126,6 +130,8 @@ class Todo:
          for field in fields:
              setattr(todo, field, getattr(self, field))
 
@@ -114,7 +112,7 @@ index b35e958d..444d0811 100644
          return todo
 
      STRING_FIELDS = (
-@@ -135,6 +141,7 @@ def clone(self) -> Todo:
+@@ -135,6 +141,7 @@ class Todo:
          "summary",
          "uid",
          "rrule",
@@ -122,7 +120,7 @@ index b35e958d..444d0811 100644
      )
      INT_FIELDS = (
          "percent_complete",
-@@ -309,6 +316,7 @@ class VtodoWriter:
+@@ -314,6 +321,7 @@ class VtodoWriter:
              "created_at": "created",
              "last_modified": "last-modified",
              "rrule": "rrule",
@@ -130,7 +128,7 @@ index b35e958d..444d0811 100644
          }
      )
 
-@@ -355,7 +363,14 @@ def serialize(self, original: icalendar.Todo = None) -> icalendar.Todo:
+@@ -360,7 +368,14 @@ class VtodoWriter:
                  elif source in Todo.INT_FIELDS:
                      value = int(raw)
                  elif source in Todo.STRING_FIELDS:
@@ -139,14 +137,32 @@ index b35e958d..444d0811 100644
 +                        set_params = {}
 +                        reltype_value = self.todo.related_to_reltype
 +                        if reltype_value != "":
-+                            set_params = {'reltype': reltype_value}
++                            set_params = {"reltype": reltype_value}
 +                        value = icalendar.prop.vText(raw, params=set_params)
 +                    else:
 +                        value = raw
                  else:
                      raise Exception(f"Unknown field {source} serialized.")
 
-@@ -533,6 +548,8 @@ def create_tables(self) -> None:
+@@ -427,11 +442,16 @@ class Cache:
+     load times, but, more importantly, provides a simpler interface for
+     filtering/querying/sorting.
+
++    The `SCHEMA_VERSION` should be incremented when breaking changes to the
++    database are made. For example adding new fields or removing no longer
++    needed fields and etc. This will ensure that the cache is rebuilt
++    automatically after todoman was updated.
++
+     [1]: Relevant fields are those we show when listing todos, or those which
+     may be used for filtering/sorting.
+     """
+
+-    SCHEMA_VERSION = 10
++    SCHEMA_VERSION = 11
+
+     def __init__(self, path: str) -> None:
+         self.cache_path = str(path)
+@@ -545,6 +565,8 @@ class Cache:
                  "sequence" INTEGER,
                  "last_modified" INTEGER,
                  "rrule" TEXT,
@@ -155,7 +171,7 @@ index b35e958d..444d0811 100644
 
                  FOREIGN KEY(file_path) REFERENCES files(path) ON DELETE CASCADE
              );
-@@ -657,6 +674,11 @@ def add_vtodo(
+@@ -669,6 +691,11 @@ class Cache:
          :param todo: The icalendar component object on which
          """
 
@@ -167,7 +183,7 @@ index b35e958d..444d0811 100644
          sql = """
              INSERT INTO todos (
                  {}
-@@ -677,9 +699,11 @@ def add_vtodo(
+@@ -689,9 +716,11 @@ class Cache:
                  location,
                  sequence,
                  last_modified,
@@ -181,7 +197,7 @@ index b35e958d..444d0811 100644
              """
 
          due, due_dt = self._serialize_datetime(todo, "due")
-@@ -707,6 +731,8 @@ def add_vtodo(
+@@ -719,6 +748,8 @@ class Cache:
              todo.get("sequence", 1),
              self._serialize_datetime(todo, "last-modified")[0],
              self._serialize_rrule(todo, "rrule"),
@@ -190,7 +206,7 @@ index b35e958d..444d0811 100644
          ]
 
          if id:
-@@ -917,6 +943,8 @@ def _todo_from_db(self, row: dict) -> Todo:
+@@ -929,6 +960,8 @@ class Cache:
          todo.list = self.lists_map[row["list_name"]]
          todo.filename = os.path.basename(row["path"])
          todo.rrule = row["rrule"]
@@ -199,18 +215,21 @@ index b35e958d..444d0811 100644
          return todo
 
      def lists(self) -> Iterator[TodoList]:
+--
+2.53.0
 
-From b8fbc9fc95eb23bb50c07a13ac3c3e0d43a0df08 Mon Sep 17 00:00:00 2001
+
+From e40e99897f8589ea5699b09378d66494a8981f23 Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Mon, 25 Aug 2025 20:38:01 +0200
-Subject: [PATCH 2/8] chore(gitignore): add `.mypy_cache/`
+Subject: [PATCH 2/9] chore(gitignore): add `.mypy_cache/`
 
 ---
  .gitignore | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/.gitignore b/.gitignore
-index 4d443c0a..911a0e5a 100644
+index 4d443c0..911a0e5 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -13,5 +13,6 @@ docs/_build/
@@ -220,11 +239,14 @@ index 4d443c0a..911a0e5a 100644
 +.mypy_cache/
 
  todoman/version.py
+--
+2.53.0
 
-From 0fa9d37d3bdb2d0f5e673b5ccd608f40603256ec Mon Sep 17 00:00:00 2001
+
+From b57a13ea62a236e93a9ce44487587155f09c30be Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Wed, 3 Sep 2025 18:48:56 +0200
-Subject: [PATCH 3/8] feat(porcelain): add `related_to` and
+Subject: [PATCH 3/9] feat(porcelain): add `related_to` and
  `related_to_reltype`
 
 New names and values added to the JSON output for the `RELATED-TO`
@@ -235,7 +257,7 @@ property.
  2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/tests/test_porcelain.py b/tests/test_porcelain.py
-index 14b97bcf..5d53c997 100644
+index e54d8f9..ce7c04f 100644
 --- a/tests/test_porcelain.py
 +++ b/tests/test_porcelain.py
 @@ -22,7 +22,8 @@ def test_list_all(tmpdir: py.path.local, runner: CliRunner, create: Callable) ->
@@ -303,10 +325,10 @@ index 14b97bcf..5d53c997 100644
          "summary": "YARR!",
      }
 diff --git a/todoman/formatters.py b/todoman/formatters.py
-index 2424eef3..88f7cee6 100644
+index 2424eef..88f7cee 100644
 --- a/todoman/formatters.py
 +++ b/todoman/formatters.py
-@@ -313,6 +313,8 @@ def _todo_as_dict(self, todo: Todo) -> dict:
+@@ -313,6 +313,8 @@ class PorcelainFormatter(DefaultFormatter):
              "description": todo.description,
              "completed_at": self.format_datetime(todo.completed_at),
              "recurring": todo.is_recurring,
@@ -315,11 +337,14 @@ index 2424eef3..88f7cee6 100644
          }
 
      def compact(self, todo: Todo) -> str:
+--
+2.53.0
 
-From 2c0cea31bfc9e2d0745d1c0c219c5e31089b000b Mon Sep 17 00:00:00 2001
+
+From 9b557d41c629e415e9182664c92e071d742990e2 Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Sun, 7 Sep 2025 21:06:58 +0200
-Subject: [PATCH 4/8] feat(formatters): indentated output for related tasks
+Subject: [PATCH 4/9] feat(formatters): indentated output for related tasks
  (subtasks)
 
 List text output is now with a tree structure:
@@ -339,51 +364,44 @@ Includes output space formatting fixes.
 
 Tests adjusted to changes.
 ---
- tests/test_cli.py       |  13 ++--
+ tests/test_cli.py       |  16 ++---
  tests/test_formatter.py |  10 +--
- todoman/formatters.py   | 148 +++++++++++++++++++++++++++++++++-------
- 3 files changed, 136 insertions(+), 35 deletions(-)
+ todoman/formatters.py   | 142 ++++++++++++++++++++++++++++++++++------
+ 3 files changed, 134 insertions(+), 34 deletions(-)
 
 diff --git a/tests/test_cli.py b/tests/test_cli.py
-index 75e0cabd..315faf0f 100644
+index b85bec8..7de9b3b 100644
 --- a/tests/test_cli.py
 +++ b/tests/test_cli.py
-@@ -472,7 +472,8 @@ def test_color_due_dates(
-     due = datetime.datetime.now() + datetime.timedelta(hours=hours)
-     create(
-         "test.ics",
--        "SUMMARY:aaa\nSTATUS:IN-PROCESS\nDUE;VALUE=DATE-TIME;TZID=ART:{}\n".format(
-+        "SUMMARY:aaa\nSTATUS:IN-PROCESS\nDUE;VALUE=DATE-TIME;TZID=ART:{}\n"
-+        .format(
-             due.strftime("%Y%m%dT%H%M%S")
-         ),
-     )
-@@ -482,11 +483,11 @@ def test_color_due_dates(
+@@ -484,13 +484,9 @@ def test_color_due_dates(
+     assert not result.exception
      due_str = due.strftime("%Y-%m-%d")
      if hours == 72:
-         expected = (
+-        expected = (
 -            f"[ ] 1 \x1b[35m\x1b[0m \x1b[37m{due_str}\x1b[0m aaa @default\x1b[0m\n"
-+            f"[ ] 1 \x1b[37m{due_str}\x1b[0m aaa @default\x1b[0m\n"
-         )
+-        )
++        expected = f"[ ] 1 \x1b[37m{due_str}\x1b[0m aaa @default\x1b[0m\n"
      else:
-         expected = (
+-        expected = (
 -            f"[ ] 1 \x1b[35m\x1b[0m \x1b[31m{due_str}\x1b[0m aaa @default\x1b[0m\n"
-+            f"[ ] 1 \x1b[31m{due_str}\x1b[0m aaa @default\x1b[0m\n"
-         )
+-        )
++        expected = f"[ ] 1 \x1b[31m{due_str}\x1b[0m aaa @default\x1b[0m\n"
      assert result.output == expected
 
-@@ -497,16 +498,16 @@ def test_color_flag(runner: CliRunner, todo_factory: Callable) -> None:
+
+@@ -499,17 +495,15 @@ def test_color_flag(runner: CliRunner, todo_factory: Callable) -> None:
+
      result = runner.invoke(cli, ["--color", "always"], color=True)
      assert (
-         result.output.strip()
+-        result.output.strip()
 -        == "[ ] 1 \x1b[35m\x1b[0m \x1b[31m2007-03-22\x1b[0m YARR! @default\x1b[0m"
-+        == "[ ] 1 \x1b[31m2007-03-22\x1b[0m YARR! @default\x1b[0m"
++        result.output.strip() == "[ ] 1 \x1b[31m2007-03-22\x1b[0m YARR! @default\x1b[0m"
      )
      result = runner.invoke(cli, color=True)
      assert (
-         result.output.strip()
+-        result.output.strip()
 -        == "[ ] 1 \x1b[35m\x1b[0m \x1b[31m2007-03-22\x1b[0m YARR! @default\x1b[0m"
-+        == "[ ] 1 \x1b[31m2007-03-22\x1b[0m YARR! @default\x1b[0m"
++        result.output.strip() == "[ ] 1 \x1b[31m2007-03-22\x1b[0m YARR! @default\x1b[0m"
      )
 
      result = runner.invoke(cli, ["--color", "never"], color=True)
@@ -393,17 +411,17 @@ index 75e0cabd..315faf0f 100644
 
  def test_flush(
 diff --git a/tests/test_formatter.py b/tests/test_formatter.py
-index 8676d4a6..fefdf53f 100644
+index 15946fb..d5075c2 100644
 --- a/tests/test_formatter.py
 +++ b/tests/test_formatter.py
-@@ -108,15 +108,17 @@ def test_format_datetime(default_formatter: DefaultFormatter) -> None:
+@@ -106,15 +106,17 @@ def test_format_datetime(default_formatter: DefaultFormatter) -> None:
  def test_detailed_format(runner: CliRunner, todo_factory: Callable) -> None:
      todo_factory(
          description=(
 -            "Test detailed formatting\nThis includes multiline descriptions\nBlah!"
-+            "Test detailed formatting\n" +
-+            "This includes multiline descriptions\n" +
-+            "Blah!"
++            "Test detailed formatting\n"
++            + "This includes multiline descriptions\n"
++            + "Blah!"
          ),
          location="Over the hills, and far away",
      )
@@ -417,7 +435,7 @@ index 8676d4a6..fefdf53f 100644
          "",
          "Description:",
          "Test detailed formatting",
-@@ -204,7 +206,7 @@ def test_format_multiple_with_list(
+@@ -202,7 +204,7 @@ def test_format_multiple_with_list(
      assert todo.list
      assert (
          default_formatter.compact_multiple([todo])
@@ -427,28 +445,17 @@ index 8676d4a6..fefdf53f 100644
 
 
 diff --git a/todoman/formatters.py b/todoman/formatters.py
-index 88f7cee6..848c9d95 100644
+index 88f7cee..f3a4bd0 100644
 --- a/todoman/formatters.py
 +++ b/todoman/formatters.py
-@@ -20,7 +20,6 @@
- from todoman.model import Todo
- from todoman.model import TodoList
-
--
- def rgb_to_ansi(colour: str | None) -> str | None:
-     """
-     Convert a string containing an RGB colour to ANSI escapes
-@@ -119,52 +118,151 @@ def simple_action(self, action: str, todo: Todo) -> str:
-     def compact(self, todo: Todo) -> str:
+@@ -120,51 +120,155 @@ class DefaultFormatter(Formatter):
          return self.compact_multiple([todo])
 
--    def compact_multiple(self, todos: Iterable[Todo], hide_list: bool = False) -> str:
+     def compact_multiple(self, todos: Iterable[Todo], hide_list: bool = False) -> str:
 -        # TODO: format lines fuidly and drop the table
 -        # it can end up being more readable when too many columns are empty.
 -        # show dates that are in the future in yellow (in 24hs) or grey (future)
 -        table = []
-+    def compact_multiple(self, todos: Iterable[Todo],
-+                         hide_list: bool = False) -> str:
 +        # TODO: show dates that are in the future in yellow (in 24hs)
 +        # or grey (future)
 +
@@ -480,8 +487,7 @@ index 88f7cee6..848c9d95 100644
 +            # Source:
 +            # https://www.rfc-editor.org/rfc/rfc9253#section-9.1
 +            if todo.related_to != "":
-+                if todo.related_to_reltype == "PARENT" \
-+                        or todo.related_to_reltype == "":
++                if todo.related_to_reltype == "PARENT" or todo.related_to_reltype == "":
 +                    related_todos[todo.uid] = [todo.related_to, None]
 +                elif todo.related_to_reltype == "CHILD":
 +                    related_todos[todo.related_to] = [todo.uid, None]
@@ -506,7 +512,10 @@ index 88f7cee6..848c9d95 100644
 -            )
 +            priority = self.format_priority_compact(todo.priority)
 +            if priority != "":
-+                priority = click.style(priority + " ", fg="magenta",)
++                priority = click.style(
++                    priority + " ",
++                    fg="magenta",
++                )
 
              due = self.format_datetime(todo.due) or "(no due date)"
              due_colour = self._due_colour(todo)
@@ -523,31 +532,29 @@ index 88f7cee6..848c9d95 100644
                  if not todo.list:
                      raise ValueError("Cannot format todo without a list")
 
--                summary = f"{todo.summary} {self.format_database(todo.list)}{percent}"
--
+                 summary = f"{todo.summary} {self.format_database(todo.list)}{percent}"
+
 -            # TODO: add spaces on the left based on max todos"
--
++            tree[todo.uid] = [
++                f"[{completed}] {todo.id} {priority}{due} "
++                f"{recurring}{summary} {categories}\n",
++                None,
++            ]
+
 -            # FIXME: double space when no priority
 -            # split into parts to satisfy linter line too long
 -            table.append(
 -                f"[{completed}] {todo.id} {priority} {due} "
 -                f"{recurring}{summary}{categories}"
 -            )
--
--        return "\n".join(table)
-+                summary = f"{todo.summary} "\
-+                          f"{self.format_database(todo.list)}{percent}"
-+
-+            tree[todo.uid] = [f"[{completed}] {todo.id} {priority}{due} "
-+                              f"{recurring}{summary} {categories}\n",
-+                              None]
-+
 +        self._tree_reorder_related(tree, related_todos)
-+
+
+-        return "\n".join(table)
 +        return self._join_tree(tree).strip()
 +
-+    def _tree_reorder_related(self, tree: dict[str, list],
-+                              related_todos: dict[str, list]) -> None:
++    def _tree_reorder_related(
++        self, tree: dict[str, list], related_todos: dict[str, list]
++    ) -> None:
 +        """Move all related todos to their proper positions within the tree
 +        dictionary."""
 +        store_path: list = []
@@ -556,8 +563,7 @@ index 88f7cee6..848c9d95 100644
 +            related_to_path_tracer: str = related_to[0]
 +            related_dict: dict[str, list] = tree
 +            while related_to_path_tracer in related_todos:
-+                related_to_path_tracer = \
-+                        related_todos[related_to_path_tracer][0]
++                related_to_path_tracer = related_todos[related_to_path_tracer][0]
 +                store_path.append(related_to_path_tracer)
 +
 +            # Walk from the parent root todo, down to the
@@ -578,14 +584,17 @@ index 88f7cee6..848c9d95 100644
 +                    related_dict = tree
 +                    break
 +
-+            self._tree_move_related(related, related_to[0],
-+                                    tree, related_dict)
++            self._tree_move_related(related, related_to[0], tree, related_dict)
 +
 +            store_path.clear()
 +
-+    def _tree_move_related(self, related: str, to: str,
-+                           tree: dict[str, list],
-+                           related_dict: dict[str, list] | None) -> None:
++    def _tree_move_related(
++        self,
++        related: str,
++        to: str,
++        tree: dict[str, list],
++        related_dict: dict[str, list] | None,
++    ) -> None:
 +        """Move a todo from the top of the tree dictionary, to the child
 +        dictionary of a todo."""
 +        if related_dict is None:
@@ -614,37 +623,26 @@ index 88f7cee6..848c9d95 100644
 
      def _due_colour(self, todo: Todo) -> str:
          now = self.now if isinstance(todo.due, datetime) else self.now.date()
+--
+2.53.0
 
-From 967e532a7ca4573794adc1735100e3c4f726a15a Mon Sep 17 00:00:00 2001
+
+From 5707b8ae25fa47c3322cb500c776c1d35087cf2b Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Mon, 8 Sep 2025 16:53:32 +0200
-Subject: [PATCH 5/8] refactor(cli): description of `_todo_property_options`
+Subject: [PATCH 5/9] refactor(cli): description of `_todo_property_options`
  wrapper
 
 Comment for describing the weird code for merging arguments.
 ---
- todoman/cli.py | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ todoman/cli.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/todoman/cli.py b/todoman/cli.py
-index d4ea7224..44f8818b 100644
+index 5d7a44f..9488405 100644
 --- a/todoman/cli.py
 +++ b/todoman/cli.py
-@@ -220,9 +220,10 @@ def _todo_property_options(command: Callable) -> Callable:
-         callback=_validate_priority_param,
-         help="Priority for this task",
-     )(command)
--    click.option("--location", help="The location where this todo takes place.")(
--        command
--    )
-+    click.option(
-+        "--location",
-+        help="The location where this todo takes place."
-+    )(command)
-     click.option(
-         "--due",
-         "-d",
-@@ -238,10 +239,19 @@ def _todo_property_options(command: Callable) -> Callable:
+@@ -238,6 +238,13 @@ def _todo_property_options(command: Callable) -> Callable:
          help="When the task starts.",
      )(command)
 
@@ -658,18 +656,14 @@ index d4ea7224..44f8818b 100644
      @functools.wraps(command)
      def command_wrap(*a, **kw) -> click.Command:
          kw["todo_properties"] = {
--            key: kw.pop(key) for key in ("due", "start", "location", "priority")
-+            key: kw.pop(key) for key in (
-+                "due", "start", "location", "priority"
-+            )
-         }
-         # longform is singular since user can pass it multiple times, but
-         # in actuality it's plural, so manually changing for #cache.todos.
+--
+2.53.0
 
-From c44baba6bc5d3fbdf3397f245c2a8d87382052d5 Mon Sep 17 00:00:00 2001
+
+From 64f4b6bacddeb4b144bf8018034a0c0e3a119753 Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Mon, 8 Sep 2025 18:11:52 +0200
-Subject: [PATCH 6/8] feat(cli): support for editing and adding subtasks
+Subject: [PATCH 6/9] feat(cli): support for editing and adding subtasks
 
 Using the newly supported attributes, two new options are added.
 `--subtask-for`, making a task be a subtask for another and
@@ -680,10 +674,10 @@ The commands `new` and `edit` are fitted with these new options.
  1 file changed, 41 insertions(+), 1 deletion(-)
 
 diff --git a/todoman/cli.py b/todoman/cli.py
-index 44f8818b..26b0319b 100644
+index 9488405..0fd59df 100644
 --- a/todoman/cli.py
 +++ b/todoman/cli.py
-@@ -53,7 +53,9 @@ def wrapper(*a, **kw) -> _T:
+@@ -54,7 +54,9 @@ def catch_errors(f: Callable[_P, _T]) -> Callable[_P, _T]:
 
 
  TODO_ID_MIN = 1
@@ -694,7 +688,7 @@ index 44f8818b..26b0319b 100644
 
 
  def _validate_lists_param(
-@@ -294,6 +296,21 @@ def formatter(self) -> formatters.Formatter:
+@@ -291,6 +293,21 @@ _interactive_option = click.option(
      help="Go into interactive mode before saving the task.",
  )
 
@@ -716,7 +710,7 @@ index 44f8818b..26b0319b 100644
 
  @click.group(invoke_without_command=True)
  @click_log.simple_verbosity_option()
-@@ -432,6 +449,7 @@ def repl(ctx: click.Context) -> None:
+@@ -430,6 +447,7 @@ def repl(ctx: click.Context) -> None:
  )
  @_todo_property_options
  @_interactive_option
@@ -724,15 +718,15 @@ index 44f8818b..26b0319b 100644
  @pass_ctx
  @catch_errors
  def new(
-@@ -441,6 +459,7 @@ def new(
+@@ -439,6 +457,7 @@ def new(
      todo_properties: dict,
      read_description: bool,
      interactive: bool,
-+    subtask_for: int | None
++    subtask_for: int | None,
  ) -> None:
      """
      Create a new task with SUMMARY.
-@@ -462,6 +481,11 @@ def new(
+@@ -460,6 +479,11 @@ def new(
              setattr(todo, key, value)
      todo.summary = " ".join(summary)
 
@@ -744,7 +738,7 @@ index 44f8818b..26b0319b 100644
      if read_description:
          todo.description = sys.stdin.read()
 
-@@ -496,6 +520,8 @@ def new(
+@@ -494,6 +518,8 @@ def new(
  )
  @_todo_property_options
  @_interactive_option
@@ -753,16 +747,16 @@ index 44f8818b..26b0319b 100644
  @with_id_arg
  @catch_errors
  def edit(
-@@ -505,6 +531,8 @@ def edit(
+@@ -503,6 +529,8 @@ def edit(
      interactive: bool,
      read_description: bool,
      raw: bool,
 +    subtask_for: int | None,
-+    not_subtask: bool
++    not_subtask: bool,
  ) -> None:
      """
      Edit the task with id ID.
-@@ -525,6 +553,17 @@ def edit(
+@@ -523,6 +551,17 @@ def edit(
          changes = True
          todo.description = sys.stdin.read()
 
@@ -780,7 +774,7 @@ index 44f8818b..26b0319b 100644
      if interactive or (not changes and interactive is None):
          ui = TodoEditor(todo, ctx.db.lists(), ctx.ui_formatter)
          ui.edit()
-@@ -537,6 +576,7 @@ def edit(
+@@ -535,6 +574,7 @@ def edit(
      ctx.db.save(todo)
      if old_list != new_list:
          ctx.db.move(todo, new_list=new_list, from_list=old_list)
@@ -788,58 +782,53 @@ index 44f8818b..26b0319b 100644
      click.echo(ctx.formatter.detailed(todo))
 
 
+--
+2.53.0
 
-From 5047eb71e3b33d4d248ca9d48bbd8ecd2c7c638d Mon Sep 17 00:00:00 2001
+
+From 977ea6e8934ada8d9407b037c9ffd3ba51dfe56c Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Mon, 8 Sep 2025 18:44:37 +0200
-Subject: [PATCH 7/8] chore(CHANGELOG): describe new breaking change from
- subtasks
+Subject: [PATCH 7/9] chore(CHANGELOG): describe new subtasks feature
 
 ---
- CHANGELOG.rst | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ CHANGELOG.rst | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/CHANGELOG.rst b/CHANGELOG.rst
-index 775a49bb..601f23ff 100644
+index a990ba2..4f816f5 100644
 --- a/CHANGELOG.rst
 +++ b/CHANGELOG.rst
-@@ -4,9 +4,23 @@ Changelog
+@@ -4,6 +4,14 @@ Changelog
  This file contains a brief summary of new features and dependency changes or
  releases, in reverse chronological order.
 
--v4.7.0
-+v5.0.0
++v4.8.0
++------
++* Added support for RELATED-TO property and RELTYPE parameter, allowing the
++  parsing and creation of subtasks. This requires adding two new columns to
++  the database. The `SCHEMA_VERSION` has been incremented, so the cache will
++  be recreated. No changes to the configuration or lists is needed. The tasks
++  are now printed as a tree when subtasks are present.
++
+ v4.7.0
  ------
 
-+Breaking changes to the database
-+********************************
-+
-+Added support for RELATED-TO property and RELTYPE parameter, allowing the
-+parsing and creation of subtasks. This requires adding two new columns to
-+the database.
-+
-+The cache has to be deleted manually and recreated if the cache was previously
-+created using a version of the code, that is older than this release.
-+
-+No changes to the configuration or lists is needed.
-+
-+The tasks are now printed as a tree when subtasks are present.
-+
- * Removed ``bin/todo``. It is no longer requierd, as the entry point generated
-   by setuptools no longer has performance issues.
+--
+2.53.0
 
 
-From e87552a1c21357caea826863e4c1da5f6e0a3797 Mon Sep 17 00:00:00 2001
+From 4cd86ac883e7995f1c57d6024e07df09441a6450 Mon Sep 17 00:00:00 2001
 From: powerjungle <fabsidereal@gmail.com>
 Date: Mon, 8 Sep 2025 18:48:07 +0200
-Subject: [PATCH 8/8] chore(AUTHORS): add powerjungle
+Subject: [PATCH 8/9] chore(AUTHORS): add powerjungle
 
 ---
  AUTHORS.rst | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/AUTHORS.rst b/AUTHORS.rst
-index 558e93a2..771fde96 100644
+index 558e93a..771fde9 100644
 --- a/AUTHORS.rst
 +++ b/AUTHORS.rst
 @@ -34,3 +34,4 @@ Authors are listed in alphabetical order.
@@ -847,3 +836,35 @@ index 558e93a2..771fde96 100644
  * Thomas Glanzmann <thomas@glanzmann.de>
  * https://github.com/Pikrass
 +* https://github.com/powerjungle
+--
+2.53.0
+
+
+From 4e7d91df489e26b65b54ee5c08ca8d7f932a052c Mon Sep 17 00:00:00 2001
+From: powerjungle <fabsidereal@gmail.com>
+Date: Wed, 1 Oct 2025 16:49:40 +0200
+Subject: [PATCH 9/9] docs(Hacking): new description of `SCHEMA_VERSION`
+ variable
+
+---
+ docs/source/contributing.rst | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/docs/source/contributing.rst b/docs/source/contributing.rst
+index 98d0349..48433b9 100644
+--- a/docs/source/contributing.rst
++++ b/docs/source/contributing.rst
+@@ -23,6 +23,11 @@ without them being properly documented.
+ Run ``pip install -e .`` to install todoman and its dependencies into a
+ virtualenv.
+
++If the database is changed in a breaking way, the ``SCHEMA_VERSION`` variable
++in the class ``Cache`` has to be incremented to allow the cache to be recreated
++after todoman has been updated. An example would be adding new fields or
++removing old unnecessary fields and etc.
++
+ We use ``pre-commit`` to run style and convention checks. Run ``pre-commit
+ install``` to install our git-hooks. These will check code style and inform you
+ of any issues when attempting to commit. This will also run ``black`` to
+--
+2.53.0
