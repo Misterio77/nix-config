@@ -28,6 +28,7 @@
       ./upower.nix
       ./display-manager.nix
       ./mandoc.nix
+      ./security-fixes.nix
     ]
     ++ (builtins.attrValues outputs.nixosModules);
 
