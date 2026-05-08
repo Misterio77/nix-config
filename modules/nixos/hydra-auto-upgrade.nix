@@ -36,8 +36,10 @@
         if [ "$(readlink -f "$current")" == "$path" ]; then
           echo "Already running $path" >&2
         else
-          echo "Activating configuration" >&2
+          echo "Changes to apply now:"
           nvd --color=always diff "$current" "$path"
+
+          echo "Activating configuration" >&2
           "$path/bin/switch-to-configuration" test
         fi
       fi
@@ -51,6 +53,9 @@
 
           echo "Adding to bootloader" >&2
           "$path/bin/switch-to-configuration" boot
+
+          echo "Changes to apply after reboot:"
+          nvd --color=always diff "$current" "$profile"
         fi
       fi
     '';
