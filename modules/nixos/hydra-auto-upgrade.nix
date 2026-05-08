@@ -21,9 +21,27 @@
     ];
     text = ''
       action="''${1:-build}"
+      old_flake="''${2:-}"
+
+      eval="$(curl -sLH 'accept: application/json' "${buildUrl}" | jq -r '.jobsetevals[0]')"
+      flake="$(curl -sLH 'accept: application/json' "${cfg.instance}/eval/$eval" | jq -r '.flake')"
+      echo "New flake: $flake" >&2
+      new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
+      echo "Modified at: $(date -d @$new)" >&2
+
+      if [ -n "$old_flake" ]; then
+        echo "Current flake: ${cfg.oldFlakeRef}" >&2
+        current="$(nix flake metadata "${cfg.oldFlakeRef}" --json | jq -r '.lastModified')"
+        echo "Modified at: $(date -d @$current)" >&2
+        if [ "$new" -le "$current" ]; then
+          echo "Skipping upgrade, not newer than current flake" >&2
+          exit 0
+        fi
+      fi
+
+      path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
       profile="/nix/var/nix/profiles/system"
       current="/run/current-system"
-      path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
 
       echo "Building $path" >&2
       nix build --no-link "$path"
@@ -119,7 +137,7 @@ in {
       unitConfig.X-StopOnRemoval = false;
       serviceConfig.Type = "oneshot";
 
-      script = "${lib.getExe cached-nixos-rebuild} ${cfg.operation}";
+      script = "${lib.getExe cached-nixos-rebuild} ${cfg.operation} ${lib.optionalString (cfg.oldFlakeRef != null) cfg.oldFlakeRef}";
       startAt = cfg.dates;
       after = ["network-online.target"];
       wants = ["network-online.target"];
