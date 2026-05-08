@@ -28,8 +28,9 @@
       echo "Building $path" >&2
       nix build --no-link "$path"
 
-      echo "Comparing changes with running system" >&2
-      nvd --color=always diff "$current" "$path"
+      if [ "$action" == "diff" ]; then
+        nvd --color=always diff "$current" "$path"
+      fi
 
       if [ "$action" == "switch" ] || [ "$action" == "test" ]; then
         if [ "$(readlink -f "$current")" == "$path" ]; then
@@ -37,6 +38,7 @@
           exit 0
         fi
         echo "Activating configuration" >&2
+        nvd --color=always diff "$current" "$path"
         "$path/bin/switch-to-configuration" test
       fi
 
