@@ -47,7 +47,11 @@
       nix build --no-link "$path"
 
       if [ "$action" == "diff" ]; then
-        nvd --color=always diff "$current" "$path"
+        if [ "$(readlink -f "$current")" != "$path" ]; then
+          nvd --color=always diff "$current" "$path"
+        else
+          echo "No changes"
+        fi
       fi
 
       if [ "$action" == "switch" ] || [ "$action" == "test" ]; then
