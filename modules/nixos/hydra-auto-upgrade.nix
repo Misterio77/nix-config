@@ -22,25 +22,29 @@
     text = ''
       action="''${1:-build}"
       profile="/nix/var/nix/profiles/system"
+      current="/run/current-system"
       path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
-
-      if [ "$(readlink -f "$profile")" = "$path" ]; then
-        echo "Already up to date" >&2
-        exit 0
-      fi
 
       echo "Building $path" >&2
       nix build --no-link "$path"
 
-      echo "Comparing changes" >&2
-      nvd --color=always diff "$profile" "$path"
+      echo "Comparing changes with running system" >&2
+      nvd --color=always diff "$current" "$path"
 
       if [ "$action" == "switch" ] || [ "$action" == "test" ]; then
+        if [ "$(readlink -f "$current")" == "$path" ]; then
+          echo "Already running $path" >&2
+          exit 0
+        fi
         echo "Activating configuration" >&2
         "$path/bin/switch-to-configuration" test
       fi
 
       if [ "$action" == "switch" ] || [ "$action" == "boot" ]; then
+        if [ "$(readlink -f "$profile")" == "$path" ]; then
+          echo "Already set to boot $path" >&2
+          exit 0
+        fi
         echo "Setting profile" >&2
         nix build --no-link --profile "$profile" "$path"
 
