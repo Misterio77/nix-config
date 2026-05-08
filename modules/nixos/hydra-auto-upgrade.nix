@@ -35,23 +35,23 @@
       if [ "$action" == "switch" ] || [ "$action" == "test" ]; then
         if [ "$(readlink -f "$current")" == "$path" ]; then
           echo "Already running $path" >&2
-          exit 0
+        else
+          echo "Activating configuration" >&2
+          nvd --color=always diff "$current" "$path"
+          "$path/bin/switch-to-configuration" test
         fi
-        echo "Activating configuration" >&2
-        nvd --color=always diff "$current" "$path"
-        "$path/bin/switch-to-configuration" test
       fi
 
       if [ "$action" == "switch" ] || [ "$action" == "boot" ]; then
         if [ "$(readlink -f "$profile")" == "$path" ]; then
           echo "Already set to boot $path" >&2
-          exit 0
-        fi
-        echo "Setting profile" >&2
-        nix build --no-link --profile "$profile" "$path"
+        else
+          echo "Setting profile" >&2
+          nix build --no-link --profile "$profile" "$path"
 
-        echo "Adding to bootloader" >&2
-        "$path/bin/switch-to-configuration" boot
+          echo "Adding to bootloader" >&2
+          "$path/bin/switch-to-configuration" boot
+        fi
       fi
     '';
   };
