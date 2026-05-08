@@ -23,7 +23,7 @@
   };
 
   # Disable DynamicUser
-  systemd.services.jellyseerr.serviceConfig = {
+  systemd.services.seerr.serviceConfig = {
     DynamicUser = lib.mkForce false;
     User = lib.mkForce "jellyseerr";
     Group = lib.mkForce "jellyseerr";
