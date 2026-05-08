@@ -5,6 +5,50 @@
   ...
 }: let
   cfg = config.system.hydraAutoUpgrade;
+  buildUrl = "${cfg.instance}/job/${cfg.project}/${cfg.jobset}/${cfg.job}/latest";
+  cached-nixos-rebuild = pkgs.writeShellApplication {
+    name = "cached-nixos-rebuild";
+    runtimeInputs = with pkgs; [
+      config.nix.package.out
+      config.programs.ssh.package
+      coreutils
+      curl
+      gitMinimal
+      gnutar
+      gzip
+      jq
+      nvd
+    ];
+    text = ''
+      action="''${1:-build}"
+      profile="/nix/var/nix/profiles/system"
+      path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
+
+      if [ "$(readlink -f "$profile")" = "$path" ]; then
+        echo "Already up to date" >&2
+        exit 0
+      fi
+
+      echo "Building $path" >&2
+      nix build --no-link "$path"
+
+      echo "Comparing changes" >&2
+      nvd --color=always diff "$profile" "$path"
+
+      if [ "$action" == "switch" ] || [ "$action" == "test" ]; then
+        echo "Activating configuration" >&2
+        "$path/bin/switch-to-configuration" test
+      fi
+
+      if [ "$action" == "switch" ] || [ "$action" == "boot" ]; then
+        echo "Setting profile" >&2
+        nix build --no-link --profile "$profile" "$path"
+
+        echo "Adding to bootloader" >&2
+        "$path/bin/switch-to-configuration" boot
+      fi
+    '';
+  };
 in {
   options = {
     system.hydraAutoUpgrade = {
@@ -64,65 +108,12 @@ in {
       unitConfig.X-StopOnRemoval = false;
       serviceConfig.Type = "oneshot";
 
-      path = with pkgs; [
-        config.nix.package.out
-        config.programs.ssh.package
-        coreutils
-        curl
-        gitMinimal
-        gnutar
-        gzip
-        jq
-        nvd
-      ];
-
-      script = let
-        buildUrl = "${cfg.instance}/job/${cfg.project}/${cfg.jobset}/${cfg.job}/latest";
-      in
-        (lib.optionalString (cfg.oldFlakeRef != null) ''
-          eval="$(curl -sLH 'accept: application/json' "${buildUrl}" | jq -r '.jobsetevals[0]')"
-          flake="$(curl -sLH 'accept: application/json' "${cfg.instance}/eval/$eval" | jq -r '.flake')"
-          echo "New flake: $flake" >&2
-          new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
-          echo "Modified at: $(date -d @$new)" >&2
-
-          echo "Current flake: ${cfg.oldFlakeRef}" >&2
-          current="$(nix flake metadata "${cfg.oldFlakeRef}" --json | jq -r '.lastModified')"
-          echo "Modified at: $(date -d @$current)" >&2
-
-          if [ "$new" -le "$current" ]; then
-            echo "Skipping upgrade, not newer" >&2
-            exit 0
-          fi
-        '')
-        + ''
-          profile="/nix/var/nix/profiles/system"
-          path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
-
-          if [ "$(readlink -f "$profile")" = "$path" ]; then
-            echo "Already up to date" >&2
-            exit 0
-          fi
-
-          echo "Building $path" >&2
-          nix build --no-link "$path"
-
-          echo "Comparing changes" >&2
-          nvd --color=always diff "$profile" "$path"
-
-          echo "Activating configuration" >&2
-          "$path/bin/switch-to-configuration" test
-
-          echo "Setting profile" >&2
-          nix build --no-link --profile "$profile" "$path"
-
-          echo "Adding to bootloader" >&2
-          "$path/bin/switch-to-configuration" boot
-        '';
-
+      script = "${lib.getExe cached-nixos-rebuild} ${cfg.operation}";
       startAt = cfg.dates;
       after = ["network-online.target"];
       wants = ["network-online.target"];
     };
+    # Make script available for admin usage
+    environment.systemPackages = [cached-nixos-rebuild];
   };
 }
