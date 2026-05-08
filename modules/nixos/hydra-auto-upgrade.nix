@@ -72,8 +72,12 @@
           echo "Adding to bootloader" >&2
           "$path/bin/switch-to-configuration" boot
 
-          echo "Changes to apply after reboot:"
-          nvd --color=always diff "$current" "$profile"
+          if [ "$(readlink -f "$current")" != "$(readlink -f "$profile")" ]; then
+            echo "Changes to apply after reboot:"
+            nvd --color=always diff "$current" "$profile"
+          else
+            echo "No pending boot change"
+          fi
         fi
       fi
     '';
