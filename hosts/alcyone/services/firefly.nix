@@ -1,6 +1,27 @@
-{config, ...}: {
+{config, pkgs, ...}: {
   services.firefly-iii = {
     enable = true;
+    package = pkgs.firefly-iii.overrideAttrs (old: rec {
+      pname = "firefly-iii";
+      version = "6.4.22";
+      src = pkgs.fetchFromGitHub {
+        owner = "firefly-iii";
+        repo = "firefly-iii";
+        tag = "v${version}";
+        hash = "sha256-i20D0/z6GA7pZYrWvRJ8tUlptNI5Cl/e9UY0hKg9SP8=";
+      };
+      composerVendor = pkgs.php.mkComposerVendor {
+        inherit pname src version;
+        composerStrictValidation = true;
+        strictDeps = true;
+        vendorHash = "sha256-m+esW/yQs/GSwnw2iqVfSMXCf6/5M4634GUbt4Nnvbg=";
+      };
+      npmDeps = pkgs.fetchNpmDeps {
+        inherit src;
+        name = "${pname}-npm-deps";
+        hash = "sha256-pu8dxL0NRB1cyqlQEf2zT2wdVp2fbe+Vp85qMs7f6s0=";
+      };
+    });
     settings = {
       APP_KEY_FILE = config.sops.secrets.firefly-key.path;
       ENABLE_EXCHANGE_RATES = "true";
