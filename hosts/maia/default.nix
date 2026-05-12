@@ -19,6 +19,7 @@
 
     ../common/optional/wireless.nix
     ../common/optional/secure-boot.nix
+    ../common/optional/cups.nix
   ];
 
   networking = {
