@@ -13,6 +13,7 @@
     ./prometheus.nix
     ./radicale.nix
     ./firefly.nix
+    ./lumis.nix
 
     # Disabled for now
     # ./cgit
