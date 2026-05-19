@@ -16,7 +16,14 @@
       "m7.rs"
       "misterio.me"
       "gsfontes.com"
+      "lumis.cards"
     ];
+    forwards = {
+      "contato@lumis.cards" = [
+        "gabriel@gsfontes.com"
+        "offrakki@gmail.com"
+      ];
+    };
     useFSLayout = true;
     x509.useACMEHost = config.mailserver.fqdn;
     localDnsResolver = false;
