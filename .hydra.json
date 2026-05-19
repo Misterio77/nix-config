@@ -6,7 +6,7 @@
         "description": "Build main branch",
         "flake": "github:misterio77/nix-config/main",
         "checkinterval": 60,
-        "schedulingshares": 10,
+        "schedulingshares": 100,
         "enableemail": false,
         "emailoverride": "",
         "keepnr": 1
