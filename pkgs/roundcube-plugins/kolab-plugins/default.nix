@@ -13,6 +13,7 @@ php.buildComposerProject2 (finalAttrs: {
     ./priorities.patch
     ./color-tweaks.patch
     ./darkmode-fixes.patch
+    ./plugin-vendor-load.patch
   ];
 
   composerVendor = php.mkComposerVendor {
