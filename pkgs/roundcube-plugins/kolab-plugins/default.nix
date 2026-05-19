@@ -46,6 +46,10 @@ php.buildComposerProject2 (finalAttrs: {
   '';
 
   postInstall = ''
-    ln -s $out/share/php/kolab-plugins/{plugins,vendor} $out/
+    mkdir -p $out/plugins
+    for plugin in $out/share/php/kolab-plugins/plugins/*; do
+      ln -s $out/share/php/kolab-plugins/vendor $plugin/
+      ln -s $plugin $out/plugins/
+    done
   '';
 })
