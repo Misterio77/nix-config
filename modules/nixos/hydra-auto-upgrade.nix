@@ -5,7 +5,6 @@
   ...
 }: let
   cfg = config.system.hydraAutoUpgrade;
-  buildUrl = "${cfg.instance}/job/${cfg.project}/${cfg.jobset}/${cfg.job}/latest";
   cached-nixos-rebuild = pkgs.writeShellApplication {
     name = "cached-nixos-rebuild";
     runtimeInputs = with pkgs; [
@@ -21,14 +20,16 @@
     ];
     text = ''
       action="''${1:-build}"
+      jobset="''${2:-${cfg.jobset}}"
+      job="''${3:-${cfg.job}}"
 
-      eval="$(curl -sLH 'accept: application/json' "${buildUrl}" | jq -r '.jobsetevals[0]')"
+      eval="$(curl -sLH 'accept: application/json' "${cfg.instance}/job/${cfg.project}/$jobset/$job/latest" | jq -r '.jobsetevals[0]')"
       flake="$(curl -sLH 'accept: application/json' "${cfg.instance}/eval/$eval" | jq -r '.flake')"
       echo "New flake: $flake" >&2
       new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
       echo "Modified at: $(date -d @"$new")" >&2
 
-      path="$(curl -sLH 'accept: application/json' ${buildUrl} | jq -r '.buildoutputs.out.path')"
+      path="$(curl -sLH 'accept: application/json' "${cfg.instance}/job/${cfg.project}/$jobset/$job/latest" | jq -r '.buildoutputs.out.path')"
       profile="/nix/var/nix/profiles/system"
       current="/run/current-system"
 
@@ -123,7 +124,7 @@ in {
       unitConfig.X-StopOnRemoval = false;
       serviceConfig.Type = "oneshot";
 
-      script = "${lib.getExe cached-nixos-rebuild} ${cfg.operation}";
+      script = "${lib.getExe cached-nixos-rebuild} ${cfg.operation} ${cfg.jobset} ${cfg.job}";
       startAt = cfg.dates;
       after = ["network-online.target"];
       wants = ["network-online.target"];
