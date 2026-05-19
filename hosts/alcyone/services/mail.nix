@@ -46,7 +46,6 @@
         hashedPasswordFile = config.sops.secrets.firefly-mail-password-hashed.path;
       };
       "contato@lumis.cards" = {
-        sendOnly = true;
         hashedPasswordFile = config.sops.secrets.lumis-mail-password-hashed.path;
       };
     };
