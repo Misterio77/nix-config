@@ -35,6 +35,11 @@ in {
           static_configs = [{targets = ["metrics.m7.rs"];}];
         }
         {
+          job_name = "jellyfin";
+          scheme = "https";
+          static_configs = [{targets = ["media.m7.rs"];}];
+        }
+        {
           job_name = "nginx";
           scheme = "https";
           static_configs = [
