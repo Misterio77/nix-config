@@ -38,6 +38,7 @@
           user = config.mailserver.loginAccounts."grafana@m7.rs".name;
           password = "$__file{${config.sops.secrets.grafana-mail-password.path}}";
         };
+        server.root_url = "https://dash.m7.rs/";
       };
       provision = {
         enable = true;
