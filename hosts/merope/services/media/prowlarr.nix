@@ -12,12 +12,12 @@
     locations."/" = {
       proxyPass = "http://localhost:${toString config.services.prowlarr.settings.server.port}";
       proxyWebsockets = true;
+      extraConfig = ''
+        allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+        allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+        deny all;
+      '';
     };
-    extraConfig = ''
-      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
-      allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
-      deny all;
-    '';
   };
 
 

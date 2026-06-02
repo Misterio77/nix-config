@@ -15,6 +15,65 @@ in {
           base_domain = "ts.m7.rs";
           magic_dns = true;
           nameservers.global = ["9.9.9.9"];
+          extra_records = let
+            # Would be nice to not have to hardcode these
+            alcyone = "100.77.0.6";
+            celaeno = "100.77.0.10";
+            merope = "100.77.0.5";
+          in [
+            {
+              type = "A";
+              name = "photos.m7.rs";
+              value = merope;
+            }
+            {
+              type = "A";
+              name = "deluge.m7.rs";
+              value = merope;
+            }
+            {
+              type = "A";
+              name = "bazarr.m7.rs";
+              value = merope;
+            }
+            {
+              type = "A";
+              name = "lidarr.m7.rs";
+              value = merope;
+            }
+            {
+              type = "A";
+              name = "radarr.m7.rs";
+              value = merope;
+            }
+            {
+              type = "A";
+              name = "prowlarr.m7.rs";
+              value = merope;
+            }
+            {
+              type = "A";
+              name = "sonarr.m7.rs";
+              value = merope;
+            }
+
+            {
+              type = "A";
+              name = "dash.m7.rs";
+              value = alcyone;
+            }
+            {
+              type = "A";
+              name = "metrics.m7.rs";
+              value = alcyone;
+            }
+
+            {
+              type = "A";
+              name = "hydra.m7.rs";
+              value = celaeno;
+            }
+          ];
         };
         server_url = "https://tailscale.m7.rs";
         metrics_listen_addr = "127.0.0.1:8095";

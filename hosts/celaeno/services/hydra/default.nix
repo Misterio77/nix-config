@@ -44,13 +44,15 @@ in {
         enableACME = true;
         locations = {
           "~* ^/shield/([^\\s]*)".return = "302 https://img.shields.io/endpoint?url=https://hydra.m7.rs/$1/shield";
-          "/".proxyPass = "http://localhost:${toString config.services.hydra.port}";
+          "/" = {
+            proxyPass = "http://localhost:${toString config.services.hydra.port}";
+            extraConfig = ''
+              allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+              allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+              deny all;
+            '';
+          };
         };
-        extraConfig = ''
-          allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
-          allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
-          deny all;
-        '';
       };
     };
   };
