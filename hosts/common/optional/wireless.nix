@@ -10,6 +10,8 @@
   sops.secrets.wireless = {
     sopsFile = ../secrets.yaml;
     neededForUsers = true;
+    owner = config.users.users.wpa_supplicant.name;
+    group = config.users.users.wpa_supplicant.group;
   };
 
   networking.wireless = {
