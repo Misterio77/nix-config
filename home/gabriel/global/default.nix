@@ -11,6 +11,7 @@
       inputs.impermanence.homeManagerModules.impermanence
       ../features/cli
       ../features/helix
+      ../features/opencode
     ]
     ++ (builtins.attrValues outputs.homeManagerModules);
 
