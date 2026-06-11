@@ -9,16 +9,17 @@ Looking for something simpler to start out with flakes? Try [my starter config r
 
 **Highlights**:
 
-- Multiple **NixOS configurations**, including **desktop**, **laptop**, **server**
+- **NixOS configurations**: desktop, laptop, servers
 - **Opt-in persistence** through impermanence + blank snapshotting
-- **Encrypted** single **BTRFS** partition
+- **Encrypted** single **BTRFS** partition (with **disko** for declarative partitioning)
+- **Secure Boot** via **lanzaboote**
 - Fully **declarative** **self-hosted** stuff
 - Deployment **secrets** using **sops-nix**
 - **Mesh networked** hosts with **tailscale** and **headscale**
-- Flexible **Home Manager** Configs through **feature flags**
-- Extensively configured wayland environments (**sway** and **hyprland**)
+- Flexible **Home Manager** configs through **feature flags**
+- Extensively configured **hyprland** environment
 - **Declarative** **themes** and **wallpapers** with **nix-colors**
-- **Hydra CI/CD server and binary cache** that uses the **desktops as remote builders**
+- **Hydra CI/CD** builds every host, serves a binary cache, and hosts auto-upgrade by pull deployment
 
 
 ## About the installation
@@ -27,30 +28,7 @@ All my computers use a single btrfs (encrypted on all except headless systems)
 partition, with subvolumes for `/nix`, a `/persist` directory (which I opt in
 using `impermanence`), swap file, and a root subvolume (cleared on every boot).
 
-Home-manager is used in a standalone way, and because of opt-in persistence is
-activated on every boot with `loginShellInit`.
-
-
-## How to bootstrap
-
-All you need is nix (any version). Run:
-```
-nix-shell
-```
-
-If you already have nix 2.4+, git, and have already enabled `flakes` and
-`nix-command`, you can also use the non-legacy command:
-```
-nix develop
-```
-
-`nixos-rebuild --flake .` To build system configurations
-
-`home-manager --flake .` To build user configurations
-
-`nix build` (or shell or run) To build and use packages
-
-`sops` To manage secrets
+Home-manager is used as a NixOS module, integrated via `home-manager.users`.
 
 
 ## Secrets
@@ -68,7 +46,7 @@ signing, as well as for SSH'ing around.
 
 Most relevant user apps daily drivers:
 
-- hyprland + swayidle + swaylock
+- hyprland + hypridle + hyprlock
 - waybar
 - helix
 - fish
@@ -87,8 +65,8 @@ Most relevant user apps daily drivers:
 Some of the services I host:
 
 - hydra
-- navidrome
-- deluge
+- jellyfin
+- *arrs (including torrent and usenet)
 - prometheus
 - websites (such as https://m7.rs)
 - minecraft
@@ -99,8 +77,9 @@ Nixy stuff:
 - nix-colors
 - sops-nix
 - impermanence
+- disko
+- lanzaboote
 - home-manager
-- deploy-rs
 - and NixOS and nix itself, of course :)
 
 Let me know if you have any questions about them :)
@@ -108,7 +87,3 @@ Let me know if you have any questions about them :)
 ## Unixpornish stuff
 ![fakebusy](https://i.imgur.com/PZ4L7TR.png)
 ![clean](https://i.imgur.com/T5FjqbZ.jpg)
-
-That's how my hyprland desktop setup look like (as of 2022 July).
-
-
