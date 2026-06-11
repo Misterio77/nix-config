@@ -17,12 +17,11 @@
         behaviour = if gitCfg.commit.gpgSign then "own" else "never";
         key = gitCfg.user.signing.key;
       };
-      revset-aliases = {
-        "closest_bookmark(to)" = "heads(::to & bookmarks())";
+      revsets = {
+        bookmark-advance-to = "@-";
       };
       aliases = {
-        # Advances closest bookmark to parent commit
-        tug = ["bookmark" "move" "--from" "closest_bookmark(@-)" "--to" "@-"];
+        tug = ["bookmark" "advance"];
       };
       template-aliases = {
         "gerrit_change_id(change_id)" = ''
