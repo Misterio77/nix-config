@@ -23,6 +23,7 @@
         # Would be nice to have a api-key-cmd or similar
         apiKey = "{file:~/.config/deepseek.key}";
       };
+      autoupdate = false;
       model = "deepseek/deepseek-v4-pro";
       small_model = "deepseek/deepseek-v4-flash";
     };
