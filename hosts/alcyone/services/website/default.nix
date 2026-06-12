@@ -12,7 +12,6 @@
   minutes = n: n * 60;
 in {
   imports = [
-    ./themes.nix
     ./shortner.nix
   ];
 
