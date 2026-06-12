@@ -283,6 +283,7 @@ in {
           ''}"
           # Program bindings
           "SUPER,Return,exec,${defaultApp "x-scheme-handler/terminal"}"
+          "SUPER,o,exec,${lib.getExe config.programs.opencode.package}"
           "SUPER,e,exec,${defaultApp "text/plain"}"
           "SUPER,b,exec,${defaultApp "x-scheme-handler/https"}"
           "SUPERALT,Return,exec,${remote} ${defaultApp "x-scheme-handler/terminal"}"
