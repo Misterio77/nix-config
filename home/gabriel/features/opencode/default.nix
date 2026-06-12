@@ -1,4 +1,21 @@
 {config, ...}: {
+  xdg.desktopEntries.opencode = {
+    name = "Opencode";
+    genericName = "AI CLI Assistant";
+    comment = "Terminal-based AI coding assistant";
+    exec = "opencode";
+    icon = "terminal";
+    terminal = true;
+    categories = [
+      "Development"
+      "ConsoleOnly"
+    ];
+    mimeType = ["x-scheme-handler/opencode"];
+    type = "Application";
+  };
+
+  xdg.mimeApps.defaultApplications."x-scheme-handler/opencode" = "opencode.desktop";
+
   programs.opencode = {
     enable = true;
     settings = {
