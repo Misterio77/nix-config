@@ -40,11 +40,12 @@
     stateVersion = lib.mkDefault "22.05";
     sessionPath = ["$HOME/.local/bin"];
     sessionVariables = {
-      NH_FLAKE = "$HOME/Documents/NixConfig";
+      NH_FLAKE = "$HOME/Projects/NixConfig";
     };
 
     persistence = {
       "/persist".directories = [
+        "Backups"
         "Documents"
         "Downloads"
         "Notes"
