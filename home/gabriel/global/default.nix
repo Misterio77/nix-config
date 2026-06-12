@@ -47,7 +47,9 @@
       "/persist".directories = [
         "Documents"
         "Downloads"
+        "Notes"
         "Pictures"
+        "Projects"
         "Videos"
         ".local/bin"
         ".local/share/nix" # trusted settings and repl history
