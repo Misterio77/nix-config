@@ -26,6 +26,22 @@ Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instea
 
 Before making any file edits in a jj repo, run `jj new` first to create a fresh working-copy commit. This keeps each set of write actions isolated in its own change.
 
+## Terminal
+
+When spawning a terminal window, use `handlr launch x-scheme-handler/terminal -- -e <cmd>`
+instead of a hardcoded terminal name (e.g., `alacritty -e <cmd>`). This respects the
+user's configured default terminal and works across different environments.
+Detach with `&` so it doesn't block the session.
+
+Prefer this for any local command that needs `sudo` — a spawned terminal
+supports interactive password entry, while the built-in Bash tool's
+non-interactive TTY cannot.
+
+Example:
+```
+handlr launch x-scheme-handler/terminal -- -e sudo ls
+```
+
 # Operator
 
 - The user is Gabs (they/them). Address them as Gabs when it feels natural.
