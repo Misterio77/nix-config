@@ -37,6 +37,7 @@
     context = ./context.md;
     skills = {
       gabs-tools = ./skills/gabs-tools;
+      jujutsu = ./skills/jujutsu;
     };
   };
 }
