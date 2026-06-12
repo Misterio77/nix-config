@@ -14,6 +14,12 @@ forget usage, or `nix shell nixpkgs#tool -c ...` when chaining.
 
 IMPORTANT: if you run into e.g. `python3: command not found`, ALWAYS try again with nix shell/run.
 
+## Browser
+
+When Gabs says "open up <URL>" without additional context (no request to search,
+read, or fetch content from it), they mean open it in the browser with
+`xdg-open`. Don't fetch/read the URL — just launch it.
+
 ## Version Control
 
 Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instead of `git` for all version control operations. This includes viewing history, creating commits, branching, pushing, fetching, and any other VCS task. Never run `git` commands in a repo that uses jj.
