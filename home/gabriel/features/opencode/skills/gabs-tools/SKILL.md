@@ -173,6 +173,20 @@ read ~/Mail/personal/Inbox/cur/<file> limit=160  <-- read one
 read ~/Mail/personal/Inbox/cur/<file> offset=161 limit=200
 ```
 
+### Sending email
+
+Gabs uses a desktop email client. To compose a new message, use:
+
+```bash
+handlr open mailto:<address>
+```
+
+This opens the client's compose window pre-filled with the recipient. For a blank compose window, omit the address:
+
+```bash
+handlr open mailto:
+```
+
 ### Drafts and Sent
 
 - `~/Mail/personal/Sent/cur/`
