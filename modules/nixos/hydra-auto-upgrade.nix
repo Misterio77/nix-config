@@ -23,11 +23,19 @@
       jobset="''${2:-${cfg.jobset}}"
       job="''${3:-${cfg.job}}"
 
+      current_ts="$(nix flake metadata "self" --json | jq -r '.lastModified')"
+      echo "Current flake modified at: $(date -d @"$current_ts")" >&2
+
       eval="$(curl -sLH 'accept: application/json' "${cfg.instance}/job/${cfg.project}/$jobset/$job/latest" | jq -r '.jobsetevals[0]')"
-      flake="$(curl -sLH 'accept: application/json' "${cfg.instance}/eval/$eval" | jq -r '.flake')"
-      echo "New flake: $flake" >&2
-      new="$(nix flake metadata "$flake" --json | jq -r '.lastModified')"
-      echo "Modified at: $(date -d @"$new")" >&2
+      new_flake="$(curl -sLH 'accept: application/json' "${cfg.instance}/eval/$eval" | jq -r '.flake')"
+      echo "New flake: $new_flake" >&2
+      new_ts="$(nix flake metadata "$new_flake" --json | jq -r '.lastModified')"
+      echo "Modified at: $(date -d @"$new_ts")" >&2
+
+      if ! "''${IGNORE_TIMESTAMP:-false}" && ! [ "$new_ts" -gt "$current_ts" ]; then
+        echo "Skipping upgrade, not newer. Set IGNORE_TIMESTAMP=true to skip this check." >&2
+        exit 0
+      fi
 
       path="$(curl -sLH 'accept: application/json' "${cfg.instance}/job/${cfg.project}/$jobset/$job/latest" | jq -r '.buildoutputs.out.path')"
       profile="/nix/var/nix/profiles/system"
