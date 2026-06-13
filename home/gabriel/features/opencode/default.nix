@@ -1,6 +1,4 @@
-{config, ...}: let
-  secrets = "${config.xdg.stateHome}/opencode/secrets";
-in {
+{config, ...}: {
   xdg.desktopEntries.opencode = {
     name = "Opencode";
     genericName = "AI CLI Assistant";
@@ -29,7 +27,7 @@ in {
     enable = true;
     settings = {
       provider.deepseek.options = {
-        apiKey = "{file:${secrets}/deepseek-apikey}";
+        apiKey = "{file:/run/secrets/deepseek-apikey}";
       };
       autoupdate = false;
       model = "deepseek/deepseek-v4-pro";

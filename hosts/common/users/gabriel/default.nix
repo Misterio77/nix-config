@@ -5,7 +5,6 @@
   ...
 }: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-  inherit (config.home-manager.users.gabriel.xdg) stateHome;
 in {
   users.mutableUsers = false;
   users.users.gabriel = {
@@ -42,12 +41,10 @@ in {
     firefly-pat = {
       sopsFile = ../../secrets.yaml;
       owner = "gabriel";
-      path = "${stateHome}/opencode/secrets/firefly-pat";
     };
     deepseek-apikey = {
       sopsFile = ../../secrets.yaml;
       owner = "gabriel";
-      path = "${stateHome}/opencode/secrets/deepseek-apikey";
     };
   };
 
