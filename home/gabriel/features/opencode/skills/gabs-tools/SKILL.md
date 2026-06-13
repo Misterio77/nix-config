@@ -27,7 +27,7 @@ todo list --category '@Blocked'         # todos tagged with @Blocked across all 
 Gabs uses categories as tags.
 
 Priority markers: `!!!` (high), `!!` (medium), `!` (low), `Quick Win` (category).
-Status markers: `Blocked` (category).
+Status markers: `Blocked` (category) — means an **external** dependency prevents progress (e.g. out of supplies, waiting on someone else). NOT "I haven't gotten to it" or "it's my turn." If Gabs could do it right now but hasn't, that's not blocked — that's just pending.
 
 ### Creating todos non-interactively
 
