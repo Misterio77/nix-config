@@ -28,7 +28,7 @@ in {
   programs.opencode = {
     enable = true;
     settings = {
-      provider.deepseek = {
+      provider.deepseek.options = {
         apiKey = "{file:${secrets}/deepseek-apikey}";
       };
       autoupdate = false;
