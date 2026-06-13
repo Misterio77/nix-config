@@ -13,9 +13,57 @@ todo done <id>                 # mark a todo as completed
 todo new "task text"           # create a new todo (prompts for details interactively)
 ```
 
-Categories observed: `@Magalu`, `@Postgrad`, `@Personal`, `@Casa`, `@GELOS`, `@Reading List`, `@Ideas`.
+### Lists vs categories
 
-Priority markers: `!!!` (high), `!!` (medium), `!` (low), `[Quick Win]` (tag).
+`todo list <NAME>` filters by **list** (a vdir directory/calendary), not category. Use `--category` to filter by category instead.
+
+Lists are separate vdir directories under `~/Calendars/personal/` — e.g. list "Personal" lives in `~/Calendars/personal/Personal/`, list "Lumis" lives in a UUID-named directory. The UUID->name can be found by looking at the `displayname` file each list has.
+
+```bash
+todo list Lumis                         # todos in the "Lumis" list
+todo list --category '@Blocked'         # todos tagged with @Blocked across all lists
+```
+
+Gabs uses categories as tags.
+
+Priority markers: `!!!` (high), `!!` (medium), `!` (low), `Quick Win` (category).
+Status markers: `Blocked` (category).
+
+### Creating todos non-interactively
+
+`todo new` accepts flags to skip the interactive prompt:
+
+```bash
+todo new -l <list> --priority high --category Blocked "summary text"
+```
+
+Flags: `-l` (list), `-r` (read description from stdin), `--priority` (low/medium/high), `--category`, `--due`, `--start`.
+
+### Modifying todos via .ics files
+
+`todo edit` is limited non-interactively (no `--summary`, no `--list`). For any field change,
+edit the `.ics` file directly:
+
+```bash
+grep -rl "match text" ~/Calendars/personal/
+```
+
+Key fields in the `.ics`:
+
+| Field | Purpose |
+|---|---|
+| `SUMMARY:` | Todo title |
+| `DESCRIPTION:` | Body text |
+| `PRIORITY:` | 1=high/`!!!`, 5=medium/`!!`, 9=low/`!` (ical default: 1 highest) |
+| `CATEGORIES:` | Comma-separated tags (delete line to remove all categories) |
+| `DUE:` | Due date (`YYYYMMDDTHHMMSSZ`) |
+| `SEQUENCE:` | Bump this on each edit (increment by 1) |
+
+**Moving between lists:** move the `.ics` file to the target list's vdir directory:
+
+```bash
+mv ~/Calendars/personal/<from-dir>/<uid>.ics ~/Calendars/personal/<to-dir>/
+```
 
 Todoman currently throws parse errors on some `.ics` files due to a known upstream bug with `RELATED-TO` param handling (`'list' object has no attribute 'params'`). The list still loads — these are cosmetic warnings.
 
