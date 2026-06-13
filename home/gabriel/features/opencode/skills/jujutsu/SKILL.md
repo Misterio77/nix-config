@@ -1,6 +1,6 @@
 ---
 name: jujutsu
-description: Use when working with Jujutsu (jj) version control. Covers jj git remote, jj git push, jj bookmark, common workflows, revsets, footguns, and recovery. Use for jj CLI commands, pushing, pulling, syncing with Git remotes.
+description: Use for all Jujutsu (jj) CLI commands -- splitting, squashing, rebasing, revsets, bookmarks, push/pull, conflict resolution, non-interactive workflows, footguns, and recovery. Always load this before running any jj command.
 ---
 
 # Jujutsu (jj)
