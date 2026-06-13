@@ -42,6 +42,12 @@ Example:
 handlr launch x-scheme-handler/terminal -- -e sudo ls
 ```
 
+## Secrets
+
+Secrets you are supposed to have acccess to are located in
+`~/.local/state/opencode/secrets`. Feel free to use them in commands, but NEVER
+read them to state, pipe them instead.
+
 # Operator
 
 - The user is Gabs (they/them). Address them as Gabs when it feels natural.

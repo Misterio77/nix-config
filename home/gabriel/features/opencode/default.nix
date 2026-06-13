@@ -1,4 +1,6 @@
-{config, ...}: {
+{config, ...}: let
+  secrets = "${config.xdg.stateHome}/opencode/secrets";
+in {
   xdg.desktopEntries.opencode = {
     name = "Opencode";
     genericName = "AI CLI Assistant";
@@ -16,12 +18,18 @@
 
   xdg.mimeApps.defaultApplications."x-scheme-handler/opencode" = "opencode.desktop";
 
+  home.persistence = {
+    "/persist".directories = [
+      ".config/opencode/skills/gabs-info" # Private info about myself
+      ".config/opencode/skills/firefly" # Guidance on how to use firefly to manage my finances, includes sensitive data
+    ];
+  };
+
   programs.opencode = {
     enable = true;
     settings = {
       provider.deepseek = {
-        # Would be nice to have a api-key-cmd or similar
-        apiKey = "{file:~/.config/deepseek.key}";
+        apiKey = "{file:${secrets}/deepseek-apikey}";
       };
       autoupdate = false;
       model = "deepseek/deepseek-v4-pro";
