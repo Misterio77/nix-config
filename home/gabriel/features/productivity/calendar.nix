@@ -41,6 +41,7 @@ in {
             "7eebf97d-5962-5fcd-4e73-888f22720cee" # Casa
             "Postgrad"
             "GELOS"
+            "29c5b864-a7b9-4130-bed3-8fb7a9c3d331" # Lumis
             "3ce52be8-d87e-4b4d-8225-a9c65840c72e" # Magalu
           ];
         };
