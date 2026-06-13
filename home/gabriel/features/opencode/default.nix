@@ -20,6 +20,7 @@
     "/persist".directories = [
       ".config/opencode/skills/gabs-info" # Private info about myself
       ".config/opencode/skills/firefly" # Guidance on how to use firefly to manage my finances, includes sensitive data
+      ".config/opencode/skills/lumis" # Info on my card printing sidegig
     ];
   };
 
