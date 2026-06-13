@@ -10,8 +10,6 @@ Conventional commits: `type(scope): description`
   - `{host}` or `{host}/{service}` for host-specific: `pleione`, `alcyone/firefly`, `merope/recyclarr`
   - Just the component for shared/global: `grafana`, `minecraft`, `recyclarr`
 - Message is lowercase, no period at end.
-- Undescribed changes (`(no description set)`) are intermediate WIP states -- they're fine to leave.
-
 ## Directory Structure
 
 ```
