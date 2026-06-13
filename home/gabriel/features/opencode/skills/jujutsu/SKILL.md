@@ -407,8 +407,12 @@ jj git push -b main                         # Push to overwrite remote
 7. **Don't stack empty commits** -- before running `jj new`, check if the
    current working copy is already empty and has no description (`jj log -r @`
    shows `(empty)` and `(no description set)`). If so, reuse it: describe it
-   with `jj describe -m "message"` and start working there instead of creating
-   a fresh child.
+    with `jj describe -m "message"` and start working there instead of creating
+    a fresh child.
+8. **Leave a clean empty commit after work** -- when finished with a task,
+   run `jj new` so there's always a fresh working copy at the tip. Never end
+   a session sitting on a commit that has uncommitted changes or is partly
+   described.
 
 ## Filesets (basics)
 
