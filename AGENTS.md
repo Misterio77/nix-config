@@ -70,7 +70,7 @@ Conventional commits: `type(scope): description`
 - Build a host: `nixos-rebuild build --flake .#{host}`
 - Deploy a host: `./deploy.sh {host}` or `nixos-rebuild --flake .#{host} switch --target-host {host} --use-remote-sudo`
 - Home-manager standalone: `home-manager switch --flake .#{user}@{host}`
-- CI: Hydra at `hydra.m7.rs` builds all hosts on push.
+- CI/CD: Hydra at `hydra.m7.rs` builds all hosts on push; hosts auto-upgrade from the latest successful build (see `modules/nixos/hydra-auto-upgrade.nix`).
 
 ## Vdirsyncer Calendar Collections
 
