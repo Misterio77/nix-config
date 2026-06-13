@@ -230,6 +230,11 @@ jj split                   # Split current change into multiple changes
 `-m "message"` to `jj squash` to avoid the interactive editor opening in
 non-interactive shells.
 
+**Squashing an edit chain that touches the same file must go bottom-up.**
+If commits A → B → C all modify `foo.md`, squashing C directly into A will
+conflict because A lacks B's intermediate state. Squash sequentially up
+the chain instead: `jj squash` (B into A), then `jj squash --from C --into A`.
+
 ## Absorb
 
 ```bash
@@ -243,7 +248,9 @@ working on a merge commit spanning multiple branches.
 
 ## Non-interactive commit splitting
 
-When `jj split` (interactive) isn't usable:
+`jj split` opens an interactive TUI for selecting hunks and will crash
+in non-TTY shells (e.g., inside an LLM tool's command runner). Use the
+workflow below instead:
 
 ```bash
 # 1. Create empty targets on the parent of the big commit
