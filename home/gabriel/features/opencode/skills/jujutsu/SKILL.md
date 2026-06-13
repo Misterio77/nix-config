@@ -413,6 +413,13 @@ jj git push -b main                         # Push to overwrite remote
    run `jj new` so there's always a fresh working copy at the tip. Never end
    a session sitting on a commit that has uncommitted changes or is partly
    described.
+9. **Clean up stale empty commits** -- if a previous session's
+   `(empty) (no description set)` commits are still sitting in the stack
+   below `@`, abandon them before starting new work. A stack like
+   `empty → empty → real-work` should become `empty → real-work`.
+   ```bash
+   jj abandon <stale-empty-change-id>
+   ```
 
 ## Filesets (basics)
 
