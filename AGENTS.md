@@ -62,8 +62,6 @@ Conventional commits: `type(scope): description`
   - `hosts/common/secrets.yaml` -- shared across hosts, encrypted to all host age keys.
   - `hosts/{hostname}/secrets.yaml` -- per-host, encrypted to that host only.
 - Both are also encrypted to the PGP key `7088C7421873E0DB97FF17C2245CAB70B4C225E9`.
-- Password store (`pass`) is used for personal secrets (email, calendar creds), referenced via `passwordCommand`.
-- `oama` is used for OAuth access tokens (Google accounts).
 - **Never** read secrets into context. Pipe them, reference them by command, or use SOPS to edit them in-place.
 
 ## Building and Deploying
