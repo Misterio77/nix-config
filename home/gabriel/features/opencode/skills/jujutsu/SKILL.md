@@ -25,6 +25,10 @@ automatically at the start of every command.
   an empty change by default.
 - **Immutable commits**: by default, commits reachable from remote bookmarks
   are immutable. Use `--allow-backwards` or `--ignore-immutable` to override.
+  Immutable commits are also **hidden from `jj log` by default** — they won't
+  show up unless you explicitly include them in a revset. Don't be startled
+  when `jj log -r main::` shows fewer commits than you expect; the ancestors
+  of main below the remote bookmark are simply hidden.
 
 ## Init / clone
 
