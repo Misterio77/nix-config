@@ -210,14 +210,18 @@ class FireflyClient:
                          {"transactions": [transaction]})
 
     def update_transaction_group(self, group_id: int,
-                                 transactions: list[dict]) -> dict:
+                                  transactions: list[dict],
+                                  group_title: str | None = None) -> dict:
         """PUT /api/v1/transactions/{group_id} — update all splits.
 
         Used when editing a split transaction — pass ALL existing splits
-        in the transactions list.
+        in the transactions list. group_title is mandatory when there
+        are multiple splits; pass None (default) for single groups.
         """
-        return self._put(f"transactions/{group_id}",
-                         {"transactions": transactions})
+        body: dict[str, object] = {"transactions": transactions}
+        if group_title is not None:
+            body["group_title"] = group_title
+        return self._put(f"transactions/{group_id}", body)
 
     def delete_transaction(self, group_id: int) -> dict:
         """DELETE /api/v1/transactions/{group_id} — deletes entire group."""
