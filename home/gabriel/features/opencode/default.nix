@@ -35,6 +35,7 @@
       provider.openai.options.apiKey = "{file:${osConfig.sops.secrets.openai-free-apikey.path}}";
 
       model = "deepseek/deepseek-v4-flash";
+      instructions = [osConfig.sops.secrets.gabs-info.path];
     };
     context = ./context.md; # Main context
     agents = ./agents;
@@ -46,7 +47,6 @@
       screenshot = ./skills/screenshot;
       jujutsu = ./skills/jujutsu; # From https://github.com/mtaran/jj-guide
       # Private
-      gabs-info = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-gabs-info.path}";
       lumis = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-lumis.path}";
       firefly = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-firefly.path}";
     };

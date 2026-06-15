@@ -58,7 +58,7 @@ in {
     };
 
     # Private opencode skills
-    skill-gabs-info = {
+    gabs-info = {
       sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };
