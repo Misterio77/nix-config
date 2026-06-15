@@ -52,7 +52,10 @@ If the skill file at `~/.config/opencode` is a symlink to `/nix/store/<path>`, i
   - Ask Gabs to restart opencode to take effect
 - How to create:
   - Create `~/Projects/NixConfig/home/gabriel/features/opencode/skills/<name>/SKILL.md`
-  - Add skill to to `~/Projects/NixConfig/home/gabriel/featues/opencode/default.nix`, under public skills
+  - Extra files (scripts, references, assets):
+    - Put in `~/Projects/NixConfig/home/gabriel/features/opencode/skills/<name>/<file>`
+    - Is automatically included when the skill is included
+  - Add skill directory to `~/Projects/NixConfig/home/gabriel/featues/opencode/default.nix`, under public skills
   - Use the `question` tool to ask Gabs if they want to rebuild
   - Ask Gabs to restart opencode to take effect
 
@@ -68,6 +71,9 @@ If the skill file at `~/.config/opencode` is a symlink to `/run/secrets/<path>`,
   - Run `sops decrypt --extract '["skill-<name>"]' ~/Projects/NixConfig/home/gabriel/features/opencode/skills/private.yaml > /tmp/opencode/skill.md`
   - Edit `/tmp/opencode/skill.md`
   - Run `sops set ~/Projects/NixConfig/home/gabriel/features/opencode/skills/private.yaml '["skill-<name>"]' "$(jq -sR < /tmp/opencode/skill.md)"`
+  - Extra (public) files (scripts, references, assets):
+    - Put in `~/Projects/NixConfig/home/gabriel/features/opencode/skills/<name>/<file>`
+    - Link using `xdg.configFile."opencode/skills/<name>/<file>".source = ./skills/<name>/<file>`
   - Use the `question` tool to ask Gabs if they want to rebuild
   - Ask Gabs to restart opencode to take effect
 - How to create:
