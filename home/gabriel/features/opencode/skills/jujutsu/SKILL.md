@@ -264,19 +264,28 @@ working on a merge commit spanning multiple branches.
 
 `jj split` opens an interactive TUI for selecting hunks and will crash
 in non-TTY shells (e.g., inside an LLM tool's command runner). Use the
-workflow below instead:
+workflow below instead.
+
+**Before starting**: if the big commit is `@`, describe it first (`jj describe -m "WIP"`)
+so it has a name and won't get confused with the new empty commits.
+
+Note the change IDs of all commits you'll reference — `@` moves around as you work.
 
 ```bash
-# 1. Create empty targets on the parent of the big commit
-jj new <big-change-id>- -m "feat: logical group 1"
-jj new @ -m "feat: logical group 2"
+# 1. Create empty target commits on the parent of the big commit.
+#    `@-` is the parent. The big commit gets finalized here.
+jj new @- -m "feat: logical group 1"     # <- note this change ID, e.g. "puvlmqyz"
+jj new @ -m "feat: logical group 2"      # <- note this change ID, e.g. "vtuzlxrp"
 
-# 2. Rebase the big commit onto the last empty commit
+# 2. Rebase the big commit onto the last target.
+#    It will now sit at the tip — check `jj log -r '@+'`.
 jj rebase -s <big-change-id> -d @
 
-# 3. Distribute files (change IDs are stable, no re-log needed!)
-jj squash --from <big-change-id> --into <target-1-id> -m "feat: logical group 1" -- file1 file2
-jj squash --from <big-change-id> --into <target-2-id> -m "feat: logical group 2" -- file3 file4
+# 3. Distribute files into each target (change IDs are stable, no re-log needed).
+jj squash --from <big-change-id> --into puvlmqyz -m "feat: logical group 1" -- file1 file2
+jj squash --from <big-change-id> --into vtuzlxrp -m "feat: logical group 2" -- file3 file4
+
+# jj auto-abandons the big commit once all files are squashed out — no manual cleanup needed.
 ```
 
 ## Conflict handling
