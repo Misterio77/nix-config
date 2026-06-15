@@ -87,3 +87,13 @@ When adding a remote calendar collection to `home/gabriel/features/productivity/
 1. First verify the collection exists remotely with `vdirsyncer discover`.
 2. Add the collection name (or UUID) string to the `collections` list under the appropriate account.
 3. Use a `# Comment` to note the display name if it differs from the ID.
+
+## Nix eval
+
+When verifying config output before deploying:
+
+- NixOS config: `nixosConfigurations.<host>.config.<path>`
+- Home-manager (managed by NixOS): `nixosConfigurations.<host>.config.home-manager.users.<user>.<path>`
+- Specialised HM variant: `nixosConfigurations.<host>.config.home-manager.users.<user>.specialisation.<variant>.config.<path>`
+- `nix build <path>.source --no-link --print-out-paths` to get the built file
+- `nix eval <path> --json` to inspect raw attribute values
