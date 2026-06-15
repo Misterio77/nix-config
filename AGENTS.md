@@ -72,6 +72,14 @@ Conventional commits: `type(scope): description`
 - Home-manager standalone: `home-manager switch --flake .#{user}@{host}`
 - CI/CD: Hydra at `hydra.m7.rs` builds all hosts on push; hosts auto-upgrade from the latest successful build (see `modules/nixos/hydra-auto-upgrade.nix`).
 
+### Post-deploy verification
+
+After deploying a host, verify the correct revision landed:
+
+1. `ssh {host} -- nix flake metadata self --json | jq .revision -r` — get the deployed commit hash (first 8 chars).
+2. `jj log -r 'commit_id("{hash}")'` — map it to a change ID and commit description.
+3. Confirm it's the expected commit (should be at or near `main` / the tip of the stack).
+
 ## Vdirsyncer Calendar Collections
 
 When adding a remote calendar collection to `home/gabriel/features/productivity/calendar.nix`:
