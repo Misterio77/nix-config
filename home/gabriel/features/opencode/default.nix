@@ -40,19 +40,15 @@
     context = ./context.md; # Main context
     agents = ./agents;
     skills = {
-      # Public
+      jujutsu = ./skills/jujutsu; # From https://github.com/mtaran/jj-guide
       gabs-tools = ./skills/gabs-tools;
       edit-skills = ./skills/edit-skills;
       nix-shell = ./skills/nix-shell;
       screenshot = ./skills/screenshot;
-      jujutsu = ./skills/jujutsu; # From https://github.com/mtaran/jj-guide
-      # Private
+      firefly = ./skills/firefly;
       lumis = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-lumis.path}";
-      firefly = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-firefly.path}";
     };
   };
 
-  xdg.configFile."opencode/skills/firefly/scripts/expenses.py".source = ./skills/firefly/scripts/expenses.py;
-  xdg.configFile."opencode/skills/firefly/scripts/firefly_client.py".source = ./skills/firefly/scripts/firefly_client.py;
-  xdg.configFile."opencode/skills/firefly/scripts/pluggy_fetch.py".source = ./skills/firefly/scripts/pluggy_fetch.py;
+  xdg.configFile."opencode/skills/firefly/resources/private.md".source = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-firefly-private.path}";
 }

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Pull Nubank accounts + card transactions via Pluggy.
+"""Pull bank accounts + card transactions via Pluggy.
 
 Usage:
-  1. One-time Nubank connection:
+  1. One-time connection:
        python3 pluggy_fetch.py connect
-     Opens browser → log into Nubank → copy item_id from URL bar.
+     Opens browser → log into your bank → copy item_id from URL bar.
 
   2. Fetch transactions for a month:
        python3 pluggy_fetch.py fetch <itemId> 2026-05-01 2026-05-31
@@ -23,9 +23,12 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-PLUGGY_CLIENT_ID = "e2c80f12-53f7-4e4b-b032-065f477a82b7"
-PLUGGY_CLIENT_SECRET = open("/run/secrets/pluggy-secret").read().strip()
-API_BASE = "https://api.pluggy.ai"
+PLUGGY_CLIENT_ID = os.environ.get("PLUGGY_CLIENT_ID", "e2c80f12-53f7-4e4b-b032-065f477a82b7")
+
+_secret_path = os.environ.get("PLUGGY_SECRET_PATH", "/run/secrets/pluggy-secret")
+PLUGGY_CLIENT_SECRET = open(_secret_path).read().strip()
+
+API_BASE = os.environ.get("PLUGGY_API_BASE", "https://api.pluggy.ai")
 OUTPUT_DIR = "/tmp/pluggy_data"
 
 
@@ -109,7 +112,7 @@ def cmd_connect():
     result = client.create_connect_token()
     token = result["accessToken"]
     widget_url = f"https://connect.pluggy.ai/widget?connect_token={token}"
-    print("Opening browser to connect Nubank...")
+    print("Opening browser to connect your bank...")
     print(f"  URL: {widget_url}")
     print()
     print("After logging in, look at the URL bar for: &item_id=YOUR-ITEM-ID&")

@@ -20,7 +20,7 @@ import urllib.request
 import urllib.error
 
 BASE_URL = os.environ.get("FIREFLY_BASE", "https://firefly.m7.rs")
-TOKEN_PATH = "/run/secrets/firefly-pat"
+TOKEN_PATH = os.environ.get("FIREFLY_TOKEN_PATH", "/run/secrets/firefly-pat")
 
 
 class FireflyError(Exception):
@@ -127,24 +127,6 @@ class FireflyClient:
             parts.append(f"end={end}")
         return self._get(f"transactions?{'&'.join(parts)}")
 
-    def all_transactions(self, limit: int = 200,
-                         start: str | None = None,
-                         end: str | None = None) -> list[dict]:
-        """Paginate through all transactions (splits expanded)."""
-        parts = [f"limit={limit}"]
-        if start is not None:
-            parts.append(f"start={start}")
-        if end is not None:
-            parts.append(f"end={end}")
-        path = f"transactions?{'&'.join(parts)}"
-        items = self._get_all(path)
-        # flatten split transactions
-        flat: list[dict] = []
-        for group in items:
-            for split in group["attributes"]["transactions"]:
-                flat.append({**split, "_group_id": group["id"]})
-        return flat
-
     def search(self, query: str, limit: int = 50) -> dict:
         """GET /api/v1/search/transactions?query=..."""
         return self._get(f"search/transactions?query={urllib.parse.quote(query)}&limit={limit}")
@@ -172,51 +154,37 @@ class FireflyClient:
         return self._get_all("subscriptions")
 
     def transaction(self, group_id: int) -> dict:
-        """GET /api/v1/transactions/{group_id} — single transaction group."""
+        """GET /api/v1/transactions/{group_id} — full group with all splits."""
         return self._get(f"transactions/{group_id}")
 
-    # ── POST / write endpoints ───────────────────────────────────────────
+    # ── POST / PUT / DELETE — all transactions are groups ────────────────
 
-    def create_transaction(self, transaction: dict) -> dict:
-        """POST /api/v1/transactions — create a single transaction.
+    def create_transaction(self, splits: list[dict],
+                           group_title: str | None = None) -> dict:
+        """POST /api/v1/transactions — create a transaction group.
 
-        Minimal shape:
+        ``splits`` is a list of split dicts, one per transaction in the group.
+        A "single" transaction is just a group with one entry.
+        ``group_title`` is required when len(splits) > 1.
+
+        Split shape:
             {"type": "withdrawal", "date": "2026-06-12", "amount": "42.50",
-             "description": "Something", "source_id": 6,
-             "destination_name": "Some expense", "category_name": "Comer fora"}
+             "description": "Something", "source_id": SOURCE_ACCOUNT_ID,
+             "destination_name": "Some expense", "category_name": "Some category"}
         """
-        return self._post("transactions",
-                          {"transactions": [transaction]})
-
-    def create_split_transaction(self, group_title: str,
-                                 splits: list[dict]) -> dict:
-        """POST /api/v1/transactions — create a split transaction.
-
-        group_title is mandatory when splits has more than one entry.
-        Each split has the same shape as a single transaction.
-        """
-        return self._post("transactions",
-                          {"group_title": group_title,
-                           "transactions": splits})
+        body: dict[str, object] = {"transactions": splits}
+        if group_title is not None:
+            body["group_title"] = group_title
+        return self._post("transactions", body)
 
     def update_transaction(self, group_id: int,
-                           transaction: dict) -> dict:
-        """PUT /api/v1/transactions/{group_id} — edit fields.
+                           transactions: list[dict],
+                           group_title: str | None = None) -> dict:
+        """PUT /api/v1/transactions/{group_id} — update ALL splits in a group.
 
-        Fields to update can include transaction_journal_id to target
-        a specific split. Send only changed fields.
-        """
-        return self._put(f"transactions/{group_id}",
-                         {"transactions": [transaction]})
-
-    def update_transaction_group(self, group_id: int,
-                                  transactions: list[dict],
-                                  group_title: str | None = None) -> dict:
-        """PUT /api/v1/transactions/{group_id} — update all splits.
-
-        Used when editing a split transaction — pass ALL existing splits
-        in the transactions list. group_title is mandatory when there
-        are multiple splits; pass None (default) for single groups.
+        GET the group first, modify the ``transactions[]`` array, then PUT it
+        back. Sending only some splits **removes** the others.
+        ``group_title`` is required when the result has multiple splits.
         """
         body: dict[str, object] = {"transactions": transactions}
         if group_title is not None:

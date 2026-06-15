@@ -66,7 +66,7 @@ in {
       sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };
-    skill-firefly = {
+    skill-firefly-private = {
       sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };

@@ -15,8 +15,7 @@ marked with *.
 Usage:
     ./expenses.py [start_month] [end_month]
 
-Requires Firefly PAT at /run/secrets/firefly-pat.
-Set FIREFLY_BASE to override the instance URL (default: https://firefly.m7.rs).
+Set FIREFLY_BASE and FIREFLY_TOKEN_PATH env vars to configure.
 """
 
 import calendar
@@ -28,7 +27,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 BASE = os.environ.get("FIREFLY_BASE", "https://firefly.m7.rs")
-TOKEN_PATH = "/run/secrets/firefly-pat"
+TOKEN_PATH = os.environ.get("FIREFLY_TOKEN_PATH", "/run/secrets/firefly-pat")
 COL_W = 12
 TOT_W = 7
 MONTH_ABBR = [
