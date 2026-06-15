@@ -13,7 +13,11 @@
     enable = true;
     settings = {
       keyboard.bindings = [
-        { key = "N"; mods = "Control|Shift"; action = "SpawnNewInstance"; }
+        {
+          key = "N";
+          mods = "Control|Shift";
+          action = "SpawnNewInstance";
+        }
       ];
       font = {
         size = config.fontProfiles.monospace.size;
@@ -28,7 +32,7 @@
           y = 26;
         };
       };
-      colors = rec {
+      colors = {
         primary = {
           background = config.colorscheme.colors.surface;
           foreground = config.colorscheme.colors.on_surface;
@@ -43,9 +47,23 @@
           magenta = config.colorscheme.colors.magenta;
           cyan = config.colorscheme.colors.cyan;
         };
-        # TODO make actual bright variants
-        bright = normal // {
-          black = config.colorscheme.colors.on_surface_variant;
+        bright = let
+          inherit (config.colorscheme) colors mode;
+          # on_*_container are the light variants in dark mode;
+          # *_container are the light variants in light mode.
+          p =
+            if mode == "dark"
+            then "on_"
+            else "";
+        in {
+          black = colors.surface_bright;
+          white = colors.on_surface;
+          red = colors."${p}red_container";
+          green = colors."${p}green_container";
+          yellow = colors."${p}yellow_container";
+          blue = colors."${p}blue_container";
+          magenta = colors."${p}magenta_container";
+          cyan = colors."${p}cyan_container";
         };
       };
     };
