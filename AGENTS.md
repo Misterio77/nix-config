@@ -68,7 +68,7 @@ Conventional commits: `type(scope): description`
 
 - Format check: `nix fmt`
 - Build a host: `nixos-rebuild build --flake .#{host}`
-- Deploy a host: `./deploy.sh {host}` or `nixos-rebuild --flake .#{host} switch --target-host {host} --use-remote-sudo`
+- Deploy a host: `./deploy.sh {host}`
 - Home-manager standalone: `home-manager switch --flake .#{user}@{host}`
 - CI/CD: Hydra at `hydra.m7.rs` builds all hosts on push; hosts auto-upgrade from the latest successful build (see `modules/nixos/hydra-auto-upgrade.nix`).
 

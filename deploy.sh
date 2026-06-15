@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
+# Helper script to quickly deploy config to a host. Use it for rapid iteration.
 export NIX_SSHOPTS="-A"
-
-build_remote=false
 
 hosts="$1"
 shift
@@ -12,5 +11,5 @@ if [ -z "$hosts" ]; then
 fi
 
 for host in ${hosts//,/ }; do
-    nixos-rebuild --flake .\#$host switch --target-host $host --use-remote-sudo --use-substitutes $@
+   nixos-rebuild --flake .\#$host test --target-host $host --ask-sudo-password --use-substitutes $@
 done
