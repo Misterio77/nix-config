@@ -62,7 +62,7 @@ in {
       sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };
-    skill-lumis = {
+    skill-lumis-private = {
       sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };

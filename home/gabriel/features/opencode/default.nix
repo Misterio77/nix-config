@@ -46,9 +46,10 @@
       nix-shell = ./skills/nix-shell;
       screenshot = ./skills/screenshot;
       firefly = ./skills/firefly;
-      lumis = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-lumis.path}";
+      lumis = ./skills/lumis;
     };
   };
 
   xdg.configFile."opencode/skills/firefly/resources/private.md".source = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-firefly-private.path}";
+  xdg.configFile."opencode/skills/lumis/resources/private.md".source = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-lumis-private.path}";
 }
