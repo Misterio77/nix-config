@@ -1,494 +1,231 @@
 ---
 name: jujutsu
-description: Use for all Jujutsu (jj) CLI commands -- splitting, squashing, rebasing, revsets, bookmarks, push/pull, conflict resolution, non-interactive workflows, footguns, and recovery. Always load this before running any jj command.
+description: "REQUIRED for any VCS operation in jj repositories (`.jj/` directory present). Activate on: commit, push, pull, status, diff, log, branch/bookmark, PR, merge, rebase, stash, conflict, undo, or any version-control task. In jj repos, use jj exclusively — running git commands can corrupt or confuse state."
 ---
 
-# Jujutsu (jj)
+# jj Guide for AI Agents
 
-Jujutsu is a Git-compatible version control system. The working copy is a
-revision like any other, identified by `@`. Changes are snapshotted
-automatically at the start of every command.
+Jujutsu (jj) is a Git-compatible VCS with mutable commits, automatic snapshotting, no staging area, and first-class conflicts. This skill teaches you how to use it safely from a non-interactive agent environment.
 
-## Mental model
+If `.jj/` exists in the repo root, this is a jj repo. **Use `jj` commands, not `git`.** In a colocated repo (`.jj/` *and* `.git/`), git tools can read the state, but mutations should go through `jj` so the operation log stays consistent.
 
-- **Change / Revision**: a commit (identified by short hex like `b84294d7`).
-  There are two identifiers:
-  - **Change ID** (e.g. `puqltutt`): stable identity that survives rewrites
-    and rebases. **Always use change IDs** for `--from`, `--into`, `-r`, etc.
-  - **Commit ID** (e.g. `abc123`): content hash that changes on every rewrite.
-    Using a stale hash silently targets an orphaned commit with no error.
-- **Bookmark**: jj's equivalent of a Git branch. Pushes/pulls operate on
-  bookmarks. Bookmarks do NOT auto-advance when you create new commits.
-- **Working copy** (`@`): the current change. Whenever you run a jj command,
-  jj snapshots the working copy first.
-- **Empty change**: a change with no diff against its parent. `jj new` creates
-  an empty change by default.
-- **Immutable commits**: by default, commits reachable from remote bookmarks
-  are immutable. Use `--allow-backwards` or `--ignore-immutable` to override.
-  Immutable commits are also **hidden from `jj log` by default** — they won't
-  show up unless you explicitly include them in a revset. Don't be startled
-  when `jj log -r main::` shows fewer commits than you expect; the ancestors
-  of main below the remote bookmark are simply hidden.
+## Critical Rules
 
-## Init / clone
+- **NEVER** use interactive flags (`-i`, `--interactive`). TUI prompts hang in agent environments. This applies to `jj split -i`, `jj squash -i`, `jj commit -i`, `jj resolve`, `jj diffedit`, etc.
+- **ALWAYS** pass `-m "msg"` when describing/committing. Without `-m`, an editor opens and hangs.
+- **VERIFY** mutations with `jj st` and `jj log` after `squash`, `abandon`, `rebase`, `restore`, `commit`. jj will silently do exactly what you asked, even if it wasn't what you meant.
+- **PREFER change IDs** (letters, e.g. `nmwwolux`) over commit IDs (hex). Change IDs are stable across rewrites.
+- **NEVER** rebase or describe an immutable commit (e.g. `main` if it's tracking a remote). Target the commit *above* it, or use `main@origin` as `--destination`.
+- If you get stuck, `jj undo` reverses the last operation. `jj op log` shows everything; `jj op restore <op-id>` rewinds the whole repo.
 
-```bash
-jj git init        # New repo with co-located .git/ + .jj/
-jj git clone <url> # Clone a Git repo (colocated by default)
-```
+## Mental Model
 
-## Common revsets
+- **The working copy is a commit (`@`).** File edits auto-amend `@` on every `jj` command — there is no staging area, no `git add`, no stashing.
+- **Commits are mutable** until pushed. You build commits by editing the working copy and refining with `squash`/`absorb`/`describe`/`restore`.
+- **Change ID vs commit ID.** A change has a stable change ID (k-z letters). Each rewrite produces a new commit ID (hex) but the change ID is preserved.
+- **Bookmarks ≈ git branches**, but they do **not** auto-advance when you make new commits. You move them yourself with `jj bookmark set` or `jj bookmark move`.
+- **Conflicts live in commits.** Operations never fail on merge conflict; the conflict is recorded in the resulting commit and you resolve it later by editing files.
+- **Operation log replaces reflog.** Every state change is an operation. `jj undo` / `jj op restore` make almost any mistake recoverable.
 
-### Symbols
+## Two Workflow Styles
 
-| Symbol         | Meaning                      |
-| -------------- | ---------------------------- |
-| `@`            | Working copy change          |
-| `@-`           | Parent of working copy       |
-| `root()`       | The root commit              |
-| `trunk()`      | Auto-resolved trunk bookmark |
-| `<change-id>`  | Prefix match on change ID    |
+There are two equivalent ways to make commits. Pick one and be consistent within a session.
 
-### Operators
-
-| Operator | Meaning                              |
-| -------- | ------------------------------------ |
-| `x-`     | Parents of x                         |
-| `x+`     | Children of x                        |
-| `::x`    | Ancestors of x (inclusive)           |
-| `x::`    | Descendants of x (inclusive)         |
-| `x..y`   | Ancestors of y, excluding ancestors of x |
-| `x & y`  | Intersection                         |
-| `x ~ y`  | Difference                           |
-| `x | y`  | Union                                |
-| `~x`     | Complement                           |
-| `all:x`  | Assert x matches multiple (required for `-s` with >1 result) |
-
-### Useful functions
-
-| Function                  | Meaning                              |
-| ------------------------- | ------------------------------------ |
-| `ancestors(x)`            | All ancestors of x                   |
-| `descendants(x)`          | All descendants of x                 |
-| `heads(x)`                | Tips of x (not ancestors of others)  |
-| `roots(x)`                | Roots of x (not descendants of others) |
-| `latest(x, n)`            | Most recent n commits in x           |
-| `bookmarks([pattern])`    | Local bookmark targets               |
-| `remote_bookmarks()`      | Remote-tracking bookmark targets     |
-| `conflicts()`             | Commits with conflicts               |
-| `empty()`                 | Commits modifying no files           |
-| `divergent()`             | Commits with duplicate change IDs    |
-| `mine()`                  | Commits by current user              |
-| `files("path")`           | Commits touching a path              |
-| `description("text")`     | Commits matching a pattern           |
-| `visible_heads()`         | All visible heads                    |
-
-### Common patterns
+### Style A — `jj commit` (closest to git)
 
 ```bash
-jj log -r ::                               # Everything visible (root()..visible_heads())
-jj log -r ::@                              # Ancestors of @ (full history in a linear repo)
-jj log -r 'remote_bookmarks()..@'           # My unpushed commits
-jj log -r 'trunk()..@'                      # All commits above trunk
-jj log -r '::@ ~ ::main'                    # My commits above main
-jj log -r 'conflicts()'                     # Find all conflicts
-jj log -r 'mine() & bookmarks()'            # My bookmarks
-jj log -r 'files("src/auth.rs")'            # Commits touching a file
-jj log -r 'latest(description("fix"), 5)'   # 5 newest "fix" commits
+# Make edits in @ (auto-tracked)
+echo "..." > file.rs
+jj st                       # verify tracked changes
+jj commit -m "feat: ..."    # finalize @ as a real commit; new empty @ is created
 ```
 
-## Remotes
+After `jj commit`, the *content* lives in `@-` (the parent) and `@` is a new empty change. Bookmarks and pushes target `@-`.
+
+### Style B — describe-first (recommended for refining)
 
 ```bash
-jj git remote list                          # List remotes
-jj git remote add <name> <url>              # Add a remote
-jj git remote remove <name>                 # Remove a remote
-jj git remote set-url <name> <url>          # Change a remote's URL
-jj git remote rename <old> <new>            # Rename a remote
+jj st                       # if @ already has content, run `jj new` first
+jj describe -m "feat: ..."  # set message before coding
+# ... edit files; they auto-amend into @ ...
+jj st                       # review
+# Leave @ as-is. The next task starts with `jj new`.
 ```
 
-For `add`, `--fetch-tags` can be `all`, `included` (default), or `none`.
+Style B keeps the message in the same change you're editing, which is convenient for `jj squash`/`jj absorb` refinement. **Don't run `jj new` at the end** — leave that for the start of the next task.
 
-## Fetching
+## Common Workflows
 
+### Inspect
 ```bash
-jj git fetch                   # Fetch from default remote (usually origin)
-jj git fetch --remote upstream # Fetch from specific remote
+jj st                # status
+jj log               # graph of recent changes
+jj log -r '::@ & ~::main@origin'   # just YOUR commits not in main
+jj diff              # diff of @
+jj show <change-id>  # description + diff for a commit
 ```
 
-## Pushing
-
+### Refine the current change
 ```bash
-jj git push               # Push all tracked bookmarks
-jj git push --allow-new   # Allow creating a new remote bookmark
-jj git push -b <bookmark> # Push a specific bookmark
-jj git push --remote origin
-jj git push --change @    # Push only the working copy's bookmark, creates a bookmark for it (very useful for PRs, prefer it to named branches)
+jj describe -m "better message"   # rewrite message only
+jj squash                         # fold @ into its parent (amend equivalent)
+jj squash --from <A> --into <B>   # move all of A into B
+jj absorb                         # auto-route hunks of @ to ancestors that last touched those lines
+jj restore path/to/file           # discard changes to a file (restore from parent)
+jj restore --from <change-id> path/to/file   # take file from another commit
+jj abandon <change-id>            # delete a commit; descendants reparent
 ```
 
-**Default push revset**: `remote_bookmarks(remote=origin)..@`
-
-This means: push bookmarks on `@` whose remote-tracking bookmark is behind
-the local one. If there is no remote-tracking bookmark at all (i.e., it would
-be a new remote bookmark), jj refuses unless `--allow-new` is passed.
-
-If `jj git push` says "No bookmarks found in the default push revset", it
-means no bookmark is tracking `@` that isn't already up to date on the
-remote. Create a bookmark on the current (or parent) change first.
-
-**Always run `jj log -r 'remote_bookmarks()..@'` before pushing** to review
-what will be pushed.
-
-**Empty `@` is harmless.** If `@` is an empty, descriptionless change sitting
-on top of real commits, don't bother abandoning it. Just move the bookmark to
-the last real commit (`@-`) and push. jj always keeps a working copy — the
-empty one is normal and doesn't need cleanup.
-
-### Multiple remotes
-
-Some repos have more than one remote that should stay in sync — typically a
-personal remote (e.g. `m7.rs`) and a mainstream one (e.g. `github`, `gitlab`).
-When pushing, push to all of them:
-
+### Split a change non-interactively
+`jj split -i` is interactive — don't use it. Instead:
 ```bash
-jj git push --remote origin && jj git push --remote github
+jj split file1.rs file2.rs           # named files become first commit; rest stays in @
+jj split 'glob:tests/**'             # by fileset pattern
 ```
 
-## Bookmarks
-
+### Bookmarks (branches)
 ```bash
-jj bookmark create <name> -r <rev>          # Create bookmark at revision
-jj bookmark list                            # List bookmarks
-jj bookmark list --all                      # Include remote bookmarks
-jj bookmark move <name> --to <rev>          # Move bookmark forward
-jj bookmark move <name> --to <rev> --allow-backwards  # Move bookmark anywhere
-jj bookmark set <name> -r <rev>             # Create or move bookmark (idempotent)
-jj bookmark delete <name>                   # Delete a bookmark
-jj bookmark track <remote>/<name>           # Track a remote bookmark
+jj bookmark list
+jj bookmark create my-feature -r @       # tracks the change ID; survives rewrites of that change
+jj bookmark set my-feature -r @-         # move an existing bookmark (e.g. after `jj commit`)
+jj bookmark delete my-feature
 ```
 
-**Footgun**: `jj bookmark create main -r @` creates the bookmark on the
-working copy. If `@` is an empty change (no content), pushing this makes no
-sense. Point to `@-` instead to bookmark the parent with actual content.
-
-**Footgun**: Moving a bookmark backwards normally requires `--allow-backwards`
-because jj protects tracked bookmarks from losing commits (the old bookmark
-position becomes unreachable from any bookmark).
-
-**Footgun**: Bookmark names with hyphens are parsed as subtraction in revsets.
-Quote them: `jj log -r '"my-branch"..@'` or use `bookmarks(exact:"my-branch")`.
-
-## Creating a change
-
-**Before `jj new`**: if `@` is already empty with no description, reuse it
-with `jj describe -m "message"` instead of stacking another empty commit.
-
+### Push and pull
 ```bash
-jj new                     # New empty change on top of @
-jj new -m "message"        # New empty change with description
-jj new main                # New change on top of main bookmark
-jj new feat-a feat-b       # New merge commit with both as parents
-jj describe -m "message"   # Set description on current change
-jj commit                  # Snapshots working copy (usually automatic)
-```
+jj git fetch                              # fetch all remotes
+jj git push -b my-feature                 # push a specific bookmark
+jj git push                               # push all tracked bookmarks (auto force-push on rewrites)
 
-### Key mental shift from Git
-
-Git makes you explicitly finalize a commit. jj doesn't — your working copy
-**is** a commit, always. `jj new` is the closest thing to `git commit`:
-it **snapshots the current @** and creates a new empty one on top.
-
-Typical workflow for a sequence of independent changes:
-
-```bash
-jj new -m "feat: add widget"         # Start change 1
-# ... edit files ...
-jj new -m "fix: patch widget edge"   # Finalizes change 1, starts change 2
-# ... edit files ...
-jj new -m "chore: format"            # Finalizes change 2, starts change 3
-```
-
-When the user says "make a new commit" or "commit this", they mean `jj new` —
-close the current change and open a fresh one. Don't overthink it.
-
-## Viewing history / status
-
-Prefer `--git` on `diff` for machine-readable +/- output.
-Avoid raw `jj diff` (color-dependent, hard to parse).
-
-```bash
-jj log                     # Show commit history
-jj log -r "main..@"        # Changes since main bookmark
-jj status                  # Working copy status
-# Always use --git for diff output the model needs to read:
-jj diff --git               # Diff working copy vs parent
-jj diff --git -r @-         # Diff against parent
-jj show <rev> --git            # Show details of a revision
-```
-
-## Editing changes
-
-```bash
-jj squash                  # Squash @ into parent
-jj squash -i               # Interactively choose what to move to parent
-jj squash --from @ --into <change-id>   # Move changes into any commit
-jj squash --from @ --into <change-id> -- file1 file2  # Specific files only
-jj rebase -d <rev>         # Rebase current change onto another
-jj abandon                 # Abandon (delete) the working copy change
-jj edit <rev>              # Make a non-@ change the working copy
-jj new --insert-after <rev>  # Insert a new change between rev and its children
-jj split                   # Split current change into multiple changes
-```
-
-**Important**: When source and destination have different descriptions, pass
-`-m "message"` to `jj squash` to avoid the interactive editor opening in
-non-interactive shells.
-
-**Squashing an edit chain that touches the same file must go bottom-up.**
-If commits A → B → C all modify `foo.md`, squashing C directly into A will
-conflict because A lacks B's intermediate state. Squash sequentially up
-the chain instead: `jj squash` (B into A), then `jj squash --from C --into A`.
-
-## Absorb
-
-```bash
-jj absorb                  # Auto-move @ changes into the nearest mutable
-                           # ancestor that touches the same files/lines
-```
-
-`jj absorb` inspects which lines were last touched by each parent commit and
-automatically routes your changes to the right one. Especially powerful when
-working on a merge commit spanning multiple branches.
-
-## Non-interactive commit splitting
-
-`jj split` opens an interactive TUI for selecting hunks and will crash
-in non-TTY shells (e.g., inside an LLM tool's command runner). To split
-`@` into multiple commits non-interactively:
-
-```bash
-# Work on both tasks in @:
-jj new -m "WIP: both tasks"
-# ... edit file A, edit file B ...
-
-# Review what's in @:
-jj show
-
-# Insert a new commit before @ for the first task:
-jj new -B @ -m "feat: edits to file A"
-
-# Move file A's changes from @ down into the new @-:
-jj restore --from @ --to @- file-A
-
-# Describe @ with the remaining changes:
-jj describe @ -m "feat: edits to file B"
-```
-
-Repeat `jj new -B @` + `jj restore` for more than two splits. No change IDs
-to track, no rebasing.
-
-## Conflict handling
-
-Conflicts are stored **inside commits** -- not as working-tree markers that
-block you. You can commit, rebase, and continue working while conflicts exist.
-
-```bash
-jj log -r 'conflicts()'    # Find all commits with conflicts
-jj resolve                 # Open interactive merge tool for @ conflicts
-jj resolve -r <rev>        # Resolve conflicts in a specific commit
-```
-
-## Undo and recovery
-
-Every repository-modifying command is recorded. Anything can be undone.
-
-```bash
-jj undo                         # Undo the last operation
-jj op log                       # View full operation history
-jj op undo <op-id>              # Undo a specific operation
-jj op restore <op-id>           # Restore repo state to a past operation
-```
-
-**`jj op restore` is the safety net.** If a rebase goes wrong, find a
-known-good state in `jj op log` and restore to it.
-
-## Simultaneous multi-branch work
-
-jj's merge-commit model lets you work across multiple active branches in one
-working copy:
-
-```bash
-# Create a merge commit over all active branches
-jj new feat-a feat-b feat-c -m "merge: working copy"
-
-# Make changes, then distribute them back
-jj absorb       # Auto-redistributes changes to the right parent branch
-```
-
-To rebase all feature branches at once when trunk advances:
-
-```bash
-jj rebase -s 'all:roots(trunk()..@)' -o trunk()
-```
-
-## Divergence
-
-Divergent changes (`??` in log) occur when multiple live commits share the
-same change ID -- often from CI auto-commits landing on remote bookmarks.
-
-```bash
-jj log -r 'divergent()'    # Find divergent changes
-
-# Resolution: keep one, abandon the other
-jj bookmark set <name> -r <correct-commit-id>
-jj abandon <wrong-commit-id>
-```
-
-**Prevention**: always `jj git fetch` before starting work on a pushed stack.
-
-## Configuration
-
-Config file: `~/.config/jj/config.toml`
-
-```toml
-[user]
-name = "Your Name"
-email = "you@example.com"
-
-[ui]
-editor = "vim"
-
-[aliases]
-l = ["log", "-r", "remote_bookmarks()..@"]
-```
-
-```bash
-jj config list                           # List all config
-jj config get user.email                 # Get a value
-jj config set --user user.email "..."    # Set a value
-```
-
-## Common workflows
-
-**Push a new repo to a fresh remote:**
-
-```bash
-jj bookmark create main -r @-
-jj git remote add origin git@github.com:user/repo.git
-jj git push --allow-new
-```
-
-**Push a change as a new bookmark (preferred)**:
-
-```bash
-jj git push --change <change-id>
-```
-
-**Create a feature and push:**
-
-```bash
-jj bookmark create my-feature -r @
-jj git push --allow-new
-```
-
-**Sync with upstream:**
-
-```bash
+# Sync main, fast-forward
 jj git fetch
-jj rebase -d main          # If main was updated upstream
-jj git push
+jj bookmark set main -r main@origin
+
+# Sync main and rebase your work onto it
+jj git fetch
+jj rebase -d main@origin                  # rebase YOUR commits (not main) onto remote main
 ```
 
-## Conflicted bookmark resolution
+### Address PR review
 
-When a remote already has a bookmark at a different commit (e.g. GitLab's
-auto-created `main`), tracking it produces a conflicted bookmark:
-
+Rewrite (clean history):
 ```bash
-jj bookmark track main@origin              # Import remote bookmark
-jj bookmark list --all                      # Inspect: @git, @origin states
-jj bookmark set main -r <our-commit>        # Resolve to our commit
-jj git push -b main                         # Push to overwrite remote
+jj edit <change-id>          # working copy becomes that commit
+# ... fix ...
+jj new                       # leave the commit
+jj git push                  # auto force-pushes the rewritten bookmark
 ```
 
-## Common pitfalls
-
-- **"My changes disappeared"** -- They didn't. `jj op log` + `jj undo`.
-- **"Bookmark didn't move after commit"** -- Bookmarks must be moved
-  explicitly. `jj bookmark move <name>`.
-- **"Push was rejected"** -- jj push is a force-push by design.
-- **"Squash opened an editor"** -- Pass `-m "message"` to avoid in scripts.
-- **"No bookmarks found in push revset"** -- No bookmark tracking `@` that
-  isn't already up-to-date. Create/move a bookmark on the relevant change.
-- **"How do I see what I'm about to push?"** -- `jj log -r
-  'remote_bookmarks()..@'`.
-
-## Best practices
-
-1. **Use change IDs, not commit hashes** -- change IDs survive all rewrites.
-2. **Pass `-m` with squash in scripts** -- prevents editor from opening.
-3. **Fetch before starting** -- `jj git fetch` before new work. CI may have
-   landed commits.
-4. **Never push without review** -- always `jj log -r
-   'remote_bookmarks()..@'` and confirm with the user first.
-5. **Squash before pushing** -- clean up intermediates into logical units.
-6. **Use `jj undo` freely** -- every operation is undoable.
-7. **Don't stack empty commits** -- before running `jj new`, check if the
-   current working copy is already empty and has no description (`jj log -r @`
-   shows `(empty)` and `(no description set)`). If so, reuse it: describe it
-    with `jj describe -m "message"` and start working there instead of creating
-    a fresh child.
-8. **Leave a clean empty commit after work** -- when finished with a task,
-   run `jj new` so there's always a fresh working copy at the tip. Never end
-   a session sitting on a commit that has uncommitted changes or is partly
-   described.
-9. **Clean up stale empty commits** -- if a previous session's
-   `(empty) (no description set)` commits are still sitting in the stack
-   below `@`, abandon them before starting new work. A stack like
-   `empty → empty → real-work` should become `empty → real-work`.
-   ```bash
-   jj abandon <stale-empty-change-id>
-   ```
-
-## Filesets (basics)
-
-Used with `jj diff`, `jj split`, `jj squash -i`, `jj file list`.
-
+Additive (preserve review history):
 ```bash
-jj diff '~Cargo.lock'                         # Exclude lockfile
-jj diff 'glob:"**/*.ts" ~ glob:"**/*.test.ts"' # TS, not tests
-jj split 'src/auth'                            # Only auth directory
-jj log -r 'files(glob:"**/*.go")'             # Commits touching Go files
+jj new <bookmark>            # new commit on top of bookmark tip
+# ... fix ...
+jj commit -m "address review"
+jj bookmark set <bookmark> -r @-
+jj git push -b <bookmark>
 ```
 
-## Migration notes (from Git)
+### Conflicts
 
-| Git command                | jj equivalent                                 |
-| -------------------------- | --------------------------------------------- |
-| `git clone`                | `jj git clone <url>`                          |
-| `git pull`                 | `jj git fetch && jj rebase -d <bookmark>`     |
-| `git push`                 | `jj git push`                                 |
-| `git push -u origin main`  | `jj bookmark create main -r @- && jj git push --allow-new` |
-| `git branch`               | `jj bookmark list`                            |
-| `git checkout -b foo`      | `jj bookmark create foo -r @`                 |
-| `git merge`                | `jj new <a> <b>` (creates a merge change)     |
-| `git rebase`               | `jj rebase -d <rev>`                          |
-| `git stash`                | Not needed; work is always snapshotted        |
-| `git add`                  | Not needed; all changes tracked automatically |
-| `git commit -m "msg"`        | `jj new -m "next msg"` (snapshots @, starts new change). Use `jj describe -m "msg"` only to rename the current @. |
-| `git commit --amend`       | `jj squash`                                   |
-| `git log`                  | `jj log`                                      |
-| `git status`               | `jj status`                                   |
-| `git diff`                 | `jj diff`                                     |
-| `git blame`                | `jj file annotate`                            |
-| `git reflog`               | `jj op log`                                   |
-| `git reset --hard`         | `jj abandon`                                  |
-| `git cherry-pick`          | `jj duplicate -r <rev> -d @`                  |
+jj never fails on conflict. After a `rebase`/`new`/`squash`, run `jj st` — conflicted files are listed. Open them and resolve by hand: jj's markers look like Git's but with extra sections (`%%%%%%% diff from:` / `+++++++` / `>>>>>>>`). See `references/conflicts.md` for the marker format. Do **not** use `jj resolve` (interactive). After editing, `jj st` will show the conflict cleared automatically.
 
-## Environment
+### Recovery
+```bash
+jj undo                      # reverse last operation
+jj op log                    # full operation history
+jj op restore <op-id>        # rewind the whole repo to that point
+jj workspace update-stale    # fix "working copy is stale" errors
+```
 
-- Repo data lives in `.jj/` (not `.git/`).
-- jj stores a co-located bare Git repo inside `.jj/` for Git interop.
-- `jj git init` creates both `.jj/` and initializes the Git repo.
-- When cloning: `jj git clone <url>` — note the `git` subcommand, not a
-  top-level `jj clone`.
+## Git → jj Quick Reference
+
+| Task | git | jj |
+|---|---|---|
+| Status | `git status` | `jj st` |
+| Diff | `git diff` | `jj diff` |
+| Log | `git log` | `jj log` |
+| Show commit | `git show <ref>` | `jj show <rev>` |
+| Stage + commit | `git add . && git commit -m "msg"` | `jj commit -m "msg"` |
+| Amend message | `git commit --amend -m "msg"` | `jj describe -m "msg"` |
+| Amend content | `git commit --amend --no-edit` | `jj squash` |
+| Push bookmark | `git push origin <branch>` | `jj git push -b <bookmark>` |
+| Fetch | `git fetch` | `jj git fetch` |
+| Pull (ff) | `git pull` | `jj git fetch && jj bookmark set main -r main@origin` |
+| Pull (rebase) | `git pull --rebase` | `jj git fetch && jj rebase -d main@origin` |
+| Switch branch | `git checkout <branch>` | `jj new <rev>` (new on top) or `jj edit <rev>` (resume) |
+| Create branch | `git checkout -b <name>` | `jj new main` then `jj bookmark create <name>` |
+| List branches | `git branch` | `jj bookmark list` |
+| Stash | `git stash` | unnecessary — `jj new` leaves work in the parent |
+| Cherry-pick | `git cherry-pick <rev>` | `jj duplicate <rev>` |
+| Revert | `git revert <rev>` | `jj revert -r <rev>` |
+| Rebase | `git rebase <base>` | `jj rebase -d <base>` |
+| Reset --hard HEAD~1 | `git reset --hard HEAD~1` | `jj abandon <change-id>` |
+| Reflog | `git reflog` | `jj op log` |
+| Blame | `git blame <file>` | `jj file annotate <file>` |
+| Worktree add | `git worktree add` | `jj workspace add` |
+| Undo last op | (varies) | `jj undo` |
+
+Full mapping (including grep, bisect, fileset patterns, file restoration): see `references/git-to-jj.md`.
+
+## Revset Quick Reference
+
+Revsets are jj's expression language for selecting commits. They're accepted by `-r`/`--revisions`/`--from`/`--to`/`--into` on most commands.
+
+| Expression | Meaning |
+|---|---|
+| `@` | working copy commit |
+| `@-` | parent of @ |
+| `@--` | grandparent of @ |
+| `<change-id>` | commit by change ID |
+| `<bookmark-name>` | tip of a bookmark |
+| `main@origin` | tip of main on origin (remote bookmark) |
+| `trunk()` | configured trunk (usually `main@origin`) |
+| `mine()` | commits authored by current user |
+| `empty()` | commits with no diff |
+| `conflicts()` | commits with unresolved conflicts |
+| `description("substr")` | commits whose message matches |
+| `files("path")` | commits modifying given path |
+| `::x` | ancestors of `x` (inclusive) |
+| `x::` | descendants of `x` (inclusive) |
+| `x..y` | commits in `y` but not in `x` (set difference) |
+| `x::y` | DAG range — commits between `x` and `y` |
+| `x \| y` | union |
+| `x & y` | intersection |
+| `~x` | complement |
+| `heads(x)` | commits in `x` with no children in `x` |
+| `roots(x)` | commits in `x` with no parents in `x` |
+
+Distinguish carefully: `x..y` is *set difference*; `x::y` is a *DAG path*. They are not interchangeable.
+
+Full revset language reference: `references/revsets.md`.
+
+## Common Pitfalls
+
+1. **Bookmarks don't auto-advance.** After `jj commit`, you must `jj bookmark set <name> -r @-`. (`jj bookmark create <name> -r @` before working *also* works because it tracks the change ID, which follows the commit.)
+2. **`@` after `jj commit` is empty.** Don't push `@`; the content is in `@-`.
+3. **`jj new` ≠ `git commit`.** `jj new` creates a new empty change on top. `jj commit` finalizes `@` as a real commit and creates a new empty `@`.
+4. **`::` vs `..`.** `::` is a DAG range (all ancestors of). `..` is set difference. They are *not* interchangeable.
+5. **Empty commits are normal.** They mean "ready to work here."
+6. **`Commit is immutable` error** — you targeted a tracked bookmark like `main` directly. Target the commit above it, or use `main@origin` as the destination.
+7. **Stale working copy** — usually caused by another workspace rewriting the working-copy commit. Run `jj workspace update-stale`.
+8. **Don't run `git checkout`/`git commit`/`git reset` in a colocated repo.** Use jj for mutations; use git only for read-only operations or things jj doesn't have (e.g. `git submodule`).
+
+## Progressive Disclosure — When to Read More
+
+Load these references on demand (don't preload):
+
+**Language & commands**
+- `references/git-to-jj.md` — full Git ⇄ jj command mapping including history rewriting, stashing, worktrees, fileset patterns
+- `references/revsets.md` — complete revset language: operators, functions, string/date patterns, examples
+- `references/glossary.md` — formal definitions (change, view, head, divergent, hidden, root commit, etc.)
+
+**Topic deep-dives**
+- `references/bookmarks.md` — bookmark tracking, remotes, conflicted bookmarks, multiple-remote workflows (fork vs integrator)
+- `references/conflicts.md` — first-class conflicts, marker formats (jj / snapshot / git styles), long markers, missing-newline conflicts
+- `references/operation-log.md` — `jj op log`, `--at-op`, recovering files from past snapshots (the "snapshot scan" trick)
+- `references/workspaces.md` — multiple working copies, stale working copy recovery, colocated repos, ignored files
+
+**Action playbooks** — read when starting one of these tasks
+- `references/workflow-commit-push-pr.md` — exact step-by-step for: commit → push → open PR (with `gh`)
+- `references/workflow-new-workspace.md` — create an isolated workspace + bookmark for parallel work
+- `references/troubleshooting.md` — diagnostic protocol, problem→fix table, rebase matrix, op-log forensics. Use this whenever something has gone sideways.
