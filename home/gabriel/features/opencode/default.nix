@@ -22,26 +22,21 @@
 
   programs.opencode = {
     enable = true;
-    settings = {
-      provider.deepseek.options = {
-        apiKey = "{file:${osConfig.sops.secrets.deepseek-apikey.path}}";
-      };
-      provider.openai.options = {
-        apiKey = "{file:${osConfig.sops.secrets.openai-free-apikey.path}}";
-      };
-      autoupdate = false;
-      permission.question = "allow";
-      tools.question = true;
-      model = "deepseek/deepseek-v4-flash";
-    };
-    themes.nix.theme = import ./theme.nix {inherit (config) colorscheme;};
     tui = {
       theme = "nix";
       keybinds = {
         editor_open = "alt+e";
       };
     };
-    context = ./context.md;
+    themes.nix.theme = import ./theme.nix {inherit (config) colorscheme;};
+    settings = {
+      autoupdate = false;
+      provider.deepseek.options.apiKey = "{file:${osConfig.sops.secrets.deepseek-apikey.path}}";
+      provider.openai.options.apiKey = "{file:${osConfig.sops.secrets.openai-free-apikey.path}}";
+
+      model = "deepseek/deepseek-v4-flash";
+    };
+    context = ./context.md; # Main context
     agents = ./agents;
     skills = {
       # Public
