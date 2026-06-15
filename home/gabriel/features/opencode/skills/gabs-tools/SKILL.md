@@ -3,6 +3,23 @@ name: gabs-tools
 description: Manage Gabs's todos (todoman), appointments (khal), contacts (khard), notes (~/Notes), and email (~/Mail)
 ---
 
+## Running password-requiring commands
+
+When a command needs interactive password entry (e.g. `sudo`), don't run it directly — the non-interactive TTY can't handle it. Spawn a terminal instead:
+
+```bash
+handlr launch x-scheme-handler/terminal -- -e <cmd> &
+```
+
+Then prompt the user to confirm when the operation is complete:
+
+```
+Question: "Done? (the operation is complete)"
+Options: ["Done"]
+```
+
+The user confirms when finished, then continue.
+
 ## Todos (todoman)
 
 Todos live in a vdir at `~/Calendars/personal/`. Use the `todo` CLI (todoman).
