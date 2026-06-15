@@ -263,30 +263,29 @@ working on a merge commit spanning multiple branches.
 ## Non-interactive commit splitting
 
 `jj split` opens an interactive TUI for selecting hunks and will crash
-in non-TTY shells (e.g., inside an LLM tool's command runner). Use the
-workflow below instead.
-
-**Before starting**: if the big commit is `@`, describe it first (`jj describe -m "WIP"`)
-so it has a name and won't get confused with the new empty commits.
-
-Note the change IDs of all commits you'll reference — `@` moves around as you work.
+in non-TTY shells (e.g., inside an LLM tool's command runner). To split
+`@` into multiple commits non-interactively:
 
 ```bash
-# 1. Create empty target commits on the parent of the big commit.
-#    `@-` is the parent. The big commit gets finalized here.
-jj new @- -m "feat: logical group 1"     # <- note this change ID, e.g. "puvlmqyz"
-jj new @ -m "feat: logical group 2"      # <- note this change ID, e.g. "vtuzlxrp"
+# Work on both tasks in @:
+jj new -m "WIP: both tasks"
+# ... edit file A, edit file B ...
 
-# 2. Rebase the big commit onto the last target.
-#    It will now sit at the tip — check `jj log -r '@+'`.
-jj rebase -s <big-change-id> -d @
+# Review what's in @:
+jj show
 
-# 3. Distribute files into each target (change IDs are stable, no re-log needed).
-jj squash --from <big-change-id> --into puvlmqyz -m "feat: logical group 1" -- file1 file2
-jj squash --from <big-change-id> --into vtuzlxrp -m "feat: logical group 2" -- file3 file4
+# Insert a new commit before @ for the first task:
+jj new -B @ -m "feat: edits to file A"
 
-# jj auto-abandons the big commit once all files are squashed out — no manual cleanup needed.
+# Move file A's changes from @ down into the new @-:
+jj restore --from @ --to @- file-A
+
+# Describe @ with the remaining changes:
+jj describe @ -m "feat: edits to file B"
 ```
+
+Repeat `jj new -B @` + `jj restore` for more than two splits. No change IDs
+to track, no rebasing.
 
 ## Conflict handling
 
