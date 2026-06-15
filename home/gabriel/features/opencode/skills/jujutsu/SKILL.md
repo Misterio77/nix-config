@@ -144,6 +144,16 @@ on top of real commits, don't bother abandoning it. Just move the bookmark to
 the last real commit (`@-`) and push. jj always keeps a working copy — the
 empty one is normal and doesn't need cleanup.
 
+### Multiple remotes
+
+Some repos have more than one remote that should stay in sync — typically a
+personal remote (e.g. `m7.rs`) and a mainstream one (e.g. `github`, `gitlab`).
+When pushing, push to all of them:
+
+```bash
+jj git push --remote origin && jj git push --remote github
+```
+
 ## Bookmarks
 
 ```bash
