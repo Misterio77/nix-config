@@ -61,8 +61,8 @@ Conventional commits: `type(scope): description`
 - Two types of secret files:
   - `hosts/common/secrets.yaml` -- shared across hosts, encrypted to all host age keys.
   - `hosts/{hostname}/secrets.yaml` -- per-host, encrypted to that host only.
-- Both are also encrypted to the PGP key `7088C7421873E0DB97FF17C2245CAB70B4C225E9`.
-- **Never** read secrets into context. Pipe them, reference them by command, or use SOPS to edit them in-place.
+- Both are also encrypted to the PGP key `7088C7421873E0DB97FF17C2245CAB70B4C225E9`. It lives on misterio's yubikey.
+- **Never** read secrets into context. Ask the user to do it.
 
 ## Building and Deploying
 
