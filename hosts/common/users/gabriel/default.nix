@@ -52,6 +52,10 @@ in {
       sopsFile = ../../secrets.yaml;
       owner = "gabriel";
     };
+    pluggy-secret = {
+      sopsFile = ../../secrets.yaml;
+      owner = "gabriel";
+    };
 
     # Private opencode skills
     skill-gabs-info = {

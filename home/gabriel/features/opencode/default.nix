@@ -59,4 +59,5 @@
 
   xdg.configFile."opencode/skills/firefly/scripts/expenses.py".source = ./skills/firefly/scripts/expenses.py;
   xdg.configFile."opencode/skills/firefly/scripts/firefly_client.py".source = ./skills/firefly/scripts/firefly_client.py;
+  xdg.configFile."opencode/skills/firefly/scripts/pluggy_fetch.py".source = ./skills/firefly/scripts/pluggy_fetch.py;
 }
