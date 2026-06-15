@@ -30,6 +30,8 @@
         apiKey = "{file:${osConfig.sops.secrets.openai-free-apikey.path}}";
       };
       autoupdate = false;
+      permission.question = "allow";
+      tools.question = true;
       model = "deepseek/deepseek-v4-flash";
     };
     themes.nix.theme = import ./theme.nix {inherit (config) colorscheme;};

@@ -46,7 +46,7 @@ handlr launch x-scheme-handler/terminal -- -e sudo ls
 
 Note: when this command succeeds, it produces no output. Silence means the terminal spawned.
 
-When you spawn a terminal for a long-running command (e.g. a rebuild), use the `question` tool to ask Gabs to confirm when it's done. Don't assume it completed successfully — wait for their confirmation.
+**IMPORTANT: When you spawn a terminal for a long-running command (e.g. a rebuild), ALWAYS use the `question` tool to ask Gabs to confirm when it's done.** Don't assume it completed successfully — wait for their confirmation. No exceptions.
 
 ## Rebuilding
 
