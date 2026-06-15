@@ -40,6 +40,8 @@ Changes require a rebuild and opencode restart to take effect.
 
 There are two types of skill. None of them can be directly edited in `~/.config/opencode`.
 
+Always check the type with `readlink -f`.
+
 ### Public
 
 If the skill file at `~/.config/opencode` is a symlink to `/nix/store/<path>`, it's public.
