@@ -46,6 +46,7 @@
       gabs-tools = ./skills/gabs-tools;
       jujutsu = ./skills/jujutsu;
       edit-skills = ./skills/edit-skills;
+      screenshot = ./skills/screenshot;
       # Private
       gabs-info = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-gabs-info.path}";
       lumis = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-lumis.path}";
