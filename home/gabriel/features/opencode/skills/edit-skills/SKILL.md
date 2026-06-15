@@ -42,6 +42,8 @@ There are two types of skill. None of them can be directly edited in `~/.config/
 
 Always check the type with `readlink -f`.
 
+Home-manager symlinks every file separately, not the whole directories.
+
 ### Public
 
 If the skill file at `~/.config/opencode` is a symlink to `/nix/store/<path>`, it's public.
