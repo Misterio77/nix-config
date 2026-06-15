@@ -41,23 +41,20 @@ Before starting a **new task** in a jj repo, run `jj new` to open a fresh workin
 
 ## Terminal
 
-When spawning a terminal window, use `handlr launch x-scheme-handler/terminal -- -e <cmd>`
-instead of a hardcoded terminal name (e.g., `alacritty -e <cmd>`). This respects the
-user's configured default terminal and works across different environments.
-Detach with `&` so it doesn't block the session.
+When spawning a terminal for a command that needs `sudo` (interactive password prompt), use
+`handlr get x-scheme-handler/terminal --json` to discover the terminal, then invoke it
+directly. This blocks until the command finishes — no polling needed.
 
-Prefer this for any local command that needs `sudo` — a spawned terminal
-supports interactive password entry, while the built-in Bash tool's
-non-interactive TTY cannot.
-
-Example:
-```
-handlr launch x-scheme-handler/terminal -- -e sudo ls
+```json
+{"cmd": "alacritty ", "handler": "Alacritty.desktop", "name": "Alacritty"}
 ```
 
-Note: when this command succeeds, it produces no output. Silence means the terminal spawned.
+Use the `cmd` value (trimmed) to run the command:
+```
+alacritty -e sudo nixos-rebuild switch --flake ~/Projects/NixConfig
+```
 
-**IMPORTANT: When you spawn a terminal for a long-running command (e.g. a rebuild), ALWAYS use the `question` tool to ask Gabs to confirm when it's done.** Don't assume it completed successfully — wait for their confirmation. No exceptions.
+The `handlr launch` approach (which forks) is deprecated — prefer the above.
 
 ## Rebuilding
 
