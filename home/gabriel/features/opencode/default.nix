@@ -47,6 +47,7 @@
       # Public
       gabs-tools = ./skills/gabs-tools;
       edit-skills = ./skills/edit-skills;
+      nix-shell = ./skills/nix-shell;
       screenshot = ./skills/screenshot;
       jujutsu = ./skills/jujutsu; # From https://github.com/mtaran/jj-guide
       # Private
