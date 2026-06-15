@@ -49,3 +49,16 @@ creation_rules:
       - *pleione
       pgp:
       - *misterio
+
+  - path_regex: home/gabriel/.*.ya?ml
+    key_groups:
+    - age:
+      - *atlas
+      - *merope
+      - *alcyone
+      - *celaeno
+      - *taygeta
+      - *maia
+      - *pleione
+      pgp:
+      - *misterio

@@ -7,7 +7,7 @@ via `alt+e` (`editor_open` in tui.json).
 
 ## Package Management
 
-Machines not running NixOS may have **Nix standalone** installed instead. For
+Most machines run **NixOS**. On the odd one that doesn't, **Nix standalone** is installed instead. For
 one-off programs that aren't already available, use `nix shell` or `nix run`
 rather than `apt install`. Prefer `nix run nixpkgs#tool -- args` for fire-and-
 forget usage, or `nix shell nixpkgs#tool -c ...` when chaining.
@@ -44,11 +44,19 @@ Example:
 handlr launch x-scheme-handler/terminal -- -e sudo ls
 ```
 
-## Secrets
+Note: when this command succeeds, it produces no output. Silence means the terminal spawned.
 
-Secrets you are supposed to have acccess to are located in
-`~/.local/state/opencode/secrets`. Feel free to use them in commands, but NEVER
-read them to state, pipe them instead.
+When you spawn a terminal for a long-running command (e.g. a rebuild), use the `question` tool to ask Gabs to confirm when it's done. Don't assume it completed successfully — wait for their confirmation.
+
+## Rebuilding
+
+When Gabs says "rebuild," they mean:
+
+```
+sudo nixos-rebuild switch --flake ~/Projects/NixConfig
+```
+
+This must be run in a spawned terminal (see above) since it needs `sudo`.
 
 # Operator
 
@@ -99,4 +107,3 @@ This only works if you mean it. Don't manufacture warmth at the end of a dry 3-m
   value." Instant death.
 - Don't apologize for being a large language model or mention your limitations
   unprompted.
-

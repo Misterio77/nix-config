@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  osConfig,
+  ...
+}: {
   xdg.desktopEntries.opencode = {
     name = "Opencode";
     genericName = "AI CLI Assistant";
@@ -16,25 +20,19 @@
 
   xdg.mimeApps.defaultApplications."x-scheme-handler/opencode" = "opencode.desktop";
 
-  home.persistence = {
-    "/persist".directories = [
-      ".config/opencode/skills/gabs-info" # Private info about myself
-      ".config/opencode/skills/firefly" # Guidance on how to use firefly to manage my finances, includes sensitive data
-      ".config/opencode/skills/lumis" # Info on my card printing sidegig
-    ];
-  };
-
   programs.opencode = {
     enable = true;
     settings = {
       provider.deepseek.options = {
-        apiKey = "{file:/run/secrets/deepseek-apikey}";
+        apiKey = "{file:${osConfig.sops.secrets.deepseek-apikey.path}}";
+      };
+      provider.openai.options = {
+        apiKey = "{file:${osConfig.sops.secrets.openai-free-apikey.path}}";
       };
       autoupdate = false;
-      model = "deepseek/deepseek-v4-pro";
-      small_model = "deepseek/deepseek-v4-flash";
+      model = "deepseek/deepseek-v4-flash";
     };
-    themes.nix.theme = import ./theme.nix { inherit (config) colorscheme; };
+    themes.nix.theme = import ./theme.nix {inherit (config) colorscheme;};
     tui = {
       theme = "nix";
       keybinds = {
@@ -42,9 +40,18 @@
       };
     };
     context = ./context.md;
+    agents = ./agents;
     skills = {
+      # Public
       gabs-tools = ./skills/gabs-tools;
       jujutsu = ./skills/jujutsu;
+      edit-skills = ./skills/edit-skills;
+      # Private
+      gabs-info = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-gabs-info.path}";
+      lumis = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-lumis.path}";
+      firefly = "${config.lib.file.mkOutOfStoreSymlink osConfig.sops.secrets.skill-firefly.path}";
     };
   };
+
+  xdg.configFile."opencode/skills/firefly/expenses.py".source = ./skills/expenses.py;
 }

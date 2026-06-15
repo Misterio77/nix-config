@@ -38,12 +38,32 @@ in {
       sopsFile = ../../secrets.yaml;
       neededForUsers = true;
     };
+
+    # Opencode secrets
     firefly-pat = {
       sopsFile = ../../secrets.yaml;
       owner = "gabriel";
     };
     deepseek-apikey = {
       sopsFile = ../../secrets.yaml;
+      owner = "gabriel";
+    };
+    openai-free-apikey = {
+      sopsFile = ../../secrets.yaml;
+      owner = "gabriel";
+    };
+
+    # Private opencode skills
+    skill-gabs-info = {
+      sopsFile = ../../../../home/gabriel/features/opencode/skills/private.yaml;
+      owner = "gabriel";
+    };
+    skill-lumis = {
+      sopsFile = ../../../../home/gabriel/features/opencode/skills/private.yaml;
+      owner = "gabriel";
+    };
+    skill-firefly = {
+      sopsFile = ../../../../home/gabriel/features/opencode/skills/private.yaml;
       owner = "gabriel";
     };
   };
