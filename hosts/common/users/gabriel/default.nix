@@ -59,15 +59,15 @@ in {
 
     # Private opencode skills
     skill-gabs-info = {
-      sopsFile = ../../../../home/gabriel/features/opencode/skills/private.yaml;
+      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };
     skill-lumis = {
-      sopsFile = ../../../../home/gabriel/features/opencode/skills/private.yaml;
+      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };
     skill-firefly = {
-      sopsFile = ../../../../home/gabriel/features/opencode/skills/private.yaml;
+      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "gabriel";
     };
   };

@@ -67,14 +67,14 @@ If the skill file at `~/.config/opencode` is a symlink to `/nix/store/<path>`, i
 
 If the skill file at `~/.config/opencode` is a symlink to `/run/secrets/<path>`, it's private.
 
-- Lives encrypted in sops `~/Projects/NixConfig/home/gabriel/features/opencode/skills/private.yaml`
+- Lives encrypted in sops `~/Projects/NixConfig/home/gabriel/features/opencode/private.yaml`
 - Decrypted at activation-time, using host SSH keys (sops-nix).
 - How to edit:
   - **IMPORTANT: NEVER DECRYPT ANY OTHER SOPS FILE IN THE NIXCONFIG**
   - Sops requires Gabs' GPG key to decrypt. Lives on his Yubikey. If it errors out, ask him to plug him and wait for his OK before continuing.
-  - Run `sops decrypt --extract '["skill-<name>"]' ~/Projects/NixConfig/home/gabriel/features/opencode/skills/private.yaml > /tmp/opencode/skill.md`
+  - Run `sops decrypt --extract '["skill-<name>"]' ~/Projects/NixConfig/home/gabriel/features/opencode/private.yaml > /tmp/opencode/skill.md`
   - Edit `/tmp/opencode/skill.md`
-  - Run `sops set ~/Projects/NixConfig/home/gabriel/features/opencode/skills/private.yaml '["skill-<name>"]' "$(jq -sR < /tmp/opencode/skill.md)"`
+  - Run `sops set ~/Projects/NixConfig/home/gabriel/features/opencode/private.yaml '["skill-<name>"]' "$(jq -sR < /tmp/opencode/skill.md)"`
   - Extra (public) files (scripts, references, assets):
     - Put in `~/Projects/NixConfig/home/gabriel/features/opencode/skills/<name>/<file>`
     - Link using `xdg.configFile."opencode/skills/<name>/<file>".source = ./skills/<name>/<file>`
@@ -82,7 +82,7 @@ If the skill file at `~/.config/opencode` is a symlink to `/run/secrets/<path>`,
   - Ask Gabs to restart opencode to take effect
 - How to create:
   - Create `/tmp/opencode/skill.md`
-  - Run `sops set ~/Projects/NixConfig/home/gabriel/features/opencode/skills/private.yaml '["skill-<name>"]' "$(jq -sR < /tmp/opencode/skill.md)"`
+  - Run `sops set ~/Projects/NixConfig/home/gabriel/features/opencode/private.yaml '["skill-<name>"]' "$(jq -sR < /tmp/opencode/skill.md)"`
   - Add `skill-<name>` to `~/Projects/NixConfig/hosts/common/users/gabriel/default.nix`, as a sops secret
   - Add skill to to `~/Projects/NixConfig/home/gabriel/featues/opencode/default.nix`, under private skills
   - Use the `question` tool to ask Gabs if they want to rebuild
