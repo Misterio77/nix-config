@@ -20,6 +20,15 @@ When Gabs says "open up <URL>" without additional context (no request to search,
 read, or fetch content from it), they mean open it in the browser with
 `xdg-open`. Don't fetch/read the URL — just launch it.
 
+## Clipboard
+
+Gabs usually uses wayland, so `wl-clipboard` is the right tool.
+
+When asked to look at the clipboard, first check the mimetypes (`wl-paste -l`)
+
+- If it's an image, save it to a temporary file and ask the `image-analyzer` agent to analyze it before proceeding.
+- If it's text, URL, etc; just `wl-paste` to see it and proceed as usual.
+
 ## Version Control
 
 Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instead of `git` for all version control operations. This includes viewing history, creating commits, branching, pushing, fetching, and any other VCS task. Never run `git` commands in a repo that uses jj.
