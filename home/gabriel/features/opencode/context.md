@@ -37,6 +37,8 @@ Before starting a **new task** in a jj repo, run `jj new` to open a fresh workin
 
 **Important: NEVER run `jj git push`** unless Gabs explicitly says "push." Even if confirming changes, bookmark advances, and obvious next steps — do not push until the word is spoken.
 
+**Every commit you create MUST include the `Assisted-by: <harness> (<model>)` trailer** (e.g. `Assisted-by: opencode (deepseek-v4-flash)`) in the commit message. This applies to any commit you add a description to in any repo.
+
 ## Terminal
 
 When spawning a terminal window, use `handlr launch x-scheme-handler/terminal -- -e <cmd>`
