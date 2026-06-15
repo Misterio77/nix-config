@@ -46,7 +46,7 @@ Conventional commits: `type(scope): description`
 
 ## Code Style
 
-- **Formatter**: Alejandra (`nix fmt`). Always format after edits.
+- **Formatter**: Alejandra (`nix fmt <file>`). ALWAYS format after edits. Never format unmodified files.
 - **Indentation**: 2 spaces, no tabs.
 - **Line endings**: LF, final newline, trimmed trailing whitespace.
 - **Nix conventions**:
