@@ -55,6 +55,12 @@ If a memo doesn't match a destination in FF:
 1. Try partial/substring matches — the truncated part is usually the most distinctive syllable.
 2. Search the destination account name in FF, not the statement memo.
 
+**Amount matching by value:** When exact (date, amount) matches fail, a
+Pluggy charge may map to multiple separate FF groups (not just splits
+within one group) that sum to the charge total. Check same-day FF entries
+from the same vendor and sum them. This is common when Gabs logs items
+as separate single-split groups rather than a single multi-split group.
+
 ### Shared expenses (piggybacked purchases)
 
 When someone else (not Layla) reimburses Gabs for a shared purchase, FF tracks only Gabs's share as an expense. The card statement shows the full lump charge, but FF splits it:
@@ -157,6 +163,11 @@ In Brazil, food vendors often register their personal name instead of the
 establishment name on the card machine. When a memo looks like a person's
 name, search for food-related transactions around that value and date — it's
 likely the same place.
+
+Small merchants sometimes use their **personal CPF** instead of a CNPJ,
+creating truncated descriptions like `NNNNNNNname`. When the same CPF
+prefix appears across multiple months, cross-reference with FF to find
+the store's consistent destination name (in private.md).
 
 ### USD subscriptions — exchange rate drift
 

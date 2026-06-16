@@ -147,6 +147,9 @@ python3 pluggy_fetch.py fetch <itemId>  # pull transactions
   - **When you GET a group**, you get both: the group `id` at the response root, and each split's `transaction_journal_id` inside `transactions[]`.
   - **Split array order is NOT stable.** Never index by position — always match by `transaction_journal_id`.
 - **Editing:** Send only the fields you want to change — everything else stays as-is. Both `category_name` and `category_id` work; same for `budget_name` / `budget_id`. To clear a nullable field: both JSON `null` and empty string `""` work.
+- **`destination_id` overrides `destination_name`:** When changing the destination of a transaction, setting `destination_name` alone may silently fail if the split still has a stale `destination_id` pointing to the old account. Always set `destination_id` to `null` alongside the new `destination_name` to ensure the change sticks.
+- **Reconciled transactions block API edits:** The API returns HTTP 422 for PUT on reconciled transactions. Unreconcile first via the web UI (`/transactions/edit/<group_id>` → uncheck "Reconciled"), then edit.
+- **Multi-split PUT requires all splits + group_title:** When updating a multi-split group via PUT, send EVERY split in the `transactions[]` array and include `group_title`. Sending only the split you want to change silently removes the others.
 
 ## Web UI URLs
 

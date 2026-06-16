@@ -20,18 +20,9 @@ Key characteristics:
 - **NuPay payments** (Uber, iFood) post on the same date as the purchase —
   no 1-3 day lag like other card transactions.
 
-## OFX memo → FF account mapping
+## Vendor mapping
 
-Mnemonic table for translating Nubank's truncated/cryptic OFX memos
-to Firefly expense accounts:
-
-| OFX memo | FF account | Notes |
-|---|---|---|
-| `G Pagani` | Hot Tiger | Food vendor, personal name on machine |
-| `Frogpay*Farmacia Rosar` | Farmácia Rosário | Truncated + acronym missing |
-| `Raia\d+` | Drogaraia | "Raia" is the brand, number is the branch |
-| `Drogaria_sp Drogariasp` | Drogaria São Paulo | Truncated at 14 chars |
-| `Ifd\*Virele Delivery` | Mana Poke | iFood delivery; merchant name on machine |
+OFX memo → Firefly account mapping is in `private.md`.
 
 ## PDF statement format
 
