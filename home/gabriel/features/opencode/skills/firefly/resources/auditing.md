@@ -84,11 +84,9 @@ the items, or ask the user.
 
 ### IOF on international purchases
 
-The bank charges IOF on the same transaction ID as the purchase, then refunds it
-days later as a separate credit ("IOF de volta de ..."). The effective cost =
-purchase amount (without IOF). The IOF debit + IOF refund cancel out and aren't
-recorded individually in Firefly. Match by extracting the merchant name from the
-IOF refund memo and pairing with the purchase by merchant name + date proximity.
+The bank charges IOF separately, then refunds it days later as a separate
+credit ("IOF de volta de ..."). The IOF debit + IOF refund cancel out and aren't
+recorded individually in Firefly.
 
 ### Marketplace lumps
 
