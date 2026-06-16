@@ -53,19 +53,17 @@ After all issues for a month are resolved, summarize what was changed before mov
 Don't trust the statement memo blindly — banks often truncate merchant names.
 If a memo doesn't match a destination in FF:
 1. Try partial/substring matches — the truncated part is usually the most distinctive syllable.
-2. A single charge may map to multiple FF splits (same merchant, same or adjacent date). Sum the splits and match the total.
-3. Search the destination account name in FF, not the statement memo.
+2. Search the destination account name in FF, not the statement memo.
 
 ### Shared expenses (piggybacked purchases)
 
-The card statement shows a single lump charge. FF splits it into:
-- A withdrawal (your share, proper category/budget)
-- A transfer (card → checking, no category, representing the other person's reimbursement)
-- Both must match the statement total. When reconciling, look for the transfer alongside the withdrawal.
+When someone else (not Layla) reimburses Gabs for a shared purchase, FF tracks only Gabs's share as an expense. The card statement shows the full lump charge, but FF splits it:
+- A **withdrawal** (your share, proper category/budget).
+- A **transfer** (card → checking, no category, representing the other person's reimbursement) — this single transfer corrects the card balance to match the statement and lands their money in checking, without inflating income. No separate deposit is recorded.
 
-When your share is zero (fully reimbursed), there's no withdrawal — only the
-transfer. Always list the component values in the transfer's **notes** so a
-future audit can verify the transfer sum matches the statement items.
+Both must match the statement total. When reconciling, look for the transfer alongside the withdrawal. When your share is zero (fully reimbursed), there's no withdrawal — only the transfer. Always list the component values in the transfer's **notes** so a future audit can verify the transfer sum matches the statement items.
+
+Example: R$20 bar tab split with Fulano → R$15 withdrawal to Bar (Gabs's share) + R$5 transfer card→checking (Fulano's share). The +R$5 in checking *is* Fulano's payment.
 
 ### Transfers vs expenses
 
@@ -86,13 +84,23 @@ the items, or ask the user.
 
 The bank charges IOF separately, then refunds it days later as a separate
 credit ("IOF de volta de ..."). The IOF debit + IOF refund cancel out and aren't
-recorded individually in Firefly.
+recorded individually in Firefly. In Pluggy, IOF refunds appear as separate
+`IOF de volta de ...` credits in BRL — they can be ignored during FF
+reconciliation since they're not tracked in FF.
 
-### Marketplace lumps
+### Same-day, same-vendor consolidation
 
-A single marketplace charge on the card is often multiple items desmembrados in
-Firefly. The statement posting date may differ from the purchase date by 1 day.
-Don't flag as discrepancy — the individual FF items sum to the lump.
+A single card charge often maps to multiple FF entries split across categories
+(e.g. Casa, Hobbies). The FF group itself is the semantic link — a multi-split
+group (group_title is set) means all its entries came from one card charge.
+The statement posting date may differ from the purchase date by 1 day.
+
+When Pluggy shows multiple charges from the same vendor on the same day:
+1. Sum all the Pluggy charges (single + all installments) into a gross total.
+2. Subtract any matching `Desconto Antecipação` credit to get the effective cost.
+3. Compare against the **combined total** of all FF entries from that vendor on
+   that day — not individually. Sum all splits in a multi-split group and match
+   group totals.
 
 ### Ride-hailing date lag
 
@@ -112,6 +120,15 @@ appear as separate lines in the statement, each with its own posting date.
 Parcela 1 lands in the current statement, Parcela 2 in the next. FF records
 the full purchase price as a single transaction, not per-installment. When
 auditing: the total of all installments should match the FF transaction.
+
+### Installment anticipation discounts
+
+Nubank applies `Desconto Antecipação` credits when installments are paid early.
+These show up as separate CREDIT transactions in Pluggy. The effective cost of an
+installment purchase = sum of all installments (including the first) minus the
+anticipation discount. Always check for matching `Desconto Antecipação` credits
+when reconciling. The FF transaction should reflect the effective cost, not the
+gross installment sum.
 
 ### Installments spanning multiple items
 
@@ -147,3 +164,8 @@ Small USD purchases are sometimes logged in FF at the *expected* BRL value at
 the time of purchase. By the time the card settles (weeks later), the exchange
 rate shifted by a few cents. When auditing, prefer the settled value
 (purchase amount after IOF refund). Update FF to match.
+
+**Pluggy data note:** Patreon, PayPal, and other international charges appear in
+Pluggy with `currencyCode: "USD"` and `amount` in USD. The BRL value is in
+`amountInAccountCurrency`. Never compare the `amount` field directly — convert
+or use `amountInAccountCurrency`.
