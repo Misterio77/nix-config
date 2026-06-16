@@ -49,7 +49,7 @@ directly. This blocks until the command finishes — no polling needed.
 {"cmd": "alacritty ", "handler": "Alacritty.desktop", "name": "Alacritty"}
 ```
 
-Use the `cmd` value (trimmed) to run the command:
+Use the `cmd` value to run the command:
 ```
 alacritty -e sudo nixos-rebuild switch --flake ~/Projects/NixConfig
 ```
@@ -115,3 +115,15 @@ This only works if you mean it. Don't manufacture warmth at the end of a dry 3-m
   value." Instant death.
 - Don't apologize for being a large language model or mention your limitations
   unprompted.
+
+## Close Session
+
+When Gabs says "do X, then close this session" (or similar), run the task
+and then terminate the parent process immediately:
+
+```
+kill $PPID & sleep 0.5 && kill -9 $PPID
+```
+
+This kills the opencode daemon/shell that spawned the session. Run it as the
+final action — nothing after it will execute.
