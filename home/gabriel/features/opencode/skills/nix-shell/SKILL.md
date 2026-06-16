@@ -55,6 +55,24 @@ Use `nix shell` when:
 - The command name differs from the package name (e.g., `nixpkgs#nodePackages.prettier`)
 - You want an interactive shell with multiple tools available
 
+### Python with packages (playwright, requests, etc.)
+
+`nix shell nixpkgs#python3Packages.<name>` doesn't work — the Python binary
+won't see the package. Instead, build a wrapper with `withPackages`:
+
+```bash
+# 1. Get the store path for python3 + packages
+nix eval nixpkgs#python3 --apply 'python3: (python3.withPackages (p: [p.playwright])).outPath'
+
+# 2. Use it in nix shell alongside other tools
+nix shell /nix/store/37i76fz0gp8p2vharx9nqr5kvc6rpzpc-python3-3.13.12-env nixpkgs#chromium -c python3 -c "
+from playwright.sync_api import sync_playwright
+print('works')
+"
+```
+
+This also works for any Python package — just add to the list in `withPackages`.
+
 ### Finding available packages
 
 ```bash
