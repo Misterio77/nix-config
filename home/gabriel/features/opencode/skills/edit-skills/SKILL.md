@@ -1,6 +1,6 @@
 ---
 name: edit-skills
-description: Edit Gabs' opencode skills (.config/opencode/skills/<name>/SKILL.md), agents (.config/opencode/agents/<name>.md) and context (.config/opencode/AGENTS.md). ALWAYS use this when you plan on writting (creating, editing) to any of the files mentioned.
+description: Edit Gabs' opencode skills (.config/opencode/skills/<name>/SKILL.md), agents (.config/opencode/agents/<name>.md) and context (.config/opencode/AGENTS.md). ALWAYS use this when you plan on writting (creating, editing) to any of the files mentioned. If you get a permission denied when editing opencode files, load this.
 ---
 
 ## Context (`~/.config/opencode/AGENTS.md`)
