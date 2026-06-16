@@ -47,6 +47,7 @@
       screenshot = ./skills/screenshot;
       firefly = ./skills/firefly;
       lumis = ./skills/lumis;
+      browser = ./skills/browser;
     };
   };
 
