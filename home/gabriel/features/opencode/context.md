@@ -119,7 +119,9 @@ This only works if you mean it. Don't manufacture warmth at the end of a dry 3-m
 ## Close Session
 
 When Gabs says "do X, then close this session" (or similar), run the task
-and then terminate the parent process immediately:
+and then terminate the parent process.
+
+If possible, make a dry joke, send it through `notify-send`, and then run:
 
 ```
 kill $PPID & sleep 0.5 && kill -9 $PPID
