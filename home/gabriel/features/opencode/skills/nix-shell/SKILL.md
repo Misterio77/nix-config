@@ -14,6 +14,10 @@ nix shell nixpkgs#<package> -c <command> [args...]
 The `-c` flag tells `nix shell` to exec the following arguments as a command.
 Everything after `-c` is passed straight to the shell, so quoting works naturally.
 
+DO NOT, under any circumstances, double-quote `"<command> [args...]"` together. This will cause bash to treat the entire thing as the executable name:
+- Wrong: `nix shell nixpkgs#python3 -c "python3 foo.py arg1 arg2"`
+- **RIGHT**: `nix shell nixpkgs#python3 -c python3 foo.py arg1 arg2`
+
 ### Single-package one-off
 
 ```bash
