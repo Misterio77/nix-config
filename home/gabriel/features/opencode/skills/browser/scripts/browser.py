@@ -10,7 +10,8 @@ and action-specific parameters. Actions execute sequentially in a single
 browser session.
 
 Actions:
-  {"action": "navigate",  "url": "https://..."}
+  {"action": "navigate",  "url": "https://...", "wait_until": "networkidle|load|domcontentloaded"}
+                          — default wait_until: "networkidle"
   {"action": "click",     "selector": "css-selector"}
   {"action": "fill",      "selector": "css-selector", "text": "value"}
   {"action": "extract",   "selector": "css-selector"}  — omit selector for full HTML
@@ -63,13 +64,13 @@ def run_steps(steps, headless=True, session_dir=None):
         context = browser.new_context(**context_kwargs)
 
         page = context.new_page()
-        page.set_default_timeout(10000)
+        page.set_default_timeout(30000)
 
         for step in steps:
             action = step.get("action", "")
             try:
                 if action == "navigate":
-                    page.goto(step["url"], wait_until="networkidle")
+                    page.goto(step["url"], wait_until=step.get("wait_until", "networkidle"))
                     results.append({"action": "navigate", "url": step["url"], "status": "ok"})
 
                 elif action == "click":
