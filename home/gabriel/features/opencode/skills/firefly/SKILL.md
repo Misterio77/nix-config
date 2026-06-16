@@ -126,8 +126,8 @@ ff.delete_transaction(gid)
 See `resources/pluggy.md` for endpoints, data shapes, sign conventions, and categorization details.
 
 ```bash
-python3 pluggy_fetch.py connect         # one-time bank auth
-python3 pluggy_fetch.py fetch <itemId>  # pull transactions
+pluggy_fetch.py connect         # one-time bank auth
+pluggy_fetch.py fetch <itemId>  # pull transactions
 ```
 
 ## Tips

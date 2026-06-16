@@ -6,7 +6,7 @@ The helper script at `scripts/pluggy_fetch.py` handles the full pipeline.
 ## One-time setup (browser)
 
 ```bash
-python3 pluggy_fetch.py connect
+pluggy_fetch.py connect
 ```
 
 Creates a connect token and opens the Pluggy Connect widget in the browser.
@@ -16,8 +16,8 @@ Log into your bank through the widget. After success the URL bar shows
 ## Fetch data
 
 ```bash
-python3 pluggy_fetch.py fetch <itemId>                  # all txns
-python3 pluggy_fetch.py fetch <itemId> 2026-05-01 2026-05-31  # date range
+pluggy_fetch.py fetch <itemId>                  # all txns
+pluggy_fetch.py fetch <itemId> 2026-05-01 2026-05-31  # date range
 ```
 
 Saves raw JSON to `/tmp/pluggy_data/` and prints a summary to stdout.

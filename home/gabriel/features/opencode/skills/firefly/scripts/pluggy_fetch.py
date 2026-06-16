@@ -1,17 +1,18 @@
-#!/usr/bin/env python3
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p python3
 """Pull bank accounts + card transactions via Pluggy.
 
 Usage:
   1. One-time connection:
-       python3 pluggy_fetch.py connect
+       pluggy_fetch.py connect
      Opens browser → log into your bank → copy item_id from URL bar.
 
   2. Fetch transactions for a month:
-       python3 pluggy_fetch.py fetch <itemId> 2026-05-01 2026-05-31
+       pluggy_fetch.py fetch <itemId> 2026-05-01 2026-05-31
      Saves JSON to /tmp/pluggy_data/ and prints summary.
 
   3. Fetch everything:
-       python3 pluggy_fetch.py fetch <itemId>
+       pluggy_fetch.py fetch <itemId>
 """
 
 import json
@@ -200,7 +201,7 @@ if __name__ == "__main__":
         cmd_connect()
     elif cmd == "fetch":
         if len(sys.argv) < 3:
-            print("Usage: python3 pluggy_fetch.py fetch <itemId> [dateFrom] [dateTo]")
+            print("Usage: pluggy_fetch.py fetch <itemId> [dateFrom] [dateTo]")
             sys.exit(1)
         cmd_fetch(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None,
                   sys.argv[4] if len(sys.argv) > 4 else None)
