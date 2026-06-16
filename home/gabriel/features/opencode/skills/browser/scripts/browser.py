@@ -22,6 +22,7 @@ Actions:
 Examples:
     browser.py '[{"action":"navigate","url":"https://example.com"},{"action":"extract"}]'
     browser.py --visible '[{"action":"navigate","url":"https://example.com"},{"action":"screenshot","path":"/tmp/shot.png"}]'
+    browser.py --stealth '[{"action":"navigate","url":"https://reddit.com"},{"action":"screenshot"}]'
     echo '...' | browser.py --stdin
 """
 
@@ -43,7 +44,16 @@ def find_chromium():
     return None
 
 
-def run_steps(steps, headless=True, session_dir=None):
+STEALTH_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+
+STEALTH_INIT_SCRIPT = """
+Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
+"""
+
+
+def run_steps(steps, headless=True, session_dir=None, stealth=False):
     chromium_path = find_chromium()
     if not chromium_path:
         print(json.dumps({"error": "chromium not found"}))
@@ -56,15 +66,21 @@ def run_steps(steps, headless=True, session_dir=None):
     results = []
     with sync_playwright() as p:
         launch_kwargs = {"executable_path": chromium_path, "headless": headless}
+        if stealth:
+            launch_kwargs.setdefault("args", []).append("--disable-blink-features=AutomationControlled")
         browser = p.chromium.launch(**launch_kwargs)
 
         context_kwargs = {}
+        if stealth:
+            context_kwargs["user_agent"] = STEALTH_UA
         if state_file and os.path.exists(state_file):
             context_kwargs["storage_state"] = state_file
         context = browser.new_context(**context_kwargs)
 
         page = context.new_page()
         page.set_default_timeout(30000)
+        if stealth:
+            page.add_init_script(STEALTH_INIT_SCRIPT)
 
         for step in steps:
             action = step.get("action", "")
@@ -83,7 +99,7 @@ def run_steps(steps, headless=True, session_dir=None):
 
                 elif action == "extract":
                     if "selector" in step and step["selector"]:
-                        el = page.query_selector_all(step["selector"])
+                        el = page.query_selector(step["selector"])
                         data = el.inner_text() if el else ""
                         if not data:
                             data = el.get_attribute("outerHTML") if el else ""
@@ -133,6 +149,7 @@ def main():
     parser.add_argument("steps", nargs="?", help="JSON array of steps")
     parser.add_argument("--stdin", action="store_true", help="Read steps from stdin")
     parser.add_argument("--visible", action="store_true", help="Run with visible browser (not headless)")
+    parser.add_argument("--stealth", action="store_true", help="Enable anti-bot-detection measures (UA override, webdriver hide, etc)")
     parser.add_argument("--persist", action="store_true", help="Persist session (cookies, localStorage) between runs")
     parser.add_argument("--session-dir", help="Session directory (default: /tmp/opencode/browser-session)")
     args = parser.parse_args()
@@ -152,7 +169,7 @@ def main():
         sys.exit(1)
 
     session_dir = args.session_dir or "/tmp/opencode/browser-session" if args.persist else None
-    results = run_steps(steps, headless=not args.visible, session_dir=session_dir)
+    results = run_steps(steps, headless=not args.visible, session_dir=session_dir, stealth=args.stealth)
     print(json.dumps(results, indent=2))
 
 
