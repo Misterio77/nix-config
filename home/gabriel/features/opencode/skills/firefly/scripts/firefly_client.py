@@ -196,6 +196,40 @@ class FireflyClient:
         """DELETE /api/v1/transactions/{group_id} — deletes entire group."""
         return self._delete(f"transactions/{group_id}")
 
+    # ── Transaction links ──────────────────────────────────────────────────
+
+    def link_types(self) -> list[dict]:
+        """GET /api/v1/link-types (paginated) — available link type IDs."""
+        return self._get_all("link-types")
+
+    def create_link(self, inward_journal_id: int,
+                    outward_journal_id: int,
+                    link_type_id: int,
+                    notes: str | None = None) -> dict:
+        """POST /api/v1/transaction-links — link two transaction journals.
+
+        Fetch link types first with ``link_types()``, then match by name:
+        e.g. ``lt_id = next(lt['id'] for lt in ff.link_types()
+        if lt['attributes']['name'] == 'Reimbursement')``.
+
+        ``inward_journal_id`` is the expense (is reimbursed by).
+        ``outward_journal_id`` is the deposit (reimburses).
+        """
+        body: dict[str, object] = {
+            "inward_id": str(inward_journal_id),
+            "outward_id": str(outward_journal_id),
+            "link_type_id": str(link_type_id),
+        }
+        if notes is not None:
+            body["notes"] = notes
+        return self._post("transaction-links", body)
+
+    link_transactions = create_link
+
+    def delete_link(self, link_id: int) -> dict:
+        """DELETE /api/v1/transaction-links/{id} — remove a transaction link."""
+        return self._request("DELETE", f"transaction-links/{link_id}")
+
 
 # ── CLI entrypoint ───────────────────────────────────────────────────────────
 

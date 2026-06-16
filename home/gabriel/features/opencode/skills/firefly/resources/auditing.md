@@ -58,26 +58,28 @@ If a memo doesn't match a destination in FF:
 **Amount matching by value:** When exact (date, amount) matches fail, a
 Pluggy charge may map to multiple separate FF groups (not just splits
 within one group) that sum to the charge total. Check same-day FF entries
-from the same vendor and sum them. This is common when Gabs logs items
+from the same vendor and sum them. This is common when items are logged
 as separate single-split groups rather than a single multi-split group.
 
-### Shared expenses (piggybacked purchases)
+### Reimbursements (linked transactions)
 
-When someone else (not Layla) reimburses Gabs for a shared purchase, FF tracks only Gabs's share as an expense. The card statement shows the full lump charge, but FF splits it:
-- A **withdrawal** (your share, proper category/budget).
-- A **transfer** (card → checking, no category, representing the other person's reimbursement) — this single transfer corrects the card balance to match the statement and lands their money in checking, without inflating income. No separate deposit is recorded.
+When someone else reimburses the user for a purchase the user paid on their behalf, record everything exactly as the statement shows. See `private.md` for the specific category and budget IDs used for reimbursement tracking.
 
-Both must match the statement total. When reconciling, look for the transfer alongside the withdrawal. When your share is zero (fully reimbursed), there's no withdrawal — only the transfer. Always list the component values in the transfer's **notes** so a future audit can verify the transfer sum matches the statement items.
+Both expenses and deposits share the same reimbursement category, making the net reimbursement status trivially visible from the category balance.
 
-Example: R$20 bar tab split with Fulano → R$15 withdrawal to Bar (Gabs's share) + R$5 transfer card→checking (Fulano's share). The +R$5 in checking *is* Fulano's payment.
+**Expenses paid on behalf of others:**
+- Record the full charge as a **withdrawal** from the source account (card or checking).
+- Assign it the reimbursement category and reimbursement budget (see `private.md`).
+- These are excluded from P&L — the reimbursement budget tracks money temporarily out on others' behalf.
 
-### Transfers vs expenses
+**Reimbursement deposits:**
+- When the other person pays you back (PIX, etc.), record it as a **deposit** into the primary checking account.
+- Assign it the reimbursement category (see `private.md`).
+- This is income-neutral in practice — it offsets the earlier expense.
 
-Not every charge on the statement is a withdrawal. Before flagging a card
-charge as missing from FF, audit all **transfers FROM the card** to any other
-account — checking (friend repayments), investment accounts (business purchases),
-or elsewhere. These transfers represent card charges that were repaid or
-invested, with no P&L impact.
+**Linking:** Use Firefly's linked transactions feature to link the reimbursement deposit to the original expense. Since both use the same category, the category balance directly shows how much is still outstanding. Use the `Reimbursement` link type: fetch it via `ff.link_types()`, then call `ff.link_transactions(expense_jid, deposit_jid, link_type_id=lt_id)`. The expense is `inward` ("is reimbursed by"), the deposit is `outward` ("reimburses").
+
+**Audit rule:** Each reimbursement expense should have a corresponding deposit summing to the same total. Outstanding reimbursements = negative category balance for the reimbursement category (see `private.md`).
 
 ### Settlement method ≠ nature
 
@@ -96,8 +98,8 @@ reconciliation since they're not tracked in FF.
 
 ### Same-day, same-vendor consolidation
 
-A single card charge often maps to multiple FF entries split across categories
-(e.g. Casa, Hobbies). The FF group itself is the semantic link — a multi-split
+A single card charge often maps to multiple FF entries split across categories.
+The FF group itself is the semantic link — a multi-split
 group (group_title is set) means all its entries came from one card charge.
 The statement posting date may differ from the purchase date by 1 day.
 
@@ -129,12 +131,12 @@ auditing: the total of all installments should match the FF transaction.
 
 ### Installment anticipation discounts
 
-Nubank applies `Desconto Antecipação` credits when installments are paid early.
-These show up as separate CREDIT transactions in Pluggy. The effective cost of an
-installment purchase = sum of all installments (including the first) minus the
-anticipation discount. Always check for matching `Desconto Antecipação` credits
-when reconciling. The FF transaction should reflect the effective cost, not the
-gross installment sum.
+Some banks apply `Desconto Antecipação` credits when installments are paid
+early. These show up as separate CREDIT transactions in Pluggy. The effective
+cost of an installment purchase = sum of all installments (including the first,
+and including future ones) minus the anticipation discount. Always check for
+matching `Desconto Antecipação` credits when reconciling. The FF transaction
+should reflect the effective cost, not the gross installment sum.
 
 ### Installments spanning multiple items
 
@@ -176,7 +178,7 @@ the time of purchase. By the time the card settles (weeks later), the exchange
 rate shifted by a few cents. When auditing, prefer the settled value
 (purchase amount after IOF refund). Update FF to match.
 
-**Pluggy data note:** Patreon, PayPal, and other international charges appear in
-Pluggy with `currencyCode: "USD"` and `amount` in USD. The BRL value is in
-`amountInAccountCurrency`. Never compare the `amount` field directly — convert
-or use `amountInAccountCurrency`.
+**IMPORTANT**: **Pluggy data note:** Patreon, PayPal, and other international
+charges appear in Pluggy with `currencyCode: "USD"` and `amount` in USD. The
+BRL value is in `amountInAccountCurrency`. **NEVER** compare the `amount` field
+directly, always use `amountInAccountCurrency` while falling back to `amount`.

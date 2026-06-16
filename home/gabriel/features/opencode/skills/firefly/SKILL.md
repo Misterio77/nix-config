@@ -119,6 +119,24 @@ ff.update_transaction(gid, splits, group_title="Group title")
 
 # ── Delete (DELETE /api/v1/transactions/{id}) ────────────────────────────
 ff.delete_transaction(gid)
+
+# ── Link types (GET /api/v1/link-types) ──────────────────────────────────
+for lt in ff.link_types():
+    print(lt["id"], lt["attributes"]["name"])
+#  3 Paid
+#  4 Reimbursement
+
+# ── Link transactions (POST /api/v1/transaction-links) ───────────────────
+# Look up the link type first, then link:
+lt_id = next(lt["id"] for lt in ff.link_types()
+             if lt["attributes"]["name"] == "Reimbursement")
+# inward = expense (is reimbursed by), outward = deposit (reimburses)
+ff.link_transactions(
+    inward_journal_id=EXPENSE_JID,
+    outward_journal_id=DEPOSIT_JID,
+    link_type_id=lt_id,
+    notes="Frete Lucky",
+)
 ```
 
 ## Pluggy API (Open Finance data ingestion)
