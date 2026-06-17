@@ -5,7 +5,6 @@
     ../../common/optional/postgres.nix
 
     ./media
-    ./files-server.nix
     ./immich.nix
   ];
 }
