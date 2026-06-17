@@ -125,6 +125,8 @@
   };
   # Lock down to tail net.
   services.nginx.virtualHosts."mail.m7.rs".locations."/".extraConfig = ''
+    allow 127.0.0.1;
+    allow ::1;
     allow ${config.services.headscale.settings.prefixes.v4};
     allow ${config.services.headscale.settings.prefixes.v6};
     deny all;

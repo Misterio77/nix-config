@@ -15,6 +15,8 @@
       proxyPass = "http://localhost:${toString config.services.immich.port}";
       proxyWebsockets = true;
       extraConfig = ''
+        allow 127.0.0.1;
+        allow ::1;
         allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
         allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
         deny all;
