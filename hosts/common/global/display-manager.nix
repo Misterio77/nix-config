@@ -1,4 +1,9 @@
-{config, lib, pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   users.users.greeter = {
     extraGroups = ["seat"];
   };
@@ -6,7 +11,7 @@
     seatd.enable = true;
     greetd = {
       enable = true;
-      settings.default_session.command = lib.mkOverride 1499 "${pkgs.greetd}/bin/agreety --cmd $SHELL";
+      settings.default_session.command = lib.mkOverride 1499 "${pkgs.tuigreet}/bin/tuigreet --time --asterisks --remember --cmd \\$SHELL";
     };
     displayManager = {
       enable = true;
