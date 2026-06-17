@@ -76,6 +76,11 @@
     dkimKeyDirectory = "/srv/mail/dkim";
   };
 
+  # Disable default open ports, we want to lock down SMTP and IMAP to tailscale.
+  mailserver.openFirewall = false;
+  networking.firewall.allowedTCPPorts = [25];
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [465 993]; # SMTP, IMAP (both SSL)
+
   # Prefer ipv4 and use main ipv6 to avoid reverse DNS issues
   # CHANGEME when switching hosts
   services.postfix.settings.main = {
@@ -118,7 +123,12 @@
       $config['tasklist_caldav_server'] = "https://dav.m7.rs";
     '';
   };
-
+  # Lock down to tail net.
+  services.nginx.virtualHosts."mail.m7.rs".locations."/".extraConfig = ''
+    allow ${config.services.headscale.settings.prefixes.v4};
+    allow ${config.services.headscale.settings.prefixes.v6};
+    deny all;
+  '';
   # Run initial migrations for libkolab and calendar plugins
   systemd.services.roundcube-setup.script = let
     psql = "psql ${config.services.roundcube.database.dbname}";
