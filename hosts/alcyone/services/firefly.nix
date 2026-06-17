@@ -46,18 +46,8 @@
   services.nginx.virtualHosts.${config.services.firefly-iii.virtualHost} = {
     forceSSL = true;
     enableACME = true;
-    locations."^~ /relatorio-layla" = {
-      proxyPass = "https://files.m7.rs/relatorio-financeiro.html";
-      recommendedProxySettings = false;
-      extraConfig = ''
-        proxy_ssl_server_name on;
-        proxy_set_header Host files.m7.rs;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Forwarded-Server $hostname;
-      '';
+    locations."=/relatorio-layla" = {
+      alias = "/srv/files/relatorio-financeiro.html";
     };
   };
 
