@@ -38,38 +38,6 @@ in {
       sopsFile = ../../secrets.yaml;
       neededForUsers = true;
     };
-
-    # Opencode secrets
-    firefly-pat = {
-      sopsFile = ../../secrets.yaml;
-      owner = "gabriel";
-    };
-    deepseek-apikey = {
-      sopsFile = ../../secrets.yaml;
-      owner = "gabriel";
-    };
-    openai-free-apikey = {
-      sopsFile = ../../secrets.yaml;
-      owner = "gabriel";
-    };
-    pluggy-secret = {
-      sopsFile = ../../secrets.yaml;
-      owner = "gabriel";
-    };
-
-    # Private opencode skills
-    gabs-info = {
-      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
-      owner = "gabriel";
-    };
-    skill-lumis-private = {
-      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
-      owner = "gabriel";
-    };
-    skill-firefly-private = {
-      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
-      owner = "gabriel";
-    };
   };
 
   home-manager.users.gabriel = import ../../../../home/gabriel/${config.networking.hostName}.nix;
