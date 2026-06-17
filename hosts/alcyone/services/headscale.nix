@@ -1,8 +1,25 @@
 {
   config,
+  pkgs,
+  lib,
+  outputs,
   ...
 }: let
   derpPort = 3478;
+  inherit (lib) listToAttrs flatten mapAttrsToList attrByPath nameValuePair;
+  domainToNode = listToAttrs (flatten (mapAttrsToList (
+      name: host: let
+        vhosts = attrByPath ["services" "nginx" "virtualHosts"] {} host.config;
+      in
+        flatten (mapAttrsToList (
+            vhostName: vhostConfig: let
+              aliases = vhostConfig.serverAliases or [];
+            in
+              map (domain: nameValuePair domain name) ([vhostName] ++ aliases)
+          )
+          vhosts)
+    )
+    outputs.nixosConfigurations));
 in {
   services = {
     headscale = {
@@ -15,65 +32,7 @@ in {
           base_domain = "ts.m7.rs";
           magic_dns = true;
           nameservers.global = ["9.9.9.9"];
-          extra_records = let
-            # Would be nice to not have to hardcode these
-            alcyone = "100.77.0.6";
-            celaeno = "100.77.0.10";
-            merope = "100.77.0.5";
-          in [
-            {
-              type = "A";
-              name = "photos.m7.rs";
-              value = merope;
-            }
-            {
-              type = "A";
-              name = "deluge.m7.rs";
-              value = merope;
-            }
-            {
-              type = "A";
-              name = "bazarr.m7.rs";
-              value = merope;
-            }
-            {
-              type = "A";
-              name = "lidarr.m7.rs";
-              value = merope;
-            }
-            {
-              type = "A";
-              name = "radarr.m7.rs";
-              value = merope;
-            }
-            {
-              type = "A";
-              name = "prowlarr.m7.rs";
-              value = merope;
-            }
-            {
-              type = "A";
-              name = "sonarr.m7.rs";
-              value = merope;
-            }
-
-            {
-              type = "A";
-              name = "dash.m7.rs";
-              value = alcyone;
-            }
-            {
-              type = "A";
-              name = "metrics.m7.rs";
-              value = alcyone;
-            }
-
-            {
-              type = "A";
-              name = "hydra.m7.rs";
-              value = celaeno;
-            }
-          ];
+          extra_records_path = "/var/lib/headscale/extra-records.json";
         };
         server_url = "https://tailscale.m7.rs";
         metrics_listen_addr = "127.0.0.1:8095";
@@ -117,17 +76,56 @@ in {
     };
   };
 
+  systemd.services.headscale-extra-records = {
+    description = "Generate headscale extra DNS records from live node list";
+    after = ["headscale.service"];
+    wants = ["headscale.service"];
+    path = [pkgs.headscale pkgs.jq];
+    script = ''
+      JSON=$(headscale nodes list --output json 2>/dev/null || echo "[]")
+      echo "$JSON" \
+        | jq --argjson mapping '${builtins.toJSON domainToNode}' -r '
+            reduce .[] as $node ({}; .[$node.given_name] = {
+              v4: ([$node.ip_addresses[] | select(startswith("100."))] | first),
+              v6: ([$node.ip_addresses[] | select(startswith("fd7a:"))] | first)
+            }) as $ips
+            | $mapping | to_entries
+            | map(select($ips[.value].v4 != null)
+              | [{ name: .key, type: "A",    value: $ips[.value].v4 },
+                 { name: .key, type: "AAAA", value: $ips[.value].v6 }])
+            | flatten
+          ' > /var/lib/headscale/extra-records.json.new \
+        && mv /var/lib/headscale/extra-records.json.new /var/lib/headscale/extra-records.json
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "headscale";
+      Group = "headscale";
+    };
+  };
+
+  systemd.timers.headscale-extra-records = {
+    description = "Hourly refresh of headscale extra DNS records";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = true;
+    };
+  };
+
   # Derp server
   networking.firewall.allowedUDPPorts = [derpPort];
 
   environment.systemPackages = [config.services.headscale.package];
 
   environment.persistence = {
-    "/persist".directories = [{
-      directory = "/var/lib/headscale";
-      user = config.services.headscale.user;
-      group = config.services.headscale.group;
-      mode = "0700";
-    }];
+    "/persist".directories = [
+      {
+        directory = "/var/lib/headscale";
+        user = config.services.headscale.user;
+        group = config.services.headscale.group;
+        mode = "0700";
+      }
+    ];
   };
 }
