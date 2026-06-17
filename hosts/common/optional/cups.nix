@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  services.avahi.enable = lib.mkForce false;
   services.ipp-usb.enable = true;
   services.printing = {
     enable = true;
