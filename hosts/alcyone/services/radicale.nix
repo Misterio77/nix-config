@@ -29,7 +29,16 @@ in {
       "dav.m7.rs" = {
         forceSSL = true;
         enableACME = true;
-        locations."/".proxyPass = "http://localhost:${port}";
+        locations."/" = {
+          extraConfig = ''
+            allow 127.0.0.1;
+            allow ::1;
+            allow ${config.services.headscale.settings.prefixes.v4};
+            allow ${config.services.headscale.settings.prefixes.v6};
+            deny all;
+          '';
+          proxyPass = "http://localhost:${port}";
+        };
         extraConfig = ''
           proxy_set_header  X-Script-Name /;
           proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
