@@ -372,9 +372,9 @@ in {
     # This is order sensitive, so it has to come here.
     extraConfig = ''
       # Passthrough mode (e.g. for VNC)
-      bind=SUPER,P,submap,passthrough
+      bind=SUPER,esc,submap,passthrough
       submap=passthrough
-      bind=SUPER,P,submap,reset
+      bind=SUPER,esc,submap,reset
       submap=reset
     '';
   };
