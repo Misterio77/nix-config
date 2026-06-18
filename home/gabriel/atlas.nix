@@ -11,6 +11,7 @@
     ./features/pass
     ./features/games
     ./features/games/shadps4.nix
+    ./features/pi
   ];
 
   # Red
