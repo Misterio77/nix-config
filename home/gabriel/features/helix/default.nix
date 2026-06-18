@@ -7,6 +7,7 @@ in {
 
   programs.helix = {
     enable = true;
+    package = pkgs.steelix;
     settings = {
       theme = "nix-${hash}";
       editor = {
