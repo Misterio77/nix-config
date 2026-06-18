@@ -31,8 +31,6 @@ in {
       mutt = mkIf hasNeomutt "neomutt";
       m = mutt;
 
-      oc = "opencode";
-
       aws-switch = mkIf hasAwsCli "export AWS_PROFILE=(aws configure list-profiles | fzf)";
       awssw = aws-switch;
     };

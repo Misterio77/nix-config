@@ -22,7 +22,6 @@
     ../common/optional/cups.nix
 
     ../common/optional/starcitizen-fixes.nix
-    ../common/optional/opencode
   ];
 
   networking = {
