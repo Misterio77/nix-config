@@ -37,20 +37,7 @@ creation_rules:
       pgp:
       - *misterio
 
-  - path_regex: hosts/common/secrets.ya?ml$
-    key_groups:
-    - age:
-      - *atlas
-      - *merope
-      - *alcyone
-      - *celaeno
-      - *taygeta
-      - *maia
-      - *pleione
-      pgp:
-      - *misterio
-
-  - path_regex: home/gabriel/.*.ya?ml
+  - path_regex: hosts/common/.*secrets.ya?ml$
     key_groups:
     - age:
       - *atlas

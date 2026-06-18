@@ -19,7 +19,6 @@
     skills = {
       jujutsu = ./skills/jujutsu;
       gabs-tools = ./skills/gabs-tools;
-      edit-skills = ./skills/edit-skills;
       nix-shell = ./skills/nix-shell;
       screenshot = ./skills/screenshot;
       firefly = ./skills/firefly;
@@ -33,24 +32,24 @@
   };
 
   sops.secrets = {
+    gabs-info = {
+      sopsFile = ./secrets.yaml;
+      owner = "opencode";
+    };
+    skill-lumis-private = {
+      sopsFile = ./secrets.yaml;
+      owner = "opencode";
+    };
+    skill-firefly-private = {
+      sopsFile = ./secrets.yaml;
+      owner = "opencode";
+    };
     deepseek-apikey = {
       sopsFile = ../../secrets.yaml;
       owner = "opencode";
     };
     openai-free-apikey = {
       sopsFile = ../../secrets.yaml;
-      owner = "opencode";
-    };
-    gabs-info = {
-      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
-      owner = "opencode";
-    };
-    skill-lumis-private = {
-      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
-      owner = "opencode";
-    };
-    skill-firefly-private = {
-      sopsFile = ../../../../home/gabriel/features/opencode/private.yaml;
       owner = "opencode";
     };
     firefly-pat = {
