@@ -16,8 +16,21 @@
         "openai-codex/gpt-5.4-mini"
       ];
       theme = config.colorscheme.mode;
+      enableInstallTelemetry = false;
+      enableAnalytics = false;
+      gondolin = {
+        http-proxy = {
+          allowedHosts = ["api.github.com"];
+          secrets = {
+            GITHUB_TOKEN = {
+              hosts = ["api.github.com"];
+              cmd = "gh auth token";
+            };
+          };
+        };
+      };
     };
   };
-
+  home.sessionVariables.PI_SKIP_VERSION_CHECK = true;
   home.file.".agents/skills".source = ./skills;
 }
