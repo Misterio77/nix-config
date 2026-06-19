@@ -3,14 +3,18 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   useHelix = config.programs.helix.enable;
-in
-{
+in {
   programs.fish = {
     interactiveShellInit = ''
-      ${if useHelix then "fish_helix_key_bindings" else "fish_vi_key_bindings"}
+      ${
+        if useHelix
+        then "fish_helix_key_bindings"
+        else "fish_vi_key_bindings"
+      }
+      bind tab __fish_at_file_or_complete
+      bind --mode insert tab __fish_at_file_or_complete
       set fish_cursor_default     block      blink
       set fish_cursor_insert      line       blink
       set fish_cursor_replace_one underscore blink

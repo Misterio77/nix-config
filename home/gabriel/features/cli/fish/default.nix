@@ -59,6 +59,33 @@ in {
           set cmd (commandline -cp)
           bash -ic "source ${./get-bash-completions.sh}; get_completions '$cmd'"
         '';
+      __fish_at_file_or_complete =
+        /*
+        fish
+        */
+        ''
+          set -l token (commandline -ct)
+
+          if not string match --quiet --regex '^@' -- $token
+              commandline -f complete
+              return
+          end
+
+          set -l query (string sub --start 2 -- $token)
+          set -l selection
+
+          if type --query fd
+              set selection (fd --hidden --follow --exclude .git --exclude .jj --type file --type directory . 2>/dev/null | fzf --height 40% --reverse --query "$query" --select-1 --exit-0)
+          else
+              set selection (find . -path './.git' -prune -o -path './.jj' -prune -o -print 2>/dev/null | string replace --regex '^\\./' "" | fzf --height 40% --reverse --query "$query" --select-1 --exit-0)
+          end
+
+          if test -n "$selection"
+              commandline -t (string escape -- $selection)
+          end
+
+          commandline -f repaint
+        '';
     };
     interactiveShellInit =
       /*
