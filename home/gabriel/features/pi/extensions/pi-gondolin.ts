@@ -264,6 +264,11 @@ export default function (pi: ExtensionAPI) {
     await stop(ctx);
   });
 
+  pi.registerShortcut("ctrl+g", {
+    description: "Toggle Gondolin VM sandboxing",
+    handler: (ctx) => setMode("toggle", ctx),
+  });
+
   pi.registerCommand("gondolin", {
     description: "Toggle Gondolin VM sandboxing (on/off/status)",
     handler: async (args, ctx) => {
