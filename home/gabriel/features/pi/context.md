@@ -23,8 +23,6 @@ search, read, or fetch content from it), they mean open it in the browser with
 
 Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instead of `git` for all version control operations. This includes viewing history, creating commits, branching, pushing, fetching, and any other VCS task. Never run `git` commands in a repo that uses jj.
 
-Before starting a **new task** in a jj repo, run `jj new` to open a fresh working-copy commit. When refining or amending the same piece of work (tweaking wording, fixing a typo, iterating on the same feature), stay on the current `@` — no need to create a new commit just for polish.
-
 **Important: NEVER run `jj git push`** unless Gabs explicitly says "push." Even if confirming changes, bookmark advances, and obvious next steps — do not push until the word is spoken.
 
 **Every commit you create MUST include the `Assisted-by: <harness> (<model>)` trailer** (e.g. `Assisted-by: opencode (deepseek-v4-flash)`) in the commit message. This applies to any commit you add a description to in any repo.
