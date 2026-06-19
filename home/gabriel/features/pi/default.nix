@@ -41,7 +41,7 @@
     pname = "pi-extensions";
     version = "0-unstable";
     src = ./extensions;
-    npmDepsHash = "sha256-u4B5khW2gL4hcu1KUR/xa7l1eClJfk1Ab6JiFZEX69Q=";
+    npmDepsHash = "sha256-odIhyMMSPBTtskV52CTEBGpMPVzUkBFLj6n+9JZCNZo=";
     npmDepsFetcherVersion = 2;
     dontNpmBuild = true;
     installPhase = ''

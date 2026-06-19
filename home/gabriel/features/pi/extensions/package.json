@@ -2,7 +2,18 @@
   "name": "pi-extensions",
   "private": true,
   "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"*.ts\"",
+    "format:check": "prettier --check \"*.ts\""
+  },
   "dependencies": {
     "@earendil-works/gondolin": "0.12.0"
+  },
+  "devDependencies": {
+    "@mariozechner/pi-coding-agent": "0.70.5",
+    "@types/node": "latest",
+    "prettier": "latest",
+    "typescript": "latest"
   }
 }
