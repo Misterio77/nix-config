@@ -1,4 +1,6 @@
-{config, ...}: {
+{
+  imports = [./theme.nix];
+
   programs.pi-coding-agent = {
     enable = true;
     context = ./context.md;
@@ -15,7 +17,6 @@
         "openai-codex/gpt-5.5"
         "openai-codex/gpt-5.4-mini"
       ];
-      theme = config.colorscheme.mode;
       enableInstallTelemetry = false;
       enableAnalytics = false;
       gondolin = {
