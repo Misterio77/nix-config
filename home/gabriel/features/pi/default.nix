@@ -33,6 +33,9 @@
         };
       };
     };
+    keybindings = {
+      "app.editor.external" = ["alt+e"];
+    };
   };
   home.sessionVariables.PI_SKIP_VERSION_CHECK = true;
 
