@@ -1,5 +1,7 @@
 {
-  imports = [./theme.nix];
+  imports = [
+    ./theme.nix
+  ];
 
   programs.pi-coding-agent = {
     enable = true;
@@ -34,4 +36,5 @@
   };
   home.sessionVariables.PI_SKIP_VERSION_CHECK = true;
   home.file.".agents/skills".source = ./skills;
+  home.file.".agents/extensions".source = ./extensions;
 }
