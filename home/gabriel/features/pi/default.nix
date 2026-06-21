@@ -22,9 +22,8 @@
       enableInstallTelemetry = false;
       enableAnalytics = false;
       gondolin = {
-        http-proxy = {
-          allowedHosts = ["api.github.com"];
-          allowedInternalHosts = ["firefly.m7.rs"];
+        httpProxy = {
+          allowedHosts = ["api.github.com"  "firefly.m7.rs"];
           secrets = {
             GITHUB_TOKEN = {
               hosts = ["api.github.com"];

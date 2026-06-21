@@ -1,19 +1,18 @@
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 
 import {
-  createBashTool,
-  createEditTool,
-  createReadTool,
-  createWriteTool,
+  createCodingTools,
+  createReadOnlyTools,
+  getAgentDir,
   type BashOperations,
   type EditOperations,
   type ExtensionAPI,
   type ExtensionCommandContext,
   type ExtensionContext,
   type ReadOperations,
+  type ToolsOptions,
   type WriteOperations,
 } from "@mariozechner/pi-coding-agent";
 import {
@@ -26,38 +25,32 @@ import {
 const GUEST = "/workspace";
 const STATUS = "gondolin";
 const MODE_ENTRY = "gondolin-mode";
-const AGENT_DIR =
-  process.env.PI_CODING_AGENT_DIR ?? path.join(os.homedir(), ".pi/agent");
+const AGENT_DIR = getAgentDir();
 const GLOBAL_SETTINGS = path.join(AGENT_DIR, "settings.json");
 const PROJECT_SETTINGS = path.join(process.cwd(), ".pi/settings.json");
 const MODES = new Set(["", "toggle", "status", "on", "off"]);
 
-type Tool = any;
+type Tool = ReturnType<typeof createCodingTools>[number];
+type ToolMap = Record<string, Tool>;
 type GondolinModeEntry = {
   type?: string;
   customType?: string;
   data?: { enabled?: unknown };
 };
 type JsonSecret = Omit<SecretDefinition, "value"> & {
-  value?: string;
   env?: string;
   file?: string;
   cmd?: string | string[];
 };
 type HttpProxyConfig = {
   allowedHosts?: string[];
-  allowedInternalHosts?: string[];
   replaceSecretsInQuery?: boolean;
   blockInternalRanges?: boolean;
   secrets?: Record<string, JsonSecret>;
 };
-type GondolinConfig = {
-  httpProxy?: HttpProxyConfig;
-  "http-proxy"?: HttpProxyConfig;
-};
-type PiSettings = {
-  gondolin?: GondolinConfig;
-};
+type GondolinConfig = { httpProxy?: HttpProxyConfig };
+type PiSettings = { gondolin?: GondolinConfig };
+type LazySecret = JsonSecret & { envName: string };
 
 function resolveSessionEnabled(entries: unknown, fallback = true) {
   if (!Array.isArray(entries)) return fallback;
@@ -113,51 +106,59 @@ function requireStringArray(
   throw new Error(`gondolin: ${name} must be an array of strings`);
 }
 
-function resolveConfigPath(file: string) {
-  if (file.startsWith("~/")) return path.join(os.homedir(), file.slice(2));
-  return path.isAbsolute(file) ? file : path.join(AGENT_DIR, file);
-}
-
 function stripTrailingNewline(value: string) {
   return value.replace(/\r?\n$/, "");
 }
 
 function readSecretFile(file: string) {
-  return stripTrailingNewline(fs.readFileSync(resolveConfigPath(file), "utf8"));
+  if (!path.isAbsolute(file)) {
+    throw new Error("gondolin: secret file paths must be absolute");
+  }
+  return stripTrailingNewline(fs.readFileSync(file, "utf8"));
 }
 
-function readSecretCmd(cmd: string | string[]) {
-  const args = typeof cmd === "string" ? ["/bin/sh", "-lc", cmd] : cmd;
-  if (!args.length || args.some((x) => typeof x !== "string")) {
-    throw new Error(`gondolin: secret cmd must be a string or string array`);
-  }
-  return stripTrailingNewline(
-    execFileSync(args[0], args.slice(1), {
-      cwd: AGENT_DIR,
-      encoding: "utf8",
-      timeout: 30_000,
-    }),
+function hasSecretSource(name: string, secret: JsonSecret) {
+  return (
+    process.env[secret.env ?? name] !== undefined ||
+    secret.file !== undefined ||
+    secret.cmd !== undefined
   );
 }
 
-type LazySecret = JsonSecret & { envName: string };
+function readSecretCmd(name: string, cmd: string | string[]) {
+  const args = typeof cmd === "string" ? ["/bin/sh", "-lc", cmd] : cmd;
+  if (!args.length || args.some((x) => typeof x !== "string")) {
+    throw new Error("gondolin: secret cmd must be a string or string array");
+  }
+
+  try {
+    return stripTrailingNewline(
+      execFileSync(args[0], args.slice(1), {
+        cwd: AGENT_DIR,
+        encoding: "utf8",
+        timeout: 30_000,
+      }),
+    );
+  } catch (err) {
+    throw new Error(
+      `gondolin: secret command failed for httpProxy.secrets.${name}: ${
+        err instanceof Error ? err.message : String(err)
+      }`,
+    );
+  }
+}
 
 function readSecret(name: string, secret: LazySecret) {
   const value =
-    secret.value ??
     process.env[secret.envName] ??
     (secret.file ? readSecretFile(secret.file) : undefined) ??
-    (secret.cmd ? readSecretCmd(secret.cmd) : undefined);
+    (secret.cmd ? readSecretCmd(name, secret.cmd) : undefined);
   if (typeof value !== "string") {
     throw new Error(
-      `gondolin: httpProxy.secrets.${name} needs value, env ${secret.envName}, file, or cmd`,
+      `gondolin: httpProxy.secrets.${name} needs env ${secret.envName}, file, or cmd`,
     );
   }
   return value;
-}
-
-function unresolvedSecretValue(name: string) {
-  return `GONDOLIN_UNRESOLVED_SECRET_${name}_${Math.random()}`;
 }
 
 function requestContainsSecretPlaceholder(
@@ -182,43 +183,42 @@ function requestContainsSecretPlaceholder(
 }
 
 function createHttpProxy(config: GondolinConfig) {
-  const httpProxy = config.httpProxy ?? config["http-proxy"];
+  const httpProxy = config.httpProxy;
   if (!httpProxy) return { env: {} };
 
-  const secrets: Record<string, SecretDefinition> = {};
   const lazySecrets = new Map<string, LazySecret>();
-  for (const [name, secret] of Object.entries(httpProxy.secrets ?? {})) {
-    const envName = secret.env ?? name;
-    if (
-      secret.value === undefined &&
-      process.env[envName] === undefined &&
-      secret.file === undefined &&
-      secret.cmd === undefined
-    ) {
-      throw new Error(
-        `gondolin: httpProxy.secrets.${name} needs value, env ${envName}, file, or cmd`,
-      );
-    }
+  const secrets = Object.fromEntries(
+    Object.entries(httpProxy.secrets ?? {}).map(([name, secret]) => {
+      const envName = secret.env ?? name;
+      if (!hasSecretSource(name, secret)) {
+        throw new Error(
+          `gondolin: httpProxy.secrets.${name} needs env ${envName}, file, or cmd`,
+        );
+      }
 
-    lazySecrets.set(name, { ...secret, envName });
-    secrets[name] = {
-      hosts:
-        requireStringArray(secret.hosts, `httpProxy.secrets.${name}.hosts`) ??
-        [],
-      value: unresolvedSecretValue(name),
-      placeholder: secret.placeholder,
-    };
-  }
+      lazySecrets.set(name, { ...secret, envName });
+      return [
+        name,
+        {
+          hosts:
+            requireStringArray(
+              secret.hosts,
+              `httpProxy.secrets.${name}.hosts`,
+            ) ?? [],
+          value: `GONDOLIN_UNRESOLVED_SECRET_${name}`,
+          placeholder: secret.placeholder,
+        } satisfies SecretDefinition,
+      ];
+    }),
+  );
 
+  const allowedHosts = requireStringArray(
+    httpProxy.allowedHosts,
+    "httpProxy.allowedHosts",
+  );
   const proxy = createHttpHooks({
-    allowedHosts: requireStringArray(
-      httpProxy.allowedHosts,
-      "httpProxy.allowedHosts",
-    ),
-    allowedInternalHosts: requireStringArray(
-      httpProxy.allowedInternalHosts,
-      "httpProxy.allowedInternalHosts",
-    ),
+    allowedHosts,
+    allowedInternalHosts: allowedHosts,
     replaceSecretsInQuery: httpProxy.replaceSecretsInQuery,
     blockInternalRanges: httpProxy.blockInternalRanges,
     secrets,
@@ -249,7 +249,7 @@ function createHttpProxy(config: GondolinConfig) {
     } finally {
       for (const name of usedSecrets) {
         proxy.secretManager.updateSecret(name, {
-          value: unresolvedSecretValue(name),
+          value: `GONDOLIN_UNRESOLVED_SECRET_${name}`,
         });
       }
     }
@@ -342,11 +342,15 @@ function writeOps(vm: VM, cwd: string): WriteOperations {
   };
 }
 
-const editOps = (vm: VM, cwd: string): EditOperations => ({
-  readFile: readOps(vm, cwd).readFile,
-  access: readOps(vm, cwd).access,
-  writeFile: writeOps(vm, cwd).writeFile,
-});
+function editOps(vm: VM, cwd: string): EditOperations {
+  const read = readOps(vm, cwd);
+  const write = writeOps(vm, cwd);
+  return {
+    readFile: read.readFile,
+    access: read.access,
+    writeFile: write.writeFile,
+  };
+}
 
 function bashOps(
   vm: VM,
@@ -464,20 +468,42 @@ export default function (pi: ExtensionAPI) {
     ctx.ui.notify("Gondolin disabled; tools now run on the host", "info");
   }
 
-  const local = {
-    read: createReadTool(cwd),
-    write: createWriteTool(cwd),
-    edit: createEditTool(cwd),
-    bash: createBashTool(cwd),
-  };
+  const toolMap = (tools: Tool[]) =>
+    Object.fromEntries(tools.map((tool) => [tool.name, tool])) as ToolMap;
+  const codingTools = (options?: ToolsOptions) =>
+    toolMap(createCodingTools(cwd, options));
+  const localTools = toolMap([
+    ...createCodingTools(cwd),
+    ...createReadOnlyTools(cwd).filter((tool) => tool.name !== "read"),
+  ]);
+  const sandboxedTools = (vm: VM) =>
+    codingTools({
+      read: { operations: readOps(vm, cwd) },
+      write: { operations: writeOps(vm, cwd) },
+      edit: { operations: editOps(vm, cwd) },
+      bash: { operations: bashOps(vm, cwd, httpProxy.env) },
+    });
 
-  function tool(base: Tool, make: (vm: VM) => Tool) {
+  function registerSandboxedTool(name: "read" | "write" | "edit" | "bash") {
+    const local = localTools[name];
     pi.registerTool({
-      ...base,
+      ...local,
       async execute(id, params, signal, onUpdate, ctx) {
-        return enabled
-          ? make(await start(ctx)).execute(id, params, signal, onUpdate)
-          : base.execute(id, params, signal, onUpdate);
+        const tool = enabled ? sandboxedTools(await start(ctx))[name] : local;
+        return tool.execute(id, params, signal, onUpdate);
+      },
+    });
+  }
+
+  function registerHostOnlyTool(name: "find" | "grep" | "ls") {
+    const local = localTools[name];
+    pi.registerTool({
+      ...local,
+      async execute(id, params, signal, onUpdate, ctx) {
+        if (enabled) {
+          throw new Error(`${name} is disabled while Gondolin is enabled. Use bash to run it instead.`);
+        }
+        return local.execute(id, params, signal, onUpdate);
       },
     });
   }
@@ -525,14 +551,13 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
-  tool(local.read, (v) => createReadTool(cwd, { operations: readOps(v, cwd) }));
-  tool(local.write, (v) =>
-    createWriteTool(cwd, { operations: writeOps(v, cwd) }),
-  );
-  tool(local.edit, (v) => createEditTool(cwd, { operations: editOps(v, cwd) }));
-  tool(local.bash, (v) =>
-    createBashTool(cwd, { operations: bashOps(v, cwd, httpProxy.env) }),
-  );
+  for (const name of ["read", "write", "edit", "bash"] as const) {
+    registerSandboxedTool(name);
+  }
+
+  for (const name of ["find", "grep", "ls"] as const) {
+    registerHostOnlyTool(name);
+  }
 
   const onUserBash = pi.on as unknown as (
     event: "user_bash",
