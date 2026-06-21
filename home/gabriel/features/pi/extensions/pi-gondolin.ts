@@ -25,18 +25,19 @@ import {
 
 const GUEST = "/workspace";
 const STATUS = "gondolin";
-const STATE = path.join(
-  process.env.XDG_STATE_HOME ?? path.join(os.homedir(), ".local/state"),
-  "pi/gondolin.json",
-);
+const MODE_ENTRY = "gondolin-mode";
 const AGENT_DIR =
   process.env.PI_CODING_AGENT_DIR ?? path.join(os.homedir(), ".pi/agent");
 const GLOBAL_SETTINGS = path.join(AGENT_DIR, "settings.json");
 const PROJECT_SETTINGS = path.join(process.cwd(), ".pi/settings.json");
 const MODES = new Set(["", "toggle", "status", "on", "off"]);
 
-type Store = { workspaces?: Record<string, boolean> };
 type Tool = any;
+type GondolinModeEntry = {
+  type?: string;
+  customType?: string;
+  data?: { enabled?: unknown };
+};
 type JsonSecret = Omit<SecretDefinition, "value"> & {
   value?: string;
   env?: string;
@@ -58,25 +59,16 @@ type PiSettings = {
   gondolin?: GondolinConfig;
 };
 
-function load(): Store {
-  try {
-    return JSON.parse(fs.readFileSync(STATE, "utf8")) as Store;
-  } catch {
-    return {};
-  }
-}
+function resolveSessionEnabled(entries: unknown, fallback = true) {
+  if (!Array.isArray(entries)) return fallback;
 
-function save(cwd: string, enabled: boolean) {
-  const store = load();
-  fs.mkdirSync(path.dirname(STATE), { recursive: true });
-  fs.writeFileSync(
-    STATE,
-    `${JSON.stringify(
-      { workspaces: { ...store.workspaces, [cwd]: enabled } },
-      null,
-      2,
-    )}\n`,
-  );
+  for (let i = entries.length - 1; i >= 0; i -= 1) {
+    const entry = entries[i] as GondolinModeEntry;
+    if (entry?.type !== "custom" || entry?.customType !== MODE_ENTRY) continue;
+    if (typeof entry.data?.enabled === "boolean") return entry.data.enabled;
+  }
+
+  return fallback;
 }
 
 function readJson(file: string) {
@@ -398,10 +390,9 @@ function bashOps(
 
 export default function (pi: ExtensionAPI) {
   const cwd = process.cwd();
-  const store = load();
   const config = loadConfig();
   const httpProxy = createHttpProxy(config);
-  let enabled = store.workspaces?.[cwd] ?? true;
+  let enabled = true;
   let vm: VM | null = null;
   let starting: Promise<VM> | null = null;
 
@@ -451,10 +442,9 @@ export default function (pi: ExtensionAPI) {
     }
   }
 
-  const persist = () => save(cwd, enabled);
   const setEnabled = (value: boolean) => {
     enabled = value;
-    persist();
+    pi.appendEntry(MODE_ENTRY, { enabled });
   };
 
   async function setMode(mode: string, ctx: ExtensionContext, wait = false) {
@@ -493,6 +483,9 @@ export default function (pi: ExtensionAPI) {
   }
 
   pi.on("session_start", async (_event, ctx) => {
+    enabled = resolveSessionEnabled(
+      ctx.sessionManager.getBranch?.() ?? ctx.sessionManager.getEntries(),
+    );
     if (!enabled) return status(ctx, "disabled", "muted");
     try {
       await start(ctx);
@@ -501,10 +494,8 @@ export default function (pi: ExtensionAPI) {
     }
   });
 
-  pi.on("session_before_fork", persist);
-  pi.on("session_shutdown", async (_event, ctx) => {
-    persist();
-    await stop(ctx);
+  pi.on("session_shutdown", async () => {
+    await stop();
   });
 
   pi.registerShortcut("ctrl+g", {
