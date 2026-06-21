@@ -51,6 +51,7 @@ type HttpProxyConfig = {
 type GondolinConfig = { httpProxy?: HttpProxyConfig };
 type PiSettings = { gondolin?: GondolinConfig };
 type LazySecret = JsonSecret & { envName: string };
+type SecretErrorNotifier = (message: string) => void;
 
 function resolveSessionEnabled(entries: unknown, fallback = true) {
   if (!Array.isArray(entries)) return fallback;
@@ -110,6 +111,10 @@ function stripTrailingNewline(value: string) {
   return value.replace(/\r?\n$/, "");
 }
 
+function errorMessage(err: unknown) {
+  return err instanceof Error ? err.message : String(err);
+}
+
 function readSecretFile(file: string) {
   if (!path.isAbsolute(file)) {
     throw new Error("gondolin: secret file paths must be absolute");
@@ -141,9 +146,9 @@ function readSecretCmd(name: string, cmd: string | string[]) {
     );
   } catch (err) {
     throw new Error(
-      `gondolin: secret command failed for httpProxy.secrets.${name}: ${
-        err instanceof Error ? err.message : String(err)
-      }`,
+      `gondolin: secret command failed for httpProxy.secrets.${name}: ${errorMessage(
+        err,
+      )}`,
     );
   }
 }
@@ -182,7 +187,10 @@ function requestContainsSecretPlaceholder(
   return false;
 }
 
-function createHttpProxy(config: GondolinConfig) {
+function createHttpProxy(
+  config: GondolinConfig,
+  onSecretError?: SecretErrorNotifier,
+) {
   const httpProxy = config.httpProxy;
   if (!httpProxy) return { env: {} };
 
@@ -238,9 +246,18 @@ function createHttpProxy(config: GondolinConfig) {
             httpProxy.replaceSecretsInQuery,
           )
         ) {
-          proxy.secretManager.updateSecret(entry.name, {
-            value: readSecret(entry.name, secret),
-          });
+          try {
+            proxy.secretManager.updateSecret(entry.name, {
+              value: readSecret(entry.name, secret),
+            });
+          } catch (err) {
+            onSecretError?.(
+              `Gondolin failed to read secret ${entry.name}: ${errorMessage(
+                err,
+              )}`,
+            );
+            throw err;
+          }
           usedSecrets.push(entry.name);
         }
       }
@@ -395,7 +412,12 @@ function bashOps(
 export default function (pi: ExtensionAPI) {
   const cwd = process.cwd();
   const config = loadConfig();
-  const httpProxy = createHttpProxy(config);
+  let notifySecretError: SecretErrorNotifier = () => {};
+  const pendingSecretErrors: string[] = [];
+  const httpProxy = createHttpProxy(config, (message) => {
+    pendingSecretErrors.push(message);
+    notifySecretError(message);
+  });
   let enabled = true;
   let vm: VM | null = null;
   let starting: Promise<VM> | null = null;
@@ -407,6 +429,7 @@ export default function (pi: ExtensionAPI) {
   ) => ctx.ui.setStatus(STATUS, ctx.ui.theme.fg(color, `Gondolin: ${text}`));
 
   async function start(ctx?: ExtensionContext) {
+    if (ctx) notifySecretError = (message) => ctx.ui.notify(message, "error");
     if (!enabled) throw new Error("Gondolin is disabled");
     if (vm) return vm;
     if (starting) return starting;
@@ -522,6 +545,21 @@ export default function (pi: ExtensionAPI) {
 
   pi.on("session_shutdown", async () => {
     await stop();
+  });
+
+  pi.on("tool_result", (event) => {
+    if (!pendingSecretErrors.length) return;
+    const errors = pendingSecretErrors.splice(0);
+    return {
+      content: [
+        ...event.content,
+        {
+          type: "text" as const,
+          text: `\nGondolin proxy errors:\n${errors.map((x) => `- ${x}`).join("\n")}`,
+        },
+      ],
+      isError: true,
+    };
   });
 
   pi.registerShortcut("ctrl+g", {
