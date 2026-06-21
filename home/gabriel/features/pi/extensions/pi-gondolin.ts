@@ -148,33 +148,77 @@ function readSecretCmd(cmd: string | string[]) {
   );
 }
 
+type LazySecret = JsonSecret & { envName: string };
+
+function readSecret(name: string, secret: LazySecret) {
+  const value =
+    secret.value ??
+    process.env[secret.envName] ??
+    (secret.file ? readSecretFile(secret.file) : undefined) ??
+    (secret.cmd ? readSecretCmd(secret.cmd) : undefined);
+  if (typeof value !== "string") {
+    throw new Error(
+      `gondolin: httpProxy.secrets.${name} needs value, env ${secret.envName}, file, or cmd`,
+    );
+  }
+  return value;
+}
+
+function unresolvedSecretValue(name: string) {
+  return `GONDOLIN_UNRESOLVED_SECRET_${name}_${Math.random()}`;
+}
+
+function requestContainsSecretPlaceholder(
+  request: Request,
+  placeholder: string,
+  replaceSecretsInQuery = false,
+) {
+  for (const value of request.headers.values()) {
+    if (value.includes(placeholder)) return true;
+  }
+
+  if (!replaceSecretsInQuery) return false;
+  try {
+    for (const values of new URL(request.url).searchParams.values()) {
+      if (values.includes(placeholder)) return true;
+    }
+  } catch {
+    return request.url.includes(placeholder);
+  }
+
+  return false;
+}
+
 function createHttpProxy(config: GondolinConfig) {
   const httpProxy = config.httpProxy ?? config["http-proxy"];
   if (!httpProxy) return { env: {} };
 
   const secrets: Record<string, SecretDefinition> = {};
+  const lazySecrets = new Map<string, LazySecret>();
   for (const [name, secret] of Object.entries(httpProxy.secrets ?? {})) {
     const envName = secret.env ?? name;
-    const value =
-      secret.value ??
-      process.env[envName] ??
-      (secret.file ? readSecretFile(secret.file) : undefined) ??
-      (secret.cmd ? readSecretCmd(secret.cmd) : undefined);
-    if (typeof value !== "string") {
+    if (
+      secret.value === undefined &&
+      process.env[envName] === undefined &&
+      secret.file === undefined &&
+      secret.cmd === undefined
+    ) {
       throw new Error(
         `gondolin: httpProxy.secrets.${name} needs value, env ${envName}, file, or cmd`,
       );
     }
+
+    lazySecrets.set(name, { ...secret, envName });
     secrets[name] = {
       hosts:
         requireStringArray(secret.hosts, `httpProxy.secrets.${name}.hosts`) ??
         [],
-      value,
+      value: unresolvedSecretValue(name),
       placeholder: secret.placeholder,
     };
   }
 
-  return createHttpHooks({
+  const proxy = createHttpHooks({
     allowedHosts: requireStringArray(
       httpProxy.allowedHosts,
       "httpProxy.allowedHosts",
@@ -187,6 +231,39 @@ function createHttpProxy(config: GondolinConfig) {
     blockInternalRanges: httpProxy.blockInternalRanges,
     secrets,
   });
+
+  const onRequest = proxy.httpHooks.onRequest;
+  proxy.httpHooks.onRequest = async (request) => {
+    const usedSecrets: string[] = [];
+    try {
+      for (const entry of proxy.secretManager.listSecrets()) {
+        const secret = lazySecrets.get(entry.name);
+        if (
+          secret &&
+          requestContainsSecretPlaceholder(
+            request,
+            entry.placeholder,
+            httpProxy.replaceSecretsInQuery,
+          )
+        ) {
+          proxy.secretManager.updateSecret(entry.name, {
+            value: readSecret(entry.name, secret),
+          });
+          usedSecrets.push(entry.name);
+        }
+      }
+
+      return await onRequest?.(request);
+    } finally {
+      for (const name of usedSecrets) {
+        proxy.secretManager.updateSecret(name, {
+          value: unresolvedSecretValue(name),
+        });
+      }
+    }
+  };
+
+  return proxy;
 }
 
 const quote = (s: string) => `'${s.replace(/'/g, "'\\''")}'`;

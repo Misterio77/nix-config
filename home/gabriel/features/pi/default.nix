@@ -24,10 +24,15 @@
       gondolin = {
         http-proxy = {
           allowedHosts = ["api.github.com"];
+          allowedInternalHosts = ["firefly.m7.rs"];
           secrets = {
             GITHUB_TOKEN = {
               hosts = ["api.github.com"];
               cmd = "gh auth token";
+            };
+            FIREFLY_TOKEN = {
+              hosts = ["firefly.m7.rs"];
+              cmd = "pass firefly.m7.rs/pi-pat";
             };
           };
         };
