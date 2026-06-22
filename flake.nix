@@ -22,8 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
-      # https://github.com/nix-community/impermanence/pull/272#discussion_r2230796215
-      url = "github:misterio77/impermanence";
+      url = "github:nix-community/impermanence";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };

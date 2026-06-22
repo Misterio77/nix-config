@@ -8,7 +8,6 @@
 }: {
   imports =
     [
-      inputs.impermanence.homeManagerModules.impermanence
       ../features/cli
       ../features/helix
     ]
