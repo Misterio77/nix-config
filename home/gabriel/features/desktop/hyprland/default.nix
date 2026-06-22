@@ -77,6 +77,7 @@ in {
       "exec-once"
     ];
 
+    configType = "hyprlang";
     settings = {
       general = {
         gaps_in = 15;
