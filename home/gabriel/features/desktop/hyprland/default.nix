@@ -105,13 +105,11 @@ in {
       };
       dwindle = {
         split_width_multiplier = 1.35;
-        pseudotile = true;
       };
       gesture = [
         "3, horizontal, workspace"
       ];
       misc = {
-        vfr = true;
         close_special_on_empty = true;
         focus_on_activate = true;
         # Unfullscreen when opening something

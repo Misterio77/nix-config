@@ -24,10 +24,17 @@
         "offrakki@gmail.com"
       ];
     };
-    useFSLayout = true;
+    storage = {
+      directoryLayout = "fs";
+      path = "/srv/mail/vmail";
+    };
+    dkim = {
+      enable = true;
+      keyDirectory = "/srv/mail/dkim";
+    };
     x509.useACMEHost = config.mailserver.fqdn;
     localDnsResolver = false;
-    loginAccounts = {
+    accounts = {
       "hi@m7.rs" = {
         # mkpasswd -sm bcrypt
         hashedPasswordFile = config.sops.secrets.gabriel-mail-password.path;
@@ -71,9 +78,6 @@
         special_use = "\\Trash";
       };
     };
-    mailDirectory = "/srv/mail/vmail";
-    sieveDirectory = "/srv/mail/sieve";
-    dkimKeyDirectory = "/srv/mail/dkim";
   };
 
   # Disable default open ports, we want to lock down SMTP and IMAP to tailscale.

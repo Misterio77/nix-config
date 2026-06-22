@@ -21,7 +21,7 @@ in {
         "col.text" = rgb config.colorscheme.colors.primary;
         bar_height = 25;
         bar_text_font = config.fontProfiles.regular.name;
-        bar_text_size = config.fontProfiles.regular.size;
+        bar_text_size = builtins.floor (config.fontProfiles.regular.size * 1.4);
         bar_part_of_window = false;
         bar_precedence_over_border = false;
         hyprbars-button = let
