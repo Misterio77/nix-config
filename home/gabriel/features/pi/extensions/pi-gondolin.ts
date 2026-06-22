@@ -53,7 +53,7 @@ type PiSettings = { gondolin?: GondolinConfig };
 type LazySecret = JsonSecret & { envName: string };
 type SecretErrorNotifier = (message: string) => void;
 
-function resolveSessionEnabled(entries: unknown, fallback = true) {
+function resolveSessionEnabled(entries: unknown, fallback = false) {
   if (!Array.isArray(entries)) return fallback;
 
   for (let i = entries.length - 1; i >= 0; i -= 1) {
@@ -418,7 +418,7 @@ export default function (pi: ExtensionAPI) {
     pendingSecretErrors.push(message);
     notifySecretError(message);
   });
-  let enabled = true;
+  let enabled = false;
   let vm: VM | null = null;
   let starting: Promise<VM> | null = null;
 
