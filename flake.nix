@@ -36,8 +36,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-minecraft = {
-      url = "github:misterio77/nix-minecraft";
+      url = "github:infinidoge/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
     };
     disko = {
       url = "github:nix-community/disko";
