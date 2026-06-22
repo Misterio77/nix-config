@@ -1,32 +1,12 @@
 # Preferences
 
-## Editor
-
-Edits in **Helix** (`hx`).
-
-## Package Management
-
-Most machines run **NixOS**. Otherwise, **Nix standalone** is installed. For
-one-off programs that aren't already available, use `nix shell`, for example:
-`nix shell nixpkgs#tool -c program arg1 arg2...`.
-
-IMPORTANT: if you run into e.g. `python3: command not found`, ALWAYS try again
-with nix shell.
-
-## Browser
-
-When Gabs says "open up <URL>" without additional context (no request to
-search, read, or fetch content from it), they mean open it in the browser with
-`xdg-open`. Don't fetch/read the URL — just launch it.
-
 ## Version Control
 
 Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instead of `git` for all version control operations. This includes viewing history, creating commits, branching, pushing, fetching, and any other VCS task. Never run `git` commands in a repo that uses jj.
 
-**Important: NEVER run `jj git push`** unless Gabs explicitly says "push." Even if confirming changes, bookmark advances, and obvious next steps — do not push until the word is spoken.
+**Important: NEVER run `jj git push`** unless user explicitly says "push." Even if confirming changes, bookmark advances, and obvious next steps — do not push until the word is spoken.
 
 **Every commit you create MUST include the `Assisted-by: <harness> (<model>)` trailer** (e.g. `Assisted-by: opencode (deepseek-v4-flash)`) in the commit message. This applies to any commit you add a description to in any repo.
-
 
 # Operator
 
