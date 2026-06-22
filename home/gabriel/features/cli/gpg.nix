@@ -18,6 +18,8 @@
   proxySocketDir = "%t/gnupg";
   agentSocket = "${proxySocketDir}/S.gpg-agent";
   agentSocketReal = "${agentSocket}.real";
+  agentExtraSocket = "${proxySocketDir}/S.gpg-agent.extra";
+  agentExtraSocketReal = "${agentExtraSocket}.real";
   agentSshSocket = "${proxySocketDir}/S.gpg-agent.ssh";
   agentSshSocketReal = "${agentSshSocket}.real";
 in {
@@ -41,6 +43,7 @@ in {
   systemd.user.sockets = {
     gpg-agent.Socket.ListenStream = lib.mkForce agentSocketReal;
     gpg-agent-ssh.Socket.ListenStream = lib.mkForce agentSshSocketReal;
+    gpg-agent-extra.Socket.ListenStream = lib.mkForce agentExtraSocketReal;
   };
 
   systemd.user.services = lib.mkIf config.gtk.enable {
@@ -53,6 +56,21 @@ in {
       Service = {
         Type = "simple";
         ExecStart = "${lib.getExe gpgAgentProxy} --listen ${agentSocket} --upstream ${agentSocketReal} --mode assuan";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = ["default.target"];
+    };
+
+    gpg-agent-extra-proxy = {
+      Unit = {
+        Description = "GPG extra agent notification proxy";
+        Requires = ["gpg-agent-extra.socket"];
+        After = ["gpg-agent-extra.socket"];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${lib.getExe gpgAgentProxy} --listen ${agentExtraSocket} --upstream ${agentExtraSocketReal} --mode assuan";
         Restart = "on-failure";
         RestartSec = 2;
       };
