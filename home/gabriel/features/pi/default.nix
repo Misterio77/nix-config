@@ -18,6 +18,7 @@
       enabledModels = [
         "openai-codex/gpt-5.5"
         "openai-codex/gpt-5.4-mini"
+        "openai-codex/gpt-5.3-codex-spark"
       ];
       enableInstallTelemetry = false;
       enableAnalytics = false;
