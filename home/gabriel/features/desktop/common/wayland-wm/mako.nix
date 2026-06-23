@@ -4,6 +4,7 @@ in {
   services.mako = {
     enable = true;
     settings = {
+      group-by = "summary";
       icon-path =
         if mode == "dark"
         then "${config.gtk.iconTheme.package}/share/icons/Papirus-Dark"
