@@ -4,8 +4,6 @@
   makeWrapper,
   python3,
   stdenvNoCC,
-  ungoogled-chromium,
-  wl-clipboard,
 }: let
   python = python3.withPackages (ps: [ps.requests]);
 in
@@ -24,10 +22,6 @@ in
       install -Dm644 $src $out/share/jagex-auth/jagex-auth.py
       makeWrapper ${lib.getExe python} $out/bin/jagex-auth \
         --add-flags $out/share/jagex-auth/jagex-auth.py \
-        --prefix PATH : ${lib.makeBinPath [
-        ungoogled-chromium
-        wl-clipboard
-      ]}
 
       runHook postInstall
     '';
