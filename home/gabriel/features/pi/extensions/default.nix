@@ -3,17 +3,11 @@
   lib,
   ...
 }: let
-  gabsExtensions = pkgs.buildNpmPackage {
+  gabsExtensions = pkgs.buildPiExtension {
     pname = "pi-extensions";
     version = "unstable";
     src = ./gabs-extensions;
     npmDepsHash = "sha256-odIhyMMSPBTtskV52CTEBGpMPVzUkBFLj6n+9JZCNZo=";
-    dontNpmBuild = true;
-    npmDepsFetcherVersion = 2;
-    installPhase = ''
-      mkdir -p $out
-      cp -r . $out/
-    '';
   };
 in {
   programs.pi-coding-agent = {
