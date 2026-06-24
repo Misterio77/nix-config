@@ -1,8 +1,8 @@
 {
   imports = [
     ./theme.nix
-    ./extensions.nix
-    ./skills.nix
+    ./extensions
+    ./skills
   ];
 
   programs.pi-coding-agent = {
