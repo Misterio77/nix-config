@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   programs.pi-coding-agent = {
     settings = {
       extensions = [
@@ -18,6 +18,7 @@
         })
       ];
       gondolin = {
+        qemuPath = lib.getExe pkgs.qemu;
         httpProxy = {
           allowedHosts = ["api.github.com"  "firefly.m7.rs"];
           secrets = {
@@ -34,5 +35,4 @@
       };
     };
   };
-  home.packages = [pkgs.qemu];
 }

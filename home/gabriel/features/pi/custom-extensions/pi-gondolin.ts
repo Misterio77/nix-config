@@ -48,7 +48,7 @@ type HttpProxyConfig = {
   blockInternalRanges?: boolean;
   secrets?: Record<string, JsonSecret>;
 };
-type GondolinConfig = { httpProxy?: HttpProxyConfig };
+type GondolinConfig = { httpProxy?: HttpProxyConfig; qemuPath?: string };
 type PiSettings = { gondolin?: GondolinConfig };
 type LazySecret = JsonSecret & { envName: string };
 type SecretErrorNotifier = (message: string) => void;
@@ -93,7 +93,11 @@ function loadConfig(): GondolinConfig {
     readJson(GLOBAL_SETTINGS),
     readJson(PROJECT_SETTINGS),
   ) as PiSettings;
-  return settings.gondolin ?? {};
+  const config = settings.gondolin ?? {};
+  if (config.qemuPath !== undefined && typeof config.qemuPath !== "string") {
+    throw new Error("gondolin: qemuPath must be a string");
+  }
+  return config;
 }
 
 function requireStringArray(
@@ -439,6 +443,7 @@ export default function (pi: ExtensionAPI) {
       httpHooks: "httpHooks" in httpProxy ? httpProxy.httpHooks : undefined,
       env: httpProxy.env,
       vfs: { mounts: { [GUEST]: new RealFSProvider(cwd) } },
+      sandbox: config.qemuPath ? { qemuPath: config.qemuPath } : undefined,
     }).then(async (next) => {
       if (!enabled) {
         await next.close();
