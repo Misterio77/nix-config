@@ -2,6 +2,7 @@
   imports = [
     ./theme.nix
     ./extensions.nix
+    ./skills.nix
   ];
 
   programs.pi-coding-agent = {
@@ -29,5 +30,4 @@
     };
   };
   home.sessionVariables.PI_SKIP_VERSION_CHECK = true;
-  home.file.".pi/agent/skills".source = ./skills;
 }
