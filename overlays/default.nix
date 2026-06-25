@@ -94,7 +94,7 @@ in {
           --run "set -a" \
           --run "source \"\$HDOS_DIR/credentials.properties\" || true" \
           --run "set +a" \
-          --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libGL ]}" \
+          --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [libGL]}" \
           --add-flags "-Dapp.user.home=\"\$HDOS_DIR\"" \
           --add-flags "-Duser.home=\"\$HDOS_DIR\"" \
           --add-flags "-jar $src"
@@ -114,23 +114,30 @@ in {
 
     buildPiExtension = let
       inherit (final) lib buildNpmPackage jq;
-      fakeSha512 = lib.convertHash {hash = lib.fakeSha512; toHashFormat = "sri"; hashAlgo = "sha512";};
-    in args: buildNpmPackage ({
-      pname = "pi-claude-bridge";
-      version = "unstable";
-      # Pi dev deps lack integrity, put fake hash to make them work
-      # https://github.com/earendil-works/pi/issues/5653
-      prePatch = ''
-        ${lib.getExe jq} 'walk(if type == "object" and has("resolved") and (has("integrity") | not) then . + {"integrity": "${fakeSha512}"} else . end)' package-lock.json >> fixed-package-lock.json
-        mv fixed-package-lock.json package-lock.json
-      '';
-      npmInstallFlags = ["--omit=dev"];
-      npmDepsFetcherVersion = 2;
-      dontNpmBuild = true;
-      installPhase = ''
-        mkdir -p $out
-        cp -r . $out/
-      '';
-    } // args);
+      fakeSha512 = lib.convertHash {
+        hash = lib.fakeSha512;
+        toHashFormat = "sri";
+        hashAlgo = "sha512";
+      };
+    in
+      args:
+        buildNpmPackage ({
+            pname = "pi-extension";
+            version = "unstable";
+            # Pi dev deps lack integrity, put fake hash to make them work
+            # https://github.com/earendil-works/pi/issues/5653
+            prePatch = ''
+              ${lib.getExe jq} 'walk(if type == "object" and has("resolved") and (has("integrity") | not) then . + {"integrity": "${fakeSha512}"} else . end)' package-lock.json >> fixed-package-lock.json
+              mv fixed-package-lock.json package-lock.json
+            '';
+            npmInstallFlags = ["--omit=dev"];
+            npmDepsFetcherVersion = 2;
+            dontNpmBuild = true;
+            installPhase = ''
+              mkdir -p $out
+              cp -r . $out/
+            '';
+          }
+          // args);
   };
 }
