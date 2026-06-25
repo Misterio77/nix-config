@@ -56,6 +56,13 @@ in {
         ];
     });
 
+    helix-unwrapped = addPatches prev.helix-unwrapped [
+      (final.fetchpatch {
+        url = "https://github.com/helix-editor/helix/commit/52bf5e94898bb10de22a4142f08470993151e5c8.diff";
+        hash = "sha256-A84GYJzchfi9ncfmH0FVWwef8hYOKEQ7alLqHr7vPtY=";
+      })
+    ];
+
     wl-clipboard = addPatches prev.wl-clipboard [./wl-clipboard-secrets.diff];
 
     pass = addPatches prev.pass [./pass-wlclipboard-secret.diff];

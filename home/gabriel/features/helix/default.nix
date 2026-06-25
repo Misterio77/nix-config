@@ -32,14 +32,11 @@ in {
       language = [
         {
           name = "nix";
-          language-servers = ["nixd" "nil" "llm-suggest"];
+          language-servers = ["nixd" "nil"];
           formatter.command = "alejandra";
         }
-        {
-          name = "json";
-          language-servers = ["colors" "llm-suggest"];
-        }
       ];
+      global-language-servers = ["llm-suggest" "colors"];
       language-server = {
         tinymist.config = {
           typstExtraArgs = ["main.typ"];
