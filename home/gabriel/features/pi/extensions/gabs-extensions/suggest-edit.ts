@@ -132,9 +132,9 @@ export default function suggestEdit(pi: ExtensionAPI) {
     name: "suggest_edit",
     label: "Suggest Edit",
     description:
-      "Publish an editor-visible suggested edit. Helix shows it as a LLM diagnostic; code actions apply the replacement.",
+      "Publish an editor-visible suggested edit/quickfix. This does not modify the file directly. Helix shows it as an LLM diagnostic; code actions apply the replacement. Ranges are 1-based and inclusive; for whole-line replacements, set wholeLine=true and provide the full replacement lines.",
     promptSnippet:
-      "suggest_edit: propose a non-invasive editor quickfix instead of directly editing a file",
+      "suggest_edit: propose a non-invasive editor quickfix instead of directly editing a file; ranges are 1-based/inclusive, and wholeLine replaces entire lines",
     parameters: {
       type: "object",
       properties: {
@@ -147,7 +147,7 @@ export default function suggestEdit(pi: ExtensionAPI) {
         startColumn: {
           type: "number",
           description:
-            "1-based start column; defaults to 1. Use 0 with endColumn 0 for whole-line replacement.",
+            "1-based inclusive start column; defaults to 1. Ignored when wholeLine=true.",
         },
         endLine: {
           type: "number",
@@ -157,7 +157,7 @@ export default function suggestEdit(pi: ExtensionAPI) {
         endColumn: {
           type: "number",
           description:
-            "1-based end column; defaults to startColumn. Use 0 with startColumn 0 for whole-line replacement.",
+            "1-based inclusive end column; defaults to startColumn. Ignored when wholeLine=true.",
         },
         message: {
           type: "string",
@@ -165,7 +165,8 @@ export default function suggestEdit(pi: ExtensionAPI) {
         },
         replacement: {
           type: "string",
-          description: "Replacement text applied by the code action.",
+          description:
+            "Full replacement text applied by the code action for the selected range.",
         },
         title: {
           type: "string",
@@ -179,7 +180,7 @@ export default function suggestEdit(pi: ExtensionAPI) {
         wholeLine: {
           type: "boolean",
           description:
-            "Replace whole lines from startLine through endLine. Replacement may omit the final newline.",
+            "Replace entire lines from startLine through endLine, ignoring columns. Replacement should contain the full replacement lines and may omit the final newline.",
         },
       },
       required: ["file", "startLine", "endLine", "message", "replacement"],

@@ -36,7 +36,7 @@ Home-manager is used as a NixOS module, integrated via `home-manager.users`.
 For deployment secrets (such as user passwords and server service secrets), I'm
 using the awesome [`sops-nix`](https://github.com/Mic92/sops-nix). All secrets
 are encrypted with my personal PGP key (stored on a YubiKey), as well as the
-relevant systems's SSH host keys.
+relevant systems' SSH host keys.
 
 On my desktop and laptop, I use `pass` for managing passwords, which are
 encrypted using (you bet) my PGP key. This same key is also used for mail
