@@ -12,7 +12,7 @@ in {
 
   programs.helix = {
     enable = true;
-    package = pkgs.steelix;
+    package = pkgs.helix;
     settings = {
       theme = "nix-${hash}";
       editor = {
