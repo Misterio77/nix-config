@@ -25,6 +25,14 @@
           allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
           allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
           deny all;
+
+          # https://docs.immich.app/administration/reverse-proxy
+          client_max_body_size 50000M;
+          proxy_request_buffering off;
+          client_body_buffer_size 1024k;
+          proxy_read_timeout 600s;
+          proxy_send_timeout 600s;
+          send_timeout 600s;
         '';
       };
       "/share" = {
