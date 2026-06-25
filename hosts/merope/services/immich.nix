@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, outputs, ...}: {
   services.immich = {
     enable = true;
     accelerationDevices = ["/dev/dri/renderD128"];
@@ -7,13 +7,29 @@
       server.externalDomain = "https://photos.m7.rs";
     };
   };
+  services.immich-public-proxy = {
+    enable = true;
+    immichUrl = "http://localhost:${toString config.services.immich.port}";
+  };
 
   services.nginx.virtualHosts."photos.m7.rs" = {
     forceSSL = true;
     enableACME = true;
-    locations."/" = {
-      proxyPass = "http://localhost:${toString config.services.immich.port}";
-      proxyWebsockets = true;
+    locations = {
+      "/" = {
+        proxyPass = "http://localhost:${toString config.services.immich.port}";
+        proxyWebsockets = true;
+        extraConfig = ''
+          allow 127.0.0.1;
+          allow ::1;
+          allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v4};
+          allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
+          deny all;
+        '';
+      };
+      "/share" = {
+        proxyPass = "http://localhost:${toString config.services.immich-public-proxy.port}";
+      };
     };
   };
 
