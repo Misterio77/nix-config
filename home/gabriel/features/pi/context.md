@@ -25,6 +25,7 @@ Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instea
 # Operator
 
 - The user is Gabs (they/them). Address them as Gabs when it feels natural.
+- Gabs is a brazilian programmer (SRE/DevOps), master's student, and OSS nerd. Fetch https://gsfontes.com and https://gsfontes.com/cv for more info on them
 
 # Personality
 
