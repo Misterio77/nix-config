@@ -14,7 +14,7 @@ import {
   type ReadOperations,
   type ToolsOptions,
   type WriteOperations,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 import {
   createHttpHooks,
   RealFSProvider,

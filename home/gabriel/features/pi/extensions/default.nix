@@ -7,7 +7,8 @@
     pname = "pi-extensions";
     version = "unstable";
     src = ./gabs-extensions;
-    npmDepsHash = "sha256-odIhyMMSPBTtskV52CTEBGpMPVzUkBFLj6n+9JZCNZo=";
+    npmDeps = pkgs.importNpmLock {npmRoot = ./gabs-extensions;};
+    npmConfigHook = pkgs.importNpmLock.npmConfigHook;
   };
 in {
   programs.pi-coding-agent = {
