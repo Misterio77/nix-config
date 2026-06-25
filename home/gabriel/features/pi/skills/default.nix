@@ -3,5 +3,6 @@
     ./gabs-tools
     ./jujutsu
     ./nix-shell
+    ./pi-extension-authoring
   ];
 }
