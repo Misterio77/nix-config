@@ -75,6 +75,8 @@ Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instea
 
 **Every commit you create MUST include the `Assisted-by: <harness> (<model>)` trailer** (e.g. `Assisted-by: claude-code (opus-4.8)`) in the commit message. This applies to any commit you add a description to in any repo.
 
+Before describing, committing, or pushing, inspect the full diff/status and keep unrelated changes separate. If the working copy contains leftover edits from earlier testing or a different task, split them into their own commit or explicitly ask before bundling them.
+
 ## Running password-requiring commands
 
 When a command needs interactive password entry (e.g. `sudo`), don't run it directly — the non-interactive TTY can't handle it. Spawn a terminal instead:
