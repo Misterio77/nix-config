@@ -1,4 +1,9 @@
-{config, pkgs, lib, ...}: let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   inherit (config) colorscheme;
   hash = builtins.hashString "md5" (builtins.toJSON colorscheme.colors);
 in {
@@ -27,12 +32,12 @@ in {
       language = [
         {
           name = "nix";
-          language-servers = ["nixd" "nil"];
+          language-servers = ["nixd" "nil" "llm-suggest"];
           formatter.command = "alejandra";
         }
         {
           name = "json";
-          language-servers = ["colors"];
+          language-servers = ["colors" "llm-suggest"];
         }
       ];
       language-server = {
@@ -44,6 +49,7 @@ in {
 
         scls.command = lib.getExe pkgs.simple-completion-language-server;
         colors.command = lib.getExe pkgs.uwu-colors;
+        llm-suggest.command = lib.getExe pkgs.llm-suggest-lsp;
       };
     };
     themes."nix-${hash}" = import ./theme.nix {inherit colorscheme;};
