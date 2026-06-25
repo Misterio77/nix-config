@@ -79,10 +79,16 @@ Before describing, committing, or pushing, inspect the full diff/status and keep
 
 ## Running password-requiring commands
 
-When a command needs interactive password entry (e.g. `sudo`), don't run it directly — the non-interactive TTY can't handle it. Spawn a terminal instead:
+When a command needs interactive password entry (e.g. `sudo`), don't run it directly — the non-interactive TTY can't handle it. Spawn a terminal instead. `handlr` already forks, so don't append `&`; pass the command as split args rather than one quoted shell string:
 
 ```bash
-handlr launch x-scheme-handler/terminal -- -e <cmd> &
+handlr launch x-scheme-handler/terminal -- -e <cmd> <arg> ...
+```
+
+Example:
+
+```bash
+handlr launch x-scheme-handler/terminal -- -e sudo nixos-rebuild switch --flake ~/Projects/NixConfig
 ```
 
 Then prompt the user to confirm when the operation is complete:
