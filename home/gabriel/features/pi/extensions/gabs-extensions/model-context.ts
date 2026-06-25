@@ -7,7 +7,13 @@ export default function modelContext(pi: ExtensionAPI) {
       : "unknown";
 
     return {
-      systemPrompt: `''${event.systemPrompt}\n\n# Runtime\n\nHarness: pi\nModel: ''${model}\n`,
+      systemPrompt: `
+        ${event.systemPrompt}
+
+        # LLM Model
+
+        **Model**: ${model}
+      `,
     };
   });
 }

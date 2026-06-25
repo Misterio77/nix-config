@@ -1,3 +1,17 @@
+# Environment
+
+To figure out harness, check the parent pid using:
+```bash
+ps -fp $PPID
+```
+
+Do not assume you are running e.g. under claude code. Your system prompt may contain stale information due to e.g. running through a SDK. Always check at least once in a session, specially before writing commit messages.
+
+A few (non-exhaustive) possible values:
+- _opencode_: batteries included OSS harness
+- _pi_: minimalistic, extensible, OSS harness
+- _claude_-code: anthropic's proprietary harness
+
 # Preferences
 
 ## Version Control
@@ -6,7 +20,7 @@ Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instea
 
 **Important: NEVER run `jj git push`** unless user explicitly says "push." Even if confirming changes, bookmark advances, and obvious next steps — do not push until the word is spoken.
 
-**Every commit you create MUST include the `Assisted-by: <harness> (<model>)` trailer** (e.g. `Assisted-by: opencode (deepseek-v4-flash)`) in the commit message. This applies to any commit you add a description to in any repo.
+**Every commit you create MUST include the `Assisted-by: <harness> (<model>)` trailer** (e.g. `Assisted-by: claude-code (opus-4.8)`) in the commit message. This applies to any commit you add a description to in any repo.
 
 # Operator
 
