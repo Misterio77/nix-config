@@ -113,31 +113,37 @@ in {
     });
 
     buildPiExtension = let
-      inherit (final) lib buildNpmPackage jq;
+      inherit (final) lib buildNpmPackage jq stdenvNoCC;
       fakeSha512 = lib.convertHash {
         hash = lib.fakeSha512;
         toHashFormat = "sri";
         hashAlgo = "sha512";
       };
+      commonDefaults = {
+        pname = "pi-extension";
+        version = "unstable";
+        installPhase = ''
+          mkdir -p $out
+          cp -r . $out/
+        '';
+      };
+      npmDefaults =
+        commonDefaults
+        // {
+          # Pi dev deps lack integrity, put fake hash to make them work
+          # https://github.com/earendil-works/pi/issues/5653
+          prePatch = ''
+            ${lib.getExe jq} 'walk(if type == "object" and has("resolved") and (has("integrity") | not) then . + {"integrity": "${fakeSha512}"} else . end)' package-lock.json >> fixed-package-lock.json
+            mv fixed-package-lock.json package-lock.json
+          '';
+          npmInstallFlags = ["--omit=dev"];
+          npmDepsFetcherVersion = 2;
+          dontNpmBuild = true;
+        };
     in
       args:
-        buildNpmPackage ({
-            pname = "pi-extension";
-            version = "unstable";
-            # Pi dev deps lack integrity, put fake hash to make them work
-            # https://github.com/earendil-works/pi/issues/5653
-            prePatch = ''
-              ${lib.getExe jq} 'walk(if type == "object" and has("resolved") and (has("integrity") | not) then . + {"integrity": "${fakeSha512}"} else . end)' package-lock.json >> fixed-package-lock.json
-              mv fixed-package-lock.json package-lock.json
-            '';
-            npmInstallFlags = ["--omit=dev"];
-            npmDepsFetcherVersion = 2;
-            dontNpmBuild = true;
-            installPhase = ''
-              mkdir -p $out
-              cp -r . $out/
-            '';
-          }
-          // args);
+        if args.dontNpmInstall or false
+        then stdenvNoCC.mkDerivation (commonDefaults // args)
+        else buildNpmPackage (npmDefaults // args);
   };
 }
