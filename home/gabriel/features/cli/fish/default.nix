@@ -23,6 +23,8 @@ in {
     shellAbbrs = rec {
       jqless = "jq -C | less -r";
 
+      watch = "viddy";
+
       s = mkIf hasSpecialisationCli "specialisation";
 
       ls = mkIf hasEza "eza";
