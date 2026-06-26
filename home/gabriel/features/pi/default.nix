@@ -9,12 +9,15 @@
     enable = true;
     context = ./context.md;
     settings = {
+      llamaServerUrl = "http://llm.m7.rs";
       compaction = {
         enabled = true;
         keepRecentTokens = 20000;
         reserveTokens = 16384;
       };
       enabledModels = [
+        "Qwen3-30B"
+        "Qwen3-8B"
         "gpt-5.5"
         "gpt-5.4"
         "claude-opus-4-8"
