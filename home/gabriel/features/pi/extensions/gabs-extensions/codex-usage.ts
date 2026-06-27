@@ -90,9 +90,6 @@ const stateDir =
 const usagePath = join(stateDir, "codex.jsonl");
 const seenPath = join(stateDir, "codex-seen.json");
 const quotaPath = join(stateDir, "codex-quota.json");
-const probePath = join(stateDir, "codex-quota-probe.jsonl");
-
-let currentQuota: QuotaProbeResult | undefined;
 
 const codexUsageEndpoint = "https://chatgpt.com/backend-api/codex/usage";
 const execFileAsync = promisify(execFile);
@@ -107,7 +104,6 @@ export default function codexUsage(pi: ExtensionAPI) {
     await mkdir(stateDir, { recursive: true });
     seen = await readSeen();
     quota = await readJson<QuotaProbeResult>(quotaPath);
-    currentQuota = quota;
   }
 
   void initialize();
@@ -119,14 +115,7 @@ export default function codexUsage(pi: ExtensionAPI) {
       ok: false,
       error: error instanceof Error ? error.message : String(error),
     }));
-    currentQuota = quota;
     await writeJson(quotaPath, quota);
-    await appendJsonl(probePath, quota);
-    updateStatus(ctx);
-  });
-
-  pi.on("model_select", async (_event, ctx) => {
-    updateStatus(ctx);
   });
 
   pi.on("message_end", async (event, ctx) => {
@@ -170,9 +159,7 @@ export default function codexUsage(pi: ExtensionAPI) {
 
     const quotaAfterMessage = await probeQuota(ctx).catch(() => undefined);
     if (quotaAfterMessage) {
-      currentQuota = quotaAfterMessage;
       await writeJson(quotaPath, quotaAfterMessage);
-      await appendJsonl(probePath, quotaAfterMessage);
     }
 
     const record: UsageRecord = {
@@ -195,7 +182,6 @@ export default function codexUsage(pi: ExtensionAPI) {
     seen.add(id);
     await appendJsonl(usagePath, record);
     await writeSeen(seen);
-    updateStatus(ctx);
   });
 
   pi.registerCommand("codex-usage", {
@@ -214,7 +200,6 @@ export default function codexUsage(pi: ExtensionAPI) {
       const byModel = groupByModel(ranged);
       const total = summarize(ranged);
       quota = await readJson<QuotaProbeResult>(quotaPath);
-      currentQuota = quota;
 
       const lines = [
         `Codex/sub usage (${range.label}): ${formatSummary(total)}`,
@@ -227,20 +212,6 @@ export default function codexUsage(pi: ExtensionAPI) {
       ];
 
       ctx.ui.notify(lines.join("\n"), "info");
-      updateStatus(ctx);
-    },
-  });
-
-  pi.registerCommand("codex-quota", {
-    description:
-      "Probe ChatGPT/Codex subscription quota endpoint and save result",
-    handler: async (_args, ctx) => {
-      quota = await probeQuota(ctx);
-      currentQuota = quota;
-      await writeJson(quotaPath, quota);
-      await appendJsonl(probePath, quota);
-      ctx.ui.notify(quotaLine(quota), quota.ok ? "info" : "warning");
-      updateStatus(ctx);
     },
   });
 }
@@ -436,27 +407,6 @@ function estimateWindowCapacity(
     tokensPerPercent,
     capacityTokens: tokensPerPercent * 100,
   };
-}
-
-function updateStatus(ctx: {
-  ui: { setStatus: (key: string, value: string) => void };
-}) {
-  void readUsageRecords()
-    .then((records) =>
-      summarize(records.filter((record) => record.provider === "openai-codex")),
-    )
-    .then((summary) => {
-      const parts = [
-        `codex Σ ↑${formatTokens(summary.input)}`,
-        `R${formatTokens(summary.cacheRead)}`,
-        `↓${formatTokens(summary.output)}`,
-        `$${summary.cost.toFixed(2)}`,
-      ];
-      if (currentQuota?.parsed?.percentUsed !== undefined)
-        parts.push(`${currentQuota.parsed.percentUsed.toFixed(1)}%`);
-      ctx.ui.setStatus("codex-usage", parts.join(" "));
-    })
-    .catch(() => undefined);
 }
 
 async function probeQuota(ctx: {
