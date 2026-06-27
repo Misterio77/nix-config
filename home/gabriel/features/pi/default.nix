@@ -2,6 +2,7 @@
   imports = [
     ./theme.nix
     ./extensions
+    ./prompts
     ./skills
   ];
 
