@@ -12,11 +12,20 @@ import {
 
 let cwdHooksInstalled = false;
 
-// The directory Pi launched in, where the built-in tools were constructed.
-// Stashed on a process-global so it survives extension reloads (which would
-// otherwise re-capture a post-chdir cwd).
-const globalScope = globalThis as { __piStartCwd?: string };
-const startCwd = (globalScope.__piStartCwd ??= process.cwd());
+// Cross-extension state lives on process-globals so it survives extension
+// reloads and is shared across separately-loaded extension modules:
+// - __piStartCwd: the directory Pi launched in, where the built-in tools were
+//   constructed (re-capturing after a chdir would be wrong).
+// - __piGondolinActive: published by pi-gondolin while it runs tools in a VM
+//   mounted from a fixed host cwd, so we can refuse to change directory.
+const piGlobal = globalThis as {
+  __piStartCwd?: string;
+  __piGondolinActive?: boolean;
+};
+const startCwd = (piGlobal.__piStartCwd ??= process.cwd());
+
+// Built-in tools that resolve a `path`/`file_path` argument relative to cwd.
+const PATH_TOOLS = new Set(["read", "write", "edit", "ls", "grep", "find"]);
 
 export function expandHome(path: string): string {
   if (path === "~") return process.env.HOME ?? path;
@@ -30,13 +39,8 @@ function shellQuote(value: string): string {
   return `'${value.replace(/'/g, `'\\''`)}'`;
 }
 
-// pi-gondolin runs the tools inside a VM mounted from a fixed host cwd, so
-// changing directory mid-session would silently desync the two. It publishes
-// its state here so we can refuse instead.
-const gondolinScope = globalThis as { __piGondolinActive?: boolean };
-
 export function gondolinActive(): boolean {
-  return gondolinScope.__piGondolinActive === true;
+  return piGlobal.__piGondolinActive === true;
 }
 
 // Built-in tools capture their cwd at construction, so they keep resolving
@@ -66,11 +70,7 @@ export function installCwdHooks(pi: ExtensionAPI) {
       return;
     }
 
-    if (
-      !["read", "write", "edit", "ls", "grep", "find"].includes(event.toolName)
-    ) {
-      return;
-    }
+    if (!PATH_TOOLS.has(event.toolName)) return;
 
     const input = event.input as { path?: string; file_path?: string };
     let hasPath = false;
@@ -118,7 +118,7 @@ async function createEmptySession(
   return replacementSession;
 }
 
-export async function replacementSessionFor(
+async function replacementSessionFor(
   sourceSession: string,
   targetCwd: string,
   sourceIsEmpty: boolean,
