@@ -106,7 +106,7 @@ export default function web(pi: ExtensionAPI) {
     description:
       "Search the web and return a ranked list of results (title, URL, snippet). " +
       "Use web_fetch afterwards to read a result in full. Requires a configured " +
-      "backend API key (Kagi or Brave).",
+      "backend (Kagi API key, Kagi session token, or Brave API key).",
     promptSnippet:
       "web_search: query the web for current information; follow up with web_fetch to read a result",
     parameters: {
@@ -132,6 +132,7 @@ export default function web(pi: ExtensionAPI) {
         return errorResult(
           "No web_search backend configured. Set one of:\n" +
             "  - KAGI_API_KEY (or `pass api.kagi.com`) — Kagi Search API, billed per query\n" +
+            "  - KAGI_SESSION_TOKEN (or `pass kagi.com/session`) — your Kagi session cookie; rides your subscription, no API key needed\n" +
             "  - BRAVE_API_KEY (or `pass api.search.brave.com`) — Brave Search API, free tier 2k/mo",
         );
       }
@@ -175,6 +176,8 @@ type Backend = {
 async function selectBackend(): Promise<Backend | undefined> {
   const kagiKey = await resolveKey("KAGI_API_KEY", "api.kagi.com");
   if (kagiKey) return kagiBackend(kagiKey);
+  const kagiToken = await resolveKey("KAGI_SESSION_TOKEN", "kagi.com/session");
+  if (kagiToken) return kagiSessionBackend(kagiToken);
   const braveKey = await resolveKey("BRAVE_API_KEY", "api.search.brave.com");
   if (braveKey) return braveBackend(braveKey);
   return undefined;
@@ -208,6 +211,31 @@ function kagiBackend(key: string): Backend {
           url: item.url ?? "",
           snippet: stripTags(item.snippet ?? ""),
         }));
+    },
+  };
+}
+
+// Session-token backend: drives Kagi's lightweight /html/search endpoint with a
+// browser `kagi_session` cookie instead of the official (invite-only, metered)
+// Search API. Same idea as the kagi-ken project. Keep it to human-scale volume —
+// it rides your normal subscription session, so automated bursts are the thing
+// most likely to draw attention.
+function kagiSessionBackend(token: string): Backend {
+  return {
+    name: "kagi (session)",
+    async search(query, count) {
+      const url = `https://kagi.com/html/search?q=${encodeURIComponent(query)}`;
+      const { status, body } = await curlGet(url, [
+        "-H",
+        `Cookie: kagi_session=${token}`,
+      ]);
+      if (status === 401 || status === 403) {
+        throw new Error("invalid or expired session token");
+      }
+      if (status < 200 || status >= 300) {
+        throw new Error(`HTTP ${status}: ${body.slice(0, 200)}`);
+      }
+      return parseKagiHtml(body, count);
     },
   };
 }
@@ -260,6 +288,56 @@ async function resolveKey(
   } catch {
     return undefined;
   }
+}
+
+// Parse Kagi's /html/search markup into results. Mirrors the selectors kagi-ken
+// relies on (`.search-result` / grouped `.__srgi`, with `.__sri_title_link` /
+// `.__srgi-title a` titles and `.__sri-desc` snippets), but with regexes to stay
+// dependency-free. Fragile by nature: if Kagi reshuffles its HTML this returns
+// fewer/no results rather than crashing.
+function parseKagiHtml(html: string, count: number): SearchResult[] {
+  const results: SearchResult[] = [];
+  const chunks = html.split(
+    /<div\b[^>]*class=["'][^"']*(?:search-result|__srgi(?=["'\s]))/i,
+  );
+  for (const chunk of chunks.slice(1)) {
+    if (results.length >= count) break;
+    let link = extractAnchor(chunk, /__sri_title_link/i);
+    if (!link) {
+      const idx = chunk.search(/__srgi-title/i);
+      if (idx >= 0) link = extractAnchor(chunk.slice(idx), /href=/i);
+    }
+    if (!link) continue;
+    const snippet = chunk.match(
+      /class=["'][^"']*__sri-desc[^"']*["'][^>]*>([\s\S]*?)<\/(?:div|span|p)>/i,
+    )?.[1];
+    results.push({
+      title: link.title,
+      url: link.url,
+      snippet: snippet ? stripTags(snippet) : "",
+    });
+  }
+  return results;
+}
+
+// Find the first <a> whose attributes match `attrRe` and that carries a usable
+// href, returning its href + plain-text title.
+function extractAnchor(
+  html: string,
+  attrRe: RegExp,
+): { url: string; title: string } | null {
+  const re = /<a\b([^>]*)>([\s\S]*?)<\/a>/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html))) {
+    const attrs = m[1];
+    if (!attrRe.test(attrs)) continue;
+    const href = attrs.match(/href=["']([^"']*)["']/i)?.[1];
+    if (!href || href.startsWith("#")) continue;
+    const title = stripTags(m[2]);
+    if (!title) continue;
+    return { url: href, title };
+  }
+  return null;
 }
 
 // --- http -----------------------------------------------------------------
