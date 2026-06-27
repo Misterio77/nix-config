@@ -1,9 +1,4 @@
-{
-  lib,
-  outputs,
-  pkgs,
-  ...
-}: let
+{outputs, ...}: let
   port = 18080;
   models = {
     # flash-attn + q8_0 KV cache halves the KV footprint to stay under 8GB VRAM.
@@ -42,6 +37,11 @@
     };
   };
 in {
+  services.llama-router = {
+    enable = true;
+    inherit port models;
+  };
+
   services.nginx.virtualHosts."llm.m7.rs" = {
     locations."/" = {
       proxyPass = "http://localhost:${toString port}";
@@ -52,46 +52,6 @@ in {
         allow ${outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes.v6};
         deny all;
       '';
-    };
-  };
-
-  users.users.llama = {
-    isSystemUser = true;
-    group = "llama";
-    home = "/var/lib/llama";
-  };
-  users.groups.llama = {};
-
-  systemd.services.llama-cpp-router = {
-    description = "Local llama.cpp router API";
-    after = ["network-online.target"];
-    wants = ["network-online.target"];
-    wantedBy = ["multi-user.target"];
-    environment = {
-      XDG_CACHE_HOME = "/var/lib/llama";
-      XDG_DATA_HOME = "/var/lib/llama";
-    };
-    path = [pkgs.llama-cpp-vulkan];
-    script = lib.concatStringsSep " " [
-      "llama-server"
-      # No --models-dir: all models come from --models-preset below.
-      # The preset parser reads INI values verbatim (no quote stripping), so use
-      # plain INI, not TOML - quoted strings would keep their literal quotes.
-      "--models-preset ${(pkgs.formats.ini {}).generate "llama-cpp-models.ini" models}"
-      "--models-max 1"
-      "--host 127.0.0.1"
-      "--port ${toString port}"
-    ];
-    serviceConfig = {
-      User = "llama";
-      Group = "llama";
-      StateDirectory = "llama";
-      RuntimeDirectory = "llama";
-      SupplementaryGroups = ["render" "video"];
-      Restart = "on-failure";
-      RestartSec = 2;
-      # llama-server can dawdle on shutdown; SIGKILL it after 15s.
-      TimeoutStopSec = 15;
     };
   };
 }
