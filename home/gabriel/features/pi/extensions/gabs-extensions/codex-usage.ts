@@ -67,10 +67,15 @@ type QuotaProbeResult = {
   attempts?: Array<{ endpoint: string; status?: number; error?: string }>;
 };
 
-type QuotaDisplay = {
+type QuotaWindowDisplay = {
   percentUsed?: number;
   resetsAt?: string;
   resetsAtEpoch?: number;
+};
+
+type QuotaDisplay = {
+  primary?: QuotaWindowDisplay;
+  secondary?: QuotaWindowDisplay;
   plan?: string;
 };
 
@@ -568,15 +573,24 @@ function quotaWindowSnapshot(value: unknown): QuotaWindowSnapshot | undefined {
 }
 
 function quotaDisplay(snapshot: QuotaSnapshot | undefined): QuotaDisplay {
-  const window = snapshot?.secondaryWindow ?? snapshot?.primaryWindow;
-  const resetsAtEpoch = window?.resetAt;
   return {
-    percentUsed: window?.usedPercent,
+    primary: quotaWindowDisplay(snapshot?.primaryWindow),
+    secondary: quotaWindowDisplay(snapshot?.secondaryWindow),
+    plan: snapshot?.plan,
+  };
+}
+
+function quotaWindowDisplay(
+  window: QuotaWindowSnapshot | undefined,
+): QuotaWindowDisplay | undefined {
+  if (!window) return undefined;
+  const resetsAtEpoch = window.resetAt;
+  return {
+    percentUsed: window.usedPercent,
     resetsAtEpoch,
     resetsAt: resetsAtEpoch
       ? new Date(resetsAtEpoch * 1000).toISOString()
       : undefined,
-    plan: snapshot?.plan,
   };
 }
 
@@ -591,10 +605,25 @@ function quotaLine(result: QuotaProbeResult | undefined) {
   if (!result.ok) return `Quota: probe failed (${result.error ?? "unknown"})`;
   const parsed = result.parsed ?? {};
   const parts = ["Quota:"];
-  if (parsed.percentUsed !== undefined)
-    parts.push(`${parsed.percentUsed.toFixed(1)}% weekly used`);
-  if (parsed.resetsAt) parts.push(`resets ${parsed.resetsAt}`);
+  const weekly = quotaWindowLine("weekly", parsed.secondary);
+  const fiveHour = quotaWindowLine("5h", parsed.primary);
+  if (weekly) parts.push(weekly);
+  if (fiveHour) parts.push(fiveHour);
+  if (!weekly && !fiveHour) parts.push("no window usage returned");
   if (parsed.plan) parts.push(`plan ${parsed.plan}`);
   parts.push(`via ${result.endpoint}`);
   return parts.join(" ");
+}
+
+function quotaWindowLine(
+  label: string,
+  window: QuotaWindowDisplay | undefined,
+) {
+  if (!window?.percentUsed && window?.percentUsed !== 0) return undefined;
+  return [
+    `${label} ${window.percentUsed.toFixed(1)}% used`,
+    window.resetsAt ? `resets ${window.resetsAt}` : undefined,
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
