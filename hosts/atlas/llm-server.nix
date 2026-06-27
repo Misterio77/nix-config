@@ -6,12 +6,9 @@
 }: let
   port = 18080;
   models = {
-    # Section name is the canonical hf-repo id so the preset owns it; otherwise
-    # the router auto-registers an untuned twin. Short alias kept for convenience.
     # flash-attn + q8_0 KV cache halves the KV footprint to stay under 8GB VRAM.
-    "Qwen/Qwen3-8B-GGUF:Q5_K_M" = {
+    qwen3-8b = {
       hf = "Qwen/Qwen3-8B-GGUF:Q5_K_M";
-      alias = "Qwen/Qwen3-8B-GGUF:Q5_K_M,qwen3-8b";
       ctx-size = 32768;
       n-gpu-layers = 999;
       flash-attn = "on";
@@ -25,9 +22,8 @@
     # MoE 30B-A3B mostly CPU-resident, but only 3B active params keep it fast.
     # Q5_K_M (not Q4): MoEs are more quant-sensitive than dense models and we
     # have the RAM to spare. ~16/48 layers on GPU as a starting point.
-    "Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M" = {
+    qwen3-30b-a3b = {
       hf = "Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M";
-      alias = "Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M,qwen3-30b-a3b";
       ctx-size = 32768;
       n-gpu-layers = 16;
       flash-attn = "on";
@@ -40,9 +36,8 @@
     };
     # Qwen3.6 35B-A3B (MoE, vision-capable - served text-only here). On trial
     # against the 30B; Q5_K_M to match. unsloth UD quant. ~16GB+ stays in RAM.
-    "unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M" = {
+    "qwen3.6-35b-a3b" = {
       hf = "unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M";
-      alias = "unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M,qwen3.6-35b-a3b";
       ctx-size = 32768;
       n-gpu-layers = 16;
       flash-attn = "on";
@@ -57,9 +52,8 @@
     # QAT q4_0: trained for q4 robustness, ~bf16 quality at only 13.5GB. Good
     # for chatty/creative work. Official Google GGUF, ungated. Light enough to
     # push ngl high - nudge up while watching VRAM.
-    "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0" = {
+    gemma-4-26b-a4b = {
       hf = "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0";
-      alias = "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0,gemma-4-26b";
       ctx-size = 32768;
       n-gpu-layers = 20;
       flash-attn = "on";
