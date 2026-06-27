@@ -38,6 +38,21 @@
       cont-batching = 1;
       sleep-idle-seconds = 300;
     };
+    # Qwen3.6 35B-A3B (MoE, vision-capable - served text-only here). On trial
+    # against the 30B; Q5_K_M to match. unsloth UD quant. ~16GB+ stays in RAM.
+    "unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M" = {
+      hf = "unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M";
+      alias = "unsloth/Qwen3.6-35B-A3B-GGUF:Q5_K_M,qwen3.6-35b-a3b";
+      ctx-size = 32768;
+      n-gpu-layers = 16;
+      flash-attn = "on";
+      cache-type-k = "q8_0";
+      cache-type-v = "q8_0";
+      threads = 8;
+      parallel = 1;
+      cont-batching = 1;
+      sleep-idle-seconds = 300;
+    };
   };
 in {
   services.nginx.virtualHosts."llm.m7.rs" = {
