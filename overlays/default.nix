@@ -63,6 +63,12 @@ in {
       })
     ];
 
+    # Make the llama.cpp router's HF-cache scan opt-in (LLAMA_ROUTER_SCAN_CACHE)
+    # so --models-preset is the single source of truth and models can be named
+    # freely without untuned repo:tag twins. Patch the base so the -vulkan and
+    # -rocm variants (llama-cpp.override) inherit it.
+    llama-cpp = addPatches prev.llama-cpp [./llama-cpp-optional-cache-scan.patch];
+
     wl-clipboard = addPatches prev.wl-clipboard [./wl-clipboard-secrets.diff];
 
     pass = addPatches prev.pass [./pass-wlclipboard-secret.diff];

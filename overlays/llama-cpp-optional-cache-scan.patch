@@ -1,0 +1,29 @@
+Make the router's HF-cache scan opt-in.
+
+By default `llama-server` in router mode scans the HF cache and auto-registers
+every downloaded model under a forced `repo:tag` id, producing untuned
+duplicates of models already defined via --models-preset and preventing free
+naming. The scan is purely a listing convenience and is independent of
+auto-download on first use (that goes through the child process's --hf-repo).
+
+Gate it behind LLAMA_ROUTER_SCAN_CACHE so presets are the single source of
+truth by default; set the env var to restore upstream behaviour.
+
+--- a/tools/server/server-models.cpp
++++ b/tools/server/server-models.cpp
+@@ -280,8 +280,13 @@
+ 
+ void server_models::load_models() {
+     // Phase 1: load presets from all sources — pure I/O, no lock needed
+-    // 1. cached models
+-    common_presets cached_models = ctx_preset.load_from_cache();
++    // 1. cached models (opt-in). Scanning the HF cache auto-registers untuned
++    //    twins of models already defined as presets and forces their id to
++    //    repo:tag. Off by default; set LLAMA_ROUTER_SCAN_CACHE to restore it.
++    common_presets cached_models;
++    if (std::getenv("LLAMA_ROUTER_SCAN_CACHE")) {
++        cached_models = ctx_preset.load_from_cache();
++    }
+     SRV_INF("Loaded %zu cached model presets\n", cached_models.size());
+     // 2. local models from --models-dir
+     common_presets local_models;
