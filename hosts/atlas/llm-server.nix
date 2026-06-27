@@ -53,6 +53,13 @@ in {
     };
   };
 
+  users.users.llama = {
+    isSystemUser = true;
+    group = "llama";
+    home = "/var/lib/llama";
+  };
+  users.groups.llama = {};
+
   systemd.services.llama-cpp-router = {
     description = "Local llama.cpp router API";
     after = ["network-online.target"];
@@ -74,7 +81,8 @@ in {
       "--port ${toString port}"
     ];
     serviceConfig = {
-      DynamicUser = true;
+      User = "llama";
+      Group = "llama";
       StateDirectory = "llama";
       RuntimeDirectory = "llama";
       SupplementaryGroups = ["render" "video"];
