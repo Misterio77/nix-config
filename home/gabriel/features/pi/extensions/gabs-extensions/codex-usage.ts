@@ -97,6 +97,7 @@ const seenPath = join(stateDir, "codex-seen.json");
 const quotaPath = join(stateDir, "codex-quota.json");
 
 const codexUsageEndpoint = "https://chatgpt.com/backend-api/codex/usage";
+const quotaStatusKey = "codex-quota";
 const execFileAsync = promisify(execFile);
 const browserUserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36";
@@ -121,6 +122,24 @@ export default function codexUsage(pi: ExtensionAPI) {
       error: error instanceof Error ? error.message : String(error),
     }));
     await writeJson(quotaPath, quota);
+    updateQuotaStatus(ctx, quota);
+  });
+
+  pi.on("model_select", async (event, ctx) => {
+    if (event.model.provider !== "openai-codex") {
+      updateQuotaStatus(ctx, undefined);
+      return;
+    }
+
+    await initialize();
+    updateQuotaStatus(ctx, quota);
+    quota = await probeQuota(ctx).catch((error: unknown) => ({
+      timestamp: new Date().toISOString(),
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    }));
+    await writeJson(quotaPath, quota);
+    updateQuotaStatus(ctx, quota);
   });
 
   pi.on("message_end", async (event, ctx) => {
@@ -165,6 +184,7 @@ export default function codexUsage(pi: ExtensionAPI) {
     const quotaAfterMessage = await probeQuota(ctx).catch(() => undefined);
     if (quotaAfterMessage) {
       await writeJson(quotaPath, quotaAfterMessage);
+      updateQuotaStatus(ctx, quotaAfterMessage);
     }
 
     const record: UsageRecord = {
@@ -613,6 +633,40 @@ function quotaLine(result: QuotaProbeResult | undefined) {
   if (parsed.plan) parts.push(`plan ${parsed.plan}`);
   parts.push(`via ${result.endpoint}`);
   return parts.join(" ");
+}
+
+function updateQuotaStatus(
+  ctx: {
+    model?: { provider?: string };
+    ui: { setStatus(key: string, text: string | undefined): void };
+  },
+  result: QuotaProbeResult | undefined,
+) {
+  if (ctx.model?.provider !== "openai-codex") {
+    ctx.ui.setStatus(quotaStatusKey, undefined);
+    return;
+  }
+
+  ctx.ui.setStatus(quotaStatusKey, quotaStatusLine(result));
+}
+
+function quotaStatusLine(result: QuotaProbeResult | undefined) {
+  if (!result?.ok) return undefined;
+  const parsed = result.parsed ?? {};
+  const fiveHour = quotaWindowLeftLine("5h", parsed.primary);
+  const weekly = quotaWindowLeftLine("weekly", parsed.secondary);
+  const parts = [fiveHour, weekly].filter(Boolean);
+  if (parts.length === 0) return undefined;
+  return `[Quota left: ${parts.join("/")}]`;
+}
+
+function quotaWindowLeftLine(
+  label: string,
+  window: QuotaWindowDisplay | undefined,
+) {
+  if (!window?.percentUsed && window?.percentUsed !== 0) return undefined;
+  const percentLeft = Math.max(0, Math.min(100, 100 - window.percentUsed));
+  return `${percentLeft.toFixed(1)}% (${label})`;
 }
 
 function quotaWindowLine(
