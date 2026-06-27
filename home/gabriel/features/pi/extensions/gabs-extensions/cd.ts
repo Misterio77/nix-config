@@ -1,15 +1,9 @@
 import { stat } from "node:fs/promises";
 import { resolve } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import {
-  expandHome,
-  installCwdBashHooks,
-  switchSessionToCwd,
-} from "./lib/cwd.js";
+import { expandHome, switchSessionToCwd } from "./lib/cwd.js";
 
 export default function cd(pi: ExtensionAPI) {
-  installCwdBashHooks(pi);
-
   pi.registerCommand("cd", {
     description: "Fork this Pi session into another directory and switch to it",
     handler: async (args, ctx) => {

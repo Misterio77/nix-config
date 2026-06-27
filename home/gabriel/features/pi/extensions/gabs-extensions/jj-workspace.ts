@@ -4,7 +4,7 @@ import { mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { installCwdBashHooks, switchSessionToCwd } from "./lib/cwd.js";
+import { switchSessionToCwd } from "./lib/cwd.js";
 
 const timeoutMs = 30_000;
 
@@ -41,8 +41,6 @@ function workspaceBase(root: string): string {
 }
 
 export default function jjWorkspace(pi: ExtensionAPI) {
-  installCwdBashHooks(pi);
-
   pi.registerCommand("workspace", {
     description:
       "Create a jj workspace under /tmp and fork this Pi session into it",
