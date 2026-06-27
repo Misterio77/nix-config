@@ -1,12 +1,22 @@
-import { execFile } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 import { promisify } from "node:util";
 
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import {
+  getAgentDir,
+  type ExtensionAPI,
+} from "@earendil-works/pi-coding-agent";
 
 const execFileAsync = promisify(execFile);
 
 const browserUserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36";
+
+// pandoc binary used for HTML->Markdown. Configurable via the `web.pandocPath`
+// key in settings.json (Nix sets it to the store path in extensions/default.nix);
+// falls back to `pandoc` on PATH when unset.
+const pandocBin = loadWebConfig().pandocPath ?? "pandoc";
 
 // Cap the text we hand back to the model so a single fetch can't blow up the
 // context window. Generous enough for an article, small enough to stay sane.
@@ -80,7 +90,7 @@ export default function web(pi: ExtensionAPI) {
 
         const isHtml = /html/i.test(contentType) || looksLikeHtml(body);
         const text =
-          p.raw || !isHtml ? body.trim() : htmlToMarkdown(body).trim();
+          p.raw || !isHtml ? body.trim() : (await htmlToMarkdown(body)).trim();
         const { output, truncated } = clamp(text, limit);
 
         const header = `# ${url}\n`;
@@ -367,6 +377,48 @@ async function curlGet(url: string, extraArgs: string[] = []) {
   return { status: Number(statusText) || 0, body, contentType };
 }
 
+// --- config ---------------------------------------------------------------
+
+type WebConfig = { pandocPath?: string };
+
+// Read `web` config from the merged global + project settings.json, mirroring
+// how pi-gondolin loads its own config. Project settings override global.
+function loadWebConfig(): WebConfig {
+  const agentDir = getAgentDir();
+  const global = readJson(path.join(agentDir, "settings.json"));
+  const project = readJson(path.join(process.cwd(), ".pi/settings.json"));
+  const web = (mergeSettings(global, project) as { web?: unknown }).web;
+  if (!isRecord(web)) return {};
+  const pandocPath = web.pandocPath;
+  if (pandocPath !== undefined && typeof pandocPath !== "string") {
+    throw new Error("web: pandocPath must be a string");
+  }
+  return { pandocPath };
+}
+
+function readJson(file: string): unknown {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return {};
+    throw err;
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
+}
+
+function mergeSettings(a: unknown, b: unknown): unknown {
+  if (!isRecord(a) || !isRecord(b)) return b;
+  return Object.fromEntries(
+    [...new Set([...Object.keys(a), ...Object.keys(b)])].map((key) => [
+      key,
+      key in b ? mergeSettings(a[key], b[key]) : a[key],
+    ]),
+  );
+}
+
 // --- helpers --------------------------------------------------------------
 
 function normalizeUrl(value: string): string | undefined {
@@ -406,103 +458,24 @@ function looksLikeHtml(body: string) {
   );
 }
 
-function stripTags(html: string) {
-  return decodeEntities(html.replace(/<[^>]+>/g, ""))
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-// Dependency-free HTML -> Markdown good enough for the model to read. Not a
-// full DOM parser; it drops non-content elements and maps common block/inline
-// tags, then normalizes whitespace.
-function htmlToMarkdown(html: string): string {
-  let s = html;
-
-  // Drop everything we never want as text.
-  s = s.replace(/<!--[\s\S]*?-->/g, "");
-  s = s.replace(
-    /<(script|style|noscript|template|svg|head|nav|footer|form|iframe)\b[^>]*>[\s\S]*?<\/\1>/gi,
-    "",
-  );
-
-  // Code/pre: preserve content, fence it.
-  s = s.replace(/<pre\b[^>]*>([\s\S]*?)<\/pre>/gi, (_m, inner) => {
-    return `\n\n\`\`\`\n${decodeEntities(inner.replace(/<[^>]+>/g, "")).trim()}\n\`\`\`\n\n`;
-  });
-  s = s.replace(/<code\b[^>]*>([\s\S]*?)<\/code>/gi, (_m, inner) => {
-    return `\`${decodeEntities(inner.replace(/<[^>]+>/g, "")).trim()}\``;
-  });
-
-  // Headings.
-  s = s.replace(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi, (_m, level, inner) => {
-    return `\n\n${"#".repeat(Number(level))} ${stripTags(inner)}\n\n`;
-  });
-
-  // Links: [text](href).
-  s = s.replace(
-    /<a\b[^>]*?href=["']([^"']*)["'][^>]*>([\s\S]*?)<\/a>/gi,
-    (_m, href, inner) => {
-      const text = stripTags(inner);
-      if (!text) return "";
-      return href && !href.startsWith("#") ? `[${text}](${href})` : text;
-    },
-  );
-
-  // List items.
-  s = s.replace(/<li\b[^>]*>([\s\S]*?)<\/li>/gi, (_m, inner) => {
-    return `\n- ${stripTags(inner)}`;
-  });
-
-  // Emphasis.
-  s = s.replace(/<(strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi, "**$2**");
-  s = s.replace(/<(em|i)\b[^>]*>([\s\S]*?)<\/\1>/gi, "*$2*");
-
-  // Block separators.
-  s = s.replace(
-    /<(p|div|section|article|tr|ul|ol|table|h[1-6])\b[^>]*>/gi,
-    "\n\n",
-  );
-  s = s.replace(/<br\b[^>]*>/gi, "\n");
-
-  // Strip remaining tags, decode entities.
-  s = s.replace(/<[^>]+>/g, "");
-  s = decodeEntities(s);
-
-  // Normalize whitespace: trim lines, collapse runs of blank lines.
-  s = s
-    .split("\n")
-    .map((line) => line.replace(/[ \t\f\v]+/g, " ").trimEnd())
-    .join("\n")
-    .replace(/\n{3,}/g, "\n\n");
-
-  return s;
-}
-
-function decodeEntities(text: string): string {
-  const named: Record<string, string> = {
-    amp: "&",
-    lt: "<",
-    gt: ">",
-    quot: '"',
-    apos: "'",
-    nbsp: " ",
-    mdash: "—",
-    ndash: "–",
-    hellip: "…",
-    copy: "©",
-    reg: "®",
-    trade: "™",
-    rsquo: "’",
-    lsquo: "‘",
-    rdquo: "”",
-    ldquo: "“",
-  };
-  return text
+// Snippets from search backends may carry inline highlight tags (<b>, <em>).
+// Strip them and decode the handful of entities that show up in those short
+// strings; full documents go through pandoc instead.
+function stripTags(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, "")
     .replace(/&#x([0-9a-f]+);/gi, (_m, hex) =>
       safeFromCodePoint(parseInt(hex, 16)),
     )
     .replace(/&#(\d+);/g, (_m, dec) => safeFromCodePoint(parseInt(dec, 10)))
-    .replace(/&([a-z0-9]+);/gi, (m, name) => named[name.toLowerCase()] ?? m);
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function safeFromCodePoint(code: number): string {
@@ -511,4 +484,38 @@ function safeFromCodePoint(code: number): string {
   } catch {
     return "";
   }
+}
+
+// Convert an HTML document to GitHub-flavored Markdown via pandoc. `gfm-raw_html`
+// drops tags pandoc can't represent (e.g. heading self-link anchors) instead of
+// leaking them as raw HTML. Falls back to a crude tag strip if pandoc fails.
+async function htmlToMarkdown(html: string): Promise<string> {
+  try {
+    const markdown = await runPandoc(html);
+    return markdown.replace(/\n{3,}/g, "\n\n");
+  } catch {
+    return stripTags(html);
+  }
+}
+
+function runPandoc(html: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      pandocBin,
+      ["-f", "html", "-t", "gfm-raw_html", "--wrap=none"],
+      { stdio: ["pipe", "pipe", "pipe"] },
+    );
+    let stdout = "";
+    let stderr = "";
+    child.stdout.setEncoding("utf8");
+    child.stdout.on("data", (chunk) => (stdout += chunk));
+    child.stderr.on("data", (chunk) => (stderr += chunk));
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (code === 0) resolve(stdout);
+      else reject(new Error(`pandoc exited ${code}: ${stderr.slice(0, 200)}`));
+    });
+    child.stdin.on("error", () => {});
+    child.stdin.end(html, "utf8");
+  });
 }

@@ -40,6 +40,9 @@ in {
         piLlamaCpp
         piClaudeBridge
       ];
+      # web_fetch (gabsExtensions) shells out to pandoc for HTML->Markdown; pin
+      # the store path here rather than relying on the runtime PATH.
+      web.pandocPath = lib.getExe pkgs.pandoc;
       gondolin = {
         qemuPath = lib.getExe pkgs.qemu;
         httpProxy = {
