@@ -77,6 +77,8 @@ Whenever a `.jj/` directory is present in the project, use `jj` (Jujutsu) instea
 
 Before describing, committing, or pushing, inspect the full diff/status and keep unrelated changes separate. If the working copy contains leftover edits from earlier testing or a different task, split them into their own commit or explicitly ask before bundling them.
 
+**Prefer working on a fresh empty commit (`jj new`) rather than editing on top of an already-described commit.** In jj the working copy auto-amends `@`, so if `@` is a finished commit, every stray edit silently mutates it and you end up reverting changes to peel them back out. Starting from an empty `@` keeps new edits somewhere disposable, then you `jj squash`/`jj absorb` them into the right target deliberately. Also: don't assume `@` is where you last left it — a stray `jj new` or `jj edit` moves it. Run `jj log` to confirm `@`'s position before squashing, absorbing, or describing.
+
 ## Running password-requiring commands
 
 When a command needs interactive password entry (e.g. `sudo`), don't run it directly — the non-interactive TTY can't handle it. Spawn a terminal instead. `handlr` already forks, so don't append `&`; pass the command as split args rather than one quoted shell string:
