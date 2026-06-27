@@ -16,11 +16,12 @@
         keepRecentTokens = 20000;
         reserveTokens = 16384;
       };
+      defaultModel = "gpt-5.5";
       enabledModels = [
-        "qwen3.6"
-        "gemma-4"
         "gpt-5.5"
         "claude-opus-4-8"
+        "qwen3.6"
+        "gemma-4"
       ];
     };
     keybindings = {
