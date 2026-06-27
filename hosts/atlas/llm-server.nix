@@ -53,6 +53,23 @@
       cont-batching = 1;
       sleep-idle-seconds = 300;
     };
+    # Gemma-4-26B-A4B (MoE, 4B active, vision-capable - text-only here).
+    # QAT q4_0: trained for q4 robustness, ~bf16 quality at only 13.5GB. Good
+    # for chatty/creative work. Official Google GGUF, ungated. Light enough to
+    # push ngl high - nudge up while watching VRAM.
+    "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0" = {
+      hf = "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0";
+      alias = "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0,gemma-4-26b";
+      ctx-size = 32768;
+      n-gpu-layers = 20;
+      flash-attn = "on";
+      cache-type-k = "q8_0";
+      cache-type-v = "q8_0";
+      threads = 8;
+      parallel = 1;
+      cont-batching = 1;
+      sleep-idle-seconds = 300;
+    };
   };
 in {
   services.nginx.virtualHosts."llm.m7.rs" = {
