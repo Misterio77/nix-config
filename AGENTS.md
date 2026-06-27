@@ -10,6 +10,28 @@ Conventional commits: `type(scope): description`
   - `{host}` or `{host}/{service}` for host-specific: `pleione`, `alcyone/firefly`, `merope/recyclarr`
   - Just the component for shared/global: `grafana`, `minecraft`, `recyclarr`
 - Message is lowercase, no period at end.
+
+### Flake Lock Bumps
+
+When describing a `flake.lock` bump (e.g. after `nix flake update <input>`), summarize
+what actually changed in the bumped input(s), not just the revision hashes:
+
+1. Get the old → new revisions from the `nix flake update` output or `flake.lock` diff.
+2. Fetch the upstream changelog between them (`gh`/GitHub compare API, or a local clone
+   in `/tmp`): `curl -s https://api.github.com/repos/<owner>/<repo>/compare/<old>...<new>`.
+3. In the commit body, note the short hash range and a brief bullet list of the
+   meaningful changes (commits/files), so the diff is reviewable without leaving the repo.
+
+Example:
+
+```
+chore(flake): update website input
+
+Update website from f6c09b0b to 70386bb7 (2 commits, docs-only):
+- add _src/llms.txt
+- remove stale _src/portfolio.md and its references in llms.txt
+```
+
 ## Directory Structure
 
 ```
