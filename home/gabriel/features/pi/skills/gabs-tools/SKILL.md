@@ -3,6 +3,14 @@ name: gabs-tools
 description: Manage Gabs's todos (todoman), appointments (khal), contacts (khard), notes (~/Notes), and email (~/Mail)
 ---
 
+## Syncing vdir-backed data
+
+After creating, editing, moving, or deleting anything backed by vdir (todos, calendar events, or contacts), start vdirsyncer so the change propagates:
+
+```bash
+systemctl --user start vdirsyncer
+```
+
 ## Todos (todoman)
 
 Todos live in a vdir at `~/Calendars/personal/`. Use the `todo` CLI (todoman).
@@ -100,11 +108,6 @@ rm /path/to/uid.ics
 **Deleting a recurring event:** same approach — find the `.ics` containing the `RRULE` and delete it. All instances will vanish.
 
 The underlying sync is done by vdirsyncer. (DAVx5 handles sync on Android.) The vdir is at `~/Calendars/personal/`.
-
-**Syncing:** vdirsyncer syncs automatically via a systemd timer. To force an immediate sync:
-```bash
-systemctl --user start vdirsyncer
-```
 
 **Cache bust:** khal caches events in `~/.cache/khal/khal.db` and won't pick up manual `.ics` edits. Delete the cache after editing `.ics` files directly:
 
