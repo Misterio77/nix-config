@@ -4,7 +4,7 @@ import { mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { switchSessionToCwd } from "./lib/cwd.js";
+import { gondolinActive, switchSessionToCwd } from "./lib/cwd.js";
 
 const timeoutMs = 30_000;
 
@@ -46,6 +46,14 @@ export default function jjWorkspace(pi: ExtensionAPI) {
       "Create a jj workspace under /tmp and fork this Pi session into it",
     handler: async (args, ctx) => {
       await ctx.waitForIdle();
+
+      if (gondolinActive()) {
+        ctx.ui.notify(
+          "Gondolin is active; run /gondolin off before creating a workspace",
+          "error",
+        );
+        return;
+      }
 
       const root = await run(pi, "jj", ["root"], ctx.cwd, "Not in a jj repo");
       const requestedName = args.trim();

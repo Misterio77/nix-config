@@ -30,6 +30,15 @@ function shellQuote(value: string): string {
   return `'${value.replace(/'/g, `'\\''`)}'`;
 }
 
+// pi-gondolin runs the tools inside a VM mounted from a fixed host cwd, so
+// changing directory mid-session would silently desync the two. It publishes
+// its state here so we can refuse instead.
+const gondolinScope = globalThis as { __piGondolinActive?: boolean };
+
+export function gondolinActive(): boolean {
+  return gondolinScope.__piGondolinActive === true;
+}
+
 // Built-in tools capture their cwd at construction, so they keep resolving
 // against the directory Pi started in even after we switch sessions and
 // `process.chdir()`. Rather than reconstructing the tools (which loses their
@@ -139,6 +148,14 @@ export async function switchSessionToCwd(
     notification: string;
   },
 ): Promise<boolean> {
+  if (gondolinActive()) {
+    ctx.ui.notify(
+      "Gondolin is active; run /gondolin off before changing directory",
+      "error",
+    );
+    return false;
+  }
+
   const sourceSession = ctx.sessionManager.getSessionFile();
   if (!sourceSession) {
     ctx.ui.notify(options.emptySessionMessage, "error");
