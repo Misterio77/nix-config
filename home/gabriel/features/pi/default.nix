@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   imports = [
     ./theme.nix
     ./extensions
@@ -8,6 +8,8 @@
 
   programs.pi-coding-agent = {
     enable = true;
+    # Used by the web-fetch skill to render fetched HTML as Markdown.
+    extraPackages = [pkgs.pandoc];
     context = ./context.md;
     settings = {
       llamaServerUrl = "http://llm.m7.rs";

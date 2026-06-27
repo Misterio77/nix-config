@@ -1,32 +1,12 @@
-import { execFile, spawn } from "node:child_process";
-import fs from "node:fs";
-import path from "node:path";
+import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 
-import {
-  getAgentDir,
-  type ExtensionAPI,
-} from "@earendil-works/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const execFileAsync = promisify(execFile);
 
 const browserUserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36";
-
-// pandoc binary used for HTML->Markdown. Configurable via the `web.pandocPath`
-// key in settings.json (Nix sets it to the store path in extensions/default.nix);
-// falls back to `pandoc` on PATH when unset.
-const pandocBin = loadWebConfig().pandocPath ?? "pandoc";
-
-// Cap the text we hand back to the model so a single fetch can't blow up the
-// context window. Generous enough for an article, small enough to stay sane.
-const FETCH_CHAR_LIMIT = 40_000;
-
-type FetchParams = {
-  url: string;
-  raw?: boolean;
-  maxChars?: number;
-};
 
 type SearchParams = {
   query: string;
@@ -41,84 +21,14 @@ type SearchResult = {
 
 export default function web(pi: ExtensionAPI) {
   pi.registerTool({
-    name: "web_fetch",
-    label: "Web Fetch",
-    description:
-      "Fetch a URL over HTTP(S) and return its content as Markdown text. " +
-      "HTML is stripped to readable text/Markdown by default; pass raw=true to " +
-      "get the unprocessed body (useful for JSON/APIs). Output is truncated to " +
-      "keep the context manageable.",
-    promptSnippet:
-      "web_fetch: download a URL and read it as Markdown (raw=true for JSON/raw bodies)",
-    parameters: {
-      type: "object",
-      properties: {
-        url: {
-          type: "string",
-          description: "Absolute http(s) URL to fetch.",
-        },
-        raw: {
-          type: "boolean",
-          description:
-            "Return the raw response body instead of HTML-to-Markdown conversion. Defaults to false.",
-        },
-        maxChars: {
-          type: "number",
-          description: `Maximum characters to return. Defaults to ${FETCH_CHAR_LIMIT}.`,
-        },
-      },
-      required: ["url"],
-      additionalProperties: false,
-    },
-    async execute(_toolCallId, params) {
-      const p = params as FetchParams;
-      const url = normalizeUrl(p.url);
-      if (!url) {
-        return errorResult(`Not a valid http(s) URL: ${String(p.url)}`);
-      }
-
-      const limit =
-        typeof p.maxChars === "number" && p.maxChars > 0
-          ? p.maxChars
-          : FETCH_CHAR_LIMIT;
-
-      try {
-        const { status, body, contentType } = await curlGet(url);
-        if (status < 200 || status >= 400) {
-          return errorResult(`Fetch failed: HTTP ${status} for ${url}`);
-        }
-
-        const isHtml = /html/i.test(contentType) || looksLikeHtml(body);
-        const text =
-          p.raw || !isHtml ? body.trim() : (await htmlToMarkdown(body)).trim();
-        const { output, truncated } = clamp(text, limit);
-
-        const header = `# ${url}\n`;
-        const note = truncated
-          ? `\n\n[...truncated to ${limit} chars; refetch with a higher maxChars for more]`
-          : "";
-
-        return {
-          content: [{ type: "text", text: `${header}\n${output}${note}` }],
-          details: { url, status, contentType, truncated },
-        };
-      } catch (error) {
-        return errorResult(
-          `Fetch error for ${url}: ${error instanceof Error ? error.message : String(error)}`,
-        );
-      }
-    },
-  });
-
-  pi.registerTool({
     name: "web_search",
     label: "Web Search",
     description:
       "Search the web and return a ranked list of results (title, URL, snippet). " +
-      "Use web_fetch afterwards to read a result in full. Requires a configured " +
-      "backend (Kagi API key, Kagi session token, or Brave API key).",
+      "To read a result in full, fetch its URL (see the web-fetch skill). " +
+      "Requires a configured backend (Kagi API key, Kagi session token, or Brave API key).",
     promptSnippet:
-      "web_search: query the web for current information; follow up with web_fetch to read a result",
+      "web_search: query the web for current information; read a result in full via the web-fetch skill",
     parameters: {
       type: "object",
       properties: {
@@ -377,71 +287,11 @@ async function curlGet(url: string, extraArgs: string[] = []) {
   return { status: Number(statusText) || 0, body, contentType };
 }
 
-// --- config ---------------------------------------------------------------
-
-type WebConfig = { pandocPath?: string };
-
-// Read `web` config from the merged global + project settings.json, mirroring
-// how pi-gondolin loads its own config. Project settings override global.
-function loadWebConfig(): WebConfig {
-  const agentDir = getAgentDir();
-  const global = readJson(path.join(agentDir, "settings.json"));
-  const project = readJson(path.join(process.cwd(), ".pi/settings.json"));
-  const web = (mergeSettings(global, project) as { web?: unknown }).web;
-  if (!isRecord(web)) return {};
-  const pandocPath = web.pandocPath;
-  if (pandocPath !== undefined && typeof pandocPath !== "string") {
-    throw new Error("web: pandocPath must be a string");
-  }
-  return { pandocPath };
-}
-
-function readJson(file: string): unknown {
-  try {
-    return JSON.parse(fs.readFileSync(file, "utf8"));
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === "ENOENT") return {};
-    throw err;
-  }
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return !!value && typeof value === "object" && !Array.isArray(value);
-}
-
-function mergeSettings(a: unknown, b: unknown): unknown {
-  if (!isRecord(a) || !isRecord(b)) return b;
-  return Object.fromEntries(
-    [...new Set([...Object.keys(a), ...Object.keys(b)])].map((key) => [
-      key,
-      key in b ? mergeSettings(a[key], b[key]) : a[key],
-    ]),
-  );
-}
-
 // --- helpers --------------------------------------------------------------
-
-function normalizeUrl(value: string): string | undefined {
-  if (typeof value !== "string") return undefined;
-  const trimmed = value.trim();
-  try {
-    const u = new URL(trimmed);
-    return u.protocol === "http:" || u.protocol === "https:"
-      ? u.toString()
-      : undefined;
-  } catch {
-    return undefined;
-  }
-}
 
 function clampCount(value: number | undefined, fallback: number): number {
   if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
   return Math.max(1, Math.min(20, Math.round(value)));
-}
-
-function clamp(text: string, limit: number) {
-  if (text.length <= limit) return { output: text, truncated: false };
-  return { output: text.slice(0, limit), truncated: true };
 }
 
 function errorResult(message: string) {
@@ -452,15 +302,9 @@ function errorResult(message: string) {
   };
 }
 
-function looksLikeHtml(body: string) {
-  return /<(!doctype html|html|body|div|p|a |h[1-6]|head)\b/i.test(
-    body.slice(0, 2000),
-  );
-}
-
 // Snippets from search backends may carry inline highlight tags (<b>, <em>).
 // Strip them and decode the handful of entities that show up in those short
-// strings; full documents go through pandoc instead.
+// strings.
 function stripTags(html: string): string {
   return html
     .replace(/<[^>]+>/g, "")
@@ -484,38 +328,4 @@ function safeFromCodePoint(code: number): string {
   } catch {
     return "";
   }
-}
-
-// Convert an HTML document to GitHub-flavored Markdown via pandoc. `gfm-raw_html`
-// drops tags pandoc can't represent (e.g. heading self-link anchors) instead of
-// leaking them as raw HTML. Falls back to a crude tag strip if pandoc fails.
-async function htmlToMarkdown(html: string): Promise<string> {
-  try {
-    const markdown = await runPandoc(html);
-    return markdown.replace(/\n{3,}/g, "\n\n");
-  } catch {
-    return stripTags(html);
-  }
-}
-
-function runPandoc(html: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const child = spawn(
-      pandocBin,
-      ["-f", "html", "-t", "gfm-raw_html", "--wrap=none"],
-      { stdio: ["pipe", "pipe", "pipe"] },
-    );
-    let stdout = "";
-    let stderr = "";
-    child.stdout.setEncoding("utf8");
-    child.stdout.on("data", (chunk) => (stdout += chunk));
-    child.stderr.on("data", (chunk) => (stderr += chunk));
-    child.on("error", reject);
-    child.on("close", (code) => {
-      if (code === 0) resolve(stdout);
-      else reject(new Error(`pandoc exited ${code}: ${stderr.slice(0, 200)}`));
-    });
-    child.stdin.on("error", () => {});
-    child.stdin.end(html, "utf8");
-  });
 }
