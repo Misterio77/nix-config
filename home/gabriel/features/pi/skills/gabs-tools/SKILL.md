@@ -39,6 +39,16 @@ todo new -l <list> --priority high --category Blocked "summary text"
 
 Flags: `-l` (list), `-r` (read description from stdin), `--priority` (low/medium/high), `--category`, `--due`, `--start`.
 
+To create subtasks, first create the parent task, capture its numeric ID from `todo new`/`todo list`, then pass `--subtask-for <id>` for each child:
+
+```bash
+todo new -l Casa --priority medium "mercado"
+todo new -l Casa --subtask-for <parent-id> "sal"
+todo new -l Casa --subtask-for <parent-id> "detergente de louça"
+```
+
+Use this pattern for shopping-list batches: one parent task like `mercado` in list `Casa`, with each item as its own subtask.
+
 ### Modifying todos via .ics files
 
 `todo edit` is limited non-interactively (no `--summary`, no `--list`). For any field change,
