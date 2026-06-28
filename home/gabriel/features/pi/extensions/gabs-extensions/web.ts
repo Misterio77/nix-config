@@ -1,9 +1,17 @@
 import { execFile } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 import { promisify } from "node:util";
 
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import {
+  getAgentDir,
+  type ExtensionAPI,
+} from "@earendil-works/pi-coding-agent";
 
 const execFileAsync = promisify(execFile);
+const AGENT_DIR = getAgentDir();
+const GLOBAL_SETTINGS = path.join(AGENT_DIR, "settings.json");
+const PROJECT_SETTINGS = path.join(process.cwd(), ".pi/settings.json");
 
 const browserUserAgent =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36";
@@ -18,6 +26,14 @@ type SearchResult = {
   url: string;
   snippet: string;
 };
+
+type WebSearchConfig = {
+  kagiApiKeyFile?: string;
+  kagiSessionTokenFile?: string;
+  braveApiKeyFile?: string;
+};
+
+type PiSettings = { webSearch?: WebSearchConfig };
 
 export default function web(pi: ExtensionAPI) {
   pi.registerTool({
@@ -51,9 +67,9 @@ export default function web(pi: ExtensionAPI) {
       if (!backend) {
         return errorResult(
           "No web_search backend configured. Set one of:\n" +
-            "  - KAGI_API_KEY (or `pass api.kagi.com`) — Kagi Search API, billed per query\n" +
-            "  - KAGI_SESSION_TOKEN (or `pass kagi.com/session`) — your Kagi session cookie; rides your subscription, no API key needed\n" +
-            "  - BRAVE_API_KEY (or `pass api.search.brave.com`) — Brave Search API, free tier 2k/mo",
+            "  - settings.webSearch.kagiApiKeyFile — Kagi Search API, billed per query\n" +
+            "  - settings.webSearch.kagiSessionTokenFile — your Kagi session cookie; rides your subscription, no API key needed\n" +
+            "  - settings.webSearch.braveApiKeyFile — Brave Search API, free tier 2k/mo",
         );
       }
 
@@ -94,11 +110,12 @@ type Backend = {
 };
 
 async function selectBackend(): Promise<Backend | undefined> {
-  const kagiKey = await resolveKey("KAGI_API_KEY", "api.kagi.com");
+  const config = loadConfig();
+  const kagiKey = readSecretFile(config.kagiApiKeyFile);
   if (kagiKey) return kagiBackend(kagiKey);
-  const kagiToken = await resolveKey("KAGI_SESSION_TOKEN", "kagi.com/session");
+  const kagiToken = readSecretFile(config.kagiSessionTokenFile);
   if (kagiToken) return kagiSessionBackend(kagiToken);
-  const braveKey = await resolveKey("BRAVE_API_KEY", "api.search.brave.com");
+  const braveKey = readSecretFile(config.braveApiKeyFile);
   if (braveKey) return braveBackend(braveKey);
   return undefined;
 }
@@ -192,22 +209,49 @@ function braveBackend(key: string): Backend {
   };
 }
 
-async function resolveKey(
-  envVar: string,
-  passPath: string,
-): Promise<string | undefined> {
-  const fromEnv = process.env[envVar]?.trim();
-  if (fromEnv) return fromEnv;
-  try {
-    const { stdout } = await execFileAsync("pass", ["show", passPath], {
-      encoding: "utf8",
-      timeout: 10_000,
-    });
-    const first = stdout.split("\n")[0]?.trim();
-    return first || undefined;
-  } catch {
-    return undefined;
+function loadConfig(): WebSearchConfig {
+  const settings = mergeSettings(
+    readJson(GLOBAL_SETTINGS),
+    readJson(PROJECT_SETTINGS),
+  ) as PiSettings;
+  const config = settings.webSearch ?? {};
+  for (const [key, value] of Object.entries(config)) {
+    if (value !== undefined && typeof value !== "string") {
+      throw new Error(`web_search: ${key} must be a string`);
+    }
   }
+  return config;
+}
+
+function readSecretFile(file: string | undefined): string | undefined {
+  if (!file) return undefined;
+  if (!path.isAbsolute(file)) {
+    throw new Error("web_search: secret file paths must be absolute");
+  }
+  return fs.readFileSync(file, "utf8").trim() || undefined;
+}
+
+function readJson(file: string) {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8")) as unknown;
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return {};
+    throw err;
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
+}
+
+function mergeSettings(a: unknown, b: unknown): unknown {
+  if (!isRecord(a) || !isRecord(b)) return b;
+  return Object.fromEntries(
+    [...new Set([...Object.keys(a), ...Object.keys(b)])].map((key) => [
+      key,
+      key in b ? mergeSettings(a[key], b[key]) : a[key],
+    ]),
+  );
 }
 
 // Parse Kagi's /html/search markup into results. Mirrors the selectors kagi-ken

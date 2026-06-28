@@ -38,6 +38,14 @@ in {
       sopsFile = ../../secrets.yaml;
       neededForUsers = true;
     };
+    brave_api_key = {
+      sopsFile = ../../secrets.yaml;
+      owner = "gabriel";
+    };
+    kagi_session_token = {
+      sopsFile = ../../secrets.yaml;
+      owner = "gabriel";
+    };
   };
 
   home-manager.users.gabriel = import ../../../../home/gabriel/${config.networking.hostName}.nix;

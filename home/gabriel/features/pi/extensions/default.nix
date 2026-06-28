@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  osConfig,
   ...
 }: let
   gabsExtensions = pkgs.buildPiExtension {
@@ -40,6 +41,10 @@ in {
         piLlamaCpp
         piClaudeBridge
       ];
+      webSearch = {
+        braveApiKeyFile = osConfig.sops.secrets.brave_api_key.path;
+        kagiSessionTokenFile = osConfig.sops.secrets.kagi_session_token.path;
+      };
       gondolin = {
         qemuPath = lib.getExe pkgs.qemu;
         httpProxy = {
