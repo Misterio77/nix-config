@@ -28,6 +28,39 @@ Notes:
 - For long pages, pipe through `head -c <bytes>` or `sed -n '1,400p'` rather than
   dumping the whole thing into context.
 
+## Noisy pages / DOM-specific extraction
+
+For pages where `trafilatura` grabs navigation/sidebar text or misses content
+(e.g. social sites, forums, old Reddit comments), fall back to targeted DOM
+parsing with Beautiful Soup:
+
+```bash
+page=$(mktemp)
+curl -sSL --compressed -A 'pi-coding-agent:web-fetch:v0.1 (contact: gsfontes.com)' \
+  'https://old.reddit.com/r/linux/comments/example/' > "$page"
+
+# Use the nix-shell skill's "Python with packages" pattern to run this with
+# beautifulsoup4 available.
+python3 - "$page" <<'PY'
+import sys
+from bs4 import BeautifulSoup
+
+soup = BeautifulSoup(open(sys.argv[1], encoding="utf-8", errors="ignore"), "html.parser")
+
+for item in soup.select(".usertext-body .md")[:10]:
+    print(item.get_text(" ", strip=True))
+    print("---")
+PY
+```
+
+Notes:
+
+- Prefer this when you know the selector you want (`article`, `.comment`,
+  `.entry-content`, `.usertext-body .md`, etc.).
+- Use a descriptive user-agent for sites that reject generic browser/script UAs.
+- If the page offers JSON, RSS, Atom, or a public API, that is usually cleaner
+  than scraping HTML.
+
 ## Raw bodies (JSON / APIs / plain text)
 
 Skip pandoc — fetch directly and parse as needed:
