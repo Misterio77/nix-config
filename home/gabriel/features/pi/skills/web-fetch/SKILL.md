@@ -12,12 +12,11 @@ the host. A dedicated tool would bypass that, so use `bash` instead.
 
 ## HTML pages → Markdown
 
-Pipe `curl` into `pandoc`. `gfm-raw_html` drops tags pandoc can't represent (e.g.
-heading self-link anchors) instead of leaking them as raw HTML:
+Pipe `curl` into `trafilatura` to extract the article/body text as Markdown:
 
 ```bash
 curl -sSL --compressed -A "Mozilla/5.0" 'https://example.com/article' \
-  | pandoc -f html -t gfm-raw_html --wrap=none
+  | trafilatura --markdown
 ```
 
 Notes:
@@ -25,6 +24,7 @@ Notes:
 - Quote the URL (single quotes) so query strings with `&`/`?` aren't mangled.
 - `-sSL` is silent + show-errors + follow-redirects; `--compressed` handles gzip.
 - The `-A` browser user-agent avoids some naive bot blocks.
+- Use `trafilatura --markdown --links` when preserving links matters.
 - For long pages, pipe through `head -c <bytes>` or `sed -n '1,400p'` rather than
   dumping the whole thing into context.
 
@@ -43,5 +43,5 @@ curl -sSL 'https://example.com/raw.txt'                # plain text
   report what came back.
 - To find a URL in the first place, use the `web_search` tool, then fetch the
   result you want with the commands above.
-- pandoc can also target other formats (`-t plain` for prose without Markdown
-  syntax, `-t commonmark`) if `gfm` output is noisy for a given page.
+- trafilatura can target other formats (`--txt`, `--json`, `--html`) if Markdown
+  output is noisy for a given page.
