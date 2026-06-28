@@ -58,20 +58,39 @@ Use `nix shell` when:
 ### Python with packages (playwright, requests, etc.)
 
 `nix shell nixpkgs#python3Packages.<name>` doesn't work — the Python binary
-won't see the package. Instead, build a wrapper with `withPackages`:
+won't see the package. Instead, use `nix eval --apply` to get the
+`python3.withPackages` derivation path, then ask `nix shell` for its `out` output:
 
 ```bash
-# 1. Get the store path for python3 + packages
-nix eval nixpkgs#python3 --apply 'python3: (python3.withPackages (p: [p.playwright])).outPath'
-
-# 2. Use it in nix shell alongside other tools
-nix shell /nix/store/37i76fz0gp8p2vharx9nqr5kvc6rpzpc-python3-3.13.12-env nixpkgs#chromium -c python3 -c "
-from playwright.sync_api import sync_playwright
-print('works')
-"
+nix shell "$(
+  nix eval nixpkgs#python3 --raw --apply \
+    'py: (py.withPackages (p: [ p.requests ])).drvPath'
+)^out" -c python3 -c '
+import requests
+print(requests.get("https://httpbin.org/json").json()["slideshow"]["title"])
+'
 ```
 
-This also works for any Python package — just add to the list in `withPackages`.
+For multiple packages/tools, add them to the same shell:
+
+```bash
+nix shell "$(
+  nix eval nixpkgs#python3 --raw --apply \
+    'py: (py.withPackages (p: [ p.playwright ])).drvPath'
+)^out" \
+  nixpkgs#chromium \
+  -c python3 -c '
+from playwright.sync_api import sync_playwright
+print("works")
+'
+```
+
+Important details:
+
+- Use `.drvPath` with `^out`; plain `.outPath` may be unrealized.
+- Keep `^out` outside the command substitution, as part of the installable path.
+- If invoking the store path directly instead of via `nix shell`, use
+  `nix build --no-link --print-out-paths` to realize the output first.
 
 ### Finding available packages
 
