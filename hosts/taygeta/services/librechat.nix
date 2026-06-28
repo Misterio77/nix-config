@@ -1,6 +1,7 @@
 {
   config,
   outputs,
+  pkgs,
   ...
 }: let
   hs = outputs.nixosConfigurations.alcyone.config.services.headscale.settings.prefixes;
@@ -17,11 +18,13 @@ in {
   };
 
   # LibreChat: only reachable on localhost; nginx fronts it (see below).
-  # Uses a local mongodb (SSPL, so unfree and uncached -- hydra builds it once
-  # and caches to cache.m7.rs). FerretDB 1.x was too incompatible (incomplete
-  # findAndModify, breaking user registration).
+  # Uses a local mongodb. mongodb-ce ships official prebuilt binaries, so it's
+  # a cheap fetch+unpack rather than a from-source build (the default mongodb
+  # package is SSPL/unfree and uncached). FerretDB 1.x was too incompatible
+  # (incomplete findAndModify, breaking user registration).
   sops.secrets.librechat-creds.sopsFile = ../secrets.yaml; # CREDS_KEY, CREDS_IV, JWT_SECRET, JWT_REFRESH_SECRET
 
+  services.mongodb.package = pkgs.mongodb-ce;
   services.librechat = {
     enable = true;
     enableLocalDB = true; # local mongodb, sets MONGO_URI
