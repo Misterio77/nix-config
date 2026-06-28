@@ -5,4 +5,5 @@
   openrgb = import ./openrgb.nix;
   nix-registry-prometheus-exporter = import ./nix-registry-prometheus-exporter.nix;
   llama-router = import ./llama-router.nix;
+  codex-openai-proxy = import ./codex-openai-proxy.nix;
 }
