@@ -9,7 +9,7 @@
   inherit (lib) listToAttrs flatten attrsToList mapAttrsToList attrByPath nameValuePair any;
   isSubstring = needle: haystack: (builtins.match ".*${needle}.*" haystack) != null;
   isRestrictedLocation = cfg: (isSubstring "allow fd7a:" cfg.extraConfig) || (isSubstring "allow 100." cfg.extraConfig);
-  isRestricted = vhost: any({value, ...}: isRestrictedLocation value) (attrsToList vhost.locations);
+  isRestricted = vhost: any ({value, ...}: isRestrictedLocation value) (attrsToList vhost.locations);
   domainToNode = listToAttrs (flatten (mapAttrsToList (
       name: host: let
         vhosts = attrByPath ["services" "nginx" "virtualHosts"] {} host.config;
@@ -102,6 +102,9 @@ in {
     '';
     serviceConfig = {
       Type = "oneshot";
+      # Stay active (exited) so a changed unit is re-run on nixos-rebuild switch;
+      # an inactive oneshot is skipped by switch-to-configuration's restart pass.
+      RemainAfterExit = true;
       User = "headscale";
       Group = "headscale";
     };
