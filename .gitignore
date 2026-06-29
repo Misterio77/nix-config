@@ -2,3 +2,4 @@
 result*
 *.qcow2
 .nixie
+__pycache__/
