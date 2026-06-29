@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, lib, ...}: let
   piClaudeBridge = pkgs.buildPiPackage {
     pname = "pi-claude-bridge";
     version = "unstable";

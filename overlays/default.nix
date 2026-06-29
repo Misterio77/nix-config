@@ -118,8 +118,6 @@ in {
       });
     });
 
-    buildPiExtension = final.buildPiPackage;
-
     buildPiPackage = let
       inherit (final) lib buildNpmPackage jq stdenvNoCC;
       fakeSha512 = lib.convertHash {

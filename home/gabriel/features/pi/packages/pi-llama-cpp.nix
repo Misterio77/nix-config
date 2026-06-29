@@ -11,5 +11,8 @@
     dontNpmInstall = true;
   };
 in {
-  programs.pi-coding-agent.settings.packages = [piLlamaCpp];
+  programs.pi-coding-agent.settings = {
+    llamaServerUrl = "http://llm.m7.rs";
+    packages = [piLlamaCpp];
+  };
 }
