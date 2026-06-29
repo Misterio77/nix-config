@@ -42,8 +42,21 @@ in {
           apiKey = "codex-proxy";
           baseURL = "http://127.0.0.1:${toString config.services.codex-openai-proxy.port}/v1";
           # Talk the native Responses API rather than chat-completions; the
-          # proxy only serves /v1/responses.
-          useResponsesApi = true;
+          # proxy only serves /v1/responses. `useResponsesApi` is not an
+          # endpoint-level key (LibreChat silently drops unknown keys here) --
+          # it's a per-conversation model param, so default it on via
+          # customParams.paramDefinitions instead.
+          customParams = {
+            # useResponsesApi is an OpenAI param, so pull the OpenAI parameter
+            # set rather than the bare `custom` one.
+            defaultParamsEndpoint = "openAI";
+            paramDefinitions = [
+              {
+                key = "useResponsesApi";
+                default = true;
+              }
+            ];
+          };
           models = {
             # Augmented at runtime from the proxy's GET /v1/models; default is
             # the required seed/fallback list (LibreChat rejects it missing).
