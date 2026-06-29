@@ -35,6 +35,16 @@ in {
     };
     settings = {
       version = "1.2.1";
+      # Web search via Tavily (TAVILY_API_KEY in the sops creds file). Tavily
+      # serves as both search provider and scraper; reranking is disabled so
+      # users aren't prompted for a Jina/Cohere key. Values must reference env
+      # var names, not literals -- escaped so Nix doesn't interpolate them.
+      webSearch = {
+        searchProvider = "tavily";
+        scraperProvider = "tavily";
+        tavilyApiKey = "\${TAVILY_API_KEY}";
+        rerankerType = "none";
+      };
       endpoints.custom = [
         {
           name = "Codex";
@@ -53,6 +63,11 @@ in {
             paramDefinitions = [
               {
                 key = "useResponsesApi";
+                default = true;
+              }
+              {
+                # Default the web-search toggle on for new conversations.
+                key = "web_search";
                 default = true;
               }
             ];
