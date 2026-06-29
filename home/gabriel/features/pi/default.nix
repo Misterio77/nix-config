@@ -5,6 +5,7 @@
     ./prompts
     ./skills
     ./packages/pi-claude-bridge.nix
+    ./packages/pi-codex-image-gen.nix
     ./packages/pi-llama-cpp.nix
   ];
 
