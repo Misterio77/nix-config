@@ -12,7 +12,6 @@
   clip-notify = pkgs.callPackage ./clip-notify {};
   jagex-auth = pkgs.callPackage ./jagex-auth {};
   llm-suggest-lsp = pkgs.callPackage ./llm-suggest-lsp {};
-  codex-openai-proxy = pkgs.callPackage ./codex-openai-proxy {};
 
   # My slightly customized plymouth theme, just makes the blue outline white
   plymouth-spinner-monochrome = pkgs.callPackage ./plymouth-spinner-monochrome {};
