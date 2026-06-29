@@ -141,13 +141,29 @@ def shape_responses_body(body: dict) -> dict:
     # reasoning has to be carried inline rather than referenced by id.
     body["store"] = False
     body["stream"] = True
-    if body.get("reasoning"):
-        include = set(body.get("include") or [])
-        include.add("reasoning.encrypted_content")
-        body["include"] = sorted(include)
-    # Params the Codex backend rejects: sampling knobs gpt-5 reasoning models
-    # don't take, plus `user`, which LibreChat injects but the backend 400s on.
-    for bad in ("temperature", "top_p", "max_tokens", "frequency_penalty",
+    # LibreChat sends reasoning controls as flat top-level params, but the
+    # Responses API wants them nested under `reasoning`; fold them in (the
+    # backend 400s on the flat `reasoning_effort`/`reasoning_summary` keys).
+    reasoning = dict(body.get("reasoning") or {})
+    if body.get("reasoning_effort"):
+        reasoning["effort"] = body["reasoning_effort"]
+    if body.get("reasoning_summary"):
+        reasoning["summary"] = body["reasoning_summary"]
+    # Always request a human-readable CoT summary, even when LibreChat sends no
+    # effort (its "auto"): without this only the opaque encrypted_content comes
+    # back and LibreChat shows no reasoning. Omitting `effort` lets the backend
+    # pick the model default, so "auto" works. "auto" summary lets the model
+    # pick summary granularity.
+    reasoning.setdefault("summary", "auto")
+    body["reasoning"] = reasoning
+    include = set(body.get("include") or [])
+    include.add("reasoning.encrypted_content")
+    body["include"] = sorted(include)
+    # Params the Codex backend rejects: the flat reasoning keys folded in
+    # above, sampling knobs gpt-5 reasoning models don't take, plus `user`,
+    # which LibreChat injects but the backend 400s on.
+    for bad in ("reasoning_effort", "reasoning_summary", "temperature",
+                "top_p", "max_tokens", "frequency_penalty",
                 "presence_penalty", "user"):
         body.pop(bad, None)
     return body
