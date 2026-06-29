@@ -145,9 +145,10 @@ def shape_responses_body(body: dict) -> dict:
         include = set(body.get("include") or [])
         include.add("reasoning.encrypted_content")
         body["include"] = sorted(include)
-    # Sampling params gpt-5 reasoning models reject.
+    # Params the Codex backend rejects: sampling knobs gpt-5 reasoning models
+    # don't take, plus `user`, which LibreChat injects but the backend 400s on.
     for bad in ("temperature", "top_p", "max_tokens", "frequency_penalty",
-                "presence_penalty"):
+                "presence_penalty", "user"):
         body.pop(bad, None)
     return body
 
