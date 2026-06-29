@@ -4,6 +4,8 @@
     ./extensions
     ./prompts
     ./skills
+    ./packages/pi-claude-bridge.nix
+    ./packages/pi-llama-cpp.nix
   ];
 
   programs.pi-coding-agent = {

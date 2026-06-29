@@ -11,35 +11,11 @@
     npmDeps = pkgs.importNpmLock {npmRoot = ./gabs-extensions;};
     npmConfigHook = pkgs.importNpmLock.npmConfigHook;
   };
-  piLlamaCpp = pkgs.buildPiExtension {
-    pname = "pi-llama-cpp";
-    version = "0.7.2";
-    src = pkgs.fetchFromGitHub {
-      owner = "gsanhueza";
-      repo = "pi-llama-cpp";
-      tag = "0.7.2";
-      hash = "sha256-7ibKGmkzKwnn3fLQvwQKIlUQ3Fil1IeOC5ixRXsStjY=";
-    };
-    dontNpmInstall = true;
-  };
-  piClaudeBridge = pkgs.buildPiExtension {
-    pname = "pi-claude-bridge";
-    version = "unstable";
-    src = pkgs.fetchFromGitHub {
-      owner = "elidickinson";
-      repo = "pi-claude-bridge";
-      rev = "0c0feef83284b71a7cf2b5779e86ca2e8f75ce4c";
-      hash = "sha256-N6hRLcbOlQyQ0coP6YTqn1k5JQlwP/qx/m8tWfySxyI=";
-    };
-    npmDepsHash = "sha256-cE6NKQZFwZxyr1MjbT8FXlrNyVwMxbN5mHAynmSJEVA=";
-  };
 in {
   programs.pi-coding-agent = {
     settings = {
       extensions = [
         gabsExtensions
-        piLlamaCpp
-        piClaudeBridge
       ];
       webSearch = {
         braveApiKeyFile = osConfig.sops.secrets.brave_api_key.path;
@@ -61,14 +37,6 @@ in {
           };
         };
       };
-    };
-  };
-  home.file.".pi/agent/claude-bridge.json".text = builtins.toJSON {
-    askClaude.enabled = false;
-    provider = {
-      plan = "max";
-      stripctMcpConfig = true;
-      pathToClaudeCodeExecutable = lib.getExe pkgs.claude-code;
     };
   };
 }
