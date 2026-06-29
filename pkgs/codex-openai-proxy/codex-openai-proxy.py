@@ -166,6 +166,18 @@ def shape_responses_body(body: dict) -> dict:
                 "top_p", "max_tokens", "frequency_penalty",
                 "presence_penalty", "user"):
         body.pop(bad, None)
+    # store=false means nothing is persisted server-side, so input items can't
+    # be referenced by id. On multi-turn/tool rounds LibreChat replays prior
+    # reasoning items (rs_...) by id without their encrypted_content; the
+    # backend 404s ("Items are not persisted... remove this item"). Drop bare
+    # reasoning references -- keep any that still carry encrypted_content.
+    if isinstance(body.get("input"), list):
+        body["input"] = [
+            item for item in body["input"]
+            if not (isinstance(item, dict)
+                    and item.get("type") == "reasoning"
+                    and not item.get("encrypted_content"))
+        ]
     return body
 
 
